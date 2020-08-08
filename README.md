@@ -1,1 +1,1 @@
-Ce rÃ©pertoire contient les fichiers permettant de gÃ©nÃ©rer le livre **Analyser des donnÃ©es avec R** (https://pydm1989.github.io/Analyser-des-donnees-avec-R/). Ce livre a Ã©tÃ© gÃ©nÃ©rÃ© grÃ¢ce au package R **bookdown**.
+Ce répertoire contient les fichiers permettant de générer le livre Analyser des données avec R. Ce livre a été généré grâce au package R **bookdown** (https://github.com/rstudio/bookdown).
