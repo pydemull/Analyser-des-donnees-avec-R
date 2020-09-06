@@ -59,9 +59,9 @@ data.frame(x = c(0, 1, 2, 3),
 ```
 
 ### Manipuler des objets
-L'une des particularités de R, c'est de permettre de stocker des valeurs, des vecteurs, ou encore des tableaux de données, dans des objets. Pour ce faire, R utilise la fonction d'assignation `<-`. Cette fonction s'utilise en écrivant à droite de la flèche ce que l'on veut stocker dans l'objet, et en écrivant à gauche de la flèche le nom que l'on souhaite donner à l'objet. (Attention : Toujours utiliser seulement des caractères alphanumériques et des points `.` ou des tirets du bas `_` pour écrire un nom d'objet ; ne pas commencer par un chiffre ; avoir à l'esprit que R est sensible à la casse, ce qui veut dire qu'un objet dont le nom commence par une majuscule sera un objet différent de celui qui a le même nom mais qui  commence par une minuscule.) L'utilisation d'objets permet de grandement faciliter les analyses par la suite. Lorsqu'on réalise une assignation, il est possible de voir le nouvel objet crée dans la fenêtre **Environnement** de RStudio. Lorsqu'un objet est crée via une assignation, R ne montre pas ce qu'il contient. Pour voir cela, il faut écrire le nom de l'objet dans une ligne de code et lancer la commande.
+L'une des particularités de R, c'est de permettre d'associer des objets (des valeurs, des vecteurs, ou encore des tableaux de données) à des noms. Pour ce faire, R utilise la fonction d'assignation `<-`. Cette fonction s'utilise en écrivant à droite de la flèche l'objet que l'on veut associer à un nom, et en écrivant à gauche de la flèche le nom désiré. (Attention : Toujours utiliser seulement des caractères alphanumériques et des points `.` ou des tirets du bas `_` pour écrire un nom ; ne pas commencer par un chiffre ; avoir à l'esprit que R est sensible à la casse, ce qui veut dire qu'un nom commençant par une majuscule sera un nom différent de celui qui a les mêmes lettres mais qui commence par une minuscule.) L'utilisation de noms associés à des objets permet de grandement faciliter les analyses par la suite. Lorsqu'on réalise une assignation, il est possible de voir le nouveau nom et l'objet associé dans la fenêtre **Environnement** de RStudio. Lorsqu'on lance le code permettant d'assigner un objet à un nom, R ne montre pas le contenu de l'objet. Pour le voir, il faut écrire le nom associé à l'objet dans une ligne de code et lancer la commande.
 
-Il est donc possible de stocker dans un objet une valeur numérique...
+Il est donc possible d'associer à un nom un objet qui serait une valeur numérique...
 
 ```{r numerical value object}
 a <- 9
@@ -93,13 +93,13 @@ df <- data.frame(Taille, Poids, Sexe)
 df
 ```
 
-Lorsqu'un objet contenant un tableau de données est crée, il est possible d'afficher le contenu d'une seule colonne de ce tableau, grâce au symbole `$`.
+Lorsqu'un objet de type tableau de données est assigné à un nom, il est possible d'afficher le contenu d'une seule colonne de ce tableau à partir du nom associé au tableau, du symbole `$`, et du titre de la colonne désirée.
 
 ```{r column object}
 df$Taille
 ```
 
-Une fois que des objets sont crées, il est possible, comme montré initialement avec des valeurs, de les utiliser pour réaliser des opérations. Par exemple, on peut manipuler des objets contenant simplement une valeur numérique...
+Une fois que des objets sont liés à des noms, il est possible, comme montré initialement avec des valeurs, d'utiliser ces noms pour réaliser des opérations. Par exemple, via des noms, on peut manipuler des objets contenant simplement une valeur numérique...
 
 ```{r calculations objects}
 a <- 7
@@ -124,7 +124,7 @@ df$IMC <- df$Poids / (df$Taille/100) ^ 2
 df
 ```
 
-Lorsque plusieurs objets ont été crées, il est possible de vouloir en supprimer, par exemple en raison du fait qu'un objet aurait été crée par erreur. Pour supprimer un objet, il est possible d'utiliser la fonction `rm()`. L'instruction `rm(list = ls())` supprime tous les objets qui ont été crées auparavant.
+Lorsque plusieurs objets ont été assignés à des noms, il est possible de vouloir supprimer certaines assignations, par exemple en raison du fait qu'un objet aurait été assigné par erreur. Pour supprimer une assignation, il est possible d'utiliser la fonction `rm()`. L'instruction `rm(list = ls())` supprime toutes les assignations qui ont été réalisées auparavant.
 
 ```{r objects deletion}
 rm(vec1)
@@ -206,11 +206,11 @@ Au fur et à mesure que l'on écrit un script, une bonne pratique consiste à r�
 * Pour créer un vecteur, qu'il contienne des nombres, du texte, ou les deux, il est possible d'utiliser la fonction `c()`.
 * Pour créer un tableau de données, il est possible d'utiliser la fonction `data.frame()`.
 * Pour afficher une colonne particulière d'un tableau de données, utiliser le symbole `$`.
-* Pour créer un objet, utiliser la fonction d'assignation `<-`.
-* Pour supprimer un objet, utiliser la fonction `rm()`.
+* Pour assigner un objet à un nom, utiliser la fonction d'assignation `<-`.
+* Pour supprimer une assignation, utiliser la fonction `rm()`.
 * L'utilisation de R repose sur l'utilisation de fonctions. Une fonction s'utilise en écrivant son nom, suivi de parenthèses à l'intérieur desquelles on peut préciser les arguments qui nous intéressent et indiquer les valeurs nécessaires selon les besoins des analyses.
 * Pour demander l'aide de R à propos d'une fonction, écrire `?` suivi du nom de la fonction.
 * Pour installer un package, utiliser la fonction `install.packages()`.
-* Un code peut être écrit directement dans la **Console**, ou dans une fenêtre **Script**. Pour activer le code à partir d'un script, utiliser le bouton **Run** ou **Ctrl + Entrée**. Les objets crées apparaissent dans la fenêtre **Environnement**.
+* Un code peut être écrit directement dans la **Console**, ou dans une fenêtre **Script**. Pour activer le code à partir d'un script, utiliser le bouton **Run** ou **Ctrl + Entrée**. Les noms et les objets associés apparaissent dans la fenêtre **Environnement**.
 * Pour écrire des titres et des commentaires dans un script, utiliser un `#` avant l'écriture du code.
 * Dans la Console, le symbole `>` signifie que le logiciel est prêt à lancer une nouvelle instruction. Le symbole `+` indique que l'instruction initialement lancée est incomplète. Mieux vaut alors faire **Echap**, modifier le code, et recommencer.

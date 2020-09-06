@@ -24,7 +24,7 @@
 <meta name="author" content="Pierre-Yves de Müllenheim" />
 
 
-<meta name="date" content="2020-08-24" />
+<meta name="date" content="2020-09-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -262,7 +262,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [122] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
 ## [133] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
 ## [144] FALSE FALSE FALSE FALSE FALSE FALSE FALSE</code></pre>
-<p>Quand on regarde bien, on voit que la troisème observation de cette nouvelle variable que l’on vient de créer (seulement de manière temporaire ici car on ne l’a pas assignée à un nom d’objet) contient la valeur <code>TRUE</code>, ce qui est en accord avec la valeur que nous avons introduite auparavant dans la variable Sepal.Length. Le fait d’observer ces valeurs <code>TRUE</code> et <code>FALSE</code> n’est évidemment pas une stratégie très pratique pour déterminer à quelle observation correspondrait l’<em>outlier</em>, et c’est pourquoi l’étape suivante consiste à montrer comment on peut se servir de cette fonction <code>is_outlier()</code> pour faire apparaître sur un graphique de boîte à moustaches les observations à qui appartiendraient les valeurs étranges.</p>
+<p>Quand on regarde bien, on voit que la troisème observation de cette nouvelle variable que l’on vient de créer (seulement de manière temporaire ici car on ne l’a pas assignée à un nom) contient la valeur <code>TRUE</code>, ce qui est en accord avec la valeur que nous avons introduite auparavant dans la variable Sepal.Length. Le fait d’observer ces valeurs <code>TRUE</code> et <code>FALSE</code> n’est évidemment pas une stratégie très pratique pour déterminer à quelle observation correspondrait l’<em>outlier</em>, et c’est pourquoi l’étape suivante consiste à montrer comment on peut se servir de cette fonction <code>is_outlier()</code> pour faire apparaître sur un graphique de boîte à moustaches les observations à qui appartiendraient les valeurs étranges.</p>
 <div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb89-1" title="1">iris <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb89-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">id =</span> <span class="kw">as.factor</span>(<span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">50</span>, <span class="dt">times =</span> <span class="dv">3</span>)),                          <span class="co"># Ajout d&#39;un numéro id pour les observations.</span></a>
 <a class="sourceLine" id="cb89-3" title="3">         <span class="dt">id_outlier =</span> <span class="kw">ifelse</span>(<span class="kw">is_outlier</span>(<span class="dt">x =</span> Sepal.Length), id, <span class="st">&quot;&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Création d&#39;une nouvelle variable appelée id_outlier.</span></a>

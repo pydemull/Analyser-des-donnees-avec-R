@@ -46,7 +46,7 @@ Il existe plusieurs fonctions pour importer une base de données dans RStudio. L
 write_csv2(x = iris, path = "iris.csv")
 ```
 
-Si l'on jette un oeil dans le répertoire de travail, il est alors possible d'y voir un nouveau fichier .csv du nom de `iris`. Maintenant qu'il existe une base de données dans le répertoire de travail actif, il est possible de concrétiser la procédure de son importation dans RStudio. Comme évoqué plus tôt dans ce document, il est intéressant, et en réalité nécessaire, d'assigner cette base de données à un nom d'objet pour pouvoir plus facilement manipuler le jeu de données par la suite. Ici, nous allons nommer tout naturellement ce nouvel  objet `iris`.
+Si l'on jette un oeil dans le répertoire de travail, il est alors possible d'y voir un nouveau fichier .csv du nom de `iris`. Maintenant qu'il existe une base de données dans le répertoire de travail actif, il est possible de concrétiser la procédure de son importation dans RStudio. Comme évoqué plus tôt dans ce document, il est intéressant, et en réalité nécessaire, d'assigner cette base de données à un nom pour pouvoir plus facilement manipuler le jeu de données par la suite. Ici, nous allons tout naturellement associer ce nouvel objet au nom `iris`.
 
 ```{r read_csv2}
 iris <- read_csv2(file = "iris.csv")
@@ -58,13 +58,13 @@ Suite à l'activation de la commande,  RStudio nous montre un message d'informat
 iris <- as.data.frame(x = iris)
 ```
 
-À présent, regardons ce qu'il se passe si on lance l'objet `iris` dans la Console... 
+À présent, regardons ce qu'il se passe si on lance le nom `iris` dans la Console... 
 
 ```{r iris}
 iris
 ```
 
-RStudio nous montre tout le jeu de données dans la Console, ce qui n'est pas très utile, d'autant plus que l'on peut perdre de vue la première ligne de titre lorsque le jeu de données contient beaucoup de lignes. Retournons donc au format *tibble* grâce à la fonction `as_tibble()` du package `tibble`, et voyons ce qu'il se passe lorsqu'on lance à nouveau l'objet `iris` dans la Console.
+RStudio nous montre tout le jeu de données dans la Console, ce qui n'est pas très utile, d'autant plus que l'on peut perdre de vue la première ligne de titre lorsque le jeu de données contient beaucoup de lignes. Retournons donc au format *tibble* grâce à la fonction `as_tibble()` du package `tibble`, et voyons ce qu'il se passe lorsqu'on lance à nouveau le nom `iris` dans la Console.
 
 ```{r as_tibble}
 iris <- as_tibble(x = iris)
@@ -75,10 +75,10 @@ Cette fois, RStudio n'affiche que les premières lignes du jeu de données, et i
 
 ## Manipuler la base de données
 ### Vérifier le succès de l'importation de la base
-Avant de débuter les analyses de la base de données, une bonne pratique est de vérifier si la base de données a été correctement importée avec RStudio. Une manière rapide de faire cela est de regarder le nombre d'observations (i.e., de lignes) et de variables (i.e., de colonnes) associés à l'objet crée lors de l'importation et visible dans la fenêtre Environnement de RStudio, puis de cliquer sur le nom de l'objet. Lors de l'étape précédente, nous avons importé le jeu de données `iris` en l'appelant ainsi. Lorsque l'on cherche l'objet `iris` dans la fenêtre Environnement, on peut peut voir qu'il contient 150 observations et 5 variables, signes que la structure du jeu de données a été bien interprétée par R si l'on sait que ce sont effectivement les dimensions du jeu de données en question. Puis, lorsque l'on clique sur l'objet `iris` dans la liste des objets montrés dans la fenêtre Environnement, RStudio ouvre un onglet qui contient les données. Il est alors possible de voir d'un simple coup d'oeil si les données sont bien présentes et organisées en lignes et en colonnes comme attendu.
+Avant de débuter les analyses de la base de données, une bonne pratique est de vérifier si la base de données a été correctement importée avec RStudio. Une manière rapide de faire cela est de regarder le nombre d'observations (i.e., de lignes) et de variables (i.e., de colonnes) associés à l'objet crée lors de l'importation et visible dans la fenêtre Environnement de RStudio, puis de cliquer sur le nom associé à l'objet. Lors de l'étape précédente, nous avons importé le jeu de données `iris` en l'appelant ainsi. Lorsque l'on cherche le nom `iris` dans la fenêtre Environnement, on peut peut voir que l'objet associé contient 150 observations et 5 variables, signes que la structure du jeu de données a été bien interprétée par R si l'on sait que ce sont effectivement les dimensions du jeu de données en question. Puis, lorsque l'on clique sur le nom `iris` dans la liste des noms montrés dans la fenêtre Environnement, RStudio ouvre un onglet qui contient les données. Il est alors possible de voir d'un simple coup d'oeil si les données sont bien présentes et organisées en lignes et en colonnes comme attendu.
 
 ### Vérifier et reconfigurer les types des variables de la base
-Il convient de vérifier que les types des variables que RStudio a associés aux variables du jeu de données importé soient bien en accord avec ce qui était attendu. Pour vérifier les types des variables, il est possible d'utiliser la fonction `str()` avec le nom de l'objet contenant la base de données.
+Il convient de vérifier que les types des variables que RStudio a associés aux variables du jeu de données importé soient bien en accord avec ce qui était attendu. Pour vérifier les types des variables, il est possible d'utiliser la fonction `str()` avec le nom auquel on a associé la base de données.
 
 ```{r str}
 str(iris)
@@ -134,7 +134,7 @@ iris <- iris %>%
          Species = as.factor(x = Species))
 ```
 
-Ici, le symbole `%>%` permet d'indiquer à R que toutes les fonctions qui sont écrites après ce symbole s'appliquent à ce qui a été défini avant ce symbole. La fonction `mutate()`, dont nous reparlerons peu après, permet de créer de nouvelles variables dans le cadre de cette stratégie, soit en écrasant les anciennes variables si les anciens noms sont conservés, soit en créant de nouvelles variables si de nouveaux noms sont utilisés. Remarquons également qu'avec ce code, nous venons de créer un nouvel objet `iris` à partir de l'ancien mais dont on a transformé les types des variables, écrasant dans le même temps l'ancien objet `iris`.
+Ici, le symbole `%>%` permet d'indiquer à R que toutes les fonctions qui sont écrites après ce symbole s'appliquent à ce qui a été défini avant ce symbole. La fonction `mutate()`, dont nous reparlerons peu après, permet de créer de nouvelles variables dans le cadre de cette stratégie, soit en écrasant les anciennes variables si les anciens noms sont conservés, soit en créant de nouvelles variables si de nouveaux noms sont utilisés. Remarquons également qu'avec ce code, nous venons de créer un nouvel objet (en l'assignant à nouveau au nom`iris`) à partir de l'ancien objet, mais dont on a transformé les types des variables, perdant dans le même temps l'ancien objet.
 
 ### Sélectionner des variables avec select()
 Certains jeux de données peuvent être très larges, c'est-à-dire qu'ils peuvent contenir beaucoup de colonnes, parfois inutiles, et qui peuvent être gênantes lorsque l'on veut avoir une vue claire du contenu du jeu de données. La fonction `select()` du package `dplyr` permet de sélectionner des colonnes facilement.
@@ -201,7 +201,7 @@ iris %>%
             mean_sep_wid = mean(Sepal.Width))
 ```
 
-Au cours des illustrations montrant l'usage des fonctions `select()` jusqu'à `summarize()`, il aura été possible de noter que les commandes n'écrasaient pas le jeu de données initial, ni ne créaient de nouveaux jeux de données, car aucune assignation à un nom d'objet n'était faite. Lorsqu'une assignation est réalisée, il est conseillé de créer un nouvel objet, avec un nom différent de celui du jeu de données initial, pour pouvoir revenir au jeu de données originel lorsque cela est souhaité. Ci-dessous un exemple de création d'un nouvel objet de type tableau (`iris2`) à partir de l'utilisation de la plupart des fonctions que nous venons de voir et qui peuvent être utilisées dans un même bloc de code grâce au *pipe* (`%>%`).
+Au cours des illustrations montrant l'usage des fonctions `select()` jusqu'à `summarize()`, il aura été possible de noter que les commandes n'écrasaient pas le jeu de données initial, ni ne créaient de nouveaux jeux de données, car aucune assignation à un nom n'était faite. Lorsqu'une assignation est réalisée, il est conseillé d'utiliser un nouveau nom, différent de celui utilisé pour le jeu de données initial, pour pouvoir revenir au jeu de données originel lorsque cela est souhaité. Ci-dessous un exemple de création d'un nouvel objet de type tableau (assigné au nom `iris2`) à partir de l'utilisation de la plupart des fonctions que nous venons de voir et qui peuvent être utilisées dans un même bloc de code grâce au *pipe* (`%>%`).
 
 ```{r full example dplyr}
 iris2 <- iris %>%
