@@ -30,7 +30,7 @@ R et RStudio sont deux logiciels en libre accès sur internet. Le logiciel R peu
 ## Prise en main de RStudio
 Le logiciel R et son interface RStudio se présentent en quelque sorte comme un super calculateur : on écrit une instruction (i.e., une ligne de code) dans une fenêtre, on lance cette instruction, et le logiciel nous donne le résultat, qu'il s'agisse d'un calcul, d'un graphique, d'une modification d'un jeu de données, etc. Quand on ouvre RStudio pour la première fois, la fenêtre principale qui se présente est la **Console**. Cette fenêtre permet d'y écrire des lignes de code et de les lancer en appuyant sur la touche **Entrée**. Lorsque l'on souhaite conserver les lignes de code que l'on a écrites, ou que l'on souhaite écrire des lignes de code sans forcément les lancer, il est possible d'utiliser une fenêtre **Script** (chemin d'accès : **File > New File > R Script**). Pour lancer les lignes de code qui sont écrites dans une fenêtre de script, il suffit  de se placer n'importe où sur la ligne de code et de cliquer sur l'icône **Run** du logiciel (raccourci : **Ctrl + Entrée**). Une fois le code activé, celui-ci et son resultat sont montrés dans la Console.
 
-### Manipuler des valeurs, des vecteurs, et des tableaux de données
+### Manipuler des objets (valeurs, vecteurs, et tableaux de données)
 De manière basique, R permet d'effectuer des opérations simples avec des nombres, telles que des additions (avec le symbole `+`), des soustractions (avec le symbole `-`), des multiplications (avec le symbole `*`), des divisions (avec le symbole `/`) , des racines carrées (avec la fonction `sqrt()`), ou encore des élévations à la puissance (avec le symbole `^`).
 
 ```{r simple operations}
@@ -58,7 +58,7 @@ data.frame(x = c(0, 1, 2, 3),
            z = c("a", "b", "c", "d"))
 ```
 
-### Manipuler des objets
+### Manipuler des objets assignés à des noms
 L'une des particularités de R, c'est de permettre d'associer des objets (des valeurs, des vecteurs, ou encore des tableaux de données) à des noms. Pour ce faire, R utilise la fonction d'assignation `<-`. Cette fonction s'utilise en écrivant à droite de la flèche l'objet que l'on veut associer à un nom, et en écrivant à gauche de la flèche le nom désiré. (Attention : Toujours utiliser seulement des caractères alphanumériques et des points `.` ou des tirets du bas `_` pour écrire un nom ; ne pas commencer par un chiffre ; avoir à l'esprit que R est sensible à la casse, ce qui veut dire qu'un nom commençant par une majuscule sera un nom différent de celui qui a les mêmes lettres mais qui commence par une minuscule.) L'utilisation de noms associés à des objets permet de grandement faciliter les analyses par la suite. Lorsqu'on réalise une assignation, il est possible de voir le nouveau nom et l'objet associé dans la fenêtre **Environnement** de RStudio. Lorsqu'on lance le code permettant d'assigner un objet à un nom, R ne montre pas le contenu de l'objet. Pour le voir, il faut écrire le nom associé à l'objet dans une ligne de code et lancer la commande.
 
 Il est donc possible d'associer à un nom un objet qui serait une valeur numérique...
