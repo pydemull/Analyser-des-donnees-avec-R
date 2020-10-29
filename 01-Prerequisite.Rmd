@@ -135,32 +135,32 @@ Dans les exemples de code précédents, nous avons utilisé plusieurs fonctions 
 
 Pour expliquer comment s'utilise une fonction, commençons directement par un exemple, cette fois avec la fonction `plot()` :
 
-```{r plot function 1, eval = FALSE}
+```{r plot function 1, eval = FALSE, fig.align ="center"}
 plot(x = iris$Sepal.Length, y = iris$Petal.Length)
 ```
 
 Comme nous pouvons l'observer ci-dessus, pour utiliser une fonction, il faut d'abord écrire son nom, puis mettre des parenthèses pour qu'on puisse écrire des informations à l'intérieur. Ces informations, elles sont de deux natures. D'un côté il y a les **arguments** (qui sont `x` et `y` dans l'exemple ci-dessus), et d'un autre côté il y a les **valeurs** (qui sont les variables `Sepal.Length` et `Petal.Length` du jeu de données `iris` dans l'exemple ci-dessus). Notons ici que le concept de valeur est à prendre au sens général du terme. Dans ce cadre là, une valeur pourrait tout aussi bien désigner des nombres ou des lettres, des vecteurs, des jeux de données, etc. Avec certaines fonctions, nous aurions pu mettre le nom de la variable seul et mettre le nom du jeu de données en face d'un autre argument, mais cela n'était pas possible ici. Comme nous pouvons le voir également, l'argument et la valeur sont toujours mis en lien par le biais du signe `=`. (Attention : Nous verrons plus tard qu'avec certaines fonctions, l'écriture qui est à gauche du signe `=` est en fait le nom d'une nouvelle variable à créer, mais laissons cela de côté pour le moment.)
 Le nombre d'arguments dépend des fonctions. Certaines n'en n'ont qu'un, d'autres peuvent en avoir un très grand nombre. Dans une fonction, certains arguments doivent obligatoirement recevoir une valeur indiquée par nos soins, alors que d'autres arguments ne seront tout simplement pas utilisés si on ne leur associe pas une valeur particulière. Enfin, certains arguments prendront une valeur par défaut associée à la fonction si l'on écrit rien les concernant dans la fonction. Dans la fonction `plot()`, seul l'argument `x` doit obligatoirement recevoir une valeur en principe pour que la fonction puisse être utilisée. Dans notre exemple, le fait d'avoir en plus associer une valeur à l'argument `y` permet à la fonction de non pas montrer uniquement les données de la variable `x`, mais de réaliser un graphique en montrant les données de `y` en fonction de `x`, comme ci-dessous : 
 
-```{r plot function 2, echo = FALSE}
+```{r plot function 2, echo = FALSE, fig.align ="center"}
 plot(x = iris$Sepal.Length, y = iris$Petal.Length)
 ```
 
 Lorsque les arguments sont explictement précisés comme pour `x` et `y` de l'exemple ci-dessus, il est en réalité possible de les écrire dans l'ordre que l'on veut. Nous aurions par exemple très bien pu écrire les choses de la manière suivante sans que cela ne change rien au résultat de la commande :
 
-```{r plot function 3, eval = FALSE}
+```{r plot function 3, eval = FALSE, fig.align ="center"}
 plot(y = iris$Petal.Length, x = iris$Sepal.Length)
 ```
 
 Ce changement d'ordre n'est possible que lorsque les arguments sont explictement précisés, car oui, il est possible de configurer une fonction sans avoir à écrire le nom des arguments. C'est possible de le faire car une fonction est conçue de telle sorte à avoir un ordre par défaut des arguments. Lorsque les noms des arguments ne sont pas précisés, R associe les valeurs mises entre parenthèses aux arguments de la fonction en suivant l'ordre par défaut des arguments qui est propre à la fonction. Ainsi, si nous voulons avoir, pour le graphique associé à notre exemple, la variable `Sepal.Length` en `x`, et la variable `Petal.Length` en `y`, nous aurions très bien pu écrire la fonction comme ceci :
 
-```{r plot function 4, eval = FALSE}
+```{r plot function 4, eval = FALSE, fig.align ="center"}
 plot(iris$Sepal.Length, iris$Petal.Length)
 ```
 
 En revanche, si nous avions inversé l'ordre des variables sans préciser les noms des arguments, nous aurions eu un résultat différent du graphique précédent (dans l'exemple ci-dessous, les variables en x et en y ont été inversées par rapport au graphique précédent) : 
 
-```{r plot function 5}
+```{r plot function 5, fig.align ="center"}
 plot(iris$Petal.Length, iris$Sepal.Length)
 ```
 
@@ -194,7 +194,7 @@ Au fur et à mesure que l'on écrit un script, une bonne pratique consiste à r�
 
 ```{r comments}
 ### Titre de section 1 ----------------------------------------------------------------
-# Sous-titre 1
+## Sous-titre 1
   # Commentaire 1
 ```
 
