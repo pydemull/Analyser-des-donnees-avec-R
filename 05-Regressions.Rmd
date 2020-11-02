@@ -1,0 +1,146 @@
+# Régression linéaire simple
+Il est possible d'investiguer l'existence d'une relation linéaire entre deux variables en modélisant de manière linéaire cette relation à l'aide d'une équation de type $Y = aX + b$, et en calculant certaines statistiques associées qui rendent compte du niveau de correspondance entre le modèle linéaire et les données étudiées. Ces statistiques sont le coefficient de détermination, noté $R^2$, et l'erreur typique d'estimation, dont on gardera l'acronyme anglais $SEE$ (pour *Standard Error of Estimate*).
+
+## Calculer le coefficient de détermination
+Le coefficient $R^2$ représente la part de variance de la variable $Y$ expliquée par le modèle linéaire concerné. La formule de ce coefficient peut être présentée comme ceci : 
+
+$$R^2 = 1 - {\frac {Var(\hat{Y} - Y) } {Var(Y)}} = 1 - {\frac {Var(RES)} {Var(Y)}}, $$
+où $\hat{Y}$ désigne les prédictions faites à partir du modèle, et $Y$ désigne les valeurs réelles que l'on a cherché à prédire à partir du modèle. Le terme $\hat{Y} - Y$ (ou $RES$) doit se concevoir comme une variable contenant toutes les différences $\hat{Y}{i} - Y{i}$ qu'on appelle des **résidus**. Ainsi, le terme ${Var(\hat{Y} - Y) }$ désigne la variance des résidus (ou encore la variance des erreurs). Au final, le ratio ${\frac {Var(\hat{Y} - Y) } {Var(Y)}}$ traduit la part de variance non expliquée (non détectée) par le modèle, et le $R^2$ se calcule en faisant 1 moins ce ratio. (A noter qu'on peut trouver d'autres manières de présenter ce coefficient $R^2$, avec des formules initiales différentes, mais mathématiquement, ces différentes manières d'aborder les choses restent équivalentes).
+
+La figure ci-dessous vise à représenter la notion de **résidu** et ce qu'il représente dans le calcul du $R^2$. Sur cette figure, les points représentent les valeurs $Y{i}$ en fonction des valeurs $X{i}$, la ligne bleue représente le modèle de régression linéaire (i.e., toutes les valeurs $\hat{Y}{i}$ qui seraient prédites à partir du modèle et des valeurs $X{i}$), et les segments rouges représentent les résidus (i.e., la différence qu'on a à chaque fois entre  $\hat{Y}{i}$ et $Y{i}$). Pour un modèle donné, plus ces segments rouges seront nombreux et grands, plus cela signifiera que les erreurs de prédiction du modèle sont nombreuses et grandes, que la part de variance non expliquée par le modèle est grande, et que la valeur du $R^2$ pour ce modèle est éloignée de 1. Ainsi, le coeffient $R^2$ peut aller de la valeur 0 (signifiant que le modèle n'explique aucune variation de $Y$), à la valeur de 1 (signifiant que le modèle explique toute les variations de $Y$). Plus la valeur de $R^2$ d'un modèle linéaire se rapprochera de 1, plus cela suggérera que la relation étudiée est effectivement linéaire.
+
+```{r graph see, echo = FALSE, message = FALSE, fig.align = "center"}
+a <- summary(lm(mpg ~ hp, data = mtcars))$coefficients[2]
+b <- summary(lm(mpg ~ hp, data = mtcars))$coefficients[1]
+
+dfR2 <- 
+  mtcars %>%
+  select(hp, mpg) %>%
+  mutate(pred = a * hp + b,
+         res = pred - mpg)
+
+ggplot(data = dfR2) +
+  geom_segment(aes(x = hp, xend = hp, y = pred, yend = mpg), color = "red", size = 1) +
+  geom_point(aes(x = hp,y =  mpg), size = 3) +
+  geom_smooth(aes(x = hp, y = mpg), method = "lm", se = FALSE) +
+  xlab("X") +
+  ylab("Y")
+```
+
+En réalité, le coefficient de corrélation de Pearson ($r$) et le coefficient de détermination ($R^2$) associé à un modèle linéaire sont mathématiquement liés, $r$ étant la racine carrée du $R^2$.
+
+Pour déterminer le $R^2$ d'un modèle linéaire avec le logiciel R, il faut d'abord créer ce modèle à l'aide de la fonction `lm()`. L'usage simple de cette fonction, tel que montré  ci-dessous, permet de prendre connaissance des coefficients du modèle. Dans les résultats issus de l'exemple ci-dessous, l'ordonnée à l'origine est située sous `(Intercept)`, et le coefficient directeur est situé sous le nom de la variable $X$ du modèle, ici `hp`. Dans l'exemple ci-dessous, qui utilise à nouveau le jeu de données `mtcars`, le modèle nous indique que lorsque `hp` vaudra 0, l'estimation de `mpg` vaudra 30.09886, et que pour chaque augmentation d'unité de `hp`, on aura une diminution de -0.06823 unité de `mpg`.
+
+```{r linear model}
+lm(mpg ~ hp, data = mtcars)
+```
+
+Pour plus de confort dans l'écriture de la suite du code, il peut être intéressant d'associer le modèle crée avec la fonction `lm()` à un nom. Pour accéder aux différentes informations statistiques résumant le modèle, on peut alors utiliser la fonction `summary()` avec le nom choisi pour le modèle.
+
+```{r linear model summary}
+model <- lm(mpg ~ hp, data = mtcars)
+summary(model)
+```
+
+Dans la liste d'informations données suite à l'activation du code, on retrouve notamment les coefficients déjà rencontrés plus haut, et on peut trouver le coefficient $R^2$ en face de l'écriture *Multiple R-squared*. On peut aussi y voir l'erreur typique d'estimation en face de l'écriture *Residual standard error*. 
+
+## L'erreur typique d'estimation
+L'erreur typique d'estimation, ou $SEE$, représente l'écart-type des erreurs d'estimation associées à l'utilisation d'un modèle. Son unité est donc celle de la variable $Y$ que l'on a cherché à prédire avec le modèle. La formule suivante permet d'expliquer son calcul à partir de données prélevées sur un échantillon :
+
+$$ SEE = \sqrt{\frac{\sum_{i=1}^{N}(RES{i} - \overline{RES})^2}{N-2}}, $$
+
+où $RES{i}$ désigne le résidu pour une observation donnée, $\overline{RES}$ la moyenne des résidus, et $N$ le nombre d'observations.
+
+Il est possible d'extraire l'ordonnée à l'origine et la pente (i.e., le coefficient directeur) du modèle de régression, le coefficient $R^2$, et la statistique $SEE$, à partir de la liste d'informations obtenue avec la fonction `summary()`. Le code ci-dessous montre comment faire cela avec l'exemple concernant le jeu de données `mtcars` :
+
+```{r coefficients extraction}
+# Extraction de l'ordonnée à l'origine
+intercept <- summary(model)$coefficients[1]
+intercept
+
+# Extraction du coefficient directeur
+slope <-  summary(model)$coefficients[2]
+slope
+
+# Extraction du coefficient R2
+R2 <- summary(model)$r.squared
+R2
+
+# Extraction de la statistique SEE
+SEE <- summary(model)$sigma
+SEE
+```
+
+Une fois extraites et associées à des noms, ces informations peuvent ensuite être réutilisées avec le package `ggplot2` et la fonction `annotate()` pour compléter le graphique initial avec des informations statistiques.
+
+```{r graph lin and stats, fig.align = "center", message = FALSE, warning = FALSE}
+ggplot(data = mtcars, aes(x = hp, y = mpg)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  annotate("text", label = bquote(paste("Y = ", .(round(slope, digits = 3)), "X + ", .(round(intercept, digits = 3)), " ; ",
+                                        R^2, " = ", .(round(R2, digits = 3)), " ; SEE = ", .(round(SEE, digits = 3)))), x = 50, y = 35, hjust = 0, size = 5)
+```
+
+*La leçon du quartet d'Anscombe*
+
+Dans cette partie dédiée à l'étude de la relation linéaire, il a été indiqué qu'il convient de réaliser au préalable un graphique montrant les données avant de s'adonner ensuite aux calculs visant la quantification d'une éventuelle relation linéaire. Cette première étape graphique est importante car les valeurs numériques qui peuvent être obtenues pour la corrélation de Pearson, le coefficient $R^2$, et la statistique $SEE$, ne peuvent à elles seules garantir l'aspect linéaire d'une relation. Un exemple qui permet d'illustrer cela est le quartet d'Anscombe [-@Anscombe1973]. Il s'agit de quatre jeux de données dont les représentations graphiques sont montrées ci-dessous.
+
+```{r anscombe quartet data, echo = FALSE, results = FALSE}
+anscombe <- 
+  tribble(
+  ~Ix,  ~Iy,	 ~IIx,  ~IIy,  ~IIIx,	~IIIy, ~IVx,  ~IVy,
+  10.0,	8.04,	 10.0,  9.14,	 10.0,	7.46,	 8.0,	 6.58,
+  8.0,	6.95,	 8.0,	  8.14,	 8.0,	  6.77,	 8.0,	 5.76,
+  13.0,	7.58,	 13.0,  8.74,	 13.0,	12.74, 8.0,	 7.71,
+  9.0,	8.81,	 9.0,	  8.77,	 9.0,	  7.11,	 8.0,	 8.84,
+  11.0,	8.33,	 11.0,  9.26,	 11.0,	7.81,	 8.0,	 8.47,
+  14.0,	9.96,	 14.0,  8.10,	 14.0,	8.84,	 8.0,	 7.04,
+  6.0,	7.24,	 6.0,	  6.13,	 6.0,	  6.08,	 8.0,	 5.25,
+  4.0,	4.26,	 4.0,	  3.10,	 4.0,	  5.39,	 19.0, 12.50,
+  12.0,	10.84, 12.0,  9.13,	 12.0, 	8.15,  8.0,	 5.56,
+  7.0,	4.82,	 7.0,	  7.26,	 7.0,	  6.42,	 8.0,	 7.91,
+  5.0,	5.68,	 5.0,	  4.74,	 5.0,	  5.73,	 8.0,	 6.89
+)
+```
+
+```{r anscombe quartet graph, echo = FALSE, fig.align = "center"}
+size <- 3
+color <- "red"
+anscombe1 <- ggplot(data = anscombe, aes(x = Ix, y = Iy)) + 
+  geom_point(size = size, color = color) + 
+  geom_abline(slope = 0.5,  intercept = 3) +
+  scale_x_continuous(breaks = seq(0, 20, 4), limits = c(0, 20)) +
+  scale_y_continuous(breaks = seq(0, 15, 3), limits = c(0, 15)) +
+  theme(axis.title = element_blank()) +
+  annotate("text", x = 1.5, y = 14, label = "A", hjust = 1, size = 5)
+
+anscombe2 <- ggplot(data = anscombe, aes(x = IIx, y = IIy)) + 
+  geom_point(size = size, color = color) + 
+  geom_abline(slope = 0.5,  intercept = 3) +
+  scale_x_continuous(breaks = seq(0, 20, 4), limits = c(0, 20)) +
+  scale_y_continuous(breaks = seq(0, 15, 3), limits = c(0, 15)) +
+  theme(axis.title = element_blank()) +
+  annotate("text", x = 1.5, y = 14, label = "B", hjust = 1, size = 5)
+
+anscombe3 <- ggplot(data = anscombe, aes(x = IIIx, y = IIIy)) + 
+  geom_point(size = size, color = color) + 
+  geom_abline(slope = 0.5,  intercept = 3) + 
+  scale_x_continuous(breaks = seq(0, 20, 4), limits = c(0, 20)) +
+  scale_y_continuous(breaks = seq(0, 15, 3), limits = c(0, 15)) +
+  theme(axis.title = element_blank()) +
+  annotate("text", x = 1.5, y = 14, label = "C", hjust = 1, size = 5)
+
+anscombe4 <- ggplot(data = anscombe, aes(x = IVx, y = IVy)) + 
+  geom_point(size = size, color = color) + 
+  geom_abline(slope = 0.5,  intercept = 3) + 
+  scale_x_continuous(breaks = seq(0, 20, 4), limits = c(0, 20)) +
+  scale_y_continuous(breaks = seq(0, 15, 3), limits = c(0, 15)) +
+  theme(axis.title = element_blank()) +
+  annotate("text", x = 1.5, y = 14, label = "D", hjust = 1, size = 5)
+
+(anscombe1 | anscombe2) / (anscombe3 | anscombe4) 
+```
+
+Bien que d'aspects très différents, ces jeux de données montrent pourtant des variables en abscisses qui ont toutes la même moyenne ($\overline{X} = 9$) et le même écart-type ($SD = 3.32$), des variables en ordonnées qui ont elles aussi la même moyenne ($\overline{Y} = 7.5$) et le même écart-type = ($SD = 2.03$), et des lignes de régression linéaire qui ont toutes la même équation ($Y = 0.5X + 3$), le même coefficient de détermination ($R^2 = 0.67$) et la même erreur typique d'estimation ($SEE = 1.24$). Pour autant, on observe que seul le premier jeu de données (cf. graphique A ci-dessus) est associé à un modèle linéaire vraiment pertinent. En effet, le graphique B montre bien que la relation n'est pas linéaire mais plutôt quadratique, le graphique C montre que la régression est anormalement influencée par une valeur extrême, et le graphique D montre qu'il n'y a en réalité pas de relation linéaire entre les deux variables et que celle-ci ne semble exister numériquement que grâce à une seule valeur très extrême. Autant le graphique C invite à conserver une analyse de régression linéaire avec éventuellement certains ajustements pour la suite, autant les graphique B et D indiquent que la corrélation de Pearson et un modèle linéaire ne sont pas pertinents pour caractériser la relation entre les deux variables étudiées.
+
+

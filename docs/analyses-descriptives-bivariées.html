@@ -24,7 +24,7 @@
 <meta name="author" content="Pierre-Yves de Müllenheim" />
 
 
-<meta name="date" content="2020-10-29" />
+<meta name="date" content="2020-11-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="analyses-descriptives-univariées.html"/>
-<link rel="next" href="références.html"/>
+<link rel="next" href="régression-linéaire-simple.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -181,9 +181,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="4" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html"><i class="fa fa-check"></i><b>4</b> Analyses descriptives bivariées</a><ul>
 <li class="chapter" data-level="4.1" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#relation-entre-deux-variables-quantitatives"><i class="fa fa-check"></i><b>4.1</b> Relation entre deux variables quantitatives</a><ul>
-<li class="chapter" data-level="4.1.1" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#visualiser-graphiquement-les-données"><i class="fa fa-check"></i><b>4.1.1</b> Visualiser graphiquement les données</a></li>
-<li class="chapter" data-level="4.1.2" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#etudier-lexistence-dune-relation-linéaire"><i class="fa fa-check"></i><b>4.1.2</b> Etudier l’existence d’une relation linéaire</a></li>
+<li class="chapter" data-level="4.1.1" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#etudier-graphiquement-la-relation"><i class="fa fa-check"></i><b>4.1.1</b> Etudier graphiquement la relation</a></li>
+<li class="chapter" data-level="4.1.2" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#etudier-numériquement-la-relation"><i class="fa fa-check"></i><b>4.1.2</b> Etudier numériquement la relation</a></li>
 </ul></li>
+<li class="chapter" data-level="4.2" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#relation-entre-deux-variables-qualitatives"><i class="fa fa-check"></i><b>4.2</b> Relation entre deux variables qualitatives</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#le-khi2-de-pearson"><i class="fa fa-check"></i><b>4.2.1</b> Le khi2 de Pearson</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#relation-entre-une-variable-quantitative-et-une-variable-qualitative"><i class="fa fa-check"></i><b>4.3</b> Relation entre une variable quantitative et une variable qualitative</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#le-rapport-de-corrélation"><i class="fa fa-check"></i><b>4.3.1</b> Le rapport de corrélation</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="régression-linéaire-simple.html"><a href="régression-linéaire-simple.html"><i class="fa fa-check"></i><b>5</b> Régression linéaire simple</a><ul>
+<li class="chapter" data-level="5.1" data-path="régression-linéaire-simple.html"><a href="régression-linéaire-simple.html#calculer-le-coefficient-de-détermination"><i class="fa fa-check"></i><b>5.1</b> Calculer le coefficient de détermination</a></li>
+<li class="chapter" data-level="5.2" data-path="régression-linéaire-simple.html"><a href="régression-linéaire-simple.html#lerreur-typique-destimation"><i class="fa fa-check"></i><b>5.2</b> L’erreur typique d’estimation</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="références.html"><a href="références.html"><i class="fa fa-check"></i>Références</a></li>
 <li class="divider"></li>
@@ -208,29 +218,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="analyses-descriptives-bivariées" class="section level1">
 <h1><span class="header-section-number">Chapitre 4</span> Analyses descriptives bivariées</h1>
-<p>Réaliser une analyse bivariée désigne le fait d’étudier la relation qui peut exister entre deux variables. Dans ce chapitre, nous allons voir les procédures graphiques et calculatoires qui permettent d’étudier et de caractériser la relation pouvant exister entre deux variables dans les cas suivants : entre deux variables quantitatives, entre deux variables qualitatives, et entre une variable quantitative et une variable qualitative. Comme dans le chapitre précédent, l’objectif est ici d’explorer et de décrire les données et leurs relations à l’échelle d’un échantillon, sans pour autant chercher à déterminer l’incertitude qu’il peut exister dans les valeurs obtenues en vue d’utiliser ces valeurs pour caractériser la population représentée.</p>
+<p>Réaliser une analyse bivariée désigne le fait d’étudier la relation qui peut exister entre deux variables. Dans ce chapitre, nous allons voir les procédures graphiques et calculatoires qui permettent d’étudier et de quantifier le degré de relation pouvant exister entre deux variables dans les cas suivants : entre deux variables quantitatives, entre deux variables qualitatives, et entre une variable quantitative et une variable qualitative. Comme dans le chapitre précédent, l’objectif est ici d’explorer et de décrire les données et leurs relations à l’échelle d’un échantillon, sans pour autant chercher à déterminer l’incertitude qu’il peut exister dans les statistiques calculées en vue de les utiliser pour réaliser une inférence dans la population représentée.</p>
 <div id="relation-entre-deux-variables-quantitatives" class="section level2">
 <h2><span class="header-section-number">4.1</span> Relation entre deux variables quantitatives</h2>
-<div id="visualiser-graphiquement-les-données" class="section level3">
-<h3><span class="header-section-number">4.1.1</span> Visualiser graphiquement les données</h3>
+<div id="etudier-graphiquement-la-relation" class="section level3">
+<h3><span class="header-section-number">4.1.1</span> Etudier graphiquement la relation</h3>
 <p>Comme dans le cadre d’analyses univariées, une bonne pratique, lorsqu’on étudie une relation bivariée, est de faire un graphique. Avec des variables quantitatives, il s’agit de montrer les valeurs d’une variable en fonction des valeurs de l’autre variable, chose que permet un simple nuage de points. Plusieurs types de relations peuvent alors être rencontrés, ces relations pouvant potentiellement s’apparenter à autant de fonctions mathématiques que l’on connaît. Parmi les plus connues, on a par exemple les relations linéaires, les relations logarithmiques, ou encore les relations quadratiques, illustrées ci-dessous.</p>
 <p><img src="Analyser-des-données-avec-R_files/figure-html/relationships illustrations-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Dans R, pour obtenir un nuage de points à partir d’un jeu de données, il est possible d’utiliser la fonction <code>ggplot()</code> en l’associant à la fonction <code>geom_point()</code> du package <code>ggplot2</code>, comme dans l’exemple ci-dessous qui utilise le jeu de données <code>mtcars</code> (qui est intégré à R de base) et les variables <code>hp</code> (<em>gross horsepower</em>) et <code>mpg</code> (<em>miles/US gallon</em>). Dans cet exemple, on peut voir que la relation semble plutôt curvilinéaire négative (voire linéaire négative dans le cas où l’on ne considèrerait pas le point isolé à droite du graphique).</p>
+<p>Dans R, pour obtenir un nuage de points à partir d’un jeu de données, il est possible d’utiliser la fonction <code>ggplot()</code> en l’associant à la fonction <code>geom_point()</code> du package <code>ggplot2</code>, comme dans l’exemple ci-dessous qui utilise le jeu de données <code>mtcars</code> (qui est intégré à R de base) et les variables <code>hp</code> (<em>gross horsepower</em>) et <code>mpg</code> (<em>miles/US gallon</em>). Dans cet exemple, on peut voir que la relation semble gobalement linéaire négative (voire curvilinéaire négative si l’on donne de l’importance au point isolé à droite du graphique).</p>
 <div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb154-1" title="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> mtcars, <span class="kw">aes</span>(<span class="dt">x =</span> hp, <span class="dt">y =</span> mpg)) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb154-2" title="2"><span class="st">  </span><span class="kw">geom_point</span>()</a></code></pre></div>
 <p><img src="Analyser-des-données-avec-R_files/figure-html/scatterplot-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-<div id="etudier-lexistence-dune-relation-linéaire" class="section level3">
-<h3><span class="header-section-number">4.1.2</span> Etudier l’existence d’une relation linéaire</h3>
-<p><em>Réaliser un nuage de points avec droite de régression</em></p>
-<p>Avant de se lancer dans une étude numérique d’une relation linéaire entre une variable <span class="math inline">\(X\)</span> et une variable <span class="math inline">\(Y\)</span>, il peut être utile de compléter le nuage de points montré ci-dessus avec une droite d’équation de type <span class="math inline">\(Y = aX + b\)</span> qui serait la meilleure modélisation possible de la relation linéaire entre <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span>. Cette droite représente, parmi l’infinité d’équations qui pourraient lier <span class="math inline">\(X\)</span> à <span class="math inline">\(Y\)</span>, celle qui au total donnerait la plus petite erreur lorsque l’on voudrait prédire <span class="math inline">\(Y\)</span> à partir de <span class="math inline">\(X\)</span>. Si <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span> sont linéairement liées, le nuage des points relatifs aux deux variables devrait alors s’étaler le long de cette droite. Pour obtenir cette droite en plus du nuage de points, il est possible d’utiliser la fonction <code>geom_smooth()</code> du package <code>ggplot2</code>.</p>
+<div id="etudier-numériquement-la-relation" class="section level3">
+<h3><span class="header-section-number">4.1.2</span> Etudier numériquement la relation</h3>
+<p><em>Le coefficient de corrélation de Pearson</em></p>
+<p>Lorsque la relation étudiée semble linéaire, l’étude numérique classique consiste à calculer le coefficient de corrélation de Pearson, noté <span class="math inline">\(r\)</span>, dont la valeur vise à renseigner dans quelle mesure le nuage de points représentant le lien entre les deux variables étudiées suit une droite. Avant de se lancer dans le calcul du coefficient de corrélation de Pearson pour étudier la relation entre une variable <span class="math inline">\(X\)</span> et une variable <span class="math inline">\(Y\)</span>, il peut donc être utile de compléter le nuage de points montré ci-dessus avec une droite d’équation de type <span class="math inline">\(Y = aX + b\)</span>. Cette équation serait la meilleure modélisation possible de la relation linéaire entre <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span>, de telle sorte que parmi l’infinité d’équations qui pourraient lier <span class="math inline">\(X\)</span> à <span class="math inline">\(Y\)</span>, c’est cette équation qui au total donnerait la plus petite erreur lorsque l’on voudrait prédire <span class="math inline">\(Y\)</span> à partir de <span class="math inline">\(X\)</span>. Si <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span> sont liées de manière linéaire, alors le nuage des points relatifs aux deux variables devrait s’étaler le long de cette droite. Pour obtenir cette droite en plus du nuage de points, il est possible d’utiliser la fonction <code>geom_smooth()</code> du package <code>ggplot2</code>.</p>
 <div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb155-1" title="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> mtcars, <span class="kw">aes</span>(<span class="dt">x =</span> hp, <span class="dt">y =</span> mpg)) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb155-2" title="2"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb155-3" title="3"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">formula =</span> y <span class="op">~</span><span class="st"> </span>x, <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <p><img src="Analyser-des-données-avec-R_files/figure-html/scatterplot and line-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Dans la fonction <code>geom_smooth()</code> qui a été utilisée dans l’exemple ci-dessus, on note que l’argument <code>formula</code> pourrait être considéré comme facultatif car il s’agit ici de la configuration par défaut de la fonction. En revanche, l’argument <code>method</code> doit être ici configuré avec <code>"lm"</code> (pour <em>linear model</em>) car ce n’est pas la méthode graphique configurée par défaut dans la fonction. Enfin, l’argument <code>se</code> permet de montrer ou non un intervalle de confiance autour de la droite de régression, ce qui n’a pas été activé ici (par défaut, l’argument <code>se</code> est configuré pour montrer cet intervalle de confiance). Dans l’exemple montré ci-dessus, la représentation graphique encourage fortement à penser que l’un des types de relations à envisager prioritairement dans l’étude des deux variables est la relation linéaire. Cette information rend pertinente la conduite éventuelle d’une étude numérique d’une relation linéaire entre les deux variables.</p>
-<p><em>Calculer le coefficient de corrélation de Pearson (</em><span class="math inline">\(r\)</span><em>)</em></p>
-<p>Classiquement, l’étude numérique d’une relation linéaire entre deux variables quantitatives s’effectue en calculant le coefficient de corrélation de Pearson, noté <span class="math inline">\(r\)</span>. La valeur du <span class="math inline">\(r\)</span> de Pearson peut aller de 1 (suggérant une relation linéaire positive parfaite) à -1 (suggérant une relation linéaire négative parfaite). Des valeurs proches de 0 suggèreraient une abscence de relation linéaire. La formule du coefficient <span class="math inline">\(r\)</span> de Pearson pour un échantillon est notée ci-dessous :</p>
+<p>Dans la fonction <code>geom_smooth()</code> qui a été utilisée dans l’exemple ci-dessus, on note que l’argument <code>formula</code> pourrait être considéré comme facultatif car il s’agit ici de la configuration par défaut de la fonction. En revanche, l’argument <code>method</code> doit être ici configuré avec <code>"lm"</code> (pour <em>linear model</em>) car ce n’est pas la méthode graphique configurée par défaut dans la fonction. Enfin, l’argument <code>se</code> permet de montrer ou non un intervalle de confiance autour de la droite de régression, ce qui n’a pas été activé ici (par défaut, l’argument <code>se</code> est configuré pour montrer cet intervalle de confiance). Dans l’exemple montré ci-dessus, la représentation graphique encourage fortement à penser que l’un des types de relations à envisager prioritairement dans l’étude des deux variables est la relation linéaire. Cette information rend pertinente l’utilisation du coefficient de corrélation de Pearson pour une étude numérique de la relation en question.</p>
+<p>La valeur du coefficient de corrélation de Pearson peut aller de 1 (suggérant une relation linéaire positive parfaite) à -1 (suggérant une relation linéaire négative parfaite). Des valeurs proches de 0 suggèreraient une abscence de relation linéaire. La formule du coefficient de corrélation de Pearson (<span class="math inline">\(r\)</span>) pour un échantillon est notée ci-dessous :</p>
 <p><span class="math display">\[r_{X,Y} =  {\frac{COV_{X,Y}}{s_{X} s_{Y}}} =  {\frac{\sum_{i=1}^{N} (X{i} - \overline{X}) (Y{i} - \overline{Y})}{N-1}} {\frac{1}{s_{X} s_{Y}}},\]</span></p>
 <p><span class="math inline">\(COV\)</span> désignant la covariance entre les variables <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span>, <span class="math inline">\(X{i}\)</span> et <span class="math inline">\(Y{i}\)</span> les valeurs de <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span> pour une observation <span class="math inline">\(i\)</span>, <span class="math inline">\(\overline{X}\)</span> et <span class="math inline">\(\overline{Y}\)</span> les moyennes des variables <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span>, <span class="math inline">\(N\)</span> le nombre d’observations, et <span class="math inline">\(s_{X}\)</span> et <span class="math inline">\(s_{Y}\)</span> les écarts-types respectifs des variables <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span>. Cette formule indique que le coefficient de corrélation de Pearson s’obtient en divisant la covariance des deux variables étudiées par le produit de leurs écarts-types respectifs.</p>
 <p>Le tableau ci-dessous montre les premières étapes du calcul de la covariance pour des couples de variables fictifs <span class="math inline">\((X1,Y1)\)</span>, <span class="math inline">\((X1,Y2)\)</span>, et <span class="math inline">\((X1,Y3)\)</span>. En particulier, la partie droite du tableau (de X1Y1 à X1Y3) montre le calcul du produit <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span> pour les différents couples de variables et cela pour chaque ligne du jeu de données.</p>
@@ -312,7 +321,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </tbody>
 </table>
-<p>Ce que ce tableau peut permettre de rendre compte, c’est que plus les deux variables étudiées évolueront de manière consistante dans des sens identiques comme avec <span class="math inline">\(X1\)</span> et <span class="math inline">\(Y1\)</span>, ou de manière consistante dans des sens opposés comme avec <span class="math inline">\(X1\)</span> et <span class="math inline">\(Y3\)</span>, plus les produits <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span> donneront respectivement des grands scores positifs ou des grands scores négatifs, et moins les scores <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span> à additionner pour le calcul de la covariance s’annuleront. En effet, avec une relation relativement linéaire et positive les scores seront plus systématiquement positifs, et avec une relation relativement linéaire et négative les scores seront plus systématiquement négatifs. Toutefois, lorsqu’on aura des variables qui n’évolueront pas de manière consistante dans le même sens ou dans un sens opposé comme avec <span class="math inline">\(X1\)</span> et <span class="math inline">\(Y3\)</span>, les scores positifs et négatifs liés aux calculs <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span> auront tendance à s’annuler et donneront lieu à une somme des scores <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span> diminuée, et donc à une covariance et au final à un coefficient de corrélation de Pearson tirés vers 0. Ces différents cas de figure et les calculs <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span> correspondants sont illustrés sur la figure ci-dessous. Sur cette figure, chaque carré correspond au calcul <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span>, le carré étant bleu lorsque le résultat du calcul est positif, et rouge lorsque le résultat est négatif. L’aire d’un carré illustre la grandeur du score issu du calcul. Sur les figures de gauche et de droite, on distingue une relation linéaire parfaite, ce qui maximise les scores à additionner pour le calcul de la covariance, dans le positif pour la figure de gauche et dans le négatif pour la figure de droite. Au milieu, on remarque que le manque de relation linéaire donne lieu à des carrés à la fois bleus et rouges, indiquant que les scores associés aux calculs <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span> de la covariance s’annulent et diminuent ainsi la valeur finale de la covariance.</p>
+<p>Ce que ce tableau peut permettre de rendre compte, c’est que plus les deux variables étudiées évolueront de manière consistante dans des sens identiques comme avec <span class="math inline">\(X1\)</span> et <span class="math inline">\(Y1\)</span>, ou de manière consistante dans des sens opposés comme avec <span class="math inline">\(X1\)</span> et <span class="math inline">\(Y3\)</span>, plus les produits <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span> donneront respectivement des grands scores positifs ou des grands scores négatifs, et moins les scores <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span> à additionner pour le calcul de la covariance s’annuleront. En effet, avec une relation relativement linéaire et positive les scores seront plus systématiquement positifs, et avec une relation relativement linéaire et négative les scores seront plus systématiquement négatifs. Toutefois, lorsqu’on aura des variables qui n’évolueront pas de manière consistante dans le même sens ou dans un sens opposé comme avec <span class="math inline">\(X1\)</span> et <span class="math inline">\(Y2\)</span>, les scores positifs et négatifs liés aux calculs <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span> auront tendance à s’annuler et donneront lieu à une somme des scores <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span> diminuée, et donc à une covariance et au final à un coefficient de corrélation de Pearson tirés vers 0. Ces différents cas de figure et les calculs <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span> correspondants sont illustrés sur la figure ci-dessous. Sur cette figure, chaque carré correspond au calcul <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span>, le carré étant bleu lorsque le résultat du calcul est positif, et rouge lorsque le résultat est négatif. L’aire d’un carré illustre la grandeur du score issu du calcul. Sur les figures de gauche et de droite, on distingue une relation linéaire parfaite, ce qui maximise les scores à additionner pour le calcul de la covariance, dans le positif pour la figure de gauche et dans le négatif pour la figure de droite. Au milieu, on remarque que le manque de relation linéaire donne lieu à des carrés à la fois bleus et rouges, indiquant que les scores associés aux calculs <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span> de la covariance s’annulent et diminuent ainsi la valeur finale de la covariance.</p>
 <p><img src="Analyser-des-données-avec-R_files/figure-html/graph cov-1.png" width="960" style="display: block; margin: auto;" /></p>
 <p>Dans R, le coefficient de corrélation de Pearson peut être obtenu avec la fonction <code>cor()</code>. Dans l’exemple ci-dessous qui reprend les variables du jeu de données <code>mtcars</code> utilisées plus haut, on observe un coefficient négatif, relativement proche de -1, suggérant une relation relativement linéaire et négative entre les variables étudiées.</p>
 <div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb156-1" title="1"><span class="kw">cor</span>(<span class="dt">x =</span> mtcars<span class="op">$</span>hp, <span class="dt">y =</span> mtcars<span class="op">$</span>mpg, <span class="dt">method =</span> <span class="st">&quot;pearson&quot;</span>)</a></code></pre></div>
@@ -351,85 +360,198 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </tbody>
 </table>
-<p><em>Calculer le coefficient de détermination (</em><span class="math inline">\(R^2\)</span><em>) et l’erreur typique d’estimation (</em><span class="math inline">\(SEE\)</span><em>) associés à un modèle linéaire</em></p>
-<p>Au-delà de la simple valeur du coefficient de corrélation de Pearson, il est possible d’investiguer l’existence d’une relation linéaire entre deux variables en modélisant de manière linéaire cette relation à l’aide d’une équation de type <span class="math inline">\(Y = aX + b\)</span>, et en calculant certaines statistiques associées qui rendent compte du niveau de correspondance entre le modèle linéaire et les données étudiées. Ces statistiques sont le coefficient de détermination, noté <span class="math inline">\(R^2\)</span>, et l’erreur typique d’estimation, dont on gardera l’acronyme anglais <span class="math inline">\(SEE\)</span> (pour <em>Standard Error of Estimate</em>).</p>
-<p>Le coefficient <span class="math inline">\(R^2\)</span> représente la part de variance de la variable <span class="math inline">\(Y\)</span> expliquée par le modèle linéaire concerné. La formule de ce coefficient peut être présentée comme ceci :</p>
-<p><span class="math display">\[R^2 = 1 - {\frac {Var(\hat{Y} - Y) } {Var(Y)}} = 1 - {\frac {Var(RES)} {Var(Y)}}, \]</span>
-où <span class="math inline">\(\hat{Y}\)</span> désigne les prédictions faites à partir du modèle, et <span class="math inline">\(Y\)</span> désigne les valeurs réelles que l’on a cherché à prédire à partir du modèle. Le terme <span class="math inline">\(\hat{Y} - Y\)</span> (ou <span class="math inline">\(RES\)</span>) doit se concevoir comme une variable contenant toutes les différences <span class="math inline">\(\hat{Y}{i} - Y{i}\)</span> qu’on appelle des <strong>résidus</strong>. Ainsi, le terme <span class="math inline">\({Var(\hat{Y} - Y) }\)</span> désigne la variance des résidus (ou encore la variance des erreurs). Au final, le ratio <span class="math inline">\({\frac {Var(\hat{Y} - Y) } {Var(Y)}}\)</span> traduit la part de variance non expliquée (non détectée) par le modèle, et le <span class="math inline">\(R^2\)</span> se calcule en faisant 1 moins ce ratio. (A noter qu’on peut trouver d’autres manières de présenter ce coefficient <span class="math inline">\(R^2\)</span>, avec des formules initiales différentes, mais mathématiquement, ces différentes manières d’aborder les choses restent équivalentes).</p>
-<p>La figure ci-dessous vise à représenter la notion de <strong>résidu</strong> et ce qu’il représente dans le calcul du <span class="math inline">\(R^2\)</span>. Sur cette figure, les points représentent les valeurs <span class="math inline">\(Y{i}\)</span> en fonction des valeurs <span class="math inline">\(X{i}\)</span>, la ligne bleue représente le modèle de régression linéaire (i.e., toutes les valeurs <span class="math inline">\(\hat{Y}{i}\)</span> qui seraient prédites à partir du modèle et des valeurs <span class="math inline">\(X{i}\)</span>), et les segments rouges représentent les résidus (i.e., la différence qu’on a à chaque fois entre <span class="math inline">\(\hat{Y}{i}\)</span> et <span class="math inline">\(Y{i}\)</span>). Pour un modèle donné, plus ces segments rouges seront nombreux et grands, plus cela signifiera que les erreurs de prédiction du modèle sont nombreuses et grandes, que la part de variance non expliquée par le modèle est grande, et que la valeur du <span class="math inline">\(R^2\)</span> pour ce modèle est éloignée de 1. Ainsi, le coeffient <span class="math inline">\(R^2\)</span> peut aller de la valeur 0 (signifiant que le modèle n’explique aucune variation de <span class="math inline">\(Y\)</span>), à la valeur de 1 (signifiant que le modèle explique toute les variations de <span class="math inline">\(Y\)</span>). Plus la valeur de <span class="math inline">\(R^2\)</span> d’un modèle linéaire se rapprochera de 1, plus cela suggérera que la relation étudiée est effectivement linéaire.</p>
-<p><img src="Analyser-des-données-avec-R_files/figure-html/graph see-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>En réalité, le coefficient de corrélation de Pearson (<span class="math inline">\(r\)</span>) et le coefficient de détermination (<span class="math inline">\(R^2\)</span>) associé à un modèle linéaire sont mathématiquement liés, <span class="math inline">\(r\)</span> étant la racine carrée du <span class="math inline">\(R^2\)</span>.</p>
-<p>Pour déterminer le <span class="math inline">\(R^2\)</span> d’un modèle linéaire avec le logiciel R, il faut d’abord créer ce modèle à l’aide de la fonction <code>lm()</code>. L’usage simple de cette fonction, tel que montré ci-dessous, permet de prendre connaissance des coefficients du modèle. Dans les résultats issus de l’exemple ci-dessous, l’ordonnée à l’origine est située sous <code>(Intercept)</code>, et le coefficient directeur est situé sous le nom de la variable <span class="math inline">\(X\)</span> du modèle, ici <code>hp</code>. Dans l’exemple ci-dessous, qui utilise à nouveau le jeu de données <code>mtcars</code>, le modèle nous indique que lorsque <code>hp</code> vaudra 0, l’estimation de <code>mpg</code> vaudra 30.09886, et que pour chaque augmentation d’unité de <code>hp</code>, on aura une diminution de -0.06823 unité de <code>mpg</code>.</p>
-<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb160-1" title="1"><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp, <span class="dt">data =</span> mtcars)</a></code></pre></div>
-<pre><code>## 
-## Call:
-## lm(formula = mpg ~ hp, data = mtcars)
-## 
-## Coefficients:
-## (Intercept)           hp  
-##    30.09886     -0.06823</code></pre>
-<p>Pour plus de confort dans l’écriture de la suite du code, il peut être intéressant d’associer le modèle crée avec la fonction <code>lm()</code> à un nom. Pour accéder aux différentes informations statistiques résumant le modèle, on peut alors utiliser la fonction <code>summary()</code> avec le nom choisi pour le modèle.</p>
-<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb162-1" title="1">model &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp, <span class="dt">data =</span> mtcars)</a>
-<a class="sourceLine" id="cb162-2" title="2"><span class="kw">summary</span>(model)</a></code></pre></div>
-<pre><code>## 
-## Call:
-## lm(formula = mpg ~ hp, data = mtcars)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -5.7121 -2.1122 -0.8854  1.5819  8.2360 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) 30.09886    1.63392  18.421  &lt; 2e-16 ***
-## hp          -0.06823    0.01012  -6.742 1.79e-07 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 3.863 on 30 degrees of freedom
-## Multiple R-squared:  0.6024, Adjusted R-squared:  0.5892 
-## F-statistic: 45.46 on 1 and 30 DF,  p-value: 1.788e-07</code></pre>
-<p>Dans la liste d’informations données suite à l’activation du code, on retrouve notamment les coefficients déjà rencontrés plus haut, et on peut trouver le coefficient <span class="math inline">\(R^2\)</span> en face de l’écriture <em>Multiple R-squared</em>. On peut aussi y voir l’erreur typique d’estimation en face de l’écriture <em>Residual standard error</em>.</p>
-<p>L’erreur typique d’estimation, ou <span class="math inline">\(SEE\)</span>, représente l’écart-type des erreurs d’estimation associées à l’utilisation d’un modèle. Son unité est donc celle de la variable <span class="math inline">\(Y\)</span> que l’on a cherché à prédire avec le modèle. La formule suivante permet d’expliquer son calcul à partir de données prélevées sur un échantillon :</p>
-<p><span class="math display">\[ SEE = \sqrt{\frac{\sum_{i=1}^{N}(RES{i} - \overline{RES})^2}{N-2}}, \]</span></p>
-<p>où <span class="math inline">\(RES{i}\)</span> désigne le résidu pour une observation donnée, <span class="math inline">\(\overline{RES}\)</span> la moyenne des résidus, et <span class="math inline">\(N\)</span> le nombre d’observations.</p>
-<p>Il est possible d’extraire l’ordonnée à l’origine et la pente (i.e., le coefficient directeur) du modèle de régression, le coefficient <span class="math inline">\(R^2\)</span>, et la statistique <span class="math inline">\(SEE\)</span>, à partir de la liste d’informations obtenue avec la fonction <code>summary()</code>. Le code ci-dessous montre comment faire cela avec l’exemple concernant le jeu de données <code>mtcars</code> :</p>
-<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb164-1" title="1"><span class="co"># Extraction de l&#39;ordonnée à l&#39;origine</span></a>
-<a class="sourceLine" id="cb164-2" title="2">intercept &lt;-<span class="st"> </span><span class="kw">summary</span>(model)<span class="op">$</span>coefficients[<span class="dv">1</span>]</a>
-<a class="sourceLine" id="cb164-3" title="3">intercept</a></code></pre></div>
-<pre><code>## [1] 30.09886</code></pre>
-<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb166-1" title="1"><span class="co"># Extraction du coefficient directeur</span></a>
-<a class="sourceLine" id="cb166-2" title="2">slope &lt;-<span class="st">  </span><span class="kw">summary</span>(model)<span class="op">$</span>coefficients[<span class="dv">2</span>]</a>
-<a class="sourceLine" id="cb166-3" title="3">slope</a></code></pre></div>
-<pre><code>## [1] -0.06822828</code></pre>
-<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb168-1" title="1"><span class="co"># Extraction du coefficient R2</span></a>
-<a class="sourceLine" id="cb168-2" title="2">R2 &lt;-<span class="st"> </span><span class="kw">summary</span>(model)<span class="op">$</span>r.squared</a>
-<a class="sourceLine" id="cb168-3" title="3">R2</a></code></pre></div>
-<pre><code>## [1] 0.6024373</code></pre>
-<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb170-1" title="1"><span class="co"># Extraction de la statistique SEE</span></a>
-<a class="sourceLine" id="cb170-2" title="2">SEE &lt;-<span class="st"> </span><span class="kw">summary</span>(model)<span class="op">$</span>sigma</a>
-<a class="sourceLine" id="cb170-3" title="3">SEE</a></code></pre></div>
-<pre><code>## [1] 3.862962</code></pre>
-<p>Une fois extraites et associées à des noms, ces informations peuvent ensuite être réutilisées avec le package <code>ggplot2</code> et la fonction <code>annotate()</code> pour compléter le graphique initial avec des informations statistiques.</p>
-<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb172-1" title="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> mtcars, <span class="kw">aes</span>(<span class="dt">x =</span> hp, <span class="dt">y =</span> mpg)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb172-2" title="2"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb172-3" title="3"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb172-4" title="4"><span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">label =</span> <span class="kw">bquote</span>(<span class="kw">paste</span>(<span class="st">&quot;Y = &quot;</span>, .(<span class="kw">round</span>(slope, <span class="dt">digits =</span> <span class="dv">3</span>)), <span class="st">&quot;X + &quot;</span>, .(<span class="kw">round</span>(intercept, <span class="dt">digits =</span> <span class="dv">3</span>)))), <span class="dt">x =</span> <span class="dv">50</span>, <span class="dt">y =</span> <span class="dv">35</span>, <span class="dt">hjust =</span> <span class="dv">0</span>, <span class="dt">size =</span> <span class="dv">5</span>)</a></code></pre></div>
-<p><img src="Analyser-des-données-avec-R_files/figure-html/graph lin and stats-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p><em>La leçon du quartet d’Anscombe</em></p>
-<p>Dans cette partie dédiée à l’étude de la relation linéaire, il a été indiqué qu’il convient de réaliser au préalable un graphique montrant les données avant de s’adonner ensuite aux calculs visant la quantification d’une éventuelle relation linéaire. Cette première étape graphique est importante car les valeurs numériques qui peuvent être obtenues pour la corrélation de Pearson, le coefficient <span class="math inline">\(R^2\)</span>, et la statistique <span class="math inline">\(SEE\)</span>, ne peuvent à elles seules garantir l’aspect linéaire d’une relation. Un exemple qui permet d’illustrer cela est le quartet d’Anscombe <span class="citation">(<a href="#ref-Anscombe1973" role="doc-biblioref">1973</a>)</span>. Il s’agit de quatre jeux de données dont les représentations graphiques sont montrées ci-dessous.</p>
-<p><img src="Analyser-des-données-avec-R_files/figure-html/anscombe quartet graph-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Bien que d’aspects très différents, ces jeux de données montrent pourtant des variables en abscisses qui ont toutes la même moyenne (<span class="math inline">\(\overline{X} = 9\)</span>) et le même écart-type (<span class="math inline">\(SD = 3.32\)</span>), des variables en ordonnées qui ont elles aussi la même moyenne (<span class="math inline">\(\overline{Y} = 7.5\)</span>) et le même écart-type = (<span class="math inline">\(SD = 2.03\)</span>), et des lignes de régression linéaire qui ont toutes la même équation (<span class="math inline">\(Y = 0.5X + 3\)</span>), le même coefficient de détermination (<span class="math inline">\(R^2 = 0.67\)</span>) et la même erreur typique d’estimation (<span class="math inline">\(SEE = 1.24\)</span>). Pour autant, on observe que seul le premier jeu de données (cf. graphique A ci-dessus) est associé à un modèle linéaire vraiment pertinent. En effet, le graphique B montre bien que la relation n’est pas linéaire mais plutôt quadratique, le graphique C montre que la régression est anormalement influencée par une valeur extrême, et le graphique D montre qu’il n’y a en réalité pas de relation linéaire entre les deux variables et que celle-ci ne semble exister numériquement que grâce à une seule valeur très extrême. Autant le graphique C invite à conserver une analyse de régression linéaire avec éventuellement certains ajustements pour la suite, autant les graphique B et D indiquent que la corrélation de Pearson et un modèle linéaire ne sont pas pertinents pour caractériser la relation entre les deux variables étudiées.</p>
+<p>Pour visualiser le lien que l’on peut faire entre la forme du nuage de points et la valeur du coefficient de corrélation de Pearson que l’on peut obtenir, la page web proposée par Kristoffer Magnusson (<a href="https://rpsychologist.com/correlation" class="uri">https://rpsychologist.com/correlation</a>) peut être particulièrement intéressante. Cette page web donne la possibilité de faire varier manuellement la valeur du coefficient de corrélation de Pearson pour ensuite voir un nuage de points type correspondant à cette valeur. Faites un essai !</p>
+<p>A noter que la valeur du coefficient de corrélation de Pearson est très dépendante de la manière dont sont distribuées les variables, avec une influence particulière de la variabilité des données <span class="citation">(Halperin, <a href="#ref-Halperin1986" role="doc-biblioref">1986</a>)</span>. L’influence de la variabilité est illustrée sur la figure ci-dessous. A gauche, on observe un nuage de points représentant une population complète, avec en conséquence une variablité le long des axe x et y relativement importante. La valeur du coefficient de corrélation de Pearson est ici particulièrement élevée. A droite, on observe exactement les mêmes valeurs, mais sur un intervalle dont l’étendue a été manuellement restreinte, diminuant ainsi la variabilité. On observe alors une diminution de la valeur du coefficient de corrélation de Pearson, alors qu’il s’agit à l’origine du même jeu de données que celui de gauche . Cet exemple doit faire prendre conscience qu’il faut faire attention lorsqu’on cherche à comparer des coefficient de corrélation de Pearson obtenus avec différents échantillons, car si ces échantillons n’ont pas les mêmes niveaux de variabilité, les valeurs des coefficients de corrélation ne seront pas vraiment comparables, en sachant que c’est l’échantillon qui présente la plus grande variabilité qui aura mathématiquement plus de chances de présenter une valeur de coefficient de corrélation plus élevée.</p>
+<p><img src="Analyser-des-données-avec-R_files/figure-html/spurious correlations-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Un exemple extrême de l’influence de la variabilité des données sur la valeur du coefficient de corrélation de Pearson est montré sur la figure ci-dessous. Les deux graphiques montrent exactement les mêmes données, à ceci près que sur le graphique de droite, on a remplacé en ordonnées une valeur du graphique de gauche pour lui donner la valeur de 10. L’influence de cette action sur la valeur du coefficient de corrélation est particulièrement nette, alors qu’une seule valeur a été modifée. Ceci montre qu’il faut faire attention aux valeurs extrêmes qui pourraient grandement influencer la valeur de corrélation obtenue, notamment en présence d’échantillons de taille relativement faible. Dans le cas où la valeur du coefficient de corrélation de Pearson serait très influencée par une valeur, il pourrait être une bonne pratique de calculer la valeur du coefficient de corrélation avec et sans cette valeur afin de pouvoir quantifier son infulence sur la relation étudiée <span class="citation">(Halperin, <a href="#ref-Halperin1986" role="doc-biblioref">1986</a>)</span>. Une alternative pourrait être aussi d’étudier la relation à l’aide d’autres types de coefficients que celui de Pearson, tels que celui de Spearman, présenté plus bas. Toutes ces informations doivent en tous les cas faire prendre conscience qu’il n’est pas toujours pertinent de calculer le coefficient de corrélation de Pearson. En ce sens, lorsqu’on cherche à inférer la valeur du coefficient de corrélation de Pearson dans la population étudiée, et cela avec un degré d’incertitude bien défini, il convient de vérifier certains prérequis, lesquels seront abordés plus tard dans ce livre.</p>
+<p><img src="Analyser-des-données-avec-R_files/figure-html/spurious correlation bis-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Lorsque la relation étudiée ne semble pas linéaire mais s’apparente assez clairement à d’autres fonctions mathématiques, telles que des relations logarithmiques ou polynomiales, il est possible de transformer une des variables, voire les deux, pour rendre la relation linéaire et à nouveau étudiable à l’aide du coefficient de corrélation de Pearson <span class="citation">(Halperin, <a href="#ref-Halperin1986" role="doc-biblioref">1986</a>)</span>. Toutefois, il est aussi possible de créer des modèles de régression non-linéaire afin de regarder si ces modèles correspondent bien aux données. La détermination et la validation d’un modèle non-linéaire qui correspondrait bien aux données confirmerait alors que la relation étudiée a une forme particulière et potentiellement prédictible. Les procédures pour explorer différents modèles de régression (linéaires et non-linéaires) sont abordées au chapitre suivant. Enfin, une dernière alternative possible pour étudier la relation entre deux variables quantitatives dont les distributions ne permettraient pas d’utiliser correctement le coefficient de corrélation de Pearson serait l’utilisation de coefficients de corrélation basés sur les rangs, tels que le coefficient de corrélation de Spearman.</p>
 <p><em>Le coefficient de corrélation de Spearman</em></p>
-<p><em>Le coefficient de corrélation de Kendall</em></p>
+<p>Lorsque le coefficient de corrélation de Pearson ne permet pas de caractériser fiablement le degré de relation linéaire <strong>entre les valeurs</strong> de deux variables (par exemple en présence de valeurs aberrantes au sein d’un échantillon de petite taille), une alternative peut être d’étudier le degré de relation linéaire <strong>entre les rangs</strong> de ces deux variables. Le rang, c’est le classement (ou la position) d’une observation donnée en fonction de sa valeur. Dans une variable, les observations avec les valeurs les plus faibles seront associées aux rangs les plus bas alors que les observations avec les valeurs les plus élevées seront associées aux rangs les plus élevés. Une illustration de la notion de rang est proposée ci-dessous pour la variable <code>hp</code> du jeu de données <code>mtcars</code>. Dans le tableau ci-dessous, les lignes ont été ordonnées sur la base des rangs de la variable <code>hp</code>. On pourra remarquer que dans le tableau, nous avons ce qu’on appelle des ex-aequos, c’est-à-dire que plusieurs observations peuvent présenter les mêmes valeurs, et donc avoir le même rang.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="right">hp</th>
+<th align="right">hp_rank</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">52</td>
+<td align="right">1.0</td>
+</tr>
+<tr class="even">
+<td align="right">62</td>
+<td align="right">2.0</td>
+</tr>
+<tr class="odd">
+<td align="right">65</td>
+<td align="right">3.0</td>
+</tr>
+<tr class="even">
+<td align="right">66</td>
+<td align="right">4.5</td>
+</tr>
+<tr class="odd">
+<td align="right">66</td>
+<td align="right">4.5</td>
+</tr>
+<tr class="even">
+<td align="right">91</td>
+<td align="right">6.0</td>
+</tr>
+<tr class="odd">
+<td align="right">93</td>
+<td align="right">7.0</td>
+</tr>
+<tr class="even">
+<td align="right">95</td>
+<td align="right">8.0</td>
+</tr>
+<tr class="odd">
+<td align="right">97</td>
+<td align="right">9.0</td>
+</tr>
+<tr class="even">
+<td align="right">105</td>
+<td align="right">10.0</td>
+</tr>
+<tr class="odd">
+<td align="right">109</td>
+<td align="right">11.0</td>
+</tr>
+<tr class="even">
+<td align="right">110</td>
+<td align="right">13.0</td>
+</tr>
+<tr class="odd">
+<td align="right">110</td>
+<td align="right">13.0</td>
+</tr>
+<tr class="even">
+<td align="right">110</td>
+<td align="right">13.0</td>
+</tr>
+<tr class="odd">
+<td align="right">113</td>
+<td align="right">15.0</td>
+</tr>
+<tr class="even">
+<td align="right">123</td>
+<td align="right">16.5</td>
+</tr>
+<tr class="odd">
+<td align="right">123</td>
+<td align="right">16.5</td>
+</tr>
+<tr class="even">
+<td align="right">150</td>
+<td align="right">18.5</td>
+</tr>
+<tr class="odd">
+<td align="right">150</td>
+<td align="right">18.5</td>
+</tr>
+<tr class="even">
+<td align="right">175</td>
+<td align="right">21.0</td>
+</tr>
+<tr class="odd">
+<td align="right">175</td>
+<td align="right">21.0</td>
+</tr>
+<tr class="even">
+<td align="right">175</td>
+<td align="right">21.0</td>
+</tr>
+<tr class="odd">
+<td align="right">180</td>
+<td align="right">24.0</td>
+</tr>
+<tr class="even">
+<td align="right">180</td>
+<td align="right">24.0</td>
+</tr>
+<tr class="odd">
+<td align="right">180</td>
+<td align="right">24.0</td>
+</tr>
+<tr class="even">
+<td align="right">205</td>
+<td align="right">26.0</td>
+</tr>
+<tr class="odd">
+<td align="right">215</td>
+<td align="right">27.0</td>
+</tr>
+<tr class="even">
+<td align="right">230</td>
+<td align="right">28.0</td>
+</tr>
+<tr class="odd">
+<td align="right">245</td>
+<td align="right">29.5</td>
+</tr>
+<tr class="even">
+<td align="right">245</td>
+<td align="right">29.5</td>
+</tr>
+<tr class="odd">
+<td align="right">264</td>
+<td align="right">31.0</td>
+</tr>
+<tr class="even">
+<td align="right">335</td>
+<td align="right">32.0</td>
+</tr>
+</tbody>
+</table>
+<p>Le fait d’étudier l’existence d’une relation linéaire entre les rangs et non plus entre les valeurs de deux variables permet de s’affranchir de l’influence possible de valeurs très extrêmes, dans l’une et/ou l’autre variable, sur le calcul final de la corrélation. Pour déterminer alors la valeur de la corrélation, une manière de procéder est d’appliquer la méthode de calcul du coefficient de corrélation de Pearson en utilisant non plus les valeurs des variables, mais les rangs correspondants. Cette methode, c’est celle du calcul du coefficient de corrélation de Spearman (<em>rho</em>). Si l’on suit <em>stricto sensu</em> cette définition, nous pourrions alors utiliser le code suivant pour avoir le coefficient de corrélation de Spearman :</p>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb160-1" title="1"><span class="kw">cor</span>(<span class="dt">x =</span> <span class="kw">rank</span>(mtcars<span class="op">$</span>hp), <span class="dt">y =</span> <span class="kw">rank</span>(mtcars<span class="op">$</span>mpg), <span class="dt">method =</span> <span class="st">&quot;pearson&quot;</span>)</a></code></pre></div>
+<pre><code>## [1] -0.8946646</code></pre>
+<p>Toutefois, il existe une manière plus directe d’écrire les choses avec la fonction <code>cor</code>, qui contient un argument spécifiquement dédié au calcul du <em>rho</em> de Spearman :</p>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb162-1" title="1"><span class="kw">cor</span>(<span class="dt">x =</span> mtcars<span class="op">$</span>hp, <span class="dt">y =</span> mtcars<span class="op">$</span>mpg, <span class="dt">method =</span> <span class="st">&quot;spearman&quot;</span>)</a></code></pre></div>
+<pre><code>## [1] -0.8946646</code></pre>
+<p>La fonction <code>cor.test</code> permet aussi de calculer le coefficient de corrélation de Spearman en fournissant d’autres informations potentiellement intéressantes pour donner une idée de la significativité de l’estimation de <em>rho</em> pour la population étudiée.</p>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb164-1" title="1"><span class="kw">cor.test</span>(<span class="dt">x =</span> mtcars<span class="op">$</span>hp, <span class="dt">y =</span> mtcars<span class="op">$</span>mpg, <span class="dt">method =</span> <span class="st">&quot;spearman&quot;</span>)</a></code></pre></div>
+<pre><code>## 
+##  Spearman&#39;s rank correlation rho
+## 
+## data:  mtcars$hp and mtcars$mpg
+## S = 10337, p-value = 5.086e-12
+## alternative hypothesis: true rho is not equal to 0
+## sample estimates:
+##        rho 
+## -0.8946646</code></pre>
+<p>Si l’on veut produire une représentation graphique qui illustre la valeur de <em>rho</em> obtenue, il pourrait être davantage pertinent de non plus montrer un nuage de points à partir des valeurs des variables mises en lien, mais un nuage de points à partir de leurs rangs respectifs.</p>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb166-1" title="1">mtcars <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb166-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">hp_rank =</span> <span class="kw">rank</span>(hp), <span class="dt">mpg_rank =</span> <span class="kw">rank</span>(mpg)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb166-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> hp_rank, <span class="dt">y =</span> mpg_rank)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb166-4" title="4"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb166-5" title="5"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<p><img src="Analyser-des-données-avec-R_files/figure-html/graph cor spearman-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>En matière d’interprétation, des valeurs de <em>rho</em> positives indiqueront que les deux variables mises en lien tendent à augmenter simultanément, on parlera alors de relation monotone positive. Dans le cas inverse, des valeurs négatives indiqueront que les deux variables mises en lien tendent à diminuer simultanément, on parlera alors de relation monotone négative. A noter cependant que de par son calcul, la valeur de <em>rho</em> ne permet pas de renseigner sur la forme de relation qu’il pourrait y avoir entre les valeurs des deux variables (e.g., linéaire ou curvilinéaire par exemple). Ceci est illustré sur la figure ci-dessous. La figure de gauche montre la relation entre les valeurs des variables <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span>, qui est caractérisée par une coefficient de corrélation de Spearman (<em>rho</em>) de 1, indiquant donc que la relation est parfaitement monotone positive, sans préjuger de la forme particulière que pourrait présenter la relation. Pour mieux comprendre pourquoi cette valeur de <em>rho</em> est de 1, la figure de droite montre la relation entre les rangs de ces deux variables <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span>. On voit en effet que la relation entre les rangs est effectivement parfaitement linéaire.</p>
+<p><img src="Analyser-des-données-avec-R_files/figure-html/ranks vs values spearman-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="relation-entre-deux-variables-qualitatives" class="section level2">
+<h2><span class="header-section-number">4.2</span> Relation entre deux variables qualitatives</h2>
+<div id="le-khi2-de-pearson" class="section level3">
+<h3><span class="header-section-number">4.2.1</span> Le khi2 de Pearson</h3>
+</div>
+</div>
+<div id="relation-entre-une-variable-quantitative-et-une-variable-qualitative" class="section level2">
+<h2><span class="header-section-number">4.3</span> Relation entre une variable quantitative et une variable qualitative</h2>
+<div id="le-rapport-de-corrélation" class="section level3">
+<h3><span class="header-section-number">4.3.1</span> Le rapport de corrélation</h3>
 
 </div>
 </div>
 </div>
 <h3>Références</h3>
 <div id="refs" class="references">
-<div id="ref-Anscombe1973">
-<p>Anscombe, F. J. (1973). Graphs in Statistical Analysis. <em>The American Statistician</em>, <em>27</em>(1), 17–21.</p>
+<div id="ref-Halperin1986">
+<p>Halperin, S. (1986). Spurious correlations–causes and cures. <em>Psychoneuroendocrinology</em>, <em>11</em>(1), 3–13. <a href="https://doi.org/10.1016/0306-4530(86)90028-4">https://doi.org/10.1016/0306-4530(86)90028-4</a></p>
 </div>
 <div id="ref-Hopkins2009">
 <p>Hopkins, W. G., Marshall, S. W., Batterham, A. M., &amp; Hanin, J. (2009). Progressive statistics for studies in sports medicine and exercise science. <em>Med Sci Sports Exerc</em>, <em>41</em>(1), 3–13. <a href="https://doi.org/10.1249/MSS.0b013e31818cb278">https://doi.org/10.1249/MSS.0b013e31818cb278</a></p>
@@ -441,7 +563,7 @@ où <span class="math inline">\(\hat{Y}\)</span> désigne les prédictions faite
         </div>
       </div>
 <a href="analyses-descriptives-univariées.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="références.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="régression-linéaire-simple.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

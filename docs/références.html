@@ -24,14 +24,14 @@
 <meta name="author" content="Pierre-Yves de Müllenheim" />
 
 
-<meta name="date" content="2020-10-29" />
+<meta name="date" content="2020-11-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="analyses-descriptives-bivariées.html"/>
+<link rel="prev" href="régression-linéaire-simple.html"/>
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -181,9 +181,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="4" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html"><i class="fa fa-check"></i><b>4</b> Analyses descriptives bivariées</a><ul>
 <li class="chapter" data-level="4.1" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#relation-entre-deux-variables-quantitatives"><i class="fa fa-check"></i><b>4.1</b> Relation entre deux variables quantitatives</a><ul>
-<li class="chapter" data-level="4.1.1" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#visualiser-graphiquement-les-données"><i class="fa fa-check"></i><b>4.1.1</b> Visualiser graphiquement les données</a></li>
-<li class="chapter" data-level="4.1.2" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#etudier-lexistence-dune-relation-linéaire"><i class="fa fa-check"></i><b>4.1.2</b> Etudier l’existence d’une relation linéaire</a></li>
+<li class="chapter" data-level="4.1.1" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#etudier-graphiquement-la-relation"><i class="fa fa-check"></i><b>4.1.1</b> Etudier graphiquement la relation</a></li>
+<li class="chapter" data-level="4.1.2" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#etudier-numériquement-la-relation"><i class="fa fa-check"></i><b>4.1.2</b> Etudier numériquement la relation</a></li>
 </ul></li>
+<li class="chapter" data-level="4.2" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#relation-entre-deux-variables-qualitatives"><i class="fa fa-check"></i><b>4.2</b> Relation entre deux variables qualitatives</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#le-khi2-de-pearson"><i class="fa fa-check"></i><b>4.2.1</b> Le khi2 de Pearson</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#relation-entre-une-variable-quantitative-et-une-variable-qualitative"><i class="fa fa-check"></i><b>4.3</b> Relation entre une variable quantitative et une variable qualitative</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#le-rapport-de-corrélation"><i class="fa fa-check"></i><b>4.3.1</b> Le rapport de corrélation</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="régression-linéaire-simple.html"><a href="régression-linéaire-simple.html"><i class="fa fa-check"></i><b>5</b> Régression linéaire simple</a><ul>
+<li class="chapter" data-level="5.1" data-path="régression-linéaire-simple.html"><a href="régression-linéaire-simple.html#calculer-le-coefficient-de-détermination"><i class="fa fa-check"></i><b>5.1</b> Calculer le coefficient de détermination</a></li>
+<li class="chapter" data-level="5.2" data-path="régression-linéaire-simple.html"><a href="régression-linéaire-simple.html#lerreur-typique-destimation"><i class="fa fa-check"></i><b>5.2</b> L’erreur typique d’estimation</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="références.html"><a href="références.html"><i class="fa fa-check"></i>Références</a></li>
 <li class="divider"></li>
@@ -226,6 +236,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Grenier, E. (2007). Quelle est la « bonne » formule de l’écart-type ? <em>Revue MODULAD</em>, <em>37</em>, 102–105.</p>
 </div>
 <div>
+<p>Halperin, S. (1986). Spurious correlations–causes and cures. <em>Psychoneuroendocrinology</em>, <em>11</em>(1), 3–13. <a href="https://doi.org/10.1016/0306-4530(86)90028-4">https://doi.org/10.1016/0306-4530(86)90028-4</a></p>
+</div>
+<div>
 <p>Hopkins, W. G., Marshall, S. W., Batterham, A. M., &amp; Hanin, J. (2009). Progressive statistics for studies in sports medicine and exercise science. <em>Med Sci Sports Exerc</em>, <em>41</em>(1), 3–13. <a href="https://doi.org/10.1249/MSS.0b013e31818cb278">https://doi.org/10.1249/MSS.0b013e31818cb278</a></p>
 </div>
 <div>
@@ -256,7 +269,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="analyses-descriptives-bivariées.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="régression-linéaire-simple.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
     </div>
   </div>
