@@ -31,6 +31,8 @@ g_lin <-
   geom_point() +
   theme(axis.text = element_blank(),
         axis.ticks = element_blank()) +
+  xlab("X") +
+  ylab("Y") +
   ggtitle("Linéaire")
 
 g_log <- 
@@ -39,13 +41,17 @@ g_log <-
   scale_x_continuous(limits = c(-1, 15)) +
   theme(axis.text = element_blank(),
         axis.ticks = element_blank()) +
+  xlab("X") +
+  ylab("Y") +
   ggtitle("Logarithmique")
 
 g_quad <- 
   ggplot(data = data_quad, aes(x = x, y = y)) + 
   geom_point() +
   theme(axis.text = element_blank(),
-        axis.ticks = element_blank())  +
+        axis.ticks = element_blank()) +
+  xlab("X") +
+  ylab("Y") +
   ggtitle("Quadratique")
 
 (g_lin | g_log | g_quad)
@@ -189,7 +195,7 @@ knitr::kable(
 
 Pour visualiser le lien que l'on peut faire entre la forme du nuage de points et la valeur du coefficient de corrélation de Pearson que l'on peut obtenir, la page web proposée par Kristoffer Magnusson (https://rpsychologist.com/correlation) peut être particulièrement intéressante. Cette page web donne la possibilité de faire varier manuellement la valeur du coefficient de corrélation de Pearson pour ensuite voir un nuage de points type correspondant à cette valeur. Faites un essai !
 
-A noter que la valeur du coefficient de corrélation de Pearson est très dépendante de la manière dont sont distribuées les variables, avec une influence particulière de la variabilité des données [@Halperin1986]. L'influence de la variabilité est illustrée sur la figure ci-dessous. A gauche, on observe un nuage de points représentant une population complète, avec en conséquence une variablité le long des axe x et y relativement importante. La valeur du coefficient de corrélation de Pearson est ici particulièrement élevée. A droite, on observe exactement les mêmes valeurs, mais sur un intervalle dont l'étendue a été manuellement restreinte, diminuant ainsi la variabilité. On observe alors une diminution de la valeur du coefficient de corrélation de Pearson, alors qu'il s'agit à l'origine du même jeu de données que celui de gauche . Cet exemple doit faire prendre conscience qu'il faut faire attention lorsqu'on cherche à comparer des coefficient de corrélation de Pearson obtenus avec différents échantillons, car si ces échantillons n'ont pas les mêmes niveaux de variabilité, les valeurs des coefficients de corrélation ne seront pas vraiment comparables, en sachant que c'est l'échantillon qui présente la plus grande variabilité qui aura mathématiquement plus de chances de présenter une valeur de coefficient de corrélation plus élevée.
+A noter que la valeur du coefficient de corrélation de Pearson est très dépendante de la manière dont sont distribuées les variables, avec une influence particulière de la variabilité des données [@Halperin1986]. L'influence de la variabilité est illustrée sur la figure ci-dessous. A gauche, on observe un nuage de points représentant une population complète, avec en conséquence une variablité le long des axes $X$ et $X$ relativement importante. La valeur du coefficient de corrélation de Pearson est ici particulièrement élevée. A droite, on observe exactement les mêmes valeurs, mais sur un intervalle dont l'étendue a été manuellement restreinte, diminuant ainsi la variabilité. On observe alors une diminution de la valeur du coefficient de corrélation de Pearson, alors qu'il s'agit à l'origine du même jeu de données que celui de gauche. Cet exemple doit faire prendre conscience qu'il faut faire attention lorsqu'on cherche à comparer des coefficient de corrélation de Pearson obtenus avec différents échantillons présentant des caractéristiques différentes, car si ces échantillons n'ont pas les mêmes niveaux de variabilité, les valeurs des coefficients de corrélation ne seront pas vraiment comparables, en sachant que c'est l'échantillon qui présente la plus grande variabilité qui aura mathématiquement plus de chances de présenter une valeur de coefficient de corrélation plus élevée.
 
 ```{r spurious correlations, echo = FALSE, warning=FALSE, message=FALSE,  fig.align ="center"}
 g_lin <- 
@@ -198,6 +204,8 @@ g_lin <-
   geom_smooth(method = "lm") +
   scale_x_continuous(limits = c(-8, 10)) +
   scale_y_continuous(limits = c(-20, 25)) +
+  xlab("X") +
+  ylab("Y") +
   ggtitle(bquote(paste("r = ", .(round(cor(x = data_lin$x, y = data_lin$y), 2)))))
 
 g_lin_sel <- 
@@ -206,12 +214,14 @@ g_lin_sel <-
   geom_smooth(method = "lm") +
   scale_x_continuous(limits = c(-8, 10)) +
   scale_y_continuous(limits = c(-20, 25)) +
+  xlab("X") +
+  ylab("Y") +
   ggtitle(bquote(paste("r = ", .(round(cor(x = filter(data_lin, x >-1 & x < 2.5)$x, y = filter(data_lin, x >-1 & x < 2.5)$y), 2)))))
 
 g_lin | g_lin_sel
 ```
 
-Un exemple extrême de l'influence de la variabilité des données sur la valeur du coefficient de corrélation de Pearson est montré sur la figure ci-dessous. Les deux graphiques montrent exactement les mêmes données, à ceci près que sur le graphique de droite, on a remplacé en ordonnées une valeur du graphique de gauche pour lui donner la valeur de 10. L'influence de cette action sur la valeur du coefficient de corrélation est particulièrement nette, alors qu'une seule valeur a été modifée. Ceci montre qu'il faut faire attention aux valeurs extrêmes qui pourraient grandement influencer la valeur de corrélation obtenue, notamment en présence d'échantillons de taille relativement faible. Dans le cas où la valeur du coefficient de corrélation de Pearson serait très influencée par une valeur, il pourrait être une bonne pratique de calculer la valeur du coefficient de corrélation avec et sans cette valeur afin de pouvoir quantifier son infulence sur la relation étudiée [@Halperin1986]. Une alternative pourrait être aussi d'étudier la relation à l'aide d'autres types de coefficients que celui de Pearson, tels que celui de Spearman, présenté plus bas. Toutes ces informations doivent en tous les cas faire prendre conscience qu'il n'est pas toujours pertinent de calculer le coefficient de corrélation de Pearson. En ce sens, lorsqu'on cherche à inférer la valeur du coefficient de corrélation de Pearson dans la population étudiée, et cela avec un degré d'incertitude bien défini, il convient de vérifier certains prérequis, lesquels seront abordés plus tard dans ce livre. 
+Un exemple extrême de l'influence de la variabilité des données sur la valeur du coefficient de corrélation de Pearson est montré sur la figure ci-dessous. Les deux graphiques montrent exactement les mêmes données, à ceci près que sur le graphique de droite, on a remplacé en ordonnées une valeur du graphique de gauche pour lui donner la valeur de 10. L'influence de cette action sur la valeur du coefficient de corrélation est particulièrement nette, alors qu'une seule valeur a été modifée. Ceci montre qu'il faut faire attention aux valeurs extrêmes qui pourraient grandement influencer la valeur de corrélation obtenue, notamment en présence d'échantillons de taille relativement faible. Dans le cas où la valeur du coefficient de corrélation de Pearson serait très influencée par une valeur, il pourrait être une bonne pratique de calculer la valeur du coefficient de corrélation avec et sans cette valeur afin de pouvoir quantifier son influence sur la relation étudiée [@Halperin1986]. Une alternative pourrait être aussi d'étudier la relation à l'aide d'autres types de coefficients que celui de Pearson, tels que celui de Spearman, présenté plus bas. Toutes ces informations doivent en tous les cas faire prendre conscience qu'il n'est pas toujours pertinent de calculer le coefficient de corrélation de Pearson. En ce sens, lorsqu'on cherche à inférer la valeur du coefficient de corrélation de Pearson dans la population étudiée, et cela avec un degré d'incertitude bien défini, il convient de vérifier certains prérequis, lesquels seront abordés plus tard dans ce livre. 
 
 ```{r spurious correlation bis,  echo = FALSE, , fig.align ="center", message = FALSE, warning = FALSE}
 data1 <- tibble(x = c(0, 1, 2, 3, 4, 5), y = c(2, 4, 3, 2, 3, 4))
@@ -223,6 +233,8 @@ g1 <- ggplot(data = data1, aes(x = x, y = y)) +
   geom_smooth(method = "lm", se = FALSE) +
   scale_x_continuous(limits = c(-5, 10)) +
   scale_y_continuous(limits = c(-5, 15)) +
+  xlab("X") +
+  ylab("Y") +
   ggtitle(bquote(paste("r = ", .(round(cor(x = data1$x, y = data1$y), 2)))))
 
 g2 <- ggplot(data = data2, aes(x = x, y = y)) +
@@ -230,14 +242,15 @@ g2 <- ggplot(data = data2, aes(x = x, y = y)) +
   geom_smooth(method = "lm", se = FALSE) +
   scale_x_continuous(limits =c(-5, 10)) +
   scale_y_continuous(limits = c(-5, 15)) +
+  xlab("X") +
+  ylab("Y") +
  ggtitle(bquote(paste("r = ", .(round(cor(x = data2$x, y = data2$y), 2)))))
 
 g1 | g2
   
 ```
 
-Lorsque la relation étudiée ne semble pas linéaire mais s'apparente assez clairement à d'autres fonctions mathématiques, telles que des relations logarithmiques ou polynomiales, il est possible de transformer une des variables, voire les deux, pour rendre la relation linéaire et à nouveau étudiable à l'aide du coefficient de corrélation de Pearson [@Halperin1986]. Toutefois, il est aussi possible de créer des modèles de régression non-linéaire afin de regarder si ces modèles correspondent bien aux données. La détermination et la validation d'un modèle non-linéaire qui correspondrait bien aux données confirmerait alors que la relation étudiée a une forme particulière et potentiellement prédictible. Les procédures pour explorer différents modèles de régression (linéaires et non-linéaires) sont abordées au chapitre suivant. Enfin, une dernière alternative possible pour étudier la relation entre deux variables quantitatives dont les distributions ne permettraient pas d'utiliser correctement le coefficient de corrélation de Pearson serait l'utilisation de coefficients de corrélation basés sur les rangs, tels que le coefficient de corrélation de Spearman.
-
+Lorsque la relation étudiée ne semble pas linéaire mais s'apparente assez clairement à d'autres fonctions mathématiques, telles que des relations logarithmiques ou polynomiales, il est possible de transformer une des variables, voire les deux, pour rendre la relation linéaire et à nouveau étudiable à l'aide du coefficient de corrélation de Pearson [@Halperin1986]. Toutefois, il est aussi possible de créer des modèles de régression non linéaires afin de regarder si ces modèles correspondent bien aux données. La détermination et la validation d'un modèle non linéaire qui correspondrait bien aux données confirmerait alors que la relation étudiée a une forme particulière et potentiellement prédictible. Les procédures pour explorer différents modèles de régression (linéaires et non linéaires) sont abordées au chapitre suivant. Enfin, une dernière alternative possible, pour étudier la relation entre deux variables quantitatives dont les distributions ne permettraient pas d'utiliser correctement le coefficient de corrélation de Pearson, serait l'utilisation de coefficients de corrélation basés sur les rangs, tels que le coefficient de corrélation de Spearman.
 
 *Le coefficient de corrélation de Spearman*
 
@@ -280,7 +293,7 @@ mtcars %>%
   geom_smooth(method = "lm", se = FALSE)
 ```
 
-En matière d'interprétation, des valeurs de *rho* positives indiqueront que les deux variables mises en lien tendent à augmenter simultanément, on parlera alors de relation monotone positive. Dans le cas inverse, des valeurs négatives indiqueront que les deux variables mises en lien tendent à diminuer simultanément, on parlera alors de relation monotone négative. A noter cependant que de par son calcul, la valeur de *rho* ne permet pas de renseigner sur la forme de relation qu'il pourrait y avoir entre les valeurs des deux variables (e.g., linéaire ou curvilinéaire par exemple). Ceci est illustré sur la figure ci-dessous. La figure de gauche montre la relation entre les valeurs des variables $X$ et $Y$, qui est caractérisée par une coefficient de corrélation de Spearman (*rho*) de 1, indiquant donc que la relation est parfaitement monotone positive, sans préjuger de la forme particulière que pourrait présenter la relation. Pour mieux comprendre pourquoi cette valeur de *rho* est de 1, la figure de droite montre la relation entre les rangs de ces deux variables $X$ et $Y$. On voit en effet que la relation entre les rangs est effectivement parfaitement linéaire.
+En matière d'interprétation, des valeurs de *rho* positives indiqueront que les deux variables mises en lien tendent à augmenter simultanément, on parlera alors de relation monotone positive. Dans le cas inverse, des valeurs négatives indiqueront que les deux variables mises en lien tendent à diminuer simultanément, on parlera alors de relation monotone négative. A noter cependant que de par son calcul, la valeur de *rho* ne permet pas de renseigner sur la forme de relation qu'il pourrait y avoir entre les valeurs des deux variables (e.g., linéaire ou curvilinéaire par exemple). Ceci est illustré sur la figure ci-dessous. La figure de gauche montre la relation entre les valeurs des variables $X$ et $Y$, qui est caractérisée par un coefficient de corrélation de Spearman (*rho*) de 1, indiquant donc que la relation est parfaitement monotone positive, sans préjuger de la forme particulière que pourrait présenter la relation. Pour mieux comprendre pourquoi cette valeur de *rho* est de 1, la figure de droite montre la relation entre les rangs de ces deux variables $X$ et $Y$. On voit en effet que la relation entre les rangs est effectivement parfaitement linéaire.
 
 ```{r ranks vs values spearman, echo = FALSE, fig.align = "center"}
 a <- data.frame(x = seq(1, 50, 1)) %>%
