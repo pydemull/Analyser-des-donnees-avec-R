@@ -24,7 +24,7 @@
 <meta name="author" content="Pierre-Yves de Müllenheim" />
 
 
-<meta name="date" content="2020-11-04" />
+<meta name="date" content="2020-11-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -185,10 +185,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.1.2" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#etudier-numériquement-la-relation"><i class="fa fa-check"></i><b>4.1.2</b> Etudier numériquement la relation</a></li>
 </ul></li>
 <li class="chapter" data-level="4.2" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#relation-entre-deux-variables-qualitatives"><i class="fa fa-check"></i><b>4.2</b> Relation entre deux variables qualitatives</a><ul>
-<li class="chapter" data-level="4.2.1" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#le-khi2-de-pearson"><i class="fa fa-check"></i><b>4.2.1</b> Le khi2 de Pearson</a></li>
+<li class="chapter" data-level="4.2.1" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#etudier-graphiquement-la-relation-1"><i class="fa fa-check"></i><b>4.2.1</b> Etudier graphiquement la relation</a></li>
+<li class="chapter" data-level="4.2.2" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#etudier-numériquement-la-relation-1"><i class="fa fa-check"></i><b>4.2.2</b> Etudier numériquement la relation</a></li>
 </ul></li>
 <li class="chapter" data-level="4.3" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#relation-entre-une-variable-quantitative-et-une-variable-qualitative"><i class="fa fa-check"></i><b>4.3</b> Relation entre une variable quantitative et une variable qualitative</a><ul>
-<li class="chapter" data-level="4.3.1" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#le-rapport-de-corrélation"><i class="fa fa-check"></i><b>4.3.1</b> Le rapport de corrélation</a></li>
+<li class="chapter" data-level="4.3.1" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#etudier-graphiquement-la-relation-2"><i class="fa fa-check"></i><b>4.3.1</b> Etudier graphiquement la relation</a></li>
+<li class="chapter" data-level="4.3.2" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#etudier-numériquement-la-relation-2"><i class="fa fa-check"></i><b>4.3.2</b> Etudier numériquement la relation</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="régression-linéaire-simple.html"><a href="régression-linéaire-simple.html"><i class="fa fa-check"></i><b>5</b> Régression linéaire simple</a><ul>
@@ -330,30 +332,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb94-6" title="6">  data &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(x)</a>
 <a class="sourceLine" id="cb94-7" title="7">  <span class="kw">names</span>(data) &lt;-<span class="st"> &quot;x&quot;</span></a>
 <a class="sourceLine" id="cb94-8" title="8">  </a>
-<a class="sourceLine" id="cb94-9" title="9">  g1 &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb94-10" title="10"><span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb94-11" title="11"><span class="st">    </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> binwidth, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb94-12" title="12"><span class="st">    </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="kw">min</span>(x, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="kw">max</span>(x, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))) <span class="op">+</span></a>
-<a class="sourceLine" id="cb94-13" title="13"><span class="st">    </span><span class="kw">theme</span>(<span class="dt">axis.title.x =</span> <span class="kw">element_blank</span>())</a>
-<a class="sourceLine" id="cb94-14" title="14">  </a>
-<a class="sourceLine" id="cb94-15" title="15">  g2 &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb94-16" title="16"><span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb94-17" title="17"><span class="st">    </span><span class="kw">geom_boxplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb94-18" title="18"><span class="st">    </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="kw">min</span>(x, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="kw">max</span>(x, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))) <span class="op">+</span></a>
-<a class="sourceLine" id="cb94-19" title="19"><span class="st">    </span><span class="kw">theme</span>(<span class="dt">axis.text.y =</span> <span class="kw">element_blank</span>(),</a>
-<a class="sourceLine" id="cb94-20" title="20">          <span class="dt">axis.title.x =</span> <span class="kw">element_blank</span>(),</a>
-<a class="sourceLine" id="cb94-21" title="21">          <span class="dt">axis.ticks.y =</span> <span class="kw">element_blank</span>())</a>
-<a class="sourceLine" id="cb94-22" title="22">  </a>
-<a class="sourceLine" id="cb94-23" title="23">    g3 &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb94-24" title="24"><span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb94-25" title="25"><span class="st">    </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> <span class="st">&quot;&quot;</span>), <span class="dt">shape =</span> <span class="dv">21</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.25</span>, <span class="dt">size =</span> <span class="dv">3</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb94-26" title="26"><span class="st">      </span><span class="kw">ylab</span>(<span class="st">&quot;&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb94-27" title="27"><span class="st">    </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="kw">min</span>(x, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="kw">max</span>(x, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))) <span class="op">+</span></a>
-<a class="sourceLine" id="cb94-28" title="28"><span class="st">    </span><span class="kw">theme</span>(<span class="dt">axis.text.y =</span> <span class="kw">element_blank</span>(),</a>
-<a class="sourceLine" id="cb94-29" title="29">          <span class="dt">axis.ticks.y =</span> <span class="kw">element_blank</span>())</a>
-<a class="sourceLine" id="cb94-30" title="30">  </a>
-<a class="sourceLine" id="cb94-31" title="31">  g1 <span class="op">+</span><span class="st"> </span>g2 <span class="op">+</span><span class="st"> </span>g3 <span class="op">+</span><span class="st"> </span><span class="kw">plot_layout</span>(<span class="dt">nrow =</span> <span class="dv">3</span>, <span class="dt">heights =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>))</a>
-<a class="sourceLine" id="cb94-32" title="32">}</a></code></pre></div>
+<a class="sourceLine" id="cb94-9" title="9">  g1 &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb94-10" title="10"><span class="st">    </span>data <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb94-11" title="11"><span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb94-12" title="12"><span class="st">    </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> binwidth, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb94-13" title="13"><span class="st">    </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="kw">min</span>(x, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="kw">max</span>(x, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))) <span class="op">+</span></a>
+<a class="sourceLine" id="cb94-14" title="14"><span class="st">    </span><span class="kw">theme</span>(<span class="dt">axis.title.x =</span> <span class="kw">element_blank</span>())</a>
+<a class="sourceLine" id="cb94-15" title="15">  </a>
+<a class="sourceLine" id="cb94-16" title="16">  g2 &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb94-17" title="17"><span class="st">    </span>data <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb94-18" title="18"><span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb94-19" title="19"><span class="st">    </span><span class="kw">geom_boxplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb94-20" title="20"><span class="st">    </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="kw">min</span>(x, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="kw">max</span>(x, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))) <span class="op">+</span></a>
+<a class="sourceLine" id="cb94-21" title="21"><span class="st">    </span><span class="kw">theme</span>(<span class="dt">axis.text.y =</span> <span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb94-22" title="22">          <span class="dt">axis.title.x =</span> <span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb94-23" title="23">          <span class="dt">axis.ticks.y =</span> <span class="kw">element_blank</span>())</a>
+<a class="sourceLine" id="cb94-24" title="24">  </a>
+<a class="sourceLine" id="cb94-25" title="25">    g3 &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb94-26" title="26"><span class="st">      </span>data <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb94-27" title="27"><span class="st">      </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb94-28" title="28"><span class="st">      </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> <span class="st">&quot;&quot;</span>), <span class="dt">shape =</span> <span class="dv">21</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.25</span>, <span class="dt">size =</span> <span class="dv">3</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb94-29" title="29"><span class="st">      </span><span class="kw">ylab</span>(<span class="st">&quot;&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb94-30" title="30"><span class="st">      </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="kw">min</span>(x, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="kw">max</span>(x, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))) <span class="op">+</span></a>
+<a class="sourceLine" id="cb94-31" title="31"><span class="st">      </span><span class="kw">theme</span>(<span class="dt">axis.text.y =</span> <span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb94-32" title="32">          <span class="dt">axis.ticks.y =</span> <span class="kw">element_blank</span>())</a>
+<a class="sourceLine" id="cb94-33" title="33">  </a>
+<a class="sourceLine" id="cb94-34" title="34">  g1 <span class="op">+</span><span class="st"> </span>g2 <span class="op">+</span><span class="st"> </span>g3 <span class="op">+</span><span class="st"> </span><span class="kw">plot_layout</span>(<span class="dt">nrow =</span> <span class="dv">3</span>, <span class="dt">heights =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>))</a>
+<a class="sourceLine" id="cb94-35" title="35">}</a></code></pre></div>
 <p>L’utilisation de la fonction <code>g_distri()</code> est illustrée ci-dessous (pour rappel, il est important d’activer/créer la fonction avant de pouvoir l’utiliser) :</p>
 <div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb95-1" title="1"><span class="kw">g_distri</span>(<span class="dt">x =</span> iris<span class="op">$</span>Sepal.Length, <span class="dt">binwidth =</span> <span class="fl">0.3</span>)</a></code></pre></div>
 <p><img src="Analyser-des-données-avec-R_files/figure-html/g_distri example-1.png" width="672" style="display: block; margin: auto;" /></p>
@@ -698,100 +703,110 @@ Comme avec le coefficient d’asymétrie, Joanes et Gill <span class="citation">
 <p><img src="Analyser-des-données-avec-R_files/figure-html/geom_bar enhanced-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Certes, pour le moment, cette seconde procédure n’a fait que rajouter des étapes par rapport à la première procédure. Toutefois, en reprenant la logique de la seconde procédure, on peut à présent créer des graphiques en barres plus élaborés relativement facilement.</p>
 <div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb150-1" title="1"><span class="co"># Diagramme en barres avec les effectifs affichés à proximité des barres</span></a>
-<a class="sourceLine" id="cb150-2" title="2">g1 &lt;-<span class="st"> </span>diamonds <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb150-3" title="3"><span class="st">  </span><span class="kw">group_by</span>(color) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb150-4" title="4"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb150-5" title="5"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> color, <span class="dt">y =</span> count)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb150-6" title="6"><span class="st">     </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb150-7" title="7"><span class="st">     </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> count, <span class="dt">x =</span> color, <span class="dt">y =</span> count), <span class="dt">size =</span> <span class="dv">2</span>, <span class="dt">nudge_y =</span> <span class="dv">700</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb150-8" title="8"><span class="st">     </span><span class="kw">ggtitle</span>(<span class="st">&quot;g1&quot;</span>)</a>
-<a class="sourceLine" id="cb150-9" title="9"></a>
-<a class="sourceLine" id="cb150-10" title="10"><span class="co"># Diagramme en barres réorganisées manuellement</span></a>
-<a class="sourceLine" id="cb150-11" title="11">g2 &lt;-<span class="st"> </span>diamonds <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb150-12" title="12"><span class="st">  </span><span class="kw">group_by</span>(color) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb150-13" title="13"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb150-14" title="14"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">fct_relevel</span>(color, <span class="st">&quot;J&quot;</span>, <span class="st">&quot;I&quot;</span>, <span class="st">&quot;H&quot;</span>, <span class="st">&quot;G&quot;</span>, <span class="st">&quot;F&quot;</span>, <span class="st">&quot;E&quot;</span>, <span class="st">&quot;D&quot;</span>), <span class="dt">y =</span> count)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb150-15" title="15"><span class="st">     </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb150-16" title="16"><span class="st">     </span><span class="kw">xlab</span>(<span class="st">&quot;color&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb150-17" title="17"><span class="st">     </span><span class="kw">ggtitle</span>(<span class="st">&quot;g2&quot;</span>) </a>
-<a class="sourceLine" id="cb150-18" title="18"></a>
-<a class="sourceLine" id="cb150-19" title="19"><span class="co"># Diagramme en barres réorganisées en ordre croissant</span></a>
-<a class="sourceLine" id="cb150-20" title="20">g3 &lt;-<span class="st"> </span>diamonds <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb150-21" title="21"><span class="st">  </span><span class="kw">group_by</span>(color) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb150-22" title="22"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb150-23" title="23"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">fct_reorder</span>(color, count), <span class="dt">y =</span> count)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb150-24" title="24"><span class="st">     </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb150-25" title="25"><span class="st">     </span><span class="kw">xlab</span>(<span class="st">&quot;color&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb150-26" title="26"><span class="st">     </span><span class="kw">ggtitle</span>(<span class="st">&quot;g3&quot;</span>) </a>
-<a class="sourceLine" id="cb150-27" title="27"></a>
-<a class="sourceLine" id="cb150-28" title="28"><span class="co"># Diagramme en barres réorganisées en ordre décroissant</span></a>
-<a class="sourceLine" id="cb150-29" title="29">g4 &lt;-<span class="st"> </span>diamonds <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb150-30" title="30"><span class="st">  </span><span class="kw">group_by</span>(color) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb150-31" title="31"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb150-32" title="32"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">fct_reorder</span>(color, <span class="op">-</span>count), <span class="dt">y =</span> count)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb150-33" title="33"><span class="st">     </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb150-34" title="34"><span class="st">     </span><span class="kw">xlab</span>(<span class="st">&quot;color&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb150-35" title="35"><span class="st">     </span><span class="kw">ggtitle</span>(<span class="st">&quot;g4&quot;</span>) </a>
-<a class="sourceLine" id="cb150-36" title="36"></a>
-<a class="sourceLine" id="cb150-37" title="37"><span class="co"># Diagramme en barres pivoté</span></a>
-<a class="sourceLine" id="cb150-38" title="38">g5 &lt;-<span class="st"> </span>diamonds <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb150-39" title="39"><span class="st">  </span><span class="kw">group_by</span>(color) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb150-40" title="40"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb150-41" title="41"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">fct_reorder</span>(color, <span class="op">-</span>count), <span class="dt">y =</span> count)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb150-42" title="42"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb150-43" title="43"><span class="st">     </span><span class="kw">coord_flip</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb150-44" title="44"><span class="st">     </span><span class="kw">ggtitle</span>(<span class="st">&quot;g5&quot;</span>)</a>
-<a class="sourceLine" id="cb150-45" title="45"></a>
-<a class="sourceLine" id="cb150-46" title="46"><span class="co"># Dotplot pivoté</span></a>
-<a class="sourceLine" id="cb150-47" title="47">g6 &lt;-<span class="st"> </span>diamonds <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb150-48" title="48"><span class="st">  </span><span class="kw">group_by</span>(color) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb150-49" title="49"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb150-50" title="50"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">fct_reorder</span>(color, <span class="op">-</span>count), <span class="dt">y =</span> count)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb150-51" title="51"><span class="st">     </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb150-52" title="52"><span class="st">     </span><span class="kw">coord_flip</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb150-53" title="53"><span class="st">     </span><span class="kw">ggtitle</span>(<span class="st">&quot;g6&quot;</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb150-2" title="2">g1 &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb150-3" title="3"><span class="st">  </span>diamonds <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb150-4" title="4"><span class="st">  </span><span class="kw">group_by</span>(color) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb150-5" title="5"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb150-6" title="6"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> color, <span class="dt">y =</span> count)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb150-7" title="7"><span class="st">     </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb150-8" title="8"><span class="st">     </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> count, <span class="dt">x =</span> color, <span class="dt">y =</span> count), <span class="dt">size =</span> <span class="dv">2</span>, <span class="dt">nudge_y =</span> <span class="dv">700</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb150-9" title="9"><span class="st">     </span><span class="kw">ggtitle</span>(<span class="st">&quot;g1&quot;</span>)</a>
+<a class="sourceLine" id="cb150-10" title="10"></a>
+<a class="sourceLine" id="cb150-11" title="11"><span class="co"># Diagramme en barres réorganisées manuellement</span></a>
+<a class="sourceLine" id="cb150-12" title="12">g2 &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb150-13" title="13"><span class="st">  </span>diamonds <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb150-14" title="14"><span class="st">  </span><span class="kw">group_by</span>(color) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb150-15" title="15"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb150-16" title="16"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">fct_relevel</span>(color, <span class="st">&quot;J&quot;</span>, <span class="st">&quot;I&quot;</span>, <span class="st">&quot;H&quot;</span>, <span class="st">&quot;G&quot;</span>, <span class="st">&quot;F&quot;</span>, <span class="st">&quot;E&quot;</span>, <span class="st">&quot;D&quot;</span>), <span class="dt">y =</span> count)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb150-17" title="17"><span class="st">     </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb150-18" title="18"><span class="st">     </span><span class="kw">xlab</span>(<span class="st">&quot;color&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb150-19" title="19"><span class="st">     </span><span class="kw">ggtitle</span>(<span class="st">&quot;g2&quot;</span>) </a>
+<a class="sourceLine" id="cb150-20" title="20"></a>
+<a class="sourceLine" id="cb150-21" title="21"><span class="co"># Diagramme en barres réorganisées en ordre croissant</span></a>
+<a class="sourceLine" id="cb150-22" title="22">g3 &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb150-23" title="23"><span class="st">  </span>diamonds <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb150-24" title="24"><span class="st">  </span><span class="kw">group_by</span>(color) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb150-25" title="25"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb150-26" title="26"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">fct_reorder</span>(color, count), <span class="dt">y =</span> count)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb150-27" title="27"><span class="st">     </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb150-28" title="28"><span class="st">     </span><span class="kw">xlab</span>(<span class="st">&quot;color&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb150-29" title="29"><span class="st">     </span><span class="kw">ggtitle</span>(<span class="st">&quot;g3&quot;</span>) </a>
+<a class="sourceLine" id="cb150-30" title="30"></a>
+<a class="sourceLine" id="cb150-31" title="31"><span class="co"># Diagramme en barres réorganisées en ordre décroissant</span></a>
+<a class="sourceLine" id="cb150-32" title="32">g4 &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb150-33" title="33"><span class="st">  </span>diamonds <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb150-34" title="34"><span class="st">  </span><span class="kw">group_by</span>(color) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb150-35" title="35"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb150-36" title="36"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">fct_reorder</span>(color, <span class="op">-</span>count), <span class="dt">y =</span> count)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb150-37" title="37"><span class="st">     </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb150-38" title="38"><span class="st">     </span><span class="kw">xlab</span>(<span class="st">&quot;color&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb150-39" title="39"><span class="st">     </span><span class="kw">ggtitle</span>(<span class="st">&quot;g4&quot;</span>) </a>
+<a class="sourceLine" id="cb150-40" title="40"></a>
+<a class="sourceLine" id="cb150-41" title="41"><span class="co"># Diagramme en barres pivoté</span></a>
+<a class="sourceLine" id="cb150-42" title="42">g5 &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb150-43" title="43"><span class="st">  </span>diamonds <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb150-44" title="44"><span class="st">  </span><span class="kw">group_by</span>(color) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb150-45" title="45"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb150-46" title="46"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">fct_reorder</span>(color, <span class="op">-</span>count), <span class="dt">y =</span> count)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb150-47" title="47"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb150-48" title="48"><span class="st">     </span><span class="kw">coord_flip</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb150-49" title="49"><span class="st">     </span><span class="kw">ggtitle</span>(<span class="st">&quot;g5&quot;</span>)</a>
+<a class="sourceLine" id="cb150-50" title="50"></a>
+<a class="sourceLine" id="cb150-51" title="51"><span class="co"># Dotplot pivoté</span></a>
+<a class="sourceLine" id="cb150-52" title="52">g6 &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb150-53" title="53"><span class="st">  </span>diamonds <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb150-54" title="54"><span class="st">  </span><span class="kw">group_by</span>(color) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb150-55" title="55"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb150-56" title="56"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">fct_reorder</span>(color, <span class="op">-</span>count), <span class="dt">y =</span> count)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb150-57" title="57"><span class="st">     </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb150-58" title="58"><span class="st">     </span><span class="kw">coord_flip</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb150-59" title="59"><span class="st">     </span><span class="kw">ggtitle</span>(<span class="st">&quot;g6&quot;</span>)</a></code></pre></div>
 <p><img src="Analyser-des-données-avec-R_files/figure-html/geom_bar enhanced graph-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Dans le code montré ci-dessus, on remarque que le réagencement manuel des barres (cf. g2) a pu être réalisé grâce à la fonction <code>fct_relevel()</code> du package <code>forcats</code>. Pour les autres diagrammes, la réorganisation des barres en ordre croissant ou décroissant sur la base de la valeur de l’effectif (<code>count</code>) a pu se faire grâce à la fonction <code>fct_reorder()</code> du package <code>forcats</code>. Les noms des arguments de ces fonctions n’ont pas été indiqués pour alléger le code. Le plus important, c’est d’indiquer en premier argument la variable dont l’ordre d’apparition des modalités doit être réorganisé (il s’agissait de la variable <code>color</code> dans cet exemple). En second argument, il convient d’indiquer la logique de réorganisation de l’apparition des modalités (ce qui a été fait sur la base des valeurs de la variable <code>count</code> dans les exemples ci-dessus utilisant la fonction <code>fct_reorder()</code>).</p>
 <p>Toujours dans le code montré ci-dessus, on peut voir aussi, dans la fonction <code>geom_text()</code> du graphique g1, la présence de l’argument <code>nudge_y</code>. Cet argument permet de régler le décalage entre le haut de la barre et le texte. L’ordre de grandeur du chiffre indiqué est celui de la variable indiquée en ordonnées.</p>
 <p>On observe que la réorganisation des barres selon un ordre croissant ou décroissant clarifie l’information délivrée par le graphique. Toutefois, cette réorganisation est en principe surtout recommandée pour des variables qualitative nominales, c’est-à-dire des variables pour lesquelles il n’existe pas un ordre naturel des modalités. Lorsqu’il existe un ordre naturel des modalités, comme c’est le cas pour des variables qualitatives ordinales, les modalités devraient préférentiellement suivre leur ordre naturel.</p>
 <p>En plus des effectifs, il est aussi possible de prendre connaissance de la distribution à l’aide des proportions, c’est-à-dire des ratios entre les effectifs liés aux différentes modalités et l’effectif total. Les proportions peuvent être visualisées avec un diagramme circulaire (i.e., un camembert), avec un diagramme en barres empilées, ou avec des barres disposées côte-à-côte. Les diagrammes circulaires et avec barres empilées mettent en avant le fait que les parties individuelles étudiées font partie d’un même ensemble. Les diagrammes circulaires peuvent être utilisés efficacement à cet effet lorsqu’ils montrent des fractions simples telles qu’un quart, un tiers, ou une moitié. Toutefois, les parties individuelles sont plus facilement comparables lorsqu’on utilise des barres mises côte-à-côte, comme montré ci-avant. Les diagrammes avec barres empilées sont quant à eux difficiles à comprendre lorsqu’il s’agit de n’étudier qu’une seule variable qualitative <span class="citation">(Wilke, <a href="#ref-Wilke2018" role="doc-biblioref">2018</a>)</span>.</p>
 <div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb151-1" title="1"><span class="co"># Diagramme en barres empilées montrant les effectifs</span></a>
-<a class="sourceLine" id="cb151-2" title="2">g1 &lt;-<span class="st"> </span>diamonds <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb151-3" title="3"><span class="st">      </span><span class="kw">group_by</span>(color) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb151-4" title="4"><span class="st">      </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb151-5" title="5"><span class="st">      </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> count, <span class="dt">fill =</span> color)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb151-6" title="6"><span class="st">         </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb151-7" title="7"><span class="st">         </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> count), <span class="dt">size =</span> <span class="dv">2</span>, <span class="dt">position =</span> <span class="kw">position_stack</span>(<span class="dt">vjust =</span> <span class="fl">0.5</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb151-8" title="8"><span class="st">         </span><span class="kw">ggtitle</span>(<span class="st">&quot;g1&quot;</span>)</a>
-<a class="sourceLine" id="cb151-9" title="9">  </a>
-<a class="sourceLine" id="cb151-10" title="10"><span class="co"># Diagramme en barres empilées montrant les proportions</span></a>
-<a class="sourceLine" id="cb151-11" title="11">g2 &lt;-<span class="st"> </span>diamonds <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb151-12" title="12"><span class="st">      </span><span class="kw">group_by</span>(color) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb151-13" title="13"><span class="st">      </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>() <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(diamonds<span class="op">$</span>color) <span class="op">*</span><span class="st"> </span><span class="dv">100</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb151-14" title="14"><span class="st">      </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> count, <span class="dt">fill =</span> color)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb151-15" title="15"><span class="st">         </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb151-16" title="16"><span class="st">         </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">paste0</span>(<span class="kw">round</span>(count, <span class="dt">digits =</span> <span class="dv">2</span>), <span class="st">&quot; %&quot;</span>)), <span class="dt">size =</span> <span class="dv">2</span>, <span class="dt">position =</span> <span class="kw">position_stack</span>(<span class="dt">vjust =</span> <span class="fl">0.5</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb151-17" title="17"><span class="st">        </span><span class="kw">ggtitle</span>(<span class="st">&quot;g2&quot;</span>)</a>
-<a class="sourceLine" id="cb151-18" title="18"></a>
-<a class="sourceLine" id="cb151-19" title="19"><span class="co"># Diagramme circulaire montrant les effectifs</span></a>
-<a class="sourceLine" id="cb151-20" title="20">g3 &lt;-<span class="st"> </span>diamonds <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb151-21" title="21"><span class="st">       </span><span class="kw">group_by</span>(color) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb151-22" title="22"><span class="st">       </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb151-23" title="23"><span class="st">       </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> count, <span class="dt">fill =</span> color)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb151-24" title="24"><span class="st">          </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">position =</span> <span class="st">&quot;stack&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb151-25" title="25"><span class="st">          </span><span class="kw">coord_polar</span>(<span class="dt">theta =</span> <span class="st">&quot;y&quot;</span>, <span class="dt">start =</span> <span class="dv">0</span>, <span class="dt">direction =</span> <span class="dv">-1</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb151-26" title="26"><span class="st">          </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> count), <span class="dt">size =</span> <span class="dv">2</span>, <span class="dt">position =</span> <span class="kw">position_stack</span>(<span class="dt">vjust =</span> <span class="fl">0.5</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb151-27" title="27"><span class="st">          </span><span class="kw">ggtitle</span>(<span class="st">&quot;g3&quot;</span>)</a>
-<a class="sourceLine" id="cb151-28" title="28"></a>
-<a class="sourceLine" id="cb151-29" title="29"><span class="co"># Diagramme circulaire montrant les proportions</span></a>
-<a class="sourceLine" id="cb151-30" title="30">g4 &lt;-<span class="st"> </span>diamonds <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb151-31" title="31"><span class="st">       </span><span class="kw">group_by</span>(color) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb151-32" title="32"><span class="st">       </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>() <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(diamonds<span class="op">$</span>color) <span class="op">*</span><span class="st"> </span><span class="dv">100</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb151-33" title="33"><span class="st">       </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> count, <span class="dt">fill =</span> color)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb151-34" title="34"><span class="st">          </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">position =</span> <span class="st">&quot;stack&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb151-35" title="35"><span class="st">          </span><span class="kw">coord_polar</span>(<span class="dt">theta =</span> <span class="st">&quot;y&quot;</span>, <span class="dt">start =</span> <span class="dv">0</span>, <span class="dt">direction =</span> <span class="dv">-1</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb151-36" title="36"><span class="st">          </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">paste0</span>(<span class="kw">round</span>(count, <span class="dt">digits =</span> <span class="dv">2</span>), <span class="st">&quot; %&quot;</span>)), <span class="dt">size =</span> <span class="dv">2</span>, <span class="dt">position =</span> <span class="kw">position_stack</span>(<span class="dt">vjust =</span> <span class="fl">0.5</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb151-37" title="37"><span class="st">          </span><span class="kw">ggtitle</span>(<span class="st">&quot;g4&quot;</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb151-2" title="2">g1 &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb151-3" title="3"><span class="st">  </span>diamonds <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb151-4" title="4"><span class="st">  </span><span class="kw">group_by</span>(color) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb151-5" title="5"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb151-6" title="6"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> count, <span class="dt">fill =</span> color)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb151-7" title="7"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb151-8" title="8"><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> count), <span class="dt">size =</span> <span class="dv">2</span>, <span class="dt">position =</span> <span class="kw">position_stack</span>(<span class="dt">vjust =</span> <span class="fl">0.5</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb151-9" title="9"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;g1&quot;</span>)</a>
+<a class="sourceLine" id="cb151-10" title="10">  </a>
+<a class="sourceLine" id="cb151-11" title="11"><span class="co"># Diagramme en barres empilées montrant les proportions</span></a>
+<a class="sourceLine" id="cb151-12" title="12">g2 &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb151-13" title="13"><span class="st">  </span>diamonds <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb151-14" title="14"><span class="st">  </span><span class="kw">group_by</span>(color) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb151-15" title="15"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>() <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(diamonds<span class="op">$</span>color) <span class="op">*</span><span class="st"> </span><span class="dv">100</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb151-16" title="16"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> count, <span class="dt">fill =</span> color)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb151-17" title="17"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb151-18" title="18"><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">paste0</span>(<span class="kw">round</span>(count, <span class="dt">digits =</span> <span class="dv">2</span>), <span class="st">&quot; %&quot;</span>)), <span class="dt">size =</span> <span class="dv">2</span>, <span class="dt">position =</span> <span class="kw">position_stack</span>(<span class="dt">vjust =</span> <span class="fl">0.5</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb151-19" title="19"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;g2&quot;</span>)</a>
+<a class="sourceLine" id="cb151-20" title="20"></a>
+<a class="sourceLine" id="cb151-21" title="21"><span class="co"># Diagramme circulaire montrant les effectifs</span></a>
+<a class="sourceLine" id="cb151-22" title="22">g3 &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb151-23" title="23"><span class="st">  </span>diamonds <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb151-24" title="24"><span class="st">  </span><span class="kw">group_by</span>(color) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb151-25" title="25"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb151-26" title="26"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> count, <span class="dt">fill =</span> color)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb151-27" title="27"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">position =</span> <span class="st">&quot;stack&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb151-28" title="28"><span class="st">  </span><span class="kw">coord_polar</span>(<span class="dt">theta =</span> <span class="st">&quot;y&quot;</span>, <span class="dt">start =</span> <span class="dv">0</span>, <span class="dt">direction =</span> <span class="dv">-1</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb151-29" title="29"><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> count), <span class="dt">size =</span> <span class="dv">2</span>, <span class="dt">position =</span> <span class="kw">position_stack</span>(<span class="dt">vjust =</span> <span class="fl">0.5</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb151-30" title="30"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;g3&quot;</span>)</a>
+<a class="sourceLine" id="cb151-31" title="31"></a>
+<a class="sourceLine" id="cb151-32" title="32"><span class="co"># Diagramme circulaire montrant les proportions</span></a>
+<a class="sourceLine" id="cb151-33" title="33">g4 &lt;-</a>
+<a class="sourceLine" id="cb151-34" title="34"><span class="st">  </span>diamonds <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb151-35" title="35"><span class="st">  </span><span class="kw">group_by</span>(color) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb151-36" title="36"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>() <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(diamonds<span class="op">$</span>color) <span class="op">*</span><span class="st"> </span><span class="dv">100</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb151-37" title="37"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> count, <span class="dt">fill =</span> color)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb151-38" title="38"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">position =</span> <span class="st">&quot;stack&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb151-39" title="39"><span class="st">  </span><span class="kw">coord_polar</span>(<span class="dt">theta =</span> <span class="st">&quot;y&quot;</span>, <span class="dt">start =</span> <span class="dv">0</span>, <span class="dt">direction =</span> <span class="dv">-1</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb151-40" title="40"><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">paste0</span>(<span class="kw">round</span>(count, <span class="dt">digits =</span> <span class="dv">2</span>), <span class="st">&quot; %&quot;</span>)), <span class="dt">size =</span> <span class="dv">2</span>, <span class="dt">position =</span> <span class="kw">position_stack</span>(<span class="dt">vjust =</span> <span class="fl">0.5</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb151-41" title="41"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;g4&quot;</span>)</a></code></pre></div>
 <p><img src="Analyser-des-données-avec-R_files/figure-html/geom_bar prop enhanced graph-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="déterminer-la-tendance-centrale" class="section level3">
@@ -865,7 +880,7 @@ Comme avec le coefficient d’asymétrie, Joanes et Gill <span class="citation">
 <p>Wickham, H. (2016). <em>ggplot2</em> (2nd ed.). Springer-Verlag. <a href="https://doi.org/10.1007/978-0-387-98141-3">https://doi.org/10.1007/978-0-387-98141-3</a></p>
 </div>
 <div id="ref-Wilke2018">
-<p>Wilke, C. O. (2018). <em>Fundamentals of data visualization</em>. O’Reilly Media, Inc. Retrieved from https://serialmentor.com/dataviz.</p>
+<p>Wilke, C. O. (2018). <em>Fundamentals of data visualization</em>. O’Reilly Media, Inc. Retrieved from https://clauswilke.com/dataviz.</p>
 </div>
 </div>
             </section>

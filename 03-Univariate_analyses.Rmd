@@ -64,7 +64,7 @@ ggplot(data = iris, aes(x = Sepal.Length)) +
 
 La boîte à moustaches nous livre plusieurs informations. Tout d'abord, ses extrémités nous indiquent ce qu'on appelle le premier quartile (ici représenté par le bord gauche de la boîte) et le troisième quartile (ici représenté par le bord droit de la boîte). Le premier quartile (Q1) désigne la valeur en-dessous de laquelle on retrouve 25 % des observations de la variable (i.e., 25 % des observations sont associées à une valeur plus faible que Q1), alors que le troisième quartile (Q3) représente la valeur en-dessous de laquelle on retrouve 75 % des observations (i.e., 75 % des observations sont associées à une valeur plus faible que Q3). Cela indique alors que sur le graphique montré ci-dessus, l'intervalle qui sépare le bord gauche du bord droit de la boîte contient 50 % des observations. La ligne noire à l'intérieur de la boîte blanche désigne la médiane, qui est la valeur pour laquelle on a 50 % des observations qui ont une valeur inférieure à cette valeur repère, et pour laquelle on a 50 % des observations qui ont une valeur supérieure à cette valeur repère. Les lignes noires en-dehors de la boîte sont les moustaches. Dans le cas présent, la moustache de gauche s'étend jusqu'à la valeur minimale de la variable, et la moustache de droite s'étend jusqu'à la valeur maximale de la variable. Dans le cas où le minimum (ou le maximum) aurait été éloigné de la médiane de plus de 1.5 fois la différence entre Q3 et Q1 (qu'on appelle **intervalle interquartile**), l'extrémité de la moustache se serait arrêtée à la dernière valeur avant cette limite, et toute valeur ayant dépassé cette limite aurait été représentée par un point. Pour illustrer ce dernier cas de figure, on peut modifier manuellement une valeur de la variable Sepal.Length de telle sorte à ce qu'il y ait une nouvelle valeur qui soit particulièrement éloignée de la boîte. Une telle valeur s'appelle un *outlier*.
 
-```{r geom_boxplot modifié, fig.align ="center"}
+```{r geom_boxplot modifié, fig.align = "center"}
 iris$Sepal.Length[3] <- 12                     # On modifie ici, pour l'exemple, la valeur de la 3ème observation 
 ggplot(data = iris, aes(x = Sepal.Length)) +   # en lui assignant la valeur 12.
   geom_boxplot() +
@@ -143,13 +143,15 @@ g_distri <- function(x = NULL, binwidth = NULL) {
   data <- as.data.frame(x)
   names(data) <- "x"
   
-  g1 <- data %>%
+  g1 <- 
+    data %>%
     ggplot(aes(x = x)) +
     geom_histogram(binwidth = binwidth, fill = "white", color = "black") +
     coord_cartesian(xlim = c(min(x, na.rm = TRUE), max(x, na.rm = TRUE))) +
     theme(axis.title.x = element_blank())
   
-  g2 <- data %>% 
+  g2 <- 
+    data %>% 
     ggplot(aes(x = x)) +
     geom_boxplot() +
     coord_cartesian(xlim = c(min(x, na.rm = TRUE), max(x, na.rm = TRUE))) +
@@ -157,12 +159,13 @@ g_distri <- function(x = NULL, binwidth = NULL) {
           axis.title.x = element_blank(),
           axis.ticks.y = element_blank())
   
-    g3 <- data %>% 
-    ggplot(aes(x = x)) +
-    geom_point(aes(x = x, y = ""), shape = 21, fill = "white", alpha = 0.25, size = 3) +
+    g3 <- 
+      data %>% 
+      ggplot(aes(x = x)) +
+      geom_point(aes(x = x, y = ""), shape = 21, fill = "white", alpha = 0.25, size = 3) +
       ylab("") +
-    coord_cartesian(xlim = c(min(x, na.rm = TRUE), max(x, na.rm = TRUE))) +
-    theme(axis.text.y = element_blank(),
+      coord_cartesian(xlim = c(min(x, na.rm = TRUE), max(x, na.rm = TRUE))) +
+      theme(axis.text.y = element_blank(),
           axis.ticks.y = element_blank())
   
   g1 + g2 + g3 + plot_layout(nrow = 3, heights = c(2, 0.2, 0.2))
@@ -187,7 +190,8 @@ lepto <- tibble(x = rcauchy(n = 10000, location = 0, scale = 1)) %>% filter(x <=
 set.seed(123)
 plati <- runif(n = 1000, min = -5, max = 5)
 
-TextPlot_gauss <- ggplot() + 
+TextPlot_gauss <- 
+            ggplot() + 
             annotate(geom = "text", x = 4, y = 1, size = 5, label = "Gaussienne") +
             theme(
               plot.background = element_blank(), 
@@ -202,7 +206,8 @@ TextPlot_gauss <- ggplot() +
               axis.ticks = element_blank(),
               axis.line = element_blank()
             )
-TextPlot_skew_right <- ggplot() + 
+TextPlot_skew_right <- 
+            ggplot() + 
             annotate(geom = "text", x = 4, y = 1, size = 5, label = "Asymétrique") +
             theme(
               plot.background = element_blank(), 
@@ -217,7 +222,8 @@ TextPlot_skew_right <- ggplot() +
               axis.ticks = element_blank(),
               axis.line = element_blank()
             )
-TextPlot_lepto <- ggplot() + 
+TextPlot_lepto <- 
+            ggplot() + 
             annotate(geom = "text", x = 4, y = 1, size = 5, label = "Leptocurtique") +
             theme(
               plot.background = element_blank(), 
@@ -232,7 +238,8 @@ TextPlot_lepto <- ggplot() +
               axis.ticks = element_blank(),
               axis.line = element_blank()
             )
-TextPlot_plati <- ggplot() + 
+TextPlot_plati <- 
+            ggplot() + 
             annotate(geom = "text", x = 4, y = 1, size = 5, label = "Platycurtique") +
             theme(
               plot.background = element_blank(), 
@@ -315,7 +322,7 @@ La moyenne, c'est en quelque sorte le "centre de gravité" de la variable [@Nava
 
 ```{r means with skewed variables, echo = FALSE, message = FALSE, warning = FALSE, fig.align ="center"}
 # Get legend function
-get_legend<-function(myggplot){
+get_legend <- function(myggplot){
   tmp <- ggplot_gtable(ggplot_build(myggplot))
   leg <- which(sapply(tmp$grobs, function(x) x$name) == "guide-box")
   legend <- tmp$grobs[[leg]]
@@ -326,7 +333,8 @@ get_legend<-function(myggplot){
 set.seed(123)
 gauss <- tibble(x = rnorm(n = 1000, mean = 0, sd = 1))
 mean_gauss <- mean(gauss$x)
-mean_gauss_g <- ggplot(data = gauss) +
+mean_gauss_g <- 
+  ggplot(data = gauss) +
   geom_histogram(aes(x = x), fill = "white", color = "black") +
   geom_segment(aes(x = mean_gauss, xend = mean_gauss, y = 0, yend = Inf, color = "red"), size = 1.2) +
   xlab("x") +
@@ -336,7 +344,8 @@ mean_gauss_g <- ggplot(data = gauss) +
 set.seed(123)
 skew_right <- tibble(x = rchisq(1000, 2))
 mean_skew_right <- mean(skew_right$x)
-mean_skew_g <- ggplot(data = skew_right) +
+mean_skew_g <- 
+  ggplot(data = skew_right) +
   geom_histogram(aes(x = x), fill = "white", color = "black") +
   geom_segment(aes(x = mean_skew_right, xend = mean_skew_right, y = 0, yend = Inf, color = "red"), size = 1.2) +
   xlab("x") +
@@ -386,7 +395,8 @@ set.seed(123)
 gauss <- tibble(x = rnorm(n = 1000, mean = 0, sd = 1))
 mean_gauss <- mean(gauss$x)
 median_gauss <- median(gauss$x)
-median_gauss_g <- ggplot(data = gauss) +
+median_gauss_g <- 
+  ggplot(data = gauss) +
   geom_histogram(aes(x = x), fill = "white", color = "black") +
   geom_segment(aes(x = mean_gauss, xend = mean_gauss, y = 0, yend = Inf, color = "Moyenne"), size = 1.2) +
   geom_segment(aes(x = median_gauss, xend = median_gauss, y = 0, yend = Inf, color = "Médiane"), size = 1.2) +
@@ -398,7 +408,8 @@ set.seed(123)
 skew_right <- tibble(x = rchisq(1000, 2))
 mean_skew_right <- mean(skew_right$x)
 median_skew_right <- median(skew_right$x)
-median_skew_g <- ggplot(data = skew_right) +
+median_skew_g <- 
+  ggplot(data = skew_right) +
   geom_histogram(aes(x = x), fill = "white", color = "black") +
   geom_segment(aes(x = mean_skew_right, xend = mean_skew_right, y = 0, yend = Inf, color = "Moyenne"), size = 1.2) +
   geom_segment(aes(x = median_skew_right, xend = median_skew_right, y = 0, yend = Inf, color = "Médiane"), size = 1.2) +
@@ -511,10 +522,11 @@ knitr::kable(
 On remarque que les résultats de la fonction `quantile()` sont différents selon la configuration de l'argument `type`. Le choix de la configuration est donc important. Pour comprendre comment R a calculé les valeurs associées aux quantiles 0.25 et 0.75 dans le cadre de la seconde méthode (i.e., avec `type` = 7), regardons le tableau ci-dessous.
 
 ```{r quantiles continuous method, echo = FALSE}
-table_quant <-  data.frame(
-  Rang = rank(vec),
-  Quantile =(rank(vec) - 1) / (length(vec) - 1),
-  Valeur = vec)
+table_quant <-  
+  data.frame(
+    Rang = rank(vec),
+    Quantile =(rank(vec) - 1) / (length(vec) - 1),
+    Valeur = vec)
 knitr::kable(
 table_quant
 )
@@ -600,7 +612,8 @@ chis_4_neg <- tibble(x = -rchisq(1000, 4))
 set.seed(123)
 gauss <- tibble(x = rnorm(n = 1000, mean = 0, sd = 1))
 
-TextPlot_chisq1 <- ggplot() + 
+TextPlot_chisq1 <- 
+            ggplot() + 
             annotate(geom = "text", x = 4, y = 1, size = 5, label = bquote(paste(gamma[1], " = ", .(round(skewness(chis_1$x), 2))))) +
             theme(
               plot.background = element_blank(), 
@@ -616,7 +629,8 @@ TextPlot_chisq1 <- ggplot() +
               axis.line = element_blank()
             )
 
-TextPlot_chisq4 <- ggplot() + 
+TextPlot_chisq4 <- 
+            ggplot() + 
             annotate(geom = "text", x = 4, y = 1, size = 5, label = bquote(paste(gamma[1], " = ", .(round(skewness(chis_4$x), 2))))) +
             theme(
               plot.background = element_blank(), 
@@ -632,7 +646,8 @@ TextPlot_chisq4 <- ggplot() +
               axis.line = element_blank()
             )
 
-TextPlot_gauss <- ggplot() + 
+TextPlot_gauss <- 
+            ggplot() + 
             annotate(geom = "text", x = 4, y = 1, size = 5, label = bquote(paste(gamma[1], " = ", .(round(skewness(gauss$x), 2))))) +
             theme(
               plot.background = element_blank(), 
@@ -648,7 +663,8 @@ TextPlot_gauss <- ggplot() +
               axis.line = element_blank()
             )
 
-TextPlot_chisq4_neg <- ggplot() + 
+TextPlot_chisq4_neg <- 
+            ggplot() + 
             annotate(geom = "text", x = 4, y = 1, size = 5, label = bquote(paste(gamma[1], " = ", .(round(skewness(chis_4_neg$x), 2))))) +
             theme(
               plot.background = element_blank(), 
@@ -664,7 +680,8 @@ TextPlot_chisq4_neg <- ggplot() +
               axis.line = element_blank()
             )
 
-TextPlot_chisq1_neg <- ggplot() + 
+TextPlot_chisq1_neg <- 
+            ggplot() + 
             annotate(geom = "text", x = 4, y = 1, size = 5, label = bquote(paste(gamma[1], " = ", .(round(skewness(chis_1_neg$x), 2))))) +
             theme(
               plot.background = element_blank(), 
@@ -680,7 +697,8 @@ TextPlot_chisq1_neg <- ggplot() +
               axis.line = element_blank()
             )
 
-g_chis1 <- ggplot(data = chis_1) +
+g_chis1 <- 
+  ggplot(data = chis_1) +
   geom_histogram(aes(x = x), fill = "white", color = "black", bins = 20) +
   xlab("x") +
   theme(legend.position="bottom", legend.text = element_text(size = 13)) +
@@ -689,7 +707,8 @@ g_chis1 <- ggplot(data = chis_1) +
         axis.text = element_blank(),
         axis.ticks = element_blank())
  
-g_chis4 <- ggplot(data = chis_4) +
+g_chis4 <- 
+  ggplot(data = chis_4) +
   geom_histogram(aes(x = x), fill = "white", color = "black", bins = 20) +
   xlab("x") +
   theme(legend.position="bottom", legend.text = element_text(size = 13)) +
@@ -698,7 +717,8 @@ g_chis4 <- ggplot(data = chis_4) +
         axis.text = element_blank(),
         axis.ticks = element_blank())
 
-g_gauss <- ggplot(data = gauss) +
+g_gauss <- 
+  ggplot(data = gauss) +
   geom_histogram(aes(x = x), fill = "white", color = "black", bins = 20) +
   xlab("x") +
   theme(legend.position="bottom", legend.text = element_text(size = 13)) +
@@ -707,7 +727,8 @@ g_gauss <- ggplot(data = gauss) +
         axis.text = element_blank(),
         axis.ticks = element_blank())
 
-g_chis4_neg <- ggplot(data = chis_4_neg) +
+g_chis4_neg <- 
+  ggplot(data = chis_4_neg) +
   geom_histogram(aes(x = x), fill = "white", color = "black", bins = 20) +
   xlab("x") +
   theme(legend.position="bottom", legend.text = element_text(size = 13)) +
@@ -716,7 +737,8 @@ g_chis4_neg <- ggplot(data = chis_4_neg) +
         axis.text = element_blank(),
         axis.ticks = element_blank())
 
-g_chis1_neg <- ggplot(data = chis_1_neg) +
+g_chis1_neg <- 
+  ggplot(data = chis_1_neg) +
   geom_histogram(aes(x = x), fill = "white", color = "black", bins = 20) +
   xlab("x") +
   theme(legend.position="bottom", legend.text = element_text(size = 13)) +
@@ -763,7 +785,8 @@ laplace <- tibble(x = rlaplace(1000, location = 0, scale=1))
 set.seed(123)
 gauss <- tibble(x = rnorm(n = 1000, mean = 0, sd = 1))
 
-TextPlot_unif <- ggplot() + 
+TextPlot_unif <- 
+            ggplot() + 
             annotate(geom = "text", x = 4, y = 1, size = 5, label = bquote(paste(gamma[2], " = ", .(round(kurtosis(unif$x), 2))))) +
             theme(
               plot.background = element_blank(), 
@@ -779,7 +802,8 @@ TextPlot_unif <- ggplot() +
               axis.line = element_blank()
             )
 
-TextPlot_gauss <- ggplot() + 
+TextPlot_gauss <- 
+            ggplot() + 
             annotate(geom = "text", x = 4, y = 1, size = 5, label = bquote(paste(gamma[2], " = ", .(round(kurtosis(gauss$x), 2))))) +
             theme(
               plot.background = element_blank(), 
@@ -796,7 +820,8 @@ TextPlot_gauss <- ggplot() +
             )
 
 
-TextPlot_laplace <- ggplot() + 
+TextPlot_laplace <- 
+            ggplot() + 
             annotate(geom = "text", x = 4, y = 1, size = 5, label = bquote(paste(gamma[2], " = ", .(round(kurtosis(laplace$x), 2))))) +
             theme(
               plot.background = element_blank(), 
@@ -812,7 +837,8 @@ TextPlot_laplace <- ggplot() +
               axis.line = element_blank()
             )
 
-g_unif <- ggplot(data = unif) +
+g_unif <- 
+  ggplot(data = unif) +
   geom_histogram(aes(x = x), fill = "white", color = "black", bins = 20) +
   xlab("x") +
   theme(legend.position="bottom", legend.text = element_text(size = 13)) +
@@ -821,7 +847,8 @@ g_unif <- ggplot(data = unif) +
         axis.text = element_blank(),
         axis.ticks = element_blank())
  
-g_gauss <- ggplot(data = gauss) +
+g_gauss <- 
+  ggplot(data = gauss) +
   geom_histogram(aes(x = x), fill = "white", color = "black", bins = 20) +
   xlab("x") +
   theme(legend.position="bottom", legend.text = element_text(size = 13)) +
@@ -830,7 +857,8 @@ g_gauss <- ggplot(data = gauss) +
         axis.text = element_blank(),
         axis.ticks = element_blank())
 
-g_laplace <- ggplot(data = laplace) +
+g_laplace <- 
+  ggplot(data = laplace) +
   geom_histogram(aes(x = x), fill = "white", color = "black", bins = 20) +
   xlab("x") +
   theme(legend.position="bottom", legend.text = element_text(size = 13)) +
@@ -904,7 +932,8 @@ df_SD2 <- df %>% filter(x > (mean(vec$x) - 2 * sd(vec$x)) &  x < (mean(vec$x) + 
 df_SD1 <- df %>% filter(x > (mean(vec$x) - 1 * sd(vec$x)) &  x < (mean(vec$x) + 1 * sd(vec$x)))
 
 
-g1 <- ggplot(data = df, aes(x = x, y = y)) +
+g1 <- 
+  ggplot(data = df, aes(x = x, y = y)) +
   geom_area(data = df_SD1, aes(x = x, y = y, fill = "x ± 1 SD")) +
   geom_line(size = 1) +
   geom_hline(aes(yintercept = 0), size = 1) +
@@ -915,7 +944,8 @@ g1 <- ggplot(data = df, aes(x = x, y = y)) +
         axis.ticks = element_blank(),
         legend.position = "none")
 
-g2 <- ggplot(data = df, aes(x = x, y = y)) +
+g2 <- 
+  ggplot(data = df, aes(x = x, y = y)) +
   geom_area(data = df_SD2, aes(x = x, y = y, fill = "x ± 2 SD")) +
   geom_line(size = 1) +
   geom_hline(aes(yintercept = 0), size = 1) +
@@ -926,7 +956,8 @@ g2 <- ggplot(data = df, aes(x = x, y = y)) +
         axis.ticks = element_blank(),
         legend.position = "none")
 
-g3 <- ggplot(data = df, aes(x = x, y = y)) +
+g3 <- 
+  ggplot(data = df, aes(x = x, y = y)) +
   geom_area(data = df_SD3, aes(x = x, y = y, fill = "x ± 3 SD")) +
   geom_line(size = 1) +
   geom_hline(aes(yintercept = 0), size = 1) +
@@ -989,7 +1020,8 @@ Certes, pour le moment, cette seconde procédure n'a fait que rajouter des étap
 
 ```{r geom_bar enhanced 2, message = FALSE, fig.align ="center"}
 # Diagramme en barres avec les effectifs affichés à proximité des barres
-g1 <- diamonds %>% 
+g1 <- 
+  diamonds %>% 
   group_by(color) %>%
   summarize(count = n()) %>%
   ggplot(aes(x = color, y = count)) +
@@ -998,7 +1030,8 @@ g1 <- diamonds %>%
      ggtitle("g1")
 
 # Diagramme en barres réorganisées manuellement
-g2 <- diamonds %>% 
+g2 <- 
+  diamonds %>% 
   group_by(color) %>%
   summarize(count = n()) %>%
   ggplot(aes(x = fct_relevel(color, "J", "I", "H", "G", "F", "E", "D"), y = count)) +
@@ -1007,7 +1040,8 @@ g2 <- diamonds %>%
      ggtitle("g2") 
 
 # Diagramme en barres réorganisées en ordre croissant
-g3 <- diamonds %>% 
+g3 <- 
+  diamonds %>% 
   group_by(color) %>%
   summarize(count = n()) %>%
   ggplot(aes(x = fct_reorder(color, count), y = count)) +
@@ -1016,7 +1050,8 @@ g3 <- diamonds %>%
      ggtitle("g3") 
 
 # Diagramme en barres réorganisées en ordre décroissant
-g4 <- diamonds %>% 
+g4 <- 
+  diamonds %>% 
   group_by(color) %>%
   summarize(count = n()) %>%
   ggplot(aes(x = fct_reorder(color, -count), y = count)) +
@@ -1025,7 +1060,8 @@ g4 <- diamonds %>%
      ggtitle("g4") 
 
 # Diagramme en barres pivoté
-g5 <- diamonds %>% 
+g5 <- 
+  diamonds %>% 
   group_by(color) %>%
   summarize(count = n()) %>%
   ggplot(aes(x = fct_reorder(color, -count), y = count)) +
@@ -1034,7 +1070,8 @@ g5 <- diamonds %>%
      ggtitle("g5")
 
 # Dotplot pivoté
-g6 <- diamonds %>% 
+g6 <- 
+  diamonds %>% 
   group_by(color) %>%
   summarize(count = n()) %>%
   ggplot(aes(x = fct_reorder(color, -count), y = count)) +
@@ -1057,42 +1094,46 @@ En plus des effectifs, il est aussi possible de prendre connaissance de la distr
 
 ```{r diagrams for proportions, message = FALSE, fig.align ="center"}
 # Diagramme en barres empilées montrant les effectifs
-g1 <- diamonds %>% 
-      group_by(color) %>%
-      summarize(count = n()) %>%
-      ggplot(aes(x = "", y = count, fill = color)) +
-         geom_bar(stat = "identity", na.rm = TRUE) +
-         geom_text(aes(label = count), size = 2, position = position_stack(vjust = 0.5)) +
-         ggtitle("g1")
+g1 <- 
+  diamonds %>% 
+  group_by(color) %>%
+  summarize(count = n()) %>%
+  ggplot(aes(x = "", y = count, fill = color)) +
+  geom_bar(stat = "identity", na.rm = TRUE) +
+  geom_text(aes(label = count), size = 2, position = position_stack(vjust = 0.5)) +
+  ggtitle("g1")
   
 # Diagramme en barres empilées montrant les proportions
-g2 <- diamonds %>% 
-      group_by(color) %>%
-      summarize(count = n() / length(diamonds$color) * 100) %>%
-      ggplot(aes(x = "", y = count, fill = color)) +
-         geom_bar(stat = "identity") +
-         geom_text(aes(label = paste0(round(count, digits = 2), " %")), size = 2, position = position_stack(vjust = 0.5)) +
-        ggtitle("g2")
+g2 <- 
+  diamonds %>% 
+  group_by(color) %>%
+  summarize(count = n() / length(diamonds$color) * 100) %>%
+  ggplot(aes(x = "", y = count, fill = color)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label = paste0(round(count, digits = 2), " %")), size = 2, position = position_stack(vjust = 0.5)) +
+  ggtitle("g2")
 
 # Diagramme circulaire montrant les effectifs
-g3 <- diamonds %>% 
-       group_by(color) %>%
-       summarize(count = n()) %>%
-       ggplot(aes(x = "", y = count, fill = color)) +
-          geom_bar(stat = "identity", position = "stack") +
-          coord_polar(theta = "y", start = 0, direction = -1) +
-          geom_text(aes(label = count), size = 2, position = position_stack(vjust = 0.5)) +
-          ggtitle("g3")
+g3 <- 
+  diamonds %>% 
+  group_by(color) %>%
+  summarize(count = n()) %>%
+  ggplot(aes(x = "", y = count, fill = color)) +
+  geom_bar(stat = "identity", position = "stack") +
+  coord_polar(theta = "y", start = 0, direction = -1) +
+  geom_text(aes(label = count), size = 2, position = position_stack(vjust = 0.5)) +
+  ggtitle("g3")
 
 # Diagramme circulaire montrant les proportions
-g4 <- diamonds %>% 
-       group_by(color) %>%
-       summarize(count = n() / length(diamonds$color) * 100) %>%
-       ggplot(aes(x = "", y = count, fill = color)) +
-          geom_bar(stat = "identity", position = "stack") +
-          coord_polar(theta = "y", start = 0, direction = -1) +
-          geom_text(aes(label = paste0(round(count, digits = 2), " %")), size = 2, position = position_stack(vjust = 0.5)) +
-          ggtitle("g4")
+g4 <-
+  diamonds %>% 
+  group_by(color) %>%
+  summarize(count = n() / length(diamonds$color) * 100) %>%
+  ggplot(aes(x = "", y = count, fill = color)) +
+  geom_bar(stat = "identity", position = "stack") +
+  coord_polar(theta = "y", start = 0, direction = -1) +
+  geom_text(aes(label = paste0(round(count, digits = 2), " %")), size = 2, position = position_stack(vjust = 0.5)) +
+  ggtitle("g4")
 ```
 
 ```{r geom_bar prop enhanced graph, echo = FALSE, message = FALSE, fig.align ="center"}

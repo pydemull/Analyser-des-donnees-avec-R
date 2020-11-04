@@ -24,7 +24,7 @@
 <meta name="author" content="Pierre-Yves de Müllenheim" />
 
 
-<meta name="date" content="2020-11-04" />
+<meta name="date" content="2020-11-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -185,10 +185,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.1.2" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#etudier-numériquement-la-relation"><i class="fa fa-check"></i><b>4.1.2</b> Etudier numériquement la relation</a></li>
 </ul></li>
 <li class="chapter" data-level="4.2" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#relation-entre-deux-variables-qualitatives"><i class="fa fa-check"></i><b>4.2</b> Relation entre deux variables qualitatives</a><ul>
-<li class="chapter" data-level="4.2.1" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#le-khi2-de-pearson"><i class="fa fa-check"></i><b>4.2.1</b> Le khi2 de Pearson</a></li>
+<li class="chapter" data-level="4.2.1" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#etudier-graphiquement-la-relation-1"><i class="fa fa-check"></i><b>4.2.1</b> Etudier graphiquement la relation</a></li>
+<li class="chapter" data-level="4.2.2" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#etudier-numériquement-la-relation-1"><i class="fa fa-check"></i><b>4.2.2</b> Etudier numériquement la relation</a></li>
 </ul></li>
 <li class="chapter" data-level="4.3" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#relation-entre-une-variable-quantitative-et-une-variable-qualitative"><i class="fa fa-check"></i><b>4.3</b> Relation entre une variable quantitative et une variable qualitative</a><ul>
-<li class="chapter" data-level="4.3.1" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#le-rapport-de-corrélation"><i class="fa fa-check"></i><b>4.3.1</b> Le rapport de corrélation</a></li>
+<li class="chapter" data-level="4.3.1" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#etudier-graphiquement-la-relation-2"><i class="fa fa-check"></i><b>4.3.1</b> Etudier graphiquement la relation</a></li>
+<li class="chapter" data-level="4.3.2" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#etudier-numériquement-la-relation-2"><i class="fa fa-check"></i><b>4.3.2</b> Etudier numériquement la relation</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="régression-linéaire-simple.html"><a href="régression-linéaire-simple.html"><i class="fa fa-check"></i><b>5</b> Régression linéaire simple</a><ul>
@@ -588,18 +590,20 @@ Pour fixer le répertoire de travail, il existe plusieurs manières de faire. Un
 ##   ..   Species = col_character()
 ##   .. )</code></pre>
 <p>Cette stratégie de modification du type de la variable peut convenir lorsqu’il y a peu de variables à modifier. Cependant, lorsque la liste s’allonge, il peut être plus lisible, en matière de code, de fonctionner autrement : en utilisant le symbole <code>%&gt;%</code> (qu’on appelle <em>pipe</em>), et la fonction <code>mutate()</code> du package <code>dplyr</code>.</p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" title="1">iris &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb58-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Sepal.Length =</span> <span class="kw">as.numeric</span>(<span class="dt">x =</span> Sepal.Length),</a>
-<a class="sourceLine" id="cb58-3" title="3">         <span class="dt">Sepal.Width =</span> <span class="kw">as.numeric</span>(<span class="dt">x =</span> Sepal.Width),</a>
-<a class="sourceLine" id="cb58-4" title="4">         <span class="dt">Petal.Length =</span> <span class="kw">as.numeric</span>(<span class="dt">x =</span> Petal.Length),</a>
-<a class="sourceLine" id="cb58-5" title="5">         <span class="dt">Petal.Width =</span> <span class="kw">as.numeric</span>(<span class="dt">x =</span> Petal.Width),</a>
-<a class="sourceLine" id="cb58-6" title="6">         <span class="dt">Species =</span> <span class="kw">as.factor</span>(<span class="dt">x =</span> Species))</a></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" title="1">iris &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb58-2" title="2"><span class="st">  </span>iris <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb58-3" title="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Sepal.Length =</span> <span class="kw">as.numeric</span>(<span class="dt">x =</span> Sepal.Length),</a>
+<a class="sourceLine" id="cb58-4" title="4">         <span class="dt">Sepal.Width =</span> <span class="kw">as.numeric</span>(<span class="dt">x =</span> Sepal.Width),</a>
+<a class="sourceLine" id="cb58-5" title="5">         <span class="dt">Petal.Length =</span> <span class="kw">as.numeric</span>(<span class="dt">x =</span> Petal.Length),</a>
+<a class="sourceLine" id="cb58-6" title="6">         <span class="dt">Petal.Width =</span> <span class="kw">as.numeric</span>(<span class="dt">x =</span> Petal.Width),</a>
+<a class="sourceLine" id="cb58-7" title="7">         <span class="dt">Species =</span> <span class="kw">as.factor</span>(<span class="dt">x =</span> Species))</a></code></pre></div>
 <p>Ici, le symbole <code>%&gt;%</code> permet d’indiquer à R que toutes les fonctions qui sont écrites après ce symbole s’appliquent à ce qui a été défini avant ce symbole. La fonction <code>mutate()</code>, dont nous reparlerons peu après, permet de créer de nouvelles variables dans le cadre de cette stratégie, soit en écrasant les anciennes variables si les anciens noms sont conservés, soit en créant de nouvelles variables si de nouveaux noms sont utilisés. Remarquons également qu’avec ce code, nous venons de créer un nouvel objet (en l’assignant à nouveau au nom<code>iris</code>) à partir de l’ancien objet, mais dont on a transformé les types des variables, perdant dans le même temps l’ancien objet.</p>
 </div>
 <div id="sélectionner-des-variables-avec-select" class="section level3">
 <h3><span class="header-section-number">2.4.3</span> Sélectionner des variables avec select()</h3>
 <p>Certains jeux de données peuvent être très larges, c’est-à-dire qu’ils peuvent contenir beaucoup de colonnes, parfois inutiles, et qui peuvent être gênantes lorsque l’on veut avoir une vue claire du contenu du jeu de données. La fonction <code>select()</code> du package <code>dplyr</code> permet de sélectionner des colonnes facilement.</p>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" title="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(Petal.Length, Petal.Width, Species)</a></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" title="1">iris <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb59-2" title="2"><span class="st">  </span><span class="kw">select</span>(Petal.Length, Petal.Width, Species)</a></code></pre></div>
 <pre><code>## # A tibble: 150 x 3
 ##    Petal.Length Petal.Width Species
 ##           &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  
@@ -743,13 +747,14 @@ Pour fixer le répertoire de travail, il existe plusieurs manières de faire. Un
 ## 2 versicolor         5.94         2.77
 ## 3 virginica          6.59         2.97</code></pre>
 <p>Au cours des illustrations montrant l’usage des fonctions <code>select()</code> jusqu’à <code>summarize()</code>, il aura été possible de noter que les commandes n’écrasaient pas le jeu de données initial, ni ne créaient de nouveaux jeux de données, car aucune assignation à un nom n’était faite. Lorsqu’une assignation est réalisée, il est conseillé d’utiliser un nouveau nom, différent de celui utilisé pour le jeu de données initial, pour pouvoir revenir au jeu de données originel lorsque cela est souhaité. Ci-dessous un exemple de création d’un nouvel objet de type tableau (assigné au nom <code>iris2</code>) à partir de l’utilisation de la plupart des fonctions que nous venons de voir et qui peuvent être utilisées dans un même bloc de code grâce au <em>pipe</em> (<code>%&gt;%</code>).</p>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" title="1">iris2 &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb72-2" title="2"><span class="st">  </span><span class="kw">select</span>(Petal.Length, Petal.Width, Species) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb72-3" title="3"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">Petal_len =</span> Petal.Length, <span class="dt">Petal_wid =</span> Petal.Width) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb72-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Petal_ratio =</span> Petal_len <span class="op">/</span><span class="st"> </span>Petal_wid) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb72-5" title="5"><span class="st">  </span><span class="kw">filter</span>((Species <span class="op">==</span><span class="st"> &quot;setosa&quot;</span> <span class="op">|</span><span class="st"> </span>Species <span class="op">==</span><span class="st"> &quot;virginica&quot;</span>) <span class="op">&amp;</span><span class="st"> </span>Petal_ratio <span class="op">&gt;</span><span class="st"> </span><span class="dv">8</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb72-6" title="6"><span class="st">  </span><span class="kw">arrange</span>(<span class="op">-</span>Petal_ratio)</a>
-<a class="sourceLine" id="cb72-7" title="7">iris2</a></code></pre></div>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" title="1">iris2 &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb72-2" title="2"><span class="st">  </span>iris <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb72-3" title="3"><span class="st">  </span><span class="kw">select</span>(Petal.Length, Petal.Width, Species) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb72-4" title="4"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">Petal_len =</span> Petal.Length, <span class="dt">Petal_wid =</span> Petal.Width) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb72-5" title="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Petal_ratio =</span> Petal_len <span class="op">/</span><span class="st"> </span>Petal_wid) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb72-6" title="6"><span class="st">  </span><span class="kw">filter</span>((Species <span class="op">==</span><span class="st"> &quot;setosa&quot;</span> <span class="op">|</span><span class="st"> </span>Species <span class="op">==</span><span class="st"> &quot;virginica&quot;</span>) <span class="op">&amp;</span><span class="st"> </span>Petal_ratio <span class="op">&gt;</span><span class="st"> </span><span class="dv">8</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb72-7" title="7"><span class="st">  </span><span class="kw">arrange</span>(<span class="op">-</span>Petal_ratio)</a>
+<a class="sourceLine" id="cb72-8" title="8">iris2</a></code></pre></div>
 <pre><code>## # A tibble: 7 x 4
 ##   Petal_len Petal_wid Species Petal_ratio
 ##       &lt;dbl&gt;     &lt;dbl&gt; &lt;fct&gt;         &lt;dbl&gt;
@@ -764,12 +769,13 @@ Pour fixer le répertoire de travail, il existe plusieurs manières de faire. Un
 <div id="passer-dune-disposition-en-lignes-à-une-disposition-en-colonnes-et-inversement-avec-pivot_wider-et-pivot_longer" class="section level3">
 <h3><span class="header-section-number">2.4.9</span> Passer d’une disposition en lignes à une disposition en colonnes et inversement avec pivot_wider() et pivot_longer()</h3>
 <p>Il convient de respecter certaines règles de base lors de la conception d’une base de données (e.g., mettre les observations en lignes et les variables en colonnes). Toutefois, dans certains cas, même après avoir bien respecter les règles, la manière selon laquelle la base de données a été organisée peut ne pas être encore adéquate pour pouvoir utiliser certaines fonctions. Prenons par exemple le cas où toutes les valeurs numériques d’une variable quantitative auraient été mises dans une même colonne en regard d’une variable qualitative pour que chaque valeur numérique corresponde à une modalité de cette variable qualitative (c’est le cas, par exemple, avec le jeu de données <code>iris</code>), et que la fonction à utiliser nécessiterait que l’on ait une colonne pour chacune des modalités de la variable qualitative, avec des colonnes mises côte à côte. Une fonction qui permet alors de passer d’un format “long” (i.e., toutes les valeurs numériques sont dans la même colonne) à un format “large” (i.e., les valeurs numériques sont réparties dans différentes colonnes selon la modalité à laquelle elles sont associées), est la fonction <code>pivot_wider()</code> du package <code>tidyr</code>. Pour pouvoir utiliser cette fonction, il faut qu’il y ait une variable permettant d’identifier à quel individu ou groupe appartienne les données dont on va changer l’organisation. Dans une base de données classique, il y a toujours une variable présente pour cela. Toutefois, dans le jeu de données <code>iris</code>, il n’y a pas une telle variable. Pour pouvoir illustrer l’utilisation de la fonction <code>pivot_wider()</code>, nous avons donc ajouté arbitrairement une variable <code>id</code> grâce à la fonction <code>mutate()</code> pour simuler le fait que les données de <code>iris</code> auraient été acquises en référence à des individus bien identifiés, avec à chaque fois une valeur pour les trois modalités de la variable <code>Species</code>.</p>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" title="1">iris2 &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb74-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">id =</span> <span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">50</span>, <span class="dt">times =</span> <span class="dv">3</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb74-3" title="3"><span class="st">  </span><span class="kw">select</span>(id, Species,  <span class="kw">everything</span>()) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb74-4" title="4"><span class="st">  </span><span class="kw">arrange</span>(id, Species) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb74-5" title="5"><span class="st">  </span><span class="kw">as_tibble</span>()</a>
-<a class="sourceLine" id="cb74-6" title="6">iris2</a></code></pre></div>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" title="1">iris2 &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb74-2" title="2"><span class="st">  </span>iris <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb74-3" title="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">id =</span> <span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">50</span>, <span class="dt">times =</span> <span class="dv">3</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb74-4" title="4"><span class="st">  </span><span class="kw">select</span>(id, Species,  <span class="kw">everything</span>()) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb74-5" title="5"><span class="st">  </span><span class="kw">arrange</span>(id, Species) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb74-6" title="6"><span class="st">  </span><span class="kw">as_tibble</span>()</a>
+<a class="sourceLine" id="cb74-7" title="7">iris2</a></code></pre></div>
 <pre><code>## # A tibble: 150 x 6
 ##       id Species    Sepal.Length Sepal.Width Petal.Length Petal.Width
 ##    &lt;int&gt; &lt;fct&gt;             &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;
@@ -785,10 +791,11 @@ Pour fixer le répertoire de travail, il existe plusieurs manières de faire. Un
 ## 10     4 setosa              4.6         3.1          1.5         0.2
 ## # ... with 140 more rows</code></pre>
 <p>La fonction <code>pivot_wider()</code> permet alors de mettre en colonnes les valeurs des variables sélectionnées pour chacune des trois modalités de la variable <code>Species</code> (ci-dessous, seules les trois colonnes relatives à la longueur des sépales des fleurs (<code>Sepal.Length</code>) sont montrées, mais le reste a bien été crée).</p>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" title="1">iris3 &lt;-<span class="st"> </span>iris2 <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb76-2" title="2"><span class="st">  </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> Species, </a>
-<a class="sourceLine" id="cb76-3" title="3">              <span class="dt">values_from =</span> Sepal.Length <span class="op">:</span><span class="st"> </span>Petal.Width)</a>
-<a class="sourceLine" id="cb76-4" title="4">iris3</a></code></pre></div>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" title="1">iris3 &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb76-2" title="2"><span class="st">  </span>iris2 <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb76-3" title="3"><span class="st">  </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> Species, </a>
+<a class="sourceLine" id="cb76-4" title="4">              <span class="dt">values_from =</span> Sepal.Length <span class="op">:</span><span class="st"> </span>Petal.Width)</a>
+<a class="sourceLine" id="cb76-5" title="5">iris3</a></code></pre></div>
 <pre><code>## # A tibble: 50 x 13
 ##       id Sepal.Length_se~ Sepal.Length_ve~ Sepal.Length_vi~
 ##    &lt;int&gt;            &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;
@@ -809,12 +816,13 @@ Pour fixer le répertoire de travail, il existe plusieurs manières de faire. Un
 ## #   Petal.Width_versicolor &lt;dbl&gt;, Petal.Width_virginica &lt;dbl&gt;</code></pre>
 <p>L’argument <code>names_from</code> a permis d’indiquer la variable à partir de laquelle on a dispatché les valeurs en colonnes, et l’argument <code>values_from</code> a permis de préciser les variables pour lesquelles on voulait que les valeurs numériques soient dispatchées. L’utilisation des deux-points (<code>:</code>) nous a permis de sélectionner toutes les variables allant de <code>Sepal.Length</code> à <code>Petal.Width</code> dans le jeu de données.</p>
 <p>Dans une situation inverse à celle que nous venons de voir, nous pourrions avoir les données représentées en colonnes (comme c’est le cas avec le jeu de données crée <code>iris3</code>), alors que nous les voudrions en lignes (comme c’était le cas avec le jeu de données <code>iris</code> à l’origine). La fonction <code>pivot_longer</code> permet de faire cette conversion.</p>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" title="1">iris4 &lt;-iris3 <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb78-2" title="2"><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> <span class="kw">c</span>(Sepal.Length_setosa, Sepal.Length_versicolor, Sepal.Length_virginica), </a>
-<a class="sourceLine" id="cb78-3" title="3">               <span class="dt">names_to =</span> <span class="st">&quot;Species&quot;</span>, </a>
-<a class="sourceLine" id="cb78-4" title="4">               <span class="dt">values_to =</span> <span class="st">&quot;Sepal_len&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb78-5" title="5"><span class="st">  </span><span class="kw">select</span>(id, Species, Sepal_len)</a>
-<a class="sourceLine" id="cb78-6" title="6">iris4</a></code></pre></div>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" title="1">iris4 &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb78-2" title="2"><span class="st">  </span>iris3 <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb78-3" title="3"><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> <span class="kw">c</span>(Sepal.Length_setosa, Sepal.Length_versicolor, Sepal.Length_virginica), </a>
+<a class="sourceLine" id="cb78-4" title="4">               <span class="dt">names_to =</span> <span class="st">&quot;Species&quot;</span>, </a>
+<a class="sourceLine" id="cb78-5" title="5">               <span class="dt">values_to =</span> <span class="st">&quot;Sepal_len&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb78-6" title="6"><span class="st">  </span><span class="kw">select</span>(id, Species, Sepal_len)</a>
+<a class="sourceLine" id="cb78-7" title="7">iris4</a></code></pre></div>
 <pre><code>## # A tibble: 150 x 3
 ##       id Species                 Sepal_len
 ##    &lt;int&gt; &lt;chr&gt;                       &lt;dbl&gt;

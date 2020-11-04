@@ -126,7 +126,8 @@ str(iris)
 Cette stratégie de modification du type de la variable peut convenir lorsqu'il y a peu de variables à modifier. Cependant, lorsque la liste s'allonge, il peut être plus lisible, en matière de code, de fonctionner autrement : en utilisant le symbole `%>%` (qu'on appelle *pipe*), et la fonction `mutate()` du package `dplyr`.
 
 ```{r trans type var iris}
-iris <- iris %>% 
+iris <- 
+  iris %>% 
   mutate(Sepal.Length = as.numeric(x = Sepal.Length),
          Sepal.Width = as.numeric(x = Sepal.Width),
          Petal.Length = as.numeric(x = Petal.Length),
@@ -140,7 +141,8 @@ Ici, le symbole `%>%` permet d'indiquer à R que toutes les fonctions qui sont �
 Certains jeux de données peuvent être très larges, c'est-à-dire qu'ils peuvent contenir beaucoup de colonnes, parfois inutiles, et qui peuvent être gênantes lorsque l'on veut avoir une vue claire du contenu du jeu de données. La fonction `select()` du package `dplyr` permet de sélectionner des colonnes facilement.
 
 ```{r select}
-iris %>% select(Petal.Length, Petal.Width, Species)
+iris %>% 
+  select(Petal.Length, Petal.Width, Species)
 ```
 
 ### Renommer des variables avec rename()
@@ -204,7 +206,8 @@ iris %>%
 Au cours des illustrations montrant l'usage des fonctions `select()` jusqu'à `summarize()`, il aura été possible de noter que les commandes n'écrasaient pas le jeu de données initial, ni ne créaient de nouveaux jeux de données, car aucune assignation à un nom n'était faite. Lorsqu'une assignation est réalisée, il est conseillé d'utiliser un nouveau nom, différent de celui utilisé pour le jeu de données initial, pour pouvoir revenir au jeu de données originel lorsque cela est souhaité. Ci-dessous un exemple de création d'un nouvel objet de type tableau (assigné au nom `iris2`) à partir de l'utilisation de la plupart des fonctions que nous venons de voir et qui peuvent être utilisées dans un même bloc de code grâce au *pipe* (`%>%`).
 
 ```{r full example dplyr}
-iris2 <- iris %>%
+iris2 <- 
+  iris %>%
   select(Petal.Length, Petal.Width, Species) %>%
   rename(Petal_len = Petal.Length, Petal_wid = Petal.Width) %>%
   mutate(Petal_ratio = Petal_len / Petal_wid) %>%
@@ -217,7 +220,8 @@ iris2
 Il convient de respecter certaines règles de base lors de la conception d'une base de données (e.g., mettre les observations en lignes et les variables en colonnes). Toutefois, dans certains cas, même après avoir bien respecter les règles, la manière selon laquelle la base de données a été organisée peut ne pas être encore adéquate pour pouvoir utiliser certaines fonctions. Prenons par exemple le cas où toutes les valeurs numériques d'une variable quantitative auraient été mises dans une même colonne en regard d'une variable qualitative pour que chaque valeur numérique corresponde à une modalité de cette variable qualitative (c'est le cas, par exemple, avec le jeu de données `iris`), et que la fonction à utiliser nécessiterait que l'on ait une colonne pour chacune des modalités de la variable qualitative, avec des colonnes mises côte à côte. Une fonction qui permet alors de passer d'un format "long" (i.e., toutes les valeurs numériques sont dans la même colonne) à un format "large" (i.e., les valeurs numériques sont réparties dans différentes colonnes selon la modalité à laquelle elles sont associées), est la fonction `pivot_wider()` du package `tidyr`. Pour pouvoir utiliser cette fonction, il faut qu'il y ait une variable permettant d'identifier à quel individu ou groupe appartienne les données dont on va changer l'organisation. Dans une base de données classique, il y a toujours une variable présente pour cela. Toutefois, dans le jeu de données `iris`, il n'y a pas une telle variable. Pour pouvoir illustrer l'utilisation de la fonction `pivot_wider()`, nous avons donc ajouté arbitrairement une variable `id` grâce à la fonction `mutate()` pour simuler le fait que les données de `iris` auraient été acquises en référence à des individus bien identifiés, avec à chaque fois une valeur pour les trois modalités de la variable `Species`.
 
 ```{r add id iris}
-iris2 <- iris %>% 
+iris2 <- 
+  iris %>% 
   mutate(id = rep(1:50, times = 3)) %>%
   select(id, Species,  everything()) %>%
   arrange(id, Species) %>%
@@ -228,7 +232,8 @@ iris2
 La fonction `pivot_wider()` permet alors de mettre en colonnes les valeurs des variables sélectionnées pour chacune des trois modalités de la variable `Species` (ci-dessous, seules les trois colonnes relatives à la longueur des sépales des fleurs (`Sepal.Length`) sont montrées, mais le reste a bien été crée).
 
 ```{r pivot_wider}
-iris3 <- iris2 %>% 
+iris3 <- 
+  iris2 %>% 
   pivot_wider(names_from = Species, 
               values_from = Sepal.Length : Petal.Width)
 iris3
@@ -239,7 +244,8 @@ L'argument `names_from` a permis d'indiquer la variable à partir de laquelle on
 Dans une situation inverse à celle que nous venons de voir, nous pourrions avoir les données représentées en colonnes (comme c'est le cas avec le jeu de données crée `iris3`), alors que nous les voudrions en lignes (comme c'était le cas avec le jeu de données `iris` à l'origine). La fonction `pivot_longer` permet de faire cette conversion.
 
 ```{r pivot_longer}
-iris4 <-iris3 %>% 
+iris4 <- 
+  iris3 %>% 
   pivot_longer(cols = c(Sepal.Length_setosa, Sepal.Length_versicolor, Sepal.Length_virginica), 
                names_to = "Species", 
                values_to = "Sepal_len") %>%
