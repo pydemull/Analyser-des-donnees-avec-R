@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Analyser des données avec R</title>
+  <title>Chapitre 5 Régressions | Analyser des données avec R</title>
   <meta name="description" content="Introduction à l’analyse des données avec R" />
   <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Analyser des données avec R" />
+  <meta property="og:title" content="Chapitre 5 Régressions | Analyser des données avec R" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="pydm1989/Analyser-des-donnees-avec-R" />
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="pydm1989/Analyser-des-donnees-avec-R" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Analyser des données avec R" />
+  <meta name="twitter:title" content="Chapitre 5 Régressions | Analyser des données avec R" />
   
   <meta name="twitter:description" content="Introduction à l’analyse des données avec R" />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="prérequis.html"/>
+<link rel="prev" href="analyses-descriptives-bivariées.html"/>
+<link rel="next" href="références.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -221,26 +221,105 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Analyser des données avec R</h1>
-<p class="author"><em>Pierre-Yves de Müllenheim</em></p>
-<p class="date"><em>2020-11-05</em></p>
+<div id="régressions" class="section level1">
+<h1><span class="header-section-number">Chapitre 5</span> Régressions</h1>
+<div id="régression-linéaire-simple" class="section level2">
+<h2><span class="header-section-number">5.1</span> Régression linéaire simple</h2>
+<p>Il est possible d’investiguer l’existence d’une relation linéaire entre deux variables en modélisant de manière linéaire cette relation à l’aide d’une équation de type <span class="math inline">\(Y = aX + b\)</span>, et en calculant certaines statistiques associées qui rendent compte du niveau de correspondance entre le modèle linéaire et les données étudiées. Ces statistiques sont le coefficient de détermination, noté <span class="math inline">\(R^2\)</span>, et l’erreur typique d’estimation, dont on gardera l’acronyme anglais <span class="math inline">\(SEE\)</span> (pour <em>Standard Error of Estimate</em>).</p>
+<div id="calculer-le-coefficient-de-détermination" class="section level3">
+<h3><span class="header-section-number">5.1.1</span> Calculer le coefficient de détermination</h3>
+<p>Le coefficient de détermination, noté <span class="math inline">\(R^2\)</span>, représente la part de variance de la variable <span class="math inline">\(Y\)</span> expliquée par le modèle linéaire concerné. La formule de ce coefficient peut être présentée comme ceci :</p>
+<p><span class="math display">\[R^2 = 1 - {\frac {Var(\hat{Y} - Y) } {Var(Y)}} = 1 - {\frac {Var(RES)} {Var(Y)}}, \]</span>
+où <span class="math inline">\(\hat{Y}\)</span> désigne les prédictions faites à partir du modèle, et <span class="math inline">\(Y\)</span> désigne les valeurs réelles que l’on a cherché à prédire à partir du modèle. Le terme <span class="math inline">\(\hat{Y} - Y\)</span> (ou <span class="math inline">\(RES\)</span>) doit se concevoir comme une variable contenant toutes les différences <span class="math inline">\(\hat{Y}{i} - Y{i}\)</span> qu’on appelle des <strong>résidus</strong>. Ainsi, le terme <span class="math inline">\({Var(\hat{Y} - Y) }\)</span> désigne la variance des résidus (ou encore la variance des erreurs). Au final, le ratio <span class="math inline">\({\frac {Var(\hat{Y} - Y) } {Var(Y)}}\)</span> traduit la part de variance non expliquée (non détectée) par le modèle, et le <span class="math inline">\(R^2\)</span> se calcule en faisant 1 moins ce ratio. (A noter qu’on peut trouver ailleurs d’autres manières de présenter ce coefficient <span class="math inline">\(R^2\)</span>, avec des formules initiales différentes, mais mathématiquement, ces différentes manières d’aborder les choses restent équivalentes).</p>
+<p>La figure ci-dessous vise à illustrer la notion de <strong>résidu</strong> et ce qu’elle représente dans le calcul du <span class="math inline">\(R^2\)</span>. Sur cette figure, les points représentent les valeurs <span class="math inline">\(Y{i}\)</span> en fonction des valeurs <span class="math inline">\(X{i}\)</span>, la ligne bleue représente le modèle de régression linéaire (i.e., toutes les valeurs <span class="math inline">\(\hat{Y}{i}\)</span> qui seraient prédites à partir du modèle et des valeurs <span class="math inline">\(X{i}\)</span>), et les segments rouges représentent les résidus (i.e., la différence qu’on a à chaque fois entre <span class="math inline">\(\hat{Y}{i}\)</span> et <span class="math inline">\(Y{i}\)</span>). Pour un modèle donné, plus ces segments rouges seront nombreux et grands, plus cela signifiera que les erreurs de prédiction du modèle sont nombreuses et grandes, que la part de variance non expliquée par le modèle est grande, et que la valeur du <span class="math inline">\(R^2\)</span> pour ce modèle est éloignée de 1. Ainsi, le coeffient <span class="math inline">\(R^2\)</span> peut aller de la valeur 0 (signifiant que le modèle n’explique aucune variation de <span class="math inline">\(Y\)</span>), à la valeur de 1 (signifiant que le modèle explique toute les variations de <span class="math inline">\(Y\)</span>). Plus la valeur de <span class="math inline">\(R^2\)</span> d’un modèle linéaire se rapprochera de 1, plus cela suggérera que la relation étudiée est effectivement linéaire. (On note par ailleurs que le coefficient de détermination <span class="math inline">\(R^2\)</span> associé à un modèle linéaire est mathématiquement lié au coefficient de corrélation de Pearson (<span class="math inline">\(r\)</span>), <span class="math inline">\(r\)</span> étant la racine carrée du <span class="math inline">\(R^2\)</span>.)</p>
+<p><img src="Analyser-des-données-avec-R_files/figure-html/graph see-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Pour déterminer le <span class="math inline">\(R^2\)</span> d’un modèle linéaire avec le logiciel R, il faut d’abord créer ce modèle à l’aide de la fonction <code>lm()</code>. L’usage simple de cette fonction, tel que montré ci-dessous, permet de prendre connaissance des coefficients du modèle. Dans les résultats issus de l’exemple ci-dessous, l’ordonnée à l’origine est située sous <code>(Intercept)</code>, et le coefficient directeur est situé sous le nom de la variable <span class="math inline">\(X\)</span> du modèle, ici <code>hp</code>. Dans l’exemple ci-dessous, qui utilise à nouveau le jeu de données <code>mtcars</code>, le modèle nous indique que lorsque <code>hp</code> vaudra 0, l’estimation de <code>mpg</code> vaudra 30.09886, et que pour chaque augmentation d’unité de <code>hp</code>, on aura une diminution de -0.06823 unité de <code>mpg</code>.</p>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb184-1" title="1"><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp, <span class="dt">data =</span> mtcars)</a></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ hp, data = mtcars)
+## 
+## Coefficients:
+## (Intercept)           hp  
+##    30.09886     -0.06823</code></pre>
+<p>Pour plus de confort dans l’écriture de la suite du code, il peut être intéressant d’associer le modèle crée avec la fonction <code>lm()</code> à un nom. Pour accéder aux différentes informations statistiques résumant le modèle, on peut alors utiliser la fonction <code>summary()</code> avec le nom choisi pour le modèle.</p>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb186-1" title="1">model &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp, <span class="dt">data =</span> mtcars)</a>
+<a class="sourceLine" id="cb186-2" title="2"><span class="kw">summary</span>(model)</a></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ hp, data = mtcars)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -5.7121 -2.1122 -0.8854  1.5819  8.2360 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 30.09886    1.63392  18.421  &lt; 2e-16 ***
+## hp          -0.06823    0.01012  -6.742 1.79e-07 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 3.863 on 30 degrees of freedom
+## Multiple R-squared:  0.6024, Adjusted R-squared:  0.5892 
+## F-statistic: 45.46 on 1 and 30 DF,  p-value: 1.788e-07</code></pre>
+<p>Dans la liste d’informations données suite à l’activation du code, on retrouve notamment les coefficients déjà rencontrés plus haut, et on peut trouver le coefficient <span class="math inline">\(R^2\)</span> en face de l’écriture <em>Multiple R-squared</em>. On peut aussi y voir l’erreur typique d’estimation en face de l’écriture <em>Residual standard error</em>.</p>
 </div>
-<div id="introduction" class="section level1 unnumbered">
-<h1>Introduction</h1>
-<p>Ce livre vise à servir de support à des enseignements auprès d’étudiants qui découvrent les analyses statistiques en même temps que le langage R et le logiciel RStudio. Au cours de la lecture, l’objectif est non seulement de découvrir les analyses statistiques qui permettent de répondre à des questions que l’on se pose à partir de données que l’on a en sa possession, mais aussi, en parallèle, de développer une certaine maîtrise du langage R avec le logiciel RStudio afin de réaliser les analyses désirées.</p>
-<p>Ce livre n’est donc pas dédié exclusivement aux statistiques, ni exclusivement dédié à R. D’autres ouvrages proposent des contenus plus spécialisés, et donc plus poussés, et c’est vers ces ouvrages qu’il convient d’aller pour davantage maîtriser les fondamentaux des statistiques ou toutes les subtilités du langage R.</p>
-<p>Bien que le langage R puisse être utilisé via le logiciel R en tant que tel, les procédures décrites dans ce livre sont relatives à l’utilisation du logiciel RStudio, qui est plus confortable en matière d’utilisation. Comme il le sera montré, R/RStudio n’est pas un logiciel “clique-bouton”. Il s’agit d’un logiciel où il convient d’écrire des lignes de code pour obtenir le résultat souhaité. Si cela peut s’avérer plus complexe et/ou fastidieux à utiliser au départ par rapport à un logiciel classique où il suffit de cliquer sur des boutons pour obtenir une analyse particulière, cela vaut la peine de prendre le temps d’apprendre à utiliser R, au moins pour les raisons suivantes : les logiciels R et RStudio sont en accès libre sur internet ; il existe de nombreuses aides documentaires, notamment sur internet, qui permettent de faire probablement n’importe quelle analyse/manipulation de données, aussi sophistiquée soit elle ; il est possible de conserver les lignes de code pour refaire rapidement des analyses déjà effectuées, ou pour appliquer ces lignes de code à d’autres données, ou encore pour partager ces lignes de code avec d’autres personnes. De par sa gratuité et sa capacité à permettre le partage des analyses réalisées, R est ainsi une très bonne option pour embrasser la tendance actuelle, encore timide, de l’<em>open science</em>, consistant à permettre de savoir ce qui a été fait en matière d’analyses et à pouvoir reproduire ces analyses. Enfin, le langage R, notamment via l’utilisation de RStudio, permet de faire bien plus que des analyses de données (programmation, construction de site internet et de curriculum vitae, etc.), ce qui en fait un outil de travail polyvalent et donc particulièrement intéressant.</p>
-<p><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Licence Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />Ce livre, qui est en cours d’élaboration, est mis à disposition selon les termes de la <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Licence Creative Commons Attribution - Pas d’Utilisation Commerciale - Partage dans les Mêmes Conditions 4.0 International</a>.</p>
+<div id="lerreur-typique-destimation" class="section level3">
+<h3><span class="header-section-number">5.1.2</span> L’erreur typique d’estimation</h3>
+<p>L’erreur typique d’estimation, ou <span class="math inline">\(SEE\)</span>, représente l’écart-type des erreurs d’estimation associées à l’utilisation d’un modèle. Son unité est donc celle de la variable <span class="math inline">\(Y\)</span> que l’on a cherché à prédire avec le modèle. La formule suivante permet d’expliquer son calcul à partir de données prélevées sur un échantillon :</p>
+<p><span class="math display">\[ SEE = \sqrt{\frac{\sum_{i=1}^{N}(RES{i} - \overline{RES})^2}{N-2}}, \]</span></p>
+<p>où <span class="math inline">\(RES{i}\)</span> désigne le résidu pour une observation donnée, <span class="math inline">\(\overline{RES}\)</span> la moyenne des résidus, et <span class="math inline">\(N\)</span> le nombre d’observations.</p>
+</div>
+<div id="graphique-récapitulatif" class="section level3">
+<h3><span class="header-section-number">5.1.3</span> Graphique récapitulatif</h3>
+<p>Il est possible d’extraire l’ordonnée à l’origine et la pente (i.e., le coefficient directeur) du modèle de régression, le coefficient <span class="math inline">\(R^2\)</span>, et la statistique <span class="math inline">\(SEE\)</span>, à partir de la liste d’informations obtenue avec la fonction <code>summary()</code>. Le code ci-dessous montre comment faire cela avec l’exemple concernant le jeu de données <code>mtcars</code> :</p>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb188-1" title="1"><span class="co"># Extraction de l&#39;ordonnée à l&#39;origine</span></a>
+<a class="sourceLine" id="cb188-2" title="2">intercept &lt;-<span class="st"> </span><span class="kw">summary</span>(model)<span class="op">$</span>coefficients[<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb188-3" title="3">intercept</a></code></pre></div>
+<pre><code>## [1] 30.09886</code></pre>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb190-1" title="1"><span class="co"># Extraction du coefficient directeur</span></a>
+<a class="sourceLine" id="cb190-2" title="2">slope &lt;-<span class="st">  </span><span class="kw">summary</span>(model)<span class="op">$</span>coefficients[<span class="dv">2</span>]</a>
+<a class="sourceLine" id="cb190-3" title="3">slope</a></code></pre></div>
+<pre><code>## [1] -0.06822828</code></pre>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb192-1" title="1"><span class="co"># Extraction du R2</span></a>
+<a class="sourceLine" id="cb192-2" title="2">R2 &lt;-<span class="st"> </span><span class="kw">summary</span>(model)<span class="op">$</span>r.squared</a>
+<a class="sourceLine" id="cb192-3" title="3">R2</a></code></pre></div>
+<pre><code>## [1] 0.6024373</code></pre>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb194-1" title="1"><span class="co"># Extraction de SEE</span></a>
+<a class="sourceLine" id="cb194-2" title="2">SEE &lt;-<span class="st"> </span><span class="kw">summary</span>(model)<span class="op">$</span>sigma</a>
+<a class="sourceLine" id="cb194-3" title="3">SEE</a></code></pre></div>
+<pre><code>## [1] 3.862962</code></pre>
+<p>Une fois extraites et associées à des noms, ces informations peuvent ensuite être réutilisées avec le package <code>ggplot2</code> et la fonction <code>annotate()</code> pour compléter le graphique initial avec des informations statistiques.</p>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb196-1" title="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> mtcars, <span class="kw">aes</span>(<span class="dt">x =</span> hp, <span class="dt">y =</span> mpg)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb196-2" title="2"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb196-3" title="3"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb196-4" title="4"><span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">label =</span> <span class="kw">bquote</span>(<span class="kw">paste</span>(<span class="st">&quot;Y = &quot;</span>, .(<span class="kw">round</span>(slope, <span class="dt">digits =</span> <span class="dv">3</span>)), <span class="st">&quot;X + &quot;</span>, .(<span class="kw">round</span>(intercept, <span class="dt">digits =</span> <span class="dv">3</span>)), <span class="st">&quot; ; &quot;</span>,</a>
+<a class="sourceLine" id="cb196-5" title="5">                                        R<span class="op">^</span><span class="dv">2</span>, <span class="st">&quot; = &quot;</span>, .(<span class="kw">round</span>(R2, <span class="dt">digits =</span> <span class="dv">3</span>)), </a>
+<a class="sourceLine" id="cb196-6" title="6">                                        <span class="st">&quot; ; SEE = &quot;</span>, .(<span class="kw">round</span>(SEE, <span class="dt">digits =</span> <span class="dv">3</span>)))), </a>
+<a class="sourceLine" id="cb196-7" title="7">           <span class="dt">x =</span> <span class="dv">50</span>, <span class="dt">y =</span> <span class="dv">35</span>, <span class="dt">hjust =</span> <span class="dv">0</span>, <span class="dt">size =</span> <span class="dv">5</span>)</a></code></pre></div>
+<p><img src="Analyser-des-données-avec-R_files/figure-html/graph lin and stats-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><em>La leçon du quartet d’Anscombe</em></p>
+<p>Encore une fois, lorsqu’on étudie un phénomène, ici l’existence d’une relation linéaire, il est important de d’abord faire un graphique montrant les données. Cette première étape graphique est importante car les valeurs numériques qui peuvent être obtenues pour le coefficient <span class="math inline">\(R^2\)</span> (et donc aussi pour le coefficient de corrélation de Pearson), et la statistique <span class="math inline">\(SEE\)</span>, ne peuvent à elles seules garantir l’aspect linéaire d’une relation. Un exemple qui permet d’illustrer cela est le quartet d’Anscombe <span class="citation">(<a href="#ref-Anscombe1973" role="doc-biblioref">1973</a>)</span>. Il s’agit de quatre jeux de données dont les représentations graphiques sont montrées ci-dessous.</p>
+<p><img src="Analyser-des-données-avec-R_files/figure-html/anscombe quartet graph-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Bien que d’aspects très différents, ces jeux de données montrent pourtant des variables en abscisses qui ont toutes la même moyenne (<span class="math inline">\(\overline{X} = 9\)</span>) et le même écart-type (<span class="math inline">\(SD = 3.32\)</span>), des variables en ordonnées qui ont elles aussi la même moyenne (<span class="math inline">\(\overline{Y} = 7.5\)</span>) et le même écart-type = (<span class="math inline">\(SD = 2.03\)</span>), et des lignes de régression linéaire qui ont toutes la même équation (<span class="math inline">\(Y = 0.5X + 3\)</span>), le même coefficient de détermination (<span class="math inline">\(R^2 = 0.67\)</span>) et la même erreur typique d’estimation (<span class="math inline">\(SEE = 1.24\)</span>). Pour autant, on observe que seul le premier jeu de données (cf. graphique A ci-dessus) est associé à un modèle linéaire vraiment pertinent. En effet, le graphique B montre bien que la relation n’est pas linéaire mais plutôt quadratique, le graphique C montre que la régression est anormalement influencée par une valeur extrême, et le graphique D montre qu’il n’y a en réalité pas de relation linéaire entre les deux variables et que celle-ci ne semble exister numériquement que grâce à une seule valeur très extrême. Autant le graphique C invite à conserver une analyse de régression linéaire avec éventuellement certains ajustements à réaliser, autant les graphiques B et D indiquent qu’un modèle linéaire n’est pas pertinent pertinent en l’état pour caractériser la relation entre les deux variables étudiées.</p>
 
+</div>
+</div>
+</div>
+<h3>Références</h3>
+<div id="refs" class="references">
+<div id="ref-Anscombe1973">
+<p>Anscombe, F. J. (1973). Graphs in Statistical Analysis. <em>The American Statistician</em>, <em>27</em>(1), 17–21.</p>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="prérequis.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="analyses-descriptives-bivariées.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="références.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

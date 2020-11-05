@@ -283,7 +283,7 @@ Toutefois, il existe une manière plus directe d'écrire les choses avec la fonc
 cor(x = mtcars$hp, y = mtcars$mpg, method = "spearman")
 ```
 
-La fonction `cor.test` permet aussi de calculer le coefficient de corrélation de Spearman en fournissant d'autres informations potentiellement intéressantes pour donner une idée de la significativité de l'estimation de *rho* pour la population étudiée.
+La fonction `cor.test` permet aussi de calculer le coefficient de corrélation de Spearman en fournissant d'autres informations potentiellement intéressantes pour donner une idée de la significativité statistique de l'estimation de *rho* pour la population étudiée.
 
 ```{r cor.test function spearman, warning=FALSE}
 cor.test(x = mtcars$hp, y = mtcars$mpg, method = "spearman")
@@ -299,7 +299,7 @@ mtcars %>%
   geom_smooth(method = "lm", se = FALSE)
 ```
 
-En matière d'interprétation, des valeurs de *rho* positives indiqueront que les deux variables mises en lien tendent à augmenter simultanément, on parlera alors de relation monotone positive. Dans le cas inverse, des valeurs négatives indiqueront que les deux variables mises en lien tendent à diminuer simultanément, on parlera alors de relation monotone négative. A noter cependant que de par son calcul, la valeur de *rho* ne permet pas de renseigner sur la forme de relation qu'il pourrait y avoir entre les valeurs des deux variables (e.g., linéaire ou curvilinéaire par exemple). Ceci est illustré sur la figure ci-dessous. La figure de gauche montre la relation entre les valeurs des variables $X$ et $Y$, qui est caractérisée par un coefficient de corrélation de Spearman (*rho*) de 1, indiquant donc que la relation est parfaitement monotone positive, sans préjuger de la forme particulière que pourrait présenter la relation. Pour mieux comprendre pourquoi cette valeur de *rho* est de 1, la figure de droite montre la relation entre les rangs de ces deux variables $X$ et $Y$. On voit en effet que la relation entre les rangs est effectivement parfaitement linéaire.
+En matière d'interprétation, des valeurs de *rho* positives indiqueront que les deux variables mises en lien tendent à augmenter simultanément, on parlera alors de **relation monotone positive**. Dans le cas inverse, des valeurs négatives indiqueront que les deux variables mises en lien tendent à diminuer simultanément, on parlera alors de relation **monotone négative**. A noter cependant que de par son calcul, la valeur de *rho* ne permet pas de renseigner sur la forme de relation qu'il pourrait y avoir entre les valeurs des deux variables (e.g., linéaire ou curvilinéaire par exemple). Ceci est illustré sur la figure ci-dessous. La figure de gauche montre la relation entre les valeurs des variables $X$ et $Y$, qui est caractérisée par un coefficient de corrélation de Spearman (*rho*) de 1, indiquant donc que la relation est parfaitement monotone positive, sans préjuger de la forme particulière que pourrait présenter la relation. Pour mieux comprendre pourquoi cette valeur de *rho* est de 1, la figure de droite montre la relation entre les rangs de ces deux variables $X$ et $Y$. On voit en effet que la relation entre les rangs est effectivement parfaitement linéaire.
 
 ```{r ranks vs values spearman, echo = FALSE, fig.align = "center"}
 a <- 
@@ -326,18 +326,19 @@ a | b
 
 ## Relation entre deux variables qualitatives
 ### Etudier graphiquement la relation
-Plusieurs types de graphiques peuvent être envisagés lorsqu'il s'agit de montrer les données relatives au croisement de deux variables qualitatives. Une première approche consiste à utiliser des graphiques avec barres mises côte-à-côte et groupées sur l'axe horizontal en fonction des modalités d'une première variable, et colorées en fonction de la seconde variable. Cela est illustré sur la figure ci-dessous, qui a été réalisée à partir du jeu de données `JointSports`, lequel est utilisable après installation et chargement du package `vcd`. `JointSports` contient des données résumées avec des effectifs mis en lien avec les modalités de différentes variables qualitatives, comme on a pu l'obtenir avec les fonctions `group_by` et `summarize` dans les derniers exemples du chapitre précédent. (La différence qu'il y a ici avec ces précédents exemples est qu'ici, l'effectif est désigné par la variable `Freq`, alors qu'il s'agissait de la variable `count` auparavant.) Pour information, `JointSports` contient les données d'une enquête s'étant intéressée, en 1983 et 1985, aux opinions d'étudiants danois de 16 à 19 ans quant à la pratique sportive mixte.
+Plusieurs types de graphiques peuvent être envisagés lorsqu'il s'agit de montrer les données relatives au croisement de deux variables qualitatives. Une première approche consiste à utiliser des graphiques avec barres mises côte-à-côte et groupées sur l'axe horizontal en fonction des modalités d'une première variable, et colorées en fonction de la seconde variable. Cela est illustré sur la figure ci-dessous, qui a été réalisée à partir du jeu de données `JointSports`, lequel est utilisable après installation et chargement du package `vcd`. `JointSports` contient des données résumées avec des effectifs mis en lien avec les modalités de différentes variables qualitatives, comme on a pu l'obtenir avec les fonctions `group_by` et `summarize` dans les derniers exemples du chapitre précédent. (La différence qu'il y a ici avec ces précédents exemples est qu'ici, l'effectif est désigné par la variable `Freq`, alors qu'il s'agissait de la variable `count` auparavant.) Pour information, `JointSports` contient les données d'une enquête s'étant intéressée, en 1983 et 1985, aux opinions d'étudiants danois de 16 à 19 ans quant à la pratique sportive mixte. On note également que le code montré ci-dessous, qui a servi à générer les graphiques à suivre, utilise la fonction `theme_hc()` du package `ggthemes` afin de pouvoir utiliser des couleurs de remplissage automatique particulières. Le package `ggthemes` doit être installé puis chargé pour pouvoir être utilisé.
 
-```{r grouped bars, message = FALSE, fig.align="center", warning = FALSE}
-# Packages (en plus de tidyverse) pour obtenir les données (vcd), changer l'arrière-plan du graphique (ggthemes), et faire la figure (patchwork)
+```{r loading vdc and ggthemes, warning=FALSE}
 library(vcd)
 library(ggthemes)
-library(patchwork)
+```
 
-# Reconfiguration de l'ordre des modalités de la variable opinion et calcul des effectifs pour les catégories étudiées
+```{r grouped bars code, message = FALSE, fig.align="center", warning = FALSE}
+# Reconfiguration de l'ordre des modalités de la variable opinion, et calcul des effectifs totaux pour les catégories étudiées
 JointSports_new <- 
   JointSports %>%
-  mutate(opinion = fct_relevel(opinion, "very bad", "bad", "indifferent", "good", "very good")) %>%
+  mutate(opinion = fct_relevel(opinion, "very bad", "bad", "indifferent", "good", "very good"),
+         gender = fct_relevel(gender, "Girl", "Boy")) %>%
   group_by(gender, opinion) %>%
   summarize(Freq = sum(Freq))
 
@@ -353,21 +354,24 @@ g1 <-
 g2 <- 
   ggplot(data = JointSports_new, aes(x = opinion, y = Freq, fill = gender)) +
   geom_bar(stat = "identity",  position = "dodge") +
-  scale_fill_brewer(palette = "Greens") +
   theme_hc() +
   theme(legend.position = "right") +  
   ggtitle("g2 : Mise en avant de la comparaison des genres")
+```
 
-# Création de la figure
+
+```{r grouped bars figure, echo = FALSE}
 g1 / g2
 ```
 
-La figure ci-dessus montre l'importance de la configuration du graphique en fonction des comparaisons que l'on veut principalement faire, et donc du message que l'on veut prioritairement délivrer. Un principe qui peut guider la conception du graphique est le fait qu'il est plus facile de comparer des barres qui sont mises juste côte-à-côte. Sur la base de ce principe, le graphique 1 ci-dessus permet de comparer plus facilement les diverses opinions relevées pour les garçons d'un côté et pour les filles de l'autre, alors que le graphique 2 permet de comparer plus facilement les réponses provenant des deux genres et cela pour chaque type d'opinion. Comme indiqué par Wilke [-@Wilke2018], les types graphiques illustrés avec g1 et g2 ci-dessus peuvent parfois se voir attribuer le reproche que s'il est relativement facile de lire les informations encodées par des positions (cf. ligne de base sur les graphiques), il peut être être difficile de lire les informations encodées par une couleur dont la signification est indiquée en légende, car cela demande un effort mental supplémentaire de garder en tête la signification de la légende lorsqu'on lit le graphique. Pour palier ce problème, qui, selon Wilke [-@Wilke2018], est au final une affaire de goût, on pourrait utiliser la fonction `facet_wrap()` pour créer une figure telle qu'illustré ci-dessous. (La figure ci-dessous reprend la logique du graphique 1 montré plus haut, avec un besoin de légende qui n'existe plus car la fonction `facet_wrap()` a permis de montrer les diagrammes en barres pour les deux genres de manière séparée en mettant ces diagrammes dans des encarts différents.)
+Pour pouvoir réaliser le graphique g1 montré ci-dessus, il a fallu indiquer dans la fonction `ggplot()`, grâce à `x = `, la variable dont on voulait voir les modalités en abscisses, et il a fallu renseigner pour les ordonnées, à l'aide de `y = `, la variable contenant les effectifs correspondants, le tout toujours à l'intérieur de l'argument `aes()` Etant donné que les données à montrer le long de l'axe des ordonnées sont explicitement indiquées avec `Freq`, il convient d'indiquer à l'intérieur de la fonction `geom_bar()` l'argument `stat = "identity"`, ce qui contraint à determiner la hauteur des barres en fonction des valeurs de la variable `Freq`. A l'intérieur de la fonction `ggplot()` et de l'argument `aes()`, c'est l'argument `fill = opinion` qui a permis d'indiquer qu'on voulait des couleurs de remplissage différentes selon les modalités de la variable `opinion`. Enfin, c'est grâce à l'argument `position = "dodge"`, à l'intérieur de la fonction `geom_bar()`, que l'on a pu obtenir des barres mises côte-à-côte, et non pas de manière empilée. Une logique similaire a été utilisée pour le graphique g2 en modifiant le code de telle sorte que la distinction de l'information avec des couleurs différentes se fasse avec la variable `gender`, et non plus `opinion`.
+
+Les graphiques g1 et g2 montrent l'importance de la configuration du graphique en fonction des comparaisons que l'on veut principalement faire, et donc du message que l'on veut prioritairement délivrer. Un principe qui peut guider la conception du graphique est le fait qu'il est plus facile de comparer des barres qui sont mises juste côte-à-côte. Sur la base de ce principe, le graphique g1 ci-dessus permet de comparer plus facilement les diverses opinions relevées pour les garçons d'un côté et pour les filles de l'autre, alors que le graphique g2 permet de comparer plus facilement les réponses provenant des deux genres et cela pour chaque type d'opinion. Comme indiqué par Wilke [-@Wilke2018], les types graphiques illustrés avec les graphiques g1 et g2 ci-dessus peuvent parfois se voir attribuer le reproche que s'il est relativement facile de lire les informations encodées par des positions (cf. ligne de base sur les graphiques), il peut être être difficile de lire les informations encodées par une couleur dont la signification est indiquée en légende, car cela demande un effort mental supplémentaire de garder en tête la signification de la légende lorsqu'on lit le graphique. Pour palier ce problème, qui, selon Wilke [-@Wilke2018], est au final une affaire de goût, on pourrait utiliser la fonction `facet_wrap()` pour créer une figure telle qu'illustré ci-dessous. (La figure ci-dessous reprend la logique du graphique g1 montré plus haut, avec un besoin de légende qui n'existe plus car la fonction `facet_wrap()` a permis de montrer les diagrammes en barres pour les deux genres de manière séparée en mettant ces diagrammes dans des encarts différents.)
 
 ```{r grouped bars upgraded, fig.align="center", message = FALSE}
 ggplot(data = JointSports_new, aes(x = opinion, y = Freq)) +
   geom_bar(stat = "identity") +
-  facet_wrap(.~gender)
+  facet_wrap(. ~ gender)
 ```
 
 Dans certains cas, on peut vouloir comparer les effectifs relatifs aux modalités d'une première variable qualitative avec des barres mises côte-à-côte, et n'utiliser la seconde variable qualitative que pour avoir un peu d'éléments de contexte "à l'intérieur" des effectifs affichés pour la première variable qualitative. La figure ci-dessous illustre ce cas de figure où la hauteur des barres sert prioritairement à comparer les effectifs relatifs à diverses opinions, et la coloration des barres sert à fournir une idée de la répartition hommes / femmes dans les réponses, sans pourtant avoir l'ambition de comparer cette répartition hommes / femmes  facilement d'un type d'opinion à un autre.
@@ -376,10 +380,12 @@ Dans certains cas, on peut vouloir comparer les effectifs relatifs aux modalité
 JointSports_new %>%
   ggplot(aes(x = opinion, y = Freq, fill = gender)) +
   geom_bar(stat = "identity") +
-  scale_fill_brewer(palette = "Greens") +
   theme_hc() +
   geom_text(aes(label = Freq), size = 3, position = position_stack(vjust = 0.5))
 ```
+
+Les graphiques présentés dans cette sous-partie montrent des valeurs d'effectifs, mais selon l'objectif, il pourrait être aussi envisagé d'utiliser ces graphiques pour montrer des proportions. Cela dit, il existe d'autres visualisations possibles des proportions pour visualiser le lien entre deux variables qualitatives. Ces visualisations peuvent être consultées dans l'ouvrage en ligne de Wilke [-@Wilke2018].
+
 
 ### Etudier numériquement la relation
 
@@ -424,112 +430,215 @@ tab <- table(JointSports_full$opinion, JointSports_full$gender)
 tab
 ```
 
-Un tableau de contingence permet donc de comparer des effectifs en fonction de plusieurs modalités et variables à la fois. Le problème, lorsqu'on utilise des effectifs, est que certaines comparaisons peuvent être difficiles à faire lorsque les effectifs totaux liés aux différentes modalités ne sont pas comparables. Par exemple, dans le tableau montré ci-dessus, l'effectif total des filles est de 761 alors que celui des garçons est de 510, ce qui rend difficile la comparaison des garçons et des filles pour les différents types d'opinion recensés dans l'enquête danoise présentée plus haut. C'est pour cela qu'il convient, dans certains cas, de calculer les proportions correspondant à ces différents effectifs. Pour ce faire, deux fonctions du package `questionr` peuvent être utilisées à partir du tableau de contingence précédemment crée : 
+Un tableau de contingence permet donc de comparer des effectifs en fonction de plusieurs modalités et variables à la fois. Le problème, lorsqu'on utilise des effectifs, est que certaines comparaisons peuvent être difficiles à faire lorsque les effectifs totaux liés aux différentes modalités ne sont pas comparables. Par exemple, dans le tableau montré ci-dessus, l'effectif total des filles est de 761 alors que celui des garçons est de 510, ce qui rend difficile la comparaison des garçons et des filles pour les différents types d'opinion recensés dans l'enquête danoise présentée plus haut. C'est pour cela qu'il convient, dans certains cas, de calculer les proportions correspondant à ces différents effectifs. Pour ce faire, on peut :
+
+- Utiliser la fonction `prop.table()`, qui va convertir en proportions les effectifs montrés plus haut en considérant l'effectif total de tout le tableau :
+
+```{r prop.table}
+round(prop.table(tab) * 100, digits = 2)
+```
+
 
 ```{r loading questionr, message=FALSE, warning=FALSE, echo=FALSE}
 library(questionr)
 ```
 
-- La fonction `lprop()`, qui montre des proportions en correspondance avec une ligne donnée du tableau de résultats. 
+- Utiliser la fonction `lprop()` du package `questionr`, qui va convertir en proportions les effectifs montrés plus haut en considérant l'effectif total de chaque ligne du tableau :
 
-```{r lprop tab}
+```{r lprop tab, message=FALSE, warning=FALSE, echo=FALSE}
 lprop(tab)
 ```
 
-- La fonction `cprop()`, qui montre des proportions en correspondance avec une colonne donnée du tableau de résultats. 
+- Utiliser la fonction `cprop()` du package `questionr`, qui va convertir en proportions les effectifs montrés plus haut en considérant l'effectif total de chaque colonne du tableau :
 
 ```{r cprop tab}
 cprop(tab)
 ```
 
-Il convient bien de noter que les proportions données par les fonctions `lprop()` et `cprop()` doivent être utilisées selon les comparaisons que l'on veut faire. L'analyse descriptive consiste alors à voir si, tant d'un point de vue graphique que numérique, on observe des différences de scores particulières entre les modalités d'une variable qualitative en fonction des modalités de l'autre variable qualitative. Si l'on considère le dernier tableau, on peut par exemple observer une légère tendance à ce que les garçons, toutes proportions gardées, sont légèrement plus représentés que les filles sur des opinions négatives vis-à-vis des pratiques sportives mixtes, alors que les filles seraient davantage représentées que les garçons sur des opinions positives, ce qui n'empêche pas que, pour les deux genres, il y a une polarisation prioritairement sur des opinions neutres à positives.
+Il convient bien de noter que les proportions données par ces différentes fonctions doivent être utilisées selon les comparaisons que l'on veut faire. L'analyse descriptive consiste alors à voir si, tant d'un point de vue graphique que numérique, on observe des différences de scores particulières entre les modalités d'une variable qualitative en fonction des modalités de l'autre variable qualitative. Si l'on considère le dernier tableau, on peut par exemple observer une très légère tendance à ce que les garçons soient davantage polarisés, par rapport aux filles, sur des opinions négatives vis-à-vis des pratiques sportives mixtes, alors que les filles seraient légèrement plus polarisées que les garçons sur des opinions positives, ce qui n'empêche pas que, pour les deux genres, il y a une polarisation principale sur des opinions neutres à positives.
 
-Si l'on a évoqué l'idée que les proportions permettent de mieux comparer les choses, il convient de faire attention malgré tout à la manière dont l'effectif total associé à une modalité d'une variable se décline selon les modalités de la seconde variable mise en lien avec la première, car une répartition non homogène de l'effectif lié à une modalité d'une variable dans les différentes modalités de la seconde variable peut donner lieu à des conclusions tout à fait différentes selon que l'on considère une analyse globale ou une analyse par modalité. Un exemple connu pour illustrer le type de situations dans lesquelles il faut être vigilant est le cas du taux de réussite des femmes à l'université de Berkely en 1973 qui était bien inférieur à celui des hommes lorsqu'on considérait les taux de réussite à l'échelle de l'ensemble de l'unversité [@Bickel1975]. Toutefois, une analyse par matière permettait de voir que les taux de réussite des femmes étaient très similaires à ceux des hommes dans la plupart des matières, voire étaient largement supérieurs à celui des hommes dans certaines matières. Cette situation, qui paraît de prime abord paradoxale, illustre pleinement ce qu'on appelle un paradoxe de Simpson (i.e., le fait que le résultat observé lors d'une analyse globale d'un groupe  puisse se retrouver annulée voire inversée lors d'une analyse à l'échelle de sous-groupes). Dans le cas présent, le paradoxe s'explique par le fait que la majorité des femmes avaient candidaté dans des matières qui étaient très sélectives, c'est-à-dire où le taux de réussite était faible (il l'était aussi pour les hommes). Très peu de femmes avaient candidaté là où les taux de réussite étaient très élevés (pour les femmes comme pour les hommes). Donc au total, les hommes se retrouvaient avec un pourcentage de réussite global bien meilleur que celui des femmes, seulement parce que en proportions, plus d'hommes s'étaient engagés dans les matières où les taux de réussite étaient bien meilleurs.
+Si l'on a évoqué l'idée que les proportions permettent de mieux comparer les choses, il convient de faire attention malgré tout à la manière dont l'effectif total associé à une modalité d'une variable se répartit selon les modalités de la seconde variable, car une répartition non homogène de l'effectif lié à une modalité d'une variable dans les différentes modalités de la seconde variable peut donner lieu à des conclusions tout à fait différentes selon que l'on considère une analyse globale ou une analyse par modalité. Un exemple connu pour illustrer le type de situations dans lesquelles il faut être vigilant est le cas du taux de réussite des femmes à l'université de Berkeley en 1973 qui était bien inférieur à celui des hommes lorsqu'on considérait les taux de réussite à l'échelle de l'ensemble de l'unversité [@Bickel1975]. Toutefois, une analyse par matière permettait de voir que les taux de réussite des femmes étaient très similaires à ceux des hommes dans la plupart des matières, voire étaient largement supérieurs à celui des hommes dans certaines matières. Cette situation, qui paraît de prime abord paradoxale, illustre pleinement ce qu'on appelle un paradoxe de Simpson (i.e., le fait que le résultat observé lors d'une analyse globale d'un groupe  puisse se retrouver annulée voire inversée lors d'une analyse à l'échelle de sous-groupes). Dans le cas présent, le paradoxe s'explique par le fait que la majorité des femmes avaient candidaté dans des matières qui étaient très sélectives, c'est-à-dire où le taux de réussite était faible (il l'était aussi pour les hommes). Très peu de femmes avaient candidaté là où les taux de réussite étaient très élevés (pour les femmes comme pour les hommes). Donc au total, les hommes se retrouvaient avec un pourcentage de réussite global bien meilleur que celui des femmes, seulement parce que en proportions, plus d'hommes s'étaient engagés dans les matières où les taux de réussite étaient bien meilleurs.
 
 
 ## Relation entre une variable quantitative et une variable qualitative
-
 ### Etudier graphiquement la relation
+Lorsque l'on cherche à explorer la relation qu'il peut y avoir entre une variable quantitative et une variable qualitative, il peut être intéressant de visualiser la distribution de la variable quantitative en fonction des modalités de la variable qualitative. Plusieurs possibilités existent afin de faire cela. On peut tout d'abord vouloir visualiser les choses de long de l'axe vertical avec :
 
-```{r graph distri biv quand vs qual, message = FALSE, warning = FALSE}
+- des moyennes et écarts-types, avec ou sans données individuelles (cf. codes et graphiques ci-dessous) ;
+
+```{r graph distri biv quand vs qual means, message = FALSE, warning = FALSE}
 # Moyennes et barres d'erreur
 g1 <- 
   ggplot(data = iris, aes(x = Species, y = Sepal.Length)) +
   stat_summary(fun.data = "mean_sdl", fun.args = list(mult=1), geom = "errorbar", na.rm = TRUE, size = 1, width = 0.2, color = "red") +
   stat_summary(fun = "mean", geom = "point", na.rm = TRUE, size = 5, color = "red") +
   ggtitle("g1") +
-  theme(plot.title = element_text(size = 20))
+  theme(plot.title = element_text(size = 20),
+        axis.title = element_text(size = 17),
+        axis.text = element_text(size = 17))
 
-# Moyennes, barres d'erreur, et points
+# Moyennes, barres d'erreur, et points (l'installation du package Hmisc est nécessaire pour pouvoir utiliser "mean_sdl" ici)
 g2 <- 
   ggplot(data = iris, aes(x = Species, y = Sepal.Length)) +
   geom_point(size = 3) +
   stat_summary(fun.data = "mean_sdl", fun.args = list(mult=1), geom = "errorbar", na.rm = TRUE, size = 1, width = 0.2, color = "red") +
   stat_summary(fun = "mean", geom = "point", na.rm = TRUE, size = 5, color = "red") +
   ggtitle("g2") +
-  theme(plot.title = element_text(size = 20))
+  theme(plot.title = element_text(size = 20),
+        axis.title = element_text(size = 17),
+        axis.text = element_text(size = 17))
 
-# Moyennes, barres d'erreur, et points avec mouvement latéral aléatoire
+# Moyennes, barres d'erreur, et points avec mouvement latéral aléatoire (l'installation du package Hmisc est nécessaire pour pouvoir utiliser "mean_sdl" ici)
 g3 <- 
   ggplot(data = iris, aes(x = Species, y = Sepal.Length)) +
-  geom_jitter(width = 0.05, height = NULL, size = 3) +
+  geom_jitter(width = 0.08, height = NULL, size = 3) +
   stat_summary(fun.data = "mean_sdl", fun.args = list(mult=1), geom = "errorbar", na.rm = TRUE, size = 1, width = 0.2, color = "red") +
   stat_summary(fun = "mean", geom = "point", na.rm = TRUE, size = 5, color = "red") +
   ggtitle("g3") +
-  theme(plot.title = element_text(size = 20))
+  theme(plot.title = element_text(size = 20),
+        axis.title = element_text(size = 17),
+        axis.text = element_text(size = 17))
+```
 
-# Moyennes, barres d'erreur, et points semi-transparents avec mouvement latéral aléatoire
+```{r fig recap biv means, fig.align="center", echo = FALSE, fig.width=20}
+library(patchwork)
+g1 | g2 | g3
+```
+
+- des médianes et intervalles interquartiles, avec ou sans données individuelles (cf. codes et graphiques ci-dessous) ;
+
+```{r graph distri biv quand vs qual med, message = FALSE, warning = FALSE}
+# Boîtes à moustaches
 g4 <- 
   ggplot(data = iris, aes(x = Species, y = Sepal.Length)) +
-  geom_jitter(width = 0.05, height = NULL, size = 3, alpha = 0.5) +
-  stat_summary(fun.data = "mean_sdl", fun.args = list(mult=1), geom = "errorbar", na.rm = TRUE, size = 1, width = 0.2, color = "red") +
-  stat_summary(fun = "mean", geom = "point", na.rm = TRUE, size = 5, color = "red") +
-  ggtitle("g4") +
-  theme(plot.title = element_text(size = 20))
-
-# Boîtes à moustaches
-g5 <- 
-  ggplot(data = iris, aes(x = Species, y = Sepal.Length)) +
   geom_boxplot() +
-  ggtitle("g5") +
-  theme(plot.title = element_text(size = 20))
+  ggtitle("g4") +
+  theme(plot.title = element_text(size = 20),
+        axis.title = element_text(size = 17),
+        axis.text = element_text(size = 17))
 
 # Boîtes à moustaches et points
-g6 <-
+g5 <-
   ggplot(data = iris, aes(x = Species, y = Sepal.Length)) +
   geom_boxplot() +
   geom_point(size = 3) +
-  ggtitle("g6") +
-  theme(plot.title = element_text(size = 20))
+  ggtitle("g5") +
+  theme(plot.title = element_text(size = 20),
+        axis.title = element_text(size = 17),
+        axis.text = element_text(size = 17))
 
-# Boîtes à moustaches et points avec mouvement aléatoire
+# Boîtes à moustaches et points avec mouvement latéral aléatoire
+g6 <- 
+  ggplot(data = iris, aes(x = Species, y = Sepal.Length)) +
+  geom_boxplot() +
+  geom_jitter(width = 0.08, height = NULL, size = 3) +
+  ggtitle("g6") +
+  theme(plot.title = element_text(size = 20),
+        axis.title = element_text(size = 17),
+        axis.text = element_text(size = 17))
+```
+
+```{r fig recap biv med, fig.align="center", echo = FALSE, fig.width=20}
+library(patchwork)
+g4 | g5 | g6
+```
+
+- des aires de densité, avec ou sans données individuelles (cf. codes et graphiques ci-dessous).
+
+```{r graph distri biv quand vs qual dens, message = FALSE, warning = FALSE}
+# Aires de densité
 g7 <- 
   ggplot(data = iris, aes(x = Species, y = Sepal.Length)) +
-  geom_boxplot() +
-  geom_jitter(width = 0.05, height = NULL, size = 3) +
+  geom_violin() +
   ggtitle("g7") +
-  theme(plot.title = element_text(size = 20))
+  theme(plot.title = element_text(size = 20),
+        axis.title = element_text(size = 17),
+        axis.text = element_text(size = 17))
 
-# Boîtes à moustaches et points semi-transparents avec mouvement aléatoire
-g8 <- 
+# Aires de densité et points
+g8 <-
   ggplot(data = iris, aes(x = Species, y = Sepal.Length)) +
-  geom_boxplot() +
-  geom_jitter(width = 0.05, height = NULL, size = 3, alpha = 0.5) +
+  geom_violin() +
+  geom_point(size = 3) +
   ggtitle("g8") +
-  theme(plot.title = element_text(size = 20))
+  theme(plot.title = element_text(size = 20),
+        axis.title = element_text(size = 17),
+        axis.text = element_text(size = 17))
+
+# Aires de densité et points avec mouvement latéral aléatoire
+g9 <- 
+  ggplot(data = iris, aes(x = Species, y = Sepal.Length)) +
+  geom_violin() +
+  geom_jitter(width = 0.08, height = NULL, size = 3) +
+  ggtitle("g9") +
+  theme(plot.title = element_text(size = 20),
+        axis.title = element_text(size = 17),
+        axis.text = element_text(size = 17))
 ```
 
-```{r fig reacp biv quant vs qual, fig.align="center", fig.width = 20, fig.height = 10, echo = FALSE}
-library(patchwork)
-(g1 | g2 | g3 | g4) / (g5 | g6 | g7 | g8)
+```{r fig recap biv distri, fig.align="center",  echo = FALSE, fig.width=20}
+g7 | g8 | g9
 ```
 
+Les différentes lignes de graphiques montrés ci-avant montrent des graphiques de plus en plus efficaces à mesure que l'on se déplace de la gauche vers la droite. Une bonne pratique est en effet de donner la possibilité de visualiser les données individuelles en plus des statistiques que l'on souhaiterait montrer pour résumer la distribution. Il s'agit d'une bonne pratique car une même statistique peut en réalité cacher des distributions de valeurs très différentes. Ce principe a été illustré notamment par Weissgerber [-@Weissgerber2015] qui milite pour la disparition des graphiques en forme de bâtons de dynamite, lesquels sont souvent utilisés pour montrer des moyennes et écart-types. La raison est que ces graphiques en forme de bâtons de dynamite ne renseignent pas sur la forme exacte de la distribution, et donc limitent les possibilités du lecteur de juger de la pertinence des choix d'analyse qui seraient faits par la suite au regard des données d'origine.
+
+Bien qu'on ait l'habitude d'utiliser des graphiques montrant les données de la variable quantitative sur l'axe vertical, il est possible de montrer les données sous formes d'aires de densité le long de l'axe horizontal (cf. graphique g13 ci-dessous) ou encore avec un graphique en lignes de crêtes (*ridgelines plot*, cf. graphique g14 ci-dessous). Ces types de graphiques et leurs intérêts ont été discutés par Wilke [-@Wilke2018]. Pour pouvoir faire le graphque g14, il faut installer et charger un nouveau package : `ggridges`.
+
+```{r fig recap biv hori, fig.align="center",  echo = FALSE, message = FALSE, warning = FALSE}
+# Aire de densités superposées
+g13 <- 
+  ggplot(data = iris, aes(x = Sepal.Length, fill = Species, color = Species)) +
+  geom_density(alpha = 0.3, size = 2) +
+  ggtitle("g13") +
+  theme(plot.title = element_text(size = 20),
+        axis.title = element_text(size = 17),
+        axis.text = element_text(size = 17),
+        legend.position = "bottom",
+        legend.title = element_text(size = 20, face = "bold"),
+        legend.text = element_text(size = 20))
+
+# Ridgeline plot
+
+library(ggridges)
+
+g14 <-
+  ggplot(data = iris, aes(x = Sepal.Length, y = Species)) +
+  geom_density_ridges(size = 2) +
+  ggtitle("g14") +
+  theme(plot.title = element_text(size = 20),
+        axis.title = element_text(size = 17),
+        axis.text = element_text(size = 17))
+```
+
+```{r fig recap biv dens, fig.align="center", message = FALSE, warning = FALSE, fig.width = 20}
+g13 | g14
+```
+
+Lorsque les données à visualiser sont **pairées**, c'est-à-dire qu'il s'agit des mêmes individus qui ont des données pour chaque modalité de la variable qualitative (e.g., suite à une même mesure qui aurait été réalisée plusieurs fois), il est possible d'ajouter des éléments graphiques, telles que des lignes, de telle sorte à mettre davantage en évidence le fait que les données sont liées. Un exemple de graphique montrant cela est montré ci-dessous avec le jeu de données `mice2` (intégré au package `datarium`). Ce jeu de données contient des données de poids de 10 souris évaluées avant et après un traitement.
+
+```{r loading datarium, echo = FALSE, warning = FALSE}
+library(datarium)
+```
+
+```{r paired data}
+mice2 %>%
+  pivot_longer(cols = c(before, after), names_to = "treatment", values_to = "score") %>%
+  ggplot(aes(x = treatment, y = score)) +
+  geom_line(aes(group = id)) +
+  geom_point(size = 3, shape = 21, fill  = "white") +
+  stat_summary(aes(group = 1), fun = "mean",  geom = "line", color = "red", size = 1.3) +
+  stat_summary(fun.data = "mean_sdl", fun.args = list(mult=1), geom = "errorbar", na.rm = TRUE, size = 1, width = 0.1, color = "red") +
+  stat_summary(fun = "mean", geom = "point", na.rm = TRUE, size = 4, color = "red") 
+```
+
+Dans le code ayant permi de réaliser ce graphique, il faut comprendre qu'il a été possible de réaliser des lignes reliant les différents points blancs grâce à la fonction `geom_line()` associée à un argument permettant de tracer les lignes en groupant les informations par individu (`aes(group = id`)). L'ajout d'une ligne rouge reliant chaque moyenne a été permis par l'écriture d'une ligne de code similaire à celle utilisée pour montrer les moyennes en rouge pour chaque condition, si ce n'est qu'on a indiqué de vouloir voir des lignes au lieu de points. La configuration de l'argument `aes(group = 1)` à l'intérieur de la fonction `stat_summary()` était nécessaire pour pouvoir montrer ces lignes rouges reliant les moyennes.
 
 ### Etudier numériquement la relation
 
-```{r num distri biv quant vs qual}
-library(psych)
-describeBy(x = iris$Sepal.Length, quant = c(0.25, 0.75), group = iris$Species)
-```
+*Différence des moyennes*
+
+*Taille d'effet*
+
+*Médianes des différences*
 
 
