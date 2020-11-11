@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapitre 3 Analyses descriptives univariées | Analyser des données avec R</title>
+  <meta name="description" content="Introduction à l’analyse des données avec R" />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapitre 3 Analyses descriptives univariées | Analyser des données avec R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="pydm1989/Analyser-des-donnees-avec-R" />
+  
+  <meta property="og:description" content="Introduction à l’analyse des données avec R" />
+  <meta name="github-repo" content="pydm1989/Analyser-des-donnees-avec-R" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapitre 3 Analyses descriptives univariées | Analyser des données avec R" />
+  
+  <meta name="twitter:description" content="Introduction à l’analyse des données avec R" />
+  
+
+<meta name="author" content="Pierre-Yves de Müllenheim" />
+
+
+<meta name="date" content="2020-11-12" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="importation-et-manipulation-dune-base-de-données.html"/>
+<link rel="next" href="analyses-descriptives-bivariées.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Analyser des données avec R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="1" data-path="prérequis.html"><a href="prérequis.html"><i class="fa fa-check"></i><b>1</b> Prérequis</a><ul>
+<li class="chapter" data-level="1.1" data-path="prérequis.html"><a href="prérequis.html#installation-de-r-et-rstudio"><i class="fa fa-check"></i><b>1.1</b> Installation de R et RStudio</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="prérequis.html"><a href="prérequis.html#installer-r-sur-windows"><i class="fa fa-check"></i><b>1.1.1</b> Installer R sur WINDOWS</a></li>
+<li class="chapter" data-level="1.1.2" data-path="prérequis.html"><a href="prérequis.html#installer-r-sur-mac"><i class="fa fa-check"></i><b>1.1.2</b> Installer R sur MAC</a></li>
+<li class="chapter" data-level="1.1.3" data-path="prérequis.html"><a href="prérequis.html#installer-rstudio-sur-windows-ou-mac"><i class="fa fa-check"></i><b>1.1.3</b> Installer RStudio sur WINDOWS ou MAC</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="prérequis.html"><a href="prérequis.html#prise-en-main-de-rstudio"><i class="fa fa-check"></i><b>1.2</b> Prise en main de RStudio</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="prérequis.html"><a href="prérequis.html#manipuler-des-objets-valeurs-vecteurs-et-tableaux-de-données"><i class="fa fa-check"></i><b>1.2.1</b> Manipuler des objets (valeurs, vecteurs, et tableaux de données)</a></li>
+<li class="chapter" data-level="1.2.2" data-path="prérequis.html"><a href="prérequis.html#manipuler-des-objets-assignés-à-des-noms"><i class="fa fa-check"></i><b>1.2.2</b> Manipuler des objets assignés à des noms</a></li>
+<li class="chapter" data-level="1.2.3" data-path="prérequis.html"><a href="prérequis.html#utiliser-des-fonctions"><i class="fa fa-check"></i><b>1.2.3</b> Utiliser des fonctions</a></li>
+<li class="chapter" data-level="1.2.4" data-path="prérequis.html"><a href="prérequis.html#installer-et-charger-des-packages"><i class="fa fa-check"></i><b>1.2.4</b> Installer et charger des packages</a></li>
+<li class="chapter" data-level="1.2.5" data-path="prérequis.html"><a href="prérequis.html#divers"><i class="fa fa-check"></i><b>1.2.5</b> Divers</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="prérequis.html"><a href="prérequis.html#résumé"><i class="fa fa-check"></i><b>1.3</b> Résumé</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html"><i class="fa fa-check"></i><b>2</b> Importation et manipulation d’une base de données</a><ul>
+<li class="chapter" data-level="2.1" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#comprendre-ce-quest-une-base-de-données"><i class="fa fa-check"></i><b>2.1</b> Comprendre ce qu’est une base de données</a></li>
+<li class="chapter" data-level="2.2" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#fixer-le-répertoire-de-travail"><i class="fa fa-check"></i><b>2.2</b> Fixer le répertoire de travail</a></li>
+<li class="chapter" data-level="2.3" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#importer-la-base-de-données"><i class="fa fa-check"></i><b>2.3</b> Importer la base de données</a></li>
+<li class="chapter" data-level="2.4" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#manipuler-la-base-de-données"><i class="fa fa-check"></i><b>2.4</b> Manipuler la base de données</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#vérifier-le-succès-de-limportation-de-la-base"><i class="fa fa-check"></i><b>2.4.1</b> Vérifier le succès de l’importation de la base</a></li>
+<li class="chapter" data-level="2.4.2" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#vérifier-et-reconfigurer-les-types-des-variables-de-la-base"><i class="fa fa-check"></i><b>2.4.2</b> Vérifier et reconfigurer les types des variables de la base</a></li>
+<li class="chapter" data-level="2.4.3" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#sélectionner-des-variables-avec-select"><i class="fa fa-check"></i><b>2.4.3</b> Sélectionner des variables avec select()</a></li>
+<li class="chapter" data-level="2.4.4" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#renommer-des-variables-avec-rename"><i class="fa fa-check"></i><b>2.4.4</b> Renommer des variables avec rename()</a></li>
+<li class="chapter" data-level="2.4.5" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#créer-des-variables-avec-mutate"><i class="fa fa-check"></i><b>2.4.5</b> Créer des variables avec mutate()</a></li>
+<li class="chapter" data-level="2.4.6" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#sélectionner-des-lignes-avec-filter"><i class="fa fa-check"></i><b>2.4.6</b> Sélectionner des lignes avec filter()</a></li>
+<li class="chapter" data-level="2.4.7" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#arranger-les-lignes-avec-arrange"><i class="fa fa-check"></i><b>2.4.7</b> Arranger les lignes avec arrange()</a></li>
+<li class="chapter" data-level="2.4.8" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#résumer-des-variables-avec-group_by-et-summarize"><i class="fa fa-check"></i><b>2.4.8</b> Résumer des variables avec group_by() et summarize()</a></li>
+<li class="chapter" data-level="2.4.9" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#passer-dune-disposition-en-lignes-à-une-disposition-en-colonnes-et-inversement-avec-pivot_wider-et-pivot_longer"><i class="fa fa-check"></i><b>2.4.9</b> Passer d’une disposition en lignes à une disposition en colonnes et inversement avec pivot_wider() et pivot_longer()</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#résumé-1"><i class="fa fa-check"></i><b>2.5</b> Résumé</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html"><i class="fa fa-check"></i><b>3</b> Analyses descriptives univariées</a><ul>
+<li class="chapter" data-level="3.1" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html#variables-quantitatives"><i class="fa fa-check"></i><b>3.1</b> Variables quantitatives</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html#visualiser-la-distribution-de-la-variable"><i class="fa fa-check"></i><b>3.1.1</b> Visualiser la distribution de la variable</a></li>
+<li class="chapter" data-level="3.1.2" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html#les-indices-de-position"><i class="fa fa-check"></i><b>3.1.2</b> Les indices de position</a></li>
+<li class="chapter" data-level="3.1.3" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html#les-indices-de-dispersion"><i class="fa fa-check"></i><b>3.1.3</b> Les indices de dispersion</a></li>
+<li class="chapter" data-level="3.1.4" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html#les-indices-dasymétrie-et-daplatissement"><i class="fa fa-check"></i><b>3.1.4</b> Les indices d’asymétrie et d’aplatissement</a></li>
+<li class="chapter" data-level="3.1.5" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html#fonctions-pour-obtenir-un-récapitulatif-des-statistiques-descriptives"><i class="fa fa-check"></i><b>3.1.5</b> Fonctions pour obtenir un récapitulatif des statistiques descriptives</a></li>
+<li class="chapter" data-level="3.1.6" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html#quelles-statistiques-choisir-pour-résumer-une-variable-quantitative-dans-un-rapport"><i class="fa fa-check"></i><b>3.1.6</b> Quelles statistiques choisir pour résumer une variable quantitative dans un rapport ?</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html#variables-qualitatives"><i class="fa fa-check"></i><b>3.2</b> Variables qualitatives</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html#visualiser-la-distribution-de-la-variable-1"><i class="fa fa-check"></i><b>3.2.1</b> Visualiser la distribution de la variable</a></li>
+<li class="chapter" data-level="3.2.2" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html#déterminer-la-tendance-centrale"><i class="fa fa-check"></i><b>3.2.2</b> Déterminer la tendance centrale</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html#résumé-2"><i class="fa fa-check"></i><b>3.3</b> Résumé</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html"><i class="fa fa-check"></i><b>4</b> Analyses descriptives bivariées</a><ul>
+<li class="chapter" data-level="4.1" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#relation-entre-deux-variables-quantitatives"><i class="fa fa-check"></i><b>4.1</b> Relation entre deux variables quantitatives</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#etudier-graphiquement-la-relation"><i class="fa fa-check"></i><b>4.1.1</b> Etudier graphiquement la relation</a></li>
+<li class="chapter" data-level="4.1.2" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#etudier-numériquement-la-relation"><i class="fa fa-check"></i><b>4.1.2</b> Etudier numériquement la relation</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#relation-entre-deux-variables-qualitatives"><i class="fa fa-check"></i><b>4.2</b> Relation entre deux variables qualitatives</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#etudier-graphiquement-la-relation-1"><i class="fa fa-check"></i><b>4.2.1</b> Etudier graphiquement la relation</a></li>
+<li class="chapter" data-level="4.2.2" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#etudier-numériquement-la-relation-1"><i class="fa fa-check"></i><b>4.2.2</b> Etudier numériquement la relation</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#relation-entre-une-variable-quantitative-et-une-variable-qualitative"><i class="fa fa-check"></i><b>4.3</b> Relation entre une variable quantitative et une variable qualitative</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#etudier-graphiquement-la-relation-2"><i class="fa fa-check"></i><b>4.3.1</b> Etudier graphiquement la relation</a></li>
+<li class="chapter" data-level="4.3.2" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#etudier-numériquement-la-relation-2"><i class="fa fa-check"></i><b>4.3.2</b> Etudier numériquement la relation</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="régressions.html"><a href="régressions.html"><i class="fa fa-check"></i><b>5</b> Régressions</a><ul>
+<li class="chapter" data-level="5.1" data-path="régressions.html"><a href="régressions.html#régression-linéaire-simple"><i class="fa fa-check"></i><b>5.1</b> Régression linéaire simple</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="régressions.html"><a href="régressions.html#le-coefficient-de-détermination"><i class="fa fa-check"></i><b>5.1.1</b> Le coefficient de détermination</a></li>
+<li class="chapter" data-level="5.1.2" data-path="régressions.html"><a href="régressions.html#lerreur-typique-destimation"><i class="fa fa-check"></i><b>5.1.2</b> L’erreur typique d’estimation</a></li>
+<li class="chapter" data-level="5.1.3" data-path="régressions.html"><a href="régressions.html#graphique-récapitulatif"><i class="fa fa-check"></i><b>5.1.3</b> Graphique récapitulatif</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="références.html"><a href="références.html"><i class="fa fa-check"></i>Références</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Publié avec bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Analyser des données avec R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="analyses-descriptives-univariées" class="section level1">
+<h1><span class="header-section-number">Chapitre 3</span> Analyses descriptives univariées</h1>
+<p>Réaliser une analyse descriptive univariée signifie que l’on s’intéresse à une seule variable en particulier. L’enjeu est ici de prendre connaissance de la distribution de la variable, c’est-à-dire de la manière selon laquelle se répartissent les observations en fonction des valeurs que prend la variable. Autrement dit, il s’agit d’avoir une idée du nombre d’observations (qui peut être le nombre d’individus dans certains cas, tels que dans des études portant sur l’être humain) en lien avec les différentes valeurs qui ont été obtenues. De manière complémentaire, l’analyse descriptive univariée vise à prendre connaissance des indices statistiques qui caractérisent la variable, ainsi qu’à déterminer les indices statistiques qui seraient les plus pertinents pour la résumer.</p>
+<p>Dans cette partie, les notions de <strong>population</strong> et d’<strong>échantillon</strong> vont revenir à plusieurs reprises. La notion de population désigne tous les individus existant qui satisfont à un ou plusieurs critères particuliers (e.g., les adultes de moins de 30 ans). En général, lorsque l’on souhaite étudier un phénomène dans une population cible, il est impossible de prendre en compte tous les individus de la population en question. L’alternative est alors de conduire l’étude sur un échantillon, c’est-à-dire une fraction de la population composée d’individus qui représentent la population étudiée. La distinction entre population et échantillon est importante à faire à plusieurs égards. Si l’étude n’a pu être conduite que sur un échantillon, cela implique de mettre en oeuvre des procédures statistiques pour estimer avec plus ou moins d’incertitude le résultat réel concernant la population étudiée, cela à partir du résultat trouvé dans l’échantillon observé. La seule analyse descriptive de l’échantillon ne suffit donc pas en soit à décrire une population. En revanche, lorsque l’étude a pu être conduite sur l’ensemble de la population à étudier (e.g., l’équipe de France dans un sport donné), il n’y a par définition pas lieu de chercher à conduire des procédures statistiques particulières pour estimer le résultat réel pour la population en question. Dans ce chapitre, les procédures d’analyse proposées servent en général à seulement décrire la variable telle qu’elle est donnée à voir à partir des données que l’on a en sa possession. L’objectif n’est donc pas ici de discuter particulièrement des statistiques les plus pertinentes à utiliser lorsqu’il s’agit de chercher à résumer la distribution d’une variable à l’échelle d’une population à partir d’un échantillon initial. Pour le moment, il s’agit d’être en mesure de décrire l’échantillon (ou la population si les données obtenues concernent toute la population) que l’on a sous les yeux.</p>
+<p>Dans le cadre de cette partie, nous allons commencer à voir comment produire des graphiques dans RStudio, et par là-même, découvrir progressivement le package ggplot2. Le package ggplot2 n’est pas le plus simple à utiliser lorsque l’on découvre le logiciel R. D’ailleurs, de nombreux manuels portant sur R privilégient les packages et fonctions de base de R lorsqu’il s’agit de montrer comment obtenir des graphiques relativement simples pour analyser ses données. Cependant, les packages et fonctions de base de R sont rapidement limités lorsqu’il s’agit de réaliser des graphiques relativement complexes. Le parti pris ici est donc d’initier dès à présent à l’utilisation du package ggplot2 pour réaliser des graphiques, même simples, afin de pouvoir être plus rapidement à l’aise dès lors qu’il s’agira par la suite de produire des graphiques relativement élaborés à l’aide de ce package. Cependant, l’ambition n’est pas ici de permettre la maîtrise complète du package ggplot2. Pour cela, il vaut mieux se référer à des documentations spécialisées telles que la seconde édition de l’ouvrage <em>ggplot2</em> d’Hadley Wickham <span class="citation">(<a href="#ref-Wickham2016" role="doc-biblioref">2016</a>)</span>, en sachant qu’une troisième édition est en cours de développement et est accessible en ligne ici : <a href="https://ggplot2-book.org" class="uri">https://ggplot2-book.org</a>.</p>
+<div id="variables-quantitatives" class="section level2">
+<h2><span class="header-section-number">3.1</span> Variables quantitatives</h2>
+<div id="visualiser-la-distribution-de-la-variable" class="section level3">
+<h3><span class="header-section-number">3.1.1</span> Visualiser la distribution de la variable</h3>
+<p>Dans le cadre de l’analyse de variables quantitatives, il est toujours utile de d’abord visualiser graphiquement la distribution des données à l’aide d’un <strong>histogramme</strong>. Un histogramme, c’est un graphique avec des barres dont la largeur représente un intervalle donné de valeurs numériques, et dont la hauteur représente le nombre d’observations associées à une valeur qui est située dans l’intervalle en question. Plus une barre est longue, plus il y a d’observations concernées par l’intervalle de valeurs. Un exemple d’histogramme est montré ci-dessous.</p>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb80-1" title="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> iris, <span class="kw">aes</span>(<span class="dt">x =</span> Sepal.Length)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb80-2" title="2"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>)</a></code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="Analyser-des-données-avec-R_files/figure-html/geom_histogram-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Pour générer cet histogramme, nous avons utilisé les fonctions <code>ggplot()</code> et <code>geom_histogram()</code> du package <code>ggplot2</code>. La fonction <code>ggplot()</code> est nécessaire pour initier le graphique. Si on lance la commande <code>ggplot()</code> dans la Console, on peut voir qu’un écran grisé apparaît à droite de l’écran du PC dans la fenêtre <strong>Plots</strong> de RStudio. Cet écran grisé est tel un tableau vierge qui ne demande qu’à être complété grâce à des commandes supplémentaires que l’on doit préciser dans le code. Dans le code montré ci-dessus, on remarque que la fonction <code>ggplot()</code> a été configurée à l’aide de deux arguments : <code>data</code>, et <code>aes()</code>. L’argument <code>data</code> désigne le jeu de données à partir duquel n’importe quelle autre fonctionnalité du package <code>ggplot2</code> sera utilisée si rien d’autre n’est précisé dans le reste du code. Comme on peut le voir, le jeu de données utilisé ici est <code>iris</code>, que nous avons déjà rencontré dans la partie précédente. L’argument <code>aes()</code>, lui, permet de désigner les données à partir desquelles les éléments graphiques indiqués par la suite devront être réalisés. Dans le cadre d’une analyse univariée, nous n’avons besoin que d’une seule variable. Celle-ci peut être renseignée à droite de <code>x =</code>, et on aura reconnu ici le nom d’une variable effectivement présente dans le jeu de données <code>iris</code>. Une fois que ces informations sont renseignées, nous ne sommes pas encore en mesure de voir un quelconque graphique. Pour cela, il faut que la fonction <code>ggplot()</code> soit accompagnée d’une fonction qui permette d’indiquer quel type de graphique on veut. C’est à cela que sert ici la fonction <code>geom_histogram()</code>. On peut noter que l’ajout de cette fonction a été réalisé grâce au signe <code>+</code>, en écrivant la fonction <em>après</em> ce signe. La fonction <code>geom_histogram()</code> aurait pu être écrite directement après le symbole <code>+</code>, mais pour des raisons de lisibilité, nous sommes allés à la ligne. (Attention : Aller à la ligne <em>avant</em> le signe <code>+</code> n’est en revanche pas possible.) De manière intéressante (et importante) pour la suite, on pourra noter que dans ce cas de figure, nous aurions pu aussi utiliser le symbole <em>pipe</em> (<code>%&gt;%</code>) pour enchaîner la création d’un graphique à la suite de l’écriture du jeu de données qu’on aurait indiqué initialement dans le code, comme cela :</p>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb82-1" title="1">iris <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb82-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Sepal.Length)) <span class="op">+</span><span class="st">                  </span><span class="co"># On remarque ici que l&#39;argument data a dû être enlevé.</span></a>
+<a class="sourceLine" id="cb82-3" title="3"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>)</a></code></pre></div>
+<p>Comme l’indique le message qui accompagne le graphique, l’histogramme a été réalisé sur la base de 30 <em>bins</em>. Cela signifie que pour faire ce graphique, R a découpé en 30 intervalles égaux l’intervalle allant de la valeur la plus faible de la variable (i.e., le minimum) à la valeur la plus élevée de la variable (i.e., le maximum). Il s’agit de la méthode par défaut utilisée par la fonction <code>geom_histogram()</code>. Toutefois, cette méthode par défaut n’est pas vraiment adaptée, comme cela l’est indiqué d’ailleurs dans la documentation d’aide associée à cette fonction. Et puis, lorsqu’il s’agit d’appréhender au mieux la distribution d’une variable avec un histogramme, une bonne pratique est d’observer ce qu’il se passe avec différentes largeurs de <em>bins</em>. La largeur d’une <em>bin</em> peut être modifiée à l’aide de l’argument <code>binwidth</code>. L’unité de la valeur associée à cet argument correspond à l’unité de la variable étudiée.</p>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb83-1" title="1"><span class="co"># Graphique avec binwidth = 0.3</span></a>
+<a class="sourceLine" id="cb83-2" title="2"><span class="kw">ggplot</span>(<span class="dt">data =</span> iris, <span class="kw">aes</span>(<span class="dt">x =</span> Sepal.Length)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb83-3" title="3"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth  =</span> <span class="fl">0.3</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb83-4" title="4"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;binwidth = 0.3&quot;</span>)</a>
+<a class="sourceLine" id="cb83-5" title="5"></a>
+<a class="sourceLine" id="cb83-6" title="6"><span class="co"># Graphique avec binwidth = 0.7</span></a>
+<a class="sourceLine" id="cb83-7" title="7"><span class="kw">ggplot</span>(<span class="dt">data =</span> iris, <span class="kw">aes</span>(<span class="dt">x =</span> Sepal.Length)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb83-8" title="8"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth  =</span> <span class="fl">0.7</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb83-9" title="9"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;binwidth = 0.7&quot;</span>)</a></code></pre></div>
+<p><img src="Analyser-des-données-avec-R_files/figure-html/geom_histogram with varied binwidth_2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>En plus de l’histogramme, une autre manière de prendre connaissance graphiquement de la distribution des données d’une variable quantitative est d’utiliser une <strong>boîte à moustaches</strong>. Pour ce faire, il convient d’utiliser la fonction <code>geom_boxplot()</code>, comme illustré ci-dessous. (On pourra noter l’ajout d’une ligne de code avec une fonction <code>theme()</code> dont ne présentera pas les détails ici ; cette fonction nous sert juste ici à ne pas montrer des chiffres qui auraient été ajoutés par défaut à gauche du graphique et qui n’auraient eu aucun intérêt.)</p>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb84-1" title="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> iris, <span class="kw">aes</span>(<span class="dt">x =</span> Sepal.Length)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb84-2" title="2"><span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb84-3" title="3"><span class="st">    </span><span class="kw">theme</span>(<span class="dt">axis.text.y =</span> <span class="kw">element_blank</span>(), </a>
+<a class="sourceLine" id="cb84-4" title="4">          <span class="dt">axis.ticks.y =</span> <span class="kw">element_blank</span>())</a></code></pre></div>
+<p><img src="Analyser-des-données-avec-R_files/figure-html/geom_boxplot-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>La boîte à moustaches nous livre plusieurs informations. Tout d’abord, ses extrémités nous indiquent ce qu’on appelle le premier quartile (ici représenté par le bord gauche de la boîte) et le troisième quartile (ici représenté par le bord droit de la boîte). Le premier quartile (Q1) désigne la valeur en-dessous de laquelle on retrouve 25 % des observations de la variable (i.e., 25 % des observations sont associées à une valeur plus faible que Q1), alors que le troisième quartile (Q3) représente la valeur en-dessous de laquelle on retrouve 75 % des observations (i.e., 75 % des observations sont associées à une valeur plus faible que Q3). Cela indique alors que sur le graphique montré ci-dessus, l’intervalle qui sépare le bord gauche du bord droit de la boîte contient 50 % des observations. La ligne noire à l’intérieur de la boîte blanche désigne la médiane, qui est la valeur pour laquelle on a 50 % des observations qui ont une valeur inférieure à cette valeur repère, et pour laquelle on a 50 % des observations qui ont une valeur supérieure à cette valeur repère. Les lignes noires en-dehors de la boîte sont les moustaches. Dans le cas présent, la moustache de gauche s’étend jusqu’à la valeur minimale de la variable, et la moustache de droite s’étend jusqu’à la valeur maximale de la variable. Dans le cas où le minimum (ou le maximum) aurait été éloigné de la médiane de plus de 1.5 fois la différence entre Q3 et Q1 (qu’on appelle <strong>intervalle interquartile</strong>), l’extrémité de la moustache se serait arrêtée à la dernière valeur avant cette limite, et toute valeur ayant dépassé cette limite aurait été représentée par un point. Pour illustrer ce dernier cas de figure, on peut modifier manuellement une valeur de la variable Sepal.Length de telle sorte à ce qu’il y ait une nouvelle valeur qui soit particulièrement éloignée de la boîte. Une telle valeur s’appelle un <em>outlier</em>.</p>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb85-1" title="1">iris<span class="op">$</span>Sepal.Length[<span class="dv">3</span>] &lt;-<span class="st"> </span><span class="dv">12</span>                     <span class="co"># On modifie ici, pour l&#39;exemple, la valeur de la 3ème observation </span></a>
+<a class="sourceLine" id="cb85-2" title="2"><span class="kw">ggplot</span>(<span class="dt">data =</span> iris, <span class="kw">aes</span>(<span class="dt">x =</span> Sepal.Length)) <span class="op">+</span><span class="st">   </span><span class="co"># en lui assignant la valeur 12.</span></a>
+<a class="sourceLine" id="cb85-3" title="3"><span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb85-4" title="4"><span class="st">    </span><span class="kw">theme</span>(<span class="dt">axis.text.y =</span> <span class="kw">element_blank</span>(), </a>
+<a class="sourceLine" id="cb85-5" title="5">          <span class="dt">axis.ticks.y =</span> <span class="kw">element_blank</span>())</a></code></pre></div>
+<p><img src="Analyser-des-données-avec-R_files/figure-html/geom_boxplot modifié-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Une boîte à moustaches a donc notamment l’intérêt de mettre en évidence des valeurs qui apparaissent comme “étranges” par rapport au reste des données. Lorsqu’il semble évident que l’<em>outlier</em> est une valeur erronnée (ou quand on veut tout simplement vérifier qu’il s’agit d’une erreur ou non), il est intéressant de savoir à quelle observation (i.e., à quel individu dans certains contextes) cette valeur étrange appartient, pour ensuite éventuellement la corriger. Malheureusement, la fonction <code>geom_boxplot()</code> ne dispose pas d’argument pour permettre d’identifier facilement à quelle observation appartient cette valeur. Cependant, on peut s’appuyer sur des fonctions créées manuellement dans R pour parvenir à cela. Dans ce cas de figure, le site <a href="https://stackoverflow.com" class="uri">https://stackoverflow.com</a> est souvent intéressant car riche de solutions. C’est d’ailleurs à partir de ce site que provient la fonction montrée ci-dessous (<a href="https://stackoverflow.com/questions/33524669/labeling-outliers-of-boxplots-in-r" class="uri">https://stackoverflow.com/questions/33524669/labeling-outliers-of-boxplots-in-r</a>) qui va nous permettre ensuite de savoir, à partir du graphique, à quelle observation correspond cette donnée étrange.</p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb86-1" title="1">is_outlier &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb86-2" title="2">  <span class="kw">return</span>(x <span class="op">&lt;</span><span class="st"> </span><span class="kw">quantile</span>(x, <span class="fl">0.25</span>) <span class="op">-</span><span class="st"> </span><span class="fl">1.5</span> <span class="op">*</span><span class="st"> </span><span class="kw">IQR</span>(x) <span class="op">|</span><span class="st"> </span>x <span class="op">&gt;</span><span class="st"> </span><span class="kw">quantile</span>(x, <span class="fl">0.75</span>) <span class="op">+</span><span class="st"> </span><span class="fl">1.5</span> <span class="op">*</span><span class="st"> </span><span class="kw">IQR</span>(x))</a>
+<a class="sourceLine" id="cb86-3" title="3">}</a></code></pre></div>
+<p>Voici donc, ci-dessus, à quoi ressemble une fonction à son état brut, avec : le nom de la fonction à gauche de la flèche d’assignation (<code>&lt;-</code>), la commande <code>function()</code> qui permet d’amorcer la création de la fonction, et les lignes de code entre les accolades { } qui indiquent les actions que la fonction réalise. La seule chose qu’il faut comprendre à ce stade, c’est que cette fonction, qui va donc s’appeler par la suite <code>is_outlier()</code>, a besoin pour fonctionner qu’on lui indique un nom de variable (représenté par la lettre <code>x</code> dans le code ci-dessus), et que le résultat de cette fonction sera une nouvelle variable qui contiendra seulement des <code>TRUE</code> ou des <code>FALSE</code>, en sachant que <code>TRUE</code> correspondra au fait que la valeur de la variable étudiée était un <em>outlier</em>, et que <code>FALSE</code> correspondra au fait que la valeur de la variable étudiée n’était pas un <em>outlier</em>. (Notons ici que la définition d’un <em>outlier</em> est la même que celle décrite plus haut, à savoir une valeur qui serait éloignée de la médiane de plus de 1.5 fois l’intervalle interquartile.) Mais regardons concrètement ce que donne cette fonction lorsqu’elle est appliquée à la variable Sepal.Length du jeu de données <code>iris</code> (NB : La fonction ne marchera que si elle a été activée/créée auparavant) :</p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb87-1" title="1"><span class="kw">is_outlier</span>(<span class="dt">x =</span> iris<span class="op">$</span>Sepal.Length)</a></code></pre></div>
+<pre><code>##   [1] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [12] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [23] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [34] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [45] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [56] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [67] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [78] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [89] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [100] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [111] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [122] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [133] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [144] FALSE FALSE FALSE FALSE FALSE FALSE FALSE</code></pre>
+<p>Quand on regarde bien, on voit que la troisème observation de cette nouvelle variable que l’on vient de créer (seulement de manière temporaire ici car on ne l’a pas assignée à un nom) contient la valeur <code>TRUE</code>, ce qui est en accord avec la valeur que nous avons introduite auparavant dans la variable Sepal.Length. Le fait d’observer ces valeurs <code>TRUE</code> et <code>FALSE</code> n’est évidemment pas une stratégie très pratique pour déterminer à quelle observation correspondrait l’<em>outlier</em>, et c’est pourquoi l’étape suivante consiste à montrer comment on peut se servir de cette fonction <code>is_outlier()</code> pour faire apparaître sur un graphique de boîte à moustaches les observations à qui appartiendraient les valeurs étranges.</p>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb89-1" title="1">iris <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb89-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">id =</span> <span class="kw">as.factor</span>(<span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">50</span>, <span class="dt">times =</span> <span class="dv">3</span>)),                          <span class="co"># Ajout d&#39;un numéro id pour les observations.</span></a>
+<a class="sourceLine" id="cb89-3" title="3">         <span class="dt">id_outlier =</span> <span class="kw">ifelse</span>(<span class="kw">is_outlier</span>(<span class="dt">x =</span> Sepal.Length), id, <span class="st">&quot;&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Création d&#39;une nouvelle variable appelée id_outlier.</span></a>
+<a class="sourceLine" id="cb89-4" title="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Sepal.Length, <span class="dt">y =</span> <span class="st">&quot;&quot;</span>)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb89-5" title="5"><span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb89-6" title="6"><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> id_outlier),  <span class="dt">hjust =</span> <span class="dv">-1</span>) <span class="op">+</span><span class="st">                     </span><span class="co"># Ajout des numéros id des outliers.</span></a>
+<a class="sourceLine" id="cb89-7" title="7"><span class="st">    </span><span class="kw">theme</span>(<span class="dt">axis.text.y =</span> <span class="kw">element_blank</span>(), </a>
+<a class="sourceLine" id="cb89-8" title="8">          <span class="dt">axis.ticks.y =</span> <span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb89-9" title="9">          <span class="dt">axis.title.y =</span> <span class="kw">element_blank</span>())</a></code></pre></div>
+<p><img src="Analyser-des-données-avec-R_files/figure-html/geom_boxplot with outlier id-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Il y a plusieurs choses à expliquer par rapport au graphique qui comporte à présent, comme on peut le voir ci-dessus, le numéro id associé à l’observation pour laquelle nous avions modifié la valeur. Tout d’abord, il faut noter qu’avant de créer le graphique, nous avons ajouté temporairement au jeu de données, avec la fonction <code>mutate()</code>, la variable <code>id_outlier</code>. Cette variable a été créée à l’aide de deux fonctions en réalité : la fonction <code>ifelse()</code>, et la fonction <code>is_outlier()</code> qu’on a présentée succintement plus haut. Ici, la fonction <code>ifelse()</code> a fonctionné comme cela : si la fonction <code>id_outlier()</code> renvoyait la valeur <code>TRUE</code>, alors on conservait le numéro id de la variable Sepal.Length, sinon, on mettait un espace vide. Cela veut dire que la variable id_outlier ne contenait que les numéros id pour lesquels la fonction <code>is_outlier()</code> avait renvoyé la valeur <code>TRUE</code>. Pour visualiser ce qu’il s’est passé, on peut revoir la conséquence du début du code qui a permis de faire le graphique (cf. à droite du tableau ci-dessous) :</p>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb90-1" title="1">iris <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb90-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">id =</span> <span class="kw">as.factor</span>(<span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">50</span>, <span class="dt">times =</span> <span class="dv">3</span>)),                           </a>
+<a class="sourceLine" id="cb90-3" title="3">         <span class="dt">id_outlier =</span> <span class="kw">ifelse</span>(<span class="kw">is_outlier</span>(<span class="dt">x =</span> Sepal.Length), id, <span class="st">&quot;&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb90-4" title="4"><span class="st">  </span><span class="kw">select</span>(id, Sepal.Length, id_outlier)</a></code></pre></div>
+<pre><code>## # A tibble: 150 x 3
+##    id    Sepal.Length id_outlier
+##    &lt;fct&gt;        &lt;dbl&gt; &lt;chr&gt;     
+##  1 1              5.1 &quot;&quot;        
+##  2 2              4.9 &quot;&quot;        
+##  3 3             12   3         
+##  4 4              4.6 &quot;&quot;        
+##  5 5              5   &quot;&quot;        
+##  6 6              5.4 &quot;&quot;        
+##  7 7              4.6 &quot;&quot;        
+##  8 8              5   &quot;&quot;        
+##  9 9              4.4 &quot;&quot;        
+## 10 10             4.9 &quot;&quot;        
+## # ... with 140 more rows</code></pre>
+<p>Une fois cette procédure réalisée, le reste du code, et notamment la fonction <code>geom_text()</code>, a permis d’ajouter des éléments textuels au graphique, en l’occurence en s’appuyant sur la variable id_outlier, tel que configuré avec l’argument <code>aes()</code> de la fonction <code>geom_text()</code>.</p>
+<p>L’ensemble de la procédure présentée ci-dessus a le mérite de conduire exactement au résultat que l’on veut et seulement à ce résultat. Toutefois, elle peut être un peu fastidieuse. Un moyen sans doute plus rapide, mais qui a également ses limites, est l’utilisation de la fonction <code>ggbetweenstats</code> du package <code>ggstatsplot</code>. Un exemple d’utilisation de cette fonction est montré ci-dessous.</p>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb92-1" title="1"><span class="kw">library</span>(ggstatsplot) </a>
+<a class="sourceLine" id="cb92-2" title="2">iris <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb92-3" title="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">id =</span> <span class="kw">as.factor</span>(<span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">50</span>, <span class="dt">times =</span> <span class="dv">3</span>))) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb92-4" title="4"><span class="st">  </span><span class="kw">ggbetweenstats</span>(<span class="dt">x =</span> Species, </a>
+<a class="sourceLine" id="cb92-5" title="5">                 <span class="dt">y =</span> Sepal.Length,</a>
+<a class="sourceLine" id="cb92-6" title="6">                 <span class="dt">outlier.tagging =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb92-7" title="7">                 <span class="dt">outlier.label =</span> id)</a></code></pre></div>
+<p><img src="Analyser-des-données-avec-R_files/figure-html/vizualising outliers with ggstatplot-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Dans cet exemple, nous avons indiqué, pour l’argument <code>x</code> de la fonction <code>ggbetweenstats</code>, une variable qualitative du jeu de données <code>iris</code>, car la fonction contraint à devoir renseigner une variable pour cet argument afin de pouvoir afficher le graphique. Ainsi, il n’était pas possible de visualiser toutes les données de manière groupée, c’est-à-dire toutes espèces confondues si l’on considère le jeu de données <code>iris</code>. Plusieurs éléments sont montrés sur le graphique. La seule chose qui nous importe ici, c’est le numéro en haut à gauche, qui est l’identifiant de l’observation présentant une valeur anormale.</p>
+<p>Lorsque la valeur anormale identifiée est effectivement une erreur de saisie dans la base de données, il convient de corriger la valeur avec la fonction d’assignation comme nous l’avons fait précédemment :</p>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb93-1" title="1">iris<span class="op">$</span>Sepal.Length[<span class="dv">3</span>] &lt;-<span class="st"> </span><span class="fl">4.7</span>  <span class="co"># Le nombre entre crochets désigne la position de l&#39;observation dans la variable.</span></a></code></pre></div>
+<p>On remarque ainsi qu’au-delà de prendre connaissance de la forme de la distribution, passer par ces étapes graphiques permet aussi de s’assurer qu’il n’y a pas eu d’erreur lors de la saisie des données dans la base (du moins, pas d’erreur visible et qui risquerait d’impacter grandement les calculs futurs). Passer par l’analyse graphique est donc recommandé avant de pouvoir se fier aux résultats numériques que l’on pourrait calculer par la suite, tels que les indices statistiques qui permettent de résumer numériquement une variable. Afin de faciliter l’analyse graphique de la distribution de la variable étudiée, nous avons crée une fonction, appelée <code>g_distri()</code> (cf. ci-dessous), visant à produire à la fois un histogramme et une boîte à moustaches représentant la variable étudiée, ainsi qu’un graphique de type nuage de points montrant les valeurs individuelles (la fonction a été configurée de telle sorte à ce que les points apparaissent davantage de couleur blanche là où il y a plus d’observations ; les observations isolées seront montrées avec des points relativement transparents).</p>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb94-1" title="1">g_distri &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">x =</span> <span class="ot">NULL</span>, <span class="dt">binwidth =</span> <span class="ot">NULL</span>) {</a>
+<a class="sourceLine" id="cb94-2" title="2">  <span class="kw">require</span>(ggplot2)</a>
+<a class="sourceLine" id="cb94-3" title="3">  <span class="kw">require</span>(magrittr)</a>
+<a class="sourceLine" id="cb94-4" title="4">  <span class="kw">require</span>(patchwork)</a>
+<a class="sourceLine" id="cb94-5" title="5">  </a>
+<a class="sourceLine" id="cb94-6" title="6">  data &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(x)</a>
+<a class="sourceLine" id="cb94-7" title="7">  <span class="kw">names</span>(data) &lt;-<span class="st"> &quot;x&quot;</span></a>
+<a class="sourceLine" id="cb94-8" title="8">  </a>
+<a class="sourceLine" id="cb94-9" title="9">  g1 &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb94-10" title="10"><span class="st">    </span>data <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb94-11" title="11"><span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb94-12" title="12"><span class="st">    </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> binwidth, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb94-13" title="13"><span class="st">    </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="kw">min</span>(x, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="kw">max</span>(x, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))) <span class="op">+</span></a>
+<a class="sourceLine" id="cb94-14" title="14"><span class="st">    </span><span class="kw">theme</span>(<span class="dt">axis.title.x =</span> <span class="kw">element_blank</span>())</a>
+<a class="sourceLine" id="cb94-15" title="15">  </a>
+<a class="sourceLine" id="cb94-16" title="16">  g2 &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb94-17" title="17"><span class="st">    </span>data <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb94-18" title="18"><span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb94-19" title="19"><span class="st">    </span><span class="kw">geom_boxplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb94-20" title="20"><span class="st">    </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="kw">min</span>(x, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="kw">max</span>(x, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))) <span class="op">+</span></a>
+<a class="sourceLine" id="cb94-21" title="21"><span class="st">    </span><span class="kw">theme</span>(<span class="dt">axis.text.y =</span> <span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb94-22" title="22">          <span class="dt">axis.title.x =</span> <span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb94-23" title="23">          <span class="dt">axis.ticks.y =</span> <span class="kw">element_blank</span>())</a>
+<a class="sourceLine" id="cb94-24" title="24">  </a>
+<a class="sourceLine" id="cb94-25" title="25">    g3 &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb94-26" title="26"><span class="st">      </span>data <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb94-27" title="27"><span class="st">      </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb94-28" title="28"><span class="st">      </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> <span class="st">&quot;&quot;</span>), <span class="dt">shape =</span> <span class="dv">21</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.25</span>, <span class="dt">size =</span> <span class="dv">3</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb94-29" title="29"><span class="st">      </span><span class="kw">ylab</span>(<span class="st">&quot;&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb94-30" title="30"><span class="st">      </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="kw">min</span>(x, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="kw">max</span>(x, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))) <span class="op">+</span></a>
+<a class="sourceLine" id="cb94-31" title="31"><span class="st">      </span><span class="kw">theme</span>(<span class="dt">axis.text.y =</span> <span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb94-32" title="32">          <span class="dt">axis.ticks.y =</span> <span class="kw">element_blank</span>())</a>
+<a class="sourceLine" id="cb94-33" title="33">  </a>
+<a class="sourceLine" id="cb94-34" title="34">  g1 <span class="op">+</span><span class="st"> </span>g2 <span class="op">+</span><span class="st"> </span>g3 <span class="op">+</span><span class="st"> </span><span class="kw">plot_layout</span>(<span class="dt">nrow =</span> <span class="dv">3</span>, <span class="dt">heights =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>))</a>
+<a class="sourceLine" id="cb94-35" title="35">}</a></code></pre></div>
+<p>L’utilisation de la fonction <code>g_distri()</code> est illustrée ci-dessous (pour rappel, il est important d’activer/créer la fonction avant de pouvoir l’utiliser) :</p>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb95-1" title="1"><span class="kw">g_distri</span>(<span class="dt">x =</span> iris<span class="op">$</span>Sepal.Length, <span class="dt">binwidth =</span> <span class="fl">0.3</span>)</a></code></pre></div>
+<p><img src="Analyser-des-données-avec-R_files/figure-html/g_distri example-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Lors de l’analyse de données, différentes formes typiques de distribution peuvent être rencontrées, notamment des formes <strong>gaussiennes</strong>, <strong>asymétriques</strong>, <strong>leptocurtiques</strong>, et <strong>platycurtiques</strong> <span class="citation">(Dart &amp; Chatellier, <a href="#ref-Dart2003" role="doc-biblioref">2003</a>)</span>. Ces formes sont illustrées sur la figure ci-dessous. Les formes gaussiennes sont observées en présence de variables suivant ce qu’on appelle une <strong>loi normale</strong>. Très souvent, on associe une distribution gaussienne, et donc une loi normale, à une distribution en forme de cloche, bien que l’analogie à la cloche pourrait se discuter. Les formes asymétriques traduisent le fait que la majorité des observations sont concentrées sur une extrémité de l’intervalle des valeurs possibles, et qu’il existe des observations, non majoritaires, avec des valeurs pouvant être très éloignées de la majorité des données, mais seulement d’un seul côté de la distribution. Enfin, les formes leptocurtiques et platycurtiques sont appelées ainsi par comparaison à la forme gaussienne. En présence d’une forme leptocurtique, la distribution s’avère plus pointue, avec des queues (qui sont les extrémités de la distribution) plus longues qu’avec une forme gaussienne. Dans le cadre d’une distribution platycurtique, la distribution est plus aplatie, avec des queues plus courtes qu’avec une forme gaussienne <span class="citation">(Dart &amp; Chatellier, <a href="#ref-Dart2003" role="doc-biblioref">2003</a>)</span>. La distribution uniforme est un cas particulier de distribution platycurtique, et c’est cette distribution qui est en réalité montrée sur la figure ci-dessous.</p>
+<p><img src="Analyser-des-données-avec-R_files/figure-html/various distributions-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Comme il le sera vu plus tard, de nombreuses analyses statistiques reposent sur l’hypothèse que la variable étudiée est gaussienne. Il est donc important de chercher, graphiquement dans un premier temps, à savoir si la distribution de la variable est effectivement gaussienne. Le fait d’être capable d’identifier les autres formes de distribution peut être aussi important afin de mener des analyses appropriées. Dans les exemples montrés ci-dessus, les distributions ont été créées à partir de 1000 valeurs générées de manière aléatoire de telle sorte à suivre des lois prédéfinies et ainsi illustrer différentes distributions possibles. C’est pour cette raison que les formes de distribution montrées sur la figure ci-dessus sont si nettes. Lorsque l’on travaille dans certains domaines ou contextes, tel qu’avec l’être humain, il peut être compliqué d’obtenir autant de données, et les formes de distribution seront alors plus dures à identifier.</p>
+<p>Une fois qu’une première analyse graphique des données a été réalisée, il peut être utile de chercher à résumer de manière numérique la variable. Plusieurs types de statistiques peuvent être utilisés à cet effet : les <strong>indices de position</strong>, les <strong>indices de dispersion</strong>, les <strong>indices d’asymétrie</strong>, et les <strong>indices d’aplatissement</strong>.</p>
+</div>
+<div id="les-indices-de-position" class="section level3">
+<h3><span class="header-section-number">3.1.2</span> Les indices de position</h3>
+<p>Les indices de position servent à donner un ordre de grandeur de la variable. Autrement dit, ces indices permettent de positionner la variable sur une échelle de valeurs numériques. De plus, ces statistiques peuvent être utilisées pour donner une idée de ce qu’on appelle la <strong>tendance centrale</strong>, c’est-à dire-la valeur typique d’une distribution qui donne une bonne indication de la localisation de la majorité des observations <span class="citation">(Rousselet &amp; Wilcox, <a href="#ref-Rousselet2020" role="doc-biblioref">2020</a>)</span>. Différentes statistiques peuvent être étudiées à cette fin : la <strong>moyenne</strong>, la <strong>médiane</strong>, la <strong>moyenne rognée</strong>, et le <strong>mode</strong>.</p>
+<p><em>La moyenne</em></p>
+<p>Si l’on pose que <em>N</em> est le nombre de valeurs dans une variable (on parle également de <strong>taille</strong> de la variable), que <em>i</em> est la i-ème observation (i-ème position) dans la variable, et que <span class="math inline">\(X{i}\)</span> est la valeur associée à la i-ème position, alors le calcul de la moyenne, notée <span class="math inline">\(\overline{X}\)</span>, peut être écrit tel que ci-dessous :
+<span class="math display">\[\overline{X} = \frac{1}{N}\sum_{i=1}^{N} X{i}\]</span>
+Cette expression mathématique signifie que la moyenne s’obtient en additionnant (<span class="math inline">\(\sum\)</span>) les valeurs allant de la position 1 à la position <em>N</em> de la variable, et en divisant le tout par le nombre total de valeurs <em>N</em> contenues dans la variable. Pour mieux comprendre, prenons par exemple une variable qui ne contiendrait que les cinq premières valeurs de la variable Sepal.Length du jeu de données <code>iris</code> et qu’on appelle <code>sample_iris</code>.</p>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb96-1" title="1">sample_iris &lt;-<span class="st"> </span>iris<span class="op">$</span>Sepal.Length[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</a>
+<a class="sourceLine" id="cb96-2" title="2">sample_iris</a></code></pre></div>
+<pre><code>## [1] 5.1 4.9 4.7 4.6 5.0</code></pre>
+<p>La moyenne de la variable <code>sample_iris</code> peut alors s’obtenir en divisant la somme des valeurs de la variable par le nombre de valeurs contenues dans la variable, qui est ici de 5 :</p>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb98-1" title="1">(<span class="fl">5.1</span> <span class="op">+</span><span class="st"> </span><span class="fl">4.9</span> <span class="op">+</span><span class="st"> </span><span class="fl">4.7</span> <span class="op">+</span><span class="st"> </span><span class="fl">4.6</span> <span class="op">+</span><span class="st"> </span><span class="fl">5.0</span>) <span class="op">/</span><span class="st"> </span><span class="dv">5</span></a></code></pre></div>
+<pre><code>## [1] 4.86</code></pre>
+<p>Évidémment, ce n’est pas très pratique de fonctionner comme cela. Aussi, R permet de calculer directement la moyenne avec la fonction <code>mean()</code> :</p>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb100-1" title="1"><span class="kw">mean</span>(<span class="dt">x =</span> sample_iris)</a></code></pre></div>
+<pre><code>## [1] 4.86</code></pre>
+<p>Dans certains cas, il se peut qu’il y ait des valeurs manquantes dans la variable à étudier. Ces valeurs manquantes sont en principe notées <strong>NA</strong>. Introduisons une valeur manquante dans notre variable <code>sample_iris</code>, et essayons de calculer la moyenne à nouveau :</p>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb102-1" title="1">sample_iris[<span class="dv">2</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
+<a class="sourceLine" id="cb102-2" title="2">sample_iris</a></code></pre></div>
+<pre><code>## [1] 5.1  NA 4.7 4.6 5.0</code></pre>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb104-1" title="1"><span class="kw">mean</span>(<span class="dt">x =</span> sample_iris)</a></code></pre></div>
+<pre><code>## [1] NA</code></pre>
+<p>Comme nous pouvons le voir ci-dessus, quand il y a une valeur manquante dans la variable, l’utilisation de la fonction <code>mean()</code> configurée par défaut renvoie la valeur NA, ce qui signifie que R n’a pas pu calculer de valeur moyenne, ce qui est normal car nous lui avons demandé de le faire en utilisant une valeur inconnue. Dans ce cas là, pour pouvoir faire le calcul de la moyenne seulement à partir des valeurs connues, il faut configurer la fonction pour que les valeurs manquantes ne soient pas considérées pour le calcul. L’argument à configurer dans ce cas là est <code>na.rm</code> en lui associant la valeur <code>TRUE</code>.</p>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb106-1" title="1"><span class="kw">mean</span>(<span class="dt">x =</span> sample_iris, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<pre><code>## [1] 4.85</code></pre>
+<p>La gestion des valeurs manquantes telle que nous venons de la voir s’effectue de la même manière avec beaucoup de fonctions dans R. Ainsi, il s’agira de fonctionner de la même manière avec la plupart des fonctions de base que nous pourrons rencontrer par la suite et qui seront concernées par ce genre de problème. Par ailleurs, si les exemples ci-dessus ont été réalisés à l’aide d’une variable isolée (i.e., ne faisant pas partie d’un tableau de données), c’est évidemment possible d’utiliser la fonction <code>mean()</code> directement à partir d’un tableau de données :</p>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb108-1" title="1"><span class="kw">mean</span>(<span class="dt">x =</span> iris<span class="op">$</span>Sepal.Length)</a></code></pre></div>
+<pre><code>## [1] 5.843333</code></pre>
+<p>La moyenne, c’est en quelque sorte le “centre de gravité” de la variable <span class="citation">(Navarro, <a href="#ref-Navarro2018" role="doc-biblioref">2018</a>)</span>. L’un de ses intérêts est que son calcul prend en compte toutes les informations contenues dans la variable, ce qui est utile quand on a relativement peu de données <span class="citation">(Navarro, <a href="#ref-Navarro2018" role="doc-biblioref">2018</a>)</span>. En revanche, un inconvénient est qu’elle est très sensible aux valeurs extrêmes, et en particulier aux valeurs qui seraient particulièrement basses ou particulièrement élevées par rapport à la majorité des valeurs de la variable (il s’agirait ici d’<em>outliers</em>), et cela est d’autant plus vrai lorsque la taille de l’échantillon étudié est faible. Dans ce dernier cas, il y a donc un risque assez important que la moyenne ne représente pas bien la tendance centrale, c’est-à-dire la valeur ou la zone de valeurs où sont situées la majorité des observations. Ce risque existe aussi même avec des tailles d’échantillon relativement importantes lorsque la distribution est asymétrique, comme illustré sur la figure ci-dessous. Sur cette figure, on peut voir qu’avec une distribution gaussienne, la moyenne correspond parfaitement à la tendance centrale. En revanche, avec une distribution asymétrique à droite, on voit que la moyenne est “tirée vers la droite” par rapport à la tendance centrale sous l’effet des valeurs, certes moins nombreuses, mais d’une grandeur plus importante.</p>
+<p><img src="Analyser-des-données-avec-R_files/figure-html/means with skewed variables-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><em>La médiane</em></p>
+<p>La médiane est le deuxième indice de position que l’on considère régulièrement lorsqu’il s’agit de résumer numériquement une variable quantitative. Pour l’obtenir, il faut d’abord classer les valeurs de la variable selon un ordre croissant. La médiane pour une variable de taille <em>N</em> est alors la valeur correspondant au rang (<em>N</em> + 1) / 2. Ainsi, la médiane désigne la valeur qui sépare les valeurs de la variable en deux groupes d’observations de même taille <span class="citation">(Chatellier &amp; Durieux, <a href="#ref-Chatellier2003" role="doc-biblioref">2003</a>)</span>. Dans l’exemple ci-dessous, il y a cinq observations, et donc cinq valeurs, qui ont été triées par ordre croissant. La médiane est alors la valeur correspondant au rang (5 + 1) / 2 = 3, soit 4.9.</p>
+<pre><code>##   1   2   3   4   5 
+## 4.6 4.7 4.9 5.0 5.1</code></pre>
+<p>Dans le cas où le nombre d’observations contenues dans la variable étudiée serait un nombre pair, la médiane s’obtiendrait différemment. En effet, avec une variable qui contiendrait par exemple six valeurs, la médiane serait associée, selon la méthode expliquée ci-dessus, au rang (6 + 1) / 2 = 3.5, or ce rang, évidemment, n’existe pas. Dans ce cas, la médiane s’obtient en faisant la moyenne des deux nombres du milieu. Par exemple, ci-dessous, la médiane correspond à la moyenne des valeurs de la 3ème et de la 4ème observation, ce qui donne 4.95.</p>
+<pre><code>##   1   2   3   4   5   6 
+## 4.6 4.7 4.9 5.0 5.1 5.4</code></pre>
+<p>Dans R, la médiane d’une variable s’obtient facilement à l’aide de la fonction <code>median()</code>.</p>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb112-1" title="1">vec &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">4.6</span>, <span class="fl">4.7</span>, <span class="fl">4.9</span>, <span class="fl">5.0</span>, <span class="fl">5.1</span>, <span class="fl">5.4</span>)</a>
+<a class="sourceLine" id="cb112-2" title="2"><span class="kw">median</span>(<span class="dt">x =</span> vec)</a></code></pre></div>
+<pre><code>## [1] 4.95</code></pre>
+<p>Contrairement à la moyenne, la médiane prend donc en compte moins d’informations relatives aux données. Toutefois, en tant que valeur “du milieu”, la médiane présente l’intérêt de ne pas être influencée par les valeurs extrêmes. En raison de cela, la médiane est susceptible de mieux refléter la tendance centrale que la moyenne en présence de faibles échantillons avec des <em>outliers</em>, ou en présence d’une forme de distribution asymétrique. Ce dernier cas est illustré sur la figure ci-dessous.</p>
+<p><img src="Analyser-des-données-avec-R_files/figure-html/medians with skewed variables-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><em>La moyenne rognée</em></p>
+<p>Parfois, il est possible de rencontrer ce qu’on appelle la moyenne rognée. Le principe est ici de calculer la moyenne non pas en prenant en compte toutes les valeurs de la variable, mais en écartant un certain pourcentage des valeurs situées à l’extrémité basse et à l’extrémité haute du classement des valeurs de la variable. Cette procédure consiste à pouvoir calculer une moyenne qui ne serait pas influencée par des <em>outliers</em>. Pour pouvoir caculer une moyenne rognée, il faut à nouveau utiliser la fonction <code>mean()</code>, en précisant cette fois l’argument <code>trim</code> avec la valeur du pourcentage de données que l’on veut rogner aux extrémités de la variable :</p>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb114-1" title="1"><span class="kw">mean</span>(<span class="dt">x =</span> iris<span class="op">$</span>Sepal.Length, <span class="dt">trim =</span> <span class="fl">0.05</span>)</a></code></pre></div>
+<p>Dans l’exemple ci-dessus, le code a été configuré pour rogner 5 % des observations situées aux extrémités de la variable. Notons que lorsque l’argument <code>trim</code> est mis à 0 (ce qui est son paramétrage par défaut), cela consiste à calculer la moyenne normale, et que lorsque l’argument <code>trim</code> est mis à 0.50, cela revient à calculer la médiane puisque la fonction supprime alors 50 % des observations de part et d’autre du milieu de la variable.</p>
+<p><em>Le mode</em></p>
+<p>Le mode désigne la valeur qui est la plus fréquemment retrouvée dans une variable. Il n’existe pas de fonction de base dans R pour pouvoir déterminer directement le mode et pour connaître le nombre de fois que le mode apparaît dans la variable. Toutefois, nous pouvons utiliser le package <code>lsr</code> crée par Danielle Navarro <span class="citation">(<a href="#ref-Navarro2018" role="doc-biblioref">2018</a>)</span> pour retrouver ces informations en présence d’une variable quantitative. Une fois le package <code>lsr</code> installé puis chargé, nous pouvons utiliser la fonction <code>modeOf()</code> pour déterminer le mode, et la fonction <code>maxFreq()</code> pour savoir à quelle fréquence revient le mode dans la variable.</p>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb115-1" title="1"><span class="kw">library</span>(lsr)</a>
+<a class="sourceLine" id="cb115-2" title="2"><span class="kw">modeOf</span>(<span class="dt">x =</span> iris<span class="op">$</span>Sepal.Length)                     <span class="co"># Détermination du mode.</span></a></code></pre></div>
+<pre><code>## [1] 5</code></pre>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb117-1" title="1"><span class="kw">maxFreq</span>(<span class="dt">x =</span> iris<span class="op">$</span>Sepal.Length)                    <span class="co"># Détermination de la fréquence du mode.</span></a></code></pre></div>
+<pre><code>## [1] 10</code></pre>
+<p>Bien que cela ne soit pas le cas dans l’exemple ci-dessus, il faut comprendre qu’il est à tout à fait possible d’avoir plusieurs modes si plusieurs valeurs reviennent à des fréquences maximales similaires dans la variable. Dans ce cas, la fonction <code>modeOf()</code> affichera les différentes valeurs de mode, et la fonction <code>maxFreq()</code> continuera de n’afficher qu’une seule valeur de fréquence puisque par définition, le mode désigne la valeur associée à la fréquence d’apparition maximale dans la variable, or il ne peut n’y avoir qu’une seule fréquence maximale… Cela signifie quelque part qu’une variable peut contenenir autant de modes que de valeurs si chaque valeur n’est représentée qu’une seule fois dans la variable. Cet inconvénient est probablement l’une des raisons pour lesquelles le mode n’est que très peu utilisé, si ce n’est jamais utilisé, pour décrire la tendance centrale d’une variable quantitative.</p>
+</div>
+<div id="les-indices-de-dispersion" class="section level3">
+<h3><span class="header-section-number">3.1.3</span> Les indices de dispersion</h3>
+<p>Les indices de dispersion permettent de rendre compte de la manière selon laquelle les observations sont étalées, ou réparties, autour des indices de position. Plusieurs statistiques sont disponibles pour caractériser la dispersion, à savoir : l’<strong>étendue</strong>, l’<strong>écart-type</strong>, et l’<strong>intervalle interquartile</strong>.</p>
+<p><em>L’étendue</em></p>
+<p>L’étendue est la mesure la plus simple de la dispersion des données contenues dans une variable. Elle est exprimée avec la plus petite valeur (minimum) et la plus grande valeur (maximum) observée, ou alors parfois avec la différence de ces deux valeurs. Par exemple, dans la variable ci-dessous dont les données ont été classées en ordre croissant, le minimum est 4.5, le maximum est 20.2, et l’étendue peut être donnée par l’intervalle [4.5 - 20.2]. Pour obtenir ces différents résultats dans R, il est possible d’utiliser les fonctions <code>min()</code>, <code>max()</code>, et <code>range()</code>. L’amplitude de l’intervalle serait ici de : 20.2-4.5 = 15.7.</p>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb119-1" title="1">vec &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">4.5</span>, <span class="fl">7.8</span>, <span class="fl">10.8</span>, <span class="fl">13.9</span>, <span class="fl">20.2</span>)</a>
+<a class="sourceLine" id="cb119-2" title="2"><span class="kw">min</span>(vec)</a></code></pre></div>
+<pre><code>## [1] 4.5</code></pre>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb121-1" title="1"><span class="kw">max</span>(vec)</a></code></pre></div>
+<pre><code>## [1] 20.2</code></pre>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb123-1" title="1"><span class="kw">range</span>(vec)</a></code></pre></div>
+<pre><code>## [1]  4.5 20.2</code></pre>
+<p><em>L’écart-type</em></p>
+<p>L’écart-type est une statistique qui donne une idée de la mesure selon laquelle les valeurs de la variable sont éloignées de la moyenne. Pour calculer l’écart-type, il faut en réalité d’abord calculer la variance <span class="math inline">\(\sigma^2\)</span>, dont le calcul est le suivant :
+<span class="math display">\[\sigma^2 = \frac{1}{N}\sum_{i=1}^{N} (X{i} - \overline{X})^2\]</span></p>
+<p>Cette formule signifie que pour obtenir la variance, il faut d’abord faire la somme des carrés des différences entre chaque valeur et la moyenne de la variable. Cela fait, la variance s’obtient en divisant cette somme de carrés par le nombre <em>N</em> de valeurs de la variable. L’écart-type <span class="math inline">\(\sigma\)</span>, c’est alors la racine carrée de la variance :
+<span class="math display">\[\sigma = \sqrt{\frac{1}{N}\sum_{i=1}^{N} (X{i} - \overline{X})^2}\]</span></p>
+<p>Ces calculs sont valides lorsque l’on a en sa possession les données de toute la population que l’on souhaite étudier. Toutefois, lorsque l’on a en sa possession des données issues seulement d’un échantillon de la population, ces calculs biaisent les estimations de la variance et de l’écart-type correspondant à la population étudiée. Cette notion de biais traduit le fait que lorsqu’on répète un grand nombre de fois le calcul de la variance ou de l’écart-type à partir, à chaque fois, d’échantillons de population différents, on a en moyenne un décalage entre la valeur de l’estimation et la “vraie” valeur de la variance et de l’écart-type. Ce décalage systématique est tel qu’il convient dans ce cas là de diviser la somme des carrés des différences (<span class="math inline">\(X{i} - \overline{X}\)</span>) par <em>N-1</em> plutôt que par <em>N</em> <span class="citation">(Grenier, <a href="#ref-Grenier2007" role="doc-biblioref">2007</a>)</span>. La formule de l’écart-type non biaisé, noté <em>s</em>, est alors la suivante :
+<span class="math display">\[s = \sqrt{\frac{1}{N-1}\sum_{i=1}^{N} (X{i} - \overline{X})^2}\]</span></p>
+<p>L’écart-type est la mesure de dispersion classiquement associée à la moyenne. Si on note une moyenne <span class="math inline">\(\overline{X}\)</span> et un écart-type <em>s</em>, alors le résumé d’une variable à l’aide de ces statistiques s’écrit comme suit : <span class="math inline">\(\overline{X}\)</span> ± <em>s</em>. Lorsque l’écart-type est divisé par la moyenne arithmétique de la variable, on obtient une valeur appelée <strong>coefficient de variation</strong>. Avec le logiciel R, les fonctions pour calculer la variance et l’écart-type non biaisés sont respectivement <code>var()</code> et <code>sd()</code>.</p>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb125-1" title="1">vec &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">4.5</span>, <span class="fl">7.8</span>, <span class="fl">10.8</span>, <span class="fl">13.9</span>, <span class="fl">20.2</span>)</a>
+<a class="sourceLine" id="cb125-2" title="2"><span class="kw">var</span>(<span class="dt">x =</span> vec)</a></code></pre></div>
+<pre><code>## [1] 36.153</code></pre>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb127-1" title="1"><span class="kw">sd</span>(<span class="dt">x =</span> vec)</a></code></pre></div>
+<pre><code>## [1] 6.012736</code></pre>
+<p><em>L’intervalle interquartile</em></p>
+<p>L’intervalle interquartile désigne l’étendue entre le premier (Q1) et le troisième (Q3) quartile d’une variable. Comme expliqué auparavant dans le cadre de la boîte à moustaches, Q1 et Q3 désignent respectivement les valeurs en-dessous desquelles 25 % et 75 % des observations de la variable se trouvent <span class="citation">(Chatellier &amp; Durieux, <a href="#ref-Chatellier2003" role="doc-biblioref">2003</a>)</span>. Pour un échantillon de taille <em>N</em>, la procédure classique pour calculer les quartiles est différente selon que le rapport <em>N</em> / 4 est un nombre entier ou non. Lorsque ce rapport n’est pas un nombre entier, Q1 est la valeur correspondant au rang immédiatement supérieur à <em>N</em> / 4. Par exemple, pour la variable ci-dessous, qui a une taille <em>N</em> de 5 valeurs, le rapport <em>N</em> / 4 est égal à 1.25. Q1 est donc la valeur correspond au rang directement supérieur, c’est-à-dire au rang 2, qui est ici la valeur 7.8.</p>
+<pre><code>##    1    2    3    4    5 
+##  4.5  7.8 10.8 13.9 20.2</code></pre>
+<p>Lorsque le rapport <em>N</em> / 4 est un nombre entier, Q1 correspond à la moyenne des valeurs associées respectivement aux rangs <em>N</em> / 4 et (<em>N</em> / 4) + 1. Par exemple, pour la variable ci-dessous, qui a une taille <em>N</em> de 8 valeurs, le rapport <em>N</em> / 4 est à égal 2. Q1 est donc la moyenne des valeurs correspondant au rang 2 et au rang 3 (i.e., les valeurs 7.8 et 10.8), qui équivaut ici à 9.3.</p>
+<pre><code>##    1    2    3    4    5    6    7    8 
+##  4.5  7.8 10.8 13.9 20.2 25.6 37.5 43.9</code></pre>
+<p>La démarche demeure la même pour déterminer Q3, à ceci près qu’on utilise le nombre 3<em>N</em> et non plus le nombre <em>N</em> pour les calculs <span class="citation">(Labreuche, <a href="#ref-Labreuche2010" role="doc-biblioref">2010</a>)</span>. Cette méthode de calcul, classique, est en principe à privilégier en présence d’une variable discrète. Si l’on souhaite obtenir les quartiles selon cette méthode avec le logiciel R, il faut utiliser la fonction <code>quantile()</code> de la manière suivante :</p>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb131-1" title="1"><span class="kw">quantile</span>(<span class="dt">x =</span> vec, <span class="dt">probs =</span> <span class="kw">c</span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>), <span class="dt">type =</span> <span class="dv">2</span>)</a></code></pre></div>
+<pre><code>##   25%   75% 
+##  9.30 31.55</code></pre>
+<p>On remarque ici que la fonction <code>quantile()</code> a plusieurs arguments. L’argument <code>probs</code> désigne les quantiles que l’on souhaite obtenir. Ici, le quantile 0.25 correspond à Q1, et le quantile 0.75 correspond à Q3. L’argument <code>type</code> permet de configurer le type de calcul à effectuer pour obtenir les valeurs des quantiles recherchés. L’indication du chiffre 2 pour l’argument <code>type</code> permet d’obtenir les quantiles selon la méthode de calcul présentée ci-dessus, qui, comme nous l’avons précisé, est dédiée à l’étude d’une variable quantitative discrète. Par défaut, en revanche, la fonction <code>quantile()</code> utilise le chiffre 7 pour l’argument <code>type</code>, ce qui renvoie à une méthode de calcul des quantiles qui serait davantage pertinente pour étudier des variables quantitatives continues. Comparons les résultats obtenus avec les deux méthodes de calcul :</p>
+<table>
+<thead>
+<tr class="header">
+<th align="right">Quantile</th>
+<th align="right">Type_2</th>
+<th align="right">Type_7</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0.25</td>
+<td align="right">9.30</td>
+<td align="right">10.050</td>
+</tr>
+<tr class="even">
+<td align="right">0.75</td>
+<td align="right">31.55</td>
+<td align="right">28.575</td>
+</tr>
+</tbody>
+</table>
+<p>On remarque que les résultats de la fonction <code>quantile()</code> sont différents selon la configuration de l’argument <code>type</code>. Le choix de la configuration est donc important. Pour comprendre comment R a calculé les valeurs associées aux quantiles 0.25 et 0.75 dans le cadre de la seconde méthode (i.e., avec <code>type</code> = 7), regardons le tableau ci-dessous.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="right">Rang</th>
+<th align="right">Quantile</th>
+<th align="right">Valeur</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">0.0000000</td>
+<td align="right">4.5</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">0.1428571</td>
+<td align="right">7.8</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">0.2857143</td>
+<td align="right">10.8</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">0.4285714</td>
+<td align="right">13.9</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="right">0.5714286</td>
+<td align="right">20.2</td>
+</tr>
+<tr class="even">
+<td align="right">6</td>
+<td align="right">0.7142857</td>
+<td align="right">25.6</td>
+</tr>
+<tr class="odd">
+<td align="right">7</td>
+<td align="right">0.8571429</td>
+<td align="right">37.5</td>
+</tr>
+<tr class="even">
+<td align="right">8</td>
+<td align="right">1.0000000</td>
+<td align="right">43.9</td>
+</tr>
+</tbody>
+</table>
+<p>Le tableau montre les données sur lesquelles R s’est appuyé pour déterminer les valeurs des quantiles recherchés (i.e., les quantiles 0.25 et 0.75 pour Q1 et Q3, respectivement). Les données du tableau sont bien celles relatives à notre variable <code>vec</code>, dont on peut reconnaître les valeurs dans la colonne de droite du tableau. La colonne “Quantile” montre les fractions (ou portions) de la variable <code>vec</code> associées aux valeurs de la variable compte tenu de leurs rangs respectifs. Par exemple, la valeur 25.6, dont le rang est 6, correspond au quantile 0.71 (approximativement). Cela veut dire que 71 % des observations ont une valeur inférieure ou égale à 25.6. Il faut savoir qu’il existe en réalité plusieurs manières de déterminer la valeur du quantile que représente chaque valeur. Dans le cas présent, le quantile représenté, que l’on va noter <em>q</em>, a été déterminé selon la formule suivante :
+<span class="math display">\[q = (k - 1 ) / (N - 1)\]</span>
+Dans le calcul ci-dessus, <em>k</em> désigne le rang de la valeur considérée, et <em>N</em> désigne la taille de la variable étudiée (i.e., le nombre total de valeurs). Comme on peut le voir dans le tableau ci-dessus, cette méthode de calcul conduit nécessairement à attribuer le quantile 0 à la valeur de rang 1, et la quantile 1 à la valeur de rang <em>N</em>. Lorsque le nombre de valeurs fait que les quantiles 0.25 et 0.75 n’existent pas, R réalise une interpolation de la valeur correspondant au quantile recherché, cela à partir des quantiles qui existent et qui encadrent le quantile recherché, ainsi qu’à partir des valeurs correspondant à ces quantiles. Dans le cas présent, il s’agit plus précisément d’une interpolation linéaire. Voyons ci-dessous en quoi cela consiste.</p>
+<p><img src="Analyser-des-données-avec-R_files/figure-html/graphic for continuous quantiles-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>La figure représente les valeurs de la variable en fonction des quantiles qui leur correspondent. Les segments de couleur noire montrés sur la figure représentent les droites d’équation utilisées pour le calcul des valeurs correspondant aux quantiles 0.25 (Q1) et 0.75 (Q3), qui ne sont pas représentés initialement dans la variable étudiée. Ces droites d’équation relient les points dont les abscisses sont celles qui encadrent directement les quantiles recherchés. Ainsi, pour trouver la valeur correspondant au quantile 0.25, il a suffi de résoudre l’équation y = 21x + 4.8, en remplaçant x par 0.25. De manière analogue, pour trouver la valeur correspondant au quantile 0.75, il a suffi de résoudre l’équation y = 83.3x - 33.9 en remplaçant x par 0.75. Les solutions de ces équations sont montrées en rouge sur la partie gauche de la figure. On retrouve bien les valeurs associées aux quantiles recherchés et qui avaient été initialement obtenues avec la configuration par défaut de la fonction <code>quantile()</code>.</p>
+<p>Les quartiles Q1 et Q3 sont les mesures de dispersion classiquement associées à la médiane. Si on note une médiane <em>m</em> et l’intervalle interquartile (Q1 - Q3), alors le résumé d’une variable à l’aide de ces statistiques s’écrit comme suit : <em>m</em> (Q1 - Q3).</p>
+</div>
+<div id="les-indices-dasymétrie-et-daplatissement" class="section level3">
+<h3><span class="header-section-number">3.1.4</span> Les indices d’asymétrie et d’aplatissement</h3>
+<p><em>Le coefficient d’asymétrie (skewness)</em></p>
+<p>Le fait qu’une distribution soit asymétrique désigne le fait que les observations sont réparties de manière inégale de part et d’autre du milieu de la distribution. L’indice statistique qui permet de rendre compte du niveau d’asymétrie est le <strong>coefficient d’asymétrie</strong>, ou <em>skewness</em> en anglais. Ce coefficient peut être obtenu à l’aide de la fonction <code>skewness()</code> du package <code>e1071</code>, qui n’existe pas dans la base de R et qu’il convient d’installer et de charger pour l’utiliser.</p>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb133-1" title="1"><span class="kw">library</span>(e1071)</a>
+<a class="sourceLine" id="cb133-2" title="2"><span class="kw">skewness</span>(<span class="dt">x =</span> iris<span class="op">$</span>Sepal.Width, <span class="dt">type =</span> <span class="dv">3</span>)</a></code></pre></div>
+<pre><code>## [1] 0.3126147</code></pre>
+<p>Comme on peut le voir dans l’aide associée à la fonction <code>skewness()</code>, il existe en réalité plusieurs méthodes de calcul du coefficient d’asymétrie. La méthode de <code>type</code> 3, qui est celle configurée par défaut pour cette fonction, consiste à faire le calcul suivant :</p>
+<p><span class="math display">\[\gamma_{1} =  \frac{1}{s^3} {\frac{\sum_{i=1}^{N} (X{i} - \overline{X})^3}{N}}\]</span>
+Dans ce calcul, <em>s</em> désigne l’écart-type non biaisé de la variable, et <em>N</em> désigne la taille de la variable. Avec cette méthode, on obtient un coefficient négatif lorsque la distribution est asymétrique à gauche (longue queue vers la gauche), un coefficient de 0 lorsque la distribution est parfaitement symétrique, et un coefficient positif lorsque la distribution est asymétrique à droite (longue queue vers la droite). Ceci est illustré sur la figure ci-dessous.</p>
+<p><img src="Analyser-des-données-avec-R_files/figure-html/skewed distri-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><em>Pour aller plus loin…</em>
+Joanes et Gill <span class="citation">(<a href="#ref-Joanes1998" role="doc-biblioref">1998</a>)</span> ont montré que lorsqu’il s’agit d’estimer le degré d’asymétrie de la distribution relative à la population étudiée, et cela à partir de l’échantillon observé, certaines méthodes de calcul du coefficient d’asymétrie peuvent être plus fiables que d’autres.</p>
+<p>Dans le cas où la distribution des valeurs dans la population étudiée suivrait une loi normale, la méthode par défaut présentée ci-dessus serait la plus fiable pour estimer le niveau d’asymétrie lorsque l’échantillon observé est de petite taille (<em>N</em> &lt; 50). Cependant, avec des échantillons de grande taille, les méthodes se valeraient.</p>
+<p>Dans le cas où la distribution des valeurs de la population étudiée ne suivrait pas une loi normale, et qu’elle s’avèrerait très asymétrique, la méthode de <code>type</code> 2 proposée avec la fonction <code>skewness()</code> serait la plus fiable, particulièrement en présence d’échantillons de petite taille.</p>
+<p><em>Le coefficient d’applatissement (kurtosis)</em></p>
+<p>Le fait qu’une distribution soit aplatie désigne le fait que la forme de la distribution présente une courbure relativement plate avec des queues de distribution relativement courtes. On parle alors de distribution platycurtique. À l’inverse, lorsque la distribution est pointue avec des queues plus longues, on parle de distribution leptocurtique. L’indice statistique qui permet de rendre compte du degré d’aplatissement est le <strong>coefficient d’aplatissement</strong>, ou <em>kurtosis</em> en anglais. Ce coefficient peut être obtenu à l’aide de la fonction <code>kurtosis()</code> du package <code>e1071</code>.</p>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb135-1" title="1"><span class="kw">library</span>(e1071)</a>
+<a class="sourceLine" id="cb135-2" title="2"><span class="kw">kurtosis</span>(<span class="dt">x =</span> iris<span class="op">$</span>Sepal.Width, <span class="dt">type =</span> <span class="dv">3</span>)</a></code></pre></div>
+<pre><code>## [1] 0.1387047</code></pre>
+<p>Comme on peut le voir dans l’aide associée à la fonction <code>kurtosis()</code>, il existe en réalité plusieurs méthodes de calcul du coefficient d’aplatissement. La méthode de <code>type</code> 3, qui est celle configurée par défaut pour cette fonction, consiste à faire le calcul suivant :</p>
+<p><span class="math display">\[\gamma_{2} =  \frac{1}{s^4} {\frac{\sum_{i=1}^{N} (X{i} - \overline{X})^4}{N}} -3\]</span>
+Dans ce calcul, <em>s</em> désigne l’écart-type non biaisé de la variable, et <em>N</em> désigne la taille de la variable. Avec cette méthode, on obtient un coefficient négatif lorsque la distribution est particulièrement aplatie par rapport à une distribution suivant une loi normale (distribution platycurtique), un coefficient de 0 lorsque la distribution suit une loi normale (distribution mésocurtique), et un coefficient positif lorsque la distribution est particulièrement pointue par rapport à une loi normale (distribution leptocurtique). Ceci est illustré sur la figure ci-dessous.</p>
+<p><img src="Analyser-des-données-avec-R_files/figure-html/kurtosis distri-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><em>Pour aller plus loin…</em>
+Comme avec le coefficient d’asymétrie, Joanes et Gill <span class="citation">(<a href="#ref-Joanes1998" role="doc-biblioref">1998</a>)</span> ont montré que lorsqu’il s’agit d’estimer le degré d’aplatissement de la distribution relative à la population étudiée, et cela à partir de l’échantillon observé, certaines méthodes de calcul du coefficient d’aplatissement peuvent être plus fiables que d’autres.</p>
+<p>Dans le cas où la distribution des valeurs dans la population étudiée suivrait une loi normale, la méthode de <code>type</code> 1 proposée avec la fonction <code>kurtosis()</code> serait la plus fiable pour estimer le niveau d’aplatissement lorsque l’échantillon observé est de petite taille (<em>N</em> &lt; 50). Cependant, la méthode par défaut présentée plus haut fournirait des résultats relativement proches de ceux obtenus avec la méthode de <code>type</code> 1. De plus, avec des échantillons de grande taille, toutes les méthodes se valeraient.</p>
+<p>Dans le cas où la distribution des valeurs de la population étudiée ne suivrait pas une loi normale, et s’avèrerait très asymétrique, la méthode de <code>type</code> 2 proposée avec la fonction <code>kurtosis()</code> serait la plus fiable, particulièrement en présence d’échantillons de petite taille.</p>
+</div>
+<div id="fonctions-pour-obtenir-un-récapitulatif-des-statistiques-descriptives" class="section level3">
+<h3><span class="header-section-number">3.1.5</span> Fonctions pour obtenir un récapitulatif des statistiques descriptives</h3>
+<p>Il existe plusieurs fonctions pour avoir une vue d’ensemble des statistiques généralement utilisées pour explorer et résumer une variable quantitative. Une fonction particulièrement intéressante est la fonction <code>describe()</code> du package <code>psych</code>.</p>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb137-1" title="1"><span class="kw">library</span>(psych)</a></code></pre></div>
+<p>La fonction <code>describe()</code> peut être utilisée sur une variable donnée :</p>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb138-1" title="1"><span class="kw">describe</span>(<span class="dt">x =</span> iris<span class="op">$</span>Sepal.Width, <span class="dt">quant =</span> <span class="kw">c</span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>))</a></code></pre></div>
+<pre><code>##   vars   n mean   sd median trimmed  mad min max range skew kurtosis   se
+## 1    1 150 3.06 0.44      3    3.04 0.44   2 4.4   2.4 0.31     0.14 0.04
+##   Q0.25 Q0.75
+## 1   2.8   3.3</code></pre>
+<p>La fonction <code>describe()</code> peut être aussi utilisée sur un jeu de données entier. (Attention, les résumés numériques fournis pour les variables qualitatives n’auront pas de sens ; les variables qualitatives détectées sont indiquées avec un astérique dans le tableau de résultats.)</p>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb140-1" title="1"><span class="kw">describe</span>(<span class="dt">x =</span> iris, <span class="dt">quant =</span> <span class="kw">c</span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>))</a></code></pre></div>
+<pre><code>##              vars   n mean   sd median trimmed  mad min max range  skew
+## Sepal.Length    1 150 5.84 0.83   5.80    5.81 1.04 4.3 7.9   3.6  0.31
+## Sepal.Width     2 150 3.06 0.44   3.00    3.04 0.44 2.0 4.4   2.4  0.31
+## Petal.Length    3 150 3.76 1.77   4.35    3.76 1.85 1.0 6.9   5.9 -0.27
+## Petal.Width     4 150 1.20 0.76   1.30    1.18 1.04 0.1 2.5   2.4 -0.10
+## Species*        5 150 2.00 0.82   2.00    2.00 1.48 1.0 3.0   2.0  0.00
+##              kurtosis   se Q0.25 Q0.75
+## Sepal.Length    -0.61 0.07   5.1   6.4
+## Sepal.Width      0.14 0.04   2.8   3.3
+## Petal.Length    -1.42 0.14   1.6   5.1
+## Petal.Width     -1.36 0.06   0.3   1.8
+## Species*        -1.52 0.07   1.0   3.0</code></pre>
+<p>On retrouve la plupart des statistiques que nous avons vues jusqu’à présent, notamment le <em>skewness</em> et le <em>kurtosis</em> qui ont été ici calculés avec la méthode par défaut du package <code>e1071</code>. Pour changer la méthode de calcul de ces deux coefficients, il suffit de modifier l’argument <code>type</code> de la fonction, comme dans le cadre de l’utilisation du package <code>e1071</code> et des fonctions <code>skewness()</code> et <code>kurtosis()</code> associées. On notera cependant qu’il ne semble pas possible de modifier la méthode de calcul des quantiles, qui sont ici calculés selon la méthode par défaut configurée telle qu’avec la fonction <code>quantile()</code>.</p>
+<p>Enfin, il est aussi possible d’obtenir ces récapitulatifs numériques en fonction des modalités d’une variable qualitative du jeu de données, grâce à la fonction <code>describeBy()</code> du package <code>psych</code>. Dans l’exemple ci-dessous, la variable qualitative est indiquée grâce à l’argument <code>group</code>.</p>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb142-1" title="1"><span class="kw">describeBy</span>(<span class="dt">x =</span> iris, <span class="dt">quant =</span> <span class="kw">c</span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>), <span class="dt">group =</span> iris<span class="op">$</span>Species)</a></code></pre></div>
+<pre><code>## 
+##  Descriptive statistics by group 
+## group: setosa
+##              vars  n mean   sd median trimmed  mad min max range skew
+## Sepal.Length    1 50 5.01 0.35    5.0    5.00 0.30 4.3 5.8   1.5 0.11
+## Sepal.Width     2 50 3.43 0.38    3.4    3.42 0.37 2.3 4.4   2.1 0.04
+## Petal.Length    3 50 1.46 0.17    1.5    1.46 0.15 1.0 1.9   0.9 0.10
+## Petal.Width     4 50 0.25 0.11    0.2    0.24 0.00 0.1 0.6   0.5 1.18
+## Species*        5 50 1.00 0.00    1.0    1.00 0.00 1.0 1.0   0.0  NaN
+##              kurtosis   se Q0.25 Q0.75
+## Sepal.Length    -0.45 0.05   4.8  5.20
+## Sepal.Width      0.60 0.05   3.2  3.68
+## Petal.Length     0.65 0.02   1.4  1.58
+## Petal.Width      1.26 0.01   0.2  0.30
+## Species*          NaN 0.00   1.0  1.00
+## -------------------------------------------------------- 
+## group: versicolor
+##              vars  n mean   sd median trimmed  mad min max range  skew
+## Sepal.Length    1 50 5.94 0.52   5.90    5.94 0.52 4.9 7.0   2.1  0.10
+## Sepal.Width     2 50 2.77 0.31   2.80    2.78 0.30 2.0 3.4   1.4 -0.34
+## Petal.Length    3 50 4.26 0.47   4.35    4.29 0.52 3.0 5.1   2.1 -0.57
+## Petal.Width     4 50 1.33 0.20   1.30    1.32 0.22 1.0 1.8   0.8 -0.03
+## Species*        5 50 2.00 0.00   2.00    2.00 0.00 2.0 2.0   0.0   NaN
+##              kurtosis   se Q0.25 Q0.75
+## Sepal.Length    -0.69 0.07  5.60   6.3
+## Sepal.Width     -0.55 0.04  2.52   3.0
+## Petal.Length    -0.19 0.07  4.00   4.6
+## Petal.Width     -0.59 0.03  1.20   1.5
+## Species*          NaN 0.00  2.00   2.0
+## -------------------------------------------------------- 
+## group: virginica
+##              vars  n mean   sd median trimmed  mad min max range  skew
+## Sepal.Length    1 50 6.59 0.64   6.50    6.57 0.59 4.9 7.9   3.0  0.11
+## Sepal.Width     2 50 2.97 0.32   3.00    2.96 0.30 2.2 3.8   1.6  0.34
+## Petal.Length    3 50 5.55 0.55   5.55    5.51 0.67 4.5 6.9   2.4  0.52
+## Petal.Width     4 50 2.03 0.27   2.00    2.03 0.30 1.4 2.5   1.1 -0.12
+## Species*        5 50 3.00 0.00   3.00    3.00 0.00 3.0 3.0   0.0   NaN
+##              kurtosis   se Q0.25 Q0.75
+## Sepal.Length    -0.20 0.09  6.23  6.90
+## Sepal.Width      0.38 0.05  2.80  3.18
+## Petal.Length    -0.37 0.08  5.10  5.88
+## Petal.Width     -0.75 0.04  1.80  2.30
+## Species*          NaN 0.00  3.00  3.00</code></pre>
+</div>
+<div id="quelles-statistiques-choisir-pour-résumer-une-variable-quantitative-dans-un-rapport" class="section level3">
+<h3><span class="header-section-number">3.1.6</span> Quelles statistiques choisir pour résumer une variable quantitative dans un rapport ?</h3>
+<p>Les statistiques les plus couramment utilisées pour résumer une variable quantitative sont les paramètres de position (moyenne et médiane principalement) en lien avec les paramètres de dispersion correspondants. Aucun paramètre de position ne surpasse les autres dans toutes les situations. Le choix du paramètre de position, en lien avec le paramètre de dispersion associé, dépend de l’objectif de l’analyse.</p>
+<p>Lorsqu’il s’agit de simplement décrire une distribution des données obtenues à titre exploratoire, certains auteurs proposent d’utiliser les trois paramètres de position (moyenne, médiane, mode), en sachant que la médiane, d’un point de vue purement descriptif, peut être le paramètre le plus adapté dans de nombreuses situations <span class="citation">(Gonzales &amp; Ottenbacher, <a href="#ref-Gonzales2001" role="doc-biblioref">2001</a>)</span>. Dans le cas où la distribution s’avèrerait plutôt gaussienne, la moyenne et l’écart-type sont intéressants car dans ce cas, on sait que :</p>
+<ol style="list-style-type: decimal">
+<li>Approximativement <strong>68.3 %</strong> des observations sont comprises dans l’intervalle [<span class="math inline">\(\overline{X}\)</span> - 1 <em>s</em> ; <span class="math inline">\(\overline{X}\)</span> + 1 <em>s</em>],</li>
+<li>Approximativement <strong>95.5 %</strong> des observations sont comprises dans l’intervalle [<span class="math inline">\(\overline{X}\)</span> - 2 <em>s</em> ; <span class="math inline">\(\overline{X}\)</span> + 2 <em>s</em>],</li>
+<li>Approximativement <strong>99.7 %</strong> des observations sont comprises dans l’intervalle [<span class="math inline">\(\overline{X}\)</span> - 3 <em>s</em> ; <span class="math inline">\(\overline{X}\)</span> + 3 <em>s</em>].</li>
+</ol>
+<p>Ceci est illustré sur la figure ci-dessous.</p>
+<p><img src="Analyser-des-données-avec-R_files/figure-html/observations within sd mutiples with gaussian distributions-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Lorsqu’il s’agit plus précisément de vouloir renseigner sur la tendance centrale relative à l’échantillon étudié, le choix dépend de la forme de la distribution observée. Lorsque la distribution est gaussienne, la moyenne, la médiane, et le mode, sont similaires et donc se valent. Toutefois, lorsque la distribution est asymétrique et unimodale (i.e., avec un seul pic), le mode reflètera mieux la tendance centrale. De plus, lorsque la distribution est asymétrique, la médiane aura tendance à mieux représenter la tendance centrale que la moyenne <span class="citation">(Rousselet &amp; Wilcox, <a href="#ref-Rousselet2020" role="doc-biblioref">2020</a>)</span>. Notons que dans certains cas où la distribution semble asymétrique, la médiane peut se retrouver malgré tout plus éloignée du mode que la moyenne, comme illustré dans l’exemple ci-dessous emprunté à Gonzales et al. <span class="citation">(<a href="#ref-Gonzales2001" role="doc-biblioref">2001</a>)</span>.</p>
+<p><img src="Analyser-des-données-avec-R_files/figure-html/mean above median aysm-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="variables-qualitatives" class="section level2">
+<h2><span class="header-section-number">3.2</span> Variables qualitatives</h2>
+<div id="visualiser-la-distribution-de-la-variable-1" class="section level3">
+<h3><span class="header-section-number">3.2.1</span> Visualiser la distribution de la variable</h3>
+<p>Comme dans le cadre de variables quantitatives, une bonne pratique est de visualiser graphiquement la distribution de la variable. Ici, il s’agit plus précisémement de prendre connaissance des effectifs correspondant aux différentes modalités de la variable. Une manière rapide de procéder pour cela est d’utiliser la fonction <code>ggplot()</code> et la fonction <code>geom_bar()</code>. Illustrons cela avec le jeu de données <code>diamonds</code>, qui contient notamment la variable qualitative <code>color</code>.</p>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb144-1" title="1"><span class="co"># Aperçu du jeu de données</span></a>
+<a class="sourceLine" id="cb144-2" title="2">diamonds</a></code></pre></div>
+<pre><code>## # A tibble: 53,940 x 10
+##    carat cut       color clarity depth table price     x     y     z
+##    &lt;dbl&gt; &lt;ord&gt;     &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 0.23  Ideal     E     SI2      61.5    55   326  3.95  3.98  2.43
+##  2 0.21  Premium   E     SI1      59.8    61   326  3.89  3.84  2.31
+##  3 0.23  Good      E     VS1      56.9    65   327  4.05  4.07  2.31
+##  4 0.290 Premium   I     VS2      62.4    58   334  4.2   4.23  2.63
+##  5 0.31  Good      J     SI2      63.3    58   335  4.34  4.35  2.75
+##  6 0.24  Very Good J     VVS2     62.8    57   336  3.94  3.96  2.48
+##  7 0.24  Very Good I     VVS1     62.3    57   336  3.95  3.98  2.47
+##  8 0.26  Very Good H     SI1      61.9    55   337  4.07  4.11  2.53
+##  9 0.22  Fair      E     VS2      65.1    61   337  3.87  3.78  2.49
+## 10 0.23  Very Good H     VS1      59.4    61   338  4     4.05  2.39
+## # ... with 53,930 more rows</code></pre>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb146-1" title="1"><span class="co"># Visualisation de la distribution de la variable color</span></a>
+<a class="sourceLine" id="cb146-2" title="2">diamonds <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb146-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> color)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb146-4" title="4"><span class="st">    </span><span class="kw">geom_bar</span>()</a></code></pre></div>
+<p><img src="Analyser-des-données-avec-R_files/figure-html/geom_bar-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Bien que rapide, cette manière de procéder devient vite limitée lorsque l’on veut améliorer le graphique, tel qu’en ajoutant les valeurs des effectifs au-dessus des barres ou encore en changeant l’ordre d’apparition des barres. Pour gagner en capacité de modification du graphique, on peut d’abord passer par une étape intermédiaire consistant à créer un mini-jeu de données où la variable <code>color</code> serait déjà résumée à l’aide des fonctions <code>group_by()</code> et <code>summarize()</code> du package <code>dplyr</code>, de telle sorte à n’avoir que la valeur de l’effectif en regard de chaque modalité. Ceci est montré dans le code ci-dessous. Si l’on poursuit le code avec les fonctions <code>ggplot()</code> et <code>geom_bar()</code>, on arrive alors au même résultat que précédemment. (On note qu’il a fallu adapter l’argument <code>stat</code> de la fonction <code>geom_bar()</code> pour que le graphique montre bien en ordonnées la valeur de la variable nouvellement appelée <code>count</code>, qui comprend les effectifs de chaque modalité.)</p>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb147-1" title="1">diamonds <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb147-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(color) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb147-3" title="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>())</a></code></pre></div>
+<pre><code>## # A tibble: 7 x 2
+##   color count
+##   &lt;ord&gt; &lt;int&gt;
+## 1 D      6775
+## 2 E      9797
+## 3 F      9542
+## 4 G     11292
+## 5 H      8304
+## 6 I      5422
+## 7 J      2808</code></pre>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb149-1" title="1">diamonds <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb149-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(color) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb149-3" title="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb149-4" title="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> color, <span class="dt">y =</span> count)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb149-5" title="5"><span class="st">     </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>)</a></code></pre></div>
+<p><img src="Analyser-des-données-avec-R_files/figure-html/geom_bar enhanced-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Certes, pour le moment, cette seconde procédure n’a fait que rajouter des étapes par rapport à la première procédure. Toutefois, en reprenant la logique de la seconde procédure, on peut à présent créer des graphiques en barres plus élaborés relativement facilement.</p>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb150-1" title="1"><span class="co"># Diagramme en barres avec les effectifs affichés à proximité des barres</span></a>
+<a class="sourceLine" id="cb150-2" title="2">g1 &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb150-3" title="3"><span class="st">  </span>diamonds <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb150-4" title="4"><span class="st">  </span><span class="kw">group_by</span>(color) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb150-5" title="5"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb150-6" title="6"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> color, <span class="dt">y =</span> count)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb150-7" title="7"><span class="st">     </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb150-8" title="8"><span class="st">     </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> count, <span class="dt">x =</span> color, <span class="dt">y =</span> count), <span class="dt">size =</span> <span class="dv">2</span>, <span class="dt">nudge_y =</span> <span class="dv">700</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb150-9" title="9"><span class="st">     </span><span class="kw">ggtitle</span>(<span class="st">&quot;g1&quot;</span>)</a>
+<a class="sourceLine" id="cb150-10" title="10"></a>
+<a class="sourceLine" id="cb150-11" title="11"><span class="co"># Diagramme en barres réorganisées manuellement</span></a>
+<a class="sourceLine" id="cb150-12" title="12">g2 &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb150-13" title="13"><span class="st">  </span>diamonds <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb150-14" title="14"><span class="st">  </span><span class="kw">group_by</span>(color) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb150-15" title="15"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb150-16" title="16"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">fct_relevel</span>(color, <span class="st">&quot;J&quot;</span>, <span class="st">&quot;I&quot;</span>, <span class="st">&quot;H&quot;</span>, <span class="st">&quot;G&quot;</span>, <span class="st">&quot;F&quot;</span>, <span class="st">&quot;E&quot;</span>, <span class="st">&quot;D&quot;</span>), <span class="dt">y =</span> count)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb150-17" title="17"><span class="st">     </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb150-18" title="18"><span class="st">     </span><span class="kw">xlab</span>(<span class="st">&quot;color&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb150-19" title="19"><span class="st">     </span><span class="kw">ggtitle</span>(<span class="st">&quot;g2&quot;</span>) </a>
+<a class="sourceLine" id="cb150-20" title="20"></a>
+<a class="sourceLine" id="cb150-21" title="21"><span class="co"># Diagramme en barres réorganisées en ordre croissant</span></a>
+<a class="sourceLine" id="cb150-22" title="22">g3 &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb150-23" title="23"><span class="st">  </span>diamonds <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb150-24" title="24"><span class="st">  </span><span class="kw">group_by</span>(color) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb150-25" title="25"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb150-26" title="26"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">fct_reorder</span>(color, count), <span class="dt">y =</span> count)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb150-27" title="27"><span class="st">     </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb150-28" title="28"><span class="st">     </span><span class="kw">xlab</span>(<span class="st">&quot;color&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb150-29" title="29"><span class="st">     </span><span class="kw">ggtitle</span>(<span class="st">&quot;g3&quot;</span>) </a>
+<a class="sourceLine" id="cb150-30" title="30"></a>
+<a class="sourceLine" id="cb150-31" title="31"><span class="co"># Diagramme en barres réorganisées en ordre décroissant</span></a>
+<a class="sourceLine" id="cb150-32" title="32">g4 &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb150-33" title="33"><span class="st">  </span>diamonds <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb150-34" title="34"><span class="st">  </span><span class="kw">group_by</span>(color) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb150-35" title="35"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb150-36" title="36"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">fct_reorder</span>(color, <span class="op">-</span>count), <span class="dt">y =</span> count)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb150-37" title="37"><span class="st">     </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb150-38" title="38"><span class="st">     </span><span class="kw">xlab</span>(<span class="st">&quot;color&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb150-39" title="39"><span class="st">     </span><span class="kw">ggtitle</span>(<span class="st">&quot;g4&quot;</span>) </a>
+<a class="sourceLine" id="cb150-40" title="40"></a>
+<a class="sourceLine" id="cb150-41" title="41"><span class="co"># Diagramme en barres pivoté</span></a>
+<a class="sourceLine" id="cb150-42" title="42">g5 &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb150-43" title="43"><span class="st">  </span>diamonds <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb150-44" title="44"><span class="st">  </span><span class="kw">group_by</span>(color) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb150-45" title="45"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb150-46" title="46"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">fct_reorder</span>(color, <span class="op">-</span>count), <span class="dt">y =</span> count)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb150-47" title="47"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb150-48" title="48"><span class="st">     </span><span class="kw">coord_flip</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb150-49" title="49"><span class="st">     </span><span class="kw">ggtitle</span>(<span class="st">&quot;g5&quot;</span>)</a>
+<a class="sourceLine" id="cb150-50" title="50"></a>
+<a class="sourceLine" id="cb150-51" title="51"><span class="co"># Dotplot pivoté</span></a>
+<a class="sourceLine" id="cb150-52" title="52">g6 &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb150-53" title="53"><span class="st">  </span>diamonds <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb150-54" title="54"><span class="st">  </span><span class="kw">group_by</span>(color) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb150-55" title="55"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb150-56" title="56"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">fct_reorder</span>(color, <span class="op">-</span>count), <span class="dt">y =</span> count)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb150-57" title="57"><span class="st">     </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb150-58" title="58"><span class="st">     </span><span class="kw">coord_flip</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb150-59" title="59"><span class="st">     </span><span class="kw">ggtitle</span>(<span class="st">&quot;g6&quot;</span>)</a></code></pre></div>
+<p><img src="Analyser-des-données-avec-R_files/figure-html/geom_bar enhanced graph-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Dans le code montré ci-dessus, on remarque que le réagencement manuel des barres (cf. g2) a pu être réalisé grâce à la fonction <code>fct_relevel()</code> du package <code>forcats</code>. Pour les autres diagrammes, la réorganisation des barres en ordre croissant ou décroissant sur la base de la valeur de l’effectif (<code>count</code>) a pu se faire grâce à la fonction <code>fct_reorder()</code> du package <code>forcats</code>. Les noms des arguments de ces fonctions n’ont pas été indiqués pour alléger le code. Le plus important, c’est d’indiquer en premier argument la variable dont l’ordre d’apparition des modalités doit être réorganisé (il s’agissait de la variable <code>color</code> dans cet exemple). En second argument, il convient d’indiquer la logique de réorganisation de l’apparition des modalités (ce qui a été fait sur la base des valeurs de la variable <code>count</code> dans les exemples ci-dessus utilisant la fonction <code>fct_reorder()</code>).</p>
+<p>Toujours dans le code montré ci-dessus, on peut voir aussi, dans la fonction <code>geom_text()</code> du graphique g1, la présence de l’argument <code>nudge_y</code>. Cet argument permet de régler le décalage entre le haut de la barre et le texte. L’ordre de grandeur du chiffre indiqué est celui de la variable indiquée en ordonnées.</p>
+<p>On observe que la réorganisation des barres selon un ordre croissant ou décroissant clarifie l’information délivrée par le graphique. Toutefois, cette réorganisation est en principe surtout recommandée pour des variables qualitative nominales, c’est-à-dire des variables pour lesquelles il n’existe pas un ordre naturel des modalités. Lorsqu’il existe un ordre naturel des modalités, comme c’est le cas pour des variables qualitatives ordinales, les modalités devraient préférentiellement suivre leur ordre naturel.</p>
+<p>En plus des effectifs, il est aussi possible de prendre connaissance de la distribution à l’aide des proportions, c’est-à-dire des ratios entre les effectifs liés aux différentes modalités et l’effectif total. Les proportions peuvent être visualisées avec un diagramme circulaire (i.e., un camembert), avec un diagramme en barres empilées, ou avec des barres disposées côte-à-côte. Les diagrammes circulaires et avec barres empilées mettent en avant le fait que les parties individuelles étudiées font partie d’un même ensemble. Les diagrammes circulaires peuvent être utilisés efficacement à cet effet lorsqu’ils montrent des fractions simples telles qu’un quart, un tiers, ou une moitié. Toutefois, les parties individuelles sont plus facilement comparables lorsqu’on utilise des barres mises côte-à-côte, comme montré ci-avant. Les diagrammes avec barres empilées sont quant à eux difficiles à comprendre lorsqu’il s’agit de n’étudier qu’une seule variable qualitative <span class="citation">(Wilke, <a href="#ref-Wilke2018" role="doc-biblioref">2018</a>)</span>.</p>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb151-1" title="1"><span class="co"># Diagramme en barres empilées montrant les effectifs</span></a>
+<a class="sourceLine" id="cb151-2" title="2">g1 &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb151-3" title="3"><span class="st">  </span>diamonds <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb151-4" title="4"><span class="st">  </span><span class="kw">group_by</span>(color) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb151-5" title="5"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb151-6" title="6"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> count, <span class="dt">fill =</span> color)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb151-7" title="7"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb151-8" title="8"><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> count), <span class="dt">size =</span> <span class="dv">2</span>, <span class="dt">position =</span> <span class="kw">position_stack</span>(<span class="dt">vjust =</span> <span class="fl">0.5</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb151-9" title="9"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;g1&quot;</span>)</a>
+<a class="sourceLine" id="cb151-10" title="10">  </a>
+<a class="sourceLine" id="cb151-11" title="11"><span class="co"># Diagramme en barres empilées montrant les proportions</span></a>
+<a class="sourceLine" id="cb151-12" title="12">g2 &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb151-13" title="13"><span class="st">  </span>diamonds <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb151-14" title="14"><span class="st">  </span><span class="kw">group_by</span>(color) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb151-15" title="15"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>() <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(diamonds<span class="op">$</span>color) <span class="op">*</span><span class="st"> </span><span class="dv">100</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb151-16" title="16"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> count, <span class="dt">fill =</span> color)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb151-17" title="17"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb151-18" title="18"><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">paste0</span>(<span class="kw">round</span>(count, <span class="dt">digits =</span> <span class="dv">2</span>), <span class="st">&quot; %&quot;</span>)), <span class="dt">size =</span> <span class="dv">2</span>, <span class="dt">position =</span> <span class="kw">position_stack</span>(<span class="dt">vjust =</span> <span class="fl">0.5</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb151-19" title="19"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;g2&quot;</span>)</a>
+<a class="sourceLine" id="cb151-20" title="20"></a>
+<a class="sourceLine" id="cb151-21" title="21"><span class="co"># Diagramme circulaire montrant les effectifs</span></a>
+<a class="sourceLine" id="cb151-22" title="22">g3 &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb151-23" title="23"><span class="st">  </span>diamonds <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb151-24" title="24"><span class="st">  </span><span class="kw">group_by</span>(color) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb151-25" title="25"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb151-26" title="26"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> count, <span class="dt">fill =</span> color)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb151-27" title="27"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">position =</span> <span class="st">&quot;stack&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb151-28" title="28"><span class="st">  </span><span class="kw">coord_polar</span>(<span class="dt">theta =</span> <span class="st">&quot;y&quot;</span>, <span class="dt">start =</span> <span class="dv">0</span>, <span class="dt">direction =</span> <span class="dv">-1</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb151-29" title="29"><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> count), <span class="dt">size =</span> <span class="dv">2</span>, <span class="dt">position =</span> <span class="kw">position_stack</span>(<span class="dt">vjust =</span> <span class="fl">0.5</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb151-30" title="30"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;g3&quot;</span>)</a>
+<a class="sourceLine" id="cb151-31" title="31"></a>
+<a class="sourceLine" id="cb151-32" title="32"><span class="co"># Diagramme circulaire montrant les proportions</span></a>
+<a class="sourceLine" id="cb151-33" title="33">g4 &lt;-</a>
+<a class="sourceLine" id="cb151-34" title="34"><span class="st">  </span>diamonds <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb151-35" title="35"><span class="st">  </span><span class="kw">group_by</span>(color) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb151-36" title="36"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>() <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(diamonds<span class="op">$</span>color) <span class="op">*</span><span class="st"> </span><span class="dv">100</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb151-37" title="37"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> count, <span class="dt">fill =</span> color)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb151-38" title="38"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">position =</span> <span class="st">&quot;stack&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb151-39" title="39"><span class="st">  </span><span class="kw">coord_polar</span>(<span class="dt">theta =</span> <span class="st">&quot;y&quot;</span>, <span class="dt">start =</span> <span class="dv">0</span>, <span class="dt">direction =</span> <span class="dv">-1</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb151-40" title="40"><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">paste0</span>(<span class="kw">round</span>(count, <span class="dt">digits =</span> <span class="dv">2</span>), <span class="st">&quot; %&quot;</span>)), <span class="dt">size =</span> <span class="dv">2</span>, <span class="dt">position =</span> <span class="kw">position_stack</span>(<span class="dt">vjust =</span> <span class="fl">0.5</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb151-41" title="41"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;g4&quot;</span>)</a></code></pre></div>
+<p><img src="Analyser-des-données-avec-R_files/figure-html/geom_bar prop enhanced graph-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="déterminer-la-tendance-centrale" class="section level3">
+<h3><span class="header-section-number">3.2.2</span> Déterminer la tendance centrale</h3>
+<p>Dans le cadre de variables qualitatives, la tendance centrale peut être renseignée à l’aide du mode en présence d’une variable nominale, et à l’aide de la médiane ou du mode en présence d’une variable ordinale <span class="citation">(Gonzales &amp; Ottenbacher, <a href="#ref-Gonzales2001" role="doc-biblioref">2001</a>)</span>. Avec des variables qualitatives, il est possible de prendre connaissance du mode facilement à l’aide d’un tableau de résultats qui récapitulerait, par ordre décroissant, les effectifs et les proportions associées aux différentes modalités de la variable étudiée. Ce type de tableau peut être obtenu à l’aide de la fonction <code>freq()</code> du package <code>questionr</code>, qu’il convient d’installer et charger au préalable afin de pouvoir l’utiliser. Dans le tableau ci-dessous, le mode de la variable <code>color</code> dans le jeu de données <code>diamonds</code> est la modalité présente sur la première ligne du tableau.</p>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb152-1" title="1"><span class="kw">library</span>(questionr)</a>
+<a class="sourceLine" id="cb152-2" title="2"><span class="kw">freq</span>(diamonds<span class="op">$</span>color, <span class="dt">valid =</span> <span class="ot">TRUE</span>, <span class="dt">total =</span> <span class="ot">TRUE</span>, <span class="dt">sort =</span> <span class="st">&quot;dec&quot;</span>)</a></code></pre></div>
+<pre><code>##           n     %  val%
+## G     11292  20.9  20.9
+## E      9797  18.2  18.2
+## F      9542  17.7  17.7
+## H      8304  15.4  15.4
+## D      6775  12.6  12.6
+## I      5422  10.1  10.1
+## J      2808   5.2   5.2
+## Total 53940 100.0 100.0</code></pre>
+</div>
+</div>
+<div id="résumé-2" class="section level2">
+<h2><span class="header-section-number">3.3</span> Résumé</h2>
+<ul>
+<li><p>En statistiques, la notion de population désigne l’ensemble des individus existant qui présentent un ou plusieurs critères d’intérêt. Un échantillon est alors une fraction de la population étudiée, composée d’individus qui en principe sont représentatifs de la population étudiée.</p></li>
+<li><p>Avec R, les graphiques peuvent être réalisés, en autres, à l’aide du package <code>ggplot2</code> et des fonctions associées.</p></li>
+<li><p>Lors de l’analyse d’une variable quantitative, une première étape doit être de visualiser graphiquement la distribution des observations. Cela peut se faire à l’aide d’un histogramme (<code>ggplot2::geom_histogram()</code>), d’une boîte à moustaches (<code>ggplot2::geom_boxplot()</code>), ou encore d’un nuage de points (<code>ggplot2::geom_point()</code>).</p></li>
+<li><p>Ces trois derniers types de graphiques peuvent être obtenus simultanément à l’aide de la fonction <code>g_distri()</code> présentée dans ce chapitre.</p></li>
+<li><p>La distribution d’une variable quantitative peut être notamment (mais pas seulement) de forme gaussienne, asymétrique, leptocurtique, ou encore platycurtique.</p></li>
+<li><p>Les indices de position disponibles pour résumer une variable quantitative sont la moyenne (<code>mean()</code>), la médiane (<code>median()</code>), le mode (<code>lsr::modeOf()</code>), et la moyenne rognée (<code>mean(trim = ...)</code>).</p></li>
+<li><p>Les indices de dispersion disponibles pour résumer une variable quantitative sont l’étendue (<code>min()</code>, <code>max()</code>, <code>range()</code>), l’écart-type (<code>sd()</code>), et les quartiles (<code>quantile(probs = c(0.25, 0.75))</code>).</p></li>
+<li><p>L’indice statistique permettant de décrire le niveau d’asymétrie d’une variable quantitative est le coefficient d’asymétrie (<code>e1071::skewness()</code>).</p></li>
+<li><p>L’indice statistique permettant de décrire le niveau d’aplatissement d’une variable quantitative est le coefficient d’aplatissement (<code>e1071::kurtosis()</code>).</p></li>
+<li><p>Les fonctions <code>psych::describe()</code> et <code>psych::describeBy()</code> permettent de récapituler les indices statistiques généralement étudiés dans le cadre de variables quantitatives.</p></li>
+<li><p>Lorsque la distribution d’une variable quantitative est gaussienne, approximativement 68.3 %, 95.5 %, et 99.7 % des observations sont situées dans ± 1 <em>s</em>, ± 2 <em>s</em>, et ± 3 <em>s</em> autour de la moyenne, respectivement (<em>s</em> étant l’écart-type de la variable).</p></li>
+<li><p>Lorsque la distribution d’une variable quantitative est asymétrique, la médiane peut être l’indicateur le plus adapté pour décrire la tendance centrale, en particulier en présence de petits échantillons.</p></li>
+<li><p>Lors de l’analyse d’une variable qualitative, une première étape doit être de visualiser graphiquement la distribution des effectifs. Cela peut se faire à l’aide d’un diagramme en barres (<code>ggplot2::geom_bar()</code>).</p></li>
+<li><p>Les variables qualitatives nominales devraient être visualisées avec une organisation des modalités selon un ordre croissant ou décroissant.</p></li>
+<li><p>Les variables qualitatives ordinales devraient être visualisées avec une organisation des modalités selon leur ordre naturel.</p></li>
+<li><p>Dans le cadre de variables qualitatives nominales, la tendance centrale peut être étudiée à l’aide du mode.</p></li>
+<li><p>Dans le cadre de variables qualitatives ordinales, la tendance centrale peut être étudiée à l’aide de la médiane ou du mode.</p></li>
+<li><p>La fonction <code>questionr::freq()</code> permet de récapituler les effectifs et les proportions relatifs aux modalités d’une variable qualitative.</p></li>
+</ul>
+
+</div>
+</div>
+<h3>Références</h3>
+<div id="refs" class="references">
+<div id="ref-Chatellier2003">
+<p>Chatellier, G., &amp; Durieux, P. (2003). Moyenne, médiane, et leurs indices de dispersion : quand les utiliser et comment les présenter dans un article scientifique ? <em>Rev Mal Respir</em>, <em>20</em>(3), 421–424. <a href="https://doi.org/RMR-06-2003-20-3-0761-8425-101019-ART17">https://doi.org/RMR-06-2003-20-3-0761-8425-101019-ART17</a></p>
+</div>
+<div id="ref-Dart2003">
+<p>Dart, T., &amp; Chatellier, G. (2003). Comment décrire la distribution d’une variable ? <em>Rev Mal Respir</em>, <em>20</em>(6), 946–951. <a href="https://doi.org/RMR-12-2003-20-6-0761-8425-101019-ART19">https://doi.org/RMR-12-2003-20-6-0761-8425-101019-ART19</a></p>
+</div>
+<div id="ref-Gonzales2001">
+<p>Gonzales, V. A., &amp; Ottenbacher, K. J. (2001). Measures of central tendency in rehabilitation research: what do they mean? <em>Am J Phys Med Rehabil</em>, <em>80</em>(2), 141–146. <a href="https://doi.org/10.1097/00002060-200102000-00014">https://doi.org/10.1097/00002060-200102000-00014</a></p>
+</div>
+<div id="ref-Grenier2007">
+<p>Grenier, E. (2007). Quelle est la « bonne » formule de l’écart-type ? <em>Revue MODULAD</em>, <em>37</em>, 102–105.</p>
+</div>
+<div id="ref-Joanes1998">
+<p>Joanes, D. N., &amp; Gill, C. A. (1998). Comparing measures of sample skewness and kurtosis. <em>The Statistician</em>, <em>47</em>(Part 1), 183–189. <a href="https://doi.org/10.1111/1467-9884.00122">https://doi.org/10.1111/1467-9884.00122</a></p>
+</div>
+<div id="ref-Labreuche2010">
+<p>Labreuche, J. (2010). Les différents types de variables, leurs représentations graphiques et paramètres descriptifs. <em>Sang Thrombose Vaisseaux</em>, <em>22</em>(10), 536–543. <a href="https://doi.org/10.1684/stv.2010.0541">https://doi.org/10.1684/stv.2010.0541</a></p>
+</div>
+<div id="ref-Navarro2018">
+<p>Navarro, D. (2018). <em>Learning statistics with R</em>. UNSW Computational Cognitive Science.</p>
+</div>
+<div id="ref-Rousselet2020">
+<p>Rousselet, G. A., &amp; Wilcox, R. R. (2020). Reaction times and other skewed distributions: problems with the mean and the median. <em>Meta-Psychology</em>, <em>4</em>, 1–39. <a href="https://doi.org/10.15626/MP.2019.1630">https://doi.org/10.15626/MP.2019.1630</a></p>
+</div>
+<div id="ref-Wickham2016">
+<p>Wickham, H. (2016). <em>ggplot2</em> (2nd ed.). Springer-Verlag. <a href="https://doi.org/10.1007/978-0-387-98141-3">https://doi.org/10.1007/978-0-387-98141-3</a></p>
+</div>
+<div id="ref-Wilke2018">
+<p>Wilke, C. O. (2018). <em>Fundamentals of data visualization</em>. O’Reilly Media, Inc. Retrieved from https://clauswilke.com/dataviz.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="importation-et-manipulation-dune-base-de-données.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="analyses-descriptives-bivariées.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
