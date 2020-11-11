@@ -461,10 +461,12 @@ Si l'on a évoqué l'idée que les proportions permettent de mieux comparer les 
 
 
 ## Relation entre une variable quantitative et une variable qualitative
-### Etudier graphiquement la relation
-Lorsque l'on cherche à explorer la relation qu'il peut y avoir entre une variable quantitative et une variable qualitative, il peut être intéressant de visualiser la distribution de la variable quantitative en fonction des modalités de la variable qualitative. Plusieurs possibilités existent afin de faire cela. On peut tout d'abord vouloir visualiser les choses de long de l'axe vertical avec :
+Lorsqu'on analyse une variable quantitative en fonction d'une variable qualitative, on peut notamment distinguer le fait que les données quantitatives soient pairées (*within-subject design* en anglais) ou non (*between-subject design* en anglais). Avoir des données non pairées signifie que pour chaque modalité de la variable qualitative étudiée, les données quantitatives correspondantes ne sont pas liées. Un exemple simple peut être l'analyse de la taille des individus en fonction du sexe. Dans ce cas, les données quantitatives de taille pour le sexe masculin et pour le sexe féminin proviendront forcément d'individus différents et ne formeront donc pas des paires. En revanche, on peut aussi avoir des études dans lesquelles plusieurs individus sont évalués dans plusieurs conditions différentes que l'on chercherait à comparer. En sciences du sport, un exemple relativement classique est de tester la performance d'endurance (variable quantitative) en ayant pris (condition de test) ou non (condition contrôle) une substance potentiellement ergonénique (la prise de substance ou non étant les modalités d'une même variable qualitative de type condition). Dans ce cas là, tous les individus auront des données dans les deux conditions et ces données seront donc pairées (dépendantes).
 
-- des moyennes et écarts-types, avec ou sans données individuelles (cf. codes et graphiques ci-dessous) ;
+### Etudier graphiquement la relation
+Lorsque l'on cherche à explorer la relation qu'il peut y avoir entre une variable quantitative et une variable qualitative, il peut être intéressant de visualiser la distribution de la variable quantitative en fonction de chaque modalité de la variable qualitative. Plusieurs possibilités existent afin de faire cela. On peut tout d'abord vouloir visualiser les choses de long de l'axe vertical avec :
+
+- des moyennes et écarts-types (cf. codes et graphiques ci-dessous) ;
 
 ```{r graph distri biv quand vs qual means, message = FALSE, warning = FALSE}
 # Moyennes et barres d'erreur
@@ -505,7 +507,7 @@ library(patchwork)
 g1 | g2 | g3
 ```
 
-- des médianes et intervalles interquartiles, avec ou sans données individuelles (cf. codes et graphiques ci-dessous) ;
+- des médianes et intervalles interquartiles (cf. codes et graphiques ci-dessous) ;
 
 ```{r graph distri biv quand vs qual med, message = FALSE, warning = FALSE}
 # Boîtes à moustaches
@@ -543,7 +545,7 @@ library(patchwork)
 g4 | g5 | g6
 ```
 
-- des aires de densité, avec ou sans données individuelles (cf. codes et graphiques ci-dessous).
+- des aires de densité (cf. codes et graphiques ci-dessous).
 
 ```{r graph distri biv quand vs qual dens, message = FALSE, warning = FALSE}
 # Aires de densité
@@ -582,9 +584,11 @@ g7 | g8 | g9
 
 Les différentes lignes de graphiques montrés ci-avant montrent des graphiques de plus en plus efficaces à mesure que l'on se déplace de la gauche vers la droite. Une bonne pratique est en effet de donner la possibilité de visualiser les données individuelles en plus des statistiques que l'on souhaiterait montrer pour résumer la distribution. Il s'agit d'une bonne pratique car une même statistique peut en réalité cacher des distributions de valeurs très différentes. Ce principe a été illustré notamment par Weissgerber [-@Weissgerber2015] qui milite pour la disparition des graphiques en forme de bâtons de dynamite, lesquels sont souvent utilisés pour montrer des moyennes et écart-types. La raison est que ces graphiques en forme de bâtons de dynamite ne renseignent pas sur la forme exacte de la distribution, et donc limitent les possibilités du lecteur de juger de la pertinence des choix d'analyse qui seraient faits par la suite au regard des données d'origine.
 
-Bien qu'on ait l'habitude d'utiliser des graphiques montrant les données de la variable quantitative sur l'axe vertical, il est possible de montrer les données sous formes d'aires de densité le long de l'axe horizontal (cf. graphique g13 ci-dessous) ou encore avec un graphique en lignes de crêtes (*ridgelines plot*, cf. graphique g14 ci-dessous). Ces types de graphiques et leurs intérêts ont été discutés par Wilke [-@Wilke2018]. Pour pouvoir faire le graphque g14, il faut installer et charger un nouveau package : `ggridges`.
+On remarque que pour pouvoir montrer les moyennes et écart-types en rouge sur les premiers graphiques, il a fallu utiliser la fonction `stat_summary()`. Cette fonction permet de mettre en graphique certaines statistiques en configurant l'argument `fun` ou `fun.data`. Pour pouvoir enrichir les possibilités de mise en graphique de diverses statistiques, il peut falloir installer au préalable le package `Hmisc`, ce qui était nécessaire ici pour montrer les écart-types avec `fun.data = "mean_sdl"`.
 
-```{r fig recap biv hori, fig.align="center",   message = FALSE, warning = FALSE}
+Bien que l'on ait l'habitude d'utiliser des graphiques montrant les données de la variable quantitative sur l'axe vertical, il est possible de montrer les données sous formes d'aires de densité le long de l'axe horizontal (cf. graphique g13 ci-dessous) ou encore avec un graphique en lignes de crêtes (*ridgelines plot*, cf. graphique g14 ci-dessous). Ces types de graphiques et leurs intérêts ont été discutés par Wilke [-@Wilke2018]. Pour pouvoir faire le graphque g14, il faut installer et charger un nouveau package : `ggridges`.
+
+```{r fig recap biv hori, message = FALSE, warning = FALSE}
 # Aire de densités superposées
 g13 <- 
   ggplot(data = iris, aes(x = Sepal.Length, fill = Species, color = Species)) +
@@ -597,7 +601,7 @@ g13 <-
         legend.title = element_text(size = 20, face = "bold"),
         legend.text = element_text(size = 20))
 
-# Ridgeline plot
+# Ridgelines plot
 
 library(ggridges)
 
@@ -610,19 +614,21 @@ g14 <-
         axis.text = element_text(size = 17))
 ```
 
-```{r fig recap biv dens, fig.align="center", message = FALSE, warning = FALSE, fig.width = 20}
+```{r fig recap biv dens, fig.align="center", echo = FALSE, message = FALSE, warning = FALSE, fig.width = 20}
 g13 | g14
 ```
 
-Lorsque les données à visualiser sont **pairées**, c'est-à-dire qu'il s'agit des mêmes individus qui ont des données pour chaque modalité de la variable qualitative (e.g., suite à une même mesure qui aurait été réalisée plusieurs fois), il est possible d'ajouter des éléments graphiques, telles que des lignes, de telle sorte à mettre davantage en évidence le fait que les données sont liées. Un exemple de graphique montrant cela est montré ci-dessous avec le jeu de données `mice2` (intégré au package `datarium`). Ce jeu de données contient des données de poids de 10 souris évaluées avant et après un traitement.
+Lorsque les données à visualiser sont pairées, c'est-à-dire qu'il s'agit des mêmes individus qui ont des données pour chaque modalité de la variable qualitative (e.g., suite à une même mesure qui aurait été réalisée dans différentes conditions), il est possible d'ajouter des éléments graphiques, telles que des lignes, de telle sorte à mettre davantage en évidence le fait que les données sont liées. Un exemple de graphique pour cela est montré ci-dessous avec le jeu de données `mice2` (intégré au package `datarium`). Ce jeu de données contient des données de poids de 10 souris évaluées avant et après un traitement.
 
 ```{r loading datarium, echo = FALSE, warning = FALSE}
 library(datarium)
+head(mice2)
 ```
 
-```{r paired data}
+```{r paired data, fig.align="center"}
 mice2 %>%
   pivot_longer(cols = c(before, after), names_to = "treatment", values_to = "score") %>%
+  mutate(treatment = fct_relevel(treatment, "before", "after")) %>%
   ggplot(aes(x = treatment, y = score)) +
   geom_line(aes(group = id)) +
   geom_point(size = 3, shape = 21, fill  = "white") +
@@ -631,14 +637,162 @@ mice2 %>%
   stat_summary(fun = "mean", geom = "point", na.rm = TRUE, size = 4, color = "red") 
 ```
 
-Dans le code ayant permi de réaliser ce graphique, il faut comprendre qu'il a été possible de réaliser des lignes reliant les différents points blancs grâce à la fonction `geom_line()` associée à un argument permettant de tracer les lignes en groupant les informations par individu (`aes(group = id)`). L'ajout d'une ligne rouge reliant chaque moyenne a été permis par l'écriture d'une ligne de code similaire à celle utilisée pour montrer les moyennes en rouge pour chaque condition, si ce n'est qu'on a indiqué de vouloir voir des lignes au lieu de points. La configuration de l'argument `aes(group = 1)` à l'intérieur de la fonction `stat_summary()` était nécessaire pour pouvoir montrer ces lignes rouges reliant les moyennes.
+Dans le code ayant permis de réaliser ce graphique, il faut comprendre qu'il a été possible de réaliser des lignes reliant les différents points blancs grâce à la fonction `geom_line()` associée à un argument permettant de tracer les lignes en groupant les informations par individu avec la variable `id` (`aes(group = id)`). L'ajout d'une ligne rouge reliant chaque moyenne a été permis par l'écriture d'une ligne de code similaire à celle utilisée pour montrer les moyennes en rouge pour chaque condition avec `stat_summary()`, si ce n'est qu'on a indiqué de vouloir voir une ligne au lieu de points. La configuration de l'argument `aes(group = 1)` à l'intérieur de la fonction `stat_summary()` était nécessaire pour pouvoir montrer la ligne rouge reliant les moyennes.
 
 ### Etudier numériquement la relation
 
-*Différence des moyennes*
+De manière générale, étudier la relation entre une variable quantitative et une variable qualitative revient souvent à comparer les valeurs que prend la variable quantitative en fonction des modalités de la variable qualitative. Les analyses qui peuvent être faites dépendent du nombre de groupes de valeurs (qui dépendent du nombre de modalités) à comparer (2 ou plus), et du caractère pairé (dépendant) ou non des données. L'observation de différences de scores entre les modalités pourrait alors indiquer qu'il y a un lien entre la variable qualitative (qu'on pourrait appelée variable **facteur**) et la variable quantitative (qu'on pourrait appeler **variable réponse**). (A noter que la démonstration d'un lien de cause à effet entre la variable quantitative et la variable qualitative ne pourra être effective que si l'on a sciemment fait varier les modalités de la variable qualitative avec les mêmes individus pour en observer la conséquence sur les valeurs de la variable quantitative.)
 
-*Taille d'effet*
+*Cas de deux groupes de données indépendants (données non pairées)*
 
-*Médianes des différences*
+De prime abord, l'analyse qui pourrait être envisagée pour comparer deux groupes de données quantitatives (e.g., des valeurs de taille) non pairées, qui seraient donc relatives à deux modalités différentes d'une variable qualitative (e.g., le sexe), serait de comparer les moyennes, ou les médianes des groupes. Toutefois, en se restreignant à cela, il pourrait être difficile de porter un jugement sur la grandeur relative de la différence qui serait observée, qu'on pourrait appeler **taille d'effet**. Il serait également difficile de comparer cette taille d'effet avec celles observées dans d'autes études, car étant calculée de la sorte, elle serait extrêmement inhérente aux variables et valeurs mesurées dans l'étude. Il est donc intéressant, dans ce genre de situation, de standardiser la différence des moyennes ou médianes obtenues pour les deux groupes. Cette procédure de standardisation a été très développée dans le cadre de comparaisons de moyennes, et les calculs suivants, repris de l'article de D. Lakens [-@Lakens2013], s'inscrivent donc dans ce cadre.
+
+**ds de Cohen**
+
+Classiquement, l'indice statistique utilisé pour calculer une différence de moyennes de manière standardisée entre deux groupes de données non pairées, à partir d'échantillons de population, est le $d_{s}$ de Cohen. Cette statistique se calcule en faisant la différence entre les moyennes des deux groupes à comparer, et en divisant cette différence par l'écart-type commun des valeurs de chacun des deux groupes. Ce calcul est montré ci-dessous : 
+
+$$d_{s} = \frac{\overline{X_{1}} - \overline{X_{2}}} {\sqrt{\frac{(N_{1} - 1) s_{1}^2 + (N_{2} - 1) s_{2}^2} {N_{1} + N_{2} - 2}}}$$
+
+
+Dans R, le $d_{s}$ de Cohen peut être calculé à l'aide de la fonction `cohens_d()` du package `effectsize`, qui nécessite d'être installé puis chargé avant d'être utilisé. Pour illustrer l'utilisation de cette fonction, on peut utiliser le jeu de données `ToothGrowth`, qui contient des données d'augmentation de la longueur d'odontoblastes (cellules reponsables de la croissance des dents) de cochons de Guinée (variable quantitative `len`), qui ont été supplémentés en vitamine C selon deux méthodes différentes (variable qualitative `supp`) : avec jus d'orange (modalité OJ), ou directement avec de l'acide ascorbique (modalité VC). (Il y a également des dosages différents indiqués dans le jeu de données, mais cette variable n'est pas prise en compte pour l'exemple.) 
+
+```{r ToothGrowth view, echo = FALSE, warning = FALSE, fig.align="center"}
+head(ToothGrowth)
+ggplot(data = ToothGrowth, aes(x = supp, y = len)) +
+  geom_jitter(size = 3, width = 0.08) +
+  stat_summary(fun = "mean", color = "red", size = 1.1) +
+  stat_summary(fun.data = "mean_sdl", fun.args = list(mult=1), geom = "errorbar", na.rm = TRUE, size = 1.8, width = 0.1, color = "red")
+```
+
+Dans ce jeu de données, les données quantitatives à comparer (`len`) selon les modalités OJ et VC de la variable qualitative `supp` sont indépendantes car les individus qui ont suivi les deux traitements n'étaient pas les mêmes. On est donc bien dans une situation de type *between-subject design*. On peut alors calculer le $d_{s}$ de Cohen à l'aide de la fonction `cohens_d()` de la manière suivante : 
+
+```{r effectsize loading, echo = FALSE, warning=FALSE, message=FALSE}
+library(effectsize)
+```
+
+```{r cohens d between, warning=FALSE, message=FALSE}
+cohens_d(len ~ supp, data = ToothGrowth, paired = FALSE, pooled_sd = TRUE)
+```
+
+Dans cet exemple, on remarque qu'on a bien cherché à savoir comment les données de la variable `len` peuvent différer en fonction (`~`) des modalités de la variable `supp`. Si la fonction nous donne un résultat, il faut toutefois bien faire attention au sens du calcul qui a été réalisé. Configurée de la sorte, la fonction `cohens_d()` réalise la différence **modalité 1 - modalité 2**. Il faut donc savoir quelle est la modalité 1 et quelle est la modalité 2 dans la variable `supp` pour ensuite pouvoir interpréter le signe du résultat, qui est positif ici avec la valeur de 0.49. Pour ce faire, on peut utiliser la fonction `levels()` :
+
+```{r levels function}
+levels(ToothGrowth$supp)
+```
+
+L'ordre des modalités affichées nous indique que OJ est la modalité 1, et que VC est la modalité 2. Par conséquent, le $d_{s}$ de Cohen de 0.49 obtenu plus haut indique que le traitement OJ (jus d'orange) a eu un effet supérieur à celui du traitement VC (acide ascorbique). Cette interprétation devrait être en cohérence avec le graphique réalisé au préalable. Si l'on avait voulu avoir le calcul inverse (VC - OJ), il aurait  fallu reconfigurer l'ordre des modalités, par exemple à l'aide de la fonction `fct_relevel()` du package `forcats` comme montré à la fin du chapite 3.
+
+Une fois que l'on a calculé une taille d'effet, il est toujours intéressant d'essayer de formuler un jugement sur l'importance, l'ampleur de l'effet. En ce sens, des valeurs seuils ont été proposées dans la littérature (Cohen, 1988; in Lakens [-@Lakens2013]). Ces valeurs, valables pour interpréter des tailles d'effet dans le cadre d'une étude de type *between-subject design*, sont montrées dans le tableau ci-dessous.
+
+```{r effect size table, echo = FALSE}
+knitr::kable(
+  tribble(
+    ~Petit, ~Moyen, ~Grand,
+    0.2,     0.5,      0.8
+  )
+)
+```
+
+Ces valeurs sont relativement arbitraires, et l'interprétation de la taille de l'effet et des conséquences qu'il peut avoir en pratique ne devrait pas être liée de manière trop rigide à ces valeurs [@Lakens2013].
+
+Il existe également une autre approche pour interpréter une valeur de taille d'effet : l'approche *Common Language explanation* [@Lakens2013]. Cette approche consiste à faire le lien entre la valeur de la taille d'effet et des probabilités de rencontrer des valeurs similaires ou supérieures dans les groupes comparés. Par exemple, lorsqu'on obtient un $d_{s}$ de Cohen de 0.80, cela peut se traduire par le fait qu'il y a 71.4 % de chances qu'une personne prise au hasard dans le groupe avec la meilleure moyenne ait un score plus élevé qu'une personne qui serait prise au hasard dans le groupe avec la moyenne la plus basse des deux groupes. Kristoffer Magnusson a réalisé une page web qui permet d'utiliser l'approche *Common Language explanation* pour n'importe quelle valeur de taille d'effet dans le cadre d'une étude de type *between-subject design*. Jetez un oeil ici : https://rpsychologist.com/cohend.
+
+**gs de Hedges**
+
+Il a été rapporté, dans la littérature, qu'en réalité le $d_{s}$ de Cohen est relativement biaisé lorsqu'il s'agit d'estimer la taille d'un effet dans la population d'intérêt à partir d'échantillons de population (autrement dit, à l'échelle de nombreux échantillons, on sait qu'avec le $d_{s}$ de Cohen on aura en moyenne un écart entre l'effet qu'on a trouvé et l'effet réel qui existe dans la population). Cela sera d'autant plus vrai lorsque les calculs seront réalisés à partir de petits échantillons ($N$ < 20), selon Hedges et Okins (1985) cités par Lakens [-@Lakens2013]. En raison de cela, un autre indice statistique a été proposé pour corriger cette erreur systématique, à savoir le $g_{s}$ de Hedges :
+
+$$g_{s} = d_{s} (1 - \frac{3}{4(N_{1} + N_{2}) - 9})$$
+
+Dans R, le $g_{s}$ de Hedges lié à un échantillon de population peut être calculé à l'aide de la fonction `hedges_g()` du package `effectsize` :
+
+```{r hedges g between}
+hedges_g(len ~ supp, data = ToothGrowth, paired = FALSE, pooled_sd = TRUE)
+```
+
+Ici, la valeur ne change pas vraiment par rapport au cas précédent (d'autant plus qu'elle est arrondie), car l'effectif n'est pas si petit que cela. Pour interpréter sa valeur, il convient de faire à nouveau attention à la différence réellement utilisée, qui reste ici OJ - VC.
+
+**Delta de Glass**
+
+Dans certains cas, les écarts-types des groupes à comparer peuvent être très différents. On peut se trouver dans ce genre de situation lorsqu'on compare des données de progression entre un groupe entraîné ou traité, et un groupe contrôle, avec un écart-type qui risquerait d'être plus élevé dans le groupe entraîné/traité sous l'effet d'une réponse potentiellement très hétérogène à l'entraînement ou au traitement selon les individus. Dans ce genre de situation, des indices statistiques autres que le $g_{s}$ de Hedges mériteraient d'être calculées, telles que le $\Delta$ de Glass [@Lakens2013] :
+
+$$\Delta = \frac{\overline{X_{1}} - \overline{X_{2}}} {s_{2}}$$
+
+
+Le calcul du $\Delta$ de Glass est dans l'idée le même  que celui du $d_{s}$ de Cohen, sauf que la différence des moyennes des deux groupes n'est pas divisée par l'écart-type commun des deux groupes, mais par celui d'un seul des deux groupes, qui serait en principe celui qui représenterait la condition contrôle ou la condition de référence. Dans R, le $\Delta$ de Glass lié à un échantillon de population peut être calculé à l'aide de la fonction `glass_delta()` du package `effectsize`. Attention, l'écart-type utilisé dans le code suivant est celui de la variable quantitative associée à la modalité 2 de la variable qualitative, qui est toujours VC dans cet exemple.
+
+```{r glass delta between}
+glass_delta(len ~ supp, data = ToothGrowth)
+```
+
+
+*Cas de deux groupes de données dépendants (données pairées)*
+
+**dz et dav de Cohen**
+
+Le calcul classique pour obtenir la taille d'effet désignant l'écart entre deux groupes de données dépendantes est celui du $d_{z}$ [@Lakens2013], qui est montré ci-dessous :
+
+$$d_{z} = \frac{M_{diff}}{s_{diff}},$$
+$M_{diff}$ désignant la moyenne des différences relatives à chaque pair de valeurs obtenues dans les deux conditions comparées, et $s_{diff}$ désignant l'écart-type de ces différences. Dans R, le $d_{z}$ peut être obtenu à nouveau avec la fonction `cohens_d()` du package `effectsize`. Pour illustrer cela, nous allons cette fois utiliser le jeu de données `Blink` associé au package `PairedData` qui doit être installé et chargé pour être utilisé. Pour information, `Blink` contient les données de taux de clignotement des yeux obtenues chez 12 sujets et dans deux conditions différentes : 1/ tâche où il fallait diriger un stylo selon une trajectoire rectiligne (modalité `Straight`) ; 2/ tâche où il fallait diriger un stylo selon une trajectoire avec des oscillations (`Oscillating`).
+
+```{r Blink view, echo = FALSE, warning = FALSE, message=FALSE}
+library(PairedData)
+data(Blink)
+head(Blink)
+```
+
+Pour la suite de l'analyse, on peut reconfigurer ce jeu de données de telle sorte à bien avoir les conditions testées dans une même colonne et les valeurs correspondantes dans la colonne d'à côté, avec la modalité "Straight" en tant que première modalité à considérer dans les fonctions à suivre. Le nouveau jeu de données s'appellerait alors `Blink2`.
+
+```{r Blink reconfiguration, echo = FALSE, message = FALSE}
+Blink2 <-
+  Blink %>%
+  pivot_longer(cols = c(Straight, Oscillating), names_to = "Condition", values_to = "Blink_rate") %>%
+  mutate(Condition = fct_relevel(Condition, "Straight", "Oscillating"))
+
+Blink2
+
+ggplot(data = Blink2, aes(x = Condition, y = Blink_rate)) +
+  geom_point(size = 2) +
+  geom_line(aes(group = Subject)) +
+  stat_summary(fun.data = "mean_sdl", fun.args = list(mult = 1), geom = "errorbar", color = "red", size = 1.2, width = 0.1) +
+  stat_summary(aes(group = 1), geom = "line", color = "red", size = 1.2) +
+  stat_summary(fun = "mean", geom = "point", color = "red", size = 3)
+```
+
+Dans R, on peut alors calculer $d_{z}$ à nouveau à l'aide de la fonction `cohens_d()` du package `effectsize` comme ceci :
+
+```{r cohens dz within, warning=FALSE, message=FALSE}
+cohens_d(Blink_rate ~ Condition, data = Blink2, paired = TRUE)
+```
+
+Toutefois, d'après Lakens [-@Lakens2013], il peut être intéressant de rapporter plutôt un indice de taille d'effet qui ne serait pas influencé par le fait que les données des deux groupes à comparer soient corrélées, notamment en vue de rendre comparable cette taille d'effet à celles obtenues dans le cadre d'études de type *between-subject design*, pour plus facilemement conduire des méta-analyses par la suite par exemple. La recommandation de Lakens [-@Lakens2013] serait alors d'utiliser l'indice $d_{av}$, dont le calcul serait le suivant : 
+
+$$d_{av} = \frac{M_{diff}}{\sqrt{\frac{s_{1}^2 + s_{2}^2} {2}}}$$
+
+Ce calcul reviendrait donc à diviser la moyenne des différences par la moyenne des écarts-types respectifs des deux groupes de données. Pour obtenir $d_{av}$, il est possible de repartir de la fonction `cohens_d()` et de sa configuration pour des groupes indépendants, mais en indiquant `pooled_sd = FALSE` dans la fonction, comme ci-dessous : 
+
+```{r cohens dav within, warning=FALSE, message=FALSE}
+cohens_d(Blink_rate ~ Condition, data = Blink2, paired = FALSE, pooled_sd = FALSE)
+```
+
+En effet, que l'on fasse la moyenne des différences (ce qui serait attendu pour le présent calcul) ou la différence entre deux moyennes (ce qui est finalement fait par la fonction tel que configurée ci-dessus), cela ne change rien avec des données pairées. Le numérateur $M_{diff}$ reste donc correctement calculé même avec cette configuration de fonction qui est faite initialement pour des groupes indépendants. Le fait d'indiquer `pooled_sd = FALSE` change le calcul du dénominateur que nous avions rencontré initialement pour le calcul de $d_{s}$, cela pour obtenir le calcul attendu pour le $d_{av}$.
+
+**gav de Hedges**
+
+Comme dans le cas de l'étude de groupes indépendants, $d_{av}$ et ses dérivés sont biaisés. Il peut donc être préfarable à nouveau de calculer le $g_{av}$ de Hedges avec la fonction `hedges_g()` configurée comme ceci : 
+
+```{r hedges gav within, warning=FALSE, message=FALSE}
+hedges_g(Blink_rate ~ Condition, data = Blink2, paired = FALSE, pooled_sd = FALSE)
+```
+
+Toutefois, comme le rappelle Lakens [-@Lakens2013], le $g_{av}$ de Hedges ne serait pas complètement non biaisé.
+
+```{r detach MASS, echo = FALSE}
+detach(package:PairedData)
+detach(package:MASS)
+```
+
+
+
+
 
 

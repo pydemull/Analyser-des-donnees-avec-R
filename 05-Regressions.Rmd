@@ -16,7 +16,7 @@ b <- summary(lm(mpg ~ hp, data = mtcars))$coefficients[1]
 
 dfR2 <- 
   mtcars %>%
-  select(hp, mpg) %>%
+  dplyr::select(hp, mpg) %>%
   mutate(pred = a * hp + b,
          res = pred - mpg)
 
