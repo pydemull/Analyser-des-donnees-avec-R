@@ -10,7 +10,7 @@ où $\hat{Y}$ désigne les prédictions faites à partir du modèle, et $Y$ dés
 
 La figure ci-dessous vise à illustrer la notion de **résidu** et ce qu'elle représente dans le calcul du $R^2$. Sur cette figure, les points représentent les valeurs $Y{i}$ en fonction des valeurs $X{i}$, la ligne bleue représente le modèle de régression linéaire (i.e., toutes les valeurs $\hat{Y}{i}$ qui seraient prédites à partir du modèle et des valeurs $X{i}$), et les segments rouges représentent les résidus (i.e., la différence qu'on a à chaque fois entre  $\hat{Y}{i}$ et $Y{i}$). Pour un modèle donné, plus ces segments rouges seront nombreux et grands, plus cela signifiera que les erreurs de prédiction du modèle sont nombreuses et grandes, que la part de variance non expliquée par le modèle est grande, et que la valeur du $R^2$ pour ce modèle est éloignée de 1. Ainsi, le coeffient $R^2$ peut aller de la valeur 0 (signifiant que le modèle n'explique aucune variation de $Y$), à la valeur de 1 (signifiant que le modèle explique toute les variations de $Y$). Plus la valeur de $R^2$ d'un modèle linéaire se rapprochera de 1, plus cela suggérera que la relation étudiée est effectivement linéaire. (On note par ailleurs que le coefficient de détermination $R^2$ associé à un modèle linéaire est mathématiquement lié au coefficient de corrélation de Pearson ($r$), $r$ étant la racine carrée du $R^2$.)
 
-```{r graph see, echo = FALSE, message = FALSE, fig.align = "center"}
+```{r graphsee, echo = FALSE, message = FALSE, fig.align = "center", fig.cap="Résidus d'un modèle"}
 a <- summary(lm(mpg ~ hp, data = mtcars))$coefficients[2]
 b <- summary(lm(mpg ~ hp, data = mtcars))$coefficients[1]
 
@@ -73,7 +73,7 @@ SEE
 
 Une fois extraites et associées à des noms, ces informations peuvent ensuite être réutilisées avec le package `ggplot2` et la fonction `annotate()` pour compléter le graphique initial avec des informations statistiques.
 
-```{r graph lin and stats, fig.align = "center", message = FALSE, warning = FALSE}
+```{r graphLinStats, fig.align = "center", message = FALSE, warning = FALSE, fig.cap = "Régression linéaire avec les informations correspondantes"}
 ggplot(data = mtcars, aes(x = hp, y = mpg)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE) +
@@ -105,7 +105,7 @@ anscombe <-
 )
 ```
 
-```{r anscombe quartet graph, echo = FALSE, fig.align = "center"}
+```{r anscombeQuartetGraph, echo = FALSE, fig.align = "center", fig.cap="Le quartet d'Anscombe"}
 size <- 3
 color <- "red"
 anscombe1 <- ggplot(data = anscombe, aes(x = Ix, y = Iy)) + 

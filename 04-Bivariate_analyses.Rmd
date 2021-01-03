@@ -5,7 +5,7 @@ Réaliser une analyse bivariée désigne le fait d'étudier la relation qui peut
 ### Etudier graphiquement la relation
 Comme dans le cadre d'analyses univariées, une bonne pratique, lorsqu'on étudie une relation bivariée, est de faire un graphique. Avec des variables quantitatives, il s'agit de montrer les valeurs d'une variable en fonction des valeurs de l'autre variable, chose que permet un simple nuage de points. Plusieurs types de relations peuvent alors être rencontrés, ces relations pouvant potentiellement s'apparenter à autant de fonctions mathématiques que l'on connaît. Parmi les plus connues, on a par exemple les relations linéaires, les relations logarithmiques, ou encore les relations quadratiques, illustrées ci-dessous.
 
-```{r relationships illustrations, message = FALSE, warning = FALSE, echo = FALSE, fig.align ="center"}
+```{r relationshipsIllustrations, message = FALSE, warning = FALSE, echo = FALSE, fig.align ="center", fig.cap="Différentes formes de relation"}
 
 # Jeu de données pour la relation linéaire
 set.seed(123)
@@ -60,7 +60,7 @@ g_quad <-
 
 Dans R, pour obtenir un nuage de points à partir d'un jeu de données, il est possible d'utiliser la fonction `ggplot()` en l'associant à la fonction `geom_point()` du package `ggplot2`, comme dans l'exemple ci-dessous qui utilise le jeu de données `mtcars` (qui est intégré à R de base) et les variables `hp` (*gross horsepower*) et `mpg` (*miles/US gallon*). Dans cet exemple, on peut voir que la relation semble gobalement linéaire négative (voire curvilinéaire négative si l'on donne de l'importance au point isolé à droite du graphique).
 
-```{r scatterplot, fig.align = "center"}
+```{r scatterplot, fig.align = "center", fig.cap="Exemple de nuage de points"}
 ggplot(data = mtcars, aes(x = hp, y = mpg)) + 
   geom_point()
 ```
@@ -71,7 +71,7 @@ ggplot(data = mtcars, aes(x = hp, y = mpg)) +
 
 Lorsque la relation étudiée semble linéaire, l'étude numérique classique consiste à calculer le coefficient de corrélation de Pearson, noté $r$, dont la valeur vise à renseigner dans quelle mesure le nuage de points représentant le lien entre les deux variables étudiées suit une droite. Avant de se lancer dans le calcul du coefficient de corrélation de Pearson pour étudier la relation entre une variable $X$ et une variable $Y$, il peut donc être utile de compléter le nuage de points montré ci-dessus avec une droite d'équation de type $Y = aX + b$. Cette équation serait la meilleure modélisation possible de la relation linéaire entre $X$ et $Y$, de telle sorte que parmi l'infinité d'équations qui pourraient lier $X$ à $Y$, c'est cette équation qui au total donnerait la plus petite erreur lorsque l'on voudrait prédire $Y$ à partir de $X$. Si $X$ et $Y$ sont liées de manière linéaire, alors le nuage des points relatifs aux deux variables devrait s'étaler le long de cette droite. Pour obtenir cette droite en plus du nuage de points, il est possible d'utiliser la fonction `geom_smooth()` du package `ggplot2`.
 
-```{r scatterplot and line, fig.align ="center"}
+```{r scatterplotLine, fig.align ="center", fig.cap="Nuage de points avec droite de régression"}
 ggplot(data = mtcars, aes(x = hp, y = mpg)) + 
   geom_point() +
   geom_smooth(formula = y ~ x, method = "lm", se = FALSE)
@@ -87,7 +87,7 @@ $COV$ désignant la covariance entre les variables $X$ et $Y$, $X{i}$ et $Y{i}$ 
 
 Le tableau ci-dessous montre les premières étapes du calcul de la covariance pour des couples de variables fictifs $(X1,Y1)$, $(X1,Y2)$, et $(X1,Y3)$. En particulier, la partie droite du tableau (de X1Y1 à X1Y3) montre le calcul du produit $(X{i} - \overline{X}) (Y{i} - \overline{Y})$ pour les différents couples de variables et cela pour chaque ligne du jeu de données.
 
-```{r table cov, echo = FALSE}
+```{r tablecov, echo = FALSE}
 X1 <- c(0, 2, 4, 6, 8, 10, 12)
 Y1 <- X1
 Y2 <- c(0, 1, 15, 5, 11, 3, 12)
@@ -98,13 +98,14 @@ df <-
   data.frame(X1 = X1, Y1 = Y1, Y2 = Y2, Y3 = Y3) %>%
   mutate(X1Y1 = (X1 - mean(X1)) * (Y1 - mean(Y1)),
          X1Y2 = (X1 - mean(X1)) * (Y2 - mean(Y2)),
-         X1Y3 = (X1 - mean(X1)) * (Y3 - mean(Y3)))
+         X1Y3 = (X1 - mean(X1)) * (Y3 - mean(Y3))),
+caption = "Calcul de la covariance"
 )
 ```
 
 Ce que ce tableau peut permettre de rendre compte, c'est que plus les deux variables étudiées évolueront de manière consistante dans des sens identiques comme avec $X1$ et $Y1$, ou de manière consistante dans des sens opposés comme avec $X1$ et $Y3$, plus les produits $(X{i} - \overline{X}) (Y{i} - \overline{Y})$ donneront respectivement des grands scores positifs ou des grands scores négatifs, et moins les scores $(X{i} - \overline{X}) (Y{i} - \overline{Y})$ à additionner pour le calcul de la covariance s'annuleront. En effet, avec une relation relativement linéaire et positive les scores seront plus systématiquement positifs, et avec une relation relativement linéaire et négative les scores seront plus systématiquement négatifs. Toutefois, lorsqu'on aura des variables qui n'évolueront pas de manière consistante dans le même sens ou dans un sens opposé comme avec $X1$ et $Y2$, les scores positifs et négatifs liés aux calculs $(X{i} - \overline{X}) (Y{i} - \overline{Y})$ auront tendance à s'annuler et donneront lieu à une somme des scores $(X{i} - \overline{X}) (Y{i} - \overline{Y})$ diminuée, et donc à une covariance et au final à un coefficient de corrélation de Pearson tirés vers 0. Ces différents cas de figure et les calculs $(X{i} - \overline{X}) (Y{i} - \overline{Y})$ correspondants sont illustrés sur la figure ci-dessous. Sur cette figure, chaque carré correspond au calcul $(X{i} - \overline{X}) (Y{i} - \overline{Y})$, le carré étant bleu lorsque le résultat du calcul est positif, et rouge lorsque le résultat est négatif. L'aire d'un carré illustre la grandeur du score issu du calcul. Sur les figures de gauche et de droite, on distingue une relation linéaire parfaite, ce qui maximise les scores à additionner pour le calcul de la covariance, dans le positif pour la figure de gauche et dans le négatif pour la figure de droite. Au milieu, on remarque que le manque de relation linéaire donne lieu à des carrés à la fois bleus et rouges, indiquant que les scores associés aux calculs $(X{i} - \overline{X}) (Y{i} - \overline{Y})$ de la covariance s'annulent et diminuent ainsi la valeur finale de la covariance.
 
-```{r graph cov, fig.align ="center", echo = FALSE, fig.width = 10, warning = FALSE}
+```{r graphCov, fig.align ="center", echo = FALSE, fig.width = 10, warning = FALSE, fig.cap="Détermination de la covariance"}
 df <- 
   df %>%
   mutate(signX1Y1 = ifelse(X1Y1 > 0, "pos", "neg"),
@@ -188,12 +189,13 @@ cor.test(x = mtcars$hp, y = mtcars$mpg, method = "pearson")
 
 Sur la base de travaux antérieurs, Hopkins et al. [-@Hopkins2009] ont fait une proposition de classification pour qualifier la valeur du coefficient de corrélation qui serait obtenue dans le cadre d'une relation linéaire. Cette proposition est montrée ci-dessous :
 
-```{r correlation table, echo = FALSE}
+```{r correlationtable, echo = FALSE}
 knitr::kable(
   tribble(
     ~Petite, ~Moyenne, ~Grande, ~"Très grande", ~"Extrêmement grande",
     0.1,     0.3,      0.5,     0.7,            0.9
-  )
+  ),
+  caption = "Taille d'effet pour une corrélation"
 )
 ```
 
@@ -201,7 +203,7 @@ Pour visualiser le lien que l'on peut faire entre la forme du nuage de points et
 
 A noter que la valeur du coefficient de corrélation de Pearson est très dépendante de la manière dont sont distribuées les variables, avec une influence particulière de la variabilité des données [@Halperin1986]. L'influence de la variabilité est illustrée sur la figure ci-dessous. A gauche, on observe un nuage de points représentant une population complète, avec en conséquence une variablité le long des axes $X$ et $X$ relativement importante. La valeur du coefficient de corrélation de Pearson est ici particulièrement élevée. A droite, on observe exactement les mêmes valeurs, mais sur un intervalle dont l'étendue a été manuellement restreinte, diminuant ainsi la variabilité. On observe alors une diminution de la valeur du coefficient de corrélation de Pearson, alors qu'il s'agit à l'origine du même jeu de données que celui de gauche. Cet exemple doit faire prendre conscience qu'il faut faire attention lorsqu'on cherche à comparer des coefficient de corrélation de Pearson obtenus avec différents échantillons présentant des caractéristiques différentes, car si ces échantillons n'ont pas les mêmes niveaux de variabilité, les valeurs des coefficients de corrélation ne seront pas vraiment comparables, en sachant que c'est l'échantillon qui présente la plus grande variabilité qui aura mathématiquement plus de chances de présenter une valeur de coefficient de corrélation plus élevée.
 
-```{r spurious correlations, echo = FALSE, warning=FALSE, message=FALSE,  fig.align ="center"}
+```{r spuriousCorrelations, echo = FALSE, warning=FALSE, message=FALSE,  fig.align ="center", fig.cap = "Coefficient de corrélation de Pearson et variabilité des données"}
 g_lin <- 
   ggplot(data = data_lin, aes(x = x, y = y)) + 
   geom_point() +
@@ -227,7 +229,7 @@ g_lin | g_lin_sel
 
 Un exemple extrême de l'influence de la variabilité des données sur la valeur du coefficient de corrélation de Pearson est montré sur la figure ci-dessous. Les deux graphiques montrent exactement les mêmes données, à ceci près que sur le graphique de droite, on a remplacé en ordonnées une valeur du graphique de gauche pour lui donner la valeur de 10. L'influence de cette action sur la valeur du coefficient de corrélation est particulièrement nette, alors qu'une seule valeur a été modifée. Ceci montre qu'il faut faire attention aux valeurs extrêmes qui pourraient grandement influencer la valeur de corrélation obtenue, notamment en présence d'échantillons de taille relativement faible. Dans le cas où la valeur du coefficient de corrélation de Pearson serait très influencée par une valeur, il pourrait être une bonne pratique de calculer la valeur du coefficient de corrélation avec et sans cette valeur afin de pouvoir quantifier son influence sur la relation étudiée [@Halperin1986]. Une alternative pourrait être aussi d'étudier la relation à l'aide d'autres types de coefficients que celui de Pearson, tels que celui de Spearman, présenté plus bas. Toutes ces informations doivent en tous les cas faire prendre conscience qu'il n'est pas toujours pertinent de calculer le coefficient de corrélation de Pearson. En ce sens, lorsqu'on cherche à inférer la valeur du coefficient de corrélation de Pearson dans la population étudiée, et cela avec un degré d'incertitude bien défini, il convient de vérifier certains prérequis, lesquels seront abordés plus tard dans ce livre. 
 
-```{r spurious correlation bis,  echo = FALSE, , fig.align ="center", message = FALSE, warning = FALSE}
+```{r spuriousCorrelationBis,  echo = FALSE, , fig.align ="center", message = FALSE, warning = FALSE, fig.cap="Coefficient de corrélation de Pearson et outliers"}
 data1 <- tibble(x = c(0, 1, 2, 3, 4, 5), y = c(2, 4, 3, 2, 3, 4))
 data2 <- tibble(x = c(0, 1, 2, 3, 4, 5), y = c(2, 4, 3, 2, 3, 10))
 
@@ -262,12 +264,13 @@ Lorsque la relation étudiée ne semble pas linéaire mais s'apparente assez cla
 
 Lorsque le coefficient de corrélation de Pearson ne permet pas de caractériser fiablement le degré de relation linéaire **entre les valeurs** de deux variables (par exemple en présence de valeurs aberrantes au sein d'un échantillon de petite taille), une alternative peut être d'étudier le degré de relation linéaire **entre les rangs** de ces deux variables. Le rang, c'est le classement (ou la position) d'une observation donnée en fonction de sa valeur. Dans une variable, les observations avec les valeurs les plus faibles seront associées aux rangs les plus bas alors que les observations avec les valeurs les plus élevées seront associées aux rangs les plus élevés. Une illustration de la notion de rang est proposée ci-dessous pour la variable `hp` du jeu de données `mtcars`. Dans le tableau ci-dessous, les lignes ont été ordonnées sur la base des rangs de la variable `hp`. On pourra remarquer que dans le tableau, nous avons ce qu'on appelle des ex-aequos, c'est-à-dire que plusieurs observations peuvent présenter les mêmes valeurs, et donc avoir le même rang.
 
-```{r table ranks, echo = FALSE}
+```{r tableranks, echo = FALSE}
 knitr::kable(
  mtcars %>%
    select(hp) %>%
    mutate(hp_rank = rank(hp)) %>%
-   arrange(hp_rank)
+   arrange(hp_rank),
+ caption = "Les rangs d'une variable"
 )
 ```
 
@@ -291,7 +294,7 @@ cor.test(x = mtcars$hp, y = mtcars$mpg, method = "spearman")
 
 Si l'on veut produire une représentation graphique qui illustre la valeur de *rho* obtenue, il pourrait être davantage pertinent de non plus montrer un nuage de points à partir des valeurs des variables mises en lien, mais un nuage de points à partir de leurs rangs respectifs.
 
-```{r graph cor spearman, fig.align="center", message=FALSE}
+```{r graphSpearman, fig.align="center", message=FALSE, fig.cap="Graphique de corrélation pour le coefficient de Spearman"}
 mtcars %>%
   mutate(hp_rank = rank(hp), mpg_rank = rank(mpg)) %>%
   ggplot(aes(x = hp_rank, y = mpg_rank)) +
@@ -301,7 +304,7 @@ mtcars %>%
 
 En matière d'interprétation, des valeurs de *rho* positives indiqueront que les deux variables mises en lien tendent à augmenter simultanément, on parlera alors de **relation monotone positive**. Dans le cas inverse, des valeurs négatives indiqueront que les deux variables mises en lien tendent à diminuer simultanément, on parlera alors de relation **monotone négative**. A noter cependant que de par son calcul, la valeur de *rho* ne permet pas de renseigner sur la forme de relation qu'il pourrait y avoir entre les valeurs des deux variables (e.g., linéaire ou curvilinéaire par exemple). Ceci est illustré sur la figure ci-dessous. La figure de gauche montre la relation entre les valeurs des variables $X$ et $Y$, qui est caractérisée par un coefficient de corrélation de Spearman (*rho*) de 1, indiquant donc que la relation est parfaitement monotone positive, sans préjuger de la forme particulière que pourrait présenter la relation. Pour mieux comprendre pourquoi cette valeur de *rho* est de 1, la figure de droite montre la relation entre les rangs de ces deux variables $X$ et $Y$. On voit en effet que la relation entre les rangs est effectivement parfaitement linéaire.
 
-```{r ranks vs values spearman, echo = FALSE, fig.align = "center"}
+```{r ranksvvaluesspearman, echo = FALSE, fig.align = "center", fig.cap="Explication du caractère monotone d'une variable évalué par le coefficient de Spearman"}
 a <- 
   data.frame(x = seq(1, 50, 1)) %>%
   mutate(y = log(x)) %>%
@@ -333,7 +336,7 @@ library(vcd)
 library(ggthemes)
 ```
 
-```{r grouped bars code, message = FALSE, fig.align="center", warning = FALSE}
+```{r grouped bars code, message = FALSE, warning = FALSE}
 # Reconfiguration de l'ordre des modalités de la variable opinion, et calcul des effectifs totaux pour les catégories étudiées
 JointSports_new <- 
   JointSports %>%
@@ -360,7 +363,7 @@ g2 <-
 ```
 
 
-```{r grouped bars figure, echo = FALSE}
+```{r groupedBarsFigure, echo = FALSE, fig.align="center", fig.cap="Exemples de diagramme en barres mises côte-à-côte"}
 g1 / g2
 ```
 
@@ -368,7 +371,7 @@ Pour pouvoir réaliser le graphique g1 montré ci-dessus, il a fallu indiquer da
 
 Les graphiques g1 et g2 montrent l'importance de la configuration du graphique en fonction des comparaisons que l'on veut principalement faire, et donc du message que l'on veut prioritairement délivrer. Un principe qui peut guider la conception du graphique est le fait qu'il est plus facile de comparer des barres qui sont mises juste côte-à-côte. Sur la base de ce principe, le graphique g1 ci-dessus permet de comparer plus facilement les diverses opinions relevées pour les garçons d'un côté et pour les filles de l'autre, alors que le graphique g2 permet de comparer plus facilement les réponses provenant des deux genres et cela pour chaque type d'opinion. Comme indiqué par Wilke [-@Wilke2018], les types graphiques illustrés avec les graphiques g1 et g2 ci-dessus peuvent parfois se voir attribuer le reproche que s'il est relativement facile de lire les informations encodées par des positions (cf. ligne de base sur les graphiques), il peut être être difficile de lire les informations encodées par une couleur dont la signification est indiquée en légende, car cela demande un effort mental supplémentaire de garder en tête la signification de la légende lorsqu'on lit le graphique. Pour palier ce problème, qui, selon Wilke [-@Wilke2018], est au final une affaire de goût, on pourrait utiliser la fonction `facet_wrap()` pour créer une figure telle qu'illustré ci-dessous. (La figure ci-dessous reprend la logique du graphique g1 montré plus haut, avec un besoin de légende pour la variable `opinion` qui n'existe plus car la fonction `facet_wrap()` a permis de montrer les diagrammes en barres pour les deux genres de manière séparée, dans des encarts différents, et avec chacun leur propre axe des abscisses relatif aux modalités de la variable `opinion`.)
 
-```{r grouped bars upgraded, fig.align="center", message = FALSE}
+```{r groupedBarsUpgraded, fig.align="center", message = FALSE, fig.cap="Diagrammes en barres côte-à-côte séparés selon une variable catégorielle"}
 ggplot(data = JointSports_new, aes(x = opinion, y = Freq)) +
   geom_bar(stat = "identity") +
   facet_wrap(. ~ gender)
@@ -376,7 +379,7 @@ ggplot(data = JointSports_new, aes(x = opinion, y = Freq)) +
 
 Dans certains cas, on peut vouloir comparer les effectifs relatifs aux modalités d'une première variable qualitative avec des barres mises côte-à-côte, et n'utiliser la seconde variable qualitative que pour avoir un peu d'éléments de contexte "à l'intérieur" des effectifs affichés pour la première variable qualitative. La figure ci-dessous illustre ce cas de figure où la hauteur des barres sert prioritairement à comparer les effectifs relatifs à diverses opinions, et la coloration des barres sert à fournir une idée de la répartition hommes / femmes dans les réponses, sans pourtant avoir l'ambition de comparer cette répartition hommes / femmes  facilement d'un type d'opinion à un autre.
 
-```{r stacked bars biv, fig.align="center", message = FALSE}
+```{r stackedBarsBiv, fig.align="center", message = FALSE, fig.cap= "Exemple de diagramme en barres empilées"}
 JointSports_new %>%
   ggplot(aes(x = opinion, y = Freq, fill = gender)) +
   geom_bar(stat = "identity") +
@@ -502,7 +505,7 @@ g3 <-
         axis.text = element_text(size = 17))
 ```
 
-```{r fig recap biv means, fig.align="center", echo = FALSE, fig.width=20}
+```{r graphDistriBivQuantvsQualMeans, fig.align="center", echo = FALSE, fig.width=20, fig.cap="Nuage de points avec moyennes et écart-types"}
 library(patchwork)
 g1 | g2 | g3
 ```
@@ -540,7 +543,7 @@ g6 <-
         axis.text = element_text(size = 17))
 ```
 
-```{r fig recap biv med, fig.align="center", echo = FALSE, fig.width=20}
+```{r graphDistriBivQuantvsQualMed, fig.align="center", echo = FALSE, fig.width=20, fig.cap="Nuage de points avec boîtes à moustaches"}
 library(patchwork)
 g4 | g5 | g6
 ```
@@ -578,7 +581,7 @@ g9 <-
         axis.text = element_text(size = 17))
 ```
 
-```{r fig recap biv distri, fig.align="center",  echo = FALSE, fig.width=20}
+```{r graphDistriBivQuantvsQualdens, fig.align="center",  echo = FALSE, fig.width=20,  fig.cap = "Nuages de points avec aires de densité"}
 g7 | g8 | g9
 ```
 
@@ -614,7 +617,7 @@ g14 <-
         axis.text = element_text(size = 17))
 ```
 
-```{r fig recap biv dens, fig.align="center", echo = FALSE, message = FALSE, warning = FALSE, fig.width = 20}
+```{r figrecapbivdens, fig.align="center", echo = FALSE, message = FALSE, warning = FALSE, fig.width = 20, fig.cap="Diagrammes en lignes de crête"}
 g13 | g14
 ```
 
@@ -625,7 +628,7 @@ library(datarium)
 head(mice2)
 ```
 
-```{r paired data, fig.align="center"}
+```{r pairedData, fig.align="center", fig.cap="Deux groupes avec données appariées"}
 mice2 %>%
   pivot_longer(cols = c(before, after), names_to = "treatment", values_to = "score") %>%
   mutate(treatment = fct_relevel(treatment, "before", "after")) %>%
@@ -655,7 +658,7 @@ $$d_{s} = \frac{\overline{X_{1}} - \overline{X_{2}}} {\sqrt{\frac{(N_{1} - 1) s_
 
 Dans R, le $d_{s}$ de Cohen peut être calculé à l'aide de la fonction `cohens_d()` du package `effectsize`, qui nécessite d'être installé puis chargé avant d'être utilisé. Pour illustrer l'utilisation de cette fonction, on peut utiliser le jeu de données `iris_two_species` crée par nos soins à partir du jeu de données `iris` pour l'exemple, qui contient notamment la variable quantitative `Sepal.Length`, et deux modalités de la  variable qualitative `Species` (`setosa` et `versicolor`).
 
-```{r iris tw species view, echo = FALSE, warning = FALSE, fig.align="center"}
+```{r iris2peciesview, echo = FALSE, warning = FALSE, fig.align="center", fig.cap="Deux groupes avec données non appariées"}
 iris_two_species <-
   iris %>% 
   filter(Species == "setosa" | Species == "versicolor")
@@ -686,12 +689,13 @@ L'ordre des modalités affichées nous indique que `setosa` est la modalité 1, 
 
 Une fois que l'on a calculé une taille d'effet, il est toujours intéressant d'essayer de formuler un jugement sur l'importance, l'ampleur de l'effet. En ce sens, des valeurs seuils ont été proposées dans la littérature (Cohen, 1988; in Lakens [-@Lakens2013]). Ces valeurs, valables pour interpréter des tailles d'effet dans le cadre d'une étude de type *between-subject design*, sont montrées dans le tableau ci-dessous.
 
-```{r effect size table, echo = FALSE}
+```{r effectsizetable, echo = FALSE}
 knitr::kable(
   tribble(
     ~Petit, ~Moyen, ~Grand,
     0.2,     0.5,      0.8
-  )
+  ), 
+  caption = "Taille d'effet pour une différence de moyennes"
 )
 ```
 
@@ -711,7 +715,7 @@ Dans R, le $g_{s}$ de Hedges lié à un échantillon de population peut être ca
 hedges_g(Sepal.Length ~ Species, data = iris_two_species, paired = FALSE, pooled_sd = TRUE)
 ```
 
-Ici, la valeur ne change pas beaucoup par rapport au cas précédent, car l'effectif n'est pas si petit que cela ($N_{1}$ + $N_{2}$ = 100 ici, ce qui fait que la correction appliuqée au $d_{s}$ de Cohen est minime).
+Ici, la valeur ne change pas beaucoup par rapport au cas précédent, car l'effectif n'est pas si petit que cela ($N_{1}$ + $N_{2}$ = 100 ici, ce qui fait que la correction appliquée au $d_{s}$ de Cohen est minime).
 
 **Delta de Glass**
 
@@ -747,7 +751,7 @@ head(Blink)
 
 Pour la suite de l'analyse, on peut reconfigurer ce jeu de données de telle sorte à bien avoir les conditions testées dans une même colonne et les valeurs correspondantes dans la colonne d'à côté, avec la modalité "Straight" en tant que première modalité à considérer dans les fonctions à suivre. Le nouveau jeu de données s'appellerait alors `Blink2`.
 
-```{r Blink reconfiguration, echo = FALSE, message = FALSE}
+```{r Blinkreconfiguration, echo = FALSE, message = FALSE, fig.align = "center", fig.cap="Données du jeu de données `Blink`"}
 Blink2 <-
   Blink %>%
   pivot_longer(cols = c(Straight, Oscillating), names_to = "Condition", values_to = "Blink_rate") %>%
