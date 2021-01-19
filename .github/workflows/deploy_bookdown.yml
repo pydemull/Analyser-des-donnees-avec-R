@@ -55,6 +55,7 @@ jobs:
    steps:
      - name: Checkout
        uses: actions/checkout@master
+       
      - name: Download artifact
        uses: actions/download-artifact@v1.0.0
        with:
@@ -62,11 +63,12 @@ jobs:
          name: _book # optional
          # Destination path
          path: _book # optional
+         
      - name: Deploy to GitHub Pages
        uses: Cecilapp/GitHub-Pages-deploy@master
        env:
-          EMAIL: ${{ secrets.EMAIL }}               # must be a verified email
-          GH_TOKEN: ${{ secrets.GH_PAT }} # https://github.com/settings/tokens
-          BUILD_DIR: _book/                     # "_site/" by default
+          EMAIL: ${{ secrets.EMAIL }}
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+          BUILD_DIR: _book                    
     
  
