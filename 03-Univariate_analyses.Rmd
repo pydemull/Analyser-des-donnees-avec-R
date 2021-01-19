@@ -110,23 +110,7 @@ iris %>%
   select(id, Sepal.Length, id_outlier)
 ```
 
-Une fois cette procédure réalisée, le reste du code, et notamment la fonction `geom_text()`, a permis d'ajouter des éléments textuels au graphique, en l'occurence en s'appuyant sur la variable id_outlier, tel que configuré avec l'argument `aes()` de la fonction `geom_text()`. 
-
-L'ensemble de la procédure présentée ci-dessus a le mérite de conduire exactement au résultat que l'on veut et seulement à ce résultat. Toutefois, elle peut être un peu fastidieuse. Un moyen sans doute plus rapide, mais qui a également ses limites, est l'utilisation de la fonction `ggbetweenstats` du package `ggstatsplot`. Un exemple d'utilisation de cette fonction est montré ci-dessous.
-
-```{r vizualisingOutliersGgstatplot, warning = FALSE, message = FALSE, fig.align ="center", fig.cap="Visualisation d'un outlier avec `ggstatsplot::ggbetweenstats`"}
-library(ggstatsplot) 
-iris %>%
-  mutate(id = as.factor(rep(1:50, times = 3))) %>%
-  ggbetweenstats(x = Species, 
-                 y = Sepal.Length,
-                 outlier.tagging = TRUE,
-                 outlier.label = id)
-```
-
-Dans cet exemple, nous avons indiqué, pour l'argument `x` de la fonction `ggbetweenstats`, une variable qualitative du jeu de données `iris`, car la fonction contraint à devoir renseigner une variable pour cet argument afin de pouvoir afficher le graphique. Ainsi, il n'était pas possible de visualiser toutes les données de manière groupée, c'est-à-dire toutes espèces confondues si l'on considère le jeu de données `iris`. Plusieurs éléments sont montrés sur le graphique. La seule chose qui nous importe ici, c'est le numéro en haut à gauche, qui est l'identifiant de l'observation présentant une valeur anormale. 
-
-Lorsque la valeur anormale identifiée est effectivement une erreur de saisie dans la base de données, il convient de corriger la valeur avec la fonction d'assignation comme nous l'avons fait précédemment :
+Une fois cette procédure réalisée, le reste du code, et notamment la fonction `geom_text()`, a permis d'ajouter des éléments textuels au graphique, en l'occurence en s'appuyant sur la variable id_outlier, tel que configuré avec l'argument `aes()` de la fonction `geom_text()`. Lorsque la valeur anormale identifiée est effectivement une erreur de saisie dans la base de données, il convient de corriger la valeur avec la fonction d'assignation comme nous l'avons fait précédemment :
 
 ```{r outlier correction}
 iris$Sepal.Length[3] <- 4.7  # Le nombre entre crochets désigne la position de l'observation dans la variable.
