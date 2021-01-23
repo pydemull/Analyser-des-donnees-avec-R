@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Références | Analyser des données avec R</title>
+  <meta name="description" content="Introduction à l’analyse des données avec R" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Références | Analyser des données avec R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="pydm1989.github.io/Analyser-des-donnees-avec-R" />
+  
+  <meta property="og:description" content="Introduction à l’analyse des données avec R" />
+  <meta name="github-repo" content="PYDM1989/Analyser-des-donnees-avec-R" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Références | Analyser des données avec R" />
+  
+  <meta name="twitter:description" content="Introduction à l’analyse des données avec R" />
+  
+
+<meta name="author" content="Pierre-Yves de Müllenheim" />
+
+
+<meta name="date" content="2021-01-23" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="régressions.html"/>
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Analyser des données avec R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="1" data-path="prérequis.html"><a href="prérequis.html"><i class="fa fa-check"></i><b>1</b> Prérequis</a><ul>
+<li class="chapter" data-level="1.1" data-path="prérequis.html"><a href="prérequis.html#installation-de-r-et-rstudio"><i class="fa fa-check"></i><b>1.1</b> Installation de R et RStudio</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="prérequis.html"><a href="prérequis.html#installer-r-sur-windows"><i class="fa fa-check"></i><b>1.1.1</b> Installer R sur WINDOWS</a></li>
+<li class="chapter" data-level="1.1.2" data-path="prérequis.html"><a href="prérequis.html#installer-r-sur-mac"><i class="fa fa-check"></i><b>1.1.2</b> Installer R sur MAC</a></li>
+<li class="chapter" data-level="1.1.3" data-path="prérequis.html"><a href="prérequis.html#installer-rstudio-sur-windows-ou-mac"><i class="fa fa-check"></i><b>1.1.3</b> Installer RStudio sur WINDOWS ou MAC</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="prérequis.html"><a href="prérequis.html#prise-en-main-de-rstudio"><i class="fa fa-check"></i><b>1.2</b> Prise en main de RStudio</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="prérequis.html"><a href="prérequis.html#manipuler-des-objets-valeurs-vecteurs-et-tableaux-de-données"><i class="fa fa-check"></i><b>1.2.1</b> Manipuler des objets (valeurs, vecteurs, et tableaux de données)</a></li>
+<li class="chapter" data-level="1.2.2" data-path="prérequis.html"><a href="prérequis.html#manipuler-des-objets-assignés-à-des-noms"><i class="fa fa-check"></i><b>1.2.2</b> Manipuler des objets assignés à des noms</a></li>
+<li class="chapter" data-level="1.2.3" data-path="prérequis.html"><a href="prérequis.html#utiliser-des-fonctions"><i class="fa fa-check"></i><b>1.2.3</b> Utiliser des fonctions</a></li>
+<li class="chapter" data-level="1.2.4" data-path="prérequis.html"><a href="prérequis.html#installer-et-charger-des-packages"><i class="fa fa-check"></i><b>1.2.4</b> Installer et charger des packages</a></li>
+<li class="chapter" data-level="1.2.5" data-path="prérequis.html"><a href="prérequis.html#divers"><i class="fa fa-check"></i><b>1.2.5</b> Divers</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="prérequis.html"><a href="prérequis.html#résumé"><i class="fa fa-check"></i><b>1.3</b> Résumé</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html"><i class="fa fa-check"></i><b>2</b> Importation et manipulation d’une base de données</a><ul>
+<li class="chapter" data-level="2.1" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#comprendre-ce-quest-une-base-de-données"><i class="fa fa-check"></i><b>2.1</b> Comprendre ce qu’est une base de données</a></li>
+<li class="chapter" data-level="2.2" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#fixer-le-répertoire-de-travail"><i class="fa fa-check"></i><b>2.2</b> Fixer le répertoire de travail</a></li>
+<li class="chapter" data-level="2.3" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#importer-la-base-de-données"><i class="fa fa-check"></i><b>2.3</b> Importer la base de données</a></li>
+<li class="chapter" data-level="2.4" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#manipuler-la-base-de-données"><i class="fa fa-check"></i><b>2.4</b> Manipuler la base de données</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#vérifier-le-succès-de-limportation-de-la-base"><i class="fa fa-check"></i><b>2.4.1</b> Vérifier le succès de l’importation de la base</a></li>
+<li class="chapter" data-level="2.4.2" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#vérifier-et-reconfigurer-les-types-des-variables-de-la-base"><i class="fa fa-check"></i><b>2.4.2</b> Vérifier et reconfigurer les types des variables de la base</a></li>
+<li class="chapter" data-level="2.4.3" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#sélectionner-des-variables-avec-select"><i class="fa fa-check"></i><b>2.4.3</b> Sélectionner des variables avec select()</a></li>
+<li class="chapter" data-level="2.4.4" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#renommer-des-variables-avec-rename"><i class="fa fa-check"></i><b>2.4.4</b> Renommer des variables avec rename()</a></li>
+<li class="chapter" data-level="2.4.5" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#créer-des-variables-avec-mutate"><i class="fa fa-check"></i><b>2.4.5</b> Créer des variables avec mutate()</a></li>
+<li class="chapter" data-level="2.4.6" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#sélectionner-des-lignes-avec-filter"><i class="fa fa-check"></i><b>2.4.6</b> Sélectionner des lignes avec filter()</a></li>
+<li class="chapter" data-level="2.4.7" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#arranger-les-lignes-avec-arrange"><i class="fa fa-check"></i><b>2.4.7</b> Arranger les lignes avec arrange()</a></li>
+<li class="chapter" data-level="2.4.8" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#résumer-des-variables-avec-group_by-et-summarize"><i class="fa fa-check"></i><b>2.4.8</b> Résumer des variables avec group_by() et summarize()</a></li>
+<li class="chapter" data-level="2.4.9" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#passer-dune-disposition-en-lignes-à-une-disposition-en-colonnes-et-inversement-avec-pivot_wider-et-pivot_longer"><i class="fa fa-check"></i><b>2.4.9</b> Passer d’une disposition en lignes à une disposition en colonnes et inversement avec pivot_wider() et pivot_longer()</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#résumé-1"><i class="fa fa-check"></i><b>2.5</b> Résumé</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html"><i class="fa fa-check"></i><b>3</b> Analyses descriptives univariées</a><ul>
+<li class="chapter" data-level="3.1" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html#variables-quantitatives"><i class="fa fa-check"></i><b>3.1</b> Variables quantitatives</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html#visualiser-la-distribution-de-la-variable"><i class="fa fa-check"></i><b>3.1.1</b> Visualiser la distribution de la variable</a></li>
+<li class="chapter" data-level="3.1.2" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html#les-indices-de-position"><i class="fa fa-check"></i><b>3.1.2</b> Les indices de position</a></li>
+<li class="chapter" data-level="3.1.3" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html#les-indices-de-dispersion"><i class="fa fa-check"></i><b>3.1.3</b> Les indices de dispersion</a></li>
+<li class="chapter" data-level="3.1.4" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html#les-indices-dasymétrie-et-daplatissement"><i class="fa fa-check"></i><b>3.1.4</b> Les indices d’asymétrie et d’aplatissement</a></li>
+<li class="chapter" data-level="3.1.5" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html#fonctions-pour-obtenir-un-récapitulatif-des-statistiques-descriptives"><i class="fa fa-check"></i><b>3.1.5</b> Fonctions pour obtenir un récapitulatif des statistiques descriptives</a></li>
+<li class="chapter" data-level="3.1.6" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html#quelles-statistiques-choisir-pour-résumer-une-variable-quantitative-dans-un-rapport"><i class="fa fa-check"></i><b>3.1.6</b> Quelles statistiques choisir pour résumer une variable quantitative dans un rapport ?</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html#variables-qualitatives"><i class="fa fa-check"></i><b>3.2</b> Variables qualitatives</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html#visualiser-la-distribution-de-la-variable-1"><i class="fa fa-check"></i><b>3.2.1</b> Visualiser la distribution de la variable</a></li>
+<li class="chapter" data-level="3.2.2" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html#déterminer-la-tendance-centrale"><i class="fa fa-check"></i><b>3.2.2</b> Déterminer la tendance centrale</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html#résumé-2"><i class="fa fa-check"></i><b>3.3</b> Résumé</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html"><i class="fa fa-check"></i><b>4</b> Analyses descriptives bivariées</a><ul>
+<li class="chapter" data-level="4.1" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#relation-entre-deux-variables-quantitatives"><i class="fa fa-check"></i><b>4.1</b> Relation entre deux variables quantitatives</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#etudier-graphiquement-la-relation"><i class="fa fa-check"></i><b>4.1.1</b> Etudier graphiquement la relation</a></li>
+<li class="chapter" data-level="4.1.2" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#etudier-numériquement-la-relation"><i class="fa fa-check"></i><b>4.1.2</b> Etudier numériquement la relation</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#relation-entre-deux-variables-qualitatives"><i class="fa fa-check"></i><b>4.2</b> Relation entre deux variables qualitatives</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#etudier-graphiquement-la-relation-1"><i class="fa fa-check"></i><b>4.2.1</b> Etudier graphiquement la relation</a></li>
+<li class="chapter" data-level="4.2.2" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#etudier-numériquement-la-relation-1"><i class="fa fa-check"></i><b>4.2.2</b> Etudier numériquement la relation</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#relation-entre-une-variable-quantitative-et-une-variable-qualitative"><i class="fa fa-check"></i><b>4.3</b> Relation entre une variable quantitative et une variable qualitative</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#etudier-graphiquement-la-relation-2"><i class="fa fa-check"></i><b>4.3.1</b> Etudier graphiquement la relation</a></li>
+<li class="chapter" data-level="4.3.2" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#etudier-numériquement-la-relation-2"><i class="fa fa-check"></i><b>4.3.2</b> Etudier numériquement la relation</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="régressions.html"><a href="régressions.html"><i class="fa fa-check"></i><b>5</b> Régressions</a><ul>
+<li class="chapter" data-level="5.1" data-path="régressions.html"><a href="régressions.html#régression-linéaire-simple"><i class="fa fa-check"></i><b>5.1</b> Régression linéaire simple</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="régressions.html"><a href="régressions.html#le-coefficient-de-détermination"><i class="fa fa-check"></i><b>5.1.1</b> Le coefficient de détermination</a></li>
+<li class="chapter" data-level="5.1.2" data-path="régressions.html"><a href="régressions.html#lerreur-typique-destimation"><i class="fa fa-check"></i><b>5.1.2</b> L’erreur typique d’estimation</a></li>
+<li class="chapter" data-level="5.1.3" data-path="régressions.html"><a href="régressions.html#graphique-récapitulatif"><i class="fa fa-check"></i><b>5.1.3</b> Graphique récapitulatif</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="références.html"><a href="références.html"><i class="fa fa-check"></i>Références</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Publié avec bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Analyser des données avec R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="références" class="section level1 unnumbered">
+<h1>Références</h1>
+
+<div id="refs" class="references">
+<div>
+<p>Anscombe, F. J. (1973). Graphs in Statistical Analysis. <em>The American Statistician</em>, <em>27</em>(1), 17–21.</p>
+</div>
+<div>
+<p>Bickel, P. J., Hammel, E. A., &amp; O’Connell J, W. (1975). Sex bias in graduate admissions: data from berkeley. <em>Science</em>, <em>187</em>(4175), 398–404. <a href="https://doi.org/10.1126/science.187.4175.398">https://doi.org/10.1126/science.187.4175.398</a></p>
+</div>
+<div>
+<p>Chatellier, G., &amp; Durieux, P. (2003). Moyenne, médiane, et leurs indices de dispersion : quand les utiliser et comment les présenter dans un article scientifique ? <em>Rev Mal Respir</em>, <em>20</em>(3), 421–424. <a href="https://doi.org/RMR-06-2003-20-3-0761-8425-101019-ART17">https://doi.org/RMR-06-2003-20-3-0761-8425-101019-ART17</a></p>
+</div>
+<div>
+<p>Dart, T., &amp; Chatellier, G. (2003). Comment décrire la distribution d’une variable ? <em>Rev Mal Respir</em>, <em>20</em>(6), 946–951. <a href="https://doi.org/RMR-12-2003-20-6-0761-8425-101019-ART19">https://doi.org/RMR-12-2003-20-6-0761-8425-101019-ART19</a></p>
+</div>
+<div>
+<p>Gonzales, V. A., &amp; Ottenbacher, K. J. (2001). Measures of central tendency in rehabilitation research: what do they mean? <em>Am J Phys Med Rehabil</em>, <em>80</em>(2), 141–146. <a href="https://doi.org/10.1097/00002060-200102000-00014">https://doi.org/10.1097/00002060-200102000-00014</a></p>
+</div>
+<div>
+<p>Grenier, E. (2007). Quelle est la « bonne » formule de l’écart-type ? <em>Revue MODULAD</em>, <em>37</em>, 102–105.</p>
+</div>
+<div>
+<p>Halperin, S. (1986). Spurious correlations–causes and cures. <em>Psychoneuroendocrinology</em>, <em>11</em>(1), 3–13. <a href="https://doi.org/10.1016/0306-4530(86)90028-4">https://doi.org/10.1016/0306-4530(86)90028-4</a></p>
+</div>
+<div>
+<p>Hopkins, W. G., Marshall, S. W., Batterham, A. M., &amp; Hanin, J. (2009). Progressive statistics for studies in sports medicine and exercise science. <em>Med Sci Sports Exerc</em>, <em>41</em>(1), 3–13. <a href="https://doi.org/10.1249/MSS.0b013e31818cb278">https://doi.org/10.1249/MSS.0b013e31818cb278</a></p>
+</div>
+<div>
+<p>Joanes, D. N., &amp; Gill, C. A. (1998). Comparing measures of sample skewness and kurtosis. <em>The Statistician</em>, <em>47</em>(Part 1), 183–189. <a href="https://doi.org/10.1111/1467-9884.00122">https://doi.org/10.1111/1467-9884.00122</a></p>
+</div>
+<div>
+<p>Labreuche, J. (2010). Les différents types de variables, leurs représentations graphiques et paramètres descriptifs. <em>Sang Thrombose Vaisseaux</em>, <em>22</em>(10), 536–543. <a href="https://doi.org/10.1684/stv.2010.0541">https://doi.org/10.1684/stv.2010.0541</a></p>
+</div>
+<div>
+<p>Lakens, D. (2013). Calculating and reporting effect sizes to facilitate cumulative science: a practical primer for t-tests and ANOVAs. <em>Front Psychol</em>, <em>4</em>, 863. <a href="https://doi.org/10.3389/fpsyg.2013.00863">https://doi.org/10.3389/fpsyg.2013.00863</a></p>
+</div>
+<div>
+<p>Navarro, D. (2018). <em>Learning statistics with R</em>. UNSW Computational Cognitive Science.</p>
+</div>
+<div>
+<p>Rousselet, G. A., &amp; Wilcox, R. R. (2020). Reaction times and other skewed distributions: problems with the mean and the median. <em>Meta-Psychology</em>, <em>4</em>, 1–39. <a href="https://doi.org/10.15626/MP.2019.1630">https://doi.org/10.15626/MP.2019.1630</a></p>
+</div>
+<div>
+<p>Weissgerber, T. L., Milic, N. M., Winham, S. J., &amp; Garovic, V. D. (2015). Beyond bar and line graphs: time for a new data presentation paradigm. <em>PLoS Biol</em>, <em>13</em>(4), e1002128. <a href="https://doi.org/10.1371/journal.pbio.1002128">https://doi.org/10.1371/journal.pbio.1002128</a></p>
+</div>
+<div>
+<p>Wickham, H. (2016). <em>ggplot2</em> (2nd ed.). Springer-Verlag. <a href="https://doi.org/10.1007/978-0-387-98141-3">https://doi.org/10.1007/978-0-387-98141-3</a></p>
+</div>
+<div>
+<p>Wickham, H., &amp; Grolemund, G. (2017). <em>R for Data Science</em>. O’Reilly.</p>
+</div>
+<div>
+<p>Wilke, C. O. (2018). <em>Fundamentals of data visualization</em>. O’Reilly Media, Inc. Retrieved from https://clauswilke.com/dataviz.</p>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="régressions.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

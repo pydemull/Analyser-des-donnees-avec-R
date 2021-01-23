@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapitre 4 Analyses descriptives bivariées | Analyser des données avec R</title>
+  <meta name="description" content="Introduction à l’analyse des données avec R" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapitre 4 Analyses descriptives bivariées | Analyser des données avec R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="pydm1989.github.io/Analyser-des-donnees-avec-R" />
+  
+  <meta property="og:description" content="Introduction à l’analyse des données avec R" />
+  <meta name="github-repo" content="PYDM1989/Analyser-des-donnees-avec-R" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapitre 4 Analyses descriptives bivariées | Analyser des données avec R" />
+  
+  <meta name="twitter:description" content="Introduction à l’analyse des données avec R" />
+  
+
+<meta name="author" content="Pierre-Yves de Müllenheim" />
+
+
+<meta name="date" content="2021-01-23" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="analyses-descriptives-univariées.html"/>
+<link rel="next" href="régressions.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Analyser des données avec R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="1" data-path="prérequis.html"><a href="prérequis.html"><i class="fa fa-check"></i><b>1</b> Prérequis</a><ul>
+<li class="chapter" data-level="1.1" data-path="prérequis.html"><a href="prérequis.html#installation-de-r-et-rstudio"><i class="fa fa-check"></i><b>1.1</b> Installation de R et RStudio</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="prérequis.html"><a href="prérequis.html#installer-r-sur-windows"><i class="fa fa-check"></i><b>1.1.1</b> Installer R sur WINDOWS</a></li>
+<li class="chapter" data-level="1.1.2" data-path="prérequis.html"><a href="prérequis.html#installer-r-sur-mac"><i class="fa fa-check"></i><b>1.1.2</b> Installer R sur MAC</a></li>
+<li class="chapter" data-level="1.1.3" data-path="prérequis.html"><a href="prérequis.html#installer-rstudio-sur-windows-ou-mac"><i class="fa fa-check"></i><b>1.1.3</b> Installer RStudio sur WINDOWS ou MAC</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="prérequis.html"><a href="prérequis.html#prise-en-main-de-rstudio"><i class="fa fa-check"></i><b>1.2</b> Prise en main de RStudio</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="prérequis.html"><a href="prérequis.html#manipuler-des-objets-valeurs-vecteurs-et-tableaux-de-données"><i class="fa fa-check"></i><b>1.2.1</b> Manipuler des objets (valeurs, vecteurs, et tableaux de données)</a></li>
+<li class="chapter" data-level="1.2.2" data-path="prérequis.html"><a href="prérequis.html#manipuler-des-objets-assignés-à-des-noms"><i class="fa fa-check"></i><b>1.2.2</b> Manipuler des objets assignés à des noms</a></li>
+<li class="chapter" data-level="1.2.3" data-path="prérequis.html"><a href="prérequis.html#utiliser-des-fonctions"><i class="fa fa-check"></i><b>1.2.3</b> Utiliser des fonctions</a></li>
+<li class="chapter" data-level="1.2.4" data-path="prérequis.html"><a href="prérequis.html#installer-et-charger-des-packages"><i class="fa fa-check"></i><b>1.2.4</b> Installer et charger des packages</a></li>
+<li class="chapter" data-level="1.2.5" data-path="prérequis.html"><a href="prérequis.html#divers"><i class="fa fa-check"></i><b>1.2.5</b> Divers</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="prérequis.html"><a href="prérequis.html#résumé"><i class="fa fa-check"></i><b>1.3</b> Résumé</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html"><i class="fa fa-check"></i><b>2</b> Importation et manipulation d’une base de données</a><ul>
+<li class="chapter" data-level="2.1" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#comprendre-ce-quest-une-base-de-données"><i class="fa fa-check"></i><b>2.1</b> Comprendre ce qu’est une base de données</a></li>
+<li class="chapter" data-level="2.2" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#fixer-le-répertoire-de-travail"><i class="fa fa-check"></i><b>2.2</b> Fixer le répertoire de travail</a></li>
+<li class="chapter" data-level="2.3" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#importer-la-base-de-données"><i class="fa fa-check"></i><b>2.3</b> Importer la base de données</a></li>
+<li class="chapter" data-level="2.4" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#manipuler-la-base-de-données"><i class="fa fa-check"></i><b>2.4</b> Manipuler la base de données</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#vérifier-le-succès-de-limportation-de-la-base"><i class="fa fa-check"></i><b>2.4.1</b> Vérifier le succès de l’importation de la base</a></li>
+<li class="chapter" data-level="2.4.2" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#vérifier-et-reconfigurer-les-types-des-variables-de-la-base"><i class="fa fa-check"></i><b>2.4.2</b> Vérifier et reconfigurer les types des variables de la base</a></li>
+<li class="chapter" data-level="2.4.3" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#sélectionner-des-variables-avec-select"><i class="fa fa-check"></i><b>2.4.3</b> Sélectionner des variables avec select()</a></li>
+<li class="chapter" data-level="2.4.4" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#renommer-des-variables-avec-rename"><i class="fa fa-check"></i><b>2.4.4</b> Renommer des variables avec rename()</a></li>
+<li class="chapter" data-level="2.4.5" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#créer-des-variables-avec-mutate"><i class="fa fa-check"></i><b>2.4.5</b> Créer des variables avec mutate()</a></li>
+<li class="chapter" data-level="2.4.6" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#sélectionner-des-lignes-avec-filter"><i class="fa fa-check"></i><b>2.4.6</b> Sélectionner des lignes avec filter()</a></li>
+<li class="chapter" data-level="2.4.7" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#arranger-les-lignes-avec-arrange"><i class="fa fa-check"></i><b>2.4.7</b> Arranger les lignes avec arrange()</a></li>
+<li class="chapter" data-level="2.4.8" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#résumer-des-variables-avec-group_by-et-summarize"><i class="fa fa-check"></i><b>2.4.8</b> Résumer des variables avec group_by() et summarize()</a></li>
+<li class="chapter" data-level="2.4.9" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#passer-dune-disposition-en-lignes-à-une-disposition-en-colonnes-et-inversement-avec-pivot_wider-et-pivot_longer"><i class="fa fa-check"></i><b>2.4.9</b> Passer d’une disposition en lignes à une disposition en colonnes et inversement avec pivot_wider() et pivot_longer()</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#résumé-1"><i class="fa fa-check"></i><b>2.5</b> Résumé</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html"><i class="fa fa-check"></i><b>3</b> Analyses descriptives univariées</a><ul>
+<li class="chapter" data-level="3.1" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html#variables-quantitatives"><i class="fa fa-check"></i><b>3.1</b> Variables quantitatives</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html#visualiser-la-distribution-de-la-variable"><i class="fa fa-check"></i><b>3.1.1</b> Visualiser la distribution de la variable</a></li>
+<li class="chapter" data-level="3.1.2" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html#les-indices-de-position"><i class="fa fa-check"></i><b>3.1.2</b> Les indices de position</a></li>
+<li class="chapter" data-level="3.1.3" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html#les-indices-de-dispersion"><i class="fa fa-check"></i><b>3.1.3</b> Les indices de dispersion</a></li>
+<li class="chapter" data-level="3.1.4" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html#les-indices-dasymétrie-et-daplatissement"><i class="fa fa-check"></i><b>3.1.4</b> Les indices d’asymétrie et d’aplatissement</a></li>
+<li class="chapter" data-level="3.1.5" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html#fonctions-pour-obtenir-un-récapitulatif-des-statistiques-descriptives"><i class="fa fa-check"></i><b>3.1.5</b> Fonctions pour obtenir un récapitulatif des statistiques descriptives</a></li>
+<li class="chapter" data-level="3.1.6" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html#quelles-statistiques-choisir-pour-résumer-une-variable-quantitative-dans-un-rapport"><i class="fa fa-check"></i><b>3.1.6</b> Quelles statistiques choisir pour résumer une variable quantitative dans un rapport ?</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html#variables-qualitatives"><i class="fa fa-check"></i><b>3.2</b> Variables qualitatives</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html#visualiser-la-distribution-de-la-variable-1"><i class="fa fa-check"></i><b>3.2.1</b> Visualiser la distribution de la variable</a></li>
+<li class="chapter" data-level="3.2.2" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html#déterminer-la-tendance-centrale"><i class="fa fa-check"></i><b>3.2.2</b> Déterminer la tendance centrale</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html#résumé-2"><i class="fa fa-check"></i><b>3.3</b> Résumé</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html"><i class="fa fa-check"></i><b>4</b> Analyses descriptives bivariées</a><ul>
+<li class="chapter" data-level="4.1" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#relation-entre-deux-variables-quantitatives"><i class="fa fa-check"></i><b>4.1</b> Relation entre deux variables quantitatives</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#etudier-graphiquement-la-relation"><i class="fa fa-check"></i><b>4.1.1</b> Etudier graphiquement la relation</a></li>
+<li class="chapter" data-level="4.1.2" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#etudier-numériquement-la-relation"><i class="fa fa-check"></i><b>4.1.2</b> Etudier numériquement la relation</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#relation-entre-deux-variables-qualitatives"><i class="fa fa-check"></i><b>4.2</b> Relation entre deux variables qualitatives</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#etudier-graphiquement-la-relation-1"><i class="fa fa-check"></i><b>4.2.1</b> Etudier graphiquement la relation</a></li>
+<li class="chapter" data-level="4.2.2" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#etudier-numériquement-la-relation-1"><i class="fa fa-check"></i><b>4.2.2</b> Etudier numériquement la relation</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#relation-entre-une-variable-quantitative-et-une-variable-qualitative"><i class="fa fa-check"></i><b>4.3</b> Relation entre une variable quantitative et une variable qualitative</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#etudier-graphiquement-la-relation-2"><i class="fa fa-check"></i><b>4.3.1</b> Etudier graphiquement la relation</a></li>
+<li class="chapter" data-level="4.3.2" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#etudier-numériquement-la-relation-2"><i class="fa fa-check"></i><b>4.3.2</b> Etudier numériquement la relation</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="régressions.html"><a href="régressions.html"><i class="fa fa-check"></i><b>5</b> Régressions</a><ul>
+<li class="chapter" data-level="5.1" data-path="régressions.html"><a href="régressions.html#régression-linéaire-simple"><i class="fa fa-check"></i><b>5.1</b> Régression linéaire simple</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="régressions.html"><a href="régressions.html#le-coefficient-de-détermination"><i class="fa fa-check"></i><b>5.1.1</b> Le coefficient de détermination</a></li>
+<li class="chapter" data-level="5.1.2" data-path="régressions.html"><a href="régressions.html#lerreur-typique-destimation"><i class="fa fa-check"></i><b>5.1.2</b> L’erreur typique d’estimation</a></li>
+<li class="chapter" data-level="5.1.3" data-path="régressions.html"><a href="régressions.html#graphique-récapitulatif"><i class="fa fa-check"></i><b>5.1.3</b> Graphique récapitulatif</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="références.html"><a href="références.html"><i class="fa fa-check"></i>Références</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Publié avec bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Analyser des données avec R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="analyses-descriptives-bivariées" class="section level1">
+<h1><span class="header-section-number">Chapitre 4</span> Analyses descriptives bivariées</h1>
+<p>Réaliser une analyse bivariée désigne le fait d’étudier la relation qui peut exister entre deux variables. Dans ce chapitre, nous allons voir les procédures graphiques et calculatoires qui permettent d’étudier et de quantifier le degré de relation pouvant exister entre deux variables dans les cas suivants : entre deux variables quantitatives, entre deux variables qualitatives, et entre une variable quantitative et une variable qualitative. Comme dans le chapitre précédent, l’objectif est ici d’explorer et de décrire les données et leurs relations à l’échelle d’un échantillon, sans pour autant chercher à déterminer l’incertitude qu’il peut exister dans les statistiques calculées en vue de les utiliser pour réaliser une inférence dans la population représentée.</p>
+<div id="relation-entre-deux-variables-quantitatives" class="section level2">
+<h2><span class="header-section-number">4.1</span> Relation entre deux variables quantitatives</h2>
+<div id="etudier-graphiquement-la-relation" class="section level3">
+<h3><span class="header-section-number">4.1.1</span> Etudier graphiquement la relation</h3>
+<p>Comme dans le cadre d’analyses univariées, une bonne pratique, lorsqu’on étudie une relation bivariée, est de faire un graphique. Avec des variables quantitatives, il s’agit de montrer les valeurs d’une variable en fonction des valeurs de l’autre variable, chose que permet un simple nuage de points. Plusieurs types de relations peuvent alors être rencontrés, ces relations pouvant potentiellement s’apparenter à autant de fonctions mathématiques que l’on connaît. Parmi les plus connues, on a par exemple les relations linéaires, les relations logarithmiques, ou encore les relations quadratiques, qui sont illustrées ci-dessous.</p>
+<div class="figure" style="text-align: center"><span id="fig:relationshipsIllustrations"></span>
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/relationshipsIllustrations-1.png" alt="Différentes formes de relation" width="672" />
+<p class="caption">
+Figure 4.1: Différentes formes de relation
+</p>
+</div>
+<p>Dans R, pour obtenir un nuage de points à partir d’un jeu de données, il est possible d’utiliser la fonction <code>ggplot()</code> en l’associant à la fonction <code>geom_point()</code> du package <code>ggplot2</code>, comme dans l’exemple ci-dessous qui utilise le jeu de données <code>mtcars</code> (qui est intégré à R de base) et les variables <code>hp</code> (<em>gross horsepower</em>) et <code>mpg</code> (<em>miles/US gallon</em>). Dans cet exemple, on peut voir que la relation semble gobalement linéaire négative (voire curvilinéaire négative si l’on donne de l’importance au point isolé à droite du graphique).</p>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="analyses-descriptives-bivariées.html#cb150-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> mtcars, <span class="kw">aes</span>(<span class="dt">x =</span> hp, <span class="dt">y =</span> mpg)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb150-2"><a href="analyses-descriptives-bivariées.html#cb150-2"></a><span class="st">  </span><span class="kw">geom_point</span>()</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:scatterplot"></span>
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/scatterplot-1.png" alt="Exemple de nuage de points" width="672" />
+<p class="caption">
+Figure 4.2: Exemple de nuage de points
+</p>
+</div>
+</div>
+<div id="etudier-numériquement-la-relation" class="section level3">
+<h3><span class="header-section-number">4.1.2</span> Etudier numériquement la relation</h3>
+<p><em>Le coefficient de corrélation de Pearson</em></p>
+<p>Lorsque la relation étudiée semble linéaire, l’étude numérique classique consiste à calculer le coefficient de corrélation de Pearson, noté <span class="math inline">\(r\)</span>, dont la valeur vise à renseigner dans quelle mesure le nuage de points représentant le lien entre les deux variables étudiées suit une droite. Avant de se lancer dans le calcul du coefficient de corrélation de Pearson pour étudier la relation entre une variable <span class="math inline">\(X\)</span> et une variable <span class="math inline">\(Y\)</span>, il peut donc être utile de compléter le nuage de points montré ci-dessus avec une droite d’équation de type <span class="math inline">\(Y = aX + b\)</span>. Cette équation serait la meilleure modélisation possible de la relation linéaire entre <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span>, de telle sorte que parmi l’infinité d’équations qui pourraient lier <span class="math inline">\(X\)</span> à <span class="math inline">\(Y\)</span>, c’est cette équation qui au total donnerait la plus petite erreur lorsque l’on voudrait prédire <span class="math inline">\(Y\)</span> à partir de <span class="math inline">\(X\)</span>. Si <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span> sont liées de manière linéaire, alors le nuage des points relatifs aux deux variables devrait s’étaler le long de cette droite. Pour obtenir cette droite en plus du nuage de points, il est possible d’utiliser la fonction <code>geom_smooth()</code> du package <code>ggplot2</code>.</p>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="analyses-descriptives-bivariées.html#cb151-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> mtcars, <span class="kw">aes</span>(<span class="dt">x =</span> hp, <span class="dt">y =</span> mpg)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb151-2"><a href="analyses-descriptives-bivariées.html#cb151-2"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
+<span id="cb151-3"><a href="analyses-descriptives-bivariées.html#cb151-3"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">formula =</span> y <span class="op">~</span><span class="st"> </span>x, <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:scatterplotLine"></span>
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/scatterplotLine-1.png" alt="Nuage de points avec droite de régression" width="672" />
+<p class="caption">
+Figure 4.3: Nuage de points avec droite de régression
+</p>
+</div>
+<p>Dans la fonction <code>geom_smooth()</code> qui a été utilisée dans l’exemple ci-dessus, on note que l’argument <code>formula</code> pourrait être considéré comme facultatif car il s’agit ici de la configuration par défaut de la fonction. En revanche, l’argument <code>method</code> doit être ici configuré avec <code>"lm"</code> (pour <em>linear model</em>) car ce n’est pas la méthode graphique configurée par défaut dans la fonction. Enfin, l’argument <code>se</code> permet de montrer ou non un intervalle de confiance autour de la droite de régression, ce qui n’a pas été activé ici (par défaut, l’argument <code>se</code> est configuré pour montrer cet intervalle de confiance). Dans l’exemple montré ci-dessus, la représentation graphique encourage fortement à penser que l’un des types de relations à envisager prioritairement dans l’étude des deux variables est la relation linéaire. Cette information rend pertinente l’utilisation du coefficient de corrélation de Pearson pour une étude numérique de la relation en question.</p>
+<p>La valeur du coefficient de corrélation de Pearson peut aller de 1 (suggérant une relation linéaire positive parfaite) à -1 (suggérant une relation linéaire négative parfaite). Des valeurs proches de 0 suggèreraient une abscence de relation linéaire. La formule du coefficient de corrélation de Pearson (<span class="math inline">\(r\)</span>) pour un échantillon est notée ci-dessous :</p>
+<p><span class="math display">\[r_{X,Y} =  {\frac{COV_{X,Y}}{s_{X} s_{Y}}} =  {\frac{\sum_{i=1}^{N} (X{i} - \overline{X}) (Y{i} - \overline{Y})}{N-1}} {\frac{1}{s_{X} s_{Y}}},\]</span></p>
+<p><span class="math inline">\(COV\)</span> désignant la covariance entre les variables <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span>, <span class="math inline">\(X{i}\)</span> et <span class="math inline">\(Y{i}\)</span> les valeurs de <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span> pour une observation <span class="math inline">\(i\)</span>, <span class="math inline">\(\overline{X}\)</span> et <span class="math inline">\(\overline{Y}\)</span> les moyennes des variables <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span>, <span class="math inline">\(N\)</span> le nombre d’observations, et <span class="math inline">\(s_{X}\)</span> et <span class="math inline">\(s_{Y}\)</span> les écarts-types respectifs des variables <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span>. Cette formule indique que le coefficient de corrélation de Pearson s’obtient en divisant la covariance des deux variables étudiées par le produit de leurs écarts-types respectifs.</p>
+<p>Le tableau ci-dessous montre les premières étapes du calcul de la covariance pour des couples de variables fictifs <span class="math inline">\((X1,Y1)\)</span>, <span class="math inline">\((X1,Y2)\)</span>, et <span class="math inline">\((X1,Y3)\)</span>. En particulier, la partie droite du tableau (de X1Y1 à X1Y3) montre le calcul du produit <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span> pour les différents couples de variables et cela pour chaque ligne du jeu de données.</p>
+<table>
+<caption><span id="tab:tablecov">Tableau 4.1: </span>Calcul de la covariance</caption>
+<thead>
+<tr class="header">
+<th align="right">X1</th>
+<th align="right">Y1</th>
+<th align="right">Y2</th>
+<th align="right">Y3</th>
+<th align="right">X1Y1</th>
+<th align="right">X1Y2</th>
+<th align="right">X1Y3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">36</td>
+<td align="right">40.285714</td>
+<td align="right">-36</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">-2</td>
+<td align="right">16</td>
+<td align="right">22.857143</td>
+<td align="right">-16</td>
+</tr>
+<tr class="odd">
+<td align="right">4</td>
+<td align="right">4</td>
+<td align="right">15</td>
+<td align="right">-4</td>
+<td align="right">4</td>
+<td align="right">-16.571429</td>
+<td align="right">-4</td>
+</tr>
+<tr class="even">
+<td align="right">6</td>
+<td align="right">6</td>
+<td align="right">5</td>
+<td align="right">-6</td>
+<td align="right">0</td>
+<td align="right">0.000000</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="right">8</td>
+<td align="right">8</td>
+<td align="right">11</td>
+<td align="right">-8</td>
+<td align="right">4</td>
+<td align="right">8.571429</td>
+<td align="right">-4</td>
+</tr>
+<tr class="even">
+<td align="right">10</td>
+<td align="right">10</td>
+<td align="right">3</td>
+<td align="right">-10</td>
+<td align="right">16</td>
+<td align="right">-14.857143</td>
+<td align="right">-16</td>
+</tr>
+<tr class="odd">
+<td align="right">12</td>
+<td align="right">12</td>
+<td align="right">12</td>
+<td align="right">-12</td>
+<td align="right">36</td>
+<td align="right">31.714286</td>
+<td align="right">-36</td>
+</tr>
+</tbody>
+</table>
+<p>Ce que ce tableau peut permettre de rendre compte, c’est que plus les deux variables étudiées évolueront de manière consistante dans des sens identiques comme avec <span class="math inline">\(X1\)</span> et <span class="math inline">\(Y1\)</span>, ou de manière consistante dans des sens opposés comme avec <span class="math inline">\(X1\)</span> et <span class="math inline">\(Y3\)</span>, plus les produits <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span> donneront respectivement des grands scores positifs ou des grands scores négatifs, et moins les scores <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span> à additionner pour le calcul de la covariance s’annuleront. En effet, avec une relation relativement linéaire et positive les scores seront plus systématiquement positifs, et avec une relation relativement linéaire et négative les scores seront plus systématiquement négatifs. Toutefois, lorsqu’on aura des variables qui n’évolueront pas de manière consistante dans le même sens ou dans un sens opposé comme avec <span class="math inline">\(X1\)</span> et <span class="math inline">\(Y2\)</span>, les scores positifs et négatifs liés aux calculs <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span> auront tendance à s’annuler et donneront lieu à une somme des scores <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span> diminuée, et donc à une covariance et au final à un coefficient de corrélation de Pearson tirés vers 0. Ces différents cas de figure et les calculs <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span> correspondants sont illustrés sur la figure ci-dessous. Sur cette figure, chaque carré correspond au calcul <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span>, le carré étant bleu lorsque le résultat du calcul est positif, et rouge lorsque le résultat est négatif. L’aire d’un carré illustre la grandeur du score issu du calcul. Sur les figures de gauche et de droite, on distingue une relation linéaire parfaite, ce qui maximise les scores à additionner pour le calcul de la covariance, dans le positif pour la figure de gauche et dans le négatif pour la figure de droite. Au milieu, on remarque que le manque de relation linéaire donne lieu à des carrés à la fois bleus et rouges, indiquant que les scores associés aux calculs <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span> de la covariance s’annulent et diminuent ainsi la valeur finale de la covariance.</p>
+<div class="figure" style="text-align: center"><span id="fig:graphCov"></span>
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/graphCov-1.png" alt="Détermination de la covariance" width="960" />
+<p class="caption">
+Figure 4.4: Détermination de la covariance
+</p>
+</div>
+<p>Dans R, le coefficient de corrélation de Pearson peut être obtenu avec la fonction <code>cor()</code>. Dans l’exemple ci-dessous qui reprend les variables du jeu de données <code>mtcars</code> utilisées plus haut, on observe un coefficient négatif, relativement proche de -1, suggérant une relation relativement linéaire et négative entre les variables étudiées.</p>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="analyses-descriptives-bivariées.html#cb152-1"></a><span class="kw">cor</span>(<span class="dt">x =</span> mtcars<span class="op">$</span>hp, <span class="dt">y =</span> mtcars<span class="op">$</span>mpg, <span class="dt">method =</span> <span class="st">&quot;pearson&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] -0.7761684</code></pre>
+<p>Toutefois, la fonction <code>cor.test()</code> sera plus intéressante pour la suite car elle permet de calculer des indices statistiques de probabilité qui seront nécessaires dès lors qu’il s’agira de chercher à inférer la valeur d’une corrélation dans une population d’où l’échantillon étudié provient. La valeur de la corrélation est donnée à la fin de la liste des informations qui apparaissent suite à l’activation de la fonction.</p>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="analyses-descriptives-bivariées.html#cb154-1"></a><span class="kw">cor.test</span>(<span class="dt">x =</span> mtcars<span class="op">$</span>hp, <span class="dt">y =</span> mtcars<span class="op">$</span>mpg, <span class="dt">method =</span> <span class="st">&quot;pearson&quot;</span>)</span></code></pre></div>
+<pre><code>## 
+##  Pearson&#39;s product-moment correlation
+## 
+## data:  mtcars$hp and mtcars$mpg
+## t = -6.7424, df = 30, p-value = 1.788e-07
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  -0.8852686 -0.5860994
+## sample estimates:
+##        cor 
+## -0.7761684</code></pre>
+<p>Sur la base de travaux antérieurs, Hopkins et al. <span class="citation">(<a href="#ref-Hopkins2009" role="doc-biblioref">2009</a>)</span> ont fait une proposition de classification pour qualifier la valeur du coefficient de corrélation qui serait obtenue dans le cadre d’une relation linéaire. Cette proposition est montrée ci-dessous :</p>
+<table>
+<caption><span id="tab:correlationtable">Tableau 4.2: </span>Taille d’effet pour une corrélation</caption>
+<thead>
+<tr class="header">
+<th align="right">Petite</th>
+<th align="right">Moyenne</th>
+<th align="right">Grande</th>
+<th align="right">Très grande</th>
+<th align="right">Extrêmement grande</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0.1</td>
+<td align="right">0.3</td>
+<td align="right">0.5</td>
+<td align="right">0.7</td>
+<td align="right">0.9</td>
+</tr>
+</tbody>
+</table>
+<p>Pour visualiser le lien que l’on peut faire entre la forme du nuage de points et la valeur du coefficient de corrélation de Pearson que l’on peut obtenir, la page web proposée par Kristoffer Magnusson (<a href="https://rpsychologist.com/correlation" class="uri">https://rpsychologist.com/correlation</a>) peut être particulièrement intéressante. Cette page web donne la possibilité de faire varier manuellement la valeur du coefficient de corrélation de Pearson pour ensuite voir un nuage de points type correspondant à cette valeur. Faites un essai !</p>
+<p>A noter que la valeur du coefficient de corrélation de Pearson est très dépendante de la manière dont sont distribuées les variables, avec une influence particulière de la variabilité des données <span class="citation">(Halperin, <a href="#ref-Halperin1986" role="doc-biblioref">1986</a>)</span>. L’influence de la variabilité est illustrée sur la figure ci-dessous. A gauche, on observe un nuage de points représentant une population complète, avec en conséquence une variablité le long des axes <span class="math inline">\(X\)</span> et <span class="math inline">\(X\)</span> relativement importante. La valeur du coefficient de corrélation de Pearson est ici particulièrement élevée. A droite, on observe exactement les mêmes valeurs, mais sur un intervalle dont l’étendue a été manuellement restreinte, diminuant ainsi la variabilité. On observe alors une diminution de la valeur du coefficient de corrélation de Pearson, alors qu’il s’agit à l’origine du même jeu de données que celui de gauche. Cet exemple doit faire prendre conscience qu’il faut faire attention lorsqu’on cherche à comparer des coefficient de corrélation de Pearson obtenus avec différents échantillons présentant des caractéristiques différentes, car si ces échantillons n’ont pas les mêmes niveaux de variabilité, les valeurs des coefficients de corrélation ne seront pas vraiment comparables, en sachant que c’est l’échantillon qui présente la plus grande variabilité qui aura mathématiquement plus de chances de présenter une valeur de coefficient de corrélation plus élevée.</p>
+<div class="figure" style="text-align: center"><span id="fig:spuriousCorrelations"></span>
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/spuriousCorrelations-1.png" alt="Coefficient de corrélation de Pearson et variabilité des données" width="672" />
+<p class="caption">
+Figure 4.5: Coefficient de corrélation de Pearson et variabilité des données
+</p>
+</div>
+<p>Un exemple extrême de l’influence de la variabilité des données sur la valeur du coefficient de corrélation de Pearson est montré sur la figure ci-dessous. Les deux graphiques montrent exactement les mêmes données, à ceci près que sur le graphique de droite, on a remplacé en ordonnées une valeur du graphique de gauche pour lui donner la valeur de 10. L’influence de cette action sur la valeur du coefficient de corrélation est particulièrement nette, alors qu’une seule valeur a été modifée. Ceci montre qu’il faut faire attention aux valeurs extrêmes qui pourraient grandement influencer la valeur de corrélation obtenue, notamment en présence d’échantillons de taille relativement faible. Dans le cas où la valeur du coefficient de corrélation de Pearson serait très influencée par une valeur, il pourrait être une bonne pratique de calculer la valeur du coefficient de corrélation avec et sans cette valeur afin de pouvoir quantifier son influence sur la relation étudiée <span class="citation">(Halperin, <a href="#ref-Halperin1986" role="doc-biblioref">1986</a>)</span>. Une alternative pourrait être aussi d’étudier la relation à l’aide d’autres types de coefficients que celui de Pearson, tels que celui de Spearman, présenté plus bas. Toutes ces informations doivent en tous les cas faire prendre conscience qu’il n’est pas toujours pertinent de calculer le coefficient de corrélation de Pearson. En ce sens, lorsqu’on cherche à inférer la valeur du coefficient de corrélation de Pearson dans la population étudiée, et cela avec un degré d’incertitude bien défini, il convient de vérifier certains prérequis, lesquels seront abordés plus tard dans ce livre.</p>
+<div class="figure" style="text-align: center"><span id="fig:spuriousCorrelationBis"></span>
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/spuriousCorrelationBis-1.png" alt="Coefficient de corrélation de Pearson et outliers" width="672" />
+<p class="caption">
+Figure 4.6: Coefficient de corrélation de Pearson et outliers
+</p>
+</div>
+<p>Lorsque la relation étudiée ne semble pas linéaire mais s’apparente assez clairement à d’autres fonctions mathématiques, telles que des relations logarithmiques ou polynomiales, il est possible de transformer une des variables, voire les deux, pour rendre la relation linéaire et à nouveau étudiable à l’aide du coefficient de corrélation de Pearson <span class="citation">(Halperin, <a href="#ref-Halperin1986" role="doc-biblioref">1986</a>)</span>. Toutefois, il est aussi possible de créer des modèles de régression non linéaires afin de regarder si ces modèles correspondent bien aux données. La détermination et la validation d’un modèle non linéaire qui correspondrait bien aux données confirmerait alors que la relation étudiée a une forme particulière et potentiellement prédictible. Les procédures pour explorer différents modèles de régression (linéaires et non linéaires) sont abordées au chapitre suivant. Enfin, une dernière alternative possible, pour étudier la relation entre deux variables quantitatives dont les distributions ne permettraient pas d’utiliser correctement le coefficient de corrélation de Pearson, serait l’utilisation de coefficients de corrélation basés sur les rangs, tels que le coefficient de corrélation de Spearman.</p>
+<p><em>Le coefficient de corrélation de Spearman</em></p>
+<p>Lorsque le coefficient de corrélation de Pearson ne permet pas de caractériser fiablement le degré de relation linéaire <strong>entre les valeurs</strong> de deux variables (par exemple en présence de valeurs aberrantes au sein d’un échantillon de petite taille), une alternative peut être d’étudier le degré de relation linéaire <strong>entre les rangs</strong> de ces deux variables. Le rang, c’est le classement (ou la position) d’une observation donnée en fonction de sa valeur. Dans une variable, les observations avec les valeurs les plus faibles seront associées aux rangs les plus bas alors que les observations avec les valeurs les plus élevées seront associées aux rangs les plus élevés. Une illustration de la notion de rang est proposée ci-dessous pour la variable <code>hp</code> du jeu de données <code>mtcars</code>. Dans le tableau ci-dessous, les lignes ont été ordonnées sur la base des rangs de la variable <code>hp</code>. On pourra remarquer que dans le tableau, nous avons ce qu’on appelle des ex-aequos, c’est-à-dire que plusieurs observations peuvent présenter les mêmes valeurs, et donc avoir le même rang.</p>
+<table>
+<caption><span id="tab:tableranks">Tableau 4.3: </span>Les rangs d’une variable</caption>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">hp</th>
+<th align="right">hp_rank</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Honda Civic</td>
+<td align="right">52</td>
+<td align="right">1.0</td>
+</tr>
+<tr class="even">
+<td align="left">Merc 240D</td>
+<td align="right">62</td>
+<td align="right">2.0</td>
+</tr>
+<tr class="odd">
+<td align="left">Toyota Corolla</td>
+<td align="right">65</td>
+<td align="right">3.0</td>
+</tr>
+<tr class="even">
+<td align="left">Fiat 128</td>
+<td align="right">66</td>
+<td align="right">4.5</td>
+</tr>
+<tr class="odd">
+<td align="left">Fiat X1-9</td>
+<td align="right">66</td>
+<td align="right">4.5</td>
+</tr>
+<tr class="even">
+<td align="left">Porsche 914-2</td>
+<td align="right">91</td>
+<td align="right">6.0</td>
+</tr>
+<tr class="odd">
+<td align="left">Datsun 710</td>
+<td align="right">93</td>
+<td align="right">7.0</td>
+</tr>
+<tr class="even">
+<td align="left">Merc 230</td>
+<td align="right">95</td>
+<td align="right">8.0</td>
+</tr>
+<tr class="odd">
+<td align="left">Toyota Corona</td>
+<td align="right">97</td>
+<td align="right">9.0</td>
+</tr>
+<tr class="even">
+<td align="left">Valiant</td>
+<td align="right">105</td>
+<td align="right">10.0</td>
+</tr>
+<tr class="odd">
+<td align="left">Volvo 142E</td>
+<td align="right">109</td>
+<td align="right">11.0</td>
+</tr>
+<tr class="even">
+<td align="left">Mazda RX4</td>
+<td align="right">110</td>
+<td align="right">13.0</td>
+</tr>
+<tr class="odd">
+<td align="left">Mazda RX4 Wag</td>
+<td align="right">110</td>
+<td align="right">13.0</td>
+</tr>
+<tr class="even">
+<td align="left">Hornet 4 Drive</td>
+<td align="right">110</td>
+<td align="right">13.0</td>
+</tr>
+<tr class="odd">
+<td align="left">Lotus Europa</td>
+<td align="right">113</td>
+<td align="right">15.0</td>
+</tr>
+<tr class="even">
+<td align="left">Merc 280</td>
+<td align="right">123</td>
+<td align="right">16.5</td>
+</tr>
+<tr class="odd">
+<td align="left">Merc 280C</td>
+<td align="right">123</td>
+<td align="right">16.5</td>
+</tr>
+<tr class="even">
+<td align="left">Dodge Challenger</td>
+<td align="right">150</td>
+<td align="right">18.5</td>
+</tr>
+<tr class="odd">
+<td align="left">AMC Javelin</td>
+<td align="right">150</td>
+<td align="right">18.5</td>
+</tr>
+<tr class="even">
+<td align="left">Hornet Sportabout</td>
+<td align="right">175</td>
+<td align="right">21.0</td>
+</tr>
+<tr class="odd">
+<td align="left">Pontiac Firebird</td>
+<td align="right">175</td>
+<td align="right">21.0</td>
+</tr>
+<tr class="even">
+<td align="left">Ferrari Dino</td>
+<td align="right">175</td>
+<td align="right">21.0</td>
+</tr>
+<tr class="odd">
+<td align="left">Merc 450SE</td>
+<td align="right">180</td>
+<td align="right">24.0</td>
+</tr>
+<tr class="even">
+<td align="left">Merc 450SL</td>
+<td align="right">180</td>
+<td align="right">24.0</td>
+</tr>
+<tr class="odd">
+<td align="left">Merc 450SLC</td>
+<td align="right">180</td>
+<td align="right">24.0</td>
+</tr>
+<tr class="even">
+<td align="left">Cadillac Fleetwood</td>
+<td align="right">205</td>
+<td align="right">26.0</td>
+</tr>
+<tr class="odd">
+<td align="left">Lincoln Continental</td>
+<td align="right">215</td>
+<td align="right">27.0</td>
+</tr>
+<tr class="even">
+<td align="left">Chrysler Imperial</td>
+<td align="right">230</td>
+<td align="right">28.0</td>
+</tr>
+<tr class="odd">
+<td align="left">Duster 360</td>
+<td align="right">245</td>
+<td align="right">29.5</td>
+</tr>
+<tr class="even">
+<td align="left">Camaro Z28</td>
+<td align="right">245</td>
+<td align="right">29.5</td>
+</tr>
+<tr class="odd">
+<td align="left">Ford Pantera L</td>
+<td align="right">264</td>
+<td align="right">31.0</td>
+</tr>
+<tr class="even">
+<td align="left">Maserati Bora</td>
+<td align="right">335</td>
+<td align="right">32.0</td>
+</tr>
+</tbody>
+</table>
+<p>Le fait d’étudier l’existence d’une relation linéaire entre les rangs et non plus entre les valeurs de deux variables permet de s’affranchir de l’influence possible de valeurs très extrêmes, dans l’une et/ou l’autre variable, sur le calcul final de la corrélation. Pour déterminer alors la valeur de la corrélation, une manière de procéder est d’appliquer la méthode de calcul du coefficient de corrélation de Pearson en utilisant non plus les valeurs des variables, mais les rangs correspondants. Cette methode, c’est celle du calcul du coefficient de corrélation de Spearman (<em>rho</em>). Si l’on suit <em>stricto sensu</em> cette définition, nous pourrions alors utiliser le code suivant pour avoir le coefficient de corrélation de Spearman :</p>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="analyses-descriptives-bivariées.html#cb156-1"></a><span class="kw">cor</span>(<span class="dt">x =</span> <span class="kw">rank</span>(mtcars<span class="op">$</span>hp), <span class="dt">y =</span> <span class="kw">rank</span>(mtcars<span class="op">$</span>mpg), <span class="dt">method =</span> <span class="st">&quot;pearson&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] -0.8946646</code></pre>
+<p>Toutefois, il existe une manière plus directe d’écrire les choses avec la fonction <code>cor</code>, qui contient un argument spécifiquement dédié au calcul du <em>rho</em> de Spearman :</p>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="analyses-descriptives-bivariées.html#cb158-1"></a><span class="kw">cor</span>(<span class="dt">x =</span> mtcars<span class="op">$</span>hp, <span class="dt">y =</span> mtcars<span class="op">$</span>mpg, <span class="dt">method =</span> <span class="st">&quot;spearman&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] -0.8946646</code></pre>
+<p>La fonction <code>cor.test</code> permet aussi de calculer le coefficient de corrélation de Spearman en fournissant d’autres informations potentiellement intéressantes pour donner une idée de la significativité statistique de l’estimation de <em>rho</em> pour la population étudiée.</p>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="analyses-descriptives-bivariées.html#cb160-1"></a><span class="kw">cor.test</span>(<span class="dt">x =</span> mtcars<span class="op">$</span>hp, <span class="dt">y =</span> mtcars<span class="op">$</span>mpg, <span class="dt">method =</span> <span class="st">&quot;spearman&quot;</span>)</span></code></pre></div>
+<pre><code>## 
+##  Spearman&#39;s rank correlation rho
+## 
+## data:  mtcars$hp and mtcars$mpg
+## S = 10337, p-value = 5.086e-12
+## alternative hypothesis: true rho is not equal to 0
+## sample estimates:
+##        rho 
+## -0.8946646</code></pre>
+<p>Si l’on veut produire une représentation graphique qui illustre la valeur de <em>rho</em> obtenue, il pourrait être davantage pertinent de non plus montrer un nuage de points à partir des valeurs des variables mises en lien, mais un nuage de points à partir de leurs rangs respectifs.</p>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="analyses-descriptives-bivariées.html#cb162-1"></a>mtcars <span class="op">%&gt;%</span></span>
+<span id="cb162-2"><a href="analyses-descriptives-bivariées.html#cb162-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">hp_rank =</span> <span class="kw">rank</span>(hp), <span class="dt">mpg_rank =</span> <span class="kw">rank</span>(mpg)) <span class="op">%&gt;%</span></span>
+<span id="cb162-3"><a href="analyses-descriptives-bivariées.html#cb162-3"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> hp_rank, <span class="dt">y =</span> mpg_rank)) <span class="op">+</span></span>
+<span id="cb162-4"><a href="analyses-descriptives-bivariées.html#cb162-4"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
+<span id="cb162-5"><a href="analyses-descriptives-bivariées.html#cb162-5"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:graphSpearman"></span>
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/graphSpearman-1.png" alt="Graphique de corrélation pour le coefficient de Spearman" width="672" />
+<p class="caption">
+Figure 4.7: Graphique de corrélation pour le coefficient de Spearman
+</p>
+</div>
+<p>En matière d’interprétation, des valeurs de <em>rho</em> positives indiqueront que les deux variables mises en lien tendent à augmenter simultanément, on parlera alors de <strong>relation monotone positive</strong>. Dans le cas inverse, des valeurs négatives indiqueront que les deux variables mises en lien tendent à diminuer simultanément, on parlera alors de relation <strong>monotone négative</strong>. A noter cependant que de par son calcul, la valeur de <em>rho</em> ne permet pas de renseigner sur la forme de relation qu’il pourrait y avoir entre les valeurs des deux variables (e.g., linéaire ou curvilinéaire par exemple). Ceci est illustré sur la figure ci-dessous. La figure de gauche montre la relation entre les valeurs des variables <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span>, qui est caractérisée par un coefficient de corrélation de Spearman (<em>rho</em>) de 1, indiquant donc que la relation est parfaitement monotone positive, sans préjuger de la forme particulière que pourrait présenter la relation. Pour mieux comprendre pourquoi cette valeur de <em>rho</em> est de 1, la figure de droite montre la relation entre les rangs de ces deux variables <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span>. On voit en effet que la relation entre les rangs est effectivement parfaitement linéaire.</p>
+<div class="figure" style="text-align: center"><span id="fig:ranksvvaluesspearman"></span>
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/ranksvvaluesspearman-1.png" alt="Explication du caractère monotone d'une variable évalué par le coefficient de Spearman" width="672" />
+<p class="caption">
+Figure 4.8: Explication du caractère monotone d’une variable évalué par le coefficient de Spearman
+</p>
+</div>
+</div>
+</div>
+<div id="relation-entre-deux-variables-qualitatives" class="section level2">
+<h2><span class="header-section-number">4.2</span> Relation entre deux variables qualitatives</h2>
+<div id="etudier-graphiquement-la-relation-1" class="section level3">
+<h3><span class="header-section-number">4.2.1</span> Etudier graphiquement la relation</h3>
+<p>Plusieurs types de graphiques peuvent être envisagés lorsqu’il s’agit de montrer les données relatives au croisement de deux variables qualitatives. Une première approche consiste à utiliser des graphiques avec barres mises côte-à-côte et groupées sur l’axe horizontal en fonction des modalités d’une première variable, et colorées en fonction de la seconde variable. Cela est illustré sur la figure ci-dessous, qui a été réalisée à partir du jeu de données <code>JointSports</code>, lequel est utilisable après installation et chargement du package <code>vcd</code>. <code>JointSports</code> contient des données résumées avec des effectifs mis en lien avec les modalités de différentes variables qualitatives, comme on a pu l’obtenir avec les fonctions <code>group_by</code> et <code>summarize</code> dans les derniers exemples du chapitre précédent. (La différence qu’il y a ici avec ces précédents exemples est qu’ici, l’effectif est désigné par la variable <code>Freq</code>, alors qu’il s’agissait de la variable <code>count</code> auparavant.) Pour information, <code>JointSports</code> contient les données d’une enquête s’étant intéressée, en 1983 et 1985, aux opinions d’étudiants danois de 16 à 19 ans quant à la pratique sportive mixte. On note également que le code montré ci-dessous, qui a servi à générer les graphiques à suivre, utilise la fonction <code>theme_hc()</code> du package <code>ggthemes</code> afin de pouvoir utiliser des couleurs de remplissage automatique particulières. Le package <code>ggthemes</code> doit être installé puis chargé pour pouvoir être utilisé.</p>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="analyses-descriptives-bivariées.html#cb163-1"></a><span class="kw">library</span>(vcd)</span>
+<span id="cb163-2"><a href="analyses-descriptives-bivariées.html#cb163-2"></a><span class="kw">library</span>(ggthemes)</span></code></pre></div>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="analyses-descriptives-bivariées.html#cb164-1"></a><span class="co"># Reconfiguration de l&#39;ordre des modalités de la variable opinion, et calcul des effectifs totaux pour les catégories étudiées</span></span>
+<span id="cb164-2"><a href="analyses-descriptives-bivariées.html#cb164-2"></a>JointSports_new &lt;-<span class="st"> </span></span>
+<span id="cb164-3"><a href="analyses-descriptives-bivariées.html#cb164-3"></a><span class="st">  </span>JointSports <span class="op">%&gt;%</span></span>
+<span id="cb164-4"><a href="analyses-descriptives-bivariées.html#cb164-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">opinion =</span> <span class="kw">fct_relevel</span>(opinion, <span class="st">&quot;very bad&quot;</span>, <span class="st">&quot;bad&quot;</span>, <span class="st">&quot;indifferent&quot;</span>, <span class="st">&quot;good&quot;</span>, <span class="st">&quot;very good&quot;</span>),</span>
+<span id="cb164-5"><a href="analyses-descriptives-bivariées.html#cb164-5"></a>         <span class="dt">gender =</span> <span class="kw">fct_relevel</span>(gender, <span class="st">&quot;Girl&quot;</span>, <span class="st">&quot;Boy&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb164-6"><a href="analyses-descriptives-bivariées.html#cb164-6"></a><span class="st">  </span><span class="kw">group_by</span>(gender, opinion) <span class="op">%&gt;%</span></span>
+<span id="cb164-7"><a href="analyses-descriptives-bivariées.html#cb164-7"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">Freq =</span> <span class="kw">sum</span>(Freq))</span>
+<span id="cb164-8"><a href="analyses-descriptives-bivariées.html#cb164-8"></a></span>
+<span id="cb164-9"><a href="analyses-descriptives-bivariées.html#cb164-9"></a><span class="co"># Création des graphiques</span></span>
+<span id="cb164-10"><a href="analyses-descriptives-bivariées.html#cb164-10"></a>g1 &lt;-<span class="st"> </span></span>
+<span id="cb164-11"><a href="analyses-descriptives-bivariées.html#cb164-11"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">data =</span> JointSports_new, <span class="kw">aes</span>(<span class="dt">x =</span> gender, <span class="dt">y =</span> Freq, <span class="dt">fill =</span> opinion)) <span class="op">+</span></span>
+<span id="cb164-12"><a href="analyses-descriptives-bivariées.html#cb164-12"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>,  <span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="op">+</span></span>
+<span id="cb164-13"><a href="analyses-descriptives-bivariées.html#cb164-13"></a><span class="st">  </span><span class="kw">scale_fill_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;Greens&quot;</span>) <span class="op">+</span></span>
+<span id="cb164-14"><a href="analyses-descriptives-bivariées.html#cb164-14"></a><span class="st">  </span><span class="kw">theme_hc</span>() <span class="op">+</span></span>
+<span id="cb164-15"><a href="analyses-descriptives-bivariées.html#cb164-15"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;right&quot;</span>) <span class="op">+</span></span>
+<span id="cb164-16"><a href="analyses-descriptives-bivariées.html#cb164-16"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;g1 : Mise en avant de la comparaison des opinions&quot;</span>)</span>
+<span id="cb164-17"><a href="analyses-descriptives-bivariées.html#cb164-17"></a></span>
+<span id="cb164-18"><a href="analyses-descriptives-bivariées.html#cb164-18"></a>g2 &lt;-<span class="st"> </span></span>
+<span id="cb164-19"><a href="analyses-descriptives-bivariées.html#cb164-19"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">data =</span> JointSports_new, <span class="kw">aes</span>(<span class="dt">x =</span> opinion, <span class="dt">y =</span> Freq, <span class="dt">fill =</span> gender)) <span class="op">+</span></span>
+<span id="cb164-20"><a href="analyses-descriptives-bivariées.html#cb164-20"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>,  <span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="op">+</span></span>
+<span id="cb164-21"><a href="analyses-descriptives-bivariées.html#cb164-21"></a><span class="st">  </span><span class="kw">theme_hc</span>() <span class="op">+</span></span>
+<span id="cb164-22"><a href="analyses-descriptives-bivariées.html#cb164-22"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;right&quot;</span>) <span class="op">+</span><span class="st">  </span></span>
+<span id="cb164-23"><a href="analyses-descriptives-bivariées.html#cb164-23"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;g2 : Mise en avant de la comparaison des genres&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:groupedBarsFigure"></span>
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/groupedBarsFigure-1.png" alt="Exemples de diagramme en barres mises côte-à-côte" width="672" />
+<p class="caption">
+Figure 4.9: Exemples de diagramme en barres mises côte-à-côte
+</p>
+</div>
+<p>Pour pouvoir réaliser le graphique g1 montré ci-dessus, il a fallu indiquer dans la fonction <code>ggplot()</code>, grâce à <code>x =</code>, la variable dont on voulait voir les modalités en abscisses, et il a fallu renseigner pour les ordonnées, à l’aide de <code>y =</code>, la variable contenant les effectifs correspondants, le tout toujours à l’intérieur de l’argument <code>aes()</code>. Etant donné que les données à montrer le long de l’axe des ordonnées sont explicitement indiquées avec <code>Freq</code>, il convient d’indiquer à l’intérieur de la fonction <code>geom_bar()</code> l’argument <code>stat = "identity"</code>, ce qui contraint à determiner la hauteur des barres en fonction des valeurs de la variable <code>Freq</code>. A l’intérieur de la fonction <code>ggplot()</code> et de l’argument <code>aes()</code>, c’est l’argument <code>fill = opinion</code> qui a permis d’indiquer qu’on voulait des couleurs de remplissage différentes selon les modalités de la variable <code>opinion</code>. Enfin, c’est grâce à l’argument <code>position = "dodge"</code>, à l’intérieur de la fonction <code>geom_bar()</code>, que l’on a pu obtenir des barres mises côte-à-côte, et non pas de manière empilée. Une logique similaire a été utilisée pour le graphique g2 en modifiant le code de telle sorte que la distinction de l’information avec des couleurs différentes se fasse avec la variable <code>gender</code>, et non plus <code>opinion</code>.</p>
+<p>Les graphiques g1 et g2 montrent l’importance de la configuration du graphique en fonction des comparaisons que l’on veut principalement faire, et donc du message que l’on veut prioritairement délivrer. Un principe qui peut guider la conception du graphique est le fait qu’il est plus facile de comparer des barres qui sont mises juste côte-à-côte. Sur la base de ce principe, le graphique g1 ci-dessus permet de comparer plus facilement les diverses opinions relevées pour les garçons d’un côté et pour les filles de l’autre, alors que le graphique g2 permet de comparer plus facilement les réponses provenant des deux genres et cela pour chaque type d’opinion. Comme indiqué par Wilke <span class="citation">(<a href="#ref-Wilke2018" role="doc-biblioref">2018</a>)</span>, les types de graphiques illustrés avec les graphiques g1 et g2 ci-dessus peuvent parfois se voir attribuer le reproche que s’il est relativement facile de lire les informations encodées par des positions (cf. ligne de base sur les graphiques), il peut être être difficile de lire les informations encodées par une couleur dont la signification est indiquée en légende, car cela demande un effort mental supplémentaire de garder en tête la signification de la légende lorsqu’on lit le graphique. Pour palier ce problème, qui, selon Wilke <span class="citation">(<a href="#ref-Wilke2018" role="doc-biblioref">2018</a>)</span>, est au final une affaire de goût, on pourrait utiliser la fonction <code>facet_wrap()</code> pour créer une figure telle qu’illustré ci-dessous. (La figure ci-dessous reprend la logique du graphique g1 montré plus haut, avec un besoin de légende pour la variable <code>opinion</code> qui n’existe plus car la fonction <code>facet_wrap()</code> a permis de montrer les diagrammes en barres pour les deux genres de manière séparée, dans des encarts différents, et avec chacun leur propre axe des abscisses relatif aux modalités de la variable <code>opinion</code>.)</p>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="analyses-descriptives-bivariées.html#cb165-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> JointSports_new, <span class="kw">aes</span>(<span class="dt">x =</span> opinion, <span class="dt">y =</span> Freq)) <span class="op">+</span></span>
+<span id="cb165-2"><a href="analyses-descriptives-bivariées.html#cb165-2"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span></span>
+<span id="cb165-3"><a href="analyses-descriptives-bivariées.html#cb165-3"></a><span class="st">  </span><span class="kw">facet_wrap</span>(. <span class="op">~</span><span class="st"> </span>gender)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:groupedBarsUpgraded"></span>
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/groupedBarsUpgraded-1.png" alt="Diagrammes en barres côte-à-côte séparés selon une variable catégorielle" width="672" />
+<p class="caption">
+Figure 4.10: Diagrammes en barres côte-à-côte séparés selon une variable catégorielle
+</p>
+</div>
+<p>Dans certains cas, on peut vouloir comparer les effectifs relatifs aux modalités d’une première variable qualitative avec des barres mises côte-à-côte, et n’utiliser la seconde variable qualitative que pour avoir un peu d’éléments de contexte “à l’intérieur” des effectifs affichés pour la première variable qualitative. La figure ci-dessous illustre ce cas de figure où la hauteur des barres sert prioritairement à comparer les effectifs relatifs à diverses opinions, et la coloration des barres sert à fournir une idée de la répartition hommes / femmes dans les réponses, sans pourtant avoir l’ambition de comparer cette répartition hommes / femmes facilement d’un type d’opinion à un autre.</p>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="analyses-descriptives-bivariées.html#cb166-1"></a>JointSports_new <span class="op">%&gt;%</span></span>
+<span id="cb166-2"><a href="analyses-descriptives-bivariées.html#cb166-2"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> opinion, <span class="dt">y =</span> Freq, <span class="dt">fill =</span> gender)) <span class="op">+</span></span>
+<span id="cb166-3"><a href="analyses-descriptives-bivariées.html#cb166-3"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span></span>
+<span id="cb166-4"><a href="analyses-descriptives-bivariées.html#cb166-4"></a><span class="st">  </span><span class="kw">theme_hc</span>() <span class="op">+</span></span>
+<span id="cb166-5"><a href="analyses-descriptives-bivariées.html#cb166-5"></a><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> Freq), <span class="dt">size =</span> <span class="dv">3</span>, <span class="dt">position =</span> <span class="kw">position_stack</span>(<span class="dt">vjust =</span> <span class="fl">0.5</span>))</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:stackedBarsBiv"></span>
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/stackedBarsBiv-1.png" alt="Exemple de diagramme en barres empilées" width="672" />
+<p class="caption">
+Figure 4.11: Exemple de diagramme en barres empilées
+</p>
+</div>
+<p>Les graphiques présentés dans cette sous-partie montrent des valeurs d’effectifs, mais selon l’objectif, il pourrait être aussi envisagé d’utiliser ces graphiques pour montrer des proportions. Cela dit, il existe d’autres visualisations possibles des proportions pour visualiser le lien entre deux variables qualitatives. Ces visualisations peuvent être consultées dans l’ouvrage en ligne de Wilke <span class="citation">(<a href="#ref-Wilke2018" role="doc-biblioref">2018</a>)</span>.</p>
+</div>
+<div id="etudier-numériquement-la-relation-1" class="section level3">
+<h3><span class="header-section-number">4.2.2</span> Etudier numériquement la relation</h3>
+<p><em>Effectifs et proportions</em></p>
+<p>Lorsqu’il s’agit de mener une étude numérique de la relation entre deux variables qualitatives, une première démarche à mettre en oeuvre est de récapituler numériquement les effectifs qui correspondent au croisement des deux variables. Pour cela, la fonction <code>table()</code> intégrée à R de base s’avère très pratique. Cependant, cette fonction requiert d’utiliser le jeu de données initial complet (i.e., avec toutes les observations), ce qui n’est pas le cas du jeu de données <code>JointSports</code> que nous avons utilisé juste précédemment, car ce dernier contient des effectifs déjà récapitulés par modalité de variable. Pour pouvoir illustrer le fonctionnement de la fonction <code>table()</code> avec les informations du jeu de données <code>JointSports</code>, j’ai donc crée un jeu de données complet qui, une fois résumé comme c’est le cas plus haut avec <code>JointSports</code>, donnerait les mêmes résultats. Ce nouveau jeu de données se nomme <code>JointSports_full</code>.</p>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="analyses-descriptives-bivariées.html#cb167-1"></a>id &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">1</span> <span class="op">:</span><span class="st"> </span><span class="kw">sum</span>(JointSports<span class="op">$</span>Freq))</span>
+<span id="cb167-2"><a href="analyses-descriptives-bivariées.html#cb167-2"></a>year &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&quot;1983&quot;</span>, <span class="dv">656</span>), <span class="kw">rep</span>(<span class="st">&quot;1985&quot;</span>, <span class="dv">615</span>))</span>
+<span id="cb167-3"><a href="analyses-descriptives-bivariées.html#cb167-3"></a>grade &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&quot;1st&quot;</span>, <span class="dv">350</span>), <span class="kw">rep</span>(<span class="st">&quot;3rd&quot;</span>, <span class="dv">306</span>), <span class="kw">rep</span>(<span class="st">&quot;1st&quot;</span>, <span class="dv">354</span>), <span class="kw">rep</span>(<span class="st">&quot;3rd&quot;</span>, <span class="dv">261</span>))</span>
+<span id="cb167-4"><a href="analyses-descriptives-bivariées.html#cb167-4"></a>gender &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&quot;Boy&quot;</span>, <span class="dv">134</span>), <span class="kw">rep</span>(<span class="st">&quot;Girl&quot;</span>, <span class="dv">216</span>), <span class="kw">rep</span>(<span class="st">&quot;Boy&quot;</span>, <span class="dv">115</span>), <span class="kw">rep</span>(<span class="st">&quot;Girl&quot;</span>, <span class="dv">191</span>), <span class="kw">rep</span>(<span class="st">&quot;Boy&quot;</span>, <span class="dv">157</span>), <span class="kw">rep</span>(<span class="st">&quot;Girl&quot;</span>, <span class="dv">197</span>), <span class="kw">rep</span>(<span class="st">&quot;Boy&quot;</span>, <span class="dv">104</span>), <span class="kw">rep</span>(<span class="st">&quot;Girl&quot;</span>, <span class="dv">157</span>))</span>
+<span id="cb167-5"><a href="analyses-descriptives-bivariées.html#cb167-5"></a>opinion &lt;-<span class="st"> </span><span class="kw">c</span>(</span>
+<span id="cb167-6"><a href="analyses-descriptives-bivariées.html#cb167-6"></a>  <span class="kw">rep</span>(<span class="st">&quot;very good&quot;</span>, <span class="dv">31</span>), <span class="kw">rep</span>(<span class="st">&quot;good&quot;</span>, <span class="dv">51</span>), <span class="kw">rep</span>(<span class="st">&quot;indifferent&quot;</span>, <span class="dv">38</span>), <span class="kw">rep</span>(<span class="st">&quot;bad&quot;</span>, <span class="dv">10</span>), <span class="kw">rep</span>(<span class="st">&quot;very bad&quot;</span>, <span class="dv">4</span>), </span>
+<span id="cb167-7"><a href="analyses-descriptives-bivariées.html#cb167-7"></a>  <span class="kw">rep</span>(<span class="st">&quot;very good&quot;</span>, <span class="dv">103</span>), <span class="kw">rep</span>(<span class="st">&quot;good&quot;</span>, <span class="dv">67</span>), <span class="kw">rep</span>(<span class="st">&quot;indifferent&quot;</span>, <span class="dv">29</span>), <span class="kw">rep</span>(<span class="st">&quot;bad&quot;</span>, <span class="dv">15</span>), <span class="kw">rep</span>(<span class="st">&quot;very bad&quot;</span>, <span class="dv">2</span>), </span>
+<span id="cb167-8"><a href="analyses-descriptives-bivariées.html#cb167-8"></a>  <span class="kw">rep</span>(<span class="st">&quot;very good&quot;</span>, <span class="dv">23</span>), <span class="kw">rep</span>(<span class="st">&quot;good&quot;</span>, <span class="dv">39</span>), <span class="kw">rep</span>(<span class="st">&quot;indifferent&quot;</span>, <span class="dv">36</span>), <span class="kw">rep</span>(<span class="st">&quot;bad&quot;</span>, <span class="dv">15</span>), <span class="kw">rep</span>(<span class="st">&quot;very bad&quot;</span>, <span class="dv">2</span>), </span>
+<span id="cb167-9"><a href="analyses-descriptives-bivariées.html#cb167-9"></a>  <span class="kw">rep</span>(<span class="st">&quot;very good&quot;</span>, <span class="dv">61</span>), <span class="kw">rep</span>(<span class="st">&quot;good&quot;</span>, <span class="dv">72</span>), <span class="kw">rep</span>(<span class="st">&quot;indifferent&quot;</span>, <span class="dv">39</span>), <span class="kw">rep</span>(<span class="st">&quot;bad&quot;</span>, <span class="dv">16</span>), <span class="kw">rep</span>(<span class="st">&quot;very bad&quot;</span>, <span class="dv">3</span>), </span>
+<span id="cb167-10"><a href="analyses-descriptives-bivariées.html#cb167-10"></a>  <span class="kw">rep</span>(<span class="st">&quot;very good&quot;</span>, <span class="dv">41</span>), <span class="kw">rep</span>(<span class="st">&quot;good&quot;</span>, <span class="dv">67</span>), <span class="kw">rep</span>(<span class="st">&quot;indifferent&quot;</span>, <span class="dv">35</span>), <span class="kw">rep</span>(<span class="st">&quot;bad&quot;</span>, <span class="dv">12</span>), <span class="kw">rep</span>(<span class="st">&quot;very bad&quot;</span>, <span class="dv">2</span>), </span>
+<span id="cb167-11"><a href="analyses-descriptives-bivariées.html#cb167-11"></a>  <span class="kw">rep</span>(<span class="st">&quot;very good&quot;</span>, <span class="dv">77</span>), <span class="kw">rep</span>(<span class="st">&quot;good&quot;</span>, <span class="dv">80</span>), <span class="kw">rep</span>(<span class="st">&quot;indifferent&quot;</span>, <span class="dv">27</span>), <span class="kw">rep</span>(<span class="st">&quot;bad&quot;</span>, <span class="dv">10</span>), <span class="kw">rep</span>(<span class="st">&quot;very bad&quot;</span>, <span class="dv">3</span>), </span>
+<span id="cb167-12"><a href="analyses-descriptives-bivariées.html#cb167-12"></a>  <span class="kw">rep</span>(<span class="st">&quot;very good&quot;</span>, <span class="dv">31</span>), <span class="kw">rep</span>(<span class="st">&quot;good&quot;</span>, <span class="dv">31</span>), <span class="kw">rep</span>(<span class="st">&quot;indifferent&quot;</span>, <span class="dv">31</span>), <span class="kw">rep</span>(<span class="st">&quot;bad&quot;</span>, <span class="dv">4</span>), <span class="kw">rep</span>(<span class="st">&quot;very bad&quot;</span>, <span class="dv">7</span>), </span>
+<span id="cb167-13"><a href="analyses-descriptives-bivariées.html#cb167-13"></a>  <span class="kw">rep</span>(<span class="st">&quot;very good&quot;</span>, <span class="dv">52</span>), <span class="kw">rep</span>(<span class="st">&quot;good&quot;</span>, <span class="dv">70</span>), <span class="kw">rep</span>(<span class="st">&quot;indifferent&quot;</span>, <span class="dv">28</span>), <span class="kw">rep</span>(<span class="st">&quot;bad&quot;</span>, <span class="dv">4</span>), <span class="kw">rep</span>(<span class="st">&quot;very bad&quot;</span>, <span class="dv">3</span>)</span>
+<span id="cb167-14"><a href="analyses-descriptives-bivariées.html#cb167-14"></a>  )</span>
+<span id="cb167-15"><a href="analyses-descriptives-bivariées.html#cb167-15"></a></span>
+<span id="cb167-16"><a href="analyses-descriptives-bivariées.html#cb167-16"></a>JointSports_full &lt;-<span class="st"> </span></span>
+<span id="cb167-17"><a href="analyses-descriptives-bivariées.html#cb167-17"></a><span class="st">  </span><span class="kw">data.frame</span>(<span class="dt">id =</span> id, <span class="dt">year =</span> year, <span class="dt">grade =</span> grade, <span class="dt">gender =</span> gender, <span class="dt">opinion =</span> opinion) <span class="op">%&gt;%</span></span>
+<span id="cb167-18"><a href="analyses-descriptives-bivariées.html#cb167-18"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">opinion =</span> <span class="kw">fct_relevel</span>(opinion, <span class="st">&quot;very bad&quot;</span>, <span class="st">&quot;bad&quot;</span>, <span class="st">&quot;indifferent&quot;</span>, <span class="st">&quot;good&quot;</span>, <span class="st">&quot;very good&quot;</span>))</span></code></pre></div>
+<p>Une fois que l’on a un jeu de données complet sous la main, il est possible de créer ce qu’on appelle un <strong>tableau de contingence</strong>, c’est-à-dire ici un tableau qui récapitule numériquement les effectifs à la croisée des deux variables qui nous intéressent. Pour faire cela, on peut utiliser la fonction <code>table()</code> en suivant différentes méthodes montrées ci-dessous. (Le code montré ci-dessous aboutit aux mêmes informations que celles montrées sur le denier graphique ci-dessus.)</p>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="analyses-descriptives-bivariées.html#cb168-1"></a><span class="co"># 1ère méthode</span></span>
+<span id="cb168-2"><a href="analyses-descriptives-bivariées.html#cb168-2"></a>tab &lt;-<span class="st"> </span></span>
+<span id="cb168-3"><a href="analyses-descriptives-bivariées.html#cb168-3"></a><span class="st">  </span><span class="kw">with</span>(JointSports_full,</span>
+<span id="cb168-4"><a href="analyses-descriptives-bivariées.html#cb168-4"></a>       <span class="kw">table</span>(opinion, gender))</span>
+<span id="cb168-5"><a href="analyses-descriptives-bivariées.html#cb168-5"></a></span>
+<span id="cb168-6"><a href="analyses-descriptives-bivariées.html#cb168-6"></a><span class="co"># 2ème méthode</span></span>
+<span id="cb168-7"><a href="analyses-descriptives-bivariées.html#cb168-7"></a>tab &lt;-<span class="st"> </span><span class="kw">table</span>(JointSports_full<span class="op">$</span>opinion, JointSports_full<span class="op">$</span>gender)</span>
+<span id="cb168-8"><a href="analyses-descriptives-bivariées.html#cb168-8"></a></span>
+<span id="cb168-9"><a href="analyses-descriptives-bivariées.html#cb168-9"></a><span class="co"># Visualisation du tableau de contingence</span></span>
+<span id="cb168-10"><a href="analyses-descriptives-bivariées.html#cb168-10"></a>tab</span></code></pre></div>
+<pre><code>##              
+##               Boy Girl
+##   very bad     15   11
+##   bad          41   45
+##   indifferent 140  123
+##   good        188  289
+##   very good   126  293</code></pre>
+<p>Un tableau de contingence permet donc de comparer des effectifs en fonction de plusieurs modalités et variables à la fois. Le problème, lorsqu’on utilise des effectifs, est que certaines comparaisons peuvent être difficiles à faire lorsque les effectifs totaux liés aux différentes modalités ne sont pas comparables. Par exemple, dans le tableau montré ci-dessus, l’effectif total des filles est de 761 alors que celui des garçons est de 510, ce qui rend difficile la comparaison des garçons et des filles pour les différents types d’opinion recensés dans l’enquête danoise présentée plus haut. C’est pour cela qu’il convient, dans certains cas, de calculer les proportions correspondant à ces différents effectifs. Pour ce faire, on peut :</p>
+<ul>
+<li>Utiliser la fonction <code>prop.table()</code>, qui va convertir en proportions les effectifs montrés plus haut en considérant l’effectif total de tout le tableau :</li>
+</ul>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="analyses-descriptives-bivariées.html#cb170-1"></a><span class="kw">round</span>(<span class="kw">prop.table</span>(tab) <span class="op">*</span><span class="st"> </span><span class="dv">100</span>, <span class="dt">digits =</span> <span class="dv">2</span>)</span></code></pre></div>
+<pre><code>##              
+##                 Boy  Girl
+##   very bad     1.18  0.87
+##   bad          3.23  3.54
+##   indifferent 11.01  9.68
+##   good        14.79 22.74
+##   very good    9.91 23.05</code></pre>
+<ul>
+<li>Utiliser la fonction <code>lprop()</code> du package <code>questionr</code>, qui va convertir en proportions les effectifs montrés plus haut en considérant l’effectif total de chaque ligne du tableau :</li>
+</ul>
+<pre><code>##              
+##               Boy   Girl  Total
+##   very bad     57.7  42.3 100.0
+##   bad          47.7  52.3 100.0
+##   indifferent  53.2  46.8 100.0
+##   good         39.4  60.6 100.0
+##   very good    30.1  69.9 100.0
+##   All          40.1  59.9 100.0</code></pre>
+<ul>
+<li>Utiliser la fonction <code>cprop()</code> du package <code>questionr</code>, qui va convertir en proportions les effectifs montrés plus haut en considérant l’effectif total de chaque colonne du tableau :</li>
+</ul>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="analyses-descriptives-bivariées.html#cb173-1"></a><span class="kw">cprop</span>(tab)</span></code></pre></div>
+<pre><code>##              
+##               Boy   Girl  All  
+##   very bad      2.9   1.4   2.0
+##   bad           8.0   5.9   6.8
+##   indifferent  27.5  16.2  20.7
+##   good         36.9  38.0  37.5
+##   very good    24.7  38.5  33.0
+##   Total       100.0 100.0 100.0</code></pre>
+<p>Il convient bien de noter que les proportions données par ces différentes fonctions doivent être utilisées selon les comparaisons que l’on veut faire. L’analyse descriptive consiste alors à voir si, tant d’un point de vue graphique que numérique, on observe des différences de scores particulières entre les modalités d’une variable qualitative en fonction des modalités de l’autre variable qualitative. Si l’on considère le dernier tableau, on peut par exemple observer une très légère tendance à ce que les garçons soient davantage polarisés, par rapport aux filles, sur des opinions négatives vis-à-vis des pratiques sportives mixtes, alors que les filles seraient légèrement plus polarisées que les garçons sur des opinions positives, ce qui n’empêche pas que, pour les deux genres, il y a une polarisation principale sur des opinions neutres à positives.</p>
+<p>Si l’on a évoqué l’idée que les proportions permettent de mieux comparer les choses, il convient de faire attention malgré tout à la manière dont l’effectif total associé à une modalité d’une variable se répartit selon les modalités de la seconde variable, car une répartition non homogène de l’effectif lié à une modalité d’une variable dans les différentes modalités de la seconde variable peut donner lieu à des conclusions tout à fait différentes selon que l’on considère une analyse globale ou une analyse par modalité. Un exemple connu pour illustrer le type de situations dans lesquelles il faut être vigilant est le cas du taux de réussite des femmes à l’université de Berkeley en 1973 qui était bien inférieur à celui des hommes lorsqu’on considérait les taux de réussite à l’échelle de l’ensemble de l’unversité <span class="citation">(Bickel et al., <a href="#ref-Bickel1975" role="doc-biblioref">1975</a>)</span>. Toutefois, une analyse par matière permettait de voir que les taux de réussite des femmes étaient très similaires à ceux des hommes dans la plupart des matières, voire étaient largement supérieurs à celui des hommes dans certaines matières. Cette situation, qui paraît de prime abord paradoxale, illustre pleinement ce qu’on appelle un paradoxe de Simpson (i.e., le fait que le résultat observé lors d’une analyse globale d’un groupe puisse se retrouver annulée voire inversée lors d’une analyse à l’échelle de sous-groupes). Dans le cas présent, le paradoxe s’explique par le fait que la majorité des femmes avaient candidaté dans des matières qui étaient très sélectives, c’est-à-dire où le taux de réussite était faible (il l’était aussi pour les hommes). Très peu de femmes avaient candidaté là où les taux de réussite étaient très élevés (pour les femmes comme pour les hommes). Donc au total, les hommes se retrouvaient avec un pourcentage de réussite global bien meilleur que celui des femmes, seulement parce que en proportions, plus d’hommes s’étaient engagés dans les matières où les taux de réussite étaient bien meilleurs.</p>
+</div>
+</div>
+<div id="relation-entre-une-variable-quantitative-et-une-variable-qualitative" class="section level2">
+<h2><span class="header-section-number">4.3</span> Relation entre une variable quantitative et une variable qualitative</h2>
+<p>Lorsqu’on analyse une variable quantitative en fonction d’une variable qualitative, on peut notamment distinguer le fait que les données quantitatives soient pairées (<em>within-subject design</em> en anglais) ou non (<em>between-subject design</em> en anglais). Avoir des données non pairées signifie que pour chaque modalité de la variable qualitative étudiée, les données quantitatives correspondantes ne sont pas liées. Un exemple simple peut être l’analyse de la taille des individus en fonction du sexe. Dans ce cas, les données quantitatives de taille pour le sexe masculin et pour le sexe féminin proviendront forcément d’individus différents et ne formeront donc pas des paires. En revanche, on peut aussi avoir des études dans lesquelles plusieurs individus sont évalués dans plusieurs conditions différentes que l’on chercherait à comparer. En sciences du sport, un exemple relativement classique est de tester la performance d’endurance (variable quantitative) en ayant pris (condition de test) ou non (condition contrôle) une substance potentiellement ergonénique (la prise de substance ou non étant les modalités d’une même variable qualitative de type condition). Dans ce cas là, tous les individus auront des données dans les deux conditions et ces données seront donc pairées (dépendantes).</p>
+<div id="etudier-graphiquement-la-relation-2" class="section level3">
+<h3><span class="header-section-number">4.3.1</span> Etudier graphiquement la relation</h3>
+<p>Lorsque l’on cherche à explorer la relation qu’il peut y avoir entre une variable quantitative et une variable qualitative, il peut être intéressant de visualiser la distribution de la variable quantitative en fonction de chaque modalité de la variable qualitative. Plusieurs possibilités existent afin de faire cela. On peut tout d’abord vouloir visualiser les choses de long de l’axe vertical avec :</p>
+<ul>
+<li>des moyennes et écarts-types (cf. codes et graphiques ci-dessous) ;</li>
+</ul>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="analyses-descriptives-bivariées.html#cb175-1"></a><span class="co"># Moyennes et barres d&#39;erreur</span></span>
+<span id="cb175-2"><a href="analyses-descriptives-bivariées.html#cb175-2"></a>g1 &lt;-<span class="st"> </span></span>
+<span id="cb175-3"><a href="analyses-descriptives-bivariées.html#cb175-3"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">data =</span> iris, <span class="kw">aes</span>(<span class="dt">x =</span> Species, <span class="dt">y =</span> Sepal.Length)) <span class="op">+</span></span>
+<span id="cb175-4"><a href="analyses-descriptives-bivariées.html#cb175-4"></a><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> <span class="st">&quot;mean_sdl&quot;</span>, <span class="dt">fun.args =</span> <span class="kw">list</span>(<span class="dt">mult=</span><span class="dv">1</span>), <span class="dt">geom =</span> <span class="st">&quot;errorbar&quot;</span>, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>, <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">width =</span> <span class="fl">0.2</span>, <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span></span>
+<span id="cb175-5"><a href="analyses-descriptives-bivariées.html#cb175-5"></a><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun =</span> <span class="st">&quot;mean&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;point&quot;</span>, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>, <span class="dt">size =</span> <span class="dv">5</span>, <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span></span>
+<span id="cb175-6"><a href="analyses-descriptives-bivariées.html#cb175-6"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;g1&quot;</span>) <span class="op">+</span></span>
+<span id="cb175-7"><a href="analyses-descriptives-bivariées.html#cb175-7"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">20</span>),</span>
+<span id="cb175-8"><a href="analyses-descriptives-bivariées.html#cb175-8"></a>        <span class="dt">axis.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>),</span>
+<span id="cb175-9"><a href="analyses-descriptives-bivariées.html#cb175-9"></a>        <span class="dt">axis.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>))</span>
+<span id="cb175-10"><a href="analyses-descriptives-bivariées.html#cb175-10"></a></span>
+<span id="cb175-11"><a href="analyses-descriptives-bivariées.html#cb175-11"></a><span class="co"># Moyennes, barres d&#39;erreur, et points (l&#39;installation du package Hmisc est nécessaire pour pouvoir utiliser &quot;mean_sdl&quot; ici)</span></span>
+<span id="cb175-12"><a href="analyses-descriptives-bivariées.html#cb175-12"></a>g2 &lt;-<span class="st"> </span></span>
+<span id="cb175-13"><a href="analyses-descriptives-bivariées.html#cb175-13"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">data =</span> iris, <span class="kw">aes</span>(<span class="dt">x =</span> Species, <span class="dt">y =</span> Sepal.Length)) <span class="op">+</span></span>
+<span id="cb175-14"><a href="analyses-descriptives-bivariées.html#cb175-14"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">3</span>) <span class="op">+</span></span>
+<span id="cb175-15"><a href="analyses-descriptives-bivariées.html#cb175-15"></a><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> <span class="st">&quot;mean_sdl&quot;</span>, <span class="dt">fun.args =</span> <span class="kw">list</span>(<span class="dt">mult=</span><span class="dv">1</span>), <span class="dt">geom =</span> <span class="st">&quot;errorbar&quot;</span>, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>, <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">width =</span> <span class="fl">0.2</span>, <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span></span>
+<span id="cb175-16"><a href="analyses-descriptives-bivariées.html#cb175-16"></a><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun =</span> <span class="st">&quot;mean&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;point&quot;</span>, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>, <span class="dt">size =</span> <span class="dv">5</span>, <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span></span>
+<span id="cb175-17"><a href="analyses-descriptives-bivariées.html#cb175-17"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;g2&quot;</span>) <span class="op">+</span></span>
+<span id="cb175-18"><a href="analyses-descriptives-bivariées.html#cb175-18"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">20</span>),</span>
+<span id="cb175-19"><a href="analyses-descriptives-bivariées.html#cb175-19"></a>        <span class="dt">axis.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>),</span>
+<span id="cb175-20"><a href="analyses-descriptives-bivariées.html#cb175-20"></a>        <span class="dt">axis.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>))</span>
+<span id="cb175-21"><a href="analyses-descriptives-bivariées.html#cb175-21"></a></span>
+<span id="cb175-22"><a href="analyses-descriptives-bivariées.html#cb175-22"></a><span class="co"># Moyennes, barres d&#39;erreur, et points avec mouvement latéral aléatoire (l&#39;installation du package Hmisc est nécessaire pour pouvoir utiliser &quot;mean_sdl&quot; ici)</span></span>
+<span id="cb175-23"><a href="analyses-descriptives-bivariées.html#cb175-23"></a>g3 &lt;-<span class="st"> </span></span>
+<span id="cb175-24"><a href="analyses-descriptives-bivariées.html#cb175-24"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">data =</span> iris, <span class="kw">aes</span>(<span class="dt">x =</span> Species, <span class="dt">y =</span> Sepal.Length)) <span class="op">+</span></span>
+<span id="cb175-25"><a href="analyses-descriptives-bivariées.html#cb175-25"></a><span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">width =</span> <span class="fl">0.08</span>, <span class="dt">height =</span> <span class="ot">NULL</span>, <span class="dt">size =</span> <span class="dv">3</span>) <span class="op">+</span></span>
+<span id="cb175-26"><a href="analyses-descriptives-bivariées.html#cb175-26"></a><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> <span class="st">&quot;mean_sdl&quot;</span>, <span class="dt">fun.args =</span> <span class="kw">list</span>(<span class="dt">mult=</span><span class="dv">1</span>), <span class="dt">geom =</span> <span class="st">&quot;errorbar&quot;</span>, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>, <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">width =</span> <span class="fl">0.2</span>, <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span></span>
+<span id="cb175-27"><a href="analyses-descriptives-bivariées.html#cb175-27"></a><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun =</span> <span class="st">&quot;mean&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;point&quot;</span>, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>, <span class="dt">size =</span> <span class="dv">5</span>, <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span></span>
+<span id="cb175-28"><a href="analyses-descriptives-bivariées.html#cb175-28"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;g3&quot;</span>) <span class="op">+</span></span>
+<span id="cb175-29"><a href="analyses-descriptives-bivariées.html#cb175-29"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">20</span>),</span>
+<span id="cb175-30"><a href="analyses-descriptives-bivariées.html#cb175-30"></a>        <span class="dt">axis.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>),</span>
+<span id="cb175-31"><a href="analyses-descriptives-bivariées.html#cb175-31"></a>        <span class="dt">axis.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>))</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:graphDistriBivQuantvsQualMeans"></span>
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/graphDistriBivQuantvsQualMeans-1.png" alt="Nuage de points avec moyennes et écart-types" width="1920" />
+<p class="caption">
+Figure 4.12: Nuage de points avec moyennes et écart-types
+</p>
+</div>
+<ul>
+<li>des médianes et intervalles interquartiles (cf. codes et graphiques ci-dessous) ;</li>
+</ul>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="analyses-descriptives-bivariées.html#cb176-1"></a><span class="co"># Boîtes à moustaches</span></span>
+<span id="cb176-2"><a href="analyses-descriptives-bivariées.html#cb176-2"></a>g4 &lt;-<span class="st"> </span></span>
+<span id="cb176-3"><a href="analyses-descriptives-bivariées.html#cb176-3"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">data =</span> iris, <span class="kw">aes</span>(<span class="dt">x =</span> Species, <span class="dt">y =</span> Sepal.Length)) <span class="op">+</span></span>
+<span id="cb176-4"><a href="analyses-descriptives-bivariées.html#cb176-4"></a><span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span></span>
+<span id="cb176-5"><a href="analyses-descriptives-bivariées.html#cb176-5"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;g4&quot;</span>) <span class="op">+</span></span>
+<span id="cb176-6"><a href="analyses-descriptives-bivariées.html#cb176-6"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">20</span>),</span>
+<span id="cb176-7"><a href="analyses-descriptives-bivariées.html#cb176-7"></a>        <span class="dt">axis.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>),</span>
+<span id="cb176-8"><a href="analyses-descriptives-bivariées.html#cb176-8"></a>        <span class="dt">axis.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>))</span>
+<span id="cb176-9"><a href="analyses-descriptives-bivariées.html#cb176-9"></a></span>
+<span id="cb176-10"><a href="analyses-descriptives-bivariées.html#cb176-10"></a><span class="co"># Boîtes à moustaches et points</span></span>
+<span id="cb176-11"><a href="analyses-descriptives-bivariées.html#cb176-11"></a>g5 &lt;-</span>
+<span id="cb176-12"><a href="analyses-descriptives-bivariées.html#cb176-12"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">data =</span> iris, <span class="kw">aes</span>(<span class="dt">x =</span> Species, <span class="dt">y =</span> Sepal.Length)) <span class="op">+</span></span>
+<span id="cb176-13"><a href="analyses-descriptives-bivariées.html#cb176-13"></a><span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span></span>
+<span id="cb176-14"><a href="analyses-descriptives-bivariées.html#cb176-14"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">3</span>) <span class="op">+</span></span>
+<span id="cb176-15"><a href="analyses-descriptives-bivariées.html#cb176-15"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;g5&quot;</span>) <span class="op">+</span></span>
+<span id="cb176-16"><a href="analyses-descriptives-bivariées.html#cb176-16"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">20</span>),</span>
+<span id="cb176-17"><a href="analyses-descriptives-bivariées.html#cb176-17"></a>        <span class="dt">axis.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>),</span>
+<span id="cb176-18"><a href="analyses-descriptives-bivariées.html#cb176-18"></a>        <span class="dt">axis.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>))</span>
+<span id="cb176-19"><a href="analyses-descriptives-bivariées.html#cb176-19"></a></span>
+<span id="cb176-20"><a href="analyses-descriptives-bivariées.html#cb176-20"></a><span class="co"># Boîtes à moustaches et points avec mouvement latéral aléatoire</span></span>
+<span id="cb176-21"><a href="analyses-descriptives-bivariées.html#cb176-21"></a>g6 &lt;-<span class="st"> </span></span>
+<span id="cb176-22"><a href="analyses-descriptives-bivariées.html#cb176-22"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">data =</span> iris, <span class="kw">aes</span>(<span class="dt">x =</span> Species, <span class="dt">y =</span> Sepal.Length)) <span class="op">+</span></span>
+<span id="cb176-23"><a href="analyses-descriptives-bivariées.html#cb176-23"></a><span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span></span>
+<span id="cb176-24"><a href="analyses-descriptives-bivariées.html#cb176-24"></a><span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">width =</span> <span class="fl">0.08</span>, <span class="dt">height =</span> <span class="ot">NULL</span>, <span class="dt">size =</span> <span class="dv">3</span>) <span class="op">+</span></span>
+<span id="cb176-25"><a href="analyses-descriptives-bivariées.html#cb176-25"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;g6&quot;</span>) <span class="op">+</span></span>
+<span id="cb176-26"><a href="analyses-descriptives-bivariées.html#cb176-26"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">20</span>),</span>
+<span id="cb176-27"><a href="analyses-descriptives-bivariées.html#cb176-27"></a>        <span class="dt">axis.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>),</span>
+<span id="cb176-28"><a href="analyses-descriptives-bivariées.html#cb176-28"></a>        <span class="dt">axis.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>))</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:graphDistriBivQuantvsQualMed"></span>
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/graphDistriBivQuantvsQualMed-1.png" alt="Nuage de points avec boîtes à moustaches" width="1920" />
+<p class="caption">
+Figure 4.13: Nuage de points avec boîtes à moustaches
+</p>
+</div>
+<ul>
+<li>des aires de densité (cf. codes et graphiques ci-dessous).</li>
+</ul>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="analyses-descriptives-bivariées.html#cb177-1"></a><span class="co"># Aires de densité</span></span>
+<span id="cb177-2"><a href="analyses-descriptives-bivariées.html#cb177-2"></a>g7 &lt;-<span class="st"> </span></span>
+<span id="cb177-3"><a href="analyses-descriptives-bivariées.html#cb177-3"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">data =</span> iris, <span class="kw">aes</span>(<span class="dt">x =</span> Species, <span class="dt">y =</span> Sepal.Length)) <span class="op">+</span></span>
+<span id="cb177-4"><a href="analyses-descriptives-bivariées.html#cb177-4"></a><span class="st">  </span><span class="kw">geom_violin</span>() <span class="op">+</span></span>
+<span id="cb177-5"><a href="analyses-descriptives-bivariées.html#cb177-5"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;g7&quot;</span>) <span class="op">+</span></span>
+<span id="cb177-6"><a href="analyses-descriptives-bivariées.html#cb177-6"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">20</span>),</span>
+<span id="cb177-7"><a href="analyses-descriptives-bivariées.html#cb177-7"></a>        <span class="dt">axis.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>),</span>
+<span id="cb177-8"><a href="analyses-descriptives-bivariées.html#cb177-8"></a>        <span class="dt">axis.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>))</span>
+<span id="cb177-9"><a href="analyses-descriptives-bivariées.html#cb177-9"></a></span>
+<span id="cb177-10"><a href="analyses-descriptives-bivariées.html#cb177-10"></a><span class="co"># Aires de densité et points</span></span>
+<span id="cb177-11"><a href="analyses-descriptives-bivariées.html#cb177-11"></a>g8 &lt;-</span>
+<span id="cb177-12"><a href="analyses-descriptives-bivariées.html#cb177-12"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">data =</span> iris, <span class="kw">aes</span>(<span class="dt">x =</span> Species, <span class="dt">y =</span> Sepal.Length)) <span class="op">+</span></span>
+<span id="cb177-13"><a href="analyses-descriptives-bivariées.html#cb177-13"></a><span class="st">  </span><span class="kw">geom_violin</span>() <span class="op">+</span></span>
+<span id="cb177-14"><a href="analyses-descriptives-bivariées.html#cb177-14"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">3</span>) <span class="op">+</span></span>
+<span id="cb177-15"><a href="analyses-descriptives-bivariées.html#cb177-15"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;g8&quot;</span>) <span class="op">+</span></span>
+<span id="cb177-16"><a href="analyses-descriptives-bivariées.html#cb177-16"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">20</span>),</span>
+<span id="cb177-17"><a href="analyses-descriptives-bivariées.html#cb177-17"></a>        <span class="dt">axis.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>),</span>
+<span id="cb177-18"><a href="analyses-descriptives-bivariées.html#cb177-18"></a>        <span class="dt">axis.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>))</span>
+<span id="cb177-19"><a href="analyses-descriptives-bivariées.html#cb177-19"></a></span>
+<span id="cb177-20"><a href="analyses-descriptives-bivariées.html#cb177-20"></a><span class="co"># Aires de densité et points avec mouvement latéral aléatoire</span></span>
+<span id="cb177-21"><a href="analyses-descriptives-bivariées.html#cb177-21"></a>g9 &lt;-<span class="st"> </span></span>
+<span id="cb177-22"><a href="analyses-descriptives-bivariées.html#cb177-22"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">data =</span> iris, <span class="kw">aes</span>(<span class="dt">x =</span> Species, <span class="dt">y =</span> Sepal.Length)) <span class="op">+</span></span>
+<span id="cb177-23"><a href="analyses-descriptives-bivariées.html#cb177-23"></a><span class="st">  </span><span class="kw">geom_violin</span>() <span class="op">+</span></span>
+<span id="cb177-24"><a href="analyses-descriptives-bivariées.html#cb177-24"></a><span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">width =</span> <span class="fl">0.08</span>, <span class="dt">height =</span> <span class="ot">NULL</span>, <span class="dt">size =</span> <span class="dv">3</span>) <span class="op">+</span></span>
+<span id="cb177-25"><a href="analyses-descriptives-bivariées.html#cb177-25"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;g9&quot;</span>) <span class="op">+</span></span>
+<span id="cb177-26"><a href="analyses-descriptives-bivariées.html#cb177-26"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">20</span>),</span>
+<span id="cb177-27"><a href="analyses-descriptives-bivariées.html#cb177-27"></a>        <span class="dt">axis.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>),</span>
+<span id="cb177-28"><a href="analyses-descriptives-bivariées.html#cb177-28"></a>        <span class="dt">axis.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>))</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:graphDistriBivQuantvsQualdens"></span>
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/graphDistriBivQuantvsQualdens-1.png" alt="Nuages de points avec aires de densité" width="1920" />
+<p class="caption">
+Figure 4.14: Nuages de points avec aires de densité
+</p>
+</div>
+<p>Les différentes lignes de graphiques ci-avant montrent des graphiques de plus en plus efficaces à mesure que l’on se déplace de la gauche vers la droite. Une bonne pratique est en effet de donner la possibilité de visualiser les données individuelles en plus des statistiques que l’on souhaiterait montrer pour résumer la distribution. Il s’agit d’une bonne pratique car une même statistique peut en réalité cacher des distributions de valeurs très différentes. Ce principe a été illustré notamment par Weissgerber <span class="citation">(<a href="#ref-Weissgerber2015" role="doc-biblioref">2015</a>)</span> qui milite pour la disparition des graphiques en forme de bâtons de dynamite, lesquels sont souvent utilisés pour montrer des moyennes et écart-types. La raison est que ces graphiques en forme de bâtons de dynamite peuvent induire en erreur quant à la réelle forme de la distribution et ils limitent les possibilités du lecteur de juger de la pertinence des choix d’analyse qui seraient faits par la suite au regard des données d’origine.</p>
+<p>On remarque que pour pouvoir montrer les moyennes et écart-types en rouge sur les premiers graphiques, il a fallu utiliser la fonction <code>stat_summary()</code>. Cette fonction permet de mettre en graphique certaines statistiques en configurant l’argument <code>fun</code> ou <code>fun.data</code>. Pour pouvoir enrichir les possibilités de mise en graphique de diverses statistiques, il peut falloir installer au préalable le package <code>Hmisc</code>, ce qui était nécessaire ici pour montrer les écart-types avec <code>fun.data = "mean_sdl"</code>.</p>
+<p>Bien que l’on ait l’habitude d’utiliser des graphiques montrant les données de la variable quantitative sur l’axe vertical, il est possible de montrer les données sous formes d’aires de densité le long de l’axe horizontal (cf. graphique g13 ci-dessous) ou encore avec un graphique en lignes de crêtes (<em>ridgelines plot</em>, cf. graphique g14 ci-dessous). Ces types de graphiques et leurs intérêts ont été discutés par Wilke <span class="citation">(<a href="#ref-Wilke2018" role="doc-biblioref">2018</a>)</span>. Pour pouvoir faire le graphque g14, il faut installer et charger un nouveau package : <code>ggridges</code>.</p>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="analyses-descriptives-bivariées.html#cb178-1"></a><span class="co"># Aire de densités superposées</span></span>
+<span id="cb178-2"><a href="analyses-descriptives-bivariées.html#cb178-2"></a>g13 &lt;-<span class="st"> </span></span>
+<span id="cb178-3"><a href="analyses-descriptives-bivariées.html#cb178-3"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">data =</span> iris, <span class="kw">aes</span>(<span class="dt">x =</span> Sepal.Length, <span class="dt">fill =</span> Species, <span class="dt">color =</span> Species)) <span class="op">+</span></span>
+<span id="cb178-4"><a href="analyses-descriptives-bivariées.html#cb178-4"></a><span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">alpha =</span> <span class="fl">0.3</span>, <span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span></span>
+<span id="cb178-5"><a href="analyses-descriptives-bivariées.html#cb178-5"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;g13&quot;</span>) <span class="op">+</span></span>
+<span id="cb178-6"><a href="analyses-descriptives-bivariées.html#cb178-6"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">20</span>),</span>
+<span id="cb178-7"><a href="analyses-descriptives-bivariées.html#cb178-7"></a>        <span class="dt">axis.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>),</span>
+<span id="cb178-8"><a href="analyses-descriptives-bivariées.html#cb178-8"></a>        <span class="dt">axis.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>),</span>
+<span id="cb178-9"><a href="analyses-descriptives-bivariées.html#cb178-9"></a>        <span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>,</span>
+<span id="cb178-10"><a href="analyses-descriptives-bivariées.html#cb178-10"></a>        <span class="dt">legend.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">20</span>, <span class="dt">face =</span> <span class="st">&quot;bold&quot;</span>),</span>
+<span id="cb178-11"><a href="analyses-descriptives-bivariées.html#cb178-11"></a>        <span class="dt">legend.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">20</span>))</span>
+<span id="cb178-12"><a href="analyses-descriptives-bivariées.html#cb178-12"></a></span>
+<span id="cb178-13"><a href="analyses-descriptives-bivariées.html#cb178-13"></a><span class="co"># Ridgelines plot</span></span>
+<span id="cb178-14"><a href="analyses-descriptives-bivariées.html#cb178-14"></a></span>
+<span id="cb178-15"><a href="analyses-descriptives-bivariées.html#cb178-15"></a><span class="kw">library</span>(ggridges)</span>
+<span id="cb178-16"><a href="analyses-descriptives-bivariées.html#cb178-16"></a></span>
+<span id="cb178-17"><a href="analyses-descriptives-bivariées.html#cb178-17"></a>g14 &lt;-</span>
+<span id="cb178-18"><a href="analyses-descriptives-bivariées.html#cb178-18"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">data =</span> iris, <span class="kw">aes</span>(<span class="dt">x =</span> Sepal.Length, <span class="dt">y =</span> Species)) <span class="op">+</span></span>
+<span id="cb178-19"><a href="analyses-descriptives-bivariées.html#cb178-19"></a><span class="st">  </span><span class="kw">geom_density_ridges</span>(<span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span></span>
+<span id="cb178-20"><a href="analyses-descriptives-bivariées.html#cb178-20"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;g14&quot;</span>) <span class="op">+</span></span>
+<span id="cb178-21"><a href="analyses-descriptives-bivariées.html#cb178-21"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">20</span>),</span>
+<span id="cb178-22"><a href="analyses-descriptives-bivariées.html#cb178-22"></a>        <span class="dt">axis.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>),</span>
+<span id="cb178-23"><a href="analyses-descriptives-bivariées.html#cb178-23"></a>        <span class="dt">axis.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>))</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:figrecapbivdens"></span>
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/figrecapbivdens-1.png" alt="Diagrammes en lignes de crête" width="1920" />
+<p class="caption">
+Figure 4.15: Diagrammes en lignes de crête
+</p>
+</div>
+<p>Lorsque les données à visualiser sont pairées, c’est-à-dire qu’il s’agit des mêmes individus qui ont des données pour chaque modalité de la variable qualitative (e.g., suite à une même mesure qui aurait été réalisée dans différentes conditions), il est possible d’ajouter des éléments graphiques, telles que des lignes, de telle sorte à mettre davantage en évidence le fait que les données soient liées. Un exemple de graphique pour cela est montré ci-dessous avec le jeu de données <code>mice2</code> (intégré au package <code>datarium</code>). Ce jeu de données contient des données de poids de 10 souris évaluées avant et après un traitement.</p>
+<pre><code>##   id before after
+## 1  1  187.2 429.5
+## 2  2  194.2 404.4
+## 3  3  231.7 405.6
+## 4  4  200.5 397.2
+## 5  5  201.7 377.9
+## 6  6  235.0 445.8</code></pre>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="analyses-descriptives-bivariées.html#cb180-1"></a>mice2 <span class="op">%&gt;%</span></span>
+<span id="cb180-2"><a href="analyses-descriptives-bivariées.html#cb180-2"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> <span class="kw">c</span>(before, after), <span class="dt">names_to =</span> <span class="st">&quot;treatment&quot;</span>, <span class="dt">values_to =</span> <span class="st">&quot;score&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb180-3"><a href="analyses-descriptives-bivariées.html#cb180-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">treatment =</span> <span class="kw">fct_relevel</span>(treatment, <span class="st">&quot;before&quot;</span>, <span class="st">&quot;after&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb180-4"><a href="analyses-descriptives-bivariées.html#cb180-4"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> treatment, <span class="dt">y =</span> score)) <span class="op">+</span></span>
+<span id="cb180-5"><a href="analyses-descriptives-bivariées.html#cb180-5"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">group =</span> id)) <span class="op">+</span></span>
+<span id="cb180-6"><a href="analyses-descriptives-bivariées.html#cb180-6"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">3</span>, <span class="dt">shape =</span> <span class="dv">21</span>, <span class="dt">fill  =</span> <span class="st">&quot;white&quot;</span>) <span class="op">+</span></span>
+<span id="cb180-7"><a href="analyses-descriptives-bivariées.html#cb180-7"></a><span class="st">  </span><span class="kw">stat_summary</span>(<span class="kw">aes</span>(<span class="dt">group =</span> <span class="dv">1</span>), <span class="dt">fun =</span> <span class="st">&quot;mean&quot;</span>,  <span class="dt">geom =</span> <span class="st">&quot;line&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">size =</span> <span class="fl">1.3</span>) <span class="op">+</span></span>
+<span id="cb180-8"><a href="analyses-descriptives-bivariées.html#cb180-8"></a><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> <span class="st">&quot;mean_sdl&quot;</span>, <span class="dt">fun.args =</span> <span class="kw">list</span>(<span class="dt">mult=</span><span class="dv">1</span>), <span class="dt">geom =</span> <span class="st">&quot;errorbar&quot;</span>, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>, <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">width =</span> <span class="fl">0.1</span>, <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span></span>
+<span id="cb180-9"><a href="analyses-descriptives-bivariées.html#cb180-9"></a><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun =</span> <span class="st">&quot;mean&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;point&quot;</span>, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>, <span class="dt">size =</span> <span class="dv">4</span>, <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>) </span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:pairedData"></span>
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/pairedData-1.png" alt="Deux groupes avec données appariées" width="672" />
+<p class="caption">
+Figure 4.16: Deux groupes avec données appariées
+</p>
+</div>
+<p>Dans le code ayant permis de réaliser ce graphique, il faut comprendre qu’il a été possible de réaliser des lignes reliant les différents points blancs grâce à la fonction <code>geom_line()</code> associée à un argument permettant de tracer les lignes en groupant les informations par individu avec la variable <code>id</code> (<code>aes(group = id)</code>). L’ajout d’une ligne rouge reliant chaque moyenne a été permis par l’écriture d’une ligne de code similaire à celle utilisée pour montrer les moyennes en rouge pour chaque condition avec <code>stat_summary()</code>, si ce n’est qu’on a indiqué de vouloir voir une ligne au lieu de points. La configuration de l’argument <code>aes(group = 1)</code> à l’intérieur de la fonction <code>stat_summary()</code> était nécessaire pour pouvoir montrer la ligne rouge reliant les moyennes.</p>
+</div>
+<div id="etudier-numériquement-la-relation-2" class="section level3">
+<h3><span class="header-section-number">4.3.2</span> Etudier numériquement la relation</h3>
+<p>De manière générale, étudier la relation entre une variable quantitative et une variable qualitative revient souvent à comparer les valeurs que prend la variable quantitative en fonction des modalités de la variable qualitative. Les analyses qui peuvent être faites dépendent du nombre de groupes de valeurs (qui dépendent du nombre de modalités) à comparer (2 ou plus), et du caractère pairé (dépendant) ou non des données. L’observation de différences de scores entre les modalités pourrait alors indiquer qu’il y a un lien entre la variable qualitative (qu’on pourrait appeler variable <strong>facteur</strong>) et la variable quantitative (qu’on pourrait appeler <strong>variable réponse</strong>). (A noter que la démonstration d’un lien de cause à effet entre la variable quantitative et la variable qualitative ne pourra être effective que si l’on a sciemment fait varier les modalités de la variable qualitative pour en observer la conséquence sur les valeurs de la variable quantitative.)</p>
+<p><em>Cas de deux groupes de données indépendants (données non pairées)</em></p>
+<p>De prime abord, l’analyse qui pourrait être envisagée pour comparer deux groupes de données quantitatives (e.g., des valeurs de taille) non pairées, qui seraient donc relatives à deux modalités différentes d’une variable qualitative (e.g., le sexe), serait de comparer les moyennes, ou les médianes des groupes. Toutefois, en se restreignant à cela, il pourrait être difficile de porter un jugement sur la grandeur relative de la différence qui serait observée, qu’on pourrait appeler <strong>taille d’effet</strong>. Il serait également difficile de comparer cette taille d’effet avec celles observées dans d’autres études, car étant calculée de la sorte, elle serait extrêmement inhérente aux variables et valeurs mesurées dans l’étude. Il est donc intéressant, dans ce genre de situation, de standardiser la différence des moyennes ou médianes obtenues pour les deux groupes. Cette procédure de standardisation a été très développée dans le cadre de comparaisons de moyennes, et les calculs suivants, repris de l’article de D. Lakens <span class="citation">(<a href="#ref-Lakens2013" role="doc-biblioref">2013</a>)</span>, s’inscrivent donc dans ce cadre.</p>
+<p><strong>ds de Cohen</strong></p>
+<p>Classiquement, l’indice statistique utilisé pour calculer une différence de moyennes de manière standardisée entre deux groupes de données non pairées, à partir d’échantillons de population, est le <span class="math inline">\(d_{s}\)</span> de Cohen. Cette statistique se calcule en faisant la différence entre les moyennes des deux groupes à comparer, et en divisant cette différence par l’écart-type commun des valeurs de chacun des deux groupes. Ce calcul est montré ci-dessous :</p>
+<p><span class="math display">\[d_{s} = \frac{\overline{X_{1}} - \overline{X_{2}}} {\sqrt{\frac{(N_{1} - 1) s_{1}^2 + (N_{2} - 1) s_{2}^2} {N_{1} + N_{2} - 2}}}\]</span></p>
+<p>Dans R, le <span class="math inline">\(d_{s}\)</span> de Cohen peut être calculé à l’aide de la fonction <code>cohens_d()</code> du package <code>effectsize</code>, qui nécessite d’être installé puis chargé avant d’être utilisé. Pour illustrer l’utilisation de cette fonction, on peut utiliser le jeu de données <code>iris_two_species</code> crée par nos soins à partir du jeu de données <code>iris</code> pour l’exemple, qui contient notamment la variable quantitative <code>Sepal.Length</code>, et deux modalités de la variable qualitative <code>Species</code> (<code>setosa</code> et <code>versicolor</code>).</p>
+<div class="figure" style="text-align: center"><span id="fig:iris2peciesview"></span>
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/iris2peciesview-1.png" alt="Deux groupes avec données non appariées" width="672" />
+<p class="caption">
+Figure 4.17: Deux groupes avec données non appariées
+</p>
+</div>
+<p>On peut alors calculer le <span class="math inline">\(d_{s}\)</span> de Cohen à l’aide de la fonction <code>cohens_d()</code> de la manière suivante :</p>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="analyses-descriptives-bivariées.html#cb181-1"></a><span class="kw">cohens_d</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Species, <span class="dt">data =</span> iris_two_species, <span class="dt">paired =</span> <span class="ot">FALSE</span>, <span class="dt">pooled_sd =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<pre><code>## Cohen&#39;s d |         95% CI
+## --------------------------
+## -2.10     | [-2.59, -1.61]
+## [36m
+## - Estimated using pooled SD.[39m</code></pre>
+<p>Dans cet exemple, on remarque qu’on a bien cherché à savoir comment les données de la variable <code>Sepal.Length</code> pouvaient différer en fonction (<code>~</code>) des modalités de la variable <code>Species</code>. Si la fonction nous donne un résultat, il faut toutefois bien faire attention au sens du calcul qui a été réalisé. Configurée de la sorte, la fonction <code>cohens_d()</code> réalise la différence <strong>modalité 1 - modalité 2</strong>. Il faut donc savoir quelle est la modalité 1 et quelle est la modalité 2 dans la variable <code>Species</code> pour ensuite pouvoir interpréter le signe du résultat, qui est négatif ici avec la valeur de -2.10. Pour ce faire, on peut utiliser la fonction <code>levels()</code> :</p>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="analyses-descriptives-bivariées.html#cb183-1"></a><span class="kw">levels</span>(iris_two_species<span class="op">$</span>Species)</span></code></pre></div>
+<pre><code>## [1] &quot;setosa&quot;     &quot;versicolor&quot; &quot;virginica&quot;</code></pre>
+<p>L’ordre des modalités affichées nous indique que <code>setosa</code> est la modalité 1, et que <code>versicolor</code> est la modalité 2. (On remarque par ailleurs que l’utilisation précédente de la fonction <code>filter()</code> a certes permis de sélectionner les données d’intérêt pour notre nouveau jeu de données <code>iris_two_species</code>, mais a malgré cela permis la conservation de toutes les modalités d’origine liées à la variable <code>Species</code> dans le jeu de données <code>iris</code>.) Par conséquent, le <span class="math inline">\(d_{s}\)</span> de Cohen de -2.10 obtenu plus haut indique que la longueur des sépals (<code>Sepal.Length</code>) pour l’espèce <code>setosa</code> est inférieure à celles des sépals de l’espèce <code>versicolor</code>. Cette interprétation devrait être en cohérence avec le graphique réalisé au préalable. Si l’on avait voulu avoir le calcul inverse (<code>versicolor</code> - <code>setosa</code>), il aurait fallu reconfigurer l’ordre des modalités, par exemple à l’aide de la fonction <code>fct_relevel()</code> du package <code>forcats</code> comme montré à la fin du chapite 3.</p>
+<p>Une fois que l’on a calculé une taille d’effet, il est toujours intéressant d’essayer de formuler un jugement sur l’importance, l’ampleur de l’effet. En ce sens, des valeurs seuils ont été proposées dans la littérature (Cohen, 1988; in Lakens <span class="citation">(<a href="#ref-Lakens2013" role="doc-biblioref">2013</a>)</span>). Ces valeurs, valables pour interpréter des tailles d’effet dans le cadre d’une étude de type <em>between-subject design</em>, sont montrées dans le tableau ci-dessous.</p>
+<table>
+<caption><span id="tab:effectsizetable">Tableau 4.4: </span>Taille d’effet pour une différence de moyennes</caption>
+<thead>
+<tr class="header">
+<th align="right">Petit</th>
+<th align="right">Moyen</th>
+<th align="right">Grand</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0.2</td>
+<td align="right">0.5</td>
+<td align="right">0.8</td>
+</tr>
+</tbody>
+</table>
+<p>Ces valeurs sont relativement arbitraires, et l’interprétation de la taille de l’effet et des conséquences qu’il peut avoir en pratique ne devrait pas être liée de manière trop rigide à ces valeurs <span class="citation">(Lakens, <a href="#ref-Lakens2013" role="doc-biblioref">2013</a>)</span>.</p>
+<p>Il existe également une autre approche pour interpréter une valeur de taille d’effet : l’approche <em>Common Language explanation</em> <span class="citation">(Lakens, <a href="#ref-Lakens2013" role="doc-biblioref">2013</a>)</span>. Cette approche consiste à faire le lien entre la valeur de la taille d’effet et les probabilités de rencontrer des valeurs similaires ou supérieures dans les groupes comparés. Par exemple, lorsqu’on obtient un <span class="math inline">\(d_{s}\)</span> de Cohen de 0.80, cela peut se traduire par le fait qu’il y a 71.4 % de chances qu’une personne prise au hasard dans le groupe avec la meilleure moyenne ait un score plus élevé qu’une personne qui serait prise au hasard dans le groupe avec la moyenne la plus basse des deux groupes. Kristoffer Magnusson a réalisé une page web qui permet d’utiliser l’approche <em>Common Language explanation</em> pour n’importe quelle valeur de taille d’effet dans le cadre d’une étude de type <em>between-subject design</em>. Jetez un oeil ici : <a href="https://rpsychologist.com/cohend" class="uri">https://rpsychologist.com/cohend</a>.</p>
+<p><strong>gs de Hedges</strong></p>
+<p>Il a été rapporté, dans la littérature, qu’en réalité le <span class="math inline">\(d_{s}\)</span> de Cohen est relativement biaisé lorsqu’il s’agit d’estimer la taille d’un effet dans la population d’intérêt à partir d’échantillons de population (autrement dit, à l’échelle de nombreux échantillons, on sait qu’avec le <span class="math inline">\(d_{s}\)</span> de Cohen on aura en moyenne un écart entre l’effet qu’on a trouvé et l’effet réel qui existe dans la population). Cela sera d’autant plus vrai lorsque les calculs seront réalisés à partir de petits échantillons (<span class="math inline">\(N\)</span> &lt; 20), selon Hedges et Okins (1985) cités par Lakens <span class="citation">(<a href="#ref-Lakens2013" role="doc-biblioref">2013</a>)</span>. En raison de cela, un autre indice statistique a été proposé pour corriger cette erreur systématique qui sera d’autant plus grande que l’échantillon étudié est petit, à savoir le <span class="math inline">\(g_{s}\)</span> de Hedges :</p>
+<p><span class="math display">\[g_{s} = d_{s} (1 - \frac{3}{4(N_{1} + N_{2}) - 9})\]</span></p>
+<p>Dans R, le <span class="math inline">\(g_{s}\)</span> de Hedges lié à un échantillon de population peut être calculé à l’aide de la fonction <code>hedges_g()</code> du package <code>effectsize</code> :</p>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="analyses-descriptives-bivariées.html#cb185-1"></a><span class="kw">hedges_g</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Species, <span class="dt">data =</span> iris_two_species, <span class="dt">paired =</span> <span class="ot">FALSE</span>, <span class="dt">pooled_sd =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<pre><code>## Hedges&#39; g |         95% CI
+## --------------------------
+## -2.09     | [-2.57, -1.60]
+## [36m
+## - Estimated using pooled SD.[39m[36m
+## - Bias corrected using Hedges and Olkin&#39;s method.[39m</code></pre>
+<p>Ici, la valeur ne change pas beaucoup par rapport au cas précédent, car l’effectif n’est pas si petit que cela (<span class="math inline">\(N_{1}\)</span> + <span class="math inline">\(N_{2}\)</span> = 100 ici, ce qui fait que la correction appliquée au <span class="math inline">\(d_{s}\)</span> de Cohen est minime).</p>
+<p><strong>Delta de Glass</strong></p>
+<p>Dans certains cas où l’on souhaiterait comparer les scores de deux groupes indépendants pour tester l’effet de deux conditions expérimentales différentes, l’expérimentation en tant que telle peut influencer, au-delà de la moyenne, l’écart-type de la variable réponse dans un des deux groupes. On peut se trouver dans ce genre de situation lorsque l’on compare les données post-programme d’un groupe entrainé ou traité à celles d’un groupe contrôle. En effet, le groupe entraîné/traité peut voir son écart-type changé au terme d’un programme en raison d’une réponse individuelle hétérogène à ce programme, ce qui ne sera pas en principe le cas du groupe contrôle. Dans ce genre de situation, des indices statistiques autres que le <span class="math inline">\(g_{s}\)</span> de Hedges mériteraient d’être calculés, tels que le <span class="math inline">\(\Delta\)</span> de Glass <span class="citation">(Lakens, <a href="#ref-Lakens2013" role="doc-biblioref">2013</a>)</span> :</p>
+<p><span class="math display">\[\Delta = \frac{\overline{X_{1}} - \overline{X_{2}}} {s_{2}}\]</span></p>
+<p>Le calcul du <span class="math inline">\(\Delta\)</span> de Glass est dans l’idée le même que celui du <span class="math inline">\(d_{s}\)</span> de Cohen, sauf que la différence entre les moyennes des deux groupes n’est pas divisée par l’écart-type commun des deux groupes, mais par celui d’un seul des deux groupes, qui serait en principe celui qui représenterait la condition contrôle ou la condition de référence. Une pratique souvent recommandée pour comparer dans ce genre de situation les scores post-programme de deux groupes (un groupe entraîné/traité et un groupe contrôle) serait d’utiliser l’écart-type des scores du groupe contrôle obtenu en pré-programme <span class="citation">(Lakens, <a href="#ref-Lakens2013" role="doc-biblioref">2013</a>)</span>.</p>
+<p>Dans R, le <span class="math inline">\(\Delta\)</span> de Glass lié à un échantillon de population peut être calculé à l’aide de la fonction <code>glass_delta()</code> du package <code>effectsize</code>. Attention, l’écart-type utilisé dans le code suivant est celui de la variable quantitative associée à la modalité 2 de la variable qualitative, qui est toujours <code>versicolor</code> dans cet exemple.</p>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="analyses-descriptives-bivariées.html#cb187-1"></a><span class="kw">glass_delta</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Species, <span class="dt">data =</span> iris_two_species)</span></code></pre></div>
+<pre><code>## Glass&#39; delta |         95% CI
+## -----------------------------
+## -1.80        | [-2.21, -1.43]</code></pre>
+<p><em>Cas de deux groupes de données dépendants (données pairées)</em></p>
+<p><strong>dz et dav de Cohen</strong></p>
+<p>Le calcul classique pour obtenir la taille d’effet désignant l’écart entre deux groupes de données dépendantes est celui du <span class="math inline">\(d_{z}\)</span> <span class="citation">(Lakens, <a href="#ref-Lakens2013" role="doc-biblioref">2013</a>)</span>, qui est montré ci-dessous :</p>
+<p><span class="math display">\[d_{z} = \frac{\overline{X} _{diff}}{s_{diff}},\]</span></p>
+<p><span class="math inline">\(\overline{X} _{diff}\)</span> désignant la moyenne des différences relatives à chaque pair de valeurs obtenues dans les deux conditions comparées, et <span class="math inline">\(s_{diff}\)</span> désignant l’écart-type de ces différences. Dans R, le <span class="math inline">\(d_{z}\)</span> peut être obtenu à nouveau avec la fonction <code>cohens_d()</code> du package <code>effectsize</code>. Pour illustrer cela, nous allons cette fois utiliser le jeu de données <code>Blink</code> associé au package <code>PairedData</code> qui doit être installé et chargé pour être utilisé. Pour information, <code>Blink</code> contient les données de taux de clignotement des yeux obtenues chez 12 sujets et dans deux conditions différentes : 1/ tâche où il fallait diriger un stylo selon une trajectoire rectiligne (modalité <code>Straight</code>) ; 2/ tâche où il fallait diriger un stylo selon une trajectoire avec des oscillations (<code>Oscillating</code>).</p>
+<pre><code>##   Subject Straight Oscillating
+## 1     S01     24.0        15.0
+## 2     S02     19.5         6.6
+## 3     S03      8.2         1.9
+## 4     S04      8.5         1.5
+## 5     S05     12.1         1.1
+## 6     S06      8.0         2.5</code></pre>
+<p>Pour la suite de l’analyse, on peut reconfigurer ce jeu de données de telle sorte à bien avoir les conditions testées dans une même colonne et les valeurs correspondantes dans la colonne d’à côté, avec la modalité “Straight” en tant que première modalité à considérer dans les fonctions à suivre. Le nouveau jeu de données s’appellerait alors <code>Blink2</code>.</p>
+<pre><code>## [90m# A tibble: 24 x 3[39m
+##    Subject Condition   Blink_rate
+##    [3m[90m&lt;fct&gt;[39m[23m   [3m[90m&lt;fct&gt;[39m[23m            [3m[90m&lt;dbl&gt;[39m[23m
+## [90m 1[39m S01     Straight          24  
+## [90m 2[39m S01     Oscillating       15  
+## [90m 3[39m S02     Straight          19.5
+## [90m 4[39m S02     Oscillating        6.6
+## [90m 5[39m S03     Straight           8.2
+## [90m 6[39m S03     Oscillating        1.9
+## [90m 7[39m S04     Straight           8.5
+## [90m 8[39m S04     Oscillating        1.5
+## [90m 9[39m S05     Straight          12.1
+## [90m10[39m S05     Oscillating        1.1
+## [90m# … with 14 more rows[39m</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:Blinkreconfiguration"></span>
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/Blinkreconfiguration-1.png" alt="Données du jeu de données `Blink`" width="672" />
+<p class="caption">
+Figure 4.18: Données du jeu de données <code>Blink</code>
+</p>
+</div>
+<p>Dans R, on peut alors calculer <span class="math inline">\(d_{z}\)</span> à nouveau à l’aide de la fonction <code>cohens_d()</code> du package <code>effectsize</code> comme ceci :</p>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="analyses-descriptives-bivariées.html#cb191-1"></a><span class="kw">cohens_d</span>(Blink_rate <span class="op">~</span><span class="st"> </span>Condition, <span class="dt">data =</span> Blink2, <span class="dt">paired =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<pre><code>## Cohen&#39;s d |       95% CI
+## ------------------------
+## 2.81      | [1.58, 4.27]</code></pre>
+<p>Toutefois, d’après Lakens <span class="citation">(<a href="#ref-Lakens2013" role="doc-biblioref">2013</a>)</span>, il peut être intéressant de rapporter plutôt un indice de taille d’effet qui ne serait pas influencé par le fait que les données des deux groupes à comparer soient corrélées, notamment en vue de rendre comparable cette taille d’effet à celles obtenues dans le cadre d’études de type <em>between-subject design</em>, pour plus facilemement conduire des méta-analyses par la suite par exemple. La recommandation de Lakens <span class="citation">(<a href="#ref-Lakens2013" role="doc-biblioref">2013</a>)</span> serait alors d’utiliser l’indice <span class="math inline">\(d_{av}\)</span>, dont le calcul serait le suivant :</p>
+<p><span class="math display">\[d_{av} = \frac{\overline{X} _{diff}}{\sqrt{\frac{s_{1}^2 + s_{2}^2} {2}}}\]</span></p>
+<p>Ce calcul reviendrait donc à diviser la moyenne des différences par l’écart-type moyen relatif aux deux groupes de données. Pour obtenir <span class="math inline">\(d_{av}\)</span>, il est possible de repartir de la fonction <code>cohens_d()</code> et de sa configuration pour des groupes indépendants, mais en indiquant <code>pooled_sd = FALSE</code> dans la fonction, comme ci-dessous :</p>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="analyses-descriptives-bivariées.html#cb193-1"></a><span class="kw">cohens_d</span>(Blink_rate <span class="op">~</span><span class="st"> </span>Condition, <span class="dt">data =</span> Blink2, <span class="dt">paired =</span> <span class="ot">FALSE</span>, <span class="dt">pooled_sd =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<pre><code>## Cohen&#39;s d |       95% CI
+## ------------------------
+## 1.53      | [0.58, 2.44]
+## [36m
+## - Estimated using un-pooled SD.[39m</code></pre>
+<p>En effet, que l’on fasse la moyenne des différences (ce qui serait attendu pour le présent calcul) ou la différence entre deux moyennes (ce qui est finalement fait par la fonction tel que configurée ci-dessus), cela ne change rien avec des données pairées. Le numérateur <span class="math inline">\(\overline{X} _{diff}\)</span> reste donc correctement calculé même avec cette configuration de fonction qui est faite initialement pour des groupes indépendants. Le fait d’indiquer <code>pooled_sd = FALSE</code> change le calcul du dénominateur que nous avions rencontré initialement pour le calcul de <span class="math inline">\(d_{s}\)</span>, cela pour obtenir le calcul attendu pour le <span class="math inline">\(d_{av}\)</span>.</p>
+<p><strong>gav de Hedges</strong></p>
+<p>Comme dans le cas de l’étude de groupes indépendants, <span class="math inline">\(d_{av}\)</span> et ses dérivés sont biaisés. Il peut donc être à nouveau préférable de calculer le <span class="math inline">\(g_{av}\)</span> de Hedges avec la fonction <code>hedges_g()</code> configurée comme ceci :</p>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="analyses-descriptives-bivariées.html#cb195-1"></a><span class="kw">hedges_g</span>(Blink_rate <span class="op">~</span><span class="st"> </span>Condition, <span class="dt">data =</span> Blink2, <span class="dt">paired =</span> <span class="ot">FALSE</span>, <span class="dt">pooled_sd =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<pre><code>## Hedges&#39; g |       95% CI
+## ------------------------
+## 1.47      | [0.56, 2.35]
+## [36m
+## - Estimated using un-pooled SD.[39m[36m
+## - Bias corrected using Hedges and Olkin&#39;s method.[39m</code></pre>
+<p>Toutefois, comme le rappelle Lakens <span class="citation">(<a href="#ref-Lakens2013" role="doc-biblioref">2013</a>)</span>, le <span class="math inline">\(g_{av}\)</span> de Hedges ne serait pas complètement non biaisé.</p>
+
+</div>
+</div>
+</div>
+<h3>Références</h3>
+<div id="refs" class="references">
+<div id="ref-Bickel1975">
+<p>Bickel, P. J., Hammel, E. A., &amp; O’Connell J, W. (1975). Sex bias in graduate admissions: data from berkeley. <em>Science</em>, <em>187</em>(4175), 398–404. <a href="https://doi.org/10.1126/science.187.4175.398">https://doi.org/10.1126/science.187.4175.398</a></p>
+</div>
+<div id="ref-Halperin1986">
+<p>Halperin, S. (1986). Spurious correlations–causes and cures. <em>Psychoneuroendocrinology</em>, <em>11</em>(1), 3–13. <a href="https://doi.org/10.1016/0306-4530(86)90028-4">https://doi.org/10.1016/0306-4530(86)90028-4</a></p>
+</div>
+<div id="ref-Hopkins2009">
+<p>Hopkins, W. G., Marshall, S. W., Batterham, A. M., &amp; Hanin, J. (2009). Progressive statistics for studies in sports medicine and exercise science. <em>Med Sci Sports Exerc</em>, <em>41</em>(1), 3–13. <a href="https://doi.org/10.1249/MSS.0b013e31818cb278">https://doi.org/10.1249/MSS.0b013e31818cb278</a></p>
+</div>
+<div id="ref-Lakens2013">
+<p>Lakens, D. (2013). Calculating and reporting effect sizes to facilitate cumulative science: a practical primer for t-tests and ANOVAs. <em>Front Psychol</em>, <em>4</em>, 863. <a href="https://doi.org/10.3389/fpsyg.2013.00863">https://doi.org/10.3389/fpsyg.2013.00863</a></p>
+</div>
+<div id="ref-Weissgerber2015">
+<p>Weissgerber, T. L., Milic, N. M., Winham, S. J., &amp; Garovic, V. D. (2015). Beyond bar and line graphs: time for a new data presentation paradigm. <em>PLoS Biol</em>, <em>13</em>(4), e1002128. <a href="https://doi.org/10.1371/journal.pbio.1002128">https://doi.org/10.1371/journal.pbio.1002128</a></p>
+</div>
+<div id="ref-Wilke2018">
+<p>Wilke, C. O. (2018). <em>Fundamentals of data visualization</em>. O’Reilly Media, Inc. Retrieved from https://clauswilke.com/dataviz.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="analyses-descriptives-univariées.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="régressions.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
