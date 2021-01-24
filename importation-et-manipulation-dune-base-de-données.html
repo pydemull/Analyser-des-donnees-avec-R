@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapitre 2 Importation et manipulation d’une base de données | Analyser des données avec R</title>
+  <meta name="description" content="Introduction à l’analyse des données avec R" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapitre 2 Importation et manipulation d’une base de données | Analyser des données avec R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="pydm1989.github.io/Analyser-des-donnees-avec-R" />
+  
+  <meta property="og:description" content="Introduction à l’analyse des données avec R" />
+  <meta name="github-repo" content="PYDM1989/Analyser-des-donnees-avec-R" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapitre 2 Importation et manipulation d’une base de données | Analyser des données avec R" />
+  
+  <meta name="twitter:description" content="Introduction à l’analyse des données avec R" />
+  
+
+<meta name="author" content="Pierre-Yves de Müllenheim" />
+
+
+<meta name="date" content="2021-01-24" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="prérequis.html"/>
+<link rel="next" href="analyses-descriptives-univariées.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Analyser des données avec R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="1" data-path="prérequis.html"><a href="prérequis.html"><i class="fa fa-check"></i><b>1</b> Prérequis</a><ul>
+<li class="chapter" data-level="1.1" data-path="prérequis.html"><a href="prérequis.html#installation-de-r-et-rstudio"><i class="fa fa-check"></i><b>1.1</b> Installation de R et RStudio</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="prérequis.html"><a href="prérequis.html#installer-r-sur-windows"><i class="fa fa-check"></i><b>1.1.1</b> Installer R sur WINDOWS</a></li>
+<li class="chapter" data-level="1.1.2" data-path="prérequis.html"><a href="prérequis.html#installer-r-sur-mac"><i class="fa fa-check"></i><b>1.1.2</b> Installer R sur MAC</a></li>
+<li class="chapter" data-level="1.1.3" data-path="prérequis.html"><a href="prérequis.html#installer-rstudio-sur-windows-ou-mac"><i class="fa fa-check"></i><b>1.1.3</b> Installer RStudio sur WINDOWS ou MAC</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="prérequis.html"><a href="prérequis.html#prise-en-main-de-rstudio"><i class="fa fa-check"></i><b>1.2</b> Prise en main de RStudio</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="prérequis.html"><a href="prérequis.html#manipuler-des-objets-valeurs-vecteurs-et-tableaux-de-données"><i class="fa fa-check"></i><b>1.2.1</b> Manipuler des objets (valeurs, vecteurs, et tableaux de données)</a></li>
+<li class="chapter" data-level="1.2.2" data-path="prérequis.html"><a href="prérequis.html#manipuler-des-objets-assignés-à-des-noms"><i class="fa fa-check"></i><b>1.2.2</b> Manipuler des objets assignés à des noms</a></li>
+<li class="chapter" data-level="1.2.3" data-path="prérequis.html"><a href="prérequis.html#utiliser-des-fonctions"><i class="fa fa-check"></i><b>1.2.3</b> Utiliser des fonctions</a></li>
+<li class="chapter" data-level="1.2.4" data-path="prérequis.html"><a href="prérequis.html#installer-et-charger-des-packages"><i class="fa fa-check"></i><b>1.2.4</b> Installer et charger des packages</a></li>
+<li class="chapter" data-level="1.2.5" data-path="prérequis.html"><a href="prérequis.html#divers"><i class="fa fa-check"></i><b>1.2.5</b> Divers</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="prérequis.html"><a href="prérequis.html#résumé"><i class="fa fa-check"></i><b>1.3</b> Résumé</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html"><i class="fa fa-check"></i><b>2</b> Importation et manipulation d’une base de données</a><ul>
+<li class="chapter" data-level="2.1" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#comprendre-ce-quest-une-base-de-données"><i class="fa fa-check"></i><b>2.1</b> Comprendre ce qu’est une base de données</a></li>
+<li class="chapter" data-level="2.2" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#fixer-le-répertoire-de-travail"><i class="fa fa-check"></i><b>2.2</b> Fixer le répertoire de travail</a></li>
+<li class="chapter" data-level="2.3" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#importer-la-base-de-données"><i class="fa fa-check"></i><b>2.3</b> Importer la base de données</a></li>
+<li class="chapter" data-level="2.4" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#manipuler-la-base-de-données"><i class="fa fa-check"></i><b>2.4</b> Manipuler la base de données</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#vérifier-le-succès-de-limportation-de-la-base"><i class="fa fa-check"></i><b>2.4.1</b> Vérifier le succès de l’importation de la base</a></li>
+<li class="chapter" data-level="2.4.2" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#vérifier-et-reconfigurer-les-types-des-variables-de-la-base"><i class="fa fa-check"></i><b>2.4.2</b> Vérifier et reconfigurer les types des variables de la base</a></li>
+<li class="chapter" data-level="2.4.3" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#sélectionner-des-variables-avec-select"><i class="fa fa-check"></i><b>2.4.3</b> Sélectionner des variables avec select()</a></li>
+<li class="chapter" data-level="2.4.4" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#renommer-des-variables-avec-rename"><i class="fa fa-check"></i><b>2.4.4</b> Renommer des variables avec rename()</a></li>
+<li class="chapter" data-level="2.4.5" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#créer-des-variables-avec-mutate"><i class="fa fa-check"></i><b>2.4.5</b> Créer des variables avec mutate()</a></li>
+<li class="chapter" data-level="2.4.6" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#sélectionner-des-lignes-avec-filter"><i class="fa fa-check"></i><b>2.4.6</b> Sélectionner des lignes avec filter()</a></li>
+<li class="chapter" data-level="2.4.7" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#arranger-les-lignes-avec-arrange"><i class="fa fa-check"></i><b>2.4.7</b> Arranger les lignes avec arrange()</a></li>
+<li class="chapter" data-level="2.4.8" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#résumer-des-variables-avec-group_by-et-summarize"><i class="fa fa-check"></i><b>2.4.8</b> Résumer des variables avec group_by() et summarize()</a></li>
+<li class="chapter" data-level="2.4.9" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#passer-dune-disposition-en-lignes-à-une-disposition-en-colonnes-et-inversement-avec-pivot_wider-et-pivot_longer"><i class="fa fa-check"></i><b>2.4.9</b> Passer d’une disposition en lignes à une disposition en colonnes et inversement avec pivot_wider() et pivot_longer()</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="importation-et-manipulation-dune-base-de-données.html"><a href="importation-et-manipulation-dune-base-de-données.html#résumé-1"><i class="fa fa-check"></i><b>2.5</b> Résumé</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html"><i class="fa fa-check"></i><b>3</b> Analyses descriptives univariées</a><ul>
+<li class="chapter" data-level="3.1" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html#variables-quantitatives"><i class="fa fa-check"></i><b>3.1</b> Variables quantitatives</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html#visualiser-la-distribution-de-la-variable"><i class="fa fa-check"></i><b>3.1.1</b> Visualiser la distribution de la variable</a></li>
+<li class="chapter" data-level="3.1.2" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html#les-indices-de-position"><i class="fa fa-check"></i><b>3.1.2</b> Les indices de position</a></li>
+<li class="chapter" data-level="3.1.3" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html#les-indices-de-dispersion"><i class="fa fa-check"></i><b>3.1.3</b> Les indices de dispersion</a></li>
+<li class="chapter" data-level="3.1.4" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html#les-indices-dasymétrie-et-daplatissement"><i class="fa fa-check"></i><b>3.1.4</b> Les indices d’asymétrie et d’aplatissement</a></li>
+<li class="chapter" data-level="3.1.5" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html#fonctions-pour-obtenir-un-récapitulatif-des-statistiques-descriptives"><i class="fa fa-check"></i><b>3.1.5</b> Fonctions pour obtenir un récapitulatif des statistiques descriptives</a></li>
+<li class="chapter" data-level="3.1.6" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html#quelles-statistiques-choisir-pour-résumer-une-variable-quantitative-dans-un-rapport"><i class="fa fa-check"></i><b>3.1.6</b> Quelles statistiques choisir pour résumer une variable quantitative dans un rapport ?</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html#variables-qualitatives"><i class="fa fa-check"></i><b>3.2</b> Variables qualitatives</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html#visualiser-la-distribution-de-la-variable-1"><i class="fa fa-check"></i><b>3.2.1</b> Visualiser la distribution de la variable</a></li>
+<li class="chapter" data-level="3.2.2" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html#déterminer-la-tendance-centrale"><i class="fa fa-check"></i><b>3.2.2</b> Déterminer la tendance centrale</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="analyses-descriptives-univariées.html"><a href="analyses-descriptives-univariées.html#résumé-2"><i class="fa fa-check"></i><b>3.3</b> Résumé</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html"><i class="fa fa-check"></i><b>4</b> Analyses descriptives bivariées</a><ul>
+<li class="chapter" data-level="4.1" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#relation-entre-deux-variables-quantitatives"><i class="fa fa-check"></i><b>4.1</b> Relation entre deux variables quantitatives</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#etudier-graphiquement-la-relation"><i class="fa fa-check"></i><b>4.1.1</b> Etudier graphiquement la relation</a></li>
+<li class="chapter" data-level="4.1.2" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#etudier-numériquement-la-relation"><i class="fa fa-check"></i><b>4.1.2</b> Etudier numériquement la relation</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#relation-entre-deux-variables-qualitatives"><i class="fa fa-check"></i><b>4.2</b> Relation entre deux variables qualitatives</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#etudier-graphiquement-la-relation-1"><i class="fa fa-check"></i><b>4.2.1</b> Etudier graphiquement la relation</a></li>
+<li class="chapter" data-level="4.2.2" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#etudier-numériquement-la-relation-1"><i class="fa fa-check"></i><b>4.2.2</b> Etudier numériquement la relation</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#relation-entre-une-variable-quantitative-et-une-variable-qualitative"><i class="fa fa-check"></i><b>4.3</b> Relation entre une variable quantitative et une variable qualitative</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#etudier-graphiquement-la-relation-2"><i class="fa fa-check"></i><b>4.3.1</b> Etudier graphiquement la relation</a></li>
+<li class="chapter" data-level="4.3.2" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#etudier-numériquement-la-relation-2"><i class="fa fa-check"></i><b>4.3.2</b> Etudier numériquement la relation</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="régressions.html"><a href="régressions.html"><i class="fa fa-check"></i><b>5</b> Régressions</a><ul>
+<li class="chapter" data-level="5.1" data-path="régressions.html"><a href="régressions.html#régression-linéaire-simple"><i class="fa fa-check"></i><b>5.1</b> Régression linéaire simple</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="régressions.html"><a href="régressions.html#le-coefficient-de-détermination"><i class="fa fa-check"></i><b>5.1.1</b> Le coefficient de détermination</a></li>
+<li class="chapter" data-level="5.1.2" data-path="régressions.html"><a href="régressions.html#lerreur-typique-destimation"><i class="fa fa-check"></i><b>5.1.2</b> L’erreur typique d’estimation</a></li>
+<li class="chapter" data-level="5.1.3" data-path="régressions.html"><a href="régressions.html#graphique-récapitulatif"><i class="fa fa-check"></i><b>5.1.3</b> Graphique récapitulatif</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="références.html"><a href="références.html"><i class="fa fa-check"></i>Références</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Publié avec bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Analyser des données avec R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="importation-et-manipulation-dune-base-de-données" class="section level1">
+<h1><span class="header-section-number">Chapitre 2</span> Importation et manipulation d’une base de données</h1>
+<div id="comprendre-ce-quest-une-base-de-données" class="section level2">
+<h2><span class="header-section-number">2.1</span> Comprendre ce qu’est une base de données</h2>
+<p>Lorsqu’on souhaite répondre à une question, la démarche scientifique classique consiste à effectuer une série de mesures ou d’observations selon un protocole qui a été conçu en cohérence avec la question posée. En principe, ces mesures ou observations donnent lieu à l’obtention de valeurs. Ces valeurs peuvent être de forme numérique (e.g., les valeurs de taille de différents individus) ou de forme littérale (e.g., les valeurs de sexe de différents individus). Quelle que soit leur forme, les valeurs que l’on obtient dans un contexte qui est connu, comme dans le cas d’un protocole de mesures, ont un sens bien défini car elles sont associées à des choses que l’on a cherché à caractériser. Lorsqu’une valeur est porteuse d’un sens bien défini, on peut alors considérer qu’il s’agit d’une <strong>donnée</strong>.
+Très souvent, pour répondre à une question, il est nécessaire d’acquérir plusieurs données qui seraient relatives à différentes choses que l’on a cherché à caractériser (e.g., la taille, la couleur, le poids, etc.), et qui seraient relatives également à différents individus chez qui l’on aurait souhaité caractériser ces choses. Afin de conduire les analyses qui permettraient de répondre à la question posée, il convient alors de répertorier toutes les données acquises dans un même document, et plus exactement dans un même fichier, qui serait la base de données, telle que présentée ci-dessous.</p>
+<table>
+<caption><span id="tab:database">Tableau 2.1: </span>Exemple de base de données</caption>
+<thead>
+<tr class="header">
+<th align="right">id</th>
+<th align="left">genre</th>
+<th align="right">taille</th>
+<th align="right">nb_victoires</th>
+<th align="right">niveau</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="left">H</td>
+<td align="right">1.80</td>
+<td align="right">45</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="left">H</td>
+<td align="right">1.93</td>
+<td align="right">90</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="left">H</td>
+<td align="right">1.50</td>
+<td align="right">100</td>
+<td align="right">4</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="left">F</td>
+<td align="right">1.95</td>
+<td align="right">43</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="left">F</td>
+<td align="right">1.52</td>
+<td align="right">34</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="right">6</td>
+<td align="left">H</td>
+<td align="right">1.87</td>
+<td align="right">67</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="right">7</td>
+<td align="left">H</td>
+<td align="right">1.83</td>
+<td align="right">79</td>
+<td align="right">3</td>
+</tr>
+</tbody>
+</table>
+<p>La base de données prend donc la forme d’un tableau. Plusieurs principes sont à respecter en général lors de la création d’une base de données. Tout d’abord, les lignes de la base de données (qu’on appelle des <strong>observations</strong>) doivent correspondre le cas échéant à des individus bien identifiés. Ensuite, chaque colonne doit correspondre à une variable. L’ensemble des données contenues dans une même ligne correspond donc aux données relatives aux différentes variables (e.g., la taille, le poids, le sexe, etc.) qui auraient été obtenues chez un même individu. Dans le cas d’études où l’on évaluerait une ou plusieurs variables plusieurs fois chez un même individu (i.e., à différentes moments, dans différentes conditions), il peut convenir de créer autant de lignes que de fois où les variables auraient été évaluées. Par exemple, le tableau ci-dessous représente une base de données (certes très sommaire) contenant des données d’individus dont on aurait évalué le poids deux fois, avant et après un programme de prise en charge. On remarque alors qu’il y a deux lignes par individu qui correspondent aux deux temps d’évaluation. La taille, elle, n’aura été évaluée qu’une seule fois, en début de programme, mais pour éviter de laisser des cellules vides (ce qui est une bonne pratique), alors la valeur aura été reproduite dans la seconde ligne.</p>
+<table>
+<caption><span id="tab:databasePlusObs">Tableau 2.2: </span>Organisation d’une base de données avec des mesures répétées</caption>
+<thead>
+<tr class="header">
+<th align="left">id</th>
+<th align="right">taille</th>
+<th align="left">temps_eval</th>
+<th align="right">poids</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1</td>
+<td align="right">1.75</td>
+<td align="left">pre</td>
+<td align="right">75</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="right">1.75</td>
+<td align="left">post</td>
+<td align="right">73</td>
+</tr>
+<tr class="odd">
+<td align="left">2</td>
+<td align="right">1.89</td>
+<td align="left">pre</td>
+<td align="right">90</td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="right">1.89</td>
+<td align="left">post</td>
+<td align="right">88</td>
+</tr>
+</tbody>
+</table>
+<p>En principe, les données de la base qui ont été obtenues selon la même procédure d’acquisition représentent le même type de choses. Ces choses sont appelées des <strong>variables</strong> car elles varient selon les individus qui ont été étudiés et les conditions de mesure qui ont été mises en oeuvre (dans le cas où il y en aurait plusieurs). Lorsque ces choses ne sont pas censées varier, on parle de <strong>constantes</strong>. Une base de données peut comporter plusieurs variables de natures différentes :</p>
+<ul>
+<li>Des <strong>variables quantitatives</strong>, qui comportent des nombres. Parmi les variables quantitatives, on distingue celles qui sont continues et celles qui sont discrètes. Les variables quantitatives continues contiennent des données pouvant comporter théoriquement un nombre infini de décimales (e.g., la taille, le poids, etc.). Au contraire, les variables quantitatives discrètes ne peuvent contenir théoriquement que des nombres finis (e.g., le nombre de victoires sportives au cours d’une année). Certaines variables en théorie discrètes sont cependant souvent considérées comme continues tant le nombre de valeurs théoriquement possibles pour la variable est grand, tel que pour le nombre de globules blancs mesurés dans le sang <span class="citation">(Labreuche, <a href="#ref-Labreuche2010" role="doc-biblioref">2010</a>)</span>.</li>
+<li>Des <strong>variables qualitatives</strong>, qui contiennent des valeurs désignant non pas des quantités mais des modalités. Ces modalités peuvent être exprimées sous forme littérale ou numérique. Parmi les variables qualitatives, on distingue celles qui sont nominales et celles qui sont ordinales. Les variables qualitatives nominales contiennent des modalités qui ne peuvent pas être ordonnées (e.g., les couleurs, les genres, etc.). Au contraire, les variables qualitatives ordinales contiennent des modalités qui peuvent être ordonnées (e.g., les niveaux de compétition sportive : départemental ; régional ; interrégional ; national ; international). Les variables qualitatives ordinales qui prendraient des valeurs numériques pour indiquer par exemple un niveau d’expertise (1, 2, 3, 4) se différencient des variables quantitatives discrètes par l’absence d’information sur la distance qui sépare les nombres de cette variable <span class="citation">(Labreuche, <a href="#ref-Labreuche2010" role="doc-biblioref">2010</a>)</span>.</li>
+</ul>
+</div>
+<div id="fixer-le-répertoire-de-travail" class="section level2">
+<h2><span class="header-section-number">2.2</span> Fixer le répertoire de travail</h2>
+<p>Lorsque l’on souhaite réaliser l’analyse d’une base de données avec RStudio, il peut être utile et plus fonctionnel pour la suite de créer un dossier spécifique, sur l’ordinateur, où se trouveraient à la fois la base de données ainsi que toutes les créations (e.g., tableaux, figures, etc.) qui seraient produites au fur et à mesure des analyses. Une fois le dossier crée, il faut ensuite, dans RStudio, ouvrir un fichier <strong>Script</strong> où toutes les commandes seront écrites et enregistrables (chemin d’accès : <strong>File &gt; New File &gt; R Script</strong>). Une fois ouvert, il est possible d’enregistrer le script en appuyant sur <strong>Ctrl+S</strong>, en privilégiant le dossier où se trouve la base de données comme emplacement.
+La prochaine manipulation à faire est alors de <strong>Fixer le répertoire</strong>. L’enjeu est ici d’indiquer à RStudio un dossier à privilégier pour réaliser des importations de fichiers dans RStudio ou des exports de fichiers à partir de RStudio. Le dossier à considérer pour cela pourrait donc être celui où se trouve déjà la base de données. Plus concrètement, après avoir fait cela, dès lors que l’on voudra importer un tableau de données dans RStudio, au lieu de préciser dans la fonction d’importation tout le chemin d’accès définissant l’emplacement du fichier sur l’ordinateur, il suffira dans la fonction de mettre seulement le nom du fichier à importer. De plus, dès lors que l’on voudra exporter un tableau ou une figure crée(e) avec RStudio, l’export se fera automatiquement vers le dossier de travail en cours si rien n’est spécifié dans la fonction d’export quant à l’emplacement du document.
+Pour fixer le répertoire de travail, il existe plusieurs manières de faire. Une manière relativement simple de procéder est la suivante. Suivre le chemin d’accès suivant à partir de RStudio : <strong>Session &gt; Set Working Directory &gt; Choose Directory…</strong>. (Ou appuyer sur <strong>Ctr+Shift+H</strong>.). Puis, sélectionner le dossier où se trouve la base de données. Enfin, cliquer sur <strong>Open</strong>. Une commmande apparaît alors dans la Console. Le répertoire vient donc d’être fixé. Pour ne pas devoir faire la même manipulation à chaque nouvelle ouverture de RStudio, il est possible de copier cette commande qui est apparue dans la Console (ne pas copier le symbole <code>&gt;</code>) et de la coller au début du script. On pourra noter que cette commande contient la fonction <code>setwd()</code>, et qu’à l’intérieur se trouve le chemin d’accès au répertoire de travail qui est écrit entre des guillemets.</p>
+</div>
+<div id="importer-la-base-de-données" class="section level2">
+<h2><span class="header-section-number">2.3</span> Importer la base de données</h2>
+<p>Il existe plusieurs fonctions pour importer une base de données dans RStudio. La fonction <code>read_csv2()</code> du package <code>readr</code> permet d’importer par exemple des fichiers .csv qui, structurellement, séparent les données avec des points-virgules. C’est généralement le type de structure de fichier .csv que l’on obtient après avoir réalisé un export à partir d’un fichier Excel. Pour illustrer ici l’importation d’une base de données, il est possible d’en créer une dans le répertoire de travail actif en y exportant un tableau de données qui existe déjà avec le logiciel R. Le logiciel R dispose en effet d’un grand nombre de jeux de données différents que tout utilisateur peut consulter et manipuler. L’ensemble des jeux de données disponibles suite à l’installation par défaut de R est visible en lançant dans la Console la commande <code>data()</code>. Au fur et à mesure de la découverte des analyses montrées dans ce document, différents jeux de données seront utilisés en fonction des besoins. Pour le moment, il est possible d’utiliser le jeu de données qui s’appelle <code>iris</code>. Même si on ne le voit pas dans la fenêtre Environnement de RStudio, il est bel et bien là, disponible, prêt à être utilisé. Afin d’exporter ce jeu de données dans le répertoire de travail fixé au préalable, il est possible d’utiliser la fonction <code>write_csv2()</code> du package <code>readr</code>. Pour cela, il suffit d’utiliser le nom du jeu de données, puis d’indiquer entre guillemets le nom que l’on veut que le fichier exporté ait, tout en n’oubliant pas de mettre l’extension .csv à la fin du nom pour indiquer le format d’export, comme ci-dessous.</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="importation-et-manipulation-dune-base-de-données.html#cb43-1"></a><span class="kw">write_csv2</span>(<span class="dt">x =</span> iris, <span class="dt">path =</span> <span class="st">&quot;iris.csv&quot;</span>)</span></code></pre></div>
+<p>Si l’on jette un oeil dans le répertoire de travail, il est alors possible d’y voir un nouveau fichier .csv du nom de <code>iris</code>. Maintenant qu’il existe une base de données dans le répertoire de travail actif, il est possible de concrétiser la procédure de son importation dans RStudio. Comme évoqué plus tôt dans ce document, il est intéressant, et en réalité nécessaire, d’assigner cette base de données à un nom pour pouvoir plus facilement manipuler le jeu de données par la suite. Ici, nous allons tout naturellement associer ce nouvel objet au nom <code>iris</code>.</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="importation-et-manipulation-dune-base-de-données.html#cb44-1"></a>iris &lt;-<span class="st"> </span><span class="kw">read_csv2</span>(<span class="dt">file =</span> <span class="st">&quot;iris.csv&quot;</span>)</span></code></pre></div>
+<p>Suite à l’activation de la commande, RStudio nous montre un message d’information sur la manière dont la fonction <code>read_csv2()</code> a configuré le jeu de données importé. Ce message apparaît car la fonction importe le jeu de données non pas sous la forme d’un <em>data frame</em> comme nous avons pu en créer auparavant, mais sous la forme d’un <em>tibble</em>, qui désigne un format de tableau que l’on ne peut obtenir qu’en passant par le biais de fonctions associées à l’ensemble de packages <code>tidyverse</code>. Pour comprendre l’intérêt d’un <em>tibble</em>, revenons au format classique d’un <em>data frame</em> à l’aide de la fonction <code>as.data.frame()</code>.</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="importation-et-manipulation-dune-base-de-données.html#cb45-1"></a>iris &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="dt">x =</span> iris)</span></code></pre></div>
+<p>À présent, regardons ce qu’il se passe si on lance le nom <code>iris</code> dans la Console…</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="importation-et-manipulation-dune-base-de-données.html#cb46-1"></a>iris</span></code></pre></div>
+<pre><code>##     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
+## 1            5.1         3.5          1.4         0.2     setosa
+## 2            4.9         3.0          1.4         0.2     setosa
+## 3            4.7         3.2          1.3         0.2     setosa
+## 4            4.6         3.1          1.5         0.2     setosa
+## 5            5.0         3.6          1.4         0.2     setosa
+## 6            5.4         3.9          1.7         0.4     setosa
+## 7            4.6         3.4          1.4         0.3     setosa
+## 8            5.0         3.4          1.5         0.2     setosa
+## 9            4.4         2.9          1.4         0.2     setosa
+## 10           4.9         3.1          1.5         0.1     setosa
+## 11           5.4         3.7          1.5         0.2     setosa
+## 12           4.8         3.4          1.6         0.2     setosa
+## 13           4.8         3.0          1.4         0.1     setosa
+## 14           4.3         3.0          1.1         0.1     setosa
+## 15           5.8         4.0          1.2         0.2     setosa
+## 16           5.7         4.4          1.5         0.4     setosa
+## 17           5.4         3.9          1.3         0.4     setosa
+## 18           5.1         3.5          1.4         0.3     setosa
+## 19           5.7         3.8          1.7         0.3     setosa
+## 20           5.1         3.8          1.5         0.3     setosa
+## 21           5.4         3.4          1.7         0.2     setosa
+## 22           5.1         3.7          1.5         0.4     setosa
+## 23           4.6         3.6          1.0         0.2     setosa
+## 24           5.1         3.3          1.7         0.5     setosa
+## 25           4.8         3.4          1.9         0.2     setosa
+## 26           5.0         3.0          1.6         0.2     setosa
+## 27           5.0         3.4          1.6         0.4     setosa
+## 28           5.2         3.5          1.5         0.2     setosa
+## 29           5.2         3.4          1.4         0.2     setosa
+## 30           4.7         3.2          1.6         0.2     setosa
+## 31           4.8         3.1          1.6         0.2     setosa
+## 32           5.4         3.4          1.5         0.4     setosa
+## 33           5.2         4.1          1.5         0.1     setosa
+## 34           5.5         4.2          1.4         0.2     setosa
+## 35           4.9         3.1          1.5         0.2     setosa
+## 36           5.0         3.2          1.2         0.2     setosa
+## 37           5.5         3.5          1.3         0.2     setosa
+## 38           4.9         3.6          1.4         0.1     setosa
+## 39           4.4         3.0          1.3         0.2     setosa
+## 40           5.1         3.4          1.5         0.2     setosa
+## 41           5.0         3.5          1.3         0.3     setosa
+## 42           4.5         2.3          1.3         0.3     setosa
+## 43           4.4         3.2          1.3         0.2     setosa
+## 44           5.0         3.5          1.6         0.6     setosa
+## 45           5.1         3.8          1.9         0.4     setosa
+## 46           4.8         3.0          1.4         0.3     setosa
+## 47           5.1         3.8          1.6         0.2     setosa
+## 48           4.6         3.2          1.4         0.2     setosa
+## 49           5.3         3.7          1.5         0.2     setosa
+## 50           5.0         3.3          1.4         0.2     setosa
+## 51           7.0         3.2          4.7         1.4 versicolor
+## 52           6.4         3.2          4.5         1.5 versicolor
+## 53           6.9         3.1          4.9         1.5 versicolor
+## 54           5.5         2.3          4.0         1.3 versicolor
+## 55           6.5         2.8          4.6         1.5 versicolor
+## 56           5.7         2.8          4.5         1.3 versicolor
+## 57           6.3         3.3          4.7         1.6 versicolor
+## 58           4.9         2.4          3.3         1.0 versicolor
+## 59           6.6         2.9          4.6         1.3 versicolor
+## 60           5.2         2.7          3.9         1.4 versicolor
+## 61           5.0         2.0          3.5         1.0 versicolor
+## 62           5.9         3.0          4.2         1.5 versicolor
+## 63           6.0         2.2          4.0         1.0 versicolor
+## 64           6.1         2.9          4.7         1.4 versicolor
+## 65           5.6         2.9          3.6         1.3 versicolor
+## 66           6.7         3.1          4.4         1.4 versicolor
+## 67           5.6         3.0          4.5         1.5 versicolor
+## 68           5.8         2.7          4.1         1.0 versicolor
+## 69           6.2         2.2          4.5         1.5 versicolor
+## 70           5.6         2.5          3.9         1.1 versicolor
+## 71           5.9         3.2          4.8         1.8 versicolor
+## 72           6.1         2.8          4.0         1.3 versicolor
+## 73           6.3         2.5          4.9         1.5 versicolor
+## 74           6.1         2.8          4.7         1.2 versicolor
+## 75           6.4         2.9          4.3         1.3 versicolor
+## 76           6.6         3.0          4.4         1.4 versicolor
+## 77           6.8         2.8          4.8         1.4 versicolor
+## 78           6.7         3.0          5.0         1.7 versicolor
+## 79           6.0         2.9          4.5         1.5 versicolor
+## 80           5.7         2.6          3.5         1.0 versicolor
+## 81           5.5         2.4          3.8         1.1 versicolor
+## 82           5.5         2.4          3.7         1.0 versicolor
+## 83           5.8         2.7          3.9         1.2 versicolor
+## 84           6.0         2.7          5.1         1.6 versicolor
+## 85           5.4         3.0          4.5         1.5 versicolor
+## 86           6.0         3.4          4.5         1.6 versicolor
+## 87           6.7         3.1          4.7         1.5 versicolor
+## 88           6.3         2.3          4.4         1.3 versicolor
+## 89           5.6         3.0          4.1         1.3 versicolor
+## 90           5.5         2.5          4.0         1.3 versicolor
+## 91           5.5         2.6          4.4         1.2 versicolor
+## 92           6.1         3.0          4.6         1.4 versicolor
+## 93           5.8         2.6          4.0         1.2 versicolor
+## 94           5.0         2.3          3.3         1.0 versicolor
+## 95           5.6         2.7          4.2         1.3 versicolor
+## 96           5.7         3.0          4.2         1.2 versicolor
+## 97           5.7         2.9          4.2         1.3 versicolor
+## 98           6.2         2.9          4.3         1.3 versicolor
+## 99           5.1         2.5          3.0         1.1 versicolor
+## 100          5.7         2.8          4.1         1.3 versicolor
+## 101          6.3         3.3          6.0         2.5  virginica
+## 102          5.8         2.7          5.1         1.9  virginica
+## 103          7.1         3.0          5.9         2.1  virginica
+## 104          6.3         2.9          5.6         1.8  virginica
+## 105          6.5         3.0          5.8         2.2  virginica
+## 106          7.6         3.0          6.6         2.1  virginica
+## 107          4.9         2.5          4.5         1.7  virginica
+## 108          7.3         2.9          6.3         1.8  virginica
+## 109          6.7         2.5          5.8         1.8  virginica
+## 110          7.2         3.6          6.1         2.5  virginica
+## 111          6.5         3.2          5.1         2.0  virginica
+## 112          6.4         2.7          5.3         1.9  virginica
+## 113          6.8         3.0          5.5         2.1  virginica
+## 114          5.7         2.5          5.0         2.0  virginica
+## 115          5.8         2.8          5.1         2.4  virginica
+## 116          6.4         3.2          5.3         2.3  virginica
+## 117          6.5         3.0          5.5         1.8  virginica
+## 118          7.7         3.8          6.7         2.2  virginica
+## 119          7.7         2.6          6.9         2.3  virginica
+## 120          6.0         2.2          5.0         1.5  virginica
+## 121          6.9         3.2          5.7         2.3  virginica
+## 122          5.6         2.8          4.9         2.0  virginica
+## 123          7.7         2.8          6.7         2.0  virginica
+## 124          6.3         2.7          4.9         1.8  virginica
+## 125          6.7         3.3          5.7         2.1  virginica
+## 126          7.2         3.2          6.0         1.8  virginica
+## 127          6.2         2.8          4.8         1.8  virginica
+## 128          6.1         3.0          4.9         1.8  virginica
+## 129          6.4         2.8          5.6         2.1  virginica
+## 130          7.2         3.0          5.8         1.6  virginica
+## 131          7.4         2.8          6.1         1.9  virginica
+## 132          7.9         3.8          6.4         2.0  virginica
+## 133          6.4         2.8          5.6         2.2  virginica
+## 134          6.3         2.8          5.1         1.5  virginica
+## 135          6.1         2.6          5.6         1.4  virginica
+## 136          7.7         3.0          6.1         2.3  virginica
+## 137          6.3         3.4          5.6         2.4  virginica
+## 138          6.4         3.1          5.5         1.8  virginica
+## 139          6.0         3.0          4.8         1.8  virginica
+## 140          6.9         3.1          5.4         2.1  virginica
+## 141          6.7         3.1          5.6         2.4  virginica
+## 142          6.9         3.1          5.1         2.3  virginica
+## 143          5.8         2.7          5.1         1.9  virginica
+## 144          6.8         3.2          5.9         2.3  virginica
+## 145          6.7         3.3          5.7         2.5  virginica
+## 146          6.7         3.0          5.2         2.3  virginica
+## 147          6.3         2.5          5.0         1.9  virginica
+## 148          6.5         3.0          5.2         2.0  virginica
+## 149          6.2         3.4          5.4         2.3  virginica
+## 150          5.9         3.0          5.1         1.8  virginica</code></pre>
+<p>RStudio nous montre tout le jeu de données dans la Console, ce qui n’est pas très utile, d’autant plus que l’on peut perdre de vue la première ligne de titre lorsque le jeu de données contient beaucoup de lignes. Retournons donc au format <em>tibble</em> grâce à la fonction <code>as_tibble()</code> du package <code>tibble</code>, et voyons ce qu’il se passe lorsqu’on lance à nouveau le nom <code>iris</code> dans la Console.</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="importation-et-manipulation-dune-base-de-données.html#cb48-1"></a>iris &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(<span class="dt">x =</span> iris)</span>
+<span id="cb48-2"><a href="importation-et-manipulation-dune-base-de-données.html#cb48-2"></a>iris</span></code></pre></div>
+<pre><code>## [90m# A tibble: 150 x 5[39m
+##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+##           [3m[90m&lt;dbl&gt;[39m[23m       [3m[90m&lt;dbl&gt;[39m[23m        [3m[90m&lt;dbl&gt;[39m[23m       [3m[90m&lt;dbl&gt;[39m[23m [3m[90m&lt;chr&gt;[39m[23m  
+## [90m 1[39m          5.1         3.5          1.4         0.2 setosa 
+## [90m 2[39m          4.9         3            1.4         0.2 setosa 
+## [90m 3[39m          4.7         3.2          1.3         0.2 setosa 
+## [90m 4[39m          4.6         3.1          1.5         0.2 setosa 
+## [90m 5[39m          5           3.6          1.4         0.2 setosa 
+## [90m 6[39m          5.4         3.9          1.7         0.4 setosa 
+## [90m 7[39m          4.6         3.4          1.4         0.3 setosa 
+## [90m 8[39m          5           3.4          1.5         0.2 setosa 
+## [90m 9[39m          4.4         2.9          1.4         0.2 setosa 
+## [90m10[39m          4.9         3.1          1.5         0.1 setosa 
+## [90m# … with 140 more rows[39m</code></pre>
+<p>Cette fois, RStudio n’affiche que les premières lignes du jeu de données, et il fournit en plus de cela des informations quant aux types de variables présentes dans le jeu de données, en-dessous de la ligne de titres. Maintenant que la base de données a été importée, il ne reste plus qu’à voir différentes fonctions pour pouvoir configurer la base de données telle que nous la voulons pour réaliser confortablement les analyses.</p>
+</div>
+<div id="manipuler-la-base-de-données" class="section level2">
+<h2><span class="header-section-number">2.4</span> Manipuler la base de données</h2>
+<div id="vérifier-le-succès-de-limportation-de-la-base" class="section level3">
+<h3><span class="header-section-number">2.4.1</span> Vérifier le succès de l’importation de la base</h3>
+<p>Avant de débuter les analyses de la base de données, une bonne pratique est de vérifier si la base de données a été correctement importée avec RStudio. Une manière rapide de faire cela est de regarder le nombre d’observations (i.e., de lignes) et de variables (i.e., de colonnes) associés à l’objet crée lors de l’importation et visible dans la fenêtre Environnement de RStudio, puis de cliquer sur le nom associé à l’objet. Lors de l’étape précédente, nous avons importé le jeu de données <code>iris</code> en l’appelant ainsi. Lorsque l’on cherche le nom <code>iris</code> dans la fenêtre Environnement, on peut voir que l’objet associé contient 150 observations et 5 variables, signes que la structure du jeu de données a été bien interprétée par R si l’on sait que ce sont effectivement les dimensions du jeu de données en question. Puis, lorsque l’on clique sur le nom <code>iris</code> dans la liste des noms montrés dans la fenêtre Environnement, RStudio ouvre un onglet qui contient les données. Il est alors possible de voir d’un simple coup d’oeil si les données sont bien présentes et organisées en lignes et en colonnes comme attendu.</p>
+</div>
+<div id="vérifier-et-reconfigurer-les-types-des-variables-de-la-base" class="section level3">
+<h3><span class="header-section-number">2.4.2</span> Vérifier et reconfigurer les types des variables de la base</h3>
+<p>Il convient de vérifier que les types des variables que RStudio a associés aux variables du jeu de données importé soient bien en accord avec ce qui était attendu. Pour vérifier les types des variables, il est possible d’utiliser la fonction <code>str()</code> avec le nom auquel on a associé la base de données.</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="importation-et-manipulation-dune-base-de-données.html#cb50-1"></a><span class="kw">str</span>(iris)</span></code></pre></div>
+<pre><code>## tibble [150 × 5] (S3: tbl_df/tbl/data.frame)
+##  $ Sepal.Length: num [1:150] 5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...
+##  $ Sepal.Width : num [1:150] 3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...
+##  $ Petal.Length: num [1:150] 1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...
+##  $ Petal.Width : num [1:150] 0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...
+##  $ Species     : chr [1:150] &quot;setosa&quot; &quot;setosa&quot; &quot;setosa&quot; &quot;setosa&quot; ...
+##  - attr(*, &quot;spec&quot;)=
+##   .. cols(
+##   ..   Sepal.Length = [32mcol_double()[39m,
+##   ..   Sepal.Width = [32mcol_double()[39m,
+##   ..   Petal.Length = [32mcol_double()[39m,
+##   ..   Petal.Width = [32mcol_double()[39m,
+##   ..   Species = [31mcol_character()[39m
+##   .. )</code></pre>
+<p>Après avoir activé la commande contenant la fonction <code>str()</code>, la Console affiche plusieurs lignes d’information, avec à chaque fois le nom de la variable, son type, et les premières valeurs de la variable. Plusieurs termes peuvent être rencontrés selon la manière dont R a interprété les variables du jeu de données, notamment (mais pas seulement) :</p>
+<ul>
+<li>num : désigne une variable quantitative continue.</li>
+<li>int : dégine une variable quantitative discrète (avec des nombres entiers).</li>
+<li>Factor : désigne une variable qualitative nominale.</li>
+<li>chr : désigne une variable texte.</li>
+<li>Date : désigne une variable date.</li>
+</ul>
+<p>Le logiciel R s’appuie donc sur une classification des types de variables plus complexe que celle que nous avons présentée précédemment. On peut noter que les abbréviations montrées pour indiquer le type de variable en utilisant la fonction <code>str()</code> sont différentes de celles montrées lorsque l’on observe un jeu de données au format <em>tibble</em> dans la Console, mais ces différences reflètent en réalité principalement une divergence dans les stratégies d’écriture de l’information par les concepteurs des packages et des fonctions. En outre, si l’on veut déterminer le type d’une seule variable, ou plus globalement le type de l’objet qui nous intéresse, on peut utiliser la fonction <code>class()</code>. Utiliser un nom de variable avec cette fonction renverra le type de la variable, comme montré ci-dessous.</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="importation-et-manipulation-dune-base-de-données.html#cb52-1"></a><span class="kw">class</span>(<span class="dt">x =</span> iris<span class="op">$</span>Sepal.Length)</span></code></pre></div>
+<pre><code>## [1] &quot;numeric&quot;</code></pre>
+<p>Lorsque le type de variable ne correspond pas à celui attendu, il peut être utile de se questionner sur les raisons de la mauvaise interprétation que R en a faite. L’une des erreurs qui peuvent régulièrement survenir est le fait d’obtenir une variable de type <em>Factor</em> ou de type <em>chr</em> au lieu d’une variable de type <em>num</em> lorsque l’importation du jeu de données a été réalisée avec une fonction d’importation mal configurée (e.g., il est possible que la fonction d’importation du jeu de données considérait les valeurs comme des nombres décimaux lorsqu’ils avaient des points (.) alors qu’en réalité les nombres décimaux étaient écrits avec des virgules (,) dans le jeu de données. Une autre possibilité est que l’on n’ait pas indiqué dans la fonction d’importation sous quelle forme se présentaient les valeurs manquantes de la base de données (e.g., s’il y a des valeurs manquantes notées “NA” dans la base de données, mais que cela n’est pas indiqué dans la fonction d’importation, R peut interpréter les variables concernées comme des variables <em>chr</em>). En utilisant la fonction <code>read_csv2()</code> du package <code>readr</code>, ces écueils sont plus facilement évités car les paramètres par défaut de la fonction nous facilitent le travail. En revanche, d’autres fonctions, plus anciennes, comme <code>read.csv2()</code> qui est une fonction de base de R, nécessitent plus de vigilance.</p>
+<p>Lorsque la modification du type de la variable est nécessaire, une stratégie possible est de créer une variable portant exactement le même nom à partir de la variable initiale et à laquelle on applique une fonction capable d’imposer un certain type de variable. Il existe une fonction pour chaque type de variable à définir, notamment (mais pas seulement) :</p>
+<ul>
+<li>La fonction <code>as.numeric()</code> pour obtenir un type de variable quantitative.</li>
+<li>La fonction <code>as.factor()</code> pour un obtenir un type de variable qualitative.</li>
+<li>La fonction <code>as.character()</code> pour un obtenir un type de variable texte.</li>
+<li>La fonction <code>as.Date()</code> pour obtenir un type de variable date.</li>
+</ul>
+<p>Par exemple, nous aurions pu vouloir faire en sorte que toutes les variables du jeu de données <code>iris</code> soient de type texte :</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="importation-et-manipulation-dune-base-de-données.html#cb54-1"></a>iris<span class="op">$</span>Sepal.Length &lt;-<span class="st"> </span><span class="kw">as.character</span>(<span class="dt">x =</span> iris<span class="op">$</span>Sepal.Length)</span>
+<span id="cb54-2"><a href="importation-et-manipulation-dune-base-de-données.html#cb54-2"></a>iris<span class="op">$</span>Sepal.Width &lt;-<span class="st"> </span><span class="kw">as.character</span>(<span class="dt">x =</span> iris<span class="op">$</span>Sepal.Width)</span>
+<span id="cb54-3"><a href="importation-et-manipulation-dune-base-de-données.html#cb54-3"></a>iris<span class="op">$</span>Petal.Length &lt;-<span class="st"> </span><span class="kw">as.character</span>(<span class="dt">x =</span> iris<span class="op">$</span>Petal.Length)</span>
+<span id="cb54-4"><a href="importation-et-manipulation-dune-base-de-données.html#cb54-4"></a>iris<span class="op">$</span>Petal.Width &lt;-<span class="st"> </span><span class="kw">as.character</span>(<span class="dt">x =</span> iris<span class="op">$</span>Petal.Width)</span>
+<span id="cb54-5"><a href="importation-et-manipulation-dune-base-de-données.html#cb54-5"></a>iris<span class="op">$</span>Species &lt;-<span class="st"> </span><span class="kw">as.character</span>(<span class="dt">x =</span> iris<span class="op">$</span>Species)</span></code></pre></div>
+<p>Remarquons qu’à chaque fois, la variable désignée à gauche de la flèche d’assignation est exactement la même que celle qui est indiquée à droite de la flèche d’assignation dans la fonction <code>as.character()</code>, ce qui implique que la création de la nouvelle variable entraîne la suppression et le remplacement de la précédente qui portait le même nom. Il est possible de vérifier la conséquence de ces commandes avec la fonction <code>str()</code>.</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="importation-et-manipulation-dune-base-de-données.html#cb55-1"></a><span class="kw">str</span>(iris)</span></code></pre></div>
+<pre><code>## tibble [150 × 5] (S3: tbl_df/tbl/data.frame)
+##  $ Sepal.Length: chr [1:150] &quot;5.1&quot; &quot;4.9&quot; &quot;4.7&quot; &quot;4.6&quot; ...
+##  $ Sepal.Width : chr [1:150] &quot;3.5&quot; &quot;3&quot; &quot;3.2&quot; &quot;3.1&quot; ...
+##  $ Petal.Length: chr [1:150] &quot;1.4&quot; &quot;1.4&quot; &quot;1.3&quot; &quot;1.5&quot; ...
+##  $ Petal.Width : chr [1:150] &quot;0.2&quot; &quot;0.2&quot; &quot;0.2&quot; &quot;0.2&quot; ...
+##  $ Species     : chr [1:150] &quot;setosa&quot; &quot;setosa&quot; &quot;setosa&quot; &quot;setosa&quot; ...
+##  - attr(*, &quot;spec&quot;)=
+##   .. cols(
+##   ..   Sepal.Length = [32mcol_double()[39m,
+##   ..   Sepal.Width = [32mcol_double()[39m,
+##   ..   Petal.Length = [32mcol_double()[39m,
+##   ..   Petal.Width = [32mcol_double()[39m,
+##   ..   Species = [31mcol_character()[39m
+##   .. )</code></pre>
+<p>Cette stratégie de modification du type de la variable peut convenir lorsqu’il y a peu de variables à modifier. Cependant, lorsque la liste s’allonge, il peut être plus lisible, en matière de code, de fonctionner autrement : en utilisant le symbole <code>%&gt;%</code> (qu’on appelle <em>pipe</em>), et la fonction <code>mutate()</code> du package <code>dplyr</code>.</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="importation-et-manipulation-dune-base-de-données.html#cb57-1"></a>iris &lt;-<span class="st"> </span></span>
+<span id="cb57-2"><a href="importation-et-manipulation-dune-base-de-données.html#cb57-2"></a><span class="st">  </span>iris <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb57-3"><a href="importation-et-manipulation-dune-base-de-données.html#cb57-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Sepal.Length =</span> <span class="kw">as.numeric</span>(<span class="dt">x =</span> Sepal.Length),</span>
+<span id="cb57-4"><a href="importation-et-manipulation-dune-base-de-données.html#cb57-4"></a>         <span class="dt">Sepal.Width =</span> <span class="kw">as.numeric</span>(<span class="dt">x =</span> Sepal.Width),</span>
+<span id="cb57-5"><a href="importation-et-manipulation-dune-base-de-données.html#cb57-5"></a>         <span class="dt">Petal.Length =</span> <span class="kw">as.numeric</span>(<span class="dt">x =</span> Petal.Length),</span>
+<span id="cb57-6"><a href="importation-et-manipulation-dune-base-de-données.html#cb57-6"></a>         <span class="dt">Petal.Width =</span> <span class="kw">as.numeric</span>(<span class="dt">x =</span> Petal.Width),</span>
+<span id="cb57-7"><a href="importation-et-manipulation-dune-base-de-données.html#cb57-7"></a>         <span class="dt">Species =</span> <span class="kw">as.factor</span>(<span class="dt">x =</span> Species))</span></code></pre></div>
+<p>Ici, le symbole <code>%&gt;%</code> permet d’indiquer à R que toutes les fonctions qui sont écrites après ce symbole s’appliquent à ce qui a été défini avant ce symbole. La fonction <code>mutate()</code>, dont nous reparlerons peu après, permet de créer de nouvelles variables dans le cadre de cette stratégie, soit en écrasant les anciennes variables si les anciens noms sont conservés, soit en créant de nouvelles variables si de nouveaux noms sont utilisés. Remarquons également qu’avec ce code, nous venons de créer un nouvel objet (en l’assignant à nouveau au nom<code>iris</code>) à partir de l’ancien objet, mais dont on a transformé les types des variables, perdant dans le même temps l’ancien objet.</p>
+</div>
+<div id="sélectionner-des-variables-avec-select" class="section level3">
+<h3><span class="header-section-number">2.4.3</span> Sélectionner des variables avec select()</h3>
+<p>Certains jeux de données peuvent être très larges, c’est-à-dire qu’ils peuvent contenir beaucoup de colonnes, parfois inutiles, et qui peuvent être gênantes lorsque l’on veut avoir une vue claire du contenu du jeu de données. La fonction <code>select()</code> du package <code>dplyr</code> permet de sélectionner des colonnes facilement.</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="importation-et-manipulation-dune-base-de-données.html#cb58-1"></a>iris <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb58-2"><a href="importation-et-manipulation-dune-base-de-données.html#cb58-2"></a><span class="st">  </span><span class="kw">select</span>(Petal.Length, Petal.Width, Species)</span></code></pre></div>
+<pre><code>## [90m# A tibble: 150 x 3[39m
+##    Petal.Length Petal.Width Species
+##           [3m[90m&lt;dbl&gt;[39m[23m       [3m[90m&lt;dbl&gt;[39m[23m [3m[90m&lt;fct&gt;[39m[23m  
+## [90m 1[39m          1.4         0.2 setosa 
+## [90m 2[39m          1.4         0.2 setosa 
+## [90m 3[39m          1.3         0.2 setosa 
+## [90m 4[39m          1.5         0.2 setosa 
+## [90m 5[39m          1.4         0.2 setosa 
+## [90m 6[39m          1.7         0.4 setosa 
+## [90m 7[39m          1.4         0.3 setosa 
+## [90m 8[39m          1.5         0.2 setosa 
+## [90m 9[39m          1.4         0.2 setosa 
+## [90m10[39m          1.5         0.1 setosa 
+## [90m# … with 140 more rows[39m</code></pre>
+</div>
+<div id="renommer-des-variables-avec-rename" class="section level3">
+<h3><span class="header-section-number">2.4.4</span> Renommer des variables avec rename()</h3>
+<p>Il est possible que certains titres de variables ne soient pas clairs ou trop longs, ce qui peut être gênant pour écrire un code le plus lisible possible. La fonction <code>rename()</code> du package <code>dplyr</code> permet de gérer cela. Dans l’exemple ci-dessous, on observe que le nouveau nom doit être écrit à gauche du signal <code>=</code>, alors que l’ancien nom doit être écrit à droite du signe <code>=</code>.</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="importation-et-manipulation-dune-base-de-données.html#cb60-1"></a>iris <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb60-2"><a href="importation-et-manipulation-dune-base-de-données.html#cb60-2"></a><span class="st">  </span><span class="kw">rename</span>(<span class="dt">Sepal_long =</span> Sepal.Length,</span>
+<span id="cb60-3"><a href="importation-et-manipulation-dune-base-de-données.html#cb60-3"></a>         <span class="dt">Sepal_lar =</span> Sepal.Width,</span>
+<span id="cb60-4"><a href="importation-et-manipulation-dune-base-de-données.html#cb60-4"></a>         <span class="dt">Petal_long =</span> Petal.Length,</span>
+<span id="cb60-5"><a href="importation-et-manipulation-dune-base-de-données.html#cb60-5"></a>         <span class="dt">Petal_lar =</span> Petal.Width,</span>
+<span id="cb60-6"><a href="importation-et-manipulation-dune-base-de-données.html#cb60-6"></a>         <span class="dt">Especes =</span> Species)</span></code></pre></div>
+<pre><code>## [90m# A tibble: 150 x 5[39m
+##    Sepal_long Sepal_lar Petal_long Petal_lar Especes
+##         [3m[90m&lt;dbl&gt;[39m[23m     [3m[90m&lt;dbl&gt;[39m[23m      [3m[90m&lt;dbl&gt;[39m[23m     [3m[90m&lt;dbl&gt;[39m[23m [3m[90m&lt;fct&gt;[39m[23m  
+## [90m 1[39m        5.1       3.5        1.4       0.2 setosa 
+## [90m 2[39m        4.9       3          1.4       0.2 setosa 
+## [90m 3[39m        4.7       3.2        1.3       0.2 setosa 
+## [90m 4[39m        4.6       3.1        1.5       0.2 setosa 
+## [90m 5[39m        5         3.6        1.4       0.2 setosa 
+## [90m 6[39m        5.4       3.9        1.7       0.4 setosa 
+## [90m 7[39m        4.6       3.4        1.4       0.3 setosa 
+## [90m 8[39m        5         3.4        1.5       0.2 setosa 
+## [90m 9[39m        4.4       2.9        1.4       0.2 setosa 
+## [90m10[39m        4.9       3.1        1.5       0.1 setosa 
+## [90m# … with 140 more rows[39m</code></pre>
+</div>
+<div id="créer-des-variables-avec-mutate" class="section level3">
+<h3><span class="header-section-number">2.4.5</span> Créer des variables avec mutate()</h3>
+<p>Certaines analyses peuvent nécessiter d’ajouter des variables à partir de calculs réalisés sur des variables qui existent déjà dans le jeu de données. La fonction <code>mutate()</code>, du package <code>dplyr</code>, et que nous avons déjà rencontrée précédemment, permet cela. Dans l’exemple ci-dessous, on observe que le nom de la nouvelle variable à créer est à gauche du signe <code>=</code> et que le calcul créant les nouvelles valeurs est décrit à droite du signe <code>=</code>.</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="importation-et-manipulation-dune-base-de-données.html#cb62-1"></a>iris <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb62-2"><a href="importation-et-manipulation-dune-base-de-données.html#cb62-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">ratio_sepal =</span> Sepal.Length <span class="op">/</span><span class="st"> </span>Sepal.Width, </span>
+<span id="cb62-3"><a href="importation-et-manipulation-dune-base-de-données.html#cb62-3"></a>         <span class="dt">ratio_petal =</span> Petal.Length <span class="op">/</span><span class="st"> </span>Petal.Width)</span></code></pre></div>
+<pre><code>## [90m# A tibble: 150 x 7[39m
+##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species ratio_sepal
+##           [3m[90m&lt;dbl&gt;[39m[23m       [3m[90m&lt;dbl&gt;[39m[23m        [3m[90m&lt;dbl&gt;[39m[23m       [3m[90m&lt;dbl&gt;[39m[23m [3m[90m&lt;fct&gt;[39m[23m         [3m[90m&lt;dbl&gt;[39m[23m
+## [90m 1[39m          5.1         3.5          1.4         0.2 setosa         1.46
+## [90m 2[39m          4.9         3            1.4         0.2 setosa         1.63
+## [90m 3[39m          4.7         3.2          1.3         0.2 setosa         1.47
+## [90m 4[39m          4.6         3.1          1.5         0.2 setosa         1.48
+## [90m 5[39m          5           3.6          1.4         0.2 setosa         1.39
+## [90m 6[39m          5.4         3.9          1.7         0.4 setosa         1.38
+## [90m 7[39m          4.6         3.4          1.4         0.3 setosa         1.35
+## [90m 8[39m          5           3.4          1.5         0.2 setosa         1.47
+## [90m 9[39m          4.4         2.9          1.4         0.2 setosa         1.52
+## [90m10[39m          4.9         3.1          1.5         0.1 setosa         1.58
+## [90m# … with 140 more rows, and 1 more variable: ratio_petal [3m[90m&lt;dbl&gt;[90m[23m[39m</code></pre>
+</div>
+<div id="sélectionner-des-lignes-avec-filter" class="section level3">
+<h3><span class="header-section-number">2.4.6</span> Sélectionner des lignes avec filter()</h3>
+<p>En fonction des besoins de l’analyse, on peut vouloir ne retenir que certaines lignes du fichier de données. La fonction <code>filter()</code> du package <code>dplyr</code> est faite pour réaliser ce filtrage. Plusieurs opérateurs sont disponibles pour ne retenir que les lignes que l’on veut :</p>
+<table>
+<caption><span id="tab:SymbolsFilter">Tableau 2.3: </span>Les opérateurs utilisables avec la fonction <code>filter()</code></caption>
+<thead>
+<tr class="header">
+<th align="left">Opération</th>
+<th align="left">Opérateur</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Égal</td>
+<td align="left">==</td>
+</tr>
+<tr class="even">
+<td align="left">Inférieur ou égal</td>
+<td align="left">&lt;=</td>
+</tr>
+<tr class="odd">
+<td align="left">Supérieur ou égal</td>
+<td align="left">&gt;=</td>
+</tr>
+<tr class="even">
+<td align="left">Différent de</td>
+<td align="left">!=</td>
+</tr>
+</tbody>
+</table>
+<p>De plus, dans la configuration du code, ces opérateurs peuvent être couplés à l’opérateur <code>|</code> (OU) et à l’opérateur <code>&amp;</code> (ET). Dans l’exemple ci-dessous, le code permet, à partir du jeu de données <code>iris</code>, de ne garder que les lignes du jeu de données qui contiennent les noms d’espèce <em>setosa</em> OU <em>virginica</em>, ET en même temps qui affichent une longueur de sépale inférieure ou égale à 5.</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="importation-et-manipulation-dune-base-de-données.html#cb64-1"></a>iris <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb64-2"><a href="importation-et-manipulation-dune-base-de-données.html#cb64-2"></a><span class="st">  </span><span class="kw">filter</span>((Species <span class="op">==</span><span class="st"> &quot;setosa&quot;</span> <span class="op">|</span><span class="st"> </span>Species <span class="op">==</span><span class="st"> &quot;virginica&quot;</span>) <span class="op">&amp;</span></span>
+<span id="cb64-3"><a href="importation-et-manipulation-dune-base-de-données.html#cb64-3"></a><span class="st">          </span>Sepal.Length <span class="op">&lt;=</span><span class="st"> </span><span class="dv">5</span>)</span></code></pre></div>
+<pre><code>## [90m# A tibble: 29 x 5[39m
+##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+##           [3m[90m&lt;dbl&gt;[39m[23m       [3m[90m&lt;dbl&gt;[39m[23m        [3m[90m&lt;dbl&gt;[39m[23m       [3m[90m&lt;dbl&gt;[39m[23m [3m[90m&lt;fct&gt;[39m[23m  
+## [90m 1[39m          4.9         3            1.4         0.2 setosa 
+## [90m 2[39m          4.7         3.2          1.3         0.2 setosa 
+## [90m 3[39m          4.6         3.1          1.5         0.2 setosa 
+## [90m 4[39m          5           3.6          1.4         0.2 setosa 
+## [90m 5[39m          4.6         3.4          1.4         0.3 setosa 
+## [90m 6[39m          5           3.4          1.5         0.2 setosa 
+## [90m 7[39m          4.4         2.9          1.4         0.2 setosa 
+## [90m 8[39m          4.9         3.1          1.5         0.1 setosa 
+## [90m 9[39m          4.8         3.4          1.6         0.2 setosa 
+## [90m10[39m          4.8         3            1.4         0.1 setosa 
+## [90m# … with 19 more rows[39m</code></pre>
+</div>
+<div id="arranger-les-lignes-avec-arrange" class="section level3">
+<h3><span class="header-section-number">2.4.7</span> Arranger les lignes avec arrange()</h3>
+<p>On peut vouloir que le jeu de données soit arrangé, ou trié, selon un certain ordre, en fonction des valeurs d’une variable donnée. La fonction <code>arrange()</code> du package <code>dplyr</code> est très utile pour gérer ce genre de réalisation. L’exemple ci-dessous conduit à trier les données selon un ordre croissant en fonction des valeurs de la variable <code>Sepal.Length</code>. Le fait de mettre le symbole <code>-</code> devant le nom de la variable aurait conduit à un tri décroissant.</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="importation-et-manipulation-dune-base-de-données.html#cb66-1"></a>iris <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb66-2"><a href="importation-et-manipulation-dune-base-de-données.html#cb66-2"></a><span class="st">  </span><span class="kw">arrange</span>(Sepal.Length)</span></code></pre></div>
+<pre><code>## [90m# A tibble: 150 x 5[39m
+##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+##           [3m[90m&lt;dbl&gt;[39m[23m       [3m[90m&lt;dbl&gt;[39m[23m        [3m[90m&lt;dbl&gt;[39m[23m       [3m[90m&lt;dbl&gt;[39m[23m [3m[90m&lt;fct&gt;[39m[23m  
+## [90m 1[39m          4.3         3            1.1         0.1 setosa 
+## [90m 2[39m          4.4         2.9          1.4         0.2 setosa 
+## [90m 3[39m          4.4         3            1.3         0.2 setosa 
+## [90m 4[39m          4.4         3.2          1.3         0.2 setosa 
+## [90m 5[39m          4.5         2.3          1.3         0.3 setosa 
+## [90m 6[39m          4.6         3.1          1.5         0.2 setosa 
+## [90m 7[39m          4.6         3.4          1.4         0.3 setosa 
+## [90m 8[39m          4.6         3.6          1           0.2 setosa 
+## [90m 9[39m          4.6         3.2          1.4         0.2 setosa 
+## [90m10[39m          4.7         3.2          1.3         0.2 setosa 
+## [90m# … with 140 more rows[39m</code></pre>
+</div>
+<div id="résumer-des-variables-avec-group_by-et-summarize" class="section level3">
+<h3><span class="header-section-number">2.4.8</span> Résumer des variables avec group_by() et summarize()</h3>
+<p>Bien qu’une base de données puisse contenir énormément de lignes, on peut n’en vouloir que la version résumée. Les fonctions <code>group_by()</code> et <code>summarize()</code> du package <code>dplyr</code> permettent de faire cela aisément. Dans l’exemple ci-dessous, la fonction <code>group_by()</code> permet d’indiquer que les calculs réalisés par la suite avec la fonction <code>summarize()</code> doivent être exécutés pour les modalités de la variable <code>Species</code> prises séparément. La fonction <code>summarize()</code>, quant à elle, permet d’exéctuer différents calculs. Dans l’exemple ci-dessous, il s’agit de moyennes, obtenues à l’aide de la fonction <code>mean()</code>. De plus, la fonction <code>summarize()</code> permet, comme montré ci-dessous, d’indiquer à gauche du <code>=</code> le nom du titre du calcul alors effectué .</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="importation-et-manipulation-dune-base-de-données.html#cb68-1"></a>iris <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb68-2"><a href="importation-et-manipulation-dune-base-de-données.html#cb68-2"></a><span class="st">  </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span></span>
+<span id="cb68-3"><a href="importation-et-manipulation-dune-base-de-données.html#cb68-3"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean_sep_len =</span> <span class="kw">mean</span>(Sepal.Length),</span>
+<span id="cb68-4"><a href="importation-et-manipulation-dune-base-de-données.html#cb68-4"></a>            <span class="dt">mean_sep_wid =</span> <span class="kw">mean</span>(Sepal.Width))</span></code></pre></div>
+<pre><code>## [90m# A tibble: 3 x 3[39m
+##   Species    mean_sep_len mean_sep_wid
+## [90m*[39m [3m[90m&lt;fct&gt;[39m[23m             [3m[90m&lt;dbl&gt;[39m[23m        [3m[90m&lt;dbl&gt;[39m[23m
+## [90m1[39m setosa             5.01         3.43
+## [90m2[39m versicolor         5.94         2.77
+## [90m3[39m virginica          6.59         2.97</code></pre>
+<p>Au cours des illustrations montrant l’usage des fonctions <code>select()</code> jusqu’à <code>summarize()</code>, il aura été possible de noter que les commandes n’écrasaient pas le jeu de données initial, ni ne créaient de nouveaux jeux de données, car aucune assignation à un nom n’était faite. Lorsqu’une assignation est réalisée, il est conseillé d’utiliser un nouveau nom, différent de celui utilisé pour le jeu de données initial, pour pouvoir revenir au jeu de données originel lorsque cela est souhaité. Ci-dessous un exemple de création d’un nouvel objet de type tableau (assigné au nom <code>iris2</code>) à partir de l’utilisation de la plupart des fonctions que nous venons de voir et qui peuvent être utilisées dans un même bloc de code grâce au <em>pipe</em> (<code>%&gt;%</code>).</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="importation-et-manipulation-dune-base-de-données.html#cb70-1"></a>iris2 &lt;-<span class="st"> </span></span>
+<span id="cb70-2"><a href="importation-et-manipulation-dune-base-de-données.html#cb70-2"></a><span class="st">  </span>iris <span class="op">%&gt;%</span></span>
+<span id="cb70-3"><a href="importation-et-manipulation-dune-base-de-données.html#cb70-3"></a><span class="st">  </span><span class="kw">select</span>(Petal.Length, Petal.Width, Species) <span class="op">%&gt;%</span></span>
+<span id="cb70-4"><a href="importation-et-manipulation-dune-base-de-données.html#cb70-4"></a><span class="st">  </span><span class="kw">rename</span>(<span class="dt">Petal_len =</span> Petal.Length, <span class="dt">Petal_wid =</span> Petal.Width) <span class="op">%&gt;%</span></span>
+<span id="cb70-5"><a href="importation-et-manipulation-dune-base-de-données.html#cb70-5"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Petal_ratio =</span> Petal_len <span class="op">/</span><span class="st"> </span>Petal_wid) <span class="op">%&gt;%</span></span>
+<span id="cb70-6"><a href="importation-et-manipulation-dune-base-de-données.html#cb70-6"></a><span class="st">  </span><span class="kw">filter</span>((Species <span class="op">==</span><span class="st"> &quot;setosa&quot;</span> <span class="op">|</span><span class="st"> </span>Species <span class="op">==</span><span class="st"> &quot;virginica&quot;</span>) <span class="op">&amp;</span><span class="st"> </span>Petal_ratio <span class="op">&gt;</span><span class="st"> </span><span class="dv">8</span>) <span class="op">%&gt;%</span></span>
+<span id="cb70-7"><a href="importation-et-manipulation-dune-base-de-données.html#cb70-7"></a><span class="st">  </span><span class="kw">arrange</span>(<span class="op">-</span>Petal_ratio)</span>
+<span id="cb70-8"><a href="importation-et-manipulation-dune-base-de-données.html#cb70-8"></a>iris2</span></code></pre></div>
+<pre><code>## [90m# A tibble: 7 x 4[39m
+##   Petal_len Petal_wid Species Petal_ratio
+##       [3m[90m&lt;dbl&gt;[39m[23m     [3m[90m&lt;dbl&gt;[39m[23m [3m[90m&lt;fct&gt;[39m[23m         [3m[90m&lt;dbl&gt;[39m[23m
+## [90m1[39m       1.5       0.1 setosa        15   
+## [90m2[39m       1.5       0.1 setosa        15   
+## [90m3[39m       1.4       0.1 setosa        14.0 
+## [90m4[39m       1.4       0.1 setosa        14.0 
+## [90m5[39m       1.1       0.1 setosa        11   
+## [90m6[39m       1.9       0.2 setosa         9.50
+## [90m7[39m       1.7       0.2 setosa         8.5</code></pre>
+</div>
+<div id="passer-dune-disposition-en-lignes-à-une-disposition-en-colonnes-et-inversement-avec-pivot_wider-et-pivot_longer" class="section level3">
+<h3><span class="header-section-number">2.4.9</span> Passer d’une disposition en lignes à une disposition en colonnes et inversement avec pivot_wider() et pivot_longer()</h3>
+<p>Il convient de respecter certaines règles de base lors de la conception d’une base de données (e.g., mettre les observations en lignes et les variables en colonnes). Toutefois, dans certains cas, même après avoir bien respecter les règles, la manière selon laquelle la base de données a été organisée peut ne pas être encore adéquate pour pouvoir utiliser certaines fonctions. Prenons par exemple le cas où toutes les valeurs numériques d’une variable quantitative auraient été mises dans une même colonne en regard d’une variable qualitative pour que chaque valeur numérique corresponde à une modalité de cette variable qualitative (c’est le cas, par exemple, avec le jeu de données <code>iris</code>), et que la fonction à utiliser nécessiterait que l’on ait une colonne pour chacune des modalités de la variable qualitative, avec des colonnes mises côte à côte. Une fonction qui permet alors de passer d’un format “long” (i.e., toutes les valeurs numériques sont dans la même colonne) à un format “large” (i.e., les valeurs numériques sont réparties dans différentes colonnes selon la modalité à laquelle elles sont associées), est la fonction <code>pivot_wider()</code> du package <code>tidyr</code>. Pour pouvoir utiliser cette fonction, il faut qu’il y ait une variable permettant d’identifier à quel individu ou groupe appartienne les données dont on va changer l’organisation. Dans une base de données classique, il y a toujours une variable présente pour cela. Toutefois, dans le jeu de données <code>iris</code>, il n’y a pas une telle variable. Pour pouvoir illustrer l’utilisation de la fonction <code>pivot_wider()</code>, nous avons donc ajouté arbitrairement une variable <code>id</code> grâce à la fonction <code>mutate()</code> pour simuler le fait que les données de <code>iris</code> auraient été acquises en référence à des individus bien identifiés, avec à chaque fois une valeur pour les trois modalités de la variable <code>Species</code>.</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="importation-et-manipulation-dune-base-de-données.html#cb72-1"></a>iris2 &lt;-<span class="st"> </span></span>
+<span id="cb72-2"><a href="importation-et-manipulation-dune-base-de-données.html#cb72-2"></a><span class="st">  </span>iris <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb72-3"><a href="importation-et-manipulation-dune-base-de-données.html#cb72-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">id =</span> <span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">50</span>, <span class="dt">times =</span> <span class="dv">3</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb72-4"><a href="importation-et-manipulation-dune-base-de-données.html#cb72-4"></a><span class="st">  </span><span class="kw">select</span>(id, Species,  <span class="kw">everything</span>()) <span class="op">%&gt;%</span></span>
+<span id="cb72-5"><a href="importation-et-manipulation-dune-base-de-données.html#cb72-5"></a><span class="st">  </span><span class="kw">arrange</span>(id, Species) <span class="op">%&gt;%</span></span>
+<span id="cb72-6"><a href="importation-et-manipulation-dune-base-de-données.html#cb72-6"></a><span class="st">  </span><span class="kw">as_tibble</span>()</span>
+<span id="cb72-7"><a href="importation-et-manipulation-dune-base-de-données.html#cb72-7"></a>iris2</span></code></pre></div>
+<pre><code>## [90m# A tibble: 150 x 6[39m
+##       id Species    Sepal.Length Sepal.Width Petal.Length Petal.Width
+##    [3m[90m&lt;int&gt;[39m[23m [3m[90m&lt;fct&gt;[39m[23m             [3m[90m&lt;dbl&gt;[39m[23m       [3m[90m&lt;dbl&gt;[39m[23m        [3m[90m&lt;dbl&gt;[39m[23m       [3m[90m&lt;dbl&gt;[39m[23m
+## [90m 1[39m     1 setosa              5.1         3.5          1.4         0.2
+## [90m 2[39m     1 versicolor          7           3.2          4.7         1.4
+## [90m 3[39m     1 virginica           6.3         3.3          6           2.5
+## [90m 4[39m     2 setosa              4.9         3            1.4         0.2
+## [90m 5[39m     2 versicolor          6.4         3.2          4.5         1.5
+## [90m 6[39m     2 virginica           5.8         2.7          5.1         1.9
+## [90m 7[39m     3 setosa              4.7         3.2          1.3         0.2
+## [90m 8[39m     3 versicolor          6.9         3.1          4.9         1.5
+## [90m 9[39m     3 virginica           7.1         3            5.9         2.1
+## [90m10[39m     4 setosa              4.6         3.1          1.5         0.2
+## [90m# … with 140 more rows[39m</code></pre>
+<p>La fonction <code>pivot_wider()</code> permet alors de mettre en colonnes les valeurs des variables sélectionnées pour chacune des trois modalités de la variable <code>Species</code> (ci-dessous, seules les trois colonnes relatives à la longueur des sépales des fleurs (<code>Sepal.Length</code>) sont montrées, mais le reste a bien été crée).</p>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="importation-et-manipulation-dune-base-de-données.html#cb74-1"></a>iris3 &lt;-<span class="st"> </span></span>
+<span id="cb74-2"><a href="importation-et-manipulation-dune-base-de-données.html#cb74-2"></a><span class="st">  </span>iris2 <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb74-3"><a href="importation-et-manipulation-dune-base-de-données.html#cb74-3"></a><span class="st">  </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> Species, </span>
+<span id="cb74-4"><a href="importation-et-manipulation-dune-base-de-données.html#cb74-4"></a>              <span class="dt">values_from =</span> Sepal.Length <span class="op">:</span><span class="st"> </span>Petal.Width)</span>
+<span id="cb74-5"><a href="importation-et-manipulation-dune-base-de-données.html#cb74-5"></a>iris3</span></code></pre></div>
+<pre><code>## [90m# A tibble: 50 x 13[39m
+##       id Sepal.Length_se… Sepal.Length_ve… Sepal.Length_vi… Sepal.Width_set…
+##    [3m[90m&lt;int&gt;[39m[23m            [3m[90m&lt;dbl&gt;[39m[23m            [3m[90m&lt;dbl&gt;[39m[23m            [3m[90m&lt;dbl&gt;[39m[23m            [3m[90m&lt;dbl&gt;[39m[23m
+## [90m 1[39m     1              5.1              7                6.3              3.5
+## [90m 2[39m     2              4.9              6.4              5.8              3  
+## [90m 3[39m     3              4.7              6.9              7.1              3.2
+## [90m 4[39m     4              4.6              5.5              6.3              3.1
+## [90m 5[39m     5              5                6.5              6.5              3.6
+## [90m 6[39m     6              5.4              5.7              7.6              3.9
+## [90m 7[39m     7              4.6              6.3              4.9              3.4
+## [90m 8[39m     8              5                4.9              7.3              3.4
+## [90m 9[39m     9              4.4              6.6              6.7              2.9
+## [90m10[39m    10              4.9              5.2              7.2              3.1
+## [90m# … with 40 more rows, and 8 more variables: Sepal.Width_versicolor [3m[90m&lt;dbl&gt;[90m[23m,[39m
+## [90m#   Sepal.Width_virginica [3m[90m&lt;dbl&gt;[90m[23m, Petal.Length_setosa [3m[90m&lt;dbl&gt;[90m[23m,[39m
+## [90m#   Petal.Length_versicolor [3m[90m&lt;dbl&gt;[90m[23m, Petal.Length_virginica [3m[90m&lt;dbl&gt;[90m[23m,[39m
+## [90m#   Petal.Width_setosa [3m[90m&lt;dbl&gt;[90m[23m, Petal.Width_versicolor [3m[90m&lt;dbl&gt;[90m[23m,[39m
+## [90m#   Petal.Width_virginica [3m[90m&lt;dbl&gt;[90m[23m[39m</code></pre>
+<p>L’argument <code>names_from</code> a permis d’indiquer la variable à partir de laquelle on a dispatché les valeurs en colonnes, et l’argument <code>values_from</code> a permis de préciser les variables pour lesquelles on voulait que les valeurs numériques soient dispatchées. L’utilisation des deux-points (<code>:</code>) nous a permis de sélectionner toutes les variables allant de <code>Sepal.Length</code> à <code>Petal.Width</code> dans le jeu de données.</p>
+<p>Dans une situation inverse à celle que nous venons de voir, nous pourrions avoir les données représentées en colonnes (comme c’est le cas avec le jeu de données crée <code>iris3</code>), alors que nous les voudrions en lignes (comme c’était le cas avec le jeu de données <code>iris</code> à l’origine). La fonction <code>pivot_longer</code> permet de faire cette conversion.</p>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="importation-et-manipulation-dune-base-de-données.html#cb76-1"></a>iris4 &lt;-<span class="st"> </span></span>
+<span id="cb76-2"><a href="importation-et-manipulation-dune-base-de-données.html#cb76-2"></a><span class="st">  </span>iris3 <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb76-3"><a href="importation-et-manipulation-dune-base-de-données.html#cb76-3"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> <span class="kw">c</span>(Sepal.Length_setosa, Sepal.Length_versicolor, Sepal.Length_virginica), </span>
+<span id="cb76-4"><a href="importation-et-manipulation-dune-base-de-données.html#cb76-4"></a>               <span class="dt">names_to =</span> <span class="st">&quot;Species&quot;</span>, </span>
+<span id="cb76-5"><a href="importation-et-manipulation-dune-base-de-données.html#cb76-5"></a>               <span class="dt">values_to =</span> <span class="st">&quot;Sepal_len&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb76-6"><a href="importation-et-manipulation-dune-base-de-données.html#cb76-6"></a><span class="st">  </span><span class="kw">select</span>(id, Species, Sepal_len)</span>
+<span id="cb76-7"><a href="importation-et-manipulation-dune-base-de-données.html#cb76-7"></a>iris4</span></code></pre></div>
+<pre><code>## [90m# A tibble: 150 x 3[39m
+##       id Species                 Sepal_len
+##    [3m[90m&lt;int&gt;[39m[23m [3m[90m&lt;chr&gt;[39m[23m                       [3m[90m&lt;dbl&gt;[39m[23m
+## [90m 1[39m     1 Sepal.Length_setosa           5.1
+## [90m 2[39m     1 Sepal.Length_versicolor       7  
+## [90m 3[39m     1 Sepal.Length_virginica        6.3
+## [90m 4[39m     2 Sepal.Length_setosa           4.9
+## [90m 5[39m     2 Sepal.Length_versicolor       6.4
+## [90m 6[39m     2 Sepal.Length_virginica        5.8
+## [90m 7[39m     3 Sepal.Length_setosa           4.7
+## [90m 8[39m     3 Sepal.Length_versicolor       6.9
+## [90m 9[39m     3 Sepal.Length_virginica        7.1
+## [90m10[39m     4 Sepal.Length_setosa           4.6
+## [90m# … with 140 more rows[39m</code></pre>
+<p>Dans la fonction <code>pivot_longer()</code> ci-dessus, nous avons indiqué à l’aide de l’argument <code>cols</code> et de la fonction <code>c()</code> l’ensemble des variables dont nous souhaitions voir les valeurs regroupées dans une même colonne. L’argument <code>names_to</code> nous a permis de donner un nom à la variable qualitative qui comporte les modalités à associer aux valeurs numériques, et l’argument <code>values_to</code> nous a permis de donner un nom à la colonne où se trouvent maintenant les valeurs numériques. Les deux nouvelles colonnes ainsi crées se trouvent tout à gauche du tableau <code>iris4</code>, mais nous avons sélectionné pour cet exemple seulement les colonnes qui permettaient d’illustrer le résultat de la fonction. On peut remarquer cependant qu’en créant ces colonnes, R a dû dupliquer les valeurs de la variable id et des autres colonnes pour pouvoir garder la correspondance entre les données, chose que l’on peut voir en tapant <code>iris4</code> dans la Console.</p>
+<p>Nous venons de voir plusieurs fonctions qui peuvent être très utiles pour pouvoir facilement préparer sa base de données en vue des futures analyses. Il ne s’agit que d’une vue très superficielle de tout le potentiel de manipulation des données qu’ont ces fonctions. Pour une vue approndie des possibilités qu’offrent ces fonctions, la lecture de l’ouvrage <em>R for Data Science</em> d’Hadley Wickham et de Garrett Grolemund <span class="citation">(<a href="#ref-Wickham2017" role="doc-biblioref">2017</a>)</span> sera particulièrement enrichissante. Cet ouvrage est en libre accès ici : <a href="https://r4ds.had.co.nz" class="uri">https://r4ds.had.co.nz</a>.</p>
+</div>
+</div>
+<div id="résumé-1" class="section level2">
+<h2><span class="header-section-number">2.5</span> Résumé</h2>
+<ul>
+<li>La base de données est un tableau comportant l’ensemble des données avec les observations organisées en lignes et les variables organisées en colonnes.</li>
+<li>Les grands types de variables que l’on peut retrouver dans une base de données sont les variables quantitatives continues, les variables quantitatives discrètes, les variables qualitatives nominales, et les variables qualitatives ordinales.</li>
+<li>Avant d’initier un travail d’analyse, il peut être utile de fixer le répertoire avec la fonction <code>setwd()</code>.</li>
+<li>Pour importer un jeu de données au format .csv, il est possible d’utiliser la fonction <code>readr::read_csv2()</code>.</li>
+<li>Pour exporter un jeu de données au format .csv, il est possible d’utiliser la fonction <code>readr::write_csv2()</code>.</li>
+<li>Pour mettre un tableau de donnnées au format <em>data frame</em>, utiliser la fonction <code>as.data.frame()</code>.</li>
+<li>Pour mettre un tableau de données au format <em>tibble</em>, utiliser la fonction <code>tibble::as_tibble()</code>.</li>
+<li>Pour lister les variables présentes dans un tableau de données, utiliser la fonction <code>str()</code>.</li>
+<li>Pour modifier les types des variables, utiliser des fonctions comme <code>as.numeric()</code>, <code>as.factor()</code>, <code>as.character()</code>, <code>as.Date()</code>, etc.</li>
+<li>Pour sélectionner les variables d’un tableau de données, utiliser la fonction <code>dplyr::select()</code>.</li>
+<li>Pour renommer les variables d’un tableau de données, utiliser la fonction <code>dplyr::rename()</code>.</li>
+<li>Pour créer de nouvelles variables dans un tableau de données, utliser la fonction <code>dplyr::mutate()</code>.</li>
+<li>Pour sélectionner des lignes dans un tableau de données, utiliser la fonction <code>dplyr::filter()</code>.</li>
+<li>Pour trier les lignes d’un tableau de données, utiliser la fonction <code>dplyr::arrange()</code>.</li>
+<li>Pour résumer les variables d’un tableau de données, utiliser les fonctions <code>dplyr::group_by()</code> et <code>dplyr::summarize()</code>.</li>
+<li>Pour passer d’un tableau de données au format <em>long</em> à un tableau de données au format <em>wide</em>, utiliser la fonction <code>tidyr::pivot_wider()</code>.</li>
+<li>Pour passer d’un tableau de données au uformat <em>wide</em> à un tableau de données au format <em>long</em>, utiliser la fonction <code>tidyr::pivot_longer()</code>.</li>
+<li>Pour enchaîner l’application de fonctions, utiliser le symbole <code>%&gt;%</code> (<em>pipe</em>, package <code>magrittr</code>).</li>
+</ul>
+
+</div>
+</div>
+<h3>Références</h3>
+<div id="refs" class="references">
+<div id="ref-Labreuche2010">
+<p>Labreuche, J. (2010). Les différents types de variables, leurs représentations graphiques et paramètres descriptifs. <em>Sang Thrombose Vaisseaux</em>, <em>22</em>(10), 536–543. <a href="https://doi.org/10.1684/stv.2010.0541">https://doi.org/10.1684/stv.2010.0541</a></p>
+</div>
+<div id="ref-Wickham2017">
+<p>Wickham, H., &amp; Grolemund, G. (2017). <em>R for Data Science</em>. O’Reilly.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="prérequis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="analyses-descriptives-univariées.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
