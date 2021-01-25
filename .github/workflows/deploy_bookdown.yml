@@ -20,8 +20,6 @@ jobs:
              persist-credentials: false
       
       - uses: r-lib/actions/setup-r@v1
-          with:
-          crayon.enabled: FALSE
       
       - uses: r-lib/actions/setup-pandoc@v1
       
@@ -36,6 +34,13 @@ jobs:
         with:
           path: ${{ env.R_LIBS_USER }}
           key: ${{ runner.os }}-${{ steps.get-r-version.outputs.version }}-3-
+          
+      - name: Cache bookdown results
+        uses: actions/cache@v1
+        with:
+          path: _bookdown_files
+          key: bookdown-2-${{ hashFiles('**/*Rmd') }}
+          restore-keys: bookdown-2-
           
       - name: Install pak
         run: |
