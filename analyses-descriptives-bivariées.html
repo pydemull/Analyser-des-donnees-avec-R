@@ -24,7 +24,7 @@
 <meta name="author" content="Pierre-Yves de Müllenheim" />
 
 
-<meta name="date" content="2021-01-24" />
+<meta name="date" content="2021-01-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -955,8 +955,8 @@ Figure 4.17: Deux groupes avec données non appariées
 <pre><code>## Cohen&#39;s d |         95% CI
 ## --------------------------
 ## -2.10     | [-2.59, -1.61]
-## [36m
-## - Estimated using pooled SD.[39m</code></pre>
+## 
+## - Estimated using pooled SD.</code></pre>
 <p>Dans cet exemple, on remarque qu’on a bien cherché à savoir comment les données de la variable <code>Sepal.Length</code> pouvaient différer en fonction (<code>~</code>) des modalités de la variable <code>Species</code>. Si la fonction nous donne un résultat, il faut toutefois bien faire attention au sens du calcul qui a été réalisé. Configurée de la sorte, la fonction <code>cohens_d()</code> réalise la différence <strong>modalité 1 - modalité 2</strong>. Il faut donc savoir quelle est la modalité 1 et quelle est la modalité 2 dans la variable <code>Species</code> pour ensuite pouvoir interpréter le signe du résultat, qui est négatif ici avec la valeur de -2.10. Pour ce faire, on peut utiliser la fonction <code>levels()</code> :</p>
 <div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="analyses-descriptives-bivariées.html#cb183-1"></a><span class="kw">levels</span>(iris_two_species<span class="op">$</span>Species)</span></code></pre></div>
 <pre><code>## [1] &quot;setosa&quot;     &quot;versicolor&quot; &quot;virginica&quot;</code></pre>
@@ -989,9 +989,9 @@ Figure 4.17: Deux groupes avec données non appariées
 <pre><code>## Hedges&#39; g |         95% CI
 ## --------------------------
 ## -2.09     | [-2.57, -1.60]
-## [36m
-## - Estimated using pooled SD.[39m[36m
-## - Bias corrected using Hedges and Olkin&#39;s method.[39m</code></pre>
+## 
+## - Estimated using pooled SD.
+## - Bias corrected using Hedges and Olkin&#39;s method.</code></pre>
 <p>Ici, la valeur ne change pas beaucoup par rapport au cas précédent, car l’effectif n’est pas si petit que cela (<span class="math inline">\(N_{1}\)</span> + <span class="math inline">\(N_{2}\)</span> = 100 ici, ce qui fait que la correction appliquée au <span class="math inline">\(d_{s}\)</span> de Cohen est minime).</p>
 <p><strong>Delta de Glass</strong></p>
 <p>Dans certains cas où l’on souhaiterait comparer les scores de deux groupes indépendants pour tester l’effet de deux conditions expérimentales différentes, l’expérimentation en tant que telle peut influencer, au-delà de la moyenne, l’écart-type de la variable réponse dans un des deux groupes. On peut se trouver dans ce genre de situation lorsque l’on compare les données post-programme d’un groupe entrainé ou traité à celles d’un groupe contrôle. En effet, le groupe entraîné/traité peut voir son écart-type changé au terme d’un programme en raison d’une réponse individuelle hétérogène à ce programme, ce qui ne sera pas en principe le cas du groupe contrôle. Dans ce genre de situation, des indices statistiques autres que le <span class="math inline">\(g_{s}\)</span> de Hedges mériteraient d’être calculés, tels que le <span class="math inline">\(\Delta\)</span> de Glass <span class="citation">(Lakens, <a href="#ref-Lakens2013" role="doc-biblioref">2013</a>)</span> :</p>
@@ -1015,20 +1015,20 @@ Figure 4.17: Deux groupes avec données non appariées
 ## 5     S05     12.1         1.1
 ## 6     S06      8.0         2.5</code></pre>
 <p>Pour la suite de l’analyse, on peut reconfigurer ce jeu de données de telle sorte à bien avoir les conditions testées dans une même colonne et les valeurs correspondantes dans la colonne d’à côté, avec la modalité “Straight” en tant que première modalité à considérer dans les fonctions à suivre. Le nouveau jeu de données s’appellerait alors <code>Blink2</code>.</p>
-<pre><code>## [90m# A tibble: 24 x 3[39m
+<pre><code>## # A tibble: 24 x 3
 ##    Subject Condition   Blink_rate
-##    [3m[90m&lt;fct&gt;[39m[23m   [3m[90m&lt;fct&gt;[39m[23m            [3m[90m&lt;dbl&gt;[39m[23m
-## [90m 1[39m S01     Straight          24  
-## [90m 2[39m S01     Oscillating       15  
-## [90m 3[39m S02     Straight          19.5
-## [90m 4[39m S02     Oscillating        6.6
-## [90m 5[39m S03     Straight           8.2
-## [90m 6[39m S03     Oscillating        1.9
-## [90m 7[39m S04     Straight           8.5
-## [90m 8[39m S04     Oscillating        1.5
-## [90m 9[39m S05     Straight          12.1
-## [90m10[39m S05     Oscillating        1.1
-## [90m# … with 14 more rows[39m</code></pre>
+##    &lt;fct&gt;   &lt;fct&gt;            &lt;dbl&gt;
+##  1 S01     Straight          24  
+##  2 S01     Oscillating       15  
+##  3 S02     Straight          19.5
+##  4 S02     Oscillating        6.6
+##  5 S03     Straight           8.2
+##  6 S03     Oscillating        1.9
+##  7 S04     Straight           8.5
+##  8 S04     Oscillating        1.5
+##  9 S05     Straight          12.1
+## 10 S05     Oscillating        1.1
+## # … with 14 more rows</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:Blinkreconfiguration"></span>
 <img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/Blinkreconfiguration-1.png" alt="Données du jeu de données `Blink`" width="672" />
 <p class="caption">
@@ -1047,8 +1047,8 @@ Figure 4.18: Données du jeu de données <code>Blink</code>
 <pre><code>## Cohen&#39;s d |       95% CI
 ## ------------------------
 ## 1.53      | [0.58, 2.44]
-## [36m
-## - Estimated using un-pooled SD.[39m</code></pre>
+## 
+## - Estimated using un-pooled SD.</code></pre>
 <p>En effet, que l’on fasse la moyenne des différences (ce qui serait attendu pour le présent calcul) ou la différence entre deux moyennes (ce qui est finalement fait par la fonction tel que configurée ci-dessus), cela ne change rien avec des données pairées. Le numérateur <span class="math inline">\(\overline{X} _{diff}\)</span> reste donc correctement calculé même avec cette configuration de fonction qui est faite initialement pour des groupes indépendants. Le fait d’indiquer <code>pooled_sd = FALSE</code> change le calcul du dénominateur que nous avions rencontré initialement pour le calcul de <span class="math inline">\(d_{s}\)</span>, cela pour obtenir le calcul attendu pour le <span class="math inline">\(d_{av}\)</span>.</p>
 <p><strong>gav de Hedges</strong></p>
 <p>Comme dans le cas de l’étude de groupes indépendants, <span class="math inline">\(d_{av}\)</span> et ses dérivés sont biaisés. Il peut donc être à nouveau préférable de calculer le <span class="math inline">\(g_{av}\)</span> de Hedges avec la fonction <code>hedges_g()</code> configurée comme ceci :</p>
@@ -1056,9 +1056,9 @@ Figure 4.18: Données du jeu de données <code>Blink</code>
 <pre><code>## Hedges&#39; g |       95% CI
 ## ------------------------
 ## 1.47      | [0.56, 2.35]
-## [36m
-## - Estimated using un-pooled SD.[39m[36m
-## - Bias corrected using Hedges and Olkin&#39;s method.[39m</code></pre>
+## 
+## - Estimated using un-pooled SD.
+## - Bias corrected using Hedges and Olkin&#39;s method.</code></pre>
 <p>Toutefois, comme le rappelle Lakens <span class="citation">(<a href="#ref-Lakens2013" role="doc-biblioref">2013</a>)</span>, le <span class="math inline">\(g_{av}\)</span> de Hedges ne serait pas complètement non biaisé.</p>
 
 </div>

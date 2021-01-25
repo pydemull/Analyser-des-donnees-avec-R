@@ -24,7 +24,7 @@
 <meta name="author" content="Pierre-Yves de Müllenheim" />
 
 
-<meta name="date" content="2021-01-24" />
+<meta name="date" content="2021-01-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -507,20 +507,20 @@ Pour fixer le répertoire de travail, il existe plusieurs manières de faire. Un
 <p>RStudio nous montre tout le jeu de données dans la Console, ce qui n’est pas très utile, d’autant plus que l’on peut perdre de vue la première ligne de titre lorsque le jeu de données contient beaucoup de lignes. Retournons donc au format <em>tibble</em> grâce à la fonction <code>as_tibble()</code> du package <code>tibble</code>, et voyons ce qu’il se passe lorsqu’on lance à nouveau le nom <code>iris</code> dans la Console.</p>
 <div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="importation-et-manipulation-dune-base-de-données.html#cb48-1"></a>iris &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(<span class="dt">x =</span> iris)</span>
 <span id="cb48-2"><a href="importation-et-manipulation-dune-base-de-données.html#cb48-2"></a>iris</span></code></pre></div>
-<pre><code>## [90m# A tibble: 150 x 5[39m
+<pre><code>## # A tibble: 150 x 5
 ##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
-##           [3m[90m&lt;dbl&gt;[39m[23m       [3m[90m&lt;dbl&gt;[39m[23m        [3m[90m&lt;dbl&gt;[39m[23m       [3m[90m&lt;dbl&gt;[39m[23m [3m[90m&lt;chr&gt;[39m[23m  
-## [90m 1[39m          5.1         3.5          1.4         0.2 setosa 
-## [90m 2[39m          4.9         3            1.4         0.2 setosa 
-## [90m 3[39m          4.7         3.2          1.3         0.2 setosa 
-## [90m 4[39m          4.6         3.1          1.5         0.2 setosa 
-## [90m 5[39m          5           3.6          1.4         0.2 setosa 
-## [90m 6[39m          5.4         3.9          1.7         0.4 setosa 
-## [90m 7[39m          4.6         3.4          1.4         0.3 setosa 
-## [90m 8[39m          5           3.4          1.5         0.2 setosa 
-## [90m 9[39m          4.4         2.9          1.4         0.2 setosa 
-## [90m10[39m          4.9         3.1          1.5         0.1 setosa 
-## [90m# … with 140 more rows[39m</code></pre>
+##           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;chr&gt;  
+##  1          5.1         3.5          1.4         0.2 setosa 
+##  2          4.9         3            1.4         0.2 setosa 
+##  3          4.7         3.2          1.3         0.2 setosa 
+##  4          4.6         3.1          1.5         0.2 setosa 
+##  5          5           3.6          1.4         0.2 setosa 
+##  6          5.4         3.9          1.7         0.4 setosa 
+##  7          4.6         3.4          1.4         0.3 setosa 
+##  8          5           3.4          1.5         0.2 setosa 
+##  9          4.4         2.9          1.4         0.2 setosa 
+## 10          4.9         3.1          1.5         0.1 setosa 
+## # … with 140 more rows</code></pre>
 <p>Cette fois, RStudio n’affiche que les premières lignes du jeu de données, et il fournit en plus de cela des informations quant aux types de variables présentes dans le jeu de données, en-dessous de la ligne de titres. Maintenant que la base de données a été importée, il ne reste plus qu’à voir différentes fonctions pour pouvoir configurer la base de données telle que nous la voulons pour réaliser confortablement les analyses.</p>
 </div>
 <div id="manipuler-la-base-de-données" class="section level2">
@@ -541,11 +541,11 @@ Pour fixer le répertoire de travail, il existe plusieurs manières de faire. Un
 ##  $ Species     : chr [1:150] &quot;setosa&quot; &quot;setosa&quot; &quot;setosa&quot; &quot;setosa&quot; ...
 ##  - attr(*, &quot;spec&quot;)=
 ##   .. cols(
-##   ..   Sepal.Length = [32mcol_double()[39m,
-##   ..   Sepal.Width = [32mcol_double()[39m,
-##   ..   Petal.Length = [32mcol_double()[39m,
-##   ..   Petal.Width = [32mcol_double()[39m,
-##   ..   Species = [31mcol_character()[39m
+##   ..   Sepal.Length = col_double(),
+##   ..   Sepal.Width = col_double(),
+##   ..   Petal.Length = col_double(),
+##   ..   Petal.Width = col_double(),
+##   ..   Species = col_character()
 ##   .. )</code></pre>
 <p>Après avoir activé la commande contenant la fonction <code>str()</code>, la Console affiche plusieurs lignes d’information, avec à chaque fois le nom de la variable, son type, et les premières valeurs de la variable. Plusieurs termes peuvent être rencontrés selon la manière dont R a interprété les variables du jeu de données, notamment (mais pas seulement) :</p>
 <ul>
@@ -582,11 +582,11 @@ Pour fixer le répertoire de travail, il existe plusieurs manières de faire. Un
 ##  $ Species     : chr [1:150] &quot;setosa&quot; &quot;setosa&quot; &quot;setosa&quot; &quot;setosa&quot; ...
 ##  - attr(*, &quot;spec&quot;)=
 ##   .. cols(
-##   ..   Sepal.Length = [32mcol_double()[39m,
-##   ..   Sepal.Width = [32mcol_double()[39m,
-##   ..   Petal.Length = [32mcol_double()[39m,
-##   ..   Petal.Width = [32mcol_double()[39m,
-##   ..   Species = [31mcol_character()[39m
+##   ..   Sepal.Length = col_double(),
+##   ..   Sepal.Width = col_double(),
+##   ..   Petal.Length = col_double(),
+##   ..   Petal.Width = col_double(),
+##   ..   Species = col_character()
 ##   .. )</code></pre>
 <p>Cette stratégie de modification du type de la variable peut convenir lorsqu’il y a peu de variables à modifier. Cependant, lorsque la liste s’allonge, il peut être plus lisible, en matière de code, de fonctionner autrement : en utilisant le symbole <code>%&gt;%</code> (qu’on appelle <em>pipe</em>), et la fonction <code>mutate()</code> du package <code>dplyr</code>.</p>
 <div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="importation-et-manipulation-dune-base-de-données.html#cb57-1"></a>iris &lt;-<span class="st"> </span></span>
@@ -603,20 +603,20 @@ Pour fixer le répertoire de travail, il existe plusieurs manières de faire. Un
 <p>Certains jeux de données peuvent être très larges, c’est-à-dire qu’ils peuvent contenir beaucoup de colonnes, parfois inutiles, et qui peuvent être gênantes lorsque l’on veut avoir une vue claire du contenu du jeu de données. La fonction <code>select()</code> du package <code>dplyr</code> permet de sélectionner des colonnes facilement.</p>
 <div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="importation-et-manipulation-dune-base-de-données.html#cb58-1"></a>iris <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb58-2"><a href="importation-et-manipulation-dune-base-de-données.html#cb58-2"></a><span class="st">  </span><span class="kw">select</span>(Petal.Length, Petal.Width, Species)</span></code></pre></div>
-<pre><code>## [90m# A tibble: 150 x 3[39m
+<pre><code>## # A tibble: 150 x 3
 ##    Petal.Length Petal.Width Species
-##           [3m[90m&lt;dbl&gt;[39m[23m       [3m[90m&lt;dbl&gt;[39m[23m [3m[90m&lt;fct&gt;[39m[23m  
-## [90m 1[39m          1.4         0.2 setosa 
-## [90m 2[39m          1.4         0.2 setosa 
-## [90m 3[39m          1.3         0.2 setosa 
-## [90m 4[39m          1.5         0.2 setosa 
-## [90m 5[39m          1.4         0.2 setosa 
-## [90m 6[39m          1.7         0.4 setosa 
-## [90m 7[39m          1.4         0.3 setosa 
-## [90m 8[39m          1.5         0.2 setosa 
-## [90m 9[39m          1.4         0.2 setosa 
-## [90m10[39m          1.5         0.1 setosa 
-## [90m# … with 140 more rows[39m</code></pre>
+##           &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  
+##  1          1.4         0.2 setosa 
+##  2          1.4         0.2 setosa 
+##  3          1.3         0.2 setosa 
+##  4          1.5         0.2 setosa 
+##  5          1.4         0.2 setosa 
+##  6          1.7         0.4 setosa 
+##  7          1.4         0.3 setosa 
+##  8          1.5         0.2 setosa 
+##  9          1.4         0.2 setosa 
+## 10          1.5         0.1 setosa 
+## # … with 140 more rows</code></pre>
 </div>
 <div id="renommer-des-variables-avec-rename" class="section level3">
 <h3><span class="header-section-number">2.4.4</span> Renommer des variables avec rename()</h3>
@@ -627,20 +627,20 @@ Pour fixer le répertoire de travail, il existe plusieurs manières de faire. Un
 <span id="cb60-4"><a href="importation-et-manipulation-dune-base-de-données.html#cb60-4"></a>         <span class="dt">Petal_long =</span> Petal.Length,</span>
 <span id="cb60-5"><a href="importation-et-manipulation-dune-base-de-données.html#cb60-5"></a>         <span class="dt">Petal_lar =</span> Petal.Width,</span>
 <span id="cb60-6"><a href="importation-et-manipulation-dune-base-de-données.html#cb60-6"></a>         <span class="dt">Especes =</span> Species)</span></code></pre></div>
-<pre><code>## [90m# A tibble: 150 x 5[39m
+<pre><code>## # A tibble: 150 x 5
 ##    Sepal_long Sepal_lar Petal_long Petal_lar Especes
-##         [3m[90m&lt;dbl&gt;[39m[23m     [3m[90m&lt;dbl&gt;[39m[23m      [3m[90m&lt;dbl&gt;[39m[23m     [3m[90m&lt;dbl&gt;[39m[23m [3m[90m&lt;fct&gt;[39m[23m  
-## [90m 1[39m        5.1       3.5        1.4       0.2 setosa 
-## [90m 2[39m        4.9       3          1.4       0.2 setosa 
-## [90m 3[39m        4.7       3.2        1.3       0.2 setosa 
-## [90m 4[39m        4.6       3.1        1.5       0.2 setosa 
-## [90m 5[39m        5         3.6        1.4       0.2 setosa 
-## [90m 6[39m        5.4       3.9        1.7       0.4 setosa 
-## [90m 7[39m        4.6       3.4        1.4       0.3 setosa 
-## [90m 8[39m        5         3.4        1.5       0.2 setosa 
-## [90m 9[39m        4.4       2.9        1.4       0.2 setosa 
-## [90m10[39m        4.9       3.1        1.5       0.1 setosa 
-## [90m# … with 140 more rows[39m</code></pre>
+##         &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt; &lt;fct&gt;  
+##  1        5.1       3.5        1.4       0.2 setosa 
+##  2        4.9       3          1.4       0.2 setosa 
+##  3        4.7       3.2        1.3       0.2 setosa 
+##  4        4.6       3.1        1.5       0.2 setosa 
+##  5        5         3.6        1.4       0.2 setosa 
+##  6        5.4       3.9        1.7       0.4 setosa 
+##  7        4.6       3.4        1.4       0.3 setosa 
+##  8        5         3.4        1.5       0.2 setosa 
+##  9        4.4       2.9        1.4       0.2 setosa 
+## 10        4.9       3.1        1.5       0.1 setosa 
+## # … with 140 more rows</code></pre>
 </div>
 <div id="créer-des-variables-avec-mutate" class="section level3">
 <h3><span class="header-section-number">2.4.5</span> Créer des variables avec mutate()</h3>
@@ -648,20 +648,20 @@ Pour fixer le répertoire de travail, il existe plusieurs manières de faire. Un
 <div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="importation-et-manipulation-dune-base-de-données.html#cb62-1"></a>iris <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb62-2"><a href="importation-et-manipulation-dune-base-de-données.html#cb62-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">ratio_sepal =</span> Sepal.Length <span class="op">/</span><span class="st"> </span>Sepal.Width, </span>
 <span id="cb62-3"><a href="importation-et-manipulation-dune-base-de-données.html#cb62-3"></a>         <span class="dt">ratio_petal =</span> Petal.Length <span class="op">/</span><span class="st"> </span>Petal.Width)</span></code></pre></div>
-<pre><code>## [90m# A tibble: 150 x 7[39m
+<pre><code>## # A tibble: 150 x 7
 ##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species ratio_sepal
-##           [3m[90m&lt;dbl&gt;[39m[23m       [3m[90m&lt;dbl&gt;[39m[23m        [3m[90m&lt;dbl&gt;[39m[23m       [3m[90m&lt;dbl&gt;[39m[23m [3m[90m&lt;fct&gt;[39m[23m         [3m[90m&lt;dbl&gt;[39m[23m
-## [90m 1[39m          5.1         3.5          1.4         0.2 setosa         1.46
-## [90m 2[39m          4.9         3            1.4         0.2 setosa         1.63
-## [90m 3[39m          4.7         3.2          1.3         0.2 setosa         1.47
-## [90m 4[39m          4.6         3.1          1.5         0.2 setosa         1.48
-## [90m 5[39m          5           3.6          1.4         0.2 setosa         1.39
-## [90m 6[39m          5.4         3.9          1.7         0.4 setosa         1.38
-## [90m 7[39m          4.6         3.4          1.4         0.3 setosa         1.35
-## [90m 8[39m          5           3.4          1.5         0.2 setosa         1.47
-## [90m 9[39m          4.4         2.9          1.4         0.2 setosa         1.52
-## [90m10[39m          4.9         3.1          1.5         0.1 setosa         1.58
-## [90m# … with 140 more rows, and 1 more variable: ratio_petal [3m[90m&lt;dbl&gt;[90m[23m[39m</code></pre>
+##           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;         &lt;dbl&gt;
+##  1          5.1         3.5          1.4         0.2 setosa         1.46
+##  2          4.9         3            1.4         0.2 setosa         1.63
+##  3          4.7         3.2          1.3         0.2 setosa         1.47
+##  4          4.6         3.1          1.5         0.2 setosa         1.48
+##  5          5           3.6          1.4         0.2 setosa         1.39
+##  6          5.4         3.9          1.7         0.4 setosa         1.38
+##  7          4.6         3.4          1.4         0.3 setosa         1.35
+##  8          5           3.4          1.5         0.2 setosa         1.47
+##  9          4.4         2.9          1.4         0.2 setosa         1.52
+## 10          4.9         3.1          1.5         0.1 setosa         1.58
+## # … with 140 more rows, and 1 more variable: ratio_petal &lt;dbl&gt;</code></pre>
 </div>
 <div id="sélectionner-des-lignes-avec-filter" class="section level3">
 <h3><span class="header-section-number">2.4.6</span> Sélectionner des lignes avec filter()</h3>
@@ -697,40 +697,40 @@ Pour fixer le répertoire de travail, il existe plusieurs manières de faire. Un
 <div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="importation-et-manipulation-dune-base-de-données.html#cb64-1"></a>iris <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb64-2"><a href="importation-et-manipulation-dune-base-de-données.html#cb64-2"></a><span class="st">  </span><span class="kw">filter</span>((Species <span class="op">==</span><span class="st"> &quot;setosa&quot;</span> <span class="op">|</span><span class="st"> </span>Species <span class="op">==</span><span class="st"> &quot;virginica&quot;</span>) <span class="op">&amp;</span></span>
 <span id="cb64-3"><a href="importation-et-manipulation-dune-base-de-données.html#cb64-3"></a><span class="st">          </span>Sepal.Length <span class="op">&lt;=</span><span class="st"> </span><span class="dv">5</span>)</span></code></pre></div>
-<pre><code>## [90m# A tibble: 29 x 5[39m
+<pre><code>## # A tibble: 29 x 5
 ##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
-##           [3m[90m&lt;dbl&gt;[39m[23m       [3m[90m&lt;dbl&gt;[39m[23m        [3m[90m&lt;dbl&gt;[39m[23m       [3m[90m&lt;dbl&gt;[39m[23m [3m[90m&lt;fct&gt;[39m[23m  
-## [90m 1[39m          4.9         3            1.4         0.2 setosa 
-## [90m 2[39m          4.7         3.2          1.3         0.2 setosa 
-## [90m 3[39m          4.6         3.1          1.5         0.2 setosa 
-## [90m 4[39m          5           3.6          1.4         0.2 setosa 
-## [90m 5[39m          4.6         3.4          1.4         0.3 setosa 
-## [90m 6[39m          5           3.4          1.5         0.2 setosa 
-## [90m 7[39m          4.4         2.9          1.4         0.2 setosa 
-## [90m 8[39m          4.9         3.1          1.5         0.1 setosa 
-## [90m 9[39m          4.8         3.4          1.6         0.2 setosa 
-## [90m10[39m          4.8         3            1.4         0.1 setosa 
-## [90m# … with 19 more rows[39m</code></pre>
+##           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  
+##  1          4.9         3            1.4         0.2 setosa 
+##  2          4.7         3.2          1.3         0.2 setosa 
+##  3          4.6         3.1          1.5         0.2 setosa 
+##  4          5           3.6          1.4         0.2 setosa 
+##  5          4.6         3.4          1.4         0.3 setosa 
+##  6          5           3.4          1.5         0.2 setosa 
+##  7          4.4         2.9          1.4         0.2 setosa 
+##  8          4.9         3.1          1.5         0.1 setosa 
+##  9          4.8         3.4          1.6         0.2 setosa 
+## 10          4.8         3            1.4         0.1 setosa 
+## # … with 19 more rows</code></pre>
 </div>
 <div id="arranger-les-lignes-avec-arrange" class="section level3">
 <h3><span class="header-section-number">2.4.7</span> Arranger les lignes avec arrange()</h3>
 <p>On peut vouloir que le jeu de données soit arrangé, ou trié, selon un certain ordre, en fonction des valeurs d’une variable donnée. La fonction <code>arrange()</code> du package <code>dplyr</code> est très utile pour gérer ce genre de réalisation. L’exemple ci-dessous conduit à trier les données selon un ordre croissant en fonction des valeurs de la variable <code>Sepal.Length</code>. Le fait de mettre le symbole <code>-</code> devant le nom de la variable aurait conduit à un tri décroissant.</p>
 <div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="importation-et-manipulation-dune-base-de-données.html#cb66-1"></a>iris <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb66-2"><a href="importation-et-manipulation-dune-base-de-données.html#cb66-2"></a><span class="st">  </span><span class="kw">arrange</span>(Sepal.Length)</span></code></pre></div>
-<pre><code>## [90m# A tibble: 150 x 5[39m
+<pre><code>## # A tibble: 150 x 5
 ##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
-##           [3m[90m&lt;dbl&gt;[39m[23m       [3m[90m&lt;dbl&gt;[39m[23m        [3m[90m&lt;dbl&gt;[39m[23m       [3m[90m&lt;dbl&gt;[39m[23m [3m[90m&lt;fct&gt;[39m[23m  
-## [90m 1[39m          4.3         3            1.1         0.1 setosa 
-## [90m 2[39m          4.4         2.9          1.4         0.2 setosa 
-## [90m 3[39m          4.4         3            1.3         0.2 setosa 
-## [90m 4[39m          4.4         3.2          1.3         0.2 setosa 
-## [90m 5[39m          4.5         2.3          1.3         0.3 setosa 
-## [90m 6[39m          4.6         3.1          1.5         0.2 setosa 
-## [90m 7[39m          4.6         3.4          1.4         0.3 setosa 
-## [90m 8[39m          4.6         3.6          1           0.2 setosa 
-## [90m 9[39m          4.6         3.2          1.4         0.2 setosa 
-## [90m10[39m          4.7         3.2          1.3         0.2 setosa 
-## [90m# … with 140 more rows[39m</code></pre>
+##           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  
+##  1          4.3         3            1.1         0.1 setosa 
+##  2          4.4         2.9          1.4         0.2 setosa 
+##  3          4.4         3            1.3         0.2 setosa 
+##  4          4.4         3.2          1.3         0.2 setosa 
+##  5          4.5         2.3          1.3         0.3 setosa 
+##  6          4.6         3.1          1.5         0.2 setosa 
+##  7          4.6         3.4          1.4         0.3 setosa 
+##  8          4.6         3.6          1           0.2 setosa 
+##  9          4.6         3.2          1.4         0.2 setosa 
+## 10          4.7         3.2          1.3         0.2 setosa 
+## # … with 140 more rows</code></pre>
 </div>
 <div id="résumer-des-variables-avec-group_by-et-summarize" class="section level3">
 <h3><span class="header-section-number">2.4.8</span> Résumer des variables avec group_by() et summarize()</h3>
@@ -739,12 +739,12 @@ Pour fixer le répertoire de travail, il existe plusieurs manières de faire. Un
 <span id="cb68-2"><a href="importation-et-manipulation-dune-base-de-données.html#cb68-2"></a><span class="st">  </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span></span>
 <span id="cb68-3"><a href="importation-et-manipulation-dune-base-de-données.html#cb68-3"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean_sep_len =</span> <span class="kw">mean</span>(Sepal.Length),</span>
 <span id="cb68-4"><a href="importation-et-manipulation-dune-base-de-données.html#cb68-4"></a>            <span class="dt">mean_sep_wid =</span> <span class="kw">mean</span>(Sepal.Width))</span></code></pre></div>
-<pre><code>## [90m# A tibble: 3 x 3[39m
+<pre><code>## # A tibble: 3 x 3
 ##   Species    mean_sep_len mean_sep_wid
-## [90m*[39m [3m[90m&lt;fct&gt;[39m[23m             [3m[90m&lt;dbl&gt;[39m[23m        [3m[90m&lt;dbl&gt;[39m[23m
-## [90m1[39m setosa             5.01         3.43
-## [90m2[39m versicolor         5.94         2.77
-## [90m3[39m virginica          6.59         2.97</code></pre>
+## * &lt;fct&gt;             &lt;dbl&gt;        &lt;dbl&gt;
+## 1 setosa             5.01         3.43
+## 2 versicolor         5.94         2.77
+## 3 virginica          6.59         2.97</code></pre>
 <p>Au cours des illustrations montrant l’usage des fonctions <code>select()</code> jusqu’à <code>summarize()</code>, il aura été possible de noter que les commandes n’écrasaient pas le jeu de données initial, ni ne créaient de nouveaux jeux de données, car aucune assignation à un nom n’était faite. Lorsqu’une assignation est réalisée, il est conseillé d’utiliser un nouveau nom, différent de celui utilisé pour le jeu de données initial, pour pouvoir revenir au jeu de données originel lorsque cela est souhaité. Ci-dessous un exemple de création d’un nouvel objet de type tableau (assigné au nom <code>iris2</code>) à partir de l’utilisation de la plupart des fonctions que nous venons de voir et qui peuvent être utilisées dans un même bloc de code grâce au <em>pipe</em> (<code>%&gt;%</code>).</p>
 <div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="importation-et-manipulation-dune-base-de-données.html#cb70-1"></a>iris2 &lt;-<span class="st"> </span></span>
 <span id="cb70-2"><a href="importation-et-manipulation-dune-base-de-données.html#cb70-2"></a><span class="st">  </span>iris <span class="op">%&gt;%</span></span>
@@ -754,16 +754,16 @@ Pour fixer le répertoire de travail, il existe plusieurs manières de faire. Un
 <span id="cb70-6"><a href="importation-et-manipulation-dune-base-de-données.html#cb70-6"></a><span class="st">  </span><span class="kw">filter</span>((Species <span class="op">==</span><span class="st"> &quot;setosa&quot;</span> <span class="op">|</span><span class="st"> </span>Species <span class="op">==</span><span class="st"> &quot;virginica&quot;</span>) <span class="op">&amp;</span><span class="st"> </span>Petal_ratio <span class="op">&gt;</span><span class="st"> </span><span class="dv">8</span>) <span class="op">%&gt;%</span></span>
 <span id="cb70-7"><a href="importation-et-manipulation-dune-base-de-données.html#cb70-7"></a><span class="st">  </span><span class="kw">arrange</span>(<span class="op">-</span>Petal_ratio)</span>
 <span id="cb70-8"><a href="importation-et-manipulation-dune-base-de-données.html#cb70-8"></a>iris2</span></code></pre></div>
-<pre><code>## [90m# A tibble: 7 x 4[39m
+<pre><code>## # A tibble: 7 x 4
 ##   Petal_len Petal_wid Species Petal_ratio
-##       [3m[90m&lt;dbl&gt;[39m[23m     [3m[90m&lt;dbl&gt;[39m[23m [3m[90m&lt;fct&gt;[39m[23m         [3m[90m&lt;dbl&gt;[39m[23m
-## [90m1[39m       1.5       0.1 setosa        15   
-## [90m2[39m       1.5       0.1 setosa        15   
-## [90m3[39m       1.4       0.1 setosa        14.0 
-## [90m4[39m       1.4       0.1 setosa        14.0 
-## [90m5[39m       1.1       0.1 setosa        11   
-## [90m6[39m       1.9       0.2 setosa         9.50
-## [90m7[39m       1.7       0.2 setosa         8.5</code></pre>
+##       &lt;dbl&gt;     &lt;dbl&gt; &lt;fct&gt;         &lt;dbl&gt;
+## 1       1.5       0.1 setosa        15   
+## 2       1.5       0.1 setosa        15   
+## 3       1.4       0.1 setosa        14.0 
+## 4       1.4       0.1 setosa        14.0 
+## 5       1.1       0.1 setosa        11   
+## 6       1.9       0.2 setosa         9.50
+## 7       1.7       0.2 setosa         8.5</code></pre>
 </div>
 <div id="passer-dune-disposition-en-lignes-à-une-disposition-en-colonnes-et-inversement-avec-pivot_wider-et-pivot_longer" class="section level3">
 <h3><span class="header-section-number">2.4.9</span> Passer d’une disposition en lignes à une disposition en colonnes et inversement avec pivot_wider() et pivot_longer()</h3>
@@ -775,44 +775,44 @@ Pour fixer le répertoire de travail, il existe plusieurs manières de faire. Un
 <span id="cb72-5"><a href="importation-et-manipulation-dune-base-de-données.html#cb72-5"></a><span class="st">  </span><span class="kw">arrange</span>(id, Species) <span class="op">%&gt;%</span></span>
 <span id="cb72-6"><a href="importation-et-manipulation-dune-base-de-données.html#cb72-6"></a><span class="st">  </span><span class="kw">as_tibble</span>()</span>
 <span id="cb72-7"><a href="importation-et-manipulation-dune-base-de-données.html#cb72-7"></a>iris2</span></code></pre></div>
-<pre><code>## [90m# A tibble: 150 x 6[39m
+<pre><code>## # A tibble: 150 x 6
 ##       id Species    Sepal.Length Sepal.Width Petal.Length Petal.Width
-##    [3m[90m&lt;int&gt;[39m[23m [3m[90m&lt;fct&gt;[39m[23m             [3m[90m&lt;dbl&gt;[39m[23m       [3m[90m&lt;dbl&gt;[39m[23m        [3m[90m&lt;dbl&gt;[39m[23m       [3m[90m&lt;dbl&gt;[39m[23m
-## [90m 1[39m     1 setosa              5.1         3.5          1.4         0.2
-## [90m 2[39m     1 versicolor          7           3.2          4.7         1.4
-## [90m 3[39m     1 virginica           6.3         3.3          6           2.5
-## [90m 4[39m     2 setosa              4.9         3            1.4         0.2
-## [90m 5[39m     2 versicolor          6.4         3.2          4.5         1.5
-## [90m 6[39m     2 virginica           5.8         2.7          5.1         1.9
-## [90m 7[39m     3 setosa              4.7         3.2          1.3         0.2
-## [90m 8[39m     3 versicolor          6.9         3.1          4.9         1.5
-## [90m 9[39m     3 virginica           7.1         3            5.9         2.1
-## [90m10[39m     4 setosa              4.6         3.1          1.5         0.2
-## [90m# … with 140 more rows[39m</code></pre>
+##    &lt;int&gt; &lt;fct&gt;             &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;
+##  1     1 setosa              5.1         3.5          1.4         0.2
+##  2     1 versicolor          7           3.2          4.7         1.4
+##  3     1 virginica           6.3         3.3          6           2.5
+##  4     2 setosa              4.9         3            1.4         0.2
+##  5     2 versicolor          6.4         3.2          4.5         1.5
+##  6     2 virginica           5.8         2.7          5.1         1.9
+##  7     3 setosa              4.7         3.2          1.3         0.2
+##  8     3 versicolor          6.9         3.1          4.9         1.5
+##  9     3 virginica           7.1         3            5.9         2.1
+## 10     4 setosa              4.6         3.1          1.5         0.2
+## # … with 140 more rows</code></pre>
 <p>La fonction <code>pivot_wider()</code> permet alors de mettre en colonnes les valeurs des variables sélectionnées pour chacune des trois modalités de la variable <code>Species</code> (ci-dessous, seules les trois colonnes relatives à la longueur des sépales des fleurs (<code>Sepal.Length</code>) sont montrées, mais le reste a bien été crée).</p>
 <div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="importation-et-manipulation-dune-base-de-données.html#cb74-1"></a>iris3 &lt;-<span class="st"> </span></span>
 <span id="cb74-2"><a href="importation-et-manipulation-dune-base-de-données.html#cb74-2"></a><span class="st">  </span>iris2 <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb74-3"><a href="importation-et-manipulation-dune-base-de-données.html#cb74-3"></a><span class="st">  </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> Species, </span>
 <span id="cb74-4"><a href="importation-et-manipulation-dune-base-de-données.html#cb74-4"></a>              <span class="dt">values_from =</span> Sepal.Length <span class="op">:</span><span class="st"> </span>Petal.Width)</span>
 <span id="cb74-5"><a href="importation-et-manipulation-dune-base-de-données.html#cb74-5"></a>iris3</span></code></pre></div>
-<pre><code>## [90m# A tibble: 50 x 13[39m
+<pre><code>## # A tibble: 50 x 13
 ##       id Sepal.Length_se… Sepal.Length_ve… Sepal.Length_vi… Sepal.Width_set…
-##    [3m[90m&lt;int&gt;[39m[23m            [3m[90m&lt;dbl&gt;[39m[23m            [3m[90m&lt;dbl&gt;[39m[23m            [3m[90m&lt;dbl&gt;[39m[23m            [3m[90m&lt;dbl&gt;[39m[23m
-## [90m 1[39m     1              5.1              7                6.3              3.5
-## [90m 2[39m     2              4.9              6.4              5.8              3  
-## [90m 3[39m     3              4.7              6.9              7.1              3.2
-## [90m 4[39m     4              4.6              5.5              6.3              3.1
-## [90m 5[39m     5              5                6.5              6.5              3.6
-## [90m 6[39m     6              5.4              5.7              7.6              3.9
-## [90m 7[39m     7              4.6              6.3              4.9              3.4
-## [90m 8[39m     8              5                4.9              7.3              3.4
-## [90m 9[39m     9              4.4              6.6              6.7              2.9
-## [90m10[39m    10              4.9              5.2              7.2              3.1
-## [90m# … with 40 more rows, and 8 more variables: Sepal.Width_versicolor [3m[90m&lt;dbl&gt;[90m[23m,[39m
-## [90m#   Sepal.Width_virginica [3m[90m&lt;dbl&gt;[90m[23m, Petal.Length_setosa [3m[90m&lt;dbl&gt;[90m[23m,[39m
-## [90m#   Petal.Length_versicolor [3m[90m&lt;dbl&gt;[90m[23m, Petal.Length_virginica [3m[90m&lt;dbl&gt;[90m[23m,[39m
-## [90m#   Petal.Width_setosa [3m[90m&lt;dbl&gt;[90m[23m, Petal.Width_versicolor [3m[90m&lt;dbl&gt;[90m[23m,[39m
-## [90m#   Petal.Width_virginica [3m[90m&lt;dbl&gt;[90m[23m[39m</code></pre>
+##    &lt;int&gt;            &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;
+##  1     1              5.1              7                6.3              3.5
+##  2     2              4.9              6.4              5.8              3  
+##  3     3              4.7              6.9              7.1              3.2
+##  4     4              4.6              5.5              6.3              3.1
+##  5     5              5                6.5              6.5              3.6
+##  6     6              5.4              5.7              7.6              3.9
+##  7     7              4.6              6.3              4.9              3.4
+##  8     8              5                4.9              7.3              3.4
+##  9     9              4.4              6.6              6.7              2.9
+## 10    10              4.9              5.2              7.2              3.1
+## # … with 40 more rows, and 8 more variables: Sepal.Width_versicolor &lt;dbl&gt;,
+## #   Sepal.Width_virginica &lt;dbl&gt;, Petal.Length_setosa &lt;dbl&gt;,
+## #   Petal.Length_versicolor &lt;dbl&gt;, Petal.Length_virginica &lt;dbl&gt;,
+## #   Petal.Width_setosa &lt;dbl&gt;, Petal.Width_versicolor &lt;dbl&gt;,
+## #   Petal.Width_virginica &lt;dbl&gt;</code></pre>
 <p>L’argument <code>names_from</code> a permis d’indiquer la variable à partir de laquelle on a dispatché les valeurs en colonnes, et l’argument <code>values_from</code> a permis de préciser les variables pour lesquelles on voulait que les valeurs numériques soient dispatchées. L’utilisation des deux-points (<code>:</code>) nous a permis de sélectionner toutes les variables allant de <code>Sepal.Length</code> à <code>Petal.Width</code> dans le jeu de données.</p>
 <p>Dans une situation inverse à celle que nous venons de voir, nous pourrions avoir les données représentées en colonnes (comme c’est le cas avec le jeu de données crée <code>iris3</code>), alors que nous les voudrions en lignes (comme c’était le cas avec le jeu de données <code>iris</code> à l’origine). La fonction <code>pivot_longer</code> permet de faire cette conversion.</p>
 <div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="importation-et-manipulation-dune-base-de-données.html#cb76-1"></a>iris4 &lt;-<span class="st"> </span></span>
@@ -822,20 +822,20 @@ Pour fixer le répertoire de travail, il existe plusieurs manières de faire. Un
 <span id="cb76-5"><a href="importation-et-manipulation-dune-base-de-données.html#cb76-5"></a>               <span class="dt">values_to =</span> <span class="st">&quot;Sepal_len&quot;</span>) <span class="op">%&gt;%</span></span>
 <span id="cb76-6"><a href="importation-et-manipulation-dune-base-de-données.html#cb76-6"></a><span class="st">  </span><span class="kw">select</span>(id, Species, Sepal_len)</span>
 <span id="cb76-7"><a href="importation-et-manipulation-dune-base-de-données.html#cb76-7"></a>iris4</span></code></pre></div>
-<pre><code>## [90m# A tibble: 150 x 3[39m
+<pre><code>## # A tibble: 150 x 3
 ##       id Species                 Sepal_len
-##    [3m[90m&lt;int&gt;[39m[23m [3m[90m&lt;chr&gt;[39m[23m                       [3m[90m&lt;dbl&gt;[39m[23m
-## [90m 1[39m     1 Sepal.Length_setosa           5.1
-## [90m 2[39m     1 Sepal.Length_versicolor       7  
-## [90m 3[39m     1 Sepal.Length_virginica        6.3
-## [90m 4[39m     2 Sepal.Length_setosa           4.9
-## [90m 5[39m     2 Sepal.Length_versicolor       6.4
-## [90m 6[39m     2 Sepal.Length_virginica        5.8
-## [90m 7[39m     3 Sepal.Length_setosa           4.7
-## [90m 8[39m     3 Sepal.Length_versicolor       6.9
-## [90m 9[39m     3 Sepal.Length_virginica        7.1
-## [90m10[39m     4 Sepal.Length_setosa           4.6
-## [90m# … with 140 more rows[39m</code></pre>
+##    &lt;int&gt; &lt;chr&gt;                       &lt;dbl&gt;
+##  1     1 Sepal.Length_setosa           5.1
+##  2     1 Sepal.Length_versicolor       7  
+##  3     1 Sepal.Length_virginica        6.3
+##  4     2 Sepal.Length_setosa           4.9
+##  5     2 Sepal.Length_versicolor       6.4
+##  6     2 Sepal.Length_virginica        5.8
+##  7     3 Sepal.Length_setosa           4.7
+##  8     3 Sepal.Length_versicolor       6.9
+##  9     3 Sepal.Length_virginica        7.1
+## 10     4 Sepal.Length_setosa           4.6
+## # … with 140 more rows</code></pre>
 <p>Dans la fonction <code>pivot_longer()</code> ci-dessus, nous avons indiqué à l’aide de l’argument <code>cols</code> et de la fonction <code>c()</code> l’ensemble des variables dont nous souhaitions voir les valeurs regroupées dans une même colonne. L’argument <code>names_to</code> nous a permis de donner un nom à la variable qualitative qui comporte les modalités à associer aux valeurs numériques, et l’argument <code>values_to</code> nous a permis de donner un nom à la colonne où se trouvent maintenant les valeurs numériques. Les deux nouvelles colonnes ainsi crées se trouvent tout à gauche du tableau <code>iris4</code>, mais nous avons sélectionné pour cet exemple seulement les colonnes qui permettaient d’illustrer le résultat de la fonction. On peut remarquer cependant qu’en créant ces colonnes, R a dû dupliquer les valeurs de la variable id et des autres colonnes pour pouvoir garder la correspondance entre les données, chose que l’on peut voir en tapant <code>iris4</code> dans la Console.</p>
 <p>Nous venons de voir plusieurs fonctions qui peuvent être très utiles pour pouvoir facilement préparer sa base de données en vue des futures analyses. Il ne s’agit que d’une vue très superficielle de tout le potentiel de manipulation des données qu’ont ces fonctions. Pour une vue approndie des possibilités qu’offrent ces fonctions, la lecture de l’ouvrage <em>R for Data Science</em> d’Hadley Wickham et de Garrett Grolemund <span class="citation">(<a href="#ref-Wickham2017" role="doc-biblioref">2017</a>)</span> sera particulièrement enrichissante. Cet ouvrage est en libre accès ici : <a href="https://r4ds.had.co.nz" class="uri">https://r4ds.had.co.nz</a>.</p>
 </div>

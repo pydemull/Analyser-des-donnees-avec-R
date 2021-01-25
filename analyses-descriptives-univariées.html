@@ -24,7 +24,7 @@
 <meta name="author" content="Pierre-Yves de Müllenheim" />
 
 
-<meta name="date" content="2021-01-24" />
+<meta name="date" content="2021-01-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -325,20 +325,20 @@ Figure 3.5: Identification d’un outlier
 <span id="cb87-2"><a href="analyses-descriptives-univariées.html#cb87-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">id =</span> <span class="kw">as.factor</span>(<span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">50</span>, <span class="dt">times =</span> <span class="dv">3</span>)),                           </span>
 <span id="cb87-3"><a href="analyses-descriptives-univariées.html#cb87-3"></a>         <span class="dt">id_outlier =</span> <span class="kw">ifelse</span>(<span class="kw">is_outlier</span>(<span class="dt">x =</span> Sepal.Length), id, <span class="st">&quot;&quot;</span>)) <span class="op">%&gt;%</span></span>
 <span id="cb87-4"><a href="analyses-descriptives-univariées.html#cb87-4"></a><span class="st">  </span><span class="kw">select</span>(id, Sepal.Length, id_outlier)</span></code></pre></div>
-<pre><code>## [90m# A tibble: 150 x 3[39m
+<pre><code>## # A tibble: 150 x 3
 ##    id    Sepal.Length id_outlier
-##    [3m[90m&lt;fct&gt;[39m[23m        [3m[90m&lt;dbl&gt;[39m[23m [3m[90m&lt;chr&gt;[39m[23m     
-## [90m 1[39m 1              5.1 [90m&quot;[39m[90m&quot;[39m        
-## [90m 2[39m 2              4.9 [90m&quot;[39m[90m&quot;[39m        
-## [90m 3[39m 3             12   [90m&quot;[39m3[90m&quot;[39m       
-## [90m 4[39m 4              4.6 [90m&quot;[39m[90m&quot;[39m        
-## [90m 5[39m 5              5   [90m&quot;[39m[90m&quot;[39m        
-## [90m 6[39m 6              5.4 [90m&quot;[39m[90m&quot;[39m        
-## [90m 7[39m 7              4.6 [90m&quot;[39m[90m&quot;[39m        
-## [90m 8[39m 8              5   [90m&quot;[39m[90m&quot;[39m        
-## [90m 9[39m 9              4.4 [90m&quot;[39m[90m&quot;[39m        
-## [90m10[39m 10             4.9 [90m&quot;[39m[90m&quot;[39m        
-## [90m# … with 140 more rows[39m</code></pre>
+##    &lt;fct&gt;        &lt;dbl&gt; &lt;chr&gt;     
+##  1 1              5.1 &quot;&quot;        
+##  2 2              4.9 &quot;&quot;        
+##  3 3             12   &quot;3&quot;       
+##  4 4              4.6 &quot;&quot;        
+##  5 5              5   &quot;&quot;        
+##  6 6              5.4 &quot;&quot;        
+##  7 7              4.6 &quot;&quot;        
+##  8 8              5   &quot;&quot;        
+##  9 9              4.4 &quot;&quot;        
+## 10 10             4.9 &quot;&quot;        
+## # … with 140 more rows</code></pre>
 <p>Une fois cette procédure réalisée, le reste du code, et notamment la fonction <code>geom_text()</code>, a permis d’ajouter des éléments textuels au graphique, en l’occurence en s’appuyant sur la variable id_outlier, tel que configuré avec l’argument <code>aes()</code> de la fonction <code>geom_text()</code>. Lorsque la valeur anormale identifiée est effectivement une erreur de saisie dans la base de données, il convient de corriger la valeur avec la fonction d’assignation comme nous l’avons fait précédemment :</p>
 <div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="analyses-descriptives-univariées.html#cb89-1"></a>iris<span class="op">$</span>Sepal.Length[<span class="dv">3</span>] &lt;-<span class="st"> </span><span class="fl">4.7</span>  <span class="co"># Le nombre entre crochets désigne la position de l&#39;observation dans la variable.</span></span></code></pre></div>
 <p>On remarque ainsi qu’au-delà de prendre connaissance de la forme de la distribution, passer par ces étapes graphiques permet aussi de s’assurer qu’il n’y a pas eu d’erreur lors de la saisie des données dans la base (du moins, pas d’erreur visible et qui risquerait d’impacter grandement les calculs futurs). Passer par l’analyse graphique est donc recommandé avant de pouvoir se fier aux résultats numériques que l’on pourrait calculer par la suite, tels que les indices statistiques qui permettent de résumer numériquement une variable. Afin de faciliter l’analyse graphique de la distribution de la variable étudiée, nous avons crée une fonction, appelée <code>g_distri()</code> (cf. ci-dessous), visant à produire à la fois un histogramme et une boîte à moustaches représentant la variable étudiée, ainsi qu’un graphique de type nuage de points montrant les valeurs individuelles (la fonction a été configurée de telle sorte à ce que les points apparaissent davantage de couleur blanche là où il y a plus d’observations ; les observations isolées seront montrées avec des points relativement transparents).</p>
@@ -727,20 +727,20 @@ Figure 3.14: Moyenne et médiane dans le cadre d’une distribution asymétrique
 <p>Comme dans le cadre de variables quantitatives, une bonne pratique est de visualiser graphiquement la distribution de la variable. Ici, il s’agit plus précisémement de prendre connaissance des effectifs correspondant aux différentes modalités de la variable. Une manière rapide de procéder pour cela est d’utiliser la fonction <code>ggplot()</code> et la fonction <code>geom_bar()</code>. Illustrons cela avec le jeu de données <code>diamonds</code>, qui contient notamment la variable qualitative <code>color</code>.</p>
 <div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="analyses-descriptives-univariées.html#cb140-1"></a><span class="co"># Aperçu du jeu de données</span></span>
 <span id="cb140-2"><a href="analyses-descriptives-univariées.html#cb140-2"></a>diamonds</span></code></pre></div>
-<pre><code>## [90m# A tibble: 53,940 x 10[39m
+<pre><code>## # A tibble: 53,940 x 10
 ##    carat cut       color clarity depth table price     x     y     z
-##    [3m[90m&lt;dbl&gt;[39m[23m [3m[90m&lt;ord&gt;[39m[23m     [3m[90m&lt;ord&gt;[39m[23m [3m[90m&lt;ord&gt;[39m[23m   [3m[90m&lt;dbl&gt;[39m[23m [3m[90m&lt;dbl&gt;[39m[23m [3m[90m&lt;int&gt;[39m[23m [3m[90m&lt;dbl&gt;[39m[23m [3m[90m&lt;dbl&gt;[39m[23m [3m[90m&lt;dbl&gt;[39m[23m
-## [90m 1[39m 0.23  Ideal     E     SI2      61.5    55   326  3.95  3.98  2.43
-## [90m 2[39m 0.21  Premium   E     SI1      59.8    61   326  3.89  3.84  2.31
-## [90m 3[39m 0.23  Good      E     VS1      56.9    65   327  4.05  4.07  2.31
-## [90m 4[39m 0.290 Premium   I     VS2      62.4    58   334  4.2   4.23  2.63
-## [90m 5[39m 0.31  Good      J     SI2      63.3    58   335  4.34  4.35  2.75
-## [90m 6[39m 0.24  Very Good J     VVS2     62.8    57   336  3.94  3.96  2.48
-## [90m 7[39m 0.24  Very Good I     VVS1     62.3    57   336  3.95  3.98  2.47
-## [90m 8[39m 0.26  Very Good H     SI1      61.9    55   337  4.07  4.11  2.53
-## [90m 9[39m 0.22  Fair      E     VS2      65.1    61   337  3.87  3.78  2.49
-## [90m10[39m 0.23  Very Good H     VS1      59.4    61   338  4     4.05  2.39
-## [90m# … with 53,930 more rows[39m</code></pre>
+##    &lt;dbl&gt; &lt;ord&gt;     &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 0.23  Ideal     E     SI2      61.5    55   326  3.95  3.98  2.43
+##  2 0.21  Premium   E     SI1      59.8    61   326  3.89  3.84  2.31
+##  3 0.23  Good      E     VS1      56.9    65   327  4.05  4.07  2.31
+##  4 0.290 Premium   I     VS2      62.4    58   334  4.2   4.23  2.63
+##  5 0.31  Good      J     SI2      63.3    58   335  4.34  4.35  2.75
+##  6 0.24  Very Good J     VVS2     62.8    57   336  3.94  3.96  2.48
+##  7 0.24  Very Good I     VVS1     62.3    57   336  3.95  3.98  2.47
+##  8 0.26  Very Good H     SI1      61.9    55   337  4.07  4.11  2.53
+##  9 0.22  Fair      E     VS2      65.1    61   337  3.87  3.78  2.49
+## 10 0.23  Very Good H     VS1      59.4    61   338  4     4.05  2.39
+## # … with 53,930 more rows</code></pre>
 <div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="analyses-descriptives-univariées.html#cb142-1"></a><span class="co"># Visualisation de la distribution de la variable color</span></span>
 <span id="cb142-2"><a href="analyses-descriptives-univariées.html#cb142-2"></a>diamonds <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb142-3"><a href="analyses-descriptives-univariées.html#cb142-3"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> color)) <span class="op">+</span><span class="st"> </span></span>
@@ -755,16 +755,16 @@ Figure 3.15: Exemple de diagramme en barres
 <div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="analyses-descriptives-univariées.html#cb143-1"></a>diamonds <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb143-2"><a href="analyses-descriptives-univariées.html#cb143-2"></a><span class="st">  </span><span class="kw">group_by</span>(color) <span class="op">%&gt;%</span></span>
 <span id="cb143-3"><a href="analyses-descriptives-univariées.html#cb143-3"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>())</span></code></pre></div>
-<pre><code>## [90m# A tibble: 7 x 2[39m
+<pre><code>## # A tibble: 7 x 2
 ##   color count
-## [90m*[39m [3m[90m&lt;ord&gt;[39m[23m [3m[90m&lt;int&gt;[39m[23m
-## [90m1[39m D      [4m6[24m775
-## [90m2[39m E      [4m9[24m797
-## [90m3[39m F      [4m9[24m542
-## [90m4[39m G     [4m1[24m[4m1[24m292
-## [90m5[39m H      [4m8[24m304
-## [90m6[39m I      [4m5[24m422
-## [90m7[39m J      [4m2[24m808</code></pre>
+## * &lt;ord&gt; &lt;int&gt;
+## 1 D      6775
+## 2 E      9797
+## 3 F      9542
+## 4 G     11292
+## 5 H      8304
+## 6 I      5422
+## 7 J      2808</code></pre>
 <div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="analyses-descriptives-univariées.html#cb145-1"></a>diamonds <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb145-2"><a href="analyses-descriptives-univariées.html#cb145-2"></a><span class="st">  </span><span class="kw">group_by</span>(color) <span class="op">%&gt;%</span></span>
 <span id="cb145-3"><a href="analyses-descriptives-univariées.html#cb145-3"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span></span>
