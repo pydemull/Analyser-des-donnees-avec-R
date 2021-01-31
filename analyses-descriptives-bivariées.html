@@ -24,7 +24,7 @@
 <meta name="author" content="Pierre-Yves de Müllenheim" />
 
 
-<meta name="date" content="2021-01-25" />
+<meta name="date" content="2021-01-31" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -233,7 +233,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">4.1.1</span> Etudier graphiquement la relation</h3>
 <p>Comme dans le cadre d’analyses univariées, une bonne pratique, lorsqu’on étudie une relation bivariée, est de faire un graphique. Avec des variables quantitatives, il s’agit de montrer les valeurs d’une variable en fonction des valeurs de l’autre variable, chose que permet un simple nuage de points. Plusieurs types de relations peuvent alors être rencontrés, ces relations pouvant potentiellement s’apparenter à autant de fonctions mathématiques que l’on connaît. Parmi les plus connues, on a par exemple les relations linéaires, les relations logarithmiques, ou encore les relations quadratiques, qui sont illustrées ci-dessous.</p>
 <div class="figure" style="text-align: center"><span id="fig:relationshipsIllustrations"></span>
-<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/relationshipsIllustrations-1.png" alt="Différentes formes de relation" width="672" />
+<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/relationshipsIllustrations-1.png" alt="Différentes formes de relation" width="672" />
 <p class="caption">
 Figure 4.1: Différentes formes de relation
 </p>
@@ -242,7 +242,7 @@ Figure 4.1: Différentes formes de relation
 <div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="analyses-descriptives-bivariées.html#cb150-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> mtcars, <span class="kw">aes</span>(<span class="dt">x =</span> hp, <span class="dt">y =</span> mpg)) <span class="op">+</span><span class="st"> </span></span>
 <span id="cb150-2"><a href="analyses-descriptives-bivariées.html#cb150-2"></a><span class="st">  </span><span class="kw">geom_point</span>()</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:scatterplot"></span>
-<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/scatterplot-1.png" alt="Exemple de nuage de points" width="672" />
+<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/scatterplot-1.png" alt="Exemple de nuage de points" width="672" />
 <p class="caption">
 Figure 4.2: Exemple de nuage de points
 </p>
@@ -256,7 +256,7 @@ Figure 4.2: Exemple de nuage de points
 <span id="cb151-2"><a href="analyses-descriptives-bivariées.html#cb151-2"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
 <span id="cb151-3"><a href="analyses-descriptives-bivariées.html#cb151-3"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">formula =</span> y <span class="op">~</span><span class="st"> </span>x, <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:scatterplotLine"></span>
-<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/scatterplotLine-1.png" alt="Nuage de points avec droite de régression" width="672" />
+<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/scatterplotLine-1.png" alt="Nuage de points avec droite de régression" width="672" />
 <p class="caption">
 Figure 4.3: Nuage de points avec droite de régression
 </p>
@@ -347,7 +347,7 @@ Figure 4.3: Nuage de points avec droite de régression
 </table>
 <p>Ce que ce tableau peut permettre de rendre compte, c’est que plus les deux variables étudiées évolueront de manière consistante dans des sens identiques comme avec <span class="math inline">\(X1\)</span> et <span class="math inline">\(Y1\)</span>, ou de manière consistante dans des sens opposés comme avec <span class="math inline">\(X1\)</span> et <span class="math inline">\(Y3\)</span>, plus les produits <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span> donneront respectivement des grands scores positifs ou des grands scores négatifs, et moins les scores <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span> à additionner pour le calcul de la covariance s’annuleront. En effet, avec une relation relativement linéaire et positive les scores seront plus systématiquement positifs, et avec une relation relativement linéaire et négative les scores seront plus systématiquement négatifs. Toutefois, lorsqu’on aura des variables qui n’évolueront pas de manière consistante dans le même sens ou dans un sens opposé comme avec <span class="math inline">\(X1\)</span> et <span class="math inline">\(Y2\)</span>, les scores positifs et négatifs liés aux calculs <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span> auront tendance à s’annuler et donneront lieu à une somme des scores <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span> diminuée, et donc à une covariance et au final à un coefficient de corrélation de Pearson tirés vers 0. Ces différents cas de figure et les calculs <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span> correspondants sont illustrés sur la figure ci-dessous. Sur cette figure, chaque carré correspond au calcul <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span>, le carré étant bleu lorsque le résultat du calcul est positif, et rouge lorsque le résultat est négatif. L’aire d’un carré illustre la grandeur du score issu du calcul. Sur les figures de gauche et de droite, on distingue une relation linéaire parfaite, ce qui maximise les scores à additionner pour le calcul de la covariance, dans le positif pour la figure de gauche et dans le négatif pour la figure de droite. Au milieu, on remarque que le manque de relation linéaire donne lieu à des carrés à la fois bleus et rouges, indiquant que les scores associés aux calculs <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span> de la covariance s’annulent et diminuent ainsi la valeur finale de la covariance.</p>
 <div class="figure" style="text-align: center"><span id="fig:graphCov"></span>
-<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/graphCov-1.png" alt="Détermination de la covariance" width="960" />
+<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/graphCov-1.png" alt="Détermination de la covariance" width="960" />
 <p class="caption">
 Figure 4.4: Détermination de la covariance
 </p>
@@ -393,14 +393,14 @@ Figure 4.4: Détermination de la covariance
 <p>Pour visualiser le lien que l’on peut faire entre la forme du nuage de points et la valeur du coefficient de corrélation de Pearson que l’on peut obtenir, la page web proposée par Kristoffer Magnusson (<a href="https://rpsychologist.com/correlation" class="uri">https://rpsychologist.com/correlation</a>) peut être particulièrement intéressante. Cette page web donne la possibilité de faire varier manuellement la valeur du coefficient de corrélation de Pearson pour ensuite voir un nuage de points type correspondant à cette valeur. Faites un essai !</p>
 <p>A noter que la valeur du coefficient de corrélation de Pearson est très dépendante de la manière dont sont distribuées les variables, avec une influence particulière de la variabilité des données <span class="citation">(Halperin, <a href="#ref-Halperin1986" role="doc-biblioref">1986</a>)</span>. L’influence de la variabilité est illustrée sur la figure ci-dessous. A gauche, on observe un nuage de points représentant une population complète, avec en conséquence une variablité le long des axes <span class="math inline">\(X\)</span> et <span class="math inline">\(X\)</span> relativement importante. La valeur du coefficient de corrélation de Pearson est ici particulièrement élevée. A droite, on observe exactement les mêmes valeurs, mais sur un intervalle dont l’étendue a été manuellement restreinte, diminuant ainsi la variabilité. On observe alors une diminution de la valeur du coefficient de corrélation de Pearson, alors qu’il s’agit à l’origine du même jeu de données que celui de gauche. Cet exemple doit faire prendre conscience qu’il faut faire attention lorsqu’on cherche à comparer des coefficient de corrélation de Pearson obtenus avec différents échantillons présentant des caractéristiques différentes, car si ces échantillons n’ont pas les mêmes niveaux de variabilité, les valeurs des coefficients de corrélation ne seront pas vraiment comparables, en sachant que c’est l’échantillon qui présente la plus grande variabilité qui aura mathématiquement plus de chances de présenter une valeur de coefficient de corrélation plus élevée.</p>
 <div class="figure" style="text-align: center"><span id="fig:spuriousCorrelations"></span>
-<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/spuriousCorrelations-1.png" alt="Coefficient de corrélation de Pearson et variabilité des données" width="672" />
+<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/spuriousCorrelations-1.png" alt="Coefficient de corrélation de Pearson et variabilité des données" width="672" />
 <p class="caption">
 Figure 4.5: Coefficient de corrélation de Pearson et variabilité des données
 </p>
 </div>
 <p>Un exemple extrême de l’influence de la variabilité des données sur la valeur du coefficient de corrélation de Pearson est montré sur la figure ci-dessous. Les deux graphiques montrent exactement les mêmes données, à ceci près que sur le graphique de droite, on a remplacé en ordonnées une valeur du graphique de gauche pour lui donner la valeur de 10. L’influence de cette action sur la valeur du coefficient de corrélation est particulièrement nette, alors qu’une seule valeur a été modifée. Ceci montre qu’il faut faire attention aux valeurs extrêmes qui pourraient grandement influencer la valeur de corrélation obtenue, notamment en présence d’échantillons de taille relativement faible. Dans le cas où la valeur du coefficient de corrélation de Pearson serait très influencée par une valeur, il pourrait être une bonne pratique de calculer la valeur du coefficient de corrélation avec et sans cette valeur afin de pouvoir quantifier son influence sur la relation étudiée <span class="citation">(Halperin, <a href="#ref-Halperin1986" role="doc-biblioref">1986</a>)</span>. Une alternative pourrait être aussi d’étudier la relation à l’aide d’autres types de coefficients que celui de Pearson, tels que celui de Spearman, présenté plus bas. Toutes ces informations doivent en tous les cas faire prendre conscience qu’il n’est pas toujours pertinent de calculer le coefficient de corrélation de Pearson. En ce sens, lorsqu’on cherche à inférer la valeur du coefficient de corrélation de Pearson dans la population étudiée, et cela avec un degré d’incertitude bien défini, il convient de vérifier certains prérequis, lesquels seront abordés plus tard dans ce livre.</p>
 <div class="figure" style="text-align: center"><span id="fig:spuriousCorrelationBis"></span>
-<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/spuriousCorrelationBis-1.png" alt="Coefficient de corrélation de Pearson et outliers" width="672" />
+<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/spuriousCorrelationBis-1.png" alt="Coefficient de corrélation de Pearson et outliers" width="672" />
 <p class="caption">
 Figure 4.6: Coefficient de corrélation de Pearson et outliers
 </p>
@@ -604,14 +604,14 @@ Figure 4.6: Coefficient de corrélation de Pearson et outliers
 <span id="cb162-4"><a href="analyses-descriptives-bivariées.html#cb162-4"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
 <span id="cb162-5"><a href="analyses-descriptives-bivariées.html#cb162-5"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:graphSpearman"></span>
-<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/graphSpearman-1.png" alt="Graphique de corrélation pour le coefficient de Spearman" width="672" />
+<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/graphSpearman-1.png" alt="Graphique de corrélation pour le coefficient de Spearman" width="672" />
 <p class="caption">
 Figure 4.7: Graphique de corrélation pour le coefficient de Spearman
 </p>
 </div>
 <p>En matière d’interprétation, des valeurs de <em>rho</em> positives indiqueront que les deux variables mises en lien tendent à augmenter simultanément, on parlera alors de <strong>relation monotone positive</strong>. Dans le cas inverse, des valeurs négatives indiqueront que les deux variables mises en lien tendent à diminuer simultanément, on parlera alors de relation <strong>monotone négative</strong>. A noter cependant que de par son calcul, la valeur de <em>rho</em> ne permet pas de renseigner sur la forme de relation qu’il pourrait y avoir entre les valeurs des deux variables (e.g., linéaire ou curvilinéaire par exemple). Ceci est illustré sur la figure ci-dessous. La figure de gauche montre la relation entre les valeurs des variables <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span>, qui est caractérisée par un coefficient de corrélation de Spearman (<em>rho</em>) de 1, indiquant donc que la relation est parfaitement monotone positive, sans préjuger de la forme particulière que pourrait présenter la relation. Pour mieux comprendre pourquoi cette valeur de <em>rho</em> est de 1, la figure de droite montre la relation entre les rangs de ces deux variables <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span>. On voit en effet que la relation entre les rangs est effectivement parfaitement linéaire.</p>
 <div class="figure" style="text-align: center"><span id="fig:ranksvvaluesspearman"></span>
-<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/ranksvvaluesspearman-1.png" alt="Explication du caractère monotone d'une variable évalué par le coefficient de Spearman" width="672" />
+<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/ranksvvaluesspearman-1.png" alt="Explication du caractère monotone d'une variable évalué par le coefficient de Spearman" width="672" />
 <p class="caption">
 Figure 4.8: Explication du caractère monotone d’une variable évalué par le coefficient de Spearman
 </p>
@@ -649,7 +649,7 @@ Figure 4.8: Explication du caractère monotone d’une variable évalué par le 
 <span id="cb164-22"><a href="analyses-descriptives-bivariées.html#cb164-22"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;right&quot;</span>) <span class="op">+</span><span class="st">  </span></span>
 <span id="cb164-23"><a href="analyses-descriptives-bivariées.html#cb164-23"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;g2 : Mise en avant de la comparaison des genres&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:groupedBarsFigure"></span>
-<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/groupedBarsFigure-1.png" alt="Exemples de diagramme en barres mises côte-à-côte" width="672" />
+<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/groupedBarsFigure-1.png" alt="Exemples de diagramme en barres mises côte-à-côte" width="672" />
 <p class="caption">
 Figure 4.9: Exemples de diagramme en barres mises côte-à-côte
 </p>
@@ -660,7 +660,7 @@ Figure 4.9: Exemples de diagramme en barres mises côte-à-côte
 <span id="cb165-2"><a href="analyses-descriptives-bivariées.html#cb165-2"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span></span>
 <span id="cb165-3"><a href="analyses-descriptives-bivariées.html#cb165-3"></a><span class="st">  </span><span class="kw">facet_wrap</span>(. <span class="op">~</span><span class="st"> </span>gender)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:groupedBarsUpgraded"></span>
-<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/groupedBarsUpgraded-1.png" alt="Diagrammes en barres côte-à-côte séparés selon une variable catégorielle" width="672" />
+<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/groupedBarsUpgraded-1.png" alt="Diagrammes en barres côte-à-côte séparés selon une variable catégorielle" width="672" />
 <p class="caption">
 Figure 4.10: Diagrammes en barres côte-à-côte séparés selon une variable catégorielle
 </p>
@@ -672,7 +672,7 @@ Figure 4.10: Diagrammes en barres côte-à-côte séparés selon une variable ca
 <span id="cb166-4"><a href="analyses-descriptives-bivariées.html#cb166-4"></a><span class="st">  </span><span class="kw">theme_hc</span>() <span class="op">+</span></span>
 <span id="cb166-5"><a href="analyses-descriptives-bivariées.html#cb166-5"></a><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> Freq), <span class="dt">size =</span> <span class="dv">3</span>, <span class="dt">position =</span> <span class="kw">position_stack</span>(<span class="dt">vjust =</span> <span class="fl">0.5</span>))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:stackedBarsBiv"></span>
-<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/stackedBarsBiv-1.png" alt="Exemple de diagramme en barres empilées" width="672" />
+<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/stackedBarsBiv-1.png" alt="Exemple de diagramme en barres empilées" width="672" />
 <p class="caption">
 Figure 4.11: Exemple de diagramme en barres empilées
 </p>
@@ -799,7 +799,7 @@ Figure 4.11: Exemple de diagramme en barres empilées
 <span id="cb175-30"><a href="analyses-descriptives-bivariées.html#cb175-30"></a>        <span class="dt">axis.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>),</span>
 <span id="cb175-31"><a href="analyses-descriptives-bivariées.html#cb175-31"></a>        <span class="dt">axis.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:graphDistriBivQuantvsQualMeans"></span>
-<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/graphDistriBivQuantvsQualMeans-1.png" alt="Nuage de points avec moyennes et écart-types" width="1920" />
+<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/graphDistriBivQuantvsQualMeans-1.png" alt="Nuage de points avec moyennes et écart-types" width="1920" />
 <p class="caption">
 Figure 4.12: Nuage de points avec moyennes et écart-types
 </p>
@@ -836,7 +836,7 @@ Figure 4.12: Nuage de points avec moyennes et écart-types
 <span id="cb176-27"><a href="analyses-descriptives-bivariées.html#cb176-27"></a>        <span class="dt">axis.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>),</span>
 <span id="cb176-28"><a href="analyses-descriptives-bivariées.html#cb176-28"></a>        <span class="dt">axis.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:graphDistriBivQuantvsQualMed"></span>
-<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/graphDistriBivQuantvsQualMed-1.png" alt="Nuage de points avec boîtes à moustaches" width="1920" />
+<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/graphDistriBivQuantvsQualMed-1.png" alt="Nuage de points avec boîtes à moustaches" width="1920" />
 <p class="caption">
 Figure 4.13: Nuage de points avec boîtes à moustaches
 </p>
@@ -873,7 +873,7 @@ Figure 4.13: Nuage de points avec boîtes à moustaches
 <span id="cb177-27"><a href="analyses-descriptives-bivariées.html#cb177-27"></a>        <span class="dt">axis.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>),</span>
 <span id="cb177-28"><a href="analyses-descriptives-bivariées.html#cb177-28"></a>        <span class="dt">axis.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:graphDistriBivQuantvsQualdens"></span>
-<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/graphDistriBivQuantvsQualdens-1.png" alt="Nuages de points avec aires de densité" width="1920" />
+<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/graphDistriBivQuantvsQualdens-1.png" alt="Nuages de points avec aires de densité" width="1920" />
 <p class="caption">
 Figure 4.14: Nuages de points avec aires de densité
 </p>
@@ -905,7 +905,7 @@ Figure 4.14: Nuages de points avec aires de densité
 <span id="cb178-22"><a href="analyses-descriptives-bivariées.html#cb178-22"></a>        <span class="dt">axis.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>),</span>
 <span id="cb178-23"><a href="analyses-descriptives-bivariées.html#cb178-23"></a>        <span class="dt">axis.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:figrecapbivdens"></span>
-<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/figrecapbivdens-1.png" alt="Diagrammes en lignes de crête" width="1920" />
+<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/figrecapbivdens-1.png" alt="Diagrammes en lignes de crête" width="1920" />
 <p class="caption">
 Figure 4.15: Diagrammes en lignes de crête
 </p>
@@ -928,7 +928,7 @@ Figure 4.15: Diagrammes en lignes de crête
 <span id="cb180-8"><a href="analyses-descriptives-bivariées.html#cb180-8"></a><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> <span class="st">&quot;mean_sdl&quot;</span>, <span class="dt">fun.args =</span> <span class="kw">list</span>(<span class="dt">mult=</span><span class="dv">1</span>), <span class="dt">geom =</span> <span class="st">&quot;errorbar&quot;</span>, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>, <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">width =</span> <span class="fl">0.1</span>, <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span></span>
 <span id="cb180-9"><a href="analyses-descriptives-bivariées.html#cb180-9"></a><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun =</span> <span class="st">&quot;mean&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;point&quot;</span>, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>, <span class="dt">size =</span> <span class="dv">4</span>, <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>) </span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:pairedData"></span>
-<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/pairedData-1.png" alt="Deux groupes avec données appariées" width="672" />
+<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/pairedData-1.png" alt="Deux groupes avec données appariées" width="672" />
 <p class="caption">
 Figure 4.16: Deux groupes avec données appariées
 </p>
@@ -945,7 +945,7 @@ Figure 4.16: Deux groupes avec données appariées
 <p><span class="math display">\[d_{s} = \frac{\overline{X_{1}} - \overline{X_{2}}} {\sqrt{\frac{(N_{1} - 1) s_{1}^2 + (N_{2} - 1) s_{2}^2} {N_{1} + N_{2} - 2}}}\]</span></p>
 <p>Dans R, le <span class="math inline">\(d_{s}\)</span> de Cohen peut être calculé à l’aide de la fonction <code>cohens_d()</code> du package <code>effectsize</code>, qui nécessite d’être installé puis chargé avant d’être utilisé. Pour illustrer l’utilisation de cette fonction, on peut utiliser le jeu de données <code>iris_two_species</code> crée par nos soins à partir du jeu de données <code>iris</code> pour l’exemple, qui contient notamment la variable quantitative <code>Sepal.Length</code>, et deux modalités de la variable qualitative <code>Species</code> (<code>setosa</code> et <code>versicolor</code>).</p>
 <div class="figure" style="text-align: center"><span id="fig:iris2peciesview"></span>
-<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/iris2peciesview-1.png" alt="Deux groupes avec données non appariées" width="672" />
+<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/iris2peciesview-1.png" alt="Deux groupes avec données non appariées" width="672" />
 <p class="caption">
 Figure 4.17: Deux groupes avec données non appariées
 </p>
@@ -1030,7 +1030,7 @@ Figure 4.17: Deux groupes avec données non appariées
 ## 10 S05     Oscillating        1.1
 ## # … with 14 more rows</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:Blinkreconfiguration"></span>
-<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/Blinkreconfiguration-1.png" alt="Données du jeu de données `Blink`" width="672" />
+<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/Blinkreconfiguration-1.png" alt="Données du jeu de données `Blink`" width="672" />
 <p class="caption">
 Figure 4.18: Données du jeu de données <code>Blink</code>
 </p>
