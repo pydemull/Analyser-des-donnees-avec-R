@@ -10,10 +10,10 @@
 
   <meta property="og:title" content="Chapitre 2 Importation et manipulation d’une base de données | Analyser des données avec R" />
   <meta property="og:type" content="book" />
-  <meta property="og:url" content="pydm1989.github.io/Analyser-des-donnees-avec-R" />
+  <meta property="og:url" content="pydemull.github.io/Analyser-des-donnees-avec-R" />
   
   <meta property="og:description" content="Introduction à l’analyse des données avec R" />
-  <meta name="github-repo" content="PYDM1989/Analyser-des-donnees-avec-R" />
+  <meta name="github-repo" content="pydemull/Analyser-des-donnees-avec-R" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapitre 2 Importation et manipulation d’une base de données | Analyser des données avec R" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Pierre-Yves de Müllenheim" />
 
 
-<meta name="date" content="2021-02-20" />
+<meta name="date" content="2021-03-02" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -333,8 +333,8 @@ Très souvent, pour répondre à une question, il est nécessaire d’acquérir 
 </table>
 <p>En principe, les données de la base qui ont été obtenues selon la même procédure d’acquisition représentent le même type de choses. Ces choses sont appelées des <strong>variables</strong> car elles varient selon les individus qui ont été étudiés et les conditions de mesure qui ont été mises en oeuvre (dans le cas où il y en aurait plusieurs). Lorsque ces choses ne sont pas censées varier, on parle de <strong>constantes</strong>. Une base de données peut comporter plusieurs variables de natures différentes :</p>
 <ul>
-<li>Des <strong>variables quantitatives</strong>, qui comportent des nombres. Parmi les variables quantitatives, on distingue celles qui sont continues et celles qui sont discrètes. Les variables quantitatives continues contiennent des données pouvant comporter théoriquement un nombre infini de décimales (e.g., la taille, le poids, etc.). Au contraire, les variables quantitatives discrètes ne peuvent contenir théoriquement que des nombres finis (e.g., le nombre de victoires sportives au cours d’une année). Certaines variables en théorie discrètes sont cependant souvent considérées comme continues tant le nombre de valeurs théoriquement possibles pour la variable est grand, tel que pour le nombre de globules blancs mesurés dans le sang <span class="citation">(Labreuche, <a href="#ref-Labreuche2010" role="doc-biblioref">2010</a>)</span>.</li>
-<li>Des <strong>variables qualitatives</strong>, qui contiennent des valeurs désignant non pas des quantités mais des modalités. Ces modalités peuvent être exprimées sous forme littérale ou numérique. Parmi les variables qualitatives, on distingue celles qui sont nominales et celles qui sont ordinales. Les variables qualitatives nominales contiennent des modalités qui ne peuvent pas être ordonnées (e.g., les couleurs, les genres, etc.). Au contraire, les variables qualitatives ordinales contiennent des modalités qui peuvent être ordonnées (e.g., les niveaux de compétition sportive : départemental ; régional ; interrégional ; national ; international). Les variables qualitatives ordinales qui prendraient des valeurs numériques pour indiquer par exemple un niveau d’expertise (1, 2, 3, 4) se différencient des variables quantitatives discrètes par l’absence d’information sur la distance qui sépare les nombres de cette variable <span class="citation">(Labreuche, <a href="#ref-Labreuche2010" role="doc-biblioref">2010</a>)</span>.</li>
+<li>Des <strong>variables quantitatives</strong>, qui comportent des nombres. Parmi les variables quantitatives, on distingue celles qui sont continues et celles qui sont discrètes. Les variables quantitatives continues contiennent des données pouvant comporter théoriquement un nombre infini de décimales (e.g., la taille, le poids, etc.). Au contraire, les variables quantitatives discrètes ne peuvent contenir théoriquement que des nombres finis (e.g., le nombre de victoires sportives au cours d’une année). Certaines variables en théorie discrètes sont cependant souvent considérées comme continues tant le nombre de valeurs théoriquement possibles pour la variable est grand, tel que pour le nombre de globules blancs mesurés dans le sang <span class="citation">(Labreuche, <a href="#ref-labreucheDifferentsTypesVariables2010" role="doc-biblioref">2010</a>)</span>.</li>
+<li>Des <strong>variables qualitatives</strong>, qui contiennent des valeurs désignant non pas des quantités mais des modalités. Ces modalités peuvent être exprimées sous forme littérale ou numérique. Parmi les variables qualitatives, on distingue celles qui sont nominales et celles qui sont ordinales. Les variables qualitatives nominales contiennent des modalités qui ne peuvent pas être ordonnées (e.g., les couleurs, les genres, etc.). Au contraire, les variables qualitatives ordinales contiennent des modalités qui peuvent être ordonnées (e.g., les niveaux de compétition sportive : départemental ; régional ; interrégional ; national ; international). Les variables qualitatives ordinales qui prendraient des valeurs numériques pour indiquer par exemple un niveau d’expertise (1, 2, 3, 4) se différencient des variables quantitatives discrètes par l’absence d’information sur la distance qui sépare les nombres de cette variable <span class="citation">(Labreuche, <a href="#ref-labreucheDifferentsTypesVariables2010" role="doc-biblioref">2010</a>)</span>.</li>
 </ul>
 </div>
 <div id="fixer-le-répertoire-de-travail" class="section level2">
@@ -796,18 +796,18 @@ Pour fixer le répertoire de travail, il existe plusieurs manières de faire. Un
 <span id="cb74-4"><a href="importation-et-manipulation-dune-base-de-données.html#cb74-4"></a>              <span class="dt">values_from =</span> Sepal.Length <span class="op">:</span><span class="st"> </span>Petal.Width)</span>
 <span id="cb74-5"><a href="importation-et-manipulation-dune-base-de-données.html#cb74-5"></a>iris3</span></code></pre></div>
 <pre><code>## # A tibble: 50 x 13
-##       id Sepal.Length_se… Sepal.Length_ve… Sepal.Length_vi… Sepal.Width_set…
-##    &lt;int&gt;            &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;
-##  1     1              5.1              7                6.3              3.5
-##  2     2              4.9              6.4              5.8              3  
-##  3     3              4.7              6.9              7.1              3.2
-##  4     4              4.6              5.5              6.3              3.1
-##  5     5              5                6.5              6.5              3.6
-##  6     6              5.4              5.7              7.6              3.9
-##  7     7              4.6              6.3              4.9              3.4
-##  8     8              5                4.9              7.3              3.4
-##  9     9              4.4              6.6              6.7              2.9
-## 10    10              4.9              5.2              7.2              3.1
+##       id Sepal.Length_set… Sepal.Length_vers… Sepal.Length_vir… Sepal.Width_set…
+##    &lt;int&gt;             &lt;dbl&gt;              &lt;dbl&gt;             &lt;dbl&gt;            &lt;dbl&gt;
+##  1     1               5.1                7                 6.3              3.5
+##  2     2               4.9                6.4               5.8              3  
+##  3     3               4.7                6.9               7.1              3.2
+##  4     4               4.6                5.5               6.3              3.1
+##  5     5               5                  6.5               6.5              3.6
+##  6     6               5.4                5.7               7.6              3.9
+##  7     7               4.6                6.3               4.9              3.4
+##  8     8               5                  4.9               7.3              3.4
+##  9     9               4.4                6.6               6.7              2.9
+## 10    10               4.9                5.2               7.2              3.1
 ## # … with 40 more rows, and 8 more variables: Sepal.Width_versicolor &lt;dbl&gt;,
 ## #   Sepal.Width_virginica &lt;dbl&gt;, Petal.Length_setosa &lt;dbl&gt;,
 ## #   Petal.Length_versicolor &lt;dbl&gt;, Petal.Length_virginica &lt;dbl&gt;,
@@ -837,7 +837,7 @@ Pour fixer le répertoire de travail, il existe plusieurs manières de faire. Un
 ## 10     4 Sepal.Length_setosa           4.6
 ## # … with 140 more rows</code></pre>
 <p>Dans la fonction <code>pivot_longer()</code> ci-dessus, nous avons indiqué à l’aide de l’argument <code>cols</code> et de la fonction <code>c()</code> l’ensemble des variables dont nous souhaitions voir les valeurs regroupées dans une même colonne. L’argument <code>names_to</code> nous a permis de donner un nom à la variable qualitative qui comporte les modalités à associer aux valeurs numériques, et l’argument <code>values_to</code> nous a permis de donner un nom à la colonne où se trouvent maintenant les valeurs numériques. Les deux nouvelles colonnes ainsi crées se trouvent tout à gauche du tableau <code>iris4</code>, mais nous avons sélectionné pour cet exemple seulement les colonnes qui permettaient d’illustrer le résultat de la fonction. On peut remarquer cependant qu’en créant ces colonnes, R a dû dupliquer les valeurs de la variable id et des autres colonnes pour pouvoir garder la correspondance entre les données, chose que l’on peut voir en tapant <code>iris4</code> dans la Console.</p>
-<p>Nous venons de voir plusieurs fonctions qui peuvent être très utiles pour pouvoir facilement préparer sa base de données en vue des futures analyses. Il ne s’agit que d’une vue très superficielle de tout le potentiel de manipulation des données qu’ont ces fonctions. Pour une vue approndie des possibilités qu’offrent ces fonctions, la lecture de l’ouvrage <em>R for Data Science</em> d’Hadley Wickham et de Garrett Grolemund <span class="citation">(<a href="#ref-Wickham2017" role="doc-biblioref">2017</a>)</span> sera particulièrement enrichissante. Cet ouvrage est en libre accès ici : <a href="https://r4ds.had.co.nz" class="uri">https://r4ds.had.co.nz</a>.</p>
+<p>Nous venons de voir plusieurs fonctions qui peuvent être très utiles pour pouvoir facilement préparer sa base de données en vue des futures analyses. Il ne s’agit que d’une vue très superficielle de tout le potentiel de manipulation des données qu’ont ces fonctions. Pour une vue approndie des possibilités qu’offrent ces fonctions, la lecture de l’ouvrage <em>R for Data Science</em> d’Hadley Wickham et de Garrett Grolemund <span class="citation">(<a href="#ref-wickhamDataScience2017" role="doc-biblioref">2017</a>)</span> sera particulièrement enrichissante. Cet ouvrage est en libre accès ici : <a href="https://r4ds.had.co.nz" class="uri">https://r4ds.had.co.nz</a>.</p>
 </div>
 </div>
 <div id="résumé-1" class="section level2">
@@ -867,10 +867,10 @@ Pour fixer le répertoire de travail, il existe plusieurs manières de faire. Un
 </div>
 <h3>Références</h3>
 <div id="refs" class="references">
-<div id="ref-Labreuche2010">
-<p>Labreuche, J. (2010). Les différents types de variables, leurs représentations graphiques et paramètres descriptifs. <em>Sang Thrombose Vaisseaux</em>, <em>22</em>(10), 536–543. <a href="https://doi.org/10.1684/stv.2010.0541">https://doi.org/10.1684/stv.2010.0541</a></p>
+<div id="ref-labreucheDifferentsTypesVariables2010">
+<p>Labreuche, J. (2010). Les différents types de variables, leurs représentations graphiques et paramètres descriptifs. <em>Sang Thrombose Vaisseaux</em>, <em>22</em>(10), 536–543. <a href="https://doi.org/10.1684/stv.2010.0541">https://doi.org/10.1684/stv.2010.0541</a></p>
 </div>
-<div id="ref-Wickham2017">
+<div id="ref-wickhamDataScience2017">
 <p>Wickham, H., &amp; Grolemund, G. (2017). <em>R for Data Science</em>. O’Reilly.</p>
 </div>
 </div>

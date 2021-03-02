@@ -10,10 +10,10 @@
 
   <meta property="og:title" content="Chapitre 5 Régressions | Analyser des données avec R" />
   <meta property="og:type" content="book" />
-  <meta property="og:url" content="pydm1989.github.io/Analyser-des-donnees-avec-R" />
+  <meta property="og:url" content="pydemull.github.io/Analyser-des-donnees-avec-R" />
   
   <meta property="og:description" content="Introduction à l’analyse des données avec R" />
-  <meta name="github-repo" content="PYDM1989/Analyser-des-donnees-avec-R" />
+  <meta name="github-repo" content="pydemull/Analyser-des-donnees-avec-R" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapitre 5 Régressions | Analyser des données avec R" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Pierre-Yves de Müllenheim" />
 
 
-<meta name="date" content="2021-02-20" />
+<meta name="date" content="2021-03-02" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -236,7 +236,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 où <span class="math inline">\(\hat{Y}\)</span> désigne les prédictions faites à partir du modèle, et <span class="math inline">\(Y\)</span> désigne les valeurs réelles que l’on a cherché à prédire à partir du modèle. Le terme <span class="math inline">\(\hat{Y} - Y\)</span> (ou <span class="math inline">\(RES\)</span>) doit se concevoir comme une variable contenant toutes les différences <span class="math inline">\(\hat{Y}{i} - Y{i}\)</span> qu’on appelle des <strong>résidus</strong>. Ainsi, le terme <span class="math inline">\({Var(\hat{Y} - Y) }\)</span> désigne la variance des résidus (ou encore la variance des erreurs). Au final, le ratio <span class="math inline">\({\frac {Var(\hat{Y} - Y) } {Var(Y)}}\)</span> traduit la part de variance non expliquée (non détectée) par le modèle, et le <span class="math inline">\(R^2\)</span> se calcule en faisant 1 moins ce ratio. (A noter qu’on peut trouver ailleurs d’autres manières de présenter ce coefficient <span class="math inline">\(R^2\)</span>, avec des formules initiales différentes, mais mathématiquement, ces différentes manières d’aborder les choses restent équivalentes).</p>
 <p>La figure ci-dessous illustre la notion de <strong>résidu</strong> et ce qu’elle représente dans le calcul du <span class="math inline">\(R^2\)</span>. Sur cette figure, les points représentent les valeurs <span class="math inline">\(Y{i}\)</span> en fonction des valeurs <span class="math inline">\(X{i}\)</span>, la ligne bleue représente le modèle de régression linéaire (i.e., toutes les valeurs <span class="math inline">\(\hat{Y}{i}\)</span> qui seraient prédites à partir du modèle et des valeurs <span class="math inline">\(X{i}\)</span>), et les segments rouges représentent les résidus (i.e., la différence qu’on a à chaque fois entre <span class="math inline">\(\hat{Y}{i}\)</span> et <span class="math inline">\(Y{i}\)</span>). Pour un modèle donné, plus ces segments rouges seront nombreux et grands, plus cela signifiera que les erreurs de prédiction du modèle sont nombreuses et grandes, que la part de variance non expliquée par le modèle est grande, et que la valeur du <span class="math inline">\(R^2\)</span> pour ce modèle est éloignée de 1. Ainsi, le coeffient <span class="math inline">\(R^2\)</span> peut aller de la valeur 0 (signifiant que le modèle n’explique aucune variation de <span class="math inline">\(Y\)</span>), à la valeur de 1 (signifiant que le modèle explique toute les variations de <span class="math inline">\(Y\)</span>). Plus la valeur de <span class="math inline">\(R^2\)</span> d’un modèle linéaire se rapprochera de 1, plus cela suggérera que la relation étudiée est effectivement linéaire. (On note par ailleurs que le coefficient de détermination <span class="math inline">\(R^2\)</span> associé à un modèle linéaire est mathématiquement lié au coefficient de corrélation de Pearson (<span class="math inline">\(r\)</span>), <span class="math inline">\(r\)</span> étant la racine carrée du <span class="math inline">\(R^2\)</span>.)</p>
 <div class="figure" style="text-align: center"><span id="fig:graphsee"></span>
-<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/graphsee-1.png" alt="Résidus d'un modèle" width="672" />
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/graphsee-1.png" alt="Résidus d'un modèle" width="672" />
 <p class="caption">
 Figure 5.1: Résidus d’un modèle
 </p>
@@ -307,15 +307,15 @@ Figure 5.1: Résidus d’un modèle
 <span id="cb209-6"><a href="régressions.html#cb209-6"></a>                                        <span class="st">&quot; ; SEE = &quot;</span>, .(<span class="kw">round</span>(SEE, <span class="dt">digits =</span> <span class="dv">3</span>)))), </span>
 <span id="cb209-7"><a href="régressions.html#cb209-7"></a>           <span class="dt">x =</span> <span class="dv">50</span>, <span class="dt">y =</span> <span class="dv">35</span>, <span class="dt">hjust =</span> <span class="dv">0</span>, <span class="dt">size =</span> <span class="dv">5</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:graphLinStats"></span>
-<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/graphLinStats-1.png" alt="Régression linéaire avec les informations correspondantes" width="672" />
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/graphLinStats-1.png" alt="Régression linéaire avec les informations correspondantes" width="672" />
 <p class="caption">
 Figure 5.2: Régression linéaire avec les informations correspondantes
 </p>
 </div>
 <p><em>La leçon du quartet d’Anscombe</em></p>
-<p>Encore une fois, lorsqu’on étudie un phénomène, ici l’existence d’une relation linéaire, il est important de d’abord faire un graphique montrant les données. Cette première étape graphique est importante car les valeurs numériques qui peuvent être obtenues pour le coefficient <span class="math inline">\(R^2\)</span> (et donc aussi pour le coefficient de corrélation de Pearson), et la statistique <span class="math inline">\(SEE\)</span>, ne peuvent à elles seules garantir l’aspect linéaire d’une relation. Un exemple qui permet d’illustrer cela est le quartet d’Anscombe <span class="citation">(<a href="#ref-Anscombe1973" role="doc-biblioref">1973</a>)</span>. Il s’agit de quatre jeux de données dont les représentations graphiques sont montrées ci-dessous.</p>
+<p>Encore une fois, lorsqu’on étudie un phénomène, ici l’existence d’une relation linéaire, il est important de d’abord faire un graphique montrant les données. Cette première étape graphique est importante car les valeurs numériques qui peuvent être obtenues pour le coefficient <span class="math inline">\(R^2\)</span> (et donc aussi pour le coefficient de corrélation de Pearson), et la statistique <span class="math inline">\(SEE\)</span>, ne peuvent à elles seules garantir l’aspect linéaire d’une relation. Un exemple qui permet d’illustrer cela est le quartet d’Anscombe <span class="citation">(<a href="#ref-anscombeGraphsStatisticalAnalysis1973" role="doc-biblioref">1973</a>)</span>. Il s’agit de quatre jeux de données dont les représentations graphiques sont montrées ci-dessous.</p>
 <div class="figure" style="text-align: center"><span id="fig:anscombeQuartetGraph"></span>
-<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/anscombeQuartetGraph-1.png" alt="Le quartet d'Anscombe" width="672" />
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/anscombeQuartetGraph-1.png" alt="Le quartet d'Anscombe" width="672" />
 <p class="caption">
 Figure 5.3: Le quartet d’Anscombe
 </p>
@@ -327,8 +327,8 @@ Figure 5.3: Le quartet d’Anscombe
 </div>
 <h3>Références</h3>
 <div id="refs" class="references">
-<div id="ref-Anscombe1973">
-<p>Anscombe, F. J. (1973). Graphs in statistical analysis. <em>The American Statistician</em>, <em>27</em>(1), 17–21.</p>
+<div id="ref-anscombeGraphsStatisticalAnalysis1973">
+<p>Anscombe, F. J. (1973). Graphs in statistical analysis. <em>Am Stat</em>, <em>27</em>(1), 17–21.</p>
 </div>
 </div>
             </section>
