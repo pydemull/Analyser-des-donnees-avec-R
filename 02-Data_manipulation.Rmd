@@ -141,7 +141,7 @@ iris <-
 
 Ici, le symbole `%>%` permet d'indiquer à R que toutes les fonctions qui sont écrites après ce symbole s'appliquent à ce qui a été défini avant ce symbole. La fonction `mutate()`, dont nous reparlerons peu après, permet de créer de nouvelles variables dans le cadre de cette stratégie, soit en écrasant les anciennes variables si les anciens noms sont conservés, soit en créant de nouvelles variables si de nouveaux noms sont utilisés. Remarquons également qu'avec ce code, nous venons de créer un nouvel objet (en l'assignant à nouveau au nom`iris`) à partir de l'ancien objet, mais dont on a transformé les types des variables, perdant dans le même temps l'ancien objet.
 
-### Sélectionner des variables avec select()
+### Sélectionner des variables avec `select()`
 Certains jeux de données peuvent être très larges, c'est-à-dire qu'ils peuvent contenir beaucoup de colonnes, parfois inutiles, et qui peuvent être gênantes lorsque l'on veut avoir une vue claire du contenu du jeu de données. La fonction `select()` du package `dplyr` permet de sélectionner des colonnes facilement.
 
 ```{r select}
@@ -149,7 +149,7 @@ iris %>%
   select(Petal.Length, Petal.Width, Species)
 ```
 
-### Renommer des variables avec rename()
+### Renommer des variables avec `rename()`
 Il est possible que certains titres de variables ne soient pas clairs ou trop longs, ce qui peut être gênant pour écrire un code le plus lisible possible. La fonction `rename()` du package `dplyr` permet de gérer cela. Dans l'exemple ci-dessous, on observe que le nouveau nom doit être écrit à gauche du signal `=`, alors que l'ancien nom doit être écrit à droite du signe `=`.
 
 ```{r rename}
@@ -161,7 +161,7 @@ iris %>%
          Especes = Species)
 ```
 
-### Créer des variables avec mutate()
+### Créer des variables avec `mutate()`
 Certaines analyses peuvent nécessiter d'ajouter des variables à partir de calculs réalisés sur des variables qui existent déjà dans le jeu de données. La fonction `mutate()`, du package `dplyr`, et que nous avons déjà rencontrée précédemment, permet cela. Dans l'exemple ci-dessous, on observe que le nom de la nouvelle variable à créer est à gauche du signe `=` et que le calcul créant les nouvelles valeurs est décrit à droite du signe `=`.
 
 ```{r mutate}
@@ -170,7 +170,7 @@ iris %>%
          ratio_petal = Petal.Length / Petal.Width)
 ```
 
-### Sélectionner des lignes avec filter()
+### Sélectionner des lignes avec `filter()`
 En fonction des besoins de l'analyse, on peut vouloir ne retenir que certaines lignes du fichier de données. La fonction `filter()` du package `dplyr` est faite pour réaliser ce filtrage. Plusieurs opérateurs sont disponibles pour ne retenir que les lignes que l'on veut : 
 
 ```{r SymbolsFilter, echo = FALSE}
@@ -191,7 +191,7 @@ iris %>%
           Sepal.Length <= 5)
 ```
 
-### Arranger les lignes avec arrange()
+### Arranger les lignes avec `arrange()`
 On peut vouloir que le jeu de données soit arrangé, ou trié, selon un certain ordre, en fonction des valeurs d'une variable donnée. La fonction `arrange()` du package `dplyr` est très utile pour gérer ce genre de réalisation. L'exemple ci-dessous conduit à trier les données selon un ordre croissant en fonction des valeurs de la variable `Sepal.Length`. Le fait de mettre le symbole `-` devant le nom de la variable aurait conduit à un tri décroissant.
 
 ```{r arrange}
@@ -199,7 +199,7 @@ iris %>%
   arrange(Sepal.Length)
 ```
 
-### Résumer des variables avec group_by() et summarize()
+### Résumer des variables avec `group_by()` et `summarize()`
 Bien qu'une base de données puisse contenir énormément de lignes, on peut n'en vouloir que la version résumée. Les fonctions `group_by()` et `summarize()` du package `dplyr` permettent de faire cela aisément. Dans l'exemple ci-dessous, la fonction `group_by()` permet d'indiquer que les calculs réalisés par la suite avec la fonction `summarize()` doivent être exécutés pour les modalités de la variable `Species` prises séparément. La fonction `summarize()`, quant à elle, permet d'exéctuer différents calculs. Dans l'exemple ci-dessous, il s'agit de moyennes, obtenues à l'aide de la fonction `mean()`. De plus, la fonction `summarize()` permet, comme montré ci-dessous, d'indiquer à gauche du `=` le nom du titre du calcul alors effectué .
 
 ```{r summarize}
@@ -222,7 +222,7 @@ iris2 <-
 iris2
 ```
 
-### Passer d'une disposition en lignes à une disposition en colonnes et inversement avec pivot_wider() et pivot_longer()
+### Passer d'une disposition en lignes à une disposition en colonnes et inversement avec `pivot_wider()` et `pivot_longer()`
 Il convient de respecter certaines règles de base lors de la conception d'une base de données (e.g., mettre les observations en lignes et les variables en colonnes). Toutefois, dans certains cas, même après avoir bien respecter les règles, la manière selon laquelle la base de données a été organisée peut ne pas être encore adéquate pour pouvoir utiliser certaines fonctions. Prenons par exemple le cas où toutes les valeurs numériques d'une variable quantitative auraient été mises dans une même colonne en regard d'une variable qualitative pour que chaque valeur numérique corresponde à une modalité de cette variable qualitative (c'est le cas, par exemple, avec le jeu de données `iris`), et que la fonction à utiliser nécessiterait que l'on ait une colonne pour chacune des modalités de la variable qualitative, avec des colonnes mises côte à côte. Une fonction qui permet alors de passer d'un format "long" (i.e., toutes les valeurs numériques sont dans la même colonne) à un format "large" (i.e., les valeurs numériques sont réparties dans différentes colonnes selon la modalité à laquelle elles sont associées), est la fonction `pivot_wider()` du package `tidyr`. Pour pouvoir utiliser cette fonction, il faut qu'il y ait une variable permettant d'identifier à quel individu ou groupe appartienne les données dont on va changer l'organisation. Dans une base de données classique, il y a toujours une variable présente pour cela. Toutefois, dans le jeu de données `iris`, il n'y a pas une telle variable. Pour pouvoir illustrer l'utilisation de la fonction `pivot_wider()`, nous avons donc ajouté arbitrairement une variable `id` grâce à la fonction `mutate()` pour simuler le fait que les données de `iris` auraient été acquises en référence à des individus bien identifiés, avec à chaque fois une valeur pour les trois modalités de la variable `Species`.
 
 ```{r add id iris}
