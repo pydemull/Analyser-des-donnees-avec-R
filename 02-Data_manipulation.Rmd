@@ -4,19 +4,21 @@ Lorsqu'on souhaite répondre à une question, la démarche scientifique classiqu
 Très souvent, pour répondre à une question, il est nécessaire d'acquérir plusieurs données qui seraient relatives à différentes choses que l'on a cherché à caractériser (e.g., la taille, la couleur, le poids, etc.), et qui seraient relatives également à différents individus chez qui l'on aurait souhaité caractériser ces choses. Afin de conduire les analyses qui permettraient de répondre à la question posée, il convient alors de répertorier toutes les données acquises dans un même document, et plus exactement dans un même fichier, qui serait la base de données, telle que présentée ci-dessous.
 
 ```{r database, echo = FALSE}
-knitr::kable(
+library(flextable)
+\vspace{-0.2cm}
+flextable(
   data.frame(id = seq(1, 7, 1), 
              genre = c("H", "H", "H", "F", "F", "H", "H"), 
              taille = c(1.80, 1.93, 1.50, 1.95, 1.52, 1.87, 1.83), 
              nb_victoires = c(45, 90, 100, 43, 34, 67, 79),
              niveau = c(1, 3, 4, 1, 2, 2, 3)
-  ),
-  caption = "Exemple de base de données",
-  longtable = TRUE
-)
+  )) %>%
+  theme_zebra() %>%
+  align(align = "center", part = "all" ) %>%
+  set_caption("Exemple de base de données")
 ```
 
-La base de données prend donc la forme d’un tableau. Plusieurs principes sont à respecter en général lors de la création d’une base de données. Tout d’abord, les lignes de la base de données (qu'on appelle des **observations**) doivent correspondre le cas échéant à des individus bien identifiés. Ensuite, chaque colonne doit correspondre à une variable. L’ensemble des données contenues dans une même ligne correspond donc aux données relatives aux différentes variables (e.g., la taille, le poids, le sexe, etc.) qui auraient été obtenues chez un même individu. Dans le cas d’études où l'on évaluerait une ou plusieurs variables plusieurs fois  chez un même individu (i.e., à différentes moments, dans différentes conditions), il peut convenir de créer autant de lignes que de fois où les variables auraient été évaluées. Par exemple, le tableau ci-dessous représente une base de données (certes très sommaire) contenant des données d'individus dont on aurait évalué le poids deux fois, avant et après un programme de prise en charge. On remarque alors qu'il y a deux lignes par individu qui correspondent aux deux temps d'évaluation. La taille, elle, n'aura été évaluée qu'une seule fois, en début de programme, mais pour éviter de laisser des cellules vides (ce qui est une bonne pratique), alors la valeur aura été reproduite dans la seconde ligne.
+La base de données prend donc la forme d’un tableau. Plusieurs principes sont à respecter en général lors de la création d’une base de données. Tout d’abord, les lignes de la base de données (qu'on appelle des **observations**) doivent correspondre le cas échéant à des individus bien identifiés. Ensuite, chaque colonne doit correspondre à une variable. L’ensemble des données contenues dans une même ligne correspond donc aux données relatives aux différentes variables (e.g., la taille, le poids, le sexe, etc.) qui auraient été obtenues chez un même individu. Dans le cas d’études où l'on évaluerait une ou plusieurs variables plusieurs fois  chez un même individu (i.e., à différentes moments, dans différentes conditions), il peut convenir de créer autant de lignes que de fois où les variables auraient été évaluées. Par exemple, le tableau ci-dessous représente une base de données (certes très sommaire) contenant des données d'individus dont on aurait évalué le poids deux fois, avant et après un programme de prise en charge. On remarque alors qu'il y a deux lignes par individu qui correspondent aux deux temps d'évaluation. La taille, elle, n'aura été évaluée qu'une seule fois, en début de programme, mais pour éviter de laisser des cellules vides, alors la valeur aura été reproduite dans la seconde ligne.
 
 ```{r databasePlusObs, echo = FALSE}
 knitr::kable(
