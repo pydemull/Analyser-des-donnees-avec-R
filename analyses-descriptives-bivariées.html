@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapitre 4 Analyses descriptives bivariées | Analyser des données avec R</title>
   <meta name="description" content="Introduction à l’analyse des données avec R" />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapitre 4 Analyses descriptives bivariées | Analyser des données avec R" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Pierre-Yves de Müllenheim" />
 
 
-<meta name="date" content="2021-03-10" />
+<meta name="date" content="2021-06-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,6 +51,9 @@
 
 
 <script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet" />
 
 
 <style type="text/css">
@@ -117,6 +120,7 @@ code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -989,8 +993,7 @@ Figure 4.17: Deux groupes avec données non appariées
 ## --------------------------
 ## -2.09     | [-2.57, -1.60]
 ## 
-## - Estimated using pooled SD.
-## - Bias corrected using Hedges and Olkin&#39;s method.</code></pre>
+## - Estimated using pooled SD.</code></pre>
 <p>Ici, la valeur ne change pas beaucoup par rapport au cas précédent, car l’effectif n’est pas si petit que cela (<span class="math inline">\(N_{1}\)</span> + <span class="math inline">\(N_{2}\)</span> = 100 ici, ce qui fait que la correction appliquée au <span class="math inline">\(d_{s}\)</span> de Cohen est minime).</p>
 <p><strong>Delta de Glass</strong></p>
 <p>Dans certains cas où l’on souhaiterait comparer les scores de deux groupes indépendants pour tester l’effet de deux conditions expérimentales différentes, l’expérimentation en tant que telle peut influencer, au-delà de la moyenne, l’écart-type de la variable réponse dans un des deux groupes. On peut se trouver dans ce genre de situation lorsque l’on compare les données post-programme d’un groupe entrainé ou traité à celles d’un groupe contrôle. En effet, le groupe entraîné/traité peut voir son écart-type changé au terme d’un programme en raison d’une réponse individuelle hétérogène à ce programme, ce qui ne sera pas en principe le cas du groupe contrôle. Dans ce genre de situation, des indices statistiques autres que le <span class="math inline">\(g_{s}\)</span> de Hedges mériteraient d’être calculés, tels que le <span class="math inline">\(\Delta\)</span> de Glass <span class="citation">(Lakens, <a href="#ref-lakensCalculatingReportingEffect2013" role="doc-biblioref">2013</a>)</span> :</p>
@@ -1000,7 +1003,7 @@ Figure 4.17: Deux groupes avec données non appariées
 <div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="analyses-descriptives-bivariées.html#cb187-1"></a><span class="kw">glass_delta</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Species, <span class="dt">data =</span> iris_two_species)</span></code></pre></div>
 <pre><code>## Glass&#39; delta |         95% CI
 ## -----------------------------
-## -1.80        | [-2.21, -1.43]</code></pre>
+## -1.80        | [-2.29, -1.31]</code></pre>
 <p><em>Cas de deux groupes de données dépendants (données pairées)</em></p>
 <p><strong>dz et dav de Cohen</strong></p>
 <p>Le calcul classique pour obtenir la taille d’effet désignant l’écart entre deux groupes de données dépendantes est celui du <span class="math inline">\(d_{z}\)</span> <span class="citation">(Lakens, <a href="#ref-lakensCalculatingReportingEffect2013" role="doc-biblioref">2013</a>)</span>, qui est montré ci-dessous :</p>
@@ -1056,8 +1059,7 @@ Figure 4.18: Données du jeu de données <code>Blink</code>
 ## ------------------------
 ## 1.47      | [0.56, 2.35]
 ## 
-## - Estimated using un-pooled SD.
-## - Bias corrected using Hedges and Olkin&#39;s method.</code></pre>
+## - Estimated using un-pooled SD.</code></pre>
 <p>Toutefois, comme le rappelle Lakens <span class="citation">(<a href="#ref-lakensCalculatingReportingEffect2013" role="doc-biblioref">2013</a>)</span>, le <span class="math inline">\(g_{av}\)</span> de Hedges ne serait pas complètement non biaisé.</p>
 
 </div>
@@ -1113,6 +1115,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {

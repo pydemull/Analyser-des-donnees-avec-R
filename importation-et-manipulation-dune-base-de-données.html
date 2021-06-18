@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapitre 2 Importation et manipulation d’une base de données | Analyser des données avec R</title>
   <meta name="description" content="Introduction à l’analyse des données avec R" />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapitre 2 Importation et manipulation d’une base de données | Analyser des données avec R" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Pierre-Yves de Müllenheim" />
 
 
-<meta name="date" content="2021-03-10" />
+<meta name="date" content="2021-06-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,6 +51,9 @@
 
 
 <script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet" />
 
 
 <style type="text/css">
@@ -117,6 +120,7 @@ code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -230,70 +234,62 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">2.1</span> Comprendre ce qu’est une base de données</h2>
 <p>Lorsqu’on souhaite répondre à une question, la démarche scientifique classique consiste à effectuer une série de mesures ou d’observations selon un protocole qui a été conçu en cohérence avec la question posée. En principe, ces mesures ou observations donnent lieu à l’obtention de valeurs. Ces valeurs peuvent être de forme numérique (e.g., les valeurs de taille de différents individus) ou de forme littérale (e.g., les valeurs de sexe de différents individus). Quelle que soit leur forme, les valeurs que l’on obtient dans un contexte qui est connu, comme dans le cas d’un protocole de mesures, ont un sens bien défini car elles sont associées à des choses que l’on a cherché à caractériser. Lorsqu’une valeur est porteuse d’un sens bien défini, on peut alors considérer qu’il s’agit d’une <strong>donnée</strong>.
 Très souvent, pour répondre à une question, il est nécessaire d’acquérir plusieurs données qui seraient relatives à différentes choses que l’on a cherché à caractériser (e.g., la taille, la couleur, le poids, etc.), et qui seraient relatives également à différents individus chez qui l’on aurait souhaité caractériser ces choses. Afin de conduire les analyses qui permettraient de répondre à la question posée, il convient alors de répertorier toutes les données acquises dans un même document, et plus exactement dans un même fichier, qui serait la base de données, telle que présentée ci-dessous.</p>
-<table>
-<caption><span id="tab:database">Tableau 2.1: </span>Exemple de base de données</caption>
-<thead>
-<tr class="header">
-<th align="right">id</th>
-<th align="left">genre</th>
-<th align="right">taille</th>
-<th align="right">nb_victoires</th>
-<th align="right">niveau</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="right">1</td>
-<td align="left">H</td>
-<td align="right">1.80</td>
-<td align="right">45</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="right">2</td>
-<td align="left">H</td>
-<td align="right">1.93</td>
-<td align="right">90</td>
-<td align="right">3</td>
-</tr>
-<tr class="odd">
-<td align="right">3</td>
-<td align="left">H</td>
-<td align="right">1.50</td>
-<td align="right">100</td>
-<td align="right">4</td>
-</tr>
-<tr class="even">
-<td align="right">4</td>
-<td align="left">F</td>
-<td align="right">1.95</td>
-<td align="right">43</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="right">5</td>
-<td align="left">F</td>
-<td align="right">1.52</td>
-<td align="right">34</td>
-<td align="right">2</td>
-</tr>
-<tr class="even">
-<td align="right">6</td>
-<td align="left">H</td>
-<td align="right">1.87</td>
-<td align="right">67</td>
-<td align="right">2</td>
-</tr>
-<tr class="odd">
-<td align="right">7</td>
-<td align="left">H</td>
-<td align="right">1.83</td>
-<td align="right">79</td>
-<td align="right">3</td>
-</tr>
-</tbody>
-</table>
-<p>La base de données prend donc la forme d’un tableau. Plusieurs principes sont à respecter en général lors de la création d’une base de données. Tout d’abord, les lignes de la base de données (qu’on appelle des <strong>observations</strong>) doivent correspondre le cas échéant à des individus bien identifiés. Ensuite, chaque colonne doit correspondre à une variable. L’ensemble des données contenues dans une même ligne correspond donc aux données relatives aux différentes variables (e.g., la taille, le poids, le sexe, etc.) qui auraient été obtenues chez un même individu. Dans le cas d’études où l’on évaluerait une ou plusieurs variables plusieurs fois chez un même individu (i.e., à différentes moments, dans différentes conditions), il peut convenir de créer autant de lignes que de fois où les variables auraient été évaluées. Par exemple, le tableau ci-dessous représente une base de données (certes très sommaire) contenant des données d’individus dont on aurait évalué le poids deux fois, avant et après un programme de prise en charge. On remarque alors qu’il y a deux lignes par individu qui correspondent aux deux temps d’évaluation. La taille, elle, n’aura été évaluée qu’une seule fois, en début de programme, mais pour éviter de laisser des cellules vides (ce qui est une bonne pratique), alors la valeur aura été reproduite dans la seconde ligne.</p>
+<template id="4e18491e-5bee-4162-91fb-4220c42e2b75"><style>
+.tabwid table{
+  border-collapse:collapse;
+  line-height:1;
+  margin-left:auto;
+  margin-right:auto;
+  border-width: 0;
+  display: table;
+  margin-top: 1.275em;
+  margin-bottom: 1.275em;
+  border-spacing: 0;
+  border-color: transparent;
+}
+.tabwid_left table{
+  margin-left:0;
+}
+.tabwid_right table{
+  margin-right:0;
+}
+.tabwid td {
+    padding: 0;
+}
+.tabwid a {
+  text-decoration: none;
+}
+.tabwid thead {
+    background-color: transparent;
+}
+.tabwid tfoot {
+    background-color: transparent;
+}
+.tabwid table tr {
+background-color: transparent;
+}
+</style><div class="tabwid"><style>.cl-95325f02{border-collapse:collapse;}.cl-952879ce{font-family:'Helvetica';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-95287a5a{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-9528a3c2{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-9528f84a{width:54pt;background-clip: padding-box;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9528f890{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9528f89a{width:54pt;background-clip: padding-box;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table class='cl-95325f02'>
+<caption class="Table Caption">
+<span id="tab:database">Tableau 2.1: </span>Exemple de base de données
+</caption>
+<thead><tr style="overflow-wrap:break-word;"><td class="cl-9528f89a"><p class="cl-9528a3c2"><span class="cl-952879ce">id</span></p></td><td class="cl-9528f89a"><p class="cl-9528a3c2"><span class="cl-952879ce">genre</span></p></td><td class="cl-9528f89a"><p class="cl-9528a3c2"><span class="cl-952879ce">taille</span></p></td><td class="cl-9528f89a"><p class="cl-9528a3c2"><span class="cl-952879ce">nb_victoires</span></p></td><td class="cl-9528f89a"><p class="cl-9528a3c2"><span class="cl-952879ce">niveau</span></p></td></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-9528f84a"><p class="cl-9528a3c2"><span class="cl-95287a5a">1</span></p></td><td class="cl-9528f84a"><p class="cl-9528a3c2"><span class="cl-95287a5a">H</span></p></td><td class="cl-9528f84a"><p class="cl-9528a3c2"><span class="cl-95287a5a">1.80</span></p></td><td class="cl-9528f84a"><p class="cl-9528a3c2"><span class="cl-95287a5a">45</span></p></td><td class="cl-9528f84a"><p class="cl-9528a3c2"><span class="cl-95287a5a">1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-9528f890"><p class="cl-9528a3c2"><span class="cl-95287a5a">2</span></p></td><td class="cl-9528f890"><p class="cl-9528a3c2"><span class="cl-95287a5a">H</span></p></td><td class="cl-9528f890"><p class="cl-9528a3c2"><span class="cl-95287a5a">1.93</span></p></td><td class="cl-9528f890"><p class="cl-9528a3c2"><span class="cl-95287a5a">90</span></p></td><td class="cl-9528f890"><p class="cl-9528a3c2"><span class="cl-95287a5a">3</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-9528f84a"><p class="cl-9528a3c2"><span class="cl-95287a5a">3</span></p></td><td class="cl-9528f84a"><p class="cl-9528a3c2"><span class="cl-95287a5a">H</span></p></td><td class="cl-9528f84a"><p class="cl-9528a3c2"><span class="cl-95287a5a">1.50</span></p></td><td class="cl-9528f84a"><p class="cl-9528a3c2"><span class="cl-95287a5a">100</span></p></td><td class="cl-9528f84a"><p class="cl-9528a3c2"><span class="cl-95287a5a">4</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-9528f890"><p class="cl-9528a3c2"><span class="cl-95287a5a">4</span></p></td><td class="cl-9528f890"><p class="cl-9528a3c2"><span class="cl-95287a5a">F</span></p></td><td class="cl-9528f890"><p class="cl-9528a3c2"><span class="cl-95287a5a">1.95</span></p></td><td class="cl-9528f890"><p class="cl-9528a3c2"><span class="cl-95287a5a">43</span></p></td><td class="cl-9528f890"><p class="cl-9528a3c2"><span class="cl-95287a5a">1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-9528f84a"><p class="cl-9528a3c2"><span class="cl-95287a5a">5</span></p></td><td class="cl-9528f84a"><p class="cl-9528a3c2"><span class="cl-95287a5a">F</span></p></td><td class="cl-9528f84a"><p class="cl-9528a3c2"><span class="cl-95287a5a">1.52</span></p></td><td class="cl-9528f84a"><p class="cl-9528a3c2"><span class="cl-95287a5a">34</span></p></td><td class="cl-9528f84a"><p class="cl-9528a3c2"><span class="cl-95287a5a">2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-9528f890"><p class="cl-9528a3c2"><span class="cl-95287a5a">6</span></p></td><td class="cl-9528f890"><p class="cl-9528a3c2"><span class="cl-95287a5a">H</span></p></td><td class="cl-9528f890"><p class="cl-9528a3c2"><span class="cl-95287a5a">1.87</span></p></td><td class="cl-9528f890"><p class="cl-9528a3c2"><span class="cl-95287a5a">67</span></p></td><td class="cl-9528f890"><p class="cl-9528a3c2"><span class="cl-95287a5a">2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-9528f84a"><p class="cl-9528a3c2"><span class="cl-95287a5a">7</span></p></td><td class="cl-9528f84a"><p class="cl-9528a3c2"><span class="cl-95287a5a">H</span></p></td><td class="cl-9528f84a"><p class="cl-9528a3c2"><span class="cl-95287a5a">1.83</span></p></td><td class="cl-9528f84a"><p class="cl-9528a3c2"><span class="cl-95287a5a">79</span></p></td><td class="cl-9528f84a"><p class="cl-9528a3c2"><span class="cl-95287a5a">3</span></p></td></tr></tbody></table></div></template>
+<div class="flextable-shadow-host" id="12452870-1722-4cce-807c-52f5b2b9b38b"></div>
+<script>
+var dest = document.getElementById("12452870-1722-4cce-807c-52f5b2b9b38b");
+var template = document.getElementById("4e18491e-5bee-4162-91fb-4220c42e2b75");
+var caption = template.content.querySelector("caption");
+if(caption) {
+  caption.style.cssText = "display:block;text-align:center;";
+  var newcapt = document.createElement("p");
+  newcapt.appendChild(caption)
+  dest.parentNode.insertBefore(newcapt, dest.previousSibling);
+}
+var fantome = dest.attachShadow({mode: 'open'});
+var templateContent = template.content;
+fantome.appendChild(templateContent);
+</script>
+
+<p>La base de données prend donc la forme d’un tableau. Plusieurs principes sont à respecter en général lors de la création d’une base de données. Tout d’abord, les lignes de la base de données (qu’on appelle des <strong>observations</strong>) doivent correspondre le cas échéant à des individus bien identifiés. Ensuite, chaque colonne doit correspondre à une variable. L’ensemble des données contenues dans une même ligne correspond donc aux données relatives aux différentes variables (e.g., la taille, le poids, le sexe, etc.) qui auraient été obtenues chez un même individu. Dans le cas d’études où l’on évaluerait une ou plusieurs variables plusieurs fois chez un même individu (i.e., à différentes moments, dans différentes conditions), il peut convenir de créer autant de lignes que de fois où les variables auraient été évaluées. Par exemple, le tableau ci-dessous représente une base de données (certes très sommaire) contenant des données d’individus dont on aurait évalué le poids deux fois, avant et après un programme de prise en charge. On remarque alors qu’il y a deux lignes par individu qui correspondent aux deux temps d’évaluation. La taille, elle, n’aura été évaluée qu’une seule fois, en début de programme, mais pour éviter de laisser des cellules vides, alors la valeur aura été reproduite dans la seconde ligne.</p>
 <table>
 <caption><span id="tab:databasePlusObs">Tableau 2.2: </span>Organisation d’une base de données avec des mesures répétées</caption>
 <thead>
@@ -757,13 +753,13 @@ Pour fixer le répertoire de travail, il existe plusieurs manières de faire. Un
 <pre><code>## # A tibble: 7 x 4
 ##   Petal_len Petal_wid Species Petal_ratio
 ##       &lt;dbl&gt;     &lt;dbl&gt; &lt;fct&gt;         &lt;dbl&gt;
-## 1       1.5       0.1 setosa        15   
-## 2       1.5       0.1 setosa        15   
-## 3       1.4       0.1 setosa        14.0 
-## 4       1.4       0.1 setosa        14.0 
-## 5       1.1       0.1 setosa        11   
-## 6       1.9       0.2 setosa         9.50
-## 7       1.7       0.2 setosa         8.5</code></pre>
+## 1       1.5       0.1 setosa         15  
+## 2       1.5       0.1 setosa         15  
+## 3       1.4       0.1 setosa         14  
+## 4       1.4       0.1 setosa         14  
+## 5       1.1       0.1 setosa         11  
+## 6       1.9       0.2 setosa          9.5
+## 7       1.7       0.2 setosa          8.5</code></pre>
 </div>
 <div id="passer-dune-disposition-en-lignes-à-une-disposition-en-colonnes-et-inversement-avec-pivot_wider-et-pivot_longer" class="section level3">
 <h3><span class="header-section-number">2.4.9</span> Passer d’une disposition en lignes à une disposition en colonnes et inversement avec <code>pivot_wider()</code> et <code>pivot_longer()</code></h3>
@@ -903,6 +899,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
