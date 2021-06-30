@@ -53,9 +53,9 @@ g2 <- ggplot(data = iris, aes(x = Sepal.Length)) +
 g1 | g2
 ```
 
-En plus de l'histogramme, une autre manière de prendre connaissance graphiquement de la distribution des données d'une variable quantitative est d'utiliser une **boîte à moustaches**. Pour ce faire, il convient d'utiliser la fonction `geom_boxplot()`, comme illustré ci-dessous. (On pourra noter l'ajout d'une ligne de code avec une fonction `theme()` dont on ne présentera pas les détails ici ; cette fonction nous sert juste ici à ne pas montrer des chiffres qui auraient été ajoutés par défaut à gauche du graphique et qui n'auraient eu aucun intérêt.)
+En plus de l'histogramme, une autre manière de prendre connaissance graphiquement de la distribution des données d'une variable quantitative est d'utiliser une **boîte à moustaches**. Pour ce faire, il convient d'utiliser la fonction `geom_boxplot()`, comme illustré ci-dessous. (On pourra noter l'ajout d'une ligne de code avec une fonction `theme()` dont on ne présentera pas les détails ici ; cette fonction nous sert juste ici à ne pas montrer des chiffres qui auraient été ajoutés par défaut sur l'axe Y de gauche du graphique et qui n'auraient eu aucun intérêt.)
 
-```{r geomboxplot, fig.align ="center", fig.cap="Exemple de boîte à moustaches"}
+```{r geomboxplot, fig.align ="center", fig.height=3, fig.cap="Exemple de boîte à moustaches"}
 ggplot(data = iris, aes(x = Sepal.Length)) + 
   geom_boxplot() +
     theme(axis.text.y = element_blank(), 
@@ -64,7 +64,7 @@ ggplot(data = iris, aes(x = Sepal.Length)) +
 
 La boîte à moustaches nous livre plusieurs informations. Tout d'abord, ses extrémités nous indiquent ce qu'on appelle le premier quartile (ici représenté par le bord gauche de la boîte) et le troisième quartile (ici représenté par le bord droit de la boîte). Le premier quartile (Q1) désigne la valeur en-dessous de laquelle on retrouve 25 % des observations de la variable (i.e., 25 % des observations sont associées à une valeur plus faible que Q1), alors que le troisième quartile (Q3) représente la valeur en-dessous de laquelle on retrouve 75 % des observations (i.e., 75 % des observations sont associées à une valeur plus faible que Q3). Cela indique alors que sur le graphique montré ci-dessus, l'intervalle qui sépare le bord gauche du bord droit de la boîte contient 50 % des observations. La ligne noire à l'intérieur de la boîte blanche désigne la médiane, qui est la valeur pour laquelle on a 50 % des observations qui ont une valeur inférieure à cette valeur repère, et pour laquelle on a 50 % des observations qui ont une valeur supérieure à cette valeur repère. Les lignes noires en-dehors de la boîte sont les moustaches. Dans le cas présent, la moustache de gauche s'étend jusqu'à la valeur minimale de la variable, et la moustache de droite s'étend jusqu'à la valeur maximale de la variable. Dans le cas où le minimum (ou le maximum) aurait été éloigné de la médiane de plus de 1.5 fois la différence entre Q3 et Q1 (qu'on appelle **intervalle interquartile**), l'extrémité de la moustache se serait arrêtée à la dernière valeur avant cette limite, et toute valeur ayant dépassé cette limite aurait été représentée par un point. Pour illustrer ce dernier cas de figure, on peut modifier manuellement une valeur de la variable Sepal.Length de telle sorte à ce qu'il y ait une nouvelle valeur qui soit particulièrement éloignée de la boîte. Une telle valeur s'appelle un *outlier*.
 
-```{r geomboxplotModified, fig.align = "center", fig.cap="Visualisation d'un outlier"}
+```{r geomboxplotModified, fig.align = "center", fig.height=3, , fig.cap="Visualisation d'un outlier"}
 iris$Sepal.Length[3] <- 12                     # On modifie ici, pour l'exemple, la valeur de la 3ème observation 
 ggplot(data = iris, aes(x = Sepal.Length)) +   # en lui assignant la valeur 12.
   geom_boxplot() +
@@ -72,7 +72,7 @@ ggplot(data = iris, aes(x = Sepal.Length)) +   # en lui assignant la valeur 12.
           axis.ticks.y = element_blank())
 ```
 
-Une boîte à moustaches a donc notamment l'intérêt de mettre en évidence des valeurs qui apparaissent comme "étranges" par rapport au reste des données. Lorsqu'il semble évident que l'*outlier* est une valeur erronnée (ou quand on veut tout simplement vérifier qu'il s'agit d'une erreur ou non), il est intéressant de savoir à quelle observation (i.e., à quel individu dans certains contextes) cette valeur étrange appartient, pour ensuite éventuellement la corriger. Malheureusement, la fonction `geom_boxplot()` ne dispose pas d'argument pour permettre d'identifier facilement à quelle observation appartient cette valeur. Cependant, on peut s'appuyer sur des fonctions créées manuellement dans R pour parvenir à cela. Dans ce cas de figure, le site https://stackoverflow.com est souvent intéressant car riche de solutions. C'est d'ailleurs à partir de ce site que provient la fonction montrée ci-dessous (https://stackoverflow.com/questions/33524669/labeling-outliers-of-boxplots-in-r) qui va nous permettre ensuite de savoir, à partir du graphique, à quelle observation correspond cette donnée étrange.
+Une boîte à moustaches a donc notamment l'intérêt de mettre en évidence des valeurs qui apparaissent comme "étranges" par rapport au reste des données. Lorsqu'il semble évident que l'*outlier* est une valeur erronnée (ou quand on veut tout simplement vérifier qu'il s'agit d'une erreur ou non), il est intéressant de savoir à quelle observation (i.e., à quel individu dans certains contextes) cette valeur étrange appartient, pour ensuite éventuellement la corriger. Malheureusement, la fonction `geom_boxplot()` ne dispose pas d'argument pour permettre d'identifier facilement à quelle observation appartient cette valeur. Cependant, on peut s'appuyer sur des fonctions créées manuellement dans R pour parvenir à cela. Dans ce cas de figure, le site https://stackoverflow.com est souvent intéressant car riche de solutions. C'est d'ailleurs en provenance de ce site que vient la fonction montrée ci-dessous (https://stackoverflow.com/questions/33524669/labeling-outliers-of-boxplots-in-r) qui va nous permettre ensuite de savoir, à partir du graphique, à quelle observation correspond cette donnée étrange.
 
 ```{r is_outlier function}
 is_outlier <- function(x) {
@@ -88,7 +88,7 @@ is_outlier(x = iris$Sepal.Length)
 
 Quand on regarde bien, on voit que la troisème observation de cette nouvelle variable que l'on vient de créer (seulement de manière temporaire ici car on ne l'a pas assignée à un nom) contient la valeur `TRUE`, ce qui est en accord avec la valeur que nous avons introduite auparavant dans la variable Sepal.Length. Le fait d'observer ces valeurs `TRUE` et `FALSE` n'est évidemment pas une stratégie très pratique pour déterminer à quelle observation correspondrait l'*outlier*, et c'est pourquoi l'étape suivante consiste à montrer comment on peut se servir de cette fonction `is_outlier()` pour faire apparaître sur un graphique de boîte à moustaches les observations à qui appartiendraient les valeurs étranges.
 
-```{r geomboxplotOutlierId, fig.align ="center", fig.cap="Identification d'un outlier"}
+```{r geomboxplotOutlierId, fig.align ="center", fig.height=3, ,fig.cap="Identification d'un outlier"}
 
 iris %>%
   mutate(id = as.factor(rep(1:50, times = 3)),                          # Ajout d'un numéro id pour les observations.
@@ -101,7 +101,7 @@ iris %>%
           axis.title.y = element_blank())
 ```
 
-Il y a plusieurs choses à expliquer par rapport au graphique qui comporte à présent, comme on peut le voir ci-dessus, le numéro id associé à l'observation pour laquelle nous avions modifié la valeur. Tout d'abord, il faut noter qu'avant de créer le graphique, nous avons ajouté temporairement au jeu de données, avec la fonction `mutate()`, la variable `id_outlier`. Cette variable a été créée à l'aide de deux fonctions en réalité : la fonction `ifelse()`, et la fonction `is_outlier()` qu'on a présentée succintement plus haut. Ici, la fonction `ifelse()` a fonctionné comme cela : si la fonction `id_outlier()` renvoyait la valeur `TRUE`, alors on conservait le numéro id de la variable Sepal.Length, sinon, on mettait un espace vide. Cela veut dire que la variable id_outlier ne contenait que les numéros id pour lesquels la fonction `is_outlier()` avait renvoyé la valeur `TRUE`. Pour visualiser ce qu'il s'est passé, on peut revoir la conséquence du début du code qui a permis de faire le graphique (cf. à droite du tableau ci-dessous) : 
+Il y a plusieurs choses à expliquer par rapport au graphique qui comporte à présent, comme on peut le voir ci-dessus, le numéro id associé à l'observation pour laquelle nous avions modifié la valeur. Tout d'abord, il faut noter qu'avant de créer le graphique, nous avons ajouté temporairement au jeu de données, avec la fonction `mutate()`, la variable `id_outlier`. Cette variable a été créée à l'aide de deux fonctions en réalité : la fonction `ifelse()`, et la fonction `is_outlier()` qu'on a présentée succintement plus haut. Ici, la fonction `ifelse()` a fonctionné comme cela : si la fonction `id_outlier()` renvoyait la valeur `TRUE`, alors on conservait le numéro id de la variable Sepal.Length, sinon, on ne mettait rien. Cela veut dire que la variable id_outlier ne contenait que les numéros id pour lesquels la fonction `is_outlier()` avait renvoyé la valeur `TRUE`. Pour visualiser ce qu'il s'est passé, on peut revoir la conséquence du début du code qui a permis de faire le graphique (cf. à droite du tableau ci-dessous) : 
 
 ```{r tabular vizualisation of id.outlier}
 iris %>%
@@ -158,7 +158,7 @@ g_distri <- function(x = NULL, binwidth = NULL) {
 
 L'utilisation de la fonction `g_distri()` est illustrée ci-dessous (pour rappel, il est important d'activer/créer la fonction avant de pouvoir l'utiliser) :
 
-```{r gdistriExample, message = FALSE, fig.align ="center", fig.cap="Vsualisation de la distribution avec la fonction `g_distri()`"}
+```{r gdistriExample, message = FALSE, fig.align ="center", fig.cap="Visualisation de la distribution avec la fonction `g_distri()`"}
 g_distri(x = iris$Sepal.Length, binwidth = 0.3)
 ```
 
@@ -252,7 +252,7 @@ plot_layout(heights = c(0.3, 1, 0.3, 1))
 ```
 
 
-Comme il le sera vu plus tard, de nombreuses analyses statistiques reposent sur l'hypothèse que la variable étudiée est gaussienne. Il est donc important de chercher, graphiquement dans un premier temps, à savoir si la distribution de la variable est effectivement gaussienne. Le fait d'être capable d'identifier les autres formes de distribution peut être aussi important afin de mener des analyses appropriées. Dans les exemples montrés ci-dessus, les distributions ont été créées à partir de 1000 valeurs générées de manière aléatoire de telle sorte à suivre des lois prédéfinies et ainsi illustrer différentes distributions possibles. C'est pour cette raison que les formes de distribution montrées sur la figure ci-dessus sont si nettes. Lorsque l'on travaille dans certains domaines ou contextes, tel qu'avec l'être humain, il peut être compliqué d'obtenir autant de données, et les formes de distribution seront alors plus dures à identifier.
+Comme il le sera vu plus tard, de nombreuses analyses statistiques reposent sur l'hypothèse que la variable étudiée est gaussienne. Il est donc important de chercher à savoir, graphiquement dans un premier temps, si la distribution de la variable est effectivement gaussienne. Le fait d'être capable d'identifier les autres formes de distribution peut être aussi important afin de mener des analyses appropriées. Dans les exemples montrés ci-dessus, les distributions ont été créées à partir de 1000 valeurs générées de manière aléatoire de telle sorte à suivre des lois prédéfinies et ainsi illustrer différentes distributions possibles. C'est pour cette raison que les formes de distribution montrées sur la figure ci-dessus sont si nettes. Lorsque l'on travaille dans certains domaines ou contextes, tel qu'avec l'être humain, il peut être compliqué d'obtenir autant de données, et les formes de distribution seront alors plus dures à identifier.
 
 Une fois qu'une première analyse graphique des données a été réalisée, il peut être utile de chercher à résumer de manière numérique la variable. Plusieurs types de statistiques peuvent être utilisés à cet effet : les **indices de position**, les **indices de dispersion**, les **indices d'asymétrie**, et les **indices d'aplatissement**.
 
@@ -427,8 +427,8 @@ Le mode désigne la valeur qui est la plus fréquemment retrouvée dans une vari
 
 ```{r mode}
 library(lsr)
-modeOf(x = iris$Sepal.Length)                     # Détermination du mode.
-maxFreq(x = iris$Sepal.Length)                    # Détermination de la fréquence du mode.
+modeOf(x = iris$Sepal.Length)    # Détermination du mode.
+maxFreq(x = iris$Sepal.Length)   # Détermination de la fréquence du mode.
 ```
 
 Bien que cela ne soit pas le cas dans l'exemple ci-dessus, il faut comprendre qu'il est à tout à fait possible d'avoir plusieurs modes si plusieurs valeurs reviennent à des fréquences maximales similaires dans la variable. Dans ce cas, la fonction `modeOf()` affichera les différentes valeurs de mode, et la fonction `maxFreq()` continuera de n'afficher qu'une seule valeur de fréquence puisque par définition, le mode désigne la valeur associée à la fréquence d'apparition maximale dans la variable, or il ne peut n'y avoir qu'une seule fréquence maximale... Cela signifie quelque part qu'une variable peut contenenir autant de modes que de valeurs si chaque valeur n'est représentée qu'une seule fois dans la variable. Cet inconvénient est probablement l'une des raisons pour lesquelles le mode n'est que très peu utilisé, si ce n'est jamais utilisé, pour décrire la tendance centrale d'une variable quantitative.
@@ -455,7 +455,7 @@ $$\sigma^2 = \frac{1}{N}\sum_{i=1}^{N} (X{i} - \overline{X})^2$$
 Cette formule signifie que pour obtenir la variance, il faut d'abord faire la somme des carrés des différences entre chaque valeur et la moyenne  de la variable. Cela fait, la variance s'obtient en divisant cette somme de carrés par le nombre *N* de valeurs de la variable. L'écart-type $\sigma$, c'est alors la racine carrée de la variance : 
 $$\sigma = \sqrt{\frac{1}{N}\sum_{i=1}^{N} (X{i} - \overline{X})^2}$$
 
-Ces calculs sont valides lorsque l'on a en sa possession les données de toute la population que l'on souhaite étudier. Toutefois, lorsque l'on a en sa possession des données issues seulement d'un échantillon de la population, ces calculs biaisent les estimations de la variance et de l'écart-type correspondant à la population étudiée. Cette notion de biais traduit le fait que lorsqu'on répète un grand nombre de fois le calcul de la variance ou de l'écart-type à partir, à chaque fois, d'échantillons de population différents, on a en moyenne un décalage entre la valeur de l'estimation et la "vraie" valeur de la variance et de l'écart-type. Ce décalage systématique est tel qu'il convient dans ce cas là de diviser la somme des carrés des différences ($X{i} - \overline{X}$) par *N-1* plutôt que par *N* [@grenierQuelleEstBonne2007]. La formule de l'écart-type non biaisé, noté *s*, est alors la suivante : 
+Ces calculs sont valides lorsque l'on a en sa possession les données de toute la population que l'on souhaite étudier. Toutefois, lorsque l'on a en sa possession des données issues seulement d'un échantillon de la population, ces calculs biaisent les estimations de la variance et de l'écart-type correspondant à la population étudiée. Cette notion de biais traduit le fait que lorsqu'on répète un grand nombre de fois le calcul de la variance ou de l'écart-type à partir, à chaque fois, d'échantillons de population différents, on a en moyenne un décalage entre la valeur de l'estimation et la réelle valeur de la variance et de l'écart-type de la population. Ce décalage systématique est tel qu'il convient dans ce cas là de diviser la somme des carrés des différences ($X{i} - \overline{X}$) par *N-1* plutôt que par *N* [@grenierQuelleEstBonne2007]. La formule de l'écart-type non biaisé, noté *s*, est alors la suivante : 
 $$s = \sqrt{\frac{1}{N-1}\sum_{i=1}^{N} (X{i} - \overline{X})^2}$$
 
 L’écart-type est la mesure de dispersion classiquement associée à la moyenne. Si on note une moyenne $\overline{X}$ et un écart-type *s*, alors le résumé d’une variable à l’aide de ces statistiques s’écrit comme suit : $\overline{X}$ ± *s*. Lorsque l’écart-type est divisé par la moyenne arithmétique de la variable, on obtient une valeur appelée **coefficient de variation**. Avec le logiciel R, les fonctions pour calculer la variance et l'écart-type non biaisés sont respectivement `var()` et `sd()`.
@@ -492,16 +492,22 @@ quantile(x = vec, probs = c(0.25, 0.75), type = 2)
 On remarque ici que la fonction `quantile()` a plusieurs arguments. L'argument `probs` désigne les quantiles que l'on souhaite obtenir. Ici, le quantile 0.25 correspond à Q1, et le quantile 0.75 correspond à Q3. L'argument `type` permet de configurer le type de calcul à effectuer pour obtenir les valeurs des quantiles recherchés. L'indication du chiffre 2 pour l'argument `type` permet d'obtenir les quantiles selon la méthode de calcul présentée ci-dessus, qui, comme nous l'avons précisé, est dédiée à l'étude d'une variable quantitative discrète. Par défaut, en revanche, la fonction `quantile()` utilise le chiffre 7 pour l'argument `type`, ce qui renvoie à une méthode de calcul des quantiles qui serait davantage pertinente pour étudier des variables quantitatives continues. Comparons les résultats obtenus avec les deux méthodes de calcul : 
 
 ```{r quantilesCompaMethods, echo = FALSE}
+library(flextable)
+library(officer)
 m1 <- quantile(x = vec, probs = c(0.25, 0.75), type = 2) %>% tibble::enframe()
 m2 <- quantile(x = vec, probs = c(0.25, 0.75), type = 7) %>% tibble::enframe()
 
-knitr::kable(
+flextable(
   data.frame(
- Quantile = c(0.25, 0.75),
- Type_2 = c(m1[1, 2]$value, m1[2, 2]$value),
- Type_7 = c(m2[1, 2]$value, m2[2, 2]$value)),
- caption = "Comparaison des quantiles obtenus selon différentes configurations de la fonction `quantile()`"
-)
+    Quantile = c(0.25, 0.75),
+    type_2 = c(m1[1, 2]$value, m1[2, 2]$value),
+    type_7 = c(m2[1, 2]$value, m2[2, 2]$value)) %>%
+    rename("Type 2" = type_2, "Type 7" = type_7), cwidth = 2) %>%
+  theme_zebra() %>%
+  align(align = "center", part = "all" ) %>%
+  hline_top(part = "all", border = fp_border(width = 1.5)) %>%
+  hline_bottom(part = "all", border = fp_border(width = 1.5)) %>%
+  set_caption("Comparaison des quantiles obtenus selon différentes configurations de la fonction `quantile()`")
 ```
 
 On remarque que les résultats de la fonction `quantile()` sont différents selon la configuration de l'argument `type`. Le choix de la configuration est donc important. Pour comprendre comment R a calculé les valeurs associées aux quantiles 0.25 et 0.75 dans le cadre de la seconde méthode (i.e., avec `type` = 7), regardons le tableau ci-dessous.

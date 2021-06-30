@@ -1,3 +1,8 @@
+---
+header-includes:
+  - \AtBeginEnvironment{table}{\setlength\belowcaptionskip{-8pt}}
+---
+
 # Importation et manipulation d'une base de données
 ## Comprendre ce qu'est une base de données
 Lorsqu'on souhaite répondre à une question, la démarche scientifique classique consiste à effectuer une série de mesures ou d'observations selon un protocole qui a été conçu en cohérence avec la question posée. En principe, ces mesures ou observations donnent lieu à l'obtention de valeurs. Ces valeurs peuvent être de forme numérique (e.g., les valeurs de taille de différents individus) ou de forme littérale (e.g., les valeurs de sexe de différents individus). Quelle que soit leur forme, les valeurs que l'on obtient dans un contexte qui est connu, comme dans le cas d'un protocole de mesures, ont un sens bien défini car elles sont associées à des choses que l'on a cherché à caractériser. Lorsqu'une valeur est porteuse d'un sens bien défini, on peut alors considérer qu'il s'agit d'une **donnée**.
@@ -5,14 +10,17 @@ Très souvent, pour répondre à une question, il est nécessaire d'acquérir pl
 
 ```{r database, echo = FALSE}
 library(flextable)
+library(officer)
 flextable(
   data.frame(id = seq(1, 7, 1), 
              genre = c("H", "H", "H", "F", "F", "H", "H"), 
              taille = c(1.80, 1.93, 1.50, 1.95, 1.52, 1.87, 1.83), 
              nb_victoires = c(45, 90, 100, 43, 34, 67, 79),
              niveau = c(1, 3, 4, 1, 2, 2, 3)
-  )) %>%
+  ), cwidth = 2) %>%
   theme_zebra() %>%
+  hline_top(part = "all", border = fp_border(width = 1.5)) %>%
+  hline_bottom(part = "all", border = fp_border(width = 1.5)) %>%
   align(align = "center", part = "all" ) %>%
   set_caption("Exemple de base de données")
 ```
@@ -20,7 +28,7 @@ flextable(
 La base de données prend donc la forme d’un tableau. Plusieurs principes sont à respecter en général lors de la création d’une base de données. Tout d’abord, les lignes de la base de données (qu'on appelle des **observations**) doivent correspondre le cas échéant à des individus bien identifiés. Ensuite, chaque colonne doit correspondre à une variable. L’ensemble des données contenues dans une même ligne correspond donc aux données relatives aux différentes variables (e.g., la taille, le poids, le sexe, etc.) qui auraient été obtenues chez un même individu. Dans le cas d’études où l'on évaluerait une ou plusieurs variables plusieurs fois  chez un même individu (i.e., à différentes moments, dans différentes conditions), il peut convenir de créer autant de lignes que de fois où les variables auraient été évaluées. Par exemple, le tableau ci-dessous représente une base de données (certes très sommaire) contenant des données d'individus dont on aurait évalué le poids deux fois, avant et après un programme de prise en charge. On remarque alors qu'il y a deux lignes par individu qui correspondent aux deux temps d'évaluation. La taille, elle, n'aura été évaluée qu'une seule fois, en début de programme, mais pour éviter de laisser des cellules vides, alors la valeur aura été reproduite dans la seconde ligne.
 
 ```{r databasePlusObs, echo = FALSE}
-knitr::kable(
+flextable(
   tribble(
     ~id, ~taille, ~temps_eval, ~poids,
     #---/--------/------------/--------
@@ -28,10 +36,12 @@ knitr::kable(
     "1", 1.75,    "post",      73,
     "2", 1.89,    "pre",       90,
     "2", 1.89,    "post",      88
-  ),
-  caption = "Organisation d'une base de données avec des mesures répétées",
-  longtable = TRUE
-)
+  ), cwidth = 2) %>%
+  theme_zebra() %>%
+  hline_top(part = "all", border = fp_border(width = 1.5)) %>%
+  hline_bottom(part = "all", border = fp_border(width = 1.5)) %>%
+  align(align = "center", part = "all" ) %>%
+  set_caption("Organisation d'une base de données avec des mesures répétées")
 ```
 
 En principe, les données de la base qui ont été obtenues selon la même procédure d’acquisition représentent le même type de choses. Ces choses sont appelées des **variables** car elles varient selon les individus qui ont été étudiés et les conditions de mesure qui ont été mises en oeuvre (dans le cas où il y en aurait plusieurs). Lorsque ces choses ne sont pas censées varier, on parle de **constantes**. Une base de données peut comporter plusieurs variables de natures différentes :
@@ -42,16 +52,19 @@ En principe, les données de la base qui ont été obtenues selon la même proc�
 ## Fixer le répertoire de travail
 Lorsque l'on souhaite réaliser l'analyse d'une base de données avec RStudio, il peut être utile et plus fonctionnel pour la suite de créer un dossier spécifique, sur l'ordinateur, où se trouveraient à la fois la base de données ainsi que toutes les créations (e.g., tableaux, figures, etc.) qui seraient produites au fur et à mesure des analyses. Une fois le dossier crée, il faut ensuite, dans RStudio, ouvrir un fichier **Script** où toutes les commandes seront écrites et enregistrables (chemin d'accès : **File > New File > R Script**). Une fois ouvert, il est possible d'enregistrer le script en appuyant sur **Ctrl+S**, en privilégiant le dossier où se trouve la base de données comme emplacement.
 La prochaine manipulation à faire est alors de **Fixer le répertoire**. L'enjeu est ici d'indiquer à RStudio un dossier à privilégier pour réaliser des importations de fichiers dans RStudio ou des exports de fichiers à partir de RStudio. Le dossier à considérer pour cela pourrait donc être celui où se trouve déjà la base de données. Plus concrètement, après avoir fait cela, dès lors que l'on voudra importer un tableau de données dans RStudio, au lieu de préciser dans la fonction d'importation tout le chemin d'accès définissant l'emplacement du fichier sur l'ordinateur, il suffira dans la fonction de mettre seulement le nom du fichier à importer. De plus, dès lors que l'on voudra exporter un tableau ou une figure crée(e) avec RStudio, l'export se fera automatiquement vers le dossier de travail en cours si rien n'est spécifié dans la fonction d'export quant à l'emplacement du document.
+
 Pour fixer le répertoire de travail, il existe plusieurs manières de faire. Une manière relativement simple de procéder est la suivante. Suivre le chemin d'accès suivant à partir de RStudio : **Session > Set Working Directory > Choose Directory...**. (Ou appuyer sur **Ctr+Shift+H**.). Puis, sélectionner le dossier où se trouve la base de données. Enfin, cliquer sur **Open**. Une commmande apparaît alors dans la Console. Le répertoire vient donc d'être fixé. Pour ne pas devoir faire la même manipulation à chaque nouvelle ouverture de RStudio, il est possible de copier cette commande qui est apparue dans la Console (ne pas copier le symbole `>`) et de la coller au début du script. On pourra noter que cette commande contient la fonction `setwd()`, et qu'à l'intérieur se trouve le chemin d'accès au répertoire de travail qui est écrit entre des guillemets.
 
+Une seconde manière de procéder est de créer un fichier .Rproj dans le dossier crée au préalable pour faire ses analyses et qui contient donc la base de données. Pour créer ce fichier, il suffit de suivre, dans RStudio, le chemin suivant : **Fichier > New Project... > Existing Directory > Sélectionner le chemin d'accès au dossier souhaité > Cliquer sur Create Project**. Ainsi, à chaque fois que l'on souhaitera travailler avec les fichiers du dossier dans lequel le fichier .Rproj se trouve, il suffira de double-cliquer sur ce fichier pour ouvrir une session R qui  prendra automatiquement pour répertoire de travail le dossier dans lequel le fichier .Rproj se trouve. Le grand avantage de cette procédure est que cela permet de ne pas écrire le chemin d'accès complet au dossier de travail et ainsi de ne pas révéler dans le script des informations qui sont relativement privées. Cette deuxième solution est donc celle à préférer, surtout lorsqu'on envisage de partager son script avec d'autres collaborateurs qui risqueraient qui plus est d'être gênés par cette ligne de code d'accès au dossier qui ne leur servirait à rien car le chemin d'accès au dossier de travail d'un collègue sera très probablement différent de celui des autres collaborateurs.
+
 ## Importer la base de données
-Il existe plusieurs fonctions pour importer une base de données dans RStudio. La fonction `read_csv2()` du package `readr` permet d'importer par exemple des fichiers .csv qui, structurellement, séparent les données avec des points-virgules. C'est généralement le type de structure de fichier .csv que l'on obtient après avoir réalisé un export à partir d'un fichier Excel. Pour illustrer ici l'importation d'une base de données, il est possible d'en créer une dans le répertoire de travail actif en y exportant un tableau de données qui existe déjà avec le logiciel R. Le logiciel R dispose en effet d'un grand nombre de jeux de données différents que tout utilisateur peut consulter et manipuler. L'ensemble des jeux de données disponibles suite à l'installation par défaut de R est visible en lançant dans la Console la commande `data()`. Au fur et à mesure de la découverte des analyses montrées dans ce document, différents jeux de données seront utilisés en fonction des besoins. Pour le moment, il est possible d'utiliser le jeu de données qui s'appelle `iris`. Même si on ne le voit pas dans la fenêtre Environnement de RStudio, il est bel et bien là, disponible, prêt à être utilisé. Afin d'exporter ce jeu de données dans le répertoire de travail fixé au préalable, il est possible d'utiliser la fonction `write_csv2()` du package `readr`. Pour cela, il suffit d'utiliser le nom du jeu de données, puis d'indiquer entre guillemets le nom que l'on veut que le fichier exporté ait, tout en n'oubliant pas de mettre l'extension .csv à la fin du nom pour indiquer le format d'export, comme ci-dessous. 
+Il existe plusieurs fonctions pour importer une base de données dans RStudio. La fonction `read_csv2()` du package `readr` permet d'importer par exemple des fichiers .csv qui, structurellement, séparent les données avec des points-virgules. C'est généralement le type de structure de fichier .csv que l'on obtient après avoir réalisé un export à partir d'un fichier Excel. Pour illustrer ici l'importation d'une base de données, il est d'abord possible d'en créer une dans le répertoire de travail actif, cela en exportant un tableau de données qui existe déjà avec le logiciel R. Le logiciel R dispose en effet d'un grand nombre de jeux de données différents que tout utilisateur peut consulter et manipuler. L'ensemble des jeux de données disponibles suite à l'installation par défaut de R est visible en lançant dans la Console la commande `data()`. Au fur et à mesure de la découverte des analyses montrées dans ce document, différents jeux de données seront utilisés en fonction des besoins. Pour le moment, il est possible d'utiliser le jeu de données qui s'appelle `iris`. Même si on ne le voit pas dans la fenêtre Environnement de RStudio, il est bel et bien là, disponible, prêt à être utilisé. Afin d'exporter ce jeu de données dans le répertoire de travail fixé au préalable, il est possible d'utiliser la fonction `write_csv2()` du package `readr`. Pour cela, il suffit d'utiliser le nom du jeu de données, puis d'indiquer entre guillemets le nom que l'on veut que le fichier exporté ait, tout en n'oubliant pas de mettre l'extension .csv à la fin du nom pour indiquer le format d'export, comme ci-dessous. 
 
 ```{r write_csv2, eval = FALSE}
 write_csv2(x = iris, path = "iris.csv")
 ```
 
-Si l'on jette un oeil dans le répertoire de travail, il est alors possible d'y voir un nouveau fichier .csv du nom de `iris`. Maintenant qu'il existe une base de données dans le répertoire de travail actif, il est possible de concrétiser la procédure de son importation dans RStudio. Comme évoqué plus tôt dans ce document, il est intéressant, et en réalité nécessaire, d'assigner cette base de données à un nom pour pouvoir plus facilement manipuler le jeu de données par la suite. Ici, nous allons tout naturellement associer ce nouvel objet au nom `iris`.
+Si la commande ci-dessus est activée dans RStudio et que l'on jette ensuite un oeil dans le répertoire de travail, il est alors possible d'y voir un nouveau fichier .csv du nom de `iris`. Maintenant qu'il existe une base de données dans le répertoire de travail actif, il est possible de concrétiser la procédure de son importation dans RStudio. Comme évoqué plus tôt dans ce document, il est intéressant, et en réalité nécessaire, d'assigner cette base de données à un nom pour pouvoir plus facilement manipuler le jeu de données par la suite. Ici, nous allons tout naturellement associer ce nouvel objet au nom `iris`, tel que montré ci-dessous.
 
 ```{r read_csv2}
 iris <- read_csv2(file = "iris.csv")
@@ -76,7 +89,7 @@ iris <- as_tibble(x = iris)
 iris
 ```
 
-Cette fois, RStudio n'affiche que les premières lignes du jeu de données, et il fournit en plus de cela des informations quant aux types de variables présentes dans le jeu de données, en-dessous de la ligne de titres. Maintenant que la base de données a été importée, il ne reste plus qu'à voir différentes fonctions pour pouvoir configurer la base de données telle que nous la voulons pour réaliser confortablement les analyses.
+Cette fois, RStudio n'affiche que les premières lignes du jeu de données, et il fournit en plus de cela des informations quant aux types de variables présentes dans le jeu de données, en-dessous de la ligne de titres. Maintenant que la base de données a été importée, il ne reste plus qu'à voir différentes fonctions pour pouvoir configurer la base de données telle qu'on la voudrait pour réaliser confortablement les analyses.
 
 ## Manipuler la base de données
 ### Vérifier le succès de l'importation de la base
@@ -93,7 +106,7 @@ Après avoir activé la commande contenant la fonction `str()`, la Console affic
 
 * num : désigne une variable quantitative continue.
 * int : dégine une variable quantitative discrète (avec des nombres entiers).
-* Factor : désigne une variable qualitative nominale.
+* Factor : désigne une variable qualitative.
 * chr : désigne une variable texte.
 * Date : désigne une variable date.
 
@@ -103,7 +116,7 @@ Le logiciel R s'appuie donc sur une classification des types de variables plus c
 class(x = iris$Sepal.Length)
 ```
 
-Lorsque le type de variable ne correspond pas à celui attendu, il peut être utile de se questionner sur les raisons de la mauvaise interprétation que R en a faite. L'une des erreurs qui peuvent régulièrement survenir est le fait d'obtenir une variable de type *Factor* ou de type *chr* au lieu d'une variable de type *num* lorsque l'importation du jeu de données a été réalisée avec une fonction d'importation mal configurée (e.g., il est possible que la fonction d'importation du jeu de données considérait les valeurs comme des nombres décimaux lorsqu'ils avaient des points (.) alors qu'en réalité les nombres décimaux étaient écrits avec des virgules (,) dans le jeu de données. Une autre possibilité est que l'on n'ait pas indiqué dans la fonction d'importation sous quelle forme se présentaient les valeurs manquantes de la base de données (e.g., s'il y a des valeurs manquantes notées "NA" dans la base de données, mais que cela n'est pas indiqué dans la fonction d'importation, R peut interpréter les variables concernées comme des variables *chr*). En utilisant la fonction `read_csv2()` du package `readr`, ces écueils sont plus facilement évités car les paramètres par défaut de la fonction nous facilitent le travail. En revanche, d'autres fonctions, plus anciennes, comme `read.csv2()` qui est une fonction de base de R, nécessitent plus de vigilance.
+Lorsque le type d'une variable ne correspond pas à celui attendu après avoir importé la base de données dans RStudio, il peut être utile de se questionner sur les erreurs qui ont pu causer cela. Lorsque l'on obtient une variable de type *Factor* ou de type *chr* alors qu'une variable de type *num* étaient attendue, une cause possible est que l'importation du jeu de données a été réalisée avec une fonction d'importation mal configurée par rapport au contenu du jeu de données. Par exemple, il est possible que la fonction d'importation du jeu de données reconnaissait les nombres décimaux seulement lorsqu'ils avaient des points (e.g., 24.3) alors qu'en réalité les nombres décimaux étaient écrits avec des virgules (e.g., 24,3) dans la base de données. Une autre possibilité est que l'on n'ait pas indiqué, dans la fonction d'importation, sous quelle forme se présentaient les valeurs manquantes de la base de données (e.g., avec des valeurs manquantes qui seraient notées "NA" dans des variables numériques de la base de données, l'usage de certaines fonctions d'importation sans indiquer à l'intérieur que "NA" désigne "valeur manquante" conduira R à interpréter les variables concernées comme des variables *chr*). En utilisant la fonction `read_csv2()` du package `readr`, ces écueils sont plus facilement évités car les paramètres par défaut de la fonction nous facilitent le travail. En revanche, d'autres fonctions, plus anciennes, comme `read.csv2()` qui est une fonction de base de R, nécessitent plus de vigilance.
 
 Lorsque la modification du type de la variable est nécessaire, une stratégie possible est de créer une variable portant exactement le même nom à partir de la variable initiale et à laquelle on applique une fonction capable d'imposer un certain type de variable. Il existe une fonction pour chaque type de variable à définir, notamment (mais pas seulement) : 
 
@@ -122,7 +135,7 @@ iris$Petal.Width <- as.character(x = iris$Petal.Width)
 iris$Species <- as.character(x = iris$Species)
 ```
 
-Remarquons qu'à chaque fois, la variable désignée à gauche de la flèche d'assignation est exactement la même que celle qui est indiquée à droite de la flèche d'assignation dans la fonction `as.character()`, ce qui implique que la création de la nouvelle variable entraîne la suppression et le remplacement de la précédente qui portait le même nom. Il est possible de vérifier la conséquence de ces commandes avec la fonction `str()`.
+Remarquons qu'à chaque fois, le nom de variable écrit à gauche de la flèche d'assignation est exactement la même que celui qui est écrit à droite de la flèche d'assignation dans la fonction `as.character()`, ce qui implique que la création de la nouvelle variable entraîne la suppression et le remplacement de la précédente qui portait le même nom. Il est possible de vérifier la conséquence de ces commandes avec la fonction `str()`.
 
 ```{r verif iris}
 str(iris)
@@ -151,7 +164,7 @@ iris %>%
 ```
 
 ### Renommer des variables avec `rename()`
-Il est possible que certains titres de variables ne soient pas clairs ou trop longs, ce qui peut être gênant pour écrire un code le plus lisible possible. La fonction `rename()` du package `dplyr` permet de gérer cela. Dans l'exemple ci-dessous, on observe que le nouveau nom doit être écrit à gauche du signal `=`, alors que l'ancien nom doit être écrit à droite du signe `=`.
+Il est possible que certains titres de variables ne soient pas clairs ou trop longs, ce qui peut être gênant pour écrire un code le plus lisible possible. La fonction `rename()` du package `dplyr` permet de gérer cela. Dans l'exemple ci-dessous, on observe que le nouveau nom doit être écrit à gauche du signe `=`, alors que l'ancien nom doit être écrit à droite du signe `=`.
 
 ```{r rename}
 iris %>% 
@@ -175,13 +188,16 @@ iris %>%
 En fonction des besoins de l'analyse, on peut vouloir ne retenir que certaines lignes du fichier de données. La fonction `filter()` du package `dplyr` est faite pour réaliser ce filtrage. Plusieurs opérateurs sont disponibles pour ne retenir que les lignes que l'on veut : 
 
 ```{r SymbolsFilter, echo = FALSE}
-knitr::kable(
+flextable(
   data.frame(
   "Opération" = c("Égal",  "Inférieur ou égal", "Supérieur ou égal", "Différent de"),
-  "Opérateur" = c("==", "<=", ">=", "!=")),
-  caption = "Les opérateurs utilisables avec la fonction `filter()`",
-  longtable = TRUE
-)
+  "Opérateur" = c("==", "<=", ">=", "!=")), cwidth = 2.5) %>%
+  theme_zebra() %>%
+  hline_top(part = "all", border = fp_border(width = 1.5)) %>%
+  hline_bottom(part = "all", border = fp_border(width = 1.5)) %>%
+  align(j = 1, align="left", part="all") %>%
+  align(j = 2, align="center", part="all") %>%
+  set_caption("Les opérateurs utilisables avec la fonction `filter()`")
 ```
 
 De plus, dans la configuration du code, ces opérateurs peuvent être couplés à l'opérateur `|` (OU) et à l'opérateur `&` (ET). Dans l'exemple ci-dessous, le code permet, à partir du jeu de données `iris`, de ne garder que les lignes du jeu de données qui contiennent les noms d'espèce *setosa* OU *virginica*, ET en même temps qui affichent une longueur de sépale inférieure ou égale à 5.
@@ -192,8 +208,8 @@ iris %>%
           Sepal.Length <= 5)
 ```
 
-### Arranger les lignes avec `arrange()`
-On peut vouloir que le jeu de données soit arrangé, ou trié, selon un certain ordre, en fonction des valeurs d'une variable donnée. La fonction `arrange()` du package `dplyr` est très utile pour gérer ce genre de réalisation. L'exemple ci-dessous conduit à trier les données selon un ordre croissant en fonction des valeurs de la variable `Sepal.Length`. Le fait de mettre le symbole `-` devant le nom de la variable aurait conduit à un tri décroissant.
+### Réordonner les lignes avec `arrange()`
+On peut vouloir trier les lignes du jeu de données selon un certain ordre, en fonction des valeurs d'une variable donnée. La fonction `arrange()` du package `dplyr` est très utile pour gérer ce genre de réalisation. L'exemple ci-dessous conduit à trier les données selon un ordre croissant en fonction des valeurs de la variable `Sepal.Length`. Le fait de mettre le symbole `-` devant le nom de la variable aurait conduit à un tri décroissant.
 
 ```{r arrange}
 iris %>% 
@@ -224,7 +240,7 @@ iris2
 ```
 
 ### Passer d'une disposition en lignes à une disposition en colonnes et inversement avec `pivot_wider()` et `pivot_longer()`
-Il convient de respecter certaines règles de base lors de la conception d'une base de données (e.g., mettre les observations en lignes et les variables en colonnes). Toutefois, dans certains cas, même après avoir bien respecter les règles, la manière selon laquelle la base de données a été organisée peut ne pas être encore adéquate pour pouvoir utiliser certaines fonctions. Prenons par exemple le cas où toutes les valeurs numériques d'une variable quantitative auraient été mises dans une même colonne en regard d'une variable qualitative pour que chaque valeur numérique corresponde à une modalité de cette variable qualitative (c'est le cas, par exemple, avec le jeu de données `iris`), et que la fonction à utiliser nécessiterait que l'on ait une colonne pour chacune des modalités de la variable qualitative, avec des colonnes mises côte à côte. Une fonction qui permet alors de passer d'un format "long" (i.e., toutes les valeurs numériques sont dans la même colonne) à un format "large" (i.e., les valeurs numériques sont réparties dans différentes colonnes selon la modalité à laquelle elles sont associées), est la fonction `pivot_wider()` du package `tidyr`. Pour pouvoir utiliser cette fonction, il faut qu'il y ait une variable permettant d'identifier à quel individu ou groupe appartienne les données dont on va changer l'organisation. Dans une base de données classique, il y a toujours une variable présente pour cela. Toutefois, dans le jeu de données `iris`, il n'y a pas une telle variable. Pour pouvoir illustrer l'utilisation de la fonction `pivot_wider()`, nous avons donc ajouté arbitrairement une variable `id` grâce à la fonction `mutate()` pour simuler le fait que les données de `iris` auraient été acquises en référence à des individus bien identifiés, avec à chaque fois une valeur pour les trois modalités de la variable `Species`.
+Il convient de respecter certaines règles de base lors de la conception d'une base de données (e.g., mettre les observations en lignes et les variables en colonnes). Toutefois, dans certains cas, même après avoir bien respecté les règles, la manière selon laquelle la base de données a été organisée peut ne pas être encore adéquate pour pouvoir utiliser certaines fonctions. Prenons par exemple le cas où toutes les valeurs numériques d'une variable quantitative auraient été mises dans une même colonne en regard d'une variable qualitative pour que chaque valeur numérique corresponde à une modalité de cette variable qualitative (c'est le cas, par exemple, avec le jeu de données `iris`), et que la fonction à utiliser nécessiterait que l'on ait une colonne pour chacune des modalités de la variable qualitative, avec des colonnes mises côte à côte. Une fonction qui permet alors de passer d'un format "long" (i.e., toutes les valeurs numériques sont dans la même colonne) à un format "large" (i.e., les valeurs numériques sont réparties dans différentes colonnes selon la modalité à laquelle elles sont associées), est la fonction `pivot_wider()` du package `tidyr`. Pour pouvoir utiliser cette fonction, il faut qu'il y ait une variable permettant d'identifier à quels individus ou groupes appartiennent les données dont on va changer l'organisation. Dans une base de données classique, il y a toujours une variable présente pour cela. Toutefois, dans le jeu de données `iris`, il n'y a pas une telle variable. Pour pouvoir illustrer l'utilisation de la fonction `pivot_wider()`, nous avons donc ajouté arbitrairement une variable `id` grâce à la fonction `mutate()` pour simuler le fait que les données de `iris` auraient été acquises en référence à des individus bien identifiés, avec à chaque fois une valeur pour les trois modalités de la variable `Species`.
 
 ```{r add id iris}
 iris2 <- 
@@ -236,7 +252,7 @@ iris2 <-
 iris2
 ```
 
-La fonction `pivot_wider()` permet alors de mettre en colonnes les valeurs des variables sélectionnées pour chacune des trois modalités de la variable `Species` (ci-dessous, seules les trois colonnes relatives à la longueur des sépales des fleurs (`Sepal.Length`) sont montrées, mais le reste a bien été crée).
+La fonction `pivot_wider()` permet alors de mettre en colonnes les valeurs des variables sélectionnées pour chacune des trois modalités de la variable `Species`.
 
 ```{r pivot_wider}
 iris3 <- 
@@ -248,21 +264,33 @@ iris3
 
 L'argument `names_from` a permis d'indiquer la variable à partir de laquelle on a dispatché les valeurs en colonnes, et l'argument `values_from` a permis de préciser les variables pour lesquelles on voulait que les valeurs numériques soient dispatchées. L'utilisation des deux-points (`:`) nous a permis de sélectionner toutes les variables allant de `Sepal.Length` à `Petal.Width` dans le jeu de données.
 
-Dans une situation inverse à celle que nous venons de voir, nous pourrions avoir les données représentées en colonnes (comme c'est le cas avec le jeu de données crée `iris3`), alors que nous les voudrions en lignes (comme c'était le cas avec le jeu de données `iris` à l'origine). La fonction `pivot_longer` permet de faire cette conversion.
+Dans une situation inverse à celle que nous venons de voir, nous pourrions avoir les données représentées en colonnes (comme c'est le cas avec le jeu de données crée `iris3`), alors que nous les voudrions en lignes (comme c'était le cas avec le jeu de données `iris` à l'origine). La fonction `pivot_longer` permet de faire ce genre de conversion. Pour observer ce que cette fonction réalise, sélectionnons seulement les colonnes avec les valeurs de sépales en plus de la colonne `id`, tel que montré ci-dessous :
 
 ```{r pivot_longer}
-iris4 <- 
   iris3 %>% 
-  pivot_longer(cols = c(Sepal.Length_setosa, Sepal.Length_versicolor, Sepal.Length_virginica), 
+  select(id, 
+         Sepal.Length_setosa, 
+         Sepal.Length_versicolor, 
+         Sepal.Length_virginica) %>%
+  pivot_longer(cols = c(-id), 
                names_to = "Species", 
-               values_to = "Sepal_len") %>%
-  select(id, Species, Sepal_len)
-iris4
+               values_to = "Sepal_len")
 ```
 
-Dans la fonction `pivot_longer()` ci-dessus, nous avons indiqué à l'aide de l'argument `cols` et de la fonction `c()` l'ensemble des variables dont nous souhaitions voir les valeurs regroupées dans une même colonne. L'argument `names_to` nous a permis de donner un nom à la variable qualitative qui comporte les modalités à associer aux valeurs numériques, et l'argument `values_to` nous a permis de donner un nom à la colonne où se trouvent maintenant les valeurs numériques. Les deux nouvelles colonnes ainsi crées se trouvent tout à gauche du tableau `iris4`, mais nous avons sélectionné pour cet exemple seulement les colonnes qui permettaient d'illustrer le résultat de la fonction. On peut remarquer cependant qu'en créant ces colonnes, R a dû dupliquer les valeurs de la variable id et des autres colonnes pour pouvoir garder la correspondance entre les données, chose que l'on peut voir en tapant `iris4` dans la Console.
+Dans la fonction `pivot_longer()` ci-dessus, nous avons indiqué à l'aide de l'argument `cols` et de la fonction `c()` avec le signe `-` la colonne que nous ne voulions pas utiliser avec la fonction (c'était plus rapide que d'indiquer dans la fonction `c()` les trois colonnes à utiliser). L'argument `names_to` nous a permis de donner un nom à la variable qualitative qui comporte à présent les modalités associées aux valeurs numériques, et l'argument `values_to` nous a permis de donner un nom à la colonne où se trouvent maintenant les valeurs numériques.
 
-Nous venons de voir plusieurs fonctions qui peuvent être très utiles pour pouvoir facilement préparer sa base de données en vue des futures analyses. Il ne s'agit que d'une vue très superficielle de tout le potentiel de manipulation des données qu'ont ces fonctions. Pour une vue approndie des possibilités qu'offrent ces fonctions, la lecture de l'ouvrage *R for Data Science* d'Hadley Wickham et de Garrett Grolemund [-@wickhamDataScience2017] sera particulièrement enrichissante. Cet ouvrage est en libre accès ici : https://r4ds.had.co.nz.
+Lorsque l'on veut utiliser la fonction `pivot_longer()` sur plusieurs colonnes qui sont écrites avec la même logique (par exemple, avec un nom composé de deux morceaux séparés par un `_`, avec un morceau pour indiquer la chose mesurée, et un autre morceau pour indiquer la modalité), il convient de procéder comme ci-dessous :
+
+```{r pivot_longer 2}
+  iris3 %>% 
+  pivot_longer(cols = c(Sepal.Length_setosa : Petal.Width_virginica), 
+               names_to = c(".value", "Species"),
+               names_sep = "_")
+```
+
+Dans le code montré ci-dessus, l'argument `cols` a permis de sélectionner toutes les colonnes situées à droite de la colonne `id`, l'argument `names_to` a permis d'indiquer qu'il faut garder des colonnes spécifiques  nommées avec le premier morceau du nom des variables antérieures (le mot `".value"` permet cela), et le mot `"Species"` a permis de nommer la colonne avec les espèces d'iris qui étaient les seconds morceaux des noms des variables antérieures.
+
+Nous venons de voir plusieurs fonctions qui peuvent être très utiles pour pouvoir facilement préparer sa base de données en vue des futures analyses. Il ne s'agit que d'une vue très superficielle de tout le potentiel de manipulation des données qu'ont ces fonctions. Pour une vue plus approndie des possibilités qu'offrent ces fonctions, la lecture de l'ouvrage *R for Data Science* d'Hadley Wickham et de Garrett Grolemund [-@wickhamDataScience2017] sera particulièrement enrichissante. Cet ouvrage est en libre accès ici : https://r4ds.had.co.nz.
 
 ## Résumé
 * La base de données est un tableau comportant l'ensemble des données avec les observations organisées en lignes et les variables organisées en colonnes.
