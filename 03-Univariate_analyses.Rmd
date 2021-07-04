@@ -518,10 +518,14 @@ table_quant <-
     Rang = rank(vec),
     Quantile =(rank(vec) - 1) / (length(vec) - 1),
     Valeur = vec)
-knitr::kable(
-table_quant,
-caption = "Quantiles d'une variable quantitative continue"
-)
+
+flextable(
+table_quant, , cwidth = 2) %>%
+  theme_zebra() %>%
+  align(align = "center", part = "all" ) %>%
+  hline_top(part = "all", border = fp_border(width = 1.5)) %>%
+  hline_bottom(part = "all", border = fp_border(width = 1.5)) %>%
+  set_caption("Quantiles d'une variable quantitative continue")
 ```
 
 Le tableau montre les données sur lesquelles R s'est appuyé pour déterminer les valeurs des quantiles recherchés (i.e., les quantiles 0.25 et 0.75 pour Q1 et Q3, respectivement). Les données du tableau sont bien celles relatives à notre variable `vec`, dont on peut reconnaître les valeurs dans la colonne de droite du tableau.  La colonne "Quantile" montre les fractions (ou portions) de la variable `vec` associées aux valeurs de la variable compte tenu de leurs rangs respectifs. Par exemple, la valeur 25.6, dont le rang est 6, correspond au quantile 0.71 (approximativement). Cela veut dire que 71 % des observations ont une valeur inférieure ou égale à 25.6. Il faut savoir qu'il existe en réalité plusieurs manières de déterminer la valeur du quantile que représente chaque valeur. Dans le cas présent, le quantile représenté, que l'on va noter *q*, a été déterminé selon la formule suivante : 
