@@ -58,7 +58,7 @@ g_quad <-
 
 ```
 
-Dans R, pour obtenir un nuage de points à partir d'un jeu de données, il est possible d'utiliser la fonction `ggplot()` en l'associant à la fonction `geom_point()` du package `ggplot2`, comme dans l'exemple ci-dessous qui utilise le jeu de données `mtcars` (qui est intégré à R de base) et les variables `hp` (*gross horsepower*) et `mpg` (*miles/US gallon*). Dans cet exemple, on peut voir que la relation semble gobalement linéaire négative (voire curvilinéaire négative si l'on donne de l'importance au point isolé à droite du graphique).
+Avec R, pour obtenir un nuage de points à partir d'un jeu de données, il est possible d'utiliser la fonction `ggplot()` en l'associant à la fonction `geom_point()` du package `ggplot2`, comme dans l'exemple ci-dessous qui utilise le jeu de données `mtcars` (qui est intégré à R de base) et les variables `hp` (*gross horsepower*) et `mpg` (*miles/US gallon*). Dans cet exemple, on peut voir que la relation semble gobalement linéaire négative (voire curvilinéaire négative si l'on donne de l'importance au point isolé à droite du graphique).
 
 ```{r scatterplot, fig.align = "center", fig.cap="Exemple de nuage de points"}
 ggplot(data = mtcars, aes(x = hp, y = mpg)) + 
@@ -88,19 +88,26 @@ $COV$ désignant la covariance entre les variables $X$ et $Y$, $X{i}$ et $Y{i}$ 
 Le tableau ci-dessous montre les premières étapes du calcul de la covariance pour des couples de variables fictifs $(X1,Y1)$, $(X1,Y2)$, et $(X1,Y3)$. En particulier, la partie droite du tableau (de X1Y1 à X1Y3) montre le calcul du produit $(X{i} - \overline{X}) (Y{i} - \overline{Y})$ pour les différents couples de variables et cela pour chaque ligne du jeu de données.
 
 ```{r tablecov, echo = FALSE}
+library(flextable)
+library(officer)
 X1 <- c(0, 2, 4, 6, 8, 10, 12)
 Y1 <- X1
 Y2 <- c(0, 1, 15, 5, 11, 3, 12)
 Y3 <- -X1
 
-knitr::kable(
 df <- 
   data.frame(X1 = X1, Y1 = Y1, Y2 = Y2, Y3 = Y3) %>%
   mutate(X1Y1 = (X1 - mean(X1)) * (Y1 - mean(Y1)),
          X1Y2 = (X1 - mean(X1)) * (Y2 - mean(Y2)),
-         X1Y3 = (X1 - mean(X1)) * (Y3 - mean(Y3))),
-caption = "Calcul de la covariance"
-)
+         X1Y3 = (X1 - mean(X1)) * (Y3 - mean(Y3)))
+
+flextable(
+  df, cwidth = 2) %>%
+  theme_zebra() %>%
+  align(align = "center", part = "all" ) %>%
+  hline_top(part = "all", border = fp_border(width = 1.5)) %>%
+  hline_bottom(part = "all", border = fp_border(width = 1.5)) %>%
+  set_caption("Calcul de la covariance")
 ```
 
 Ce que ce tableau peut permettre de rendre compte, c'est que plus les deux variables étudiées évolueront de manière consistante dans des sens identiques comme avec $X1$ et $Y1$, ou de manière consistante dans des sens opposés comme avec $X1$ et $Y3$, plus les produits $(X{i} - \overline{X}) (Y{i} - \overline{Y})$ donneront respectivement des grands scores positifs ou des grands scores négatifs, et moins les scores $(X{i} - \overline{X}) (Y{i} - \overline{Y})$ à additionner pour le calcul de la covariance s'annuleront. En effet, avec une relation relativement linéaire et positive les scores seront plus systématiquement positifs, et avec une relation relativement linéaire et négative les scores seront plus systématiquement négatifs. Toutefois, lorsqu'on aura des variables qui n'évolueront pas de manière consistante dans le même sens ou dans un sens opposé comme avec $X1$ et $Y2$, les scores positifs et négatifs liés aux calculs $(X{i} - \overline{X}) (Y{i} - \overline{Y})$ auront tendance à s'annuler et donneront lieu à une somme des scores $(X{i} - \overline{X}) (Y{i} - \overline{Y})$ diminuée, et donc à une covariance et au final à un coefficient de corrélation de Pearson tirés vers 0. Ces différents cas de figure et les calculs $(X{i} - \overline{X}) (Y{i} - \overline{Y})$ correspondants sont illustrés sur la figure ci-dessous. Sur cette figure, chaque carré correspond au calcul $(X{i} - \overline{X}) (Y{i} - \overline{Y})$, le carré étant bleu lorsque le résultat du calcul est positif, et rouge lorsque le résultat est négatif. L'aire d'un carré illustre la grandeur du score issu du calcul. Sur les figures de gauche et de droite, on distingue une relation linéaire parfaite, ce qui maximise les scores à additionner pour le calcul de la covariance, dans le positif pour la figure de gauche et dans le négatif pour la figure de droite. Au milieu, on remarque que le manque de relation linéaire donne lieu à des carrés à la fois bleus et rouges, indiquant que les scores associés aux calculs $(X{i} - \overline{X}) (Y{i} - \overline{Y})$ de la covariance s'annulent et diminuent ainsi la valeur finale de la covariance.
@@ -190,13 +197,16 @@ cor.test(x = mtcars$hp, y = mtcars$mpg, method = "pearson")
 Sur la base de travaux antérieurs, Hopkins et al. [-@hopkinsProgressiveStatisticsStudies2009] ont fait une proposition de classification pour qualifier la valeur du coefficient de corrélation qui serait obtenue dans le cadre d'une relation linéaire. Cette proposition est montrée ci-dessous :
 
 ```{r correlationtable, echo = FALSE}
-knitr::kable(
+flextable(
   tribble(
     ~Petite, ~Moyenne, ~Grande, ~"Très grande", ~"Extrêmement grande",
     0.1,     0.3,      0.5,     0.7,            0.9
-  ),
-  caption = "Taille d'effet pour une corrélation"
-)
+  ),  cwidth = 2) %>%
+  theme_zebra() %>%
+  align(align = "center", part = "all" ) %>%
+  hline_top(part = "all", border = fp_border(width = 1.5)) %>%
+  hline_bottom(part = "all", border = fp_border(width = 1.5)) %>%
+  set_caption("Valeurs de taille d'effet associées aux valeurs de corrélation")
 ```
 
 Pour visualiser le lien que l'on peut faire entre la forme du nuage de points et la valeur du coefficient de corrélation de Pearson que l'on peut obtenir, la page web proposée par Kristoffer Magnusson (https://rpsychologist.com/correlation) peut être particulièrement intéressante. Cette page web donne la possibilité de faire varier manuellement la valeur du coefficient de corrélation de Pearson pour ensuite voir un nuage de points type correspondant à cette valeur. Faites un essai !
@@ -227,7 +237,7 @@ g_lin_sel <-
 g_lin | g_lin_sel
 ```
 
-Un exemple extrême de l'influence de la variabilité des données sur la valeur du coefficient de corrélation de Pearson est montré sur la figure ci-dessous. Les deux graphiques montrent exactement les mêmes données, à ceci près que sur le graphique de droite, on a remplacé en ordonnées une valeur du graphique de gauche pour lui donner la valeur de 10. L'influence de cette action sur la valeur du coefficient de corrélation est particulièrement nette, alors qu'une seule valeur a été modifée. Ceci montre qu'il faut faire attention aux valeurs extrêmes qui pourraient grandement influencer la valeur de corrélation obtenue, notamment en présence d'échantillons de taille relativement faible. Dans le cas où la valeur du coefficient de corrélation de Pearson serait très influencée par une valeur, il pourrait être une bonne pratique de calculer la valeur du coefficient de corrélation avec et sans cette valeur afin de pouvoir quantifier son influence sur la relation étudiée [@halperinSpuriousCorrelationsCauses1986]. Une alternative pourrait être aussi d'étudier la relation à l'aide d'autres types de coefficients que celui de Pearson, tels que celui de Spearman, présenté plus bas. Toutes ces informations doivent en tous les cas faire prendre conscience qu'il n'est pas toujours pertinent de calculer le coefficient de corrélation de Pearson. En ce sens, lorsqu'on cherche à inférer la valeur du coefficient de corrélation de Pearson dans la population étudiée, et cela avec un degré d'incertitude bien défini, il convient de vérifier certains prérequis, lesquels seront abordés plus tard dans ce livre. 
+Un exemple extrême de l'influence de la variabilité des données sur la valeur du coefficient de corrélation de Pearson est montré sur la figure ci-dessous. Les deux graphiques montrent exactement les mêmes données, à ceci près que sur le graphique de droite, on a remplacé en ordonnées une valeur du graphique de gauche pour lui donner la valeur de 10. L'influence de cette action sur la valeur du coefficient de corrélation est particulièrement nette, alors qu'une seule valeur a été modifée. Ceci montre qu'il faut faire attention aux valeurs extrêmes qui pourraient grandement influencer la valeur de corrélation obtenue, notamment en présence d'échantillons de taille relativement faible. Dans le cas où la valeur du coefficient de corrélation de Pearson serait très influencée par une valeur, il pourrait être une bonne pratique de calculer la valeur du coefficient de corrélation avec et sans cette valeur afin de pouvoir quantifier son influence sur la relation étudiée [@halperinSpuriousCorrelationsCauses1986]. Une alternative pourrait être aussi d'étudier la relation à l'aide d'autres types de coefficients que celui de Pearson, tels que celui de Spearman, présenté plus bas. Toutes ces informations doivent en tous les cas faire prendre conscience qu'il n'est pas toujours pertinent de calculer le coefficient de corrélation de Pearson. En ce sens, lorsqu'on cherche à inférer la valeur du coefficient de corrélation de Pearson dans la population étudiée, il convient de vérifier certains prérequis, lesquels seront abordés plus tard dans ce livre. 
 
 ```{r spuriousCorrelationBis,  echo = FALSE, , fig.align ="center", message = FALSE, warning = FALSE, fig.cap="Coefficient de corrélation de Pearson et outliers"}
 data1 <- tibble(x = c(0, 1, 2, 3, 4, 5), y = c(2, 4, 3, 2, 3, 4))
@@ -265,13 +275,18 @@ Lorsque la relation étudiée ne semble pas linéaire mais s'apparente assez cla
 Lorsque le coefficient de corrélation de Pearson ne permet pas de caractériser fiablement le degré de relation linéaire **entre les valeurs** de deux variables (par exemple en présence de valeurs aberrantes au sein d'un échantillon de petite taille), une alternative peut être d'étudier le degré de relation linéaire **entre les rangs** de ces deux variables. Le rang, c'est le classement (ou la position) d'une observation donnée en fonction de sa valeur. Dans une variable, les observations avec les valeurs les plus faibles seront associées aux rangs les plus bas alors que les observations avec les valeurs les plus élevées seront associées aux rangs les plus élevés. Une illustration de la notion de rang est proposée ci-dessous pour la variable `hp` du jeu de données `mtcars`. Dans le tableau ci-dessous, les lignes ont été ordonnées sur la base des rangs de la variable `hp`. On pourra remarquer que dans le tableau, nous avons ce qu'on appelle des ex-aequos, c'est-à-dire que plusieurs observations peuvent présenter les mêmes valeurs, et donc avoir le même rang.
 
 ```{r tableranks, echo = FALSE}
-knitr::kable(
+flextable(
  mtcars %>%
-   select(hp) %>%
+   dplyr::select(hp) %>%
    mutate(hp_rank = rank(hp)) %>%
-   arrange(hp_rank),
- caption = "Les rangs d'une variable"
-)
+   arrange(hp_rank) %>%
+   rename("hp (valeur)" = hp,
+          "hp (rang)" = hp_rank), cwidth = 2) %>%
+  theme_zebra() %>%
+  align(align = "center", part = "all" ) %>%
+  hline_top(part = "all", border = fp_border(width = 1.5)) %>%
+  hline_bottom(part = "all", border = fp_border(width = 1.5)) %>%
+  set_caption("Les rangs d'une variable")
 ```
 
 Le fait d'étudier l'existence d'une relation linéaire entre les rangs et non plus entre les valeurs de deux variables permet de s'affranchir de l'influence possible de valeurs très extrêmes, dans l'une et/ou l'autre variable, sur le calcul final de la corrélation. Pour déterminer alors la valeur de la corrélation, une manière de procéder est d'appliquer la méthode de calcul du coefficient de corrélation de Pearson en utilisant non plus les valeurs des variables, mais les rangs correspondants. Cette methode, c'est celle du calcul du coefficient de corrélation de Spearman (*rho*). Si l'on suit *stricto sensu* cette définition, nous pourrions alors utiliser le code suivant pour avoir le coefficient de corrélation de Spearman :
@@ -329,15 +344,16 @@ a | b
 
 ## Relation entre deux variables qualitatives
 ### Etudier graphiquement la relation
-Plusieurs types de graphiques peuvent être envisagés lorsqu'il s'agit de montrer les données relatives au croisement de deux variables qualitatives. Une première approche consiste à utiliser des graphiques avec barres mises côte-à-côte et groupées sur l'axe horizontal en fonction des modalités d'une première variable, et colorées en fonction de la seconde variable. Cela est illustré sur la figure ci-dessous, qui a été réalisée à partir du jeu de données `JointSports`, lequel est utilisable après installation et chargement du package `vcd`. `JointSports` contient des données résumées avec des effectifs mis en lien avec les modalités de différentes variables qualitatives, comme on a pu l'obtenir avec les fonctions `group_by` et `summarize` dans les derniers exemples du chapitre précédent. (La différence qu'il y a ici avec ces précédents exemples est qu'ici, l'effectif est désigné par la variable `Freq`, alors qu'il s'agissait de la variable `count` auparavant.) Pour information, `JointSports` contient les données d'une enquête s'étant intéressée, en 1983 et 1985, aux opinions d'étudiants danois de 16 à 19 ans quant à la pratique sportive mixte. On note également que le code montré ci-dessous, qui a servi à générer les graphiques à suivre, utilise la fonction `theme_hc()` du package `ggthemes` afin de pouvoir utiliser des couleurs de remplissage automatique particulières. Le package `ggthemes` doit être installé puis chargé pour pouvoir être utilisé.
+Plusieurs types de graphiques peuvent être envisagés lorsqu'il s'agit de montrer des données relatives au croisement de deux variables qualitatives. Une première approche consiste à utiliser des graphiques avec barres mises côte-à-côte, comme illustré sur la Figure \@ref(fig:groupedBarsFigure) ci-dessous, qui a été réalisée à partir du jeu de données `JointSports`, lequel est utilisable après installation et chargement du package `vcd`. `JointSports` contient des données résumées d'effectifs mis en lien avec les modalités de différentes variables qualitatives, comme on aurait pu l'obtenir avec les fonctions `group_by` et `summarize` dans les derniers exemples du chapitre précédent. (La différence qu'il y a avec ces précédents exemples est qu'ici, l'effectif est désigné par la variable `Freq`, alors qu'il s'agissait de la variable `count` auparavant.) Pour information, `JointSports` contient les données d'une enquête s'étant intéressée, en 1983 et 1985, aux opinions d'étudiants danois de 16 à 19 ans quant à la pratique sportive mixte.
 
 ```{r loading vdc and ggthemes, warning=FALSE}
 library(vcd)
-library(ggthemes)
 ```
 
 ```{r grouped bars code, message = FALSE, warning = FALSE}
-# Reconfiguration de l'ordre des modalités de la variable opinion, et calcul des effectifs totaux pour les catégories étudiées
+# Reconfiguration de l'ordre des modalités de la variable opinion, et calcul des 
+# effectifs totaux pour les catégories étudiées
+
 JointSports_new <- 
   JointSports %>%
   mutate(opinion = fct_relevel(opinion, "very bad", "bad", "indifferent", "good", "very good"),
@@ -346,32 +362,30 @@ JointSports_new <-
   summarize(Freq = sum(Freq))
 
 # Création des graphiques
-g1 <- 
+A <- 
   ggplot(data = JointSports_new, aes(x = gender, y = Freq, fill = opinion)) +
   geom_bar(stat = "identity",  position = "dodge") +
   scale_fill_brewer(palette = "Greens") +
-  theme_hc() +
   theme(legend.position = "right") +
-  ggtitle("g1 : Mise en avant de la comparaison des opinions")
+  ggtitle("A : Mise en avant de la comparaison des opinions")
 
-g2 <- 
+B <- 
   ggplot(data = JointSports_new, aes(x = opinion, y = Freq, fill = gender)) +
   geom_bar(stat = "identity",  position = "dodge") +
-  theme_hc() +
   theme(legend.position = "right") +  
-  ggtitle("g2 : Mise en avant de la comparaison des genres")
+  ggtitle("B : Mise en avant de la comparaison des genres")
 ```
 
 
 ```{r groupedBarsFigure, echo = FALSE, fig.align="center", fig.cap="Exemples de diagramme en barres mises côte-à-côte"}
-g1 / g2
+A / B
 ```
 
-Pour pouvoir réaliser le graphique g1 montré ci-dessus, il a fallu indiquer dans la fonction `ggplot()`, grâce à `x = `, la variable dont on voulait voir les modalités en abscisses, et il a fallu renseigner pour les ordonnées, à l'aide de `y = `, la variable contenant les effectifs correspondants, le tout toujours à l'intérieur de l'argument `aes()`. Etant donné que les données à montrer le long de l'axe des ordonnées sont explicitement indiquées avec `Freq`, il convient d'indiquer à l'intérieur de la fonction `geom_bar()` l'argument `stat = "identity"`, ce qui contraint à determiner la hauteur des barres en fonction des valeurs de la variable `Freq`. A l'intérieur de la fonction `ggplot()` et de l'argument `aes()`, c'est l'argument `fill = opinion` qui a permis d'indiquer qu'on voulait des couleurs de remplissage différentes selon les modalités de la variable `opinion`. Enfin, c'est grâce à l'argument `position = "dodge"`, à l'intérieur de la fonction `geom_bar()`, que l'on a pu obtenir des barres mises côte-à-côte, et non pas de manière empilée. Une logique similaire a été utilisée pour le graphique g2 en modifiant le code de telle sorte que la distinction de l'information avec des couleurs différentes se fasse avec la variable `gender`, et non plus `opinion`.
+Pour pouvoir réaliser le graphique `A` montré ci-dessus, il a fallu indiquer dans la fonction `ggplot()`, grâce à `x = `, la variable dont on voulait voir les modalités en abscisses, et il a fallu renseigner pour les ordonnées, à l'aide de `y = `, la variable contenant les effectifs correspondants, le tout toujours à l'intérieur de l'argument `aes()`. Etant donné que les données à montrer le long de l'axe des ordonnées sont explicitement indiquées avec `Freq`, il convient d'indiquer à l'intérieur de la fonction `geom_bar()` l'argument `stat = "identity"`, ce qui contraint à déterminer la hauteur des barres en fonction des valeurs de la variable `Freq`. A l'intérieur de la fonction `ggplot()` et de l'argument `aes()`, c'est l'argument `fill = opinion` qui a permis d'indiquer qu'on voulait des couleurs de remplissage différentes selon les modalités de la variable `opinion`. Enfin, c'est grâce à l'argument `position = "dodge"`, à l'intérieur de la fonction `geom_bar()`, que l'on a pu obtenir des barres mises côte-à-côte, et non pas de manière empilée. Une logique similaire a été utilisée pour le graphique `B` en modifiant le code de telle sorte que la distinction de l'information avec des couleurs différentes se fasse avec la variable `gender`, et non plus `opinion`.
 
-Les graphiques g1 et g2 montrent l'importance de la configuration du graphique en fonction des comparaisons que l'on veut principalement faire, et donc du message que l'on veut prioritairement délivrer. Un principe qui peut guider la conception du graphique est le fait qu'il est plus facile de comparer des barres qui sont mises juste côte-à-côte. Sur la base de ce principe, le graphique g1 ci-dessus permet de comparer plus facilement les diverses opinions relevées pour les garçons d'un côté et pour les filles de l'autre, alors que le graphique g2 permet de comparer plus facilement les réponses provenant des deux genres et cela pour chaque type d'opinion. Comme indiqué par Wilke [-@wilkeFundamentalsDataVisualization2018], les types de graphiques illustrés avec les graphiques g1 et g2 ci-dessus peuvent parfois se voir attribuer le reproche que s'il est relativement facile de lire les informations encodées par des positions (cf. ligne de base sur les graphiques), il peut être être difficile de lire les informations encodées par une couleur dont la signification est indiquée en légende, car cela demande un effort mental supplémentaire de garder en tête la signification de la légende lorsqu'on lit le graphique. Pour palier ce problème, qui, selon Wilke [-@wilkeFundamentalsDataVisualization2018], est au final une affaire de goût, on pourrait utiliser la fonction `facet_wrap()` pour créer une figure telle qu'illustré ci-dessous. (La figure ci-dessous reprend la logique du graphique g1 montré plus haut, avec un besoin de légende pour la variable `opinion` qui n'existe plus car la fonction `facet_wrap()` a permis de montrer les diagrammes en barres pour les deux genres de manière séparée, dans des encarts différents, et avec chacun leur propre axe des abscisses relatif aux modalités de la variable `opinion`.)
+Les graphiques `A` et `B` montrent l'importance de la configuration du graphique en fonction des comparaisons que l'on veut principalement faire, et donc du message que l'on veut prioritairement délivrer. Un principe qui peut guider la conception du graphique est le fait qu'il est plus facile de comparer des barres qui sont mises juste côte-à-côte. Sur la base de ce principe, le graphique `A` ci-dessus permet de comparer plus facilement les diverses opinions relevées pour les garçons d'un côté et pour les filles de l'autre, alors que le graphique `B` permet de comparer plus facilement les réponses provenant des deux genres et cela pour chaque type d'opinion. Comme indiqué par Wilke [-@wilkeFundamentalsDataVisualization2018], les types de graphiques illustrés avec les graphiques `A` et `B` ci-dessus peuvent parfois se voir attribuer le reproche que s'il est relativement facile de lire les informations encodées par des positions (cf. ligne de base sur les graphiques), il peut être être difficile de lire les informations encodées par une couleur dont la signification est indiquée en légende, car cela demande un effort mental supplémentaire de garder en tête la signification de la légende lorsqu'on lit le graphique. Pour palier ce problème, qui, selon Wilke [-@wilkeFundamentalsDataVisualization2018], est au final une affaire de goût, on pourrait utiliser la fonction `facet_wrap()` pour créer une figure telle que cela est illustré ci-dessous. (La figure ci-dessous reprend la logique du graphique `A` montré plus haut, avec un besoin de légende pour la variable `opinion` qui n'existe plus car la fonction `facet_wrap()` a permis de montrer les diagrammes en barres pour les deux genres de manière séparée, dans des encarts différents, et avec chacun leur propre axe des abscisses relatif aux modalités de la variable `opinion`.)
 
-```{r groupedBarsUpgraded, fig.align="center", message = FALSE, fig.cap="Diagrammes en barres côte-à-côte séparés selon une variable catégorielle"}
+```{r groupedBarsUpgraded, fig.align="center", message = FALSE, fig.cap="Diagrammes en barres côte-à-côte séparés selon une variable catégorielle", fig.height=3}
 ggplot(data = JointSports_new, aes(x = opinion, y = Freq)) +
   geom_bar(stat = "identity") +
   facet_wrap(. ~ gender)
@@ -383,7 +397,6 @@ Dans certains cas, on peut vouloir comparer les effectifs relatifs aux modalité
 JointSports_new %>%
   ggplot(aes(x = opinion, y = Freq, fill = gender)) +
   geom_bar(stat = "identity") +
-  theme_hc() +
   geom_text(aes(label = Freq), size = 3, position = position_stack(vjust = 0.5))
 ```
 
@@ -418,7 +431,7 @@ JointSports_full <-
   mutate(opinion = fct_relevel(opinion, "very bad", "bad", "indifferent", "good", "very good"))
 ```
 
-Une fois que l'on a un jeu de données complet sous la main, il est possible de créer ce qu'on appelle un **tableau de contingence**, c'est-à-dire ici un tableau qui récapitule numériquement les effectifs à la croisée des deux variables qui nous intéressent. Pour faire cela, on peut utiliser la fonction `table()` en suivant différentes méthodes montrées ci-dessous. (Le code montré ci-dessous aboutit aux mêmes informations que celles montrées sur le denier graphique ci-dessus.)
+Une fois que l'on a un jeu de données complet sous la main, il est possible de créer ce qu'on appelle un **tableau de contingence**, c'est-à-dire ici un tableau qui récapitule numériquement les effectifs à la croisée des deux variables qui nous intéressent. Pour faire cela, on peut utiliser la fonction `table()` en suivant différentes méthodes montrées ci-dessous. (Le code montré ci-dessous aboutit aux mêmes informations que celles montrées sur la Figure \@ref(fig:stackedBarsBiv) ci-dessus.
 
 ```{r contingence table}
 # 1ère méthode
@@ -441,234 +454,529 @@ Un tableau de contingence permet donc de comparer des effectifs en fonction de p
 round(prop.table(tab) * 100, digits = 2)
 ```
 
-
-```{r loading questionr, message=FALSE, warning=FALSE, echo=FALSE}
-library(questionr)
-```
-
 - Utiliser la fonction `lprop()` du package `questionr`, qui va convertir en proportions les effectifs montrés plus haut en considérant l'effectif total de chaque ligne du tableau :
 
-```{r lprop tab, message=FALSE, warning=FALSE, echo=FALSE}
+```{r lprop tab, message=FALSE, warning=FALSE}
+library(questionr)
 lprop(tab)
 ```
 
 - Utiliser la fonction `cprop()` du package `questionr`, qui va convertir en proportions les effectifs montrés plus haut en considérant l'effectif total de chaque colonne du tableau :
 
 ```{r cprop tab}
+library(questionr)
 cprop(tab)
 ```
 
-Il convient bien de noter que les proportions données par ces différentes fonctions doivent être utilisées selon les comparaisons que l'on veut faire. L'analyse descriptive consiste alors à voir si, tant d'un point de vue graphique que numérique, on observe des différences de scores particulières entre les modalités d'une variable qualitative en fonction des modalités de l'autre variable qualitative. Si l'on considère le dernier tableau, on peut par exemple observer une très légère tendance à ce que les garçons soient davantage polarisés, par rapport aux filles, sur des opinions négatives vis-à-vis des pratiques sportives mixtes, alors que les filles seraient légèrement plus polarisées que les garçons sur des opinions positives, ce qui n'empêche pas que, pour les deux genres, il y a une polarisation principale sur des opinions neutres à positives.
+Il convient de noter que les proportions données par ces différentes fonctions doivent être utilisées selon les comparaisons que l'on veut faire. L'analyse descriptive consiste alors à voir si, tant d'un point de vue graphique que numérique, on observe des différences de scores particulières entre les modalités d'une variable qualitative en fonction des modalités de l'autre variable qualitative. Si l'on considère le dernier tableau, on peut par exemple observer une très légère tendance à ce que les garçons soient davantage polarisés, par rapport aux filles, sur des opinions négatives vis-à-vis des pratiques sportives mixtes, alors que les filles seraient légèrement plus polarisées que les garçons sur des opinions positives, ce qui n'empêche pas que, pour les deux genres, il y a une polarisation principale sur des opinions neutres à positives.
 
-Si l'on a évoqué l'idée que les proportions permettent de mieux comparer les choses, il convient de faire attention malgré tout à la manière dont l'effectif total associé à une modalité d'une variable se répartit selon les modalités de la seconde variable, car une répartition non homogène de l'effectif lié à une modalité d'une variable dans les différentes modalités de la seconde variable peut donner lieu à des conclusions tout à fait différentes selon que l'on considère une analyse globale ou une analyse par modalité. Un exemple connu pour illustrer le type de situations dans lesquelles il faut être vigilant est le cas du taux de réussite des femmes à l'université de Berkeley en 1973 qui était bien inférieur à celui des hommes lorsqu'on considérait les taux de réussite à l'échelle de l'ensemble de l'unversité [@bickelSexBiasGraduate1975]. Toutefois, une analyse par matière permettait de voir que les taux de réussite des femmes étaient très similaires à ceux des hommes dans la plupart des matières, voire étaient largement supérieurs à celui des hommes dans certaines matières. Cette situation, qui paraît de prime abord paradoxale, illustre pleinement ce qu'on appelle un paradoxe de Simpson (i.e., le fait que le résultat observé lors d'une analyse globale d'un groupe  puisse se retrouver annulée voire inversée lors d'une analyse à l'échelle de sous-groupes). Dans le cas présent, le paradoxe s'explique par le fait que la majorité des femmes avaient candidaté dans des matières qui étaient très sélectives, c'est-à-dire où le taux de réussite était faible (il l'était aussi pour les hommes). Très peu de femmes avaient candidaté là où les taux de réussite étaient très élevés (pour les femmes comme pour les hommes). Donc au total, les hommes se retrouvaient avec un pourcentage de réussite global bien meilleur que celui des femmes, seulement parce que en proportions, plus d'hommes s'étaient engagés dans les matières où les taux de réussite étaient bien meilleurs.
+Si les proportions permettent en principe de mieux comparer les effectifs de sous-groupes (e.g., les opinions par groupe de genre dans l'exemple ci-dessus) lorsque les effectifs des groupes parents sont de tailles différentes (comme c'est le cas pour les groupes de genre dans l'exemple ci-dessus), il convient tout de même de faire attention aux conclusions que l'on tire lorsqu'on s'en tient à une analyse globale, car ces conclusions dépendent de la manière dont les individus des groupes parents sont répartis dans chacun des sous-groupes. Un exemple connu qui permet d'illustrer cette vigilance à avoir lorsqu'on étudie le croisement de variables qualitatives est le cas du taux de réussite des femmes à l'université de Berkeley en 1973, qui apparaissait bien inférieur à celui des hommes lorsqu'on considérait les taux de réussite par genre à l'échelle de l'ensemble de l’université [@bickelSexBiasGraduate1975], avec 30.3 % de réussite chez les femmes contre 44.5 % de réussite chez les hommes. Ces statistiques sont montrées sur la figure ci-dessous.
 
+```{r, dataset for Simpson paradox, echo=FALSE}
+department <- c(rep("A", 4), rep("B", 4), rep("C", 4), rep("D", 4), rep("E", 4), rep("F", 4))
+
+result <- c(rep("Admitted", 2), rep("Rejected", 2), rep("Admitted", 2), rep("Rejected", 2), rep("Admitted", 2), rep("Rejected", 2), rep("Admitted", 2), rep("Rejected", 2), rep("Admitted", 2), rep("Rejected", 2), rep("Admitted", 2), rep("Rejected", 2))
+
+gender <- c("Male", "Female", "Male", "Female", "Male", "Female", "Male", "Female", "Male", "Female", "Male", "Female", "Male", "Female", "Male", "Female", "Male", "Female", "Male", "Female", "Male", "Female", "Male", "Female")
+
+effectif <- c(512, 89, 313, 19, 353, 17, 207, 8, 120, 202, 205, 391, 138, 131, 279, 244, 53, 94, 138, 299, 22, 24, 351, 317)
+
+ results_univ <- 
+    data.frame(department = department, 
+               result = result,
+               gender = gender, 
+               effectif = effectif)
+results_univ <- 
+  results_univ %>%
+   mutate(prop = ifelse(gender == "Female", effectif / sum(filter(results_univ, gender == "Female")$effectif) * 100,
+                        ifelse(gender == "Male", effectif / sum(filter(results_univ, gender == "Male")$effectif) * 100, "NA"))) %>%
+  mutate(prop = round(as.numeric(prop), digits = 1),
+         gender = fct_recode(gender, "Femmes" = "Female", "Hommes" = "Male"),
+         result = fct_recode(result, "Admis" = "Admitted", "Refusé" = "Rejected")
+)
+```
+
+```{r taballUCBA, message=FALSE, echo = FALSE, fig.cap= "Taux de réussite des étudiants femmes et hommes à l'Université de Berkeley en 1973, approche globale [@bickelSexBiasGraduate1975]"}
+recap_univ <- 
+  results_univ %>%
+  group_by(gender, result) %>%
+  summarise(prop = sum(prop)) 
+
+ggplot(data = recap_univ, aes(x = result, y = prop, fill = gender)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  geom_text(aes(label = paste0(round(prop, digits = 2), " %")), size = 5, position = position_stack(vjust = 0.5)) +
+  labs(x = "", y = "Proportion (%)", fill = "") +
+  theme(legend.position = "none") +
+  facet_wrap(~ gender)
+```
+
+Toutefois, une analyse par département permettait de voir que les taux de réussite des femmes étaient en réalité supérieurs voire nettement supérieurs à ceux des hommes dans la plupart des départements, comme montré ci-dessous.
+
+```{r tabdepUCBA, echo = FALSE, message=FALSE, fig.height = 14, fig.cap= "Taux de réussite des étudiants femmes et hommes à l'Université de Berkeley en 1973, approche par département [@bickelSexBiasGraduate1975]"}
+recap_dep <- 
+  results_univ %>%
+  group_by(department, gender) %>%
+  mutate(prop = effectif / sum(effectif) * 100)
+
+ggplot(data = recap_dep, aes(x = result, y = prop, fill = gender)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  geom_text(aes(label = paste0(round(prop, digits = 2), " %")), size = 3, position = position_stack(vjust = 0.5)) +
+  labs(x = "", y = "Proportion (%)", fill = "") +
+  theme(legend.position = "none") +
+  facet_grid(department ~ gender)
+```
+
+Cette situation, qui peut paraître étonnante, illustre ce qu'on appelle un paradoxe de Simpson, c'est-à-dire le fait que la conclusion issue d'une analyse globale peut se retrouver annulée voire inversée lors d'une analyse différenciée par groupe et sous-groupe. Dans le cas présent, l'apparent paradoxe s'explique par le fait que, contrairement aux hommes, la majorité des femmes avaient candidaté dans des départements qui étaient très sélectifs, c'est-à-dire où le taux de réussite était faible (il l'était aussi pour les hommes). Très peu de femmes avaient candidaté là où les taux de réussite étaient très élevés (pour les femmes comme pour les hommes). Ceci est illustré sur la figure ci-dessous. On voit bien que la majorité des femmes étaient inscrites dans les départements ici montrés avec les lettres allant de C à F, or ces départements étaient associés à des taux de réussite inférieurs à 40 % seulement, que cela soit pour les hommes ou pour les femmes (cf. Figure \@ref(fig:tabdepUCBA)).
+
+```{r distriUCBA, echo = FALSE, message=FALSE, fig.cap= "Distribution des étudiants femmes et hommes par département à l'Université de Berkeley en 1973 [@bickelSexBiasGraduate1975]"}
+recap_dep2 <- 
+  results_univ %>%
+  dplyr::select(-result) %>%
+  group_by(gender, department) %>%
+  summarise(effectif = sum(effectif)) %>%
+  ungroup(department) %>%
+  mutate(prop = effectif / sum(effectif) * 100)
+
+ggplot(data = recap_dep2, aes(x = department, y = prop, fill = gender)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  geom_text(aes(label = paste0(round(prop, digits = 2), " %")), size = 3, position = position_stack(vjust = 0.5)) +
+  labs(x = "", y = "Proportion (%)", fill = "") +
+  theme(legend.position = "none") +
+  facet_wrap(. ~ gender)
+```
+Autrement dit, les hommes se retrouvaient avec un pourcentage de réussite global bien meilleur que celui des femmes seulement parce que, comparativement aux femmes, les hommes s'étaient en proportion davantage engagés dans les départements où les taux de réussite étaient bien meilleurs.
 
 ## Relation entre une variable quantitative et une variable qualitative
-Lorsqu'on analyse une variable quantitative en fonction d'une variable qualitative, on peut notamment distinguer le fait que les données quantitatives soient pairées (*within-subject design* en anglais) ou non (*between-subject design* en anglais). Avoir des données non pairées signifie que pour chaque modalité de la variable qualitative étudiée, les données quantitatives correspondantes ne sont pas liées. Un exemple simple peut être l'analyse de la taille des individus en fonction du sexe. Dans ce cas, les données quantitatives de taille pour le sexe masculin et pour le sexe féminin proviendront forcément d'individus différents et ne formeront donc pas des paires. En revanche, on peut aussi avoir des études dans lesquelles plusieurs individus sont évalués dans plusieurs conditions différentes que l'on chercherait à comparer. En sciences du sport, un exemple relativement classique est de tester la performance d'endurance (variable quantitative) en ayant pris (condition de test) ou non (condition contrôle) une substance potentiellement ergonénique (la prise de substance ou non étant les modalités d'une même variable qualitative de type condition). Dans ce cas là, tous les individus auront des données dans les deux conditions et ces données seront donc pairées (dépendantes).
+Lorsqu'on analyse une variable quantitative en fonction d'une variable qualitative, on peut avoir des données quantitatives qui sont non pairées (étude de type *between-subject design* en anglais) ou pairées (étude de type *within-subject design* en anglais). Avoir des données non pairées signifie que les données quantitatives correspondant aux différentes modalités de la variable qualitative étudiée ne sont pas liées. Un exemple simple, pour ce premier cas, peut être l'analyse de la taille des individus en fonction du sexe. Dans ce cas, les données quantitatives de taille pour le sexe masculin et pour le sexe féminin proviendront forcément d'individus différents et ne formeront donc pas des paires. Les cas de données pairées se retrouvent dans les études dans lesquelles plusieurs individus sont évalués dans plusieurs conditions différentes que l'on cherche à comparer. En sciences du sport, un exemple relativement classique est de tester la performance d'endurance (variable quantitative) en ayant pris (condition de test) ou non (condition contrôle) une substance potentiellement ergonénique (la prise de substance ou non étant les modalités d'une même variable qualitative de type condition). Dans ce cas là, tous les individus auront des données dans les deux conditions et ces données seront donc pairées (dépendantes).
 
 ### Etudier graphiquement la relation
-Lorsque l'on cherche à explorer la relation qu'il peut y avoir entre une variable quantitative et une variable qualitative, il peut être intéressant de visualiser la distribution de la variable quantitative en fonction de chaque modalité de la variable qualitative. Plusieurs possibilités existent afin de faire cela. On peut tout d'abord vouloir visualiser les choses de long de l'axe vertical avec :
+Lorsque l'on cherche à explorer la relation qu'il peut y avoir entre une variable quantitative et une variable qualitative, il peut être intéressant de visualiser la distribution de la variable quantitative en fonction de chaque modalité de la variable qualitative. Plusieurs possibilités existent afin de faire cela. Les blocs de code ci-dessous fournissent plusieurs options de graphiques qui sont discutées plus bas. Ces graphiques sont montrés sur la Figure \@ref(fig:graphDistriBivQuantvsQual), avec des exemples pour des données non pairées (graphiques de gauche) et des exemples pour des données pairées (graphiques de droite). A noter que la reproduction de ces graphiques nécessite l'installation du package `PairedData` et le chargement du jeu de données associé `Blink` pour les cas avec données pairées, et que les aires représentant les densités de probabiblité (graphiques en "demi-violons") nécessitent l'installation et le chargement du package `gghalves`. Pour information, `Blink` contient les données de taux de clignotement des yeux obtenues chez 12 sujets et dans deux conditions différentes : 1/ tâche où il fallait diriger un stylo selon une trajectoire rectiligne (modalité `Straight`) ; 2/ tâche où il fallait diriger un stylo selon une trajectoire avec des oscillations (`Oscillating`).
 
-- des moyennes et écarts-types (cf. codes et graphiques ci-dessous) ;
+```{r , message = FALSE, warning = FALSE}
+library(gghalves)
 
-```{r graph distri biv quand vs qual means, message = FALSE, warning = FALSE}
-# Moyennes et barres d'erreur
-g1 <- 
-  ggplot(data = iris, aes(x = Species, y = Sepal.Length)) +
-  stat_summary(fun.data = "mean_sdl", fun.args = list(mult=1), geom = "errorbar", na.rm = TRUE, size = 1, width = 0.2, color = "red") +
-  stat_summary(fun = "mean", geom = "point", na.rm = TRUE, size = 5, color = "red") +
-  ggtitle("g1") +
+#####################################################################################
+# Importation et configuration du jeu de données pour les exemples de données pairées
+#####################################################################################
+
+# Chargement du package PairedData puis chargement du jeu de données Blink
+library(PairedData)
+data(Blink)
+
+# Transformation du jeu de données Blink
+Blink2 <-
+  Blink %>%
+  pivot_longer(cols = c(Straight, Oscillating), 
+               names_to = "Condition", 
+               values_to = "Blink_rate") %>%
+  mutate(Condition = fct_relevel(Condition, "Straight", "Oscillating"))
+
+##################################################################
+# Paramétrage de la taille de certains labels des figures à suivre
+##################################################################
+
+set_text_size <-
   theme(plot.title = element_text(size = 20),
         axis.title = element_text(size = 17),
         axis.text = element_text(size = 17))
 
-# Moyennes, barres d'erreur, et points (l'installation du package Hmisc est nécessaire pour pouvoir utiliser "mean_sdl" ici)
-g2 <- 
-  ggplot(data = iris, aes(x = Species, y = Sepal.Length)) +
-  geom_point(size = 3) +
-  stat_summary(fun.data = "mean_sdl", fun.args = list(mult=1), geom = "errorbar", na.rm = TRUE, size = 1, width = 0.2, color = "red") +
-  stat_summary(fun = "mean", geom = "point", na.rm = TRUE, size = 5, color = "red") +
-  ggtitle("g2") +
-  theme(plot.title = element_text(size = 20),
-        axis.title = element_text(size = 17),
-        axis.text = element_text(size = 17))
+# Note : L'installation du package Hmisc est nécessaire pour pouvoir utiliser la 
+# valeur "mean_sdl" avec l'argument "fun.data" dans les blocs de code ci-dessous)
 
-# Moyennes, barres d'erreur, et points avec mouvement latéral aléatoire (l'installation du package Hmisc est nécessaire pour pouvoir utiliser "mean_sdl" ici)
-g3 <- 
+#########################################
+# Graphiques pour les données non pairées
+#########################################
+
+# Moyennes et barres d'erreur, et points avec mouvement latéral aléatoire
+A <- 
   ggplot(data = iris, aes(x = Species, y = Sepal.Length)) +
-  geom_jitter(width = 0.08, height = NULL, size = 3) +
-  stat_summary(fun.data = "mean_sdl", fun.args = list(mult=1), geom = "errorbar", na.rm = TRUE, size = 1, width = 0.2, color = "red") +
-  stat_summary(fun = "mean", geom = "point", na.rm = TRUE, size = 5, color = "red") +
-  ggtitle("g3") +
-  theme(plot.title = element_text(size = 20),
-        axis.title = element_text(size = 17),
-        axis.text = element_text(size = 17))
+  geom_point(aes(x = stage(start = Species, after_scale = x - 0.1)),
+             position = position_jitter(seed = 123, width = 0.08, height = NULL), 
+             size = 4, alpha = 0.3) +
+  stat_summary(geom = "errorbar", 
+               fun.data = "mean_sdl", 
+               fun.args = list(mult = 1), 
+               position = position_nudge(x = 0.1),
+               size = 1.3, width = 0.1) +
+  stat_summary(geom = "point",
+               fun = "mean",
+               position = position_nudge(x = 0.1),
+               size = 5)+
+  ggtitle("A") +
+  set_text_size
+
+# Boîtes à moustaches, et points avec mouvement latéral aléatoire
+B <- 
+  ggplot(data = iris, aes(x = Species, y = Sepal.Length)) +
+  geom_point(aes(x = stage(start = Species, after_scale = x - 0.1)),
+             position = position_jitter(seed = 123, width = 0.08, height = NULL), 
+             size = 4, alpha = 0.3) +
+  geom_boxplot(width = 0.1, outlier.shape = NA,
+               position = position_nudge(x = 0.1)) +
+  ggtitle("B") +
+  set_text_size
+
+# Aires montrant les densités de probabilité, et points avec mouvement latéral aléatoire
+C <- 
+  ggplot(data = iris, aes(x = Species, y = Sepal.Length)) +
+  geom_point(aes(x = stage(start = Species, after_scale = x - 0.1)),
+             position = position_jitter(seed = 123, width = 0.08, height = NULL), 
+             size = 4, alpha = 0.3) +
+  geom_half_violin(side = "r", 
+                   position = position_nudge(x = 0.1, y = 0)) +
+  ggtitle("C") +
+  set_text_size
+
+#####################################
+# Graphiques pour les données pairées
+#####################################
+
+# Moyennes et barres d'erreur, et points avec mouvement latéral aléatoire 
+D <-
+ggplot(data = Blink2, aes(x = Condition, y = Blink_rate)) +
+  geom_point(position = position_jitter(seed = 123, width = 0.05),
+             size = 4, alpha = 0.3) +
+  geom_line(aes(group = Subject), 
+            position = position_jitter(seed = 123, width = 0.05),
+            size = 2, colour = "gray", alpha = 0.3) +
+  stat_summary(data = Blink2 %>% filter(Condition == "Straight"), 
+               geom = "errorbar",
+               fun.data = "mean_sdl", 
+               fun.args = list(mult = 1),
+               position = position_nudge(x = -0.1),
+               size = 1.3, width = 0.1) +
+  stat_summary(data = Blink2 %>% filter(Condition == "Oscillating"), 
+               geom = "errorbar", 
+               fun.data = "mean_sdl", 
+               fun.args = list(mult = 1),
+               position = position_nudge(x = 0.1),
+               size = 1.3, width = 0.08) +
+  stat_summary(data = Blink2 %>% filter(Condition == "Straight"), 
+               geom = "point",
+               fun = "mean",
+               position = position_nudge(x = -0.1),
+               size = 5) + 
+  stat_summary(data = Blink2 %>% filter(Condition == "Oscillating"), 
+               geom = "point", 
+               fun = "mean", 
+               size = 5,
+               position = position_nudge(x = 0.1)) +
+  ggtitle("D") +
+  set_text_size
+
+# Boîtes à moustaches, et points avec mouvement latéral aléatoire
+E <- 
+ggplot(data = Blink2, aes(x = Condition, y = Blink_rate)) +
+  geom_point(size = 4, alpha = 0.3, 
+             position = position_jitter(seed = 123, width = 0.05)) +
+  geom_line(aes(group = Subject), 
+            position = position_jitter(seed = 123, width = 0.05),
+            size = 2, colour = "gray", alpha = 0.3) +
+  geom_boxplot(data = Blink2 %>% filter(Condition == "Straight"), 
+               width = 0.08, outlier.shape = NA,
+               position = position_nudge(x = -0.15)) +  
+  geom_boxplot(data = Blink2 %>% filter(Condition == "Oscillating"), 
+               width = 0.08, outlier.shape = NA,
+               position = position_nudge(x = 0.15)) + 
+  ggtitle("E") +
+  set_text_size
+
+# Aires montrant les densités de probabilité, et points avec mouvement latéral aléatoire
+F <- 
+ggplot(data = Blink2, aes(x = Condition, y = Blink_rate)) +
+  geom_point(size = 4, alpha = 0.3, 
+             position = position_jitter(seed = 123, width = 0.05)) +
+  geom_line(aes(group = Subject), 
+            position = position_jitter(seed = 123, width = 0.05),            
+            size = 2, colour = "gray", alpha = 0.3) +
+  geom_half_violin(data = Blink2 %>% filter(Condition == "Straight"),
+                   side = "l", 
+                   position = position_nudge(x = -0.1, y = 0)) +  
+  geom_half_violin(data = Blink2 %>% filter(Condition == "Oscillating"), 
+                   side = "r", 
+                   position = position_nudge(x = 0.1, y = 0)) +  
+  ggtitle("F") +
+  set_text_size
+
+####################################################
+# Sources ayant aidé à la réalisation des graphiques
+####################################################
+
+# Pour les graphiques avec boxplots : https://github.com/tidyverse/ggplot2/issues/4491
+# Pour les graphiques avec densité de probabilité : https://github.com/jorvlan/raincloudplots
 ```
 
-```{r graphDistriBivQuantvsQualMeans, fig.align="center", echo = FALSE, fig.width=20, fig.cap="Nuage de points avec moyennes et écart-types"}
+```{r graphDistriBivQuantvsQual, fig.align="center", echo = FALSE, fig.width = 15, fig.height=20, fig.cap="Méthodes classiques pour montrer des données quantitatives en fonction des modalités d'une variable qualitative : données non pairées (A à C) et données pairées (D à F)"}
 library(patchwork)
-g1 | g2 | g3
+(A | D) / (B | E) / (C | F)
 ```
 
-- des médianes et intervalles interquartiles (cf. codes et graphiques ci-dessous) ;
+On remarque que chaque ligne de la Figure \@ref(fig:graphDistriBivQuantvsQual) contient des graphiques illustrant des éléments différents pour résumer la distribution : la moyenne et l'écart-type pour la première ligne, la boîte à moustaches pour la seconde ligne, et une aire montrant la densité de probabilité pour la troisième ligne. 
+La moyenne et l'écart-type sont intéressants à montrer lorsque les analyses inférentielles réalisées dans l'étude consistent en la comparaison de moyennes avec l'acceptation de l'hypothèse selon laquelle les distributions des variables comparées sont gaussiennes et présentent des variances similaires. Toutefois, la moyenne et l'écart-type seuls sont problématiques car ils peuvent induire en erreur sur la manière dont sont réellement distribuées les observations. D'ailleurs, deux mêmes couples de moyennes et écart-types peuvent résulter de distributions très différentes [@weissgerberBarLineGraphs2015]. La boîte à moustaches, elle, a le mérite de refléter plus fiablement la distribution des données et de ne pas souffrir du risque d'être modifiée en présence de valeurs aberrantes. L'idée qu'on peut se faire des distributions et des comparaisons des variables est donc en principe plus robuste (i.e., moins sujette à variation d'une étude à une autre). Enfin, l'aire montrant la densité de probabilité est intéressante car elle décrit le plus précisément la distribution des observations. Cependant, sa forme et l'idée qu'elle donne de la distribution dans la population d’intérêt dépend beaucoup du nombre d'observations disponibles. Son utilisation pourrait donc se discuter en présence de peu d'observations. Quel que soit l'outil statistique et graphique utilisé pour caractériser la distribution, tous les graphiques présentés ci-dessus montrent les valeurs individuelles. En cela, ces graphiques vont dans le sens du propos de Weissgerber [-@weissgerberBarLineGraphs2015] qui milite pour la disparition des graphiques en forme de bâtons de dynamite, lesquels sont souvent utilisés pour montrer des moyennes et écart-types. La raison est que ces graphiques en forme de bâtons de dynamite peuvent induire en erreur quant à la réelle forme de la distribution et ils limitent les possibilités du lecteur de juger de la pertinence des choix d'analyse qui seraient faits par la suite sur la base de la distribution des observations. Remarquons par ailleurs que pour les graphiques de droite (ceux avec données pairées), on s'est attaché à montrer les lignes matérialisant le lien entre chaque donnée appartenant à un même individu. Cette pratique est intéressante car elle permet de juger, au-delà de l'évolution de la moyenne du groupe d'une condition à l'autre, dans quelle mesure les individus diffèrent dans leur évolution entre les deux conditions testées.
 
-```{r graph distri biv quand vs qual med, message = FALSE, warning = FALSE}
-# Boîtes à moustaches
-g4 <- 
-  ggplot(data = iris, aes(x = Species, y = Sepal.Length)) +
-  geom_boxplot() +
-  ggtitle("g4") +
-  theme(plot.title = element_text(size = 20),
-        axis.title = element_text(size = 17),
-        axis.text = element_text(size = 17))
+Pour pouvoir faire ces graphiques, il a fallu user de plusieurs nouvelles techniques : 
 
-# Boîtes à moustaches et points
-g5 <-
-  ggplot(data = iris, aes(x = Species, y = Sepal.Length)) +
-  geom_boxplot() +
-  geom_point(size = 3) +
-  ggtitle("g5") +
-  theme(plot.title = element_text(size = 20),
-        axis.title = element_text(size = 17),
-        axis.text = element_text(size = 17))
+- Pour montrer les moyennes, il a fallu utiliser la fonction `stat_summary()`. Cette fonction sert à visualiser un résumé statistique identifié grâce à l'argument `fun`. On peut choisir sa forme avec l'argument `geom`.
+- Pour montrer les écarts-types, il a fallu là aussi utiliser la fonction `stat_summary()`, cette fois en utilisant l'argument `fun.data` avec la valeur `mean_sdl`, et l'argument `fun.args` que l'on a configuré pour déterminer le nombre d'écart-types que la longueur de la barre d'erreur devait représenter (ici, c'est une fois l'écart-type, obtenu avec `mult = 1`).
+- Pour montrer les aires représentant les densités de probabilité, il a fallu utiliser la fonction `geom_half_violin()` du package `gghalves`. L'argument `side`permet de choisir de quel côté l'on veut que l'aire apparaisse (à droite ou à gauche quand on est à la verticale).
+- Pour montrer les données individuelles sans risquer qu'elle ne se superposent de trop, on a utilisé la fonction `geom_point()`, l'argument `position` et la fonction `position_jitter()`. A l'intérieur de la fonction `position_jitter()`, l'argument `seed` (la graine en français) désigne le nombre sur lequel se base l'ordinateur pour générer un résultat pseudo-aléatoire. Quand on regarde le graphique, les données individuelles apparaissent décalées aléatoirement sur le plan latéral. Cet effet aléatoire est l'intérêt même d'une fonction dite `jitter()`, mais cet effet aléatoire est en réalité prédéfini de telle sorte à ce que si on fixe la graine (`seed`), alors on obtiendra toujours le même effet aléatoire sur le graphique. Ceci est très important car cela permet d'aligner les lignes individuelles (cf. graphiques pour données pairées) avec les données (les points) individuelles, cela en configurant de manière identique l'argument `seed`.
+- Pour mettre en vis-à-vis les données individuelles avec l'élément statistique dans les cas de données non pairées, la technique a consisté à décaler latéralement les données individuelles vers la gauche à l'aide de la fonction `stage()`, et à décaler latéralement l'élément statistique vers la droite à l'aide de l'argument `position` et de la fonction `position_nudge()`. A noter que l'argument `alpha`permet de rajouter de la transparence aux points pour permettre de voir là où les données se superposeraient davantage, ce qui est difficilement évitable quand il y a beaucoup de données.
+- Pour mettre en vis-à-vis les données individuelles avec l'élément statistique dans les cas de données pairées, la technique a consisté à laisser les données individuelles centrées sur les axes relatifs à chacune des deux conditions testées, cela avec un mouvement aléatoire identique imposé aux données individuelles et aux lignes individuelles (l'argument `width` fixe l'importance du mouvement latéral aléatoire). De plus, il a fallu décaler latéralement l'élément statistique soit vers la droite, soit vers la gauche selon la condition concernée, cela à l'aide de l'argument `position` et de la fonction `position_nudge()`. Pour pouvoir appliquer un mouvement latéral différent selon la condition concernée, il a fallu proposer un morceau de code (avec `stat_summary()` ou `geom_boxplot()` ou `geom_half_violin()`) spécifique à chacun des éléments statistiques à montrer, chose ayant été réalisée en indiquant la partie du jeu de données concernée à l'intérieur de la fonction générant l'élément statistique (e.g., `data =  Blink2 %>% filter(Condition == "Oscillating")`).
 
-# Boîtes à moustaches et points avec mouvement latéral aléatoire
-g6 <- 
-  ggplot(data = iris, aes(x = Species, y = Sepal.Length)) +
-  geom_boxplot() +
-  geom_jitter(width = 0.08, height = NULL, size = 3) +
-  ggtitle("g6") +
-  theme(plot.title = element_text(size = 20),
-        axis.title = element_text(size = 17),
-        axis.text = element_text(size = 17))
+Récemment, il a été proposé dans la littérature d'user de graphiques appelés *rainclouds plots* qui combineraient les avantages de plusieurs techniques graphiques et statistiques et par là même pallieraient les manques ou défauts inhérents à chacune des techniques vues ci-dessus [@allenRaincloudPlotsMultiplatform2019]. Ces *rainclouds plots* utilisent : 
+
+- Les données individuelles, qui permettent de bien voir les différences individuelles, les *outliers*, et des patterns de distribution inattendus ;
+- Une aire montrant la densité de probabilité, qui permet de donner une idée relativement précise de la distribution (chose difficile à obtenir à partir seulement des observations individuelles) ; 
+- Une boîte à moustaches, qui permet de se faire une idée résumée relativement robuste de la distribution dans la population d'intérêt (via la médiane et les quartiles) ; selon les cas, d'autres statistiques, comme la moyenne et l'écart-type, peuvent être utilisées à la place ou en plus de la boîte à moustaches [@allenRaincloudPlotsMultiplatform2019].
+
+Les blocs de code ci-dessous et la Figure \@ref(fig:raindcloudplotsBiv) proposent plusieurs options d'utilisation du *raincloud plot*. 
+
+```{r }
+#####################
+# Données non pairées
+#####################
+
+# Raincloud plots classiques
+A <-
+  ggplot(data = iris, aes(x = Species, y = Sepal.Length, color = Species, fill = Species)) +
+  geom_point(aes(x = stage(start = Species, after_scale = x - 0.1)),
+             position = position_jitter(seed = 123, width = 0.08, height = NULL),
+             size = 4, alpha = 0.3) +
+  geom_half_violin(side = "r",
+                   position = position_nudge(x = 0.1, y = 0),
+                   size = 1, alpha = 0.4) +
+  geom_boxplot(position = position_nudge(x = 0.1),
+               width = 0.1, colour = "black", alpha = 0.3, outlier.shape = NA) +
+  ggtitle("A") +
+  set_text_size +
+  theme(legend.position = "none") +
+  coord_flip()
+
+
+# Raincloud plots basculés à la verticale
+B <-
+  ggplot(data = iris, aes(x = Species, y = Sepal.Length, color = Species, fill = Species)) +
+  geom_point(aes(x = stage(start = Species, after_scale = x - 0.1)),
+             position = position_jitter(seed = 123, width = 0.08, height = NULL),
+             size = 4, alpha = 0.3) +
+  geom_half_violin(side = "r",
+                   position = position_nudge(x = 0.1, y = 0),
+                   size = 1, alpha = 0.4) +
+  geom_boxplot(position = position_nudge(x = 0.1),
+               width = 0.1, colour = "black", alpha = 0.3, outlier.shape = NA) +
+  ggtitle("B") +
+  set_text_size +
+  theme(legend.position = "none")
+
+
+# Raincloud plots avec aires montrant les densités de probabilité sur une même ligne
+# horizontale
+C <-
+  ggplot(data = iris, aes(x = 0, y = Sepal.Length, color = Species, fill = Species)) +
+  geom_point(aes(x = - 0.2),
+             position = position_jitter(seed = 123, width = 0.08, height = NULL),
+             size = 4, alpha = 0.3) +
+  geom_half_violin(side = "r",
+                   position = position_nudge(x = 0.1, y = 0),
+                   size = 1, alpha = 0.4) +
+  geom_boxplot(position = position_dodge(width = 0.2),
+               width = 0.1, colour = "black", alpha = 0.3, outlier.shape = NA) +
+  ggtitle("C") +
+  set_text_size +
+  theme(legend.position = "bottom",
+        axis.title.y = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank()) +
+  coord_flip()
+
+# Raincloud plots avec aires montrant les densités de probabilité sur une même ligne
+# verticale
+D <-
+  ggplot(data = iris, aes(x = 0, y = Sepal.Length, color = Species, fill = Species)) +
+  geom_point(aes(x = - 0.2),
+             position = position_jitter(seed = 123, width = 0.08, height = NULL),
+             size = 4, alpha = 0.3) +
+  geom_half_violin(side = "r",
+                   position = position_nudge(x = 0.1, y = 0),
+                   size = 1, alpha = 0.4) +
+  geom_boxplot(position = position_dodge(width = 0.15),
+               width = 0.1, colour = "black", alpha = 0.3, outlier.shape = NA) +
+  ggtitle("D") +
+  set_text_size +
+  theme(legend.position = "bottom",
+        axis.title.x = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
+
+
+#################
+# Données pairées
+#################
+
+# Raincloud plots classiques avec moyennes et écart-types et ligne reliant les moyennes
+E <-
+  ggplot(data = Blink2, aes(x = Condition, y = Blink_rate, 
+                            colour = Condition, fill = Condition)) +
+  geom_point(aes(x = stage(start = Condition, after_scale = x - 0.15)),
+             position = position_jitter(seed = 123, width = 0.03),
+             size = 4, alpha = 0.3) +
+  geom_half_violin(side = "r", 
+                   position = position_nudge(0.1), 
+                   size = 1, alpha = 0.4) +  
+  geom_boxplot(width = 0.08, colour = "black", alpha = 0.3, outlier.shape = NA) + 
+  stat_summary(geom = "errorbar",
+               fun.data = "mean_sdl",
+               fun.args = list(mult = 1),
+               position = position_nudge(0.1), 
+               size = 1.1, width = 0.05) +
+  stat_summary(geom = "point",
+               fun = "mean", 
+               position = position_nudge(0.1),
+               size = 3) +
+  stat_summary(aes(group = 1),
+               geom = "line",
+               fun = "mean", 
+               position = position_nudge(0.1),
+               size = 1.5, color = "grey50",  linetype = "dashed") +
+  ggtitle("E") +
+  set_text_size +
+  theme(legend.position = "none") +
+  coord_flip()
+
+
+# Raincloud plots avec moyennes et écart-types et ligne reliant les moyennes 
+# basculés à la verticale
+F <-
+  ggplot(data = Blink2, aes(x = Condition, y = Blink_rate, 
+                            colour = Condition, fill = Condition)) +
+  geom_point(aes(x = stage(start = Condition, after_scale = x - 0.15)),
+             position = position_jitter(seed = 123, width = 0.03),
+             size = 4, alpha = 0.3) +
+  geom_half_violin(side = "r", 
+                   position = position_nudge(0.1), 
+                   size = 1, alpha = 0.4) +  
+  geom_boxplot(width = 0.08, colour = "black", alpha = 0.3, outlier.shape = NA) + 
+  stat_summary(geom = "errorbar",
+               fun.data = "mean_sdl",
+               fun.args = list(mult = 1),
+               position = position_nudge(0.1), 
+               size = 1.1, width = 0.05) +
+  stat_summary(geom = "point",
+               fun = "mean", 
+               position = position_nudge(0.1),
+               size = 3,) +
+  stat_summary(aes(group = 1),
+               geom = "line",
+               fun = "mean", 
+               position = position_nudge(0.1),
+               size = 1.5, color = "grey50",  linetype = "dashed") +
+  ggtitle("F") +
+  set_text_size +
+  theme(legend.position = "none")
+
+
+# Raincloud plots avec aires montrant les densités de probabilité sur une même ligne
+# horizontale
+G <-
+  ggplot(data = Blink2, aes(x = Condition, y = Blink_rate, 
+                            colour = Condition, fill = Condition)) +
+  geom_point(position = position_jitter(seed = 123, width = 0.03),
+             size = 4, alpha = 0.3) + 
+  geom_line(aes(group = Subject),
+            position = position_jitter(seed = 123, width = 0.03),
+             size = 2, alpha = 0.3, color = "gray") + 
+  geom_half_violin(aes(x = 2.17),
+                   side = "r",
+                   position = position_dodge(width = 0),
+                   size = 1, alpha = 0.4) +  
+  geom_boxplot(aes(x = 2.1),
+               position = position_dodge(width = 0.1),
+               width = 0.08, colour = "black", alpha = 0.3, outlier.shape = NA) +
+  ggtitle("G") +
+  set_text_size +
+  theme(legend.position = "bottom",
+        axis.title.y = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank()) +
+  coord_flip()
+
+
+# Raincloud plots avec aires montrant les densités de probabilité sur une même ligne
+# verticale
+H <-
+  ggplot(data = Blink2, aes(x = Condition, y = Blink_rate, 
+                            colour = Condition, fill = Condition)) +
+  geom_point(position = position_jitter(seed = 123, width = 0.03),
+             size = 4, alpha = 0.3) + 
+  geom_line(aes(group = Subject),
+            position = position_jitter(seed = 123, width = 0.03),
+             size = 2, alpha = 0.3, color = "gray") + 
+  geom_half_violin(aes(x = 2.17),
+                   side = "r",
+                   position = position_dodge(width = 0),
+                   size = 1, alpha = 0.4) +  
+  geom_boxplot(aes(x = 2.1),
+               position = position_dodge(width = 0.1),
+               width = 0.08, colour = "black", alpha = 0.3, outlier.shape = NA) +
+  ggtitle("H") +
+  set_text_size +
+  theme(legend.position = "bottom",
+        axis.title.x = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
+
 ```
 
-```{r graphDistriBivQuantvsQualMed, fig.align="center", echo = FALSE, fig.width=20, fig.cap="Nuage de points avec boîtes à moustaches"}
+```{r raindcloudplotsBiv, fig.align="center", echo = FALSE,  fig.width = 20, fig.height = 15, fig.cap="Exemples de raindcloud plots pour des données non pairées (A à D) et pairées (E à H)"}
 library(patchwork)
-g4 | g5 | g6
+(A |B | C | D) / (E | F | G | H)
 ```
-
-- des aires de densité (cf. codes et graphiques ci-dessous).
-
-```{r graph distri biv quand vs qual dens, message = FALSE, warning = FALSE}
-# Aires de densité
-g7 <- 
-  ggplot(data = iris, aes(x = Species, y = Sepal.Length)) +
-  geom_violin() +
-  ggtitle("g7") +
-  theme(plot.title = element_text(size = 20),
-        axis.title = element_text(size = 17),
-        axis.text = element_text(size = 17))
-
-# Aires de densité et points
-g8 <-
-  ggplot(data = iris, aes(x = Species, y = Sepal.Length)) +
-  geom_violin() +
-  geom_point(size = 3) +
-  ggtitle("g8") +
-  theme(plot.title = element_text(size = 20),
-        axis.title = element_text(size = 17),
-        axis.text = element_text(size = 17))
-
-# Aires de densité et points avec mouvement latéral aléatoire
-g9 <- 
-  ggplot(data = iris, aes(x = Species, y = Sepal.Length)) +
-  geom_violin() +
-  geom_jitter(width = 0.08, height = NULL, size = 3) +
-  ggtitle("g9") +
-  theme(plot.title = element_text(size = 20),
-        axis.title = element_text(size = 17),
-        axis.text = element_text(size = 17))
-```
-
-```{r graphDistriBivQuantvsQualdens, fig.align="center",  echo = FALSE, fig.width=20,  fig.cap = "Nuages de points avec aires de densité"}
-g7 | g8 | g9
-```
-
-Les différentes lignes de graphiques ci-avant montrent des graphiques de plus en plus efficaces à mesure que l'on se déplace de la gauche vers la droite. Une bonne pratique est en effet de donner la possibilité de visualiser les données individuelles en plus des statistiques que l'on souhaiterait montrer pour résumer la distribution. Il s'agit d'une bonne pratique car une même statistique peut en réalité cacher des distributions de valeurs très différentes. Ce principe a été illustré notamment par Weissgerber [-@weissgerberBarLineGraphs2015] qui milite pour la disparition des graphiques en forme de bâtons de dynamite, lesquels sont souvent utilisés pour montrer des moyennes et écart-types. La raison est que ces graphiques en forme de bâtons de dynamite peuvent induire en erreur quant à la réelle forme de la distribution et ils limitent les possibilités du lecteur de juger de la pertinence des choix d'analyse qui seraient faits par la suite au regard des données d'origine.
-
-On remarque que pour pouvoir montrer les moyennes et écart-types en rouge sur les premiers graphiques, il a fallu utiliser la fonction `stat_summary()`. Cette fonction permet de mettre en graphique certaines statistiques en configurant l'argument `fun` ou `fun.data`. Pour pouvoir enrichir les possibilités de mise en graphique de diverses statistiques, il peut falloir installer au préalable le package `Hmisc`, ce qui était nécessaire ici pour montrer les écart-types avec `fun.data = "mean_sdl"`.
-
-Bien que l'on ait l'habitude d'utiliser des graphiques montrant les données de la variable quantitative sur l'axe vertical, il est possible de montrer les données sous formes d'aires de densité le long de l'axe horizontal (cf. graphique g13 ci-dessous) ou encore avec un graphique en lignes de crêtes (*ridgelines plot*, cf. graphique g14 ci-dessous). Ces types de graphiques et leurs intérêts ont été discutés par Wilke [-@wilkeFundamentalsDataVisualization2018]. Pour pouvoir faire le graphque g14, il faut installer et charger un nouveau package : `ggridges`.
-
-```{r fig recap biv hori, message = FALSE, warning = FALSE}
-# Aire de densités superposées
-g13 <- 
-  ggplot(data = iris, aes(x = Sepal.Length, fill = Species, color = Species)) +
-  geom_density(alpha = 0.3, size = 2) +
-  ggtitle("g13") +
-  theme(plot.title = element_text(size = 20),
-        axis.title = element_text(size = 17),
-        axis.text = element_text(size = 17),
-        legend.position = "bottom",
-        legend.title = element_text(size = 20, face = "bold"),
-        legend.text = element_text(size = 20))
-
-# Ridgelines plot
-library(ggridges)
-
-g14 <-
-  ggplot(data = iris, aes(x = Sepal.Length, y = Species)) +
-  geom_density_ridges(size = 2) +
-  ggtitle("g14") +
-  theme(plot.title = element_text(size = 20),
-        axis.title = element_text(size = 17),
-        axis.text = element_text(size = 17))
-```
-
-```{r figrecapbivdens, fig.align="center", echo = FALSE, message = FALSE, warning = FALSE, fig.width = 20, fig.cap="Diagrammes en lignes de crête"}
-g13 | g14
-```
-
-Lorsque les données à visualiser sont pairées, c'est-à-dire qu'il s'agit des mêmes individus qui ont des données pour chaque modalité de la variable qualitative (e.g., suite à une même mesure qui aurait été réalisée dans différentes conditions), il est possible d'ajouter des éléments graphiques, telles que des lignes, de telle sorte à mettre davantage en évidence le fait que les données soient liées. Un exemple de graphique pour cela est montré ci-dessous avec le jeu de données `mice2` (intégré au package `datarium`). Ce jeu de données contient des données de poids de 10 souris évaluées avant et après un traitement.
-
-```{r loading datarium, echo = FALSE, warning = FALSE}
-library(datarium)
-head(mice2)
-```
-
-```{r pairedData, fig.align="center", fig.cap="Deux groupes avec données appariées"}
-mice2 %>%
-  pivot_longer(cols = c(before, after), names_to = "treatment", values_to = "score") %>%
-  mutate(treatment = fct_relevel(treatment, "before", "after")) %>%
-  ggplot(aes(x = treatment, y = score)) +
-  geom_line(aes(group = id)) +
-  geom_point(size = 3, shape = 21, fill  = "white") +
-  stat_summary(aes(group = 1), fun = "mean",  geom = "line", color = "red", size = 1.3) +
-  stat_summary(fun.data = "mean_sdl", fun.args = list(mult=1), geom = "errorbar", na.rm = TRUE, size = 1, width = 0.1, color = "red") +
-  stat_summary(fun = "mean", geom = "point", na.rm = TRUE, size = 4, color = "red") 
-```
-
-Dans le code ayant permis de réaliser ce graphique, il faut comprendre qu'il a été possible de réaliser des lignes reliant les différents points blancs grâce à la fonction `geom_line()` associée à un argument permettant de tracer les lignes en groupant les informations par individu avec la variable `id` (`aes(group = id)`). L'ajout d'une ligne rouge reliant chaque moyenne a été permis par l'écriture d'une ligne de code similaire à celle utilisée pour montrer les moyennes en rouge pour chaque condition avec `stat_summary()`, si ce n'est qu'on a indiqué de vouloir voir une ligne au lieu de points. La configuration de l'argument `aes(group = 1)` à l'intérieur de la fonction `stat_summary()` était nécessaire pour pouvoir montrer la ligne rouge reliant les moyennes.
 
 ### Etudier numériquement la relation
 
-De manière générale, étudier la relation entre une variable quantitative et une variable qualitative revient souvent à comparer les valeurs que prend la variable quantitative en fonction des modalités de la variable qualitative. Les analyses qui peuvent être faites dépendent du nombre de groupes de valeurs (qui dépendent du nombre de modalités) à comparer (2 ou plus), et du caractère pairé (dépendant) ou non des données. L'observation de différences de scores entre les modalités pourrait alors indiquer qu'il y a un lien entre la variable qualitative (qu'on pourrait appeler variable **facteur**) et la variable quantitative (qu'on pourrait appeler **variable réponse**). (A noter que la démonstration d'un lien de cause à effet entre la variable quantitative et la variable qualitative ne pourra être effective que si l'on a sciemment fait varier les modalités de la variable qualitative pour en observer la conséquence sur les valeurs de la variable quantitative.)
+De manière générale, étudier la relation entre une variable quantitative et une variable qualitative revient souvent à comparer les valeurs que prend la variable quantitative en fonction des modalités de la variable qualitative. Les analyses qui peuvent être faites dépendent du nombre de groupes de valeurs (qui dépendent du nombre de modalités) à comparer (2 ou plus), et du caractère pairé (dépendant) ou non des données. L'observation de différences de scores entre les modalités pourrait alors indiquer qu'il y a un lien entre la variable qualitative (qu'on pourrait appeler **variable facteur**) et la variable quantitative (qu'on pourrait appeler **variable réponse**). (A noter que la démonstration d'un lien de cause à effet entre la variable quantitative et la variable qualitative ne pourra être effective que si l'on a sciemment fait varier les modalités de la variable qualitative pour en observer la conséquence sur les valeurs de la variable quantitative.)
 
 *Cas de deux groupes de données indépendants (données non pairées)*
 
 De prime abord, l'analyse qui pourrait être envisagée pour comparer deux groupes de données quantitatives (e.g., des valeurs de taille) non pairées, qui seraient donc relatives à deux modalités différentes d'une variable qualitative (e.g., le sexe), serait de comparer les moyennes, ou les médianes des groupes. Toutefois, en se restreignant à cela, il pourrait être difficile de porter un jugement sur la grandeur relative de la différence qui serait observée, qu'on pourrait appeler **taille d'effet**. Il serait également difficile de comparer cette taille d'effet avec celles observées dans d'autres études, car étant calculée de la sorte, elle serait extrêmement inhérente aux variables et valeurs mesurées dans l'étude. Il est donc intéressant, dans ce genre de situation, de standardiser la différence des moyennes ou médianes obtenues pour les deux groupes. Cette procédure de standardisation a été très développée dans le cadre de comparaisons de moyennes, et les calculs suivants, repris de l'article de D. Lakens [-@lakensCalculatingReportingEffect2013], s'inscrivent donc dans ce cadre.
 
-**ds de Cohen**
+**$d_{s}$ de Cohen**
 
 Classiquement, l'indice statistique utilisé pour calculer une différence de moyennes de manière standardisée entre deux groupes de données non pairées, à partir d'échantillons de population, est le $d_{s}$ de Cohen. Cette statistique se calcule en faisant la différence entre les moyennes des deux groupes à comparer, et en divisant cette différence par l'écart-type commun des valeurs de chacun des deux groupes. Ce calcul est montré ci-dessous : 
 
 $$d_{s} = \frac{\overline{X_{1}} - \overline{X_{2}}} {\sqrt{\frac{(N_{1} - 1) s_{1}^2 + (N_{2} - 1) s_{2}^2} {N_{1} + N_{2} - 2}}}$$
 
-Dans R, le $d_{s}$ de Cohen peut être calculé à l'aide de la fonction `cohens_d()` du package `effectsize`, qui nécessite d'être installé puis chargé avant d'être utilisé. Pour illustrer l'utilisation de cette fonction, on peut utiliser le jeu de données `iris_two_species` crée par nos soins à partir du jeu de données `iris` pour l'exemple, qui contient notamment la variable quantitative `Sepal.Length`, et deux modalités de la  variable qualitative `Species` (`setosa` et `versicolor`).
+Dans R, le $d_{s}$ de Cohen peut être calculé à l'aide de la fonction `cohens_d()` du package `effectsize`, qui nécessite d'être installé puis chargé avant d'être utilisé. Pour illustrer l'utilisation de cette fonction, on peut utiliser le jeu de données `iris_two_species` crée par nos soins pour l'exemple à partir du jeu de données `iris` et qui contient notamment la variable quantitative `Sepal.Length`, et deux modalités de la variable qualitative `Species` (`setosa` et `versicolor`).
 
-```{r iris2peciesview, echo = FALSE, warning = FALSE, fig.align="center", fig.cap="Deux groupes avec données non appariées"}
+```{r iris2peciesview, warning = FALSE, fig.align="center", fig.cap="Visualisation des données de `iris_two_species`"}
+
+# Création du jeu de données
 iris_two_species <-
   iris %>% 
   filter(Species == "setosa" | Species == "versicolor")
-  
-ggplot(data = iris_two_species, aes(x = Species, y = Sepal.Length)) +
-  geom_jitter(size = 3, width = 0.08) +
-  stat_summary(fun = "mean", color = "red", size = 1.1) +
-  stat_summary(fun.data = "mean_sdl", fun.args = list(mult=1), geom = "errorbar", na.rm = TRUE, size = 1.8, width = 0.1, color = "red")
+
+# Visualisation graphique  
+ggplot(data = iris_two_species, aes(x = Species, y = Sepal.Length, 
+                                    color = Species, fill = Species)) +
+  geom_point(aes(x = stage(start = Species, after_scale = x - 0.1)),
+             position = position_jitter(seed = 123, width = 0.08, height = NULL),
+             size = 4, alpha = 0.3) +
+  geom_half_violin(side = "r",
+                   position = position_nudge(x = 0.1, y = 0),
+                   size = 1, alpha = 0.4) +
+  stat_summary(geom = "errorbar",
+               fun.data = "mean_sdl",
+               fun.args = list(mult = 1),
+               position = position_nudge(0.1), 
+               size = 1.1, width = 0.05) +
+  stat_summary(geom = "point",
+               fun = "mean", 
+               position = position_nudge(0.1),
+               size = 5,) +
+  theme(legend.position = "none")
 ```
 
-On peut alors calculer le $d_{s}$ de Cohen à l'aide de la fonction `cohens_d()` de la manière suivante : 
+Le $d_{s}$ de Cohen s'obtient alors de la manière suivante : 
 
 ```{r effectsize loading, echo = FALSE, warning=FALSE, message=FALSE}
 library(effectsize)
@@ -684,25 +992,28 @@ Dans cet exemple, on remarque qu'on a bien cherché à savoir comment les donné
 levels(iris_two_species$Species)
 ```
 
-L'ordre des modalités affichées nous indique que `setosa` est la modalité 1, et que `versicolor` est la modalité 2. (On remarque par ailleurs que l'utilisation précédente de la fonction `filter()` a certes permis de sélectionner les données d'intérêt pour notre nouveau jeu de données `iris_two_species`, mais a malgré cela permis la conservation de toutes les modalités d'origine liées à la variable `Species` dans le jeu de données `iris`.) Par conséquent, le $d_{s}$ de Cohen de -2.10 obtenu plus haut indique que la longueur des sépals (`Sepal.Length`) pour l'espèce `setosa` est inférieure à celles des sépals de l'espèce `versicolor`. Cette interprétation devrait être en cohérence avec le graphique réalisé au préalable. Si l'on avait voulu avoir le calcul inverse (`versicolor` - `setosa`), il aurait  fallu reconfigurer l'ordre des modalités, par exemple à l'aide de la fonction `fct_relevel()` du package `forcats` comme montré à la fin du chapite 3.
+L'ordre des modalités affichées nous indique que `setosa` est la modalité 1, et que `versicolor` est la modalité 2. (On remarque par ailleurs que l'utilisation précédente de la fonction `filter()` a certes permis de sélectionner les données d'intérêt pour notre nouveau jeu de données `iris_two_species`, mais a malgré cela permis la conservation de toutes les modalités d'origine liées à la variable `Species` dans le jeu de données `iris`.) Par conséquent, le $d_{s}$ de Cohen de -2.10 obtenu plus haut indique que la longueur des sépals (`Sepal.Length`) pour l'espèce `setosa` est inférieure à celles des sépals de l'espèce `versicolor`. Cette interprétation est en cohérence avec le graphique réalisé au préalable. Si l'on avait voulu avoir le calcul inverse (`versicolor` - `setosa`), il aurait  fallu reconfigurer l'ordre des modalités, par exemple à l'aide de la fonction `fct_relevel()` du package `forcats` comme montré à la fin du chapite 3.
 
 Une fois que l'on a calculé une taille d'effet, il est toujours intéressant d'essayer de formuler un jugement sur l'importance, l'ampleur de l'effet. En ce sens, des valeurs seuils ont été proposées dans la littérature (Cohen, 1988; in Lakens [-@lakensCalculatingReportingEffect2013]). Ces valeurs, valables pour interpréter des tailles d'effet dans le cadre d'une étude de type *between-subject design*, sont montrées dans le tableau ci-dessous.
 
 ```{r effectsizetable, echo = FALSE}
-knitr::kable(
+flextable(
   tribble(
     ~Petit, ~Moyen, ~Grand,
     0.2,     0.5,      0.8
-  ), 
-  caption = "Taille d'effet pour une différence de moyennes"
-)
+  ), cwidth = 2) %>%
+  theme_zebra() %>%
+  align(align = "center", part = "all" ) %>%
+  hline_top(part = "all", border = fp_border(width = 1.5)) %>%
+  hline_bottom(part = "all", border = fp_border(width = 1.5)) %>%
+  set_caption( "Termes pour qualifier la taille d'effet dans le cadre d'une comparaison de moyennes associées à des variables indépendantes")
 ```
 
 Ces valeurs sont relativement arbitraires, et l'interprétation de la taille de l'effet et des conséquences qu'il peut avoir en pratique ne devrait pas être liée de manière trop rigide à ces valeurs [@lakensCalculatingReportingEffect2013].
 
 Il existe également une autre approche pour interpréter une valeur de taille d'effet : l'approche *Common Language explanation* [@lakensCalculatingReportingEffect2013]. Cette approche consiste à faire le lien entre la valeur de la taille d'effet et les probabilités de rencontrer des valeurs similaires ou supérieures dans les groupes comparés. Par exemple, lorsqu'on obtient un $d_{s}$ de Cohen de 0.80, cela peut se traduire par le fait qu'il y a 71.4 % de chances qu'une personne prise au hasard dans le groupe avec la meilleure moyenne ait un score plus élevé qu'une personne qui serait prise au hasard dans le groupe avec la moyenne la plus basse des deux groupes. Kristoffer Magnusson a réalisé une page web qui permet d'utiliser l'approche *Common Language explanation* pour n'importe quelle valeur de taille d'effet dans le cadre d'une étude de type *between-subject design*. Jetez un oeil ici : https://rpsychologist.com/cohend.
 
-**gs de Hedges**
+**$g_{s}$ de Hedges**
 
 Il a été rapporté, dans la littérature, qu'en réalité le $d_{s}$ de Cohen est relativement biaisé lorsqu'il s'agit d'estimer la taille d'un effet dans la population d'intérêt à partir d'échantillons de population (autrement dit, à l'échelle de nombreux échantillons, on sait qu'avec le $d_{s}$ de Cohen on aura en moyenne un écart entre l'effet qu'on a trouvé et l'effet réel qui existe dans la population). Cela sera d'autant plus vrai lorsque les calculs seront réalisés à partir de petits échantillons ($N$ < 20), selon Hedges et Okins (1985) cités par Lakens [-@lakensCalculatingReportingEffect2013]. En raison de cela, un autre indice statistique a été proposé pour corriger cette erreur systématique qui sera d'autant plus grande que l'échantillon étudié est petit, à savoir le $g_{s}$ de Hedges :
 
@@ -725,7 +1036,7 @@ $$\Delta = \frac{\overline{X_{1}} - \overline{X_{2}}} {s_{2}}$$
 
 Le calcul du $\Delta$ de Glass est dans l'idée le même que celui du $d_{s}$ de Cohen, sauf que la différence entre les moyennes des deux groupes n'est pas divisée par l'écart-type commun des deux groupes, mais par celui d'un seul des deux groupes, qui serait en principe celui qui représenterait la condition contrôle ou la condition de référence. Une pratique souvent recommandée pour comparer dans ce genre de situation les scores post-programme de deux groupes (un groupe entraîné/traité et un groupe contrôle) serait d'utiliser l'écart-type des scores du groupe contrôle obtenu en pré-programme [@lakensCalculatingReportingEffect2013]. 
 
-Dans R, le $\Delta$ de Glass lié à un échantillon de population peut être calculé à l'aide de la fonction `glass_delta()` du package `effectsize`. Attention, l'écart-type utilisé dans le code suivant est celui de la variable quantitative associée à la modalité 2 de la variable qualitative, qui est toujours `versicolor` dans cet exemple.
+Dans R, le $\Delta$ de Glass lié à un échantillon de population peut être calculé à l'aide de la fonction `glass_delta()` du package `effectsize`. Attention, l'écart-type utilisé dans le code suivant est celui de la variable quantitative associée à la modalité 2 de la variable qualitative, qui est toujours `versicolor` dans cet exemple (exemple dont le contexte n'est certes pas celui d'un programme dont on cherche l'effet, mais le principe d'utilisation du code reste le même).
 
 ```{r glass delta between}
 glass_delta(Sepal.Length ~ Species, data = iris_two_species)
@@ -734,45 +1045,63 @@ glass_delta(Sepal.Length ~ Species, data = iris_two_species)
 
 *Cas de deux groupes de données dépendants (données pairées)*
 
-**dz et dav de Cohen**
+**$d_{z}$ et $d_{av}$ de Cohen**
 
 Le calcul classique pour obtenir la taille d'effet désignant l'écart entre deux groupes de données dépendantes est celui du $d_{z}$ [@lakensCalculatingReportingEffect2013], qui est montré ci-dessous :
 
 $$d_{z} = \frac{\overline{X} _{diff}}{s_{diff}},$$
 
-$\overline{X} _{diff}$ désignant la moyenne des différences relatives à chaque pair de valeurs obtenues dans les deux conditions comparées, et $s_{diff}$ désignant l'écart-type de ces différences. Dans R, le $d_{z}$ peut être obtenu à nouveau avec la fonction `cohens_d()` du package `effectsize`. Pour illustrer cela, nous allons cette fois utiliser le jeu de données `Blink` associé au package `PairedData` qui doit être installé et chargé pour être utilisé. Pour information, `Blink` contient les données de taux de clignotement des yeux obtenues chez 12 sujets et dans deux conditions différentes : 1/ tâche où il fallait diriger un stylo selon une trajectoire rectiligne (modalité `Straight`) ; 2/ tâche où il fallait diriger un stylo selon une trajectoire avec des oscillations (`Oscillating`).
+$\overline{X} _{diff}$ désignant la moyenne des différences relatives à chaque pair de valeurs obtenues dans les deux conditions comparées, et $s_{diff}$ désignant l'écart-type de ces différences. Dans R, le $d_{z}$ peut être obtenu à nouveau avec la fonction `cohens_d()` du package `effectsize`. Pour illustrer cela, nous allons à nouveau utiliser le jeu de données `Blink` associé au package `PairedData` qui doit être installé et chargé pour être utilisé. 
 
-```{r Blink view, echo = FALSE, warning = FALSE, message=FALSE}
-library(PairedData)
-data(Blink)
-head(Blink)
+```{r}
+Blink
 ```
 
-Pour la suite de l'analyse, on peut reconfigurer ce jeu de données de telle sorte à bien avoir les conditions testées dans une même colonne et les valeurs correspondantes dans la colonne d'à côté, avec la modalité "Straight" en tant que première modalité à considérer dans les fonctions à suivre. Le nouveau jeu de données s'appellerait alors `Blink2`.
 
-```{r Blinkreconfiguration, echo = FALSE, message = FALSE, fig.align = "center", fig.cap="Données du jeu de données `Blink`"}
+Pour la suite de l'analyse, on peut, comme réalisé plus haut, reconfigurer le jeu de données `Blink` de telle sorte à bien avoir les conditions testées dans une même colonne et les valeurs correspondantes dans la colonne d'à côté, avec la modalité `Straight` en tant que première modalité à considérer dans les fonctions à suivre. Le nouveau jeu de données s'appelle alors `Blink2`.
+
+```{r Blinkreconfiguration, echo = FALSE, message = FALSE, fig.align = "center", fig.cap="Données du jeu de données `Blink2`"}
 Blink2 <-
   Blink %>%
-  pivot_longer(cols = c(Straight, Oscillating), names_to = "Condition", values_to = "Blink_rate") %>%
+  pivot_longer(cols = c(Straight, Oscillating), 
+               names_to = "Condition", values_to = "Blink_rate") %>%
   mutate(Condition = fct_relevel(Condition, "Straight", "Oscillating"))
 
 Blink2
 
-ggplot(data = Blink2, aes(x = Condition, y = Blink_rate)) +
-  geom_point(size = 2) +
-  geom_line(aes(group = Subject)) +
-  stat_summary(fun.data = "mean_sdl", fun.args = list(mult = 1), geom = "errorbar", color = "red", size = 1.2, width = 0.1) +
-  stat_summary(aes(group = 1), geom = "line", color = "red", size = 1.2) +
-  stat_summary(fun = "mean", geom = "point", color = "red", size = 3)
+  ggplot(data = Blink2, aes(x = Condition, y = Blink_rate, 
+                            colour = Condition, fill = Condition)) +
+  geom_point(aes(x = stage(start = Condition, after_scale = x - 0.15)),
+             position = position_jitter(seed = 123, width = 0.03),
+             size = 4, alpha = 0.3) +
+  geom_half_violin(side = "r", 
+                   position = position_nudge(0.1), 
+                   size = 1, alpha = 0.4) +  
+  geom_boxplot(width = 0.08, colour = "black", alpha = 0.3, outlier.shape = NA) + 
+  stat_summary(geom = "errorbar",
+               fun.data = "mean_sdl",
+               fun.args = list(mult = 1),
+               position = position_nudge(0.1), 
+               size = 1.1, width = 0.05) +
+  stat_summary(geom = "point",
+               fun = "mean", 
+               position = position_nudge(0.1),
+               size = 3,) +
+  stat_summary(aes(group = 1),
+               geom = "line",
+               fun = "mean", 
+               position = position_nudge(0.1),
+               size = 1.5, color = "grey50",  linetype = "dashed") +
+  theme(legend.position = "none")
 ```
 
 Dans R, on peut alors calculer $d_{z}$ à nouveau à l'aide de la fonction `cohens_d()` du package `effectsize` comme ceci :
 
 ```{r cohens dz within, warning=FALSE, message=FALSE}
-cohens_d(Blink_rate ~ Condition, data = Blink2, paired = TRUE)
+cohens_d(Blink_rate ~ Condition, data = Blink2, paired = TRUE, pooled_sd = TRUE)
 ```
 
-Toutefois, d'après Lakens [-@lakensCalculatingReportingEffect2013], il peut être intéressant de rapporter plutôt un indice de taille d'effet qui ne serait pas influencé par le fait que les données des deux groupes à comparer soient corrélées, notamment en vue de rendre comparable cette taille d'effet à celles obtenues dans le cadre d'études de type *between-subject design*, pour plus facilemement conduire des méta-analyses par la suite par exemple. La recommandation de Lakens [-@lakensCalculatingReportingEffect2013] serait alors d'utiliser l'indice $d_{av}$, dont le calcul serait le suivant : 
+Toutefois, d'après Lakens [-@lakensCalculatingReportingEffect2013], il peut être intéressant de rapporter plutôt un indice de taille d'effet qui ne serait pas influencé par le fait que les données des deux groupes à comparer soient corrélées (car dépendantes), notamment en vue de rendre comparable cette taille d'effet à celles obtenues dans le cadre d'études de type *between-subject design*, pour plus facilemement conduire des méta-analyses par la suite par exemple. La recommandation de Lakens [-@lakensCalculatingReportingEffect2013] serait alors d'utiliser l'indice $d_{av}$, dont le calcul serait le suivant : 
 
 $$d_{av} = \frac{\overline{X} _{diff}}{\sqrt{\frac{s_{1}^2 + s_{2}^2} {2}}}$$
 
@@ -784,7 +1113,7 @@ cohens_d(Blink_rate ~ Condition, data = Blink2, paired = FALSE, pooled_sd = FALS
 
 En effet, que l'on fasse la moyenne des différences (ce qui serait attendu pour le présent calcul) ou la différence entre deux moyennes (ce qui est finalement fait par la fonction tel que configurée ci-dessus), cela ne change rien avec des données pairées. Le numérateur $\overline{X} _{diff}$ reste donc correctement calculé même avec cette configuration de fonction qui est faite initialement pour des groupes indépendants. Le fait d'indiquer `pooled_sd = FALSE` change le calcul du dénominateur que nous avions rencontré initialement pour le calcul de $d_{s}$, cela pour obtenir le calcul attendu pour le $d_{av}$.
 
-**gav de Hedges**
+**$g_{av}$ de Hedges**
 
 Comme dans le cas de l'étude de groupes indépendants, $d_{av}$ et ses dérivés sont biaisés. Il peut donc être à nouveau préférable de calculer le $g_{av}$ de Hedges avec la fonction `hedges_g()` configurée comme ceci : 
 
@@ -798,6 +1127,8 @@ Toutefois, comme le rappelle Lakens [-@lakensCalculatingReportingEffect2013], le
 detach(package:PairedData)
 detach(package:MASS)
 ```
+
+## Résumé
 
 
 

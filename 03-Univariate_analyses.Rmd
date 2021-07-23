@@ -116,10 +116,10 @@ Une fois cette procédure réalisée, le reste du code, et notamment la fonction
 iris$Sepal.Length[3] <- 4.7  # Le nombre entre crochets désigne la position de l'observation dans la variable.
 ```
 
-On remarque ainsi qu'au-delà de prendre connaissance de la forme de la distribution, passer par ces étapes graphiques permet aussi de s'assurer qu'il n'y a pas eu d'erreur lors de la saisie des données dans la base (du moins, pas d'erreur visible et qui risquerait d'impacter grandement les calculs futurs). Passer par l'analyse graphique est donc recommandé avant de pouvoir se fier aux résultats numériques que l'on pourrait calculer par la suite, tels que les indices statistiques qui permettent de résumer numériquement une variable. Afin de faciliter l'analyse graphique de la distribution de la variable étudiée, nous avons crée une fonction, appelée `g_distri()` (cf. ci-dessous), visant à produire à la fois un histogramme et une boîte à moustaches représentant la variable étudiée, ainsi qu'un graphique de type nuage de points montrant les valeurs individuelles (la fonction a été configurée de telle sorte à ce que les points apparaissent davantage de couleur blanche là où il y a plus d'observations ; les observations isolées seront montrées avec des points relativement transparents).
+On remarque ainsi qu'au-delà de prendre connaissance de la forme de la distribution, passer par ces étapes graphiques permet aussi de s'assurer qu'il n'y a pas eu d'erreur lors de la saisie des données dans la base (du moins, pas d'erreur visible et qui risquerait d'impacter grandement les calculs futurs). Passer par l'analyse graphique est donc recommandé avant de pouvoir se fier aux résultats numériques que l'on pourrait calculer par la suite, tels que les indices statistiques qui permettent de résumer numériquement une variable. Afin de faciliter l'analyse graphique de la distribution de la variable étudiée, nous avons crée une fonction, appelée `plot_distri()` (cf. ci-dessous), visant à produire à la fois un histogramme et une boîte à moustaches représentant la variable étudiée, ainsi qu'un graphique de type nuage de points montrant les valeurs individuelles (la fonction a été configurée de telle sorte à ce que les points apparaissent davantage de couleur blanche là où il y a plus d'observations ; les observations isolées seront montrées avec des points relativement transparents).
 
 ```{r histo & boxplot}
-g_distri <- function(x = NULL, binwidth = NULL) {
+plot_distri <- function(x = NULL, binwidth = NULL) {
   require(ggplot2)
   require(magrittr)
   require(patchwork)
@@ -156,10 +156,10 @@ g_distri <- function(x = NULL, binwidth = NULL) {
 }
 ```
 
-L'utilisation de la fonction `g_distri()` est illustrée ci-dessous (pour rappel, il est important d'activer/créer la fonction avant de pouvoir l'utiliser) :
+L'utilisation de la fonction `plot_distri()` est illustrée ci-dessous (pour rappel, il est important d'activer/créer la fonction avant de pouvoir l'utiliser) :
 
-```{r gdistriExample, message = FALSE, fig.align ="center", fig.cap="Visualisation de la distribution avec la fonction `g_distri()`"}
-g_distri(x = iris$Sepal.Length, binwidth = 0.3)
+```{r gdistriExample, message = FALSE, fig.align ="center", fig.cap="Visualisation de la distribution avec la fonction `plot_distri()`"}
+plot_distri(x = iris$Sepal.Length, binwidth = 0.3)
 ```
 
 Lors de l'analyse de données, différentes formes typiques de distribution peuvent être rencontrées, notamment des formes **gaussiennes**, **asymétriques**, **leptocurtiques**, et **platycurtiques** [@dartCommentDecrireDistribution2003]. Ces formes sont illustrées sur la figure ci-dessous. Les formes gaussiennes sont observées en présence de variables suivant ce qu'on appelle une **loi normale**. Très souvent, on associe une distribution gaussienne, et donc une loi normale, à une distribution en forme de cloche, bien que  l'analogie à la cloche pourrait se discuter. Les formes asymétriques traduisent le fait que la majorité des observations sont concentrées sur une extrémité de l'intervalle des valeurs possibles, et qu'il existe des observations, non majoritaires, avec des valeurs pouvant être très éloignées de la majorité des données, mais seulement d'un seul côté de la distribution. Enfin, les formes leptocurtiques et platycurtiques sont appelées ainsi par comparaison à la forme gaussienne. En présence d'une forme leptocurtique, la distribution s'avère plus pointue, avec des queues (qui sont les extrémités de la distribution) plus longues qu'avec une forme gaussienne. Dans le cadre d'une distribution platycurtique, la distribution est plus aplatie, avec des queues plus courtes qu'avec une forme gaussienne [@dartCommentDecrireDistribution2003]. La distribution uniforme est un cas particulier de distribution platycurtique, et c'est cette distribution qui est en réalité montrée sur la figure ci-dessous.
@@ -239,10 +239,10 @@ TextPlot_plati <-
               axis.line = element_blank()
             )
 
-gauss_g <- g_distri(x = gauss)
-skew_right_g <- g_distri(x = skew_right)
-lepto_g <- g_distri(x = lepto) +  coord_cartesian(xlim = c(-5, 5))
-plati_g <- g_distri(x = plati)
+gauss_g <- plot_distri(x = gauss)
+skew_right_g <- plot_distri(x = skew_right)
+lepto_g <- plot_distri(x = lepto) +  coord_cartesian(xlim = c(-5, 5))
+plati_g <- plot_distri(x = plati)
 
 (TextPlot_gauss | TextPlot_skew_right) /
 (gauss_g | skew_right_g) /
@@ -1016,73 +1016,73 @@ Certes, pour le moment, cette seconde procédure n'a fait que rajouter des étap
 
 ```{r geom_bar enhanced 2, message = FALSE}
 # Diagramme en barres avec les effectifs affichés à proximité des barres
-g1 <- 
+A <- 
   diamonds %>% 
   group_by(color) %>%
   summarize(count = n()) %>%
   ggplot(aes(x = color, y = count)) +
      geom_bar(stat = "identity") +
      geom_text(aes(label = count, x = color, y = count), size = 2, nudge_y = 700) +
-     ggtitle("g1")
+     ggtitle("A")
 
 # Diagramme en barres réorganisées manuellement
-g2 <- 
+B <- 
   diamonds %>% 
   group_by(color) %>%
   summarize(count = n()) %>%
   ggplot(aes(x = fct_relevel(color, "J", "I", "H", "G", "F", "E", "D"), y = count)) +
      geom_bar(stat = "identity") +
      xlab("color") +
-     ggtitle("g2") 
+     ggtitle("B") 
 
 # Diagramme en barres réorganisées en ordre croissant
-g3 <- 
+C <- 
   diamonds %>% 
   group_by(color) %>%
   summarize(count = n()) %>%
   ggplot(aes(x = fct_reorder(color, count), y = count)) +
      geom_bar(stat = "identity") +
      xlab("color") +
-     ggtitle("g3") 
+     ggtitle("C") 
 
 # Diagramme en barres réorganisées en ordre décroissant
-g4 <- 
+D <- 
   diamonds %>% 
   group_by(color) %>%
   summarize(count = n()) %>%
   ggplot(aes(x = fct_reorder(color, -count), y = count)) +
      geom_bar(stat = "identity") +
      xlab("color") +
-     ggtitle("g4") 
+     ggtitle("D") 
 
 # Diagramme en barres pivoté
-g5 <- 
+E <- 
   diamonds %>% 
   group_by(color) %>%
   summarize(count = n()) %>%
   ggplot(aes(x = fct_reorder(color, -count), y = count)) +
   geom_bar(stat = "identity") +
      coord_flip() +
-     ggtitle("g5")
+     ggtitle("E")
 
 # Dotplot pivoté
-g6 <- 
+F <- 
   diamonds %>% 
   group_by(color) %>%
   summarize(count = n()) %>%
   ggplot(aes(x = fct_reorder(color, -count), y = count)) +
      geom_point() +
      coord_flip() +
-     ggtitle("g6")
+     ggtitle("F")
 ```
 
 ```{r geombarEnhancedGraph, echo = FALSE, message = FALSE, fig.align ="center",  fig.cap="Différentes sortes de diagrammes en barres"}
-(g1 | g2 | g3) / (g4 | g5 | g6)
+(A | B | C) / (D | E | F)
 ```
 
-Dans le code montré ci-dessus, on remarque que le réagencement manuel des barres (cf. g2) a pu être réalisé grâce à la fonction `fct_relevel()` du package `forcats`. Pour les autres diagrammes, la réorganisation des barres en ordre croissant ou décroissant sur la base de la valeur de l'effectif (`count`) a pu se faire grâce à la fonction `fct_reorder()` du package `forcats`. Les noms des arguments de ces fonctions n'ont pas été indiqués pour alléger le code. Le plus important, c'est d'indiquer en premier argument la variable dont l'ordre d'apparition des modalités doit être réorganisé (il s'agissait de la variable `color` dans cet exemple). En second argument, il convient d'indiquer la logique de réorganisation de l'apparition des modalités (ce qui a été fait sur la base des valeurs de la variable `count` dans les exemples ci-dessus utilisant la fonction `fct_reorder()`).
+Dans le code montré ci-dessus, on remarque que le réagencement manuel des barres (cf. graphique B) a pu être réalisé grâce à la fonction `fct_relevel()` du package `forcats`. Pour les autres diagrammes, la réorganisation des barres en ordre croissant ou décroissant sur la base de la valeur de l'effectif (`count`) a pu se faire grâce à la fonction `fct_reorder()` du package `forcats`. Les noms des arguments de ces fonctions n'ont pas été indiqués pour alléger le code. Le plus important, c'est d'indiquer en premier argument la variable dont l'ordre d'apparition des modalités doit être réorganisé (il s'agissait de la variable `color` dans cet exemple). En second argument, il convient d'indiquer la logique de réorganisation de l'apparition des modalités (ce qui a été fait sur la base des valeurs de la variable `count` dans les exemples ci-dessus utilisant la fonction `fct_reorder()`).
 
-Toujours dans le code montré ci-dessus, on peut voir aussi, dans la fonction `geom_text()` du graphique g1, la présence de l'argument `nudge_y`. Cet argument permet de régler le décalage entre le haut de la barre et le texte. L'ordre de grandeur du chiffre indiqué est celui de la variable indiquée en ordonnées.
+Toujours dans le code montré ci-dessus, on peut voir aussi, dans la fonction `geom_text()` du graphique A, la présence de l'argument `nudge_y`. Cet argument permet de régler le décalage entre le haut de la barre et le texte. L'ordre de grandeur du chiffre indiqué est celui de la variable indiquée en ordonnées.
 
 On observe que la réorganisation des barres selon un ordre croissant ou décroissant clarifie l'information délivrée par le graphique. Toutefois, cette réorganisation est en principe surtout recommandée pour des variables qualitative nominales, c'est-à-dire des variables pour lesquelles il n'existe pas un ordre naturel des modalités. Lorsqu'il existe un ordre naturel des modalités, comme c'est le cas pour des variables qualitatives ordinales, les modalités devraient préférentiellement suivre leur ordre naturel.
 
@@ -1090,27 +1090,27 @@ En plus des effectifs, il est aussi possible de prendre connaissance de la distr
 
 ```{r diagrams for proportions, message = FALSE}
 # Diagramme en barres empilées montrant les effectifs
-g1 <- 
+A <- 
   diamonds %>% 
   group_by(color) %>%
   summarize(count = n()) %>%
   ggplot(aes(x = "", y = count, fill = color)) +
   geom_bar(stat = "identity", na.rm = TRUE) +
   geom_text(aes(label = count), size = 2, position = position_stack(vjust = 0.5)) +
-  ggtitle("g1")
+  ggtitle("A")
   
 # Diagramme en barres empilées montrant les proportions
-g2 <- 
+B <- 
   diamonds %>% 
   group_by(color) %>%
   summarize(count = n() / length(diamonds$color) * 100) %>%
   ggplot(aes(x = "", y = count, fill = color)) +
   geom_bar(stat = "identity") +
   geom_text(aes(label = paste0(round(count, digits = 2), " %")), size = 2, position = position_stack(vjust = 0.5)) +
-  ggtitle("g2")
+  ggtitle("B")
 
 # Diagramme circulaire montrant les effectifs
-g3 <- 
+C <- 
   diamonds %>% 
   group_by(color) %>%
   summarize(count = n()) %>%
@@ -1118,10 +1118,10 @@ g3 <-
   geom_bar(stat = "identity", position = "stack") +
   coord_polar(theta = "y", start = 0, direction = -1) +
   geom_text(aes(label = count), size = 2, position = position_stack(vjust = 0.5)) +
-  ggtitle("g3")
+  ggtitle("C")
 
 # Diagramme circulaire montrant les proportions
-g4 <-
+D <-
   diamonds %>% 
   group_by(color) %>%
   summarize(count = n() / length(diamonds$color) * 100) %>%
@@ -1129,11 +1129,11 @@ g4 <-
   geom_bar(stat = "identity", position = "stack") +
   coord_polar(theta = "y", start = 0, direction = -1) +
   geom_text(aes(label = paste0(round(count, digits = 2), " %")), size = 2, position = position_stack(vjust = 0.5)) +
-  ggtitle("g4")
+  ggtitle("D")
 ```
 
 ```{r geombarPropEnhancedGraph, echo = FALSE, message = FALSE, fig.align ="center",  fig.cap="Différentes sortes de diagrammes pour représenter des proportions"}
-(g1 | g2) / (g3 | g4)
+(A | B) / (C | D)
 ```
   
 ### Déterminer la tendance centrale
@@ -1151,7 +1151,7 @@ freq(diamonds$color, valid = TRUE, total = TRUE, sort = "dec")
 * Avec R, les graphiques peuvent être réalisés, en autres, à l'aide du package `ggplot2` et des fonctions associées.
 
 * Lors de l'analyse d'une variable quantitative, une première étape doit être de visualiser graphiquement la distribution des observations. Cela peut se faire à l'aide d'un histogramme (`ggplot2::geom_histogram()`), d'une boîte à moustaches (`ggplot2::geom_boxplot()`), ou encore d'un nuage de points (`ggplot2::geom_point()`). 
-* Ces trois derniers types de graphiques peuvent être obtenus simultanément à l'aide de la fonction `g_distri()` présentée dans ce chapitre.
+* Ces trois derniers types de graphiques peuvent être obtenus simultanément à l'aide de la fonction `plot_distri()` présentée dans ce chapitre.
 * La distribution d'une variable quantitative peut être notamment (mais pas seulement) de forme gaussienne, asymétrique, leptocurtique, ou encore platycurtique.
 * Les indices de position disponibles pour résumer une variable quantitative sont la moyenne (`mean()`), la médiane (`median()`), le mode (`lsr::modeOf()`), et la moyenne rognée (`mean(trim = ...)`).
 * Les indices de dispersion disponibles pour résumer une variable quantitative sont l'étendue (`min()`, `max()`, `range()`), l'écart-type (`sd()`), et les quartiles (`quantile(probs = c(0.25, 0.75))`).
