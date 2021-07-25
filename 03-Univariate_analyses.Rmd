@@ -1,3 +1,8 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
 # Analyses descriptives univariées
 Réaliser une analyse descriptive univariée signifie que l'on s'intéresse à une seule variable en particulier. L'enjeu est ici de prendre connaissance de la distribution de la variable, c'est-à-dire de la manière selon laquelle se répartissent les observations en fonction des valeurs que prend la variable. Autrement dit, il s'agit d'avoir une idée du nombre d'observations (qui peut être le nombre d'individus dans certains cas, tels que dans des études portant sur l'être humain) en lien avec les différentes valeurs qui ont été obtenues. De manière complémentaire, l'analyse descriptive univariée vise à prendre connaissance des indices statistiques qui caractérisent la variable, ainsi qu'à déterminer les indices statistiques qui seraient les plus pertinents pour la résumer.
 
@@ -107,7 +112,7 @@ Il y a plusieurs choses à expliquer par rapport au graphique qui comporte à pr
 iris %>%
   mutate(id = as.factor(rep(1:50, times = 3)),                           
          id_outlier = ifelse(is_outlier(x = Sepal.Length), id, "")) %>%
-  select(id, Sepal.Length, id_outlier)
+  dplyr::select(id, Sepal.Length, id_outlier)
 ```
 
 Une fois cette procédure réalisée, le reste du code, et notamment la fonction `geom_text()`, a permis d'ajouter des éléments textuels au graphique, en l'occurence en s'appuyant sur la variable id_outlier, tel que configuré avec l'argument `aes()` de la fonction `geom_text()`. Lorsque la valeur anormale identifiée est effectivement une erreur de saisie dans la base de données, il convient de corriger la valeur avec la fonction d'assignation comme nous l'avons fait précédemment :
@@ -146,7 +151,8 @@ plot_distri <- function(x = NULL, binwidth = NULL) {
     g3 <- 
       data %>% 
       ggplot(aes(x = x)) +
-      geom_point(aes(x = x, y = ""), shape = 21, fill = "white", alpha = 0.25, size = 3) +
+      geom_point(aes(x = x, y = ""), shape = 21, fill = "white", alpha = 0.5, size = 3,
+                 position = position_jitter(seed = 123, width = 0.04)) +
       ylab("") +
       coord_cartesian(xlim = c(min(x, na.rm = TRUE), max(x, na.rm = TRUE))) +
       theme(axis.text.y = element_blank(),
@@ -158,7 +164,7 @@ plot_distri <- function(x = NULL, binwidth = NULL) {
 
 L'utilisation de la fonction `plot_distri()` est illustrée ci-dessous (pour rappel, il est important d'activer/créer la fonction avant de pouvoir l'utiliser) :
 
-```{r gdistriExample, message = FALSE, fig.align ="center", fig.cap="Visualisation de la distribution avec la fonction `plot_distri()`"}
+```{r gdistriExample, message = FALSE, fig.align ="center", fig.cap="Visualisation de la distribution avec la fonction plot_distri()"}
 plot_distri(x = iris$Sepal.Length, binwidth = 0.3)
 ```
 

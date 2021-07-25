@@ -160,7 +160,7 @@ Certains jeux de données peuvent être très larges, c'est-à-dire qu'ils peuve
 
 ```{r select}
 iris %>% 
-  select(Petal.Length, Petal.Width, Species)
+  dplyr::select(Petal.Length, Petal.Width, Species)
 ```
 
 ### Renommer des variables avec `rename()`
@@ -231,7 +231,7 @@ Au cours des illustrations montrant l'usage des fonctions `select()` jusqu'à `s
 ```{r full example dplyr}
 iris2 <- 
   iris %>%
-  select(Petal.Length, Petal.Width, Species) %>%
+  dplyr::select(Petal.Length, Petal.Width, Species) %>%
   rename(Petal_len = Petal.Length, Petal_wid = Petal.Width) %>%
   mutate(Petal_ratio = Petal_len / Petal_wid) %>%
   filter((Species == "setosa" | Species == "virginica") & Petal_ratio > 8) %>%
@@ -246,7 +246,7 @@ Il convient de respecter certaines règles de base lors de la conception d'une b
 iris2 <- 
   iris %>% 
   mutate(id = rep(1:50, times = 3)) %>%
-  select(id, Species,  everything()) %>%
+  dplyr::select(id, Species,  everything()) %>%
   arrange(id, Species) %>%
   as_tibble()
 iris2
@@ -268,7 +268,7 @@ Dans une situation inverse à celle que nous venons de voir, nous pourrions avoi
 
 ```{r pivot_longer}
   iris3 %>% 
-  select(id, 
+  dplyr::select(id, 
          Sepal.Length_setosa, 
          Sepal.Length_versicolor, 
          Sepal.Length_virginica) %>%

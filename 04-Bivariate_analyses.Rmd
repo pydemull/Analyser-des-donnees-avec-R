@@ -547,23 +547,39 @@ ggplot(data = recap_dep2, aes(x = department, y = prop, fill = gender)) +
 Autrement dit, les hommes se retrouvaient avec un pourcentage de réussite global bien meilleur que celui des femmes seulement parce que, comparativement aux femmes, les hommes s'étaient en proportion davantage engagés dans les départements où les taux de réussite étaient bien meilleurs.
 
 ## Relation entre une variable quantitative et une variable qualitative
-Lorsqu'on analyse une variable quantitative en fonction d'une variable qualitative, on peut avoir des données quantitatives qui sont non pairées (étude de type *between-subject design* en anglais) ou pairées (étude de type *within-subject design* en anglais). Avoir des données non pairées signifie que les données quantitatives correspondant aux différentes modalités de la variable qualitative étudiée ne sont pas liées. Un exemple simple, pour ce premier cas, peut être l'analyse de la taille des individus en fonction du sexe. Dans ce cas, les données quantitatives de taille pour le sexe masculin et pour le sexe féminin proviendront forcément d'individus différents et ne formeront donc pas des paires. Les cas de données pairées se retrouvent dans les études dans lesquelles plusieurs individus sont évalués dans plusieurs conditions différentes que l'on cherche à comparer. En sciences du sport, un exemple relativement classique est de tester la performance d'endurance (variable quantitative) en ayant pris (condition de test) ou non (condition contrôle) une substance potentiellement ergonénique (la prise de substance ou non étant les modalités d'une même variable qualitative de type condition). Dans ce cas là, tous les individus auront des données dans les deux conditions et ces données seront donc pairées (dépendantes).
+Lorsqu'on analyse une variable quantitative en fonction d'une variable qualitative, on peut avoir des données quantitatives qui sont non pairées (étude de type *between-subject design* en anglais) ou pairées (étude de type *within-subject design* en anglais). Avoir des données non pairées signifie que les données quantitatives correspondant aux différentes modalités de la variable qualitative étudiée ne sont pas liées. Un exemple simple, pour ce premier cas, peut être l'analyse de la taille des individus en fonction du sexe. Dans ce cas, les données quantitatives de taille pour les personnes de sexe masculin, de sexe féminin, et de sexe indéterminé, proviendront forcément d'individus différents et ne formeront donc pas des paires. Les cas de données pairées se retrouvent dans les études dans lesquelles plusieurs individus sont évalués plusieurs fois dans des conditions similaires ou différentes et que l'on cherche à comparer. En sciences du sport, un exemple relativement classique est de tester la performance d'endurance (variable quantitative) en ayant pris (condition de test) ou non (condition contrôle) une substance potentiellement ergonénique (la prise de substance ou non étant les modalités d'une même variable qualitative de type condition). Dans ce cas là, tous les individus auront des données dans les deux conditions et ces données seront donc pairées (dépendantes).
 
-### Etudier graphiquement la relation
-Lorsque l'on cherche à explorer la relation qu'il peut y avoir entre une variable quantitative et une variable qualitative, il peut être intéressant de visualiser la distribution de la variable quantitative en fonction de chaque modalité de la variable qualitative. Plusieurs possibilités existent afin de faire cela. Les blocs de code ci-dessous fournissent plusieurs options de graphiques qui sont discutées plus bas. Ces graphiques sont montrés sur la Figure \@ref(fig:graphDistriBivQuantvsQual), avec des exemples pour des données non pairées (graphiques de gauche) et des exemples pour des données pairées (graphiques de droite). A noter que la reproduction de ces graphiques nécessite l'installation du package `PairedData` et le chargement du jeu de données associé `Blink` pour les cas avec données pairées, et que les aires représentant les densités de probabiblité (graphiques en "demi-violons") nécessitent l'installation et le chargement du package `gghalves`. Pour information, `Blink` contient les données de taux de clignotement des yeux obtenues chez 12 sujets et dans deux conditions différentes : 1/ tâche où il fallait diriger un stylo selon une trajectoire rectiligne (modalité `Straight`) ; 2/ tâche où il fallait diriger un stylo selon une trajectoire avec des oscillations (`Oscillating`).
+Etant donné que les contraintes graphiques et les statistiques à calculer diffèrent selon que l'on est en présence de (i) deux groupes (1 variable quantitative x 1 variable qualitative avec 2 modalités) ou (ii) trois groupes et plus (1 variable quantitative x 1 variable qualitative avec 3 modalités ou plus), en particulier lorsque les données sont pairées, les procédures graphiques et calculatoires présentées ci-après sont distinguées selon ces deux grands cas de figure.
 
-```{r , message = FALSE, warning = FALSE}
+### Comparaison de deux groupes de données
+
+#### Etudier graphiquement la relation
+Lorsque l'on cherche à explorer la relation qu'il peut y avoir entre une variable quantitative et une variable qualitative, il peut être intéressant de visualiser la distribution de la variable quantitative en fonction de chaque modalité de la variable qualitative. Pour faire cela, il a été proposé dans la littérature d'user de graphiques appelés *raincloud plots* qui combinent les avantages de plusieurs techniques graphiques et statistiques et par là même pallient les manques ou défauts inhérents à chacune de ces techniques  [@allenRaincloudPlotsMultiplatform2019]. Ces *raincloud plots* utilisent : 
+
+- Les données individuelles (*the rain*), qui permettent de bien voir les différences individuelles, les *outliers*, et des patterns de distribution éventuellement inattendus ;
+- Des aires montrant les densités de probabilité (*the clouds*), qui permettent de donner une idée relativement précise des distributions (chose difficile à obtenir à partir seulement des observations individuelles ; cependant, les formes des aires et l'idée qu'elles donnent des distributions dans la population d’intérêt dépendent beaucoup du nombre d'observations disponibles, et leur utilisation pourrait donc se discuter en présence de peu d'observations) ; 
+- Des boîtes à moustaches, qui permettent de se faire une idée résumée relativement robuste (i.e., insensible aux *outliers* et davantage comparable entre les études) des distributions dans la population d'intérêt (via les médianes et les quartiles) ; selon les cas, d'autres statistiques, comme les moyennes et les écarts-types, peuvent être utilisées à la place ou en plus des boîtes à moustaches [@allenRaincloudPlotsMultiplatform2019].
+
+Parce qu'ils montrent les données individuelles, les *raincloud plots* vont dans le sens du propos de Weissgerber [-@weissgerberBarLineGraphs2015] qui militent pour la disparition des graphiques en forme de simples bâtons de dynamite, lesquels sont souvent utilisés pour montrer des moyennes et écart-types dans les études. Le problème de ces graphiques en forme de bâtons de dynamite est qu'ils peuvent induire en erreur quant à la réelle forme de la distribution et ils limitent les possibilités du lecteur de juger de la pertinence des choix d'analyses inférentielles qui seraient faits par la suite. 
+
+Les blocs de code ci-dessous et la Figure \@ref(fig:raindcloudplotsBiv) proposent plusieurs options d'utilisation du *raincloud plot*. A noter que la reproduction des graphiques proposés sur la figure nécessite l'installation du package `PairedData` et le chargement du jeu de données associé `Blink` pour les cas avec données pairées, et que les aires représentant les densités de probabilité (graphiques en "demi-violons") nécessitent l'installation et le chargement du package `gghalves`. Pour information, `Blink` contient les données de taux de clignotement des yeux obtenues chez 12 sujets et dans deux conditions différentes : une tâche où il fallait diriger un stylo selon une trajectoire rectiligne (modalité `Straight`) ; et une tâche où il fallait diriger un stylo selon une trajectoire présentant des oscillations (`Oscillating`).
+
+```{r }
+
 library(gghalves)
 
-#####################################################################################
-# Importation et configuration du jeu de données pour les exemples de données pairées
-#####################################################################################
+#####################################################
+# Configuration des jeux de données pour les exemples
+#####################################################
 
-# Chargement du package PairedData puis chargement du jeu de données Blink
+# Configuration du jeu de données pour les exemples avec données non pairées
+iris_two_species <-
+  iris %>% filter(Species != "virginica")
+
+# Configuration du jeu de données pour les exemples avec données pairées
 library(PairedData)
 data(Blink)
 
-# Transformation du jeu de données Blink
 Blink2 <-
   Blink %>%
   pivot_longer(cols = c(Straight, Oscillating), 
@@ -571,174 +587,13 @@ Blink2 <-
                values_to = "Blink_rate") %>%
   mutate(Condition = fct_relevel(Condition, "Straight", "Oscillating"))
 
-##################################################################
-# Paramétrage de la taille de certains labels des figures à suivre
-##################################################################
-
-set_text_size <-
-  theme(plot.title = element_text(size = 20),
-        axis.title = element_text(size = 17),
-        axis.text = element_text(size = 17))
-
-# Note : L'installation du package Hmisc est nécessaire pour pouvoir utiliser la 
-# valeur "mean_sdl" avec l'argument "fun.data" dans les blocs de code ci-dessous)
-
-#########################################
-# Graphiques pour les données non pairées
-#########################################
-
-# Moyennes et barres d'erreur, et points avec mouvement latéral aléatoire
-A <- 
-  ggplot(data = iris, aes(x = Species, y = Sepal.Length)) +
-  geom_point(aes(x = stage(start = Species, after_scale = x - 0.1)),
-             position = position_jitter(seed = 123, width = 0.08, height = NULL), 
-             size = 4, alpha = 0.3) +
-  stat_summary(geom = "errorbar", 
-               fun.data = "mean_sdl", 
-               fun.args = list(mult = 1), 
-               position = position_nudge(x = 0.1),
-               size = 1.3, width = 0.1) +
-  stat_summary(geom = "point",
-               fun = "mean",
-               position = position_nudge(x = 0.1),
-               size = 5)+
-  ggtitle("A") +
-  set_text_size
-
-# Boîtes à moustaches, et points avec mouvement latéral aléatoire
-B <- 
-  ggplot(data = iris, aes(x = Species, y = Sepal.Length)) +
-  geom_point(aes(x = stage(start = Species, after_scale = x - 0.1)),
-             position = position_jitter(seed = 123, width = 0.08, height = NULL), 
-             size = 4, alpha = 0.3) +
-  geom_boxplot(width = 0.1, outlier.shape = NA,
-               position = position_nudge(x = 0.1)) +
-  ggtitle("B") +
-  set_text_size
-
-# Aires montrant les densités de probabilité, et points avec mouvement latéral aléatoire
-C <- 
-  ggplot(data = iris, aes(x = Species, y = Sepal.Length)) +
-  geom_point(aes(x = stage(start = Species, after_scale = x - 0.1)),
-             position = position_jitter(seed = 123, width = 0.08, height = NULL), 
-             size = 4, alpha = 0.3) +
-  geom_half_violin(side = "r", 
-                   position = position_nudge(x = 0.1, y = 0)) +
-  ggtitle("C") +
-  set_text_size
-
 #####################################
-# Graphiques pour les données pairées
+# Graphiques avec données non pairées
 #####################################
-
-# Moyennes et barres d'erreur, et points avec mouvement latéral aléatoire 
-D <-
-ggplot(data = Blink2, aes(x = Condition, y = Blink_rate)) +
-  geom_point(position = position_jitter(seed = 123, width = 0.05),
-             size = 4, alpha = 0.3) +
-  geom_line(aes(group = Subject), 
-            position = position_jitter(seed = 123, width = 0.05),
-            size = 2, colour = "gray", alpha = 0.3) +
-  stat_summary(data = Blink2 %>% filter(Condition == "Straight"), 
-               geom = "errorbar",
-               fun.data = "mean_sdl", 
-               fun.args = list(mult = 1),
-               position = position_nudge(x = -0.1),
-               size = 1.3, width = 0.1) +
-  stat_summary(data = Blink2 %>% filter(Condition == "Oscillating"), 
-               geom = "errorbar", 
-               fun.data = "mean_sdl", 
-               fun.args = list(mult = 1),
-               position = position_nudge(x = 0.1),
-               size = 1.3, width = 0.08) +
-  stat_summary(data = Blink2 %>% filter(Condition == "Straight"), 
-               geom = "point",
-               fun = "mean",
-               position = position_nudge(x = -0.1),
-               size = 5) + 
-  stat_summary(data = Blink2 %>% filter(Condition == "Oscillating"), 
-               geom = "point", 
-               fun = "mean", 
-               size = 5,
-               position = position_nudge(x = 0.1)) +
-  ggtitle("D") +
-  set_text_size
-
-# Boîtes à moustaches, et points avec mouvement latéral aléatoire
-E <- 
-ggplot(data = Blink2, aes(x = Condition, y = Blink_rate)) +
-  geom_point(size = 4, alpha = 0.3, 
-             position = position_jitter(seed = 123, width = 0.05)) +
-  geom_line(aes(group = Subject), 
-            position = position_jitter(seed = 123, width = 0.05),
-            size = 2, colour = "gray", alpha = 0.3) +
-  geom_boxplot(data = Blink2 %>% filter(Condition == "Straight"), 
-               width = 0.08, outlier.shape = NA,
-               position = position_nudge(x = -0.15)) +  
-  geom_boxplot(data = Blink2 %>% filter(Condition == "Oscillating"), 
-               width = 0.08, outlier.shape = NA,
-               position = position_nudge(x = 0.15)) + 
-  ggtitle("E") +
-  set_text_size
-
-# Aires montrant les densités de probabilité, et points avec mouvement latéral aléatoire
-F <- 
-ggplot(data = Blink2, aes(x = Condition, y = Blink_rate)) +
-  geom_point(size = 4, alpha = 0.3, 
-             position = position_jitter(seed = 123, width = 0.05)) +
-  geom_line(aes(group = Subject), 
-            position = position_jitter(seed = 123, width = 0.05),            
-            size = 2, colour = "gray", alpha = 0.3) +
-  geom_half_violin(data = Blink2 %>% filter(Condition == "Straight"),
-                   side = "l", 
-                   position = position_nudge(x = -0.1, y = 0)) +  
-  geom_half_violin(data = Blink2 %>% filter(Condition == "Oscillating"), 
-                   side = "r", 
-                   position = position_nudge(x = 0.1, y = 0)) +  
-  ggtitle("F") +
-  set_text_size
-
-####################################################
-# Sources ayant aidé à la réalisation des graphiques
-####################################################
-
-# Pour les graphiques avec boxplots : https://github.com/tidyverse/ggplot2/issues/4491
-# Pour les graphiques avec densité de probabilité : https://github.com/jorvlan/raincloudplots
-```
-
-```{r graphDistriBivQuantvsQual, fig.align="center", echo = FALSE, fig.width = 15, fig.height=20, fig.cap="Méthodes classiques pour montrer des données quantitatives en fonction des modalités d'une variable qualitative : données non pairées (A à C) et données pairées (D à F)"}
-library(patchwork)
-(A | D) / (B | E) / (C | F)
-```
-
-On remarque que chaque ligne de la Figure \@ref(fig:graphDistriBivQuantvsQual) contient des graphiques illustrant des éléments différents pour résumer la distribution : la moyenne et l'écart-type pour la première ligne, la boîte à moustaches pour la seconde ligne, et une aire montrant la densité de probabilité pour la troisième ligne. 
-La moyenne et l'écart-type sont intéressants à montrer lorsque les analyses inférentielles réalisées dans l'étude consistent en la comparaison de moyennes avec l'acceptation de l'hypothèse selon laquelle les distributions des variables comparées sont gaussiennes et présentent des variances similaires. Toutefois, la moyenne et l'écart-type seuls sont problématiques car ils peuvent induire en erreur sur la manière dont sont réellement distribuées les observations. D'ailleurs, deux mêmes couples de moyennes et écart-types peuvent résulter de distributions très différentes [@weissgerberBarLineGraphs2015]. La boîte à moustaches, elle, a le mérite de refléter plus fiablement la distribution des données et de ne pas souffrir du risque d'être modifiée en présence de valeurs aberrantes. L'idée qu'on peut se faire des distributions et des comparaisons des variables est donc en principe plus robuste (i.e., moins sujette à variation d'une étude à une autre). Enfin, l'aire montrant la densité de probabilité est intéressante car elle décrit le plus précisément la distribution des observations. Cependant, sa forme et l'idée qu'elle donne de la distribution dans la population d’intérêt dépend beaucoup du nombre d'observations disponibles. Son utilisation pourrait donc se discuter en présence de peu d'observations. Quel que soit l'outil statistique et graphique utilisé pour caractériser la distribution, tous les graphiques présentés ci-dessus montrent les valeurs individuelles. En cela, ces graphiques vont dans le sens du propos de Weissgerber [-@weissgerberBarLineGraphs2015] qui milite pour la disparition des graphiques en forme de bâtons de dynamite, lesquels sont souvent utilisés pour montrer des moyennes et écart-types. La raison est que ces graphiques en forme de bâtons de dynamite peuvent induire en erreur quant à la réelle forme de la distribution et ils limitent les possibilités du lecteur de juger de la pertinence des choix d'analyse qui seraient faits par la suite sur la base de la distribution des observations. Remarquons par ailleurs que pour les graphiques de droite (ceux avec données pairées), on s'est attaché à montrer les lignes matérialisant le lien entre chaque donnée appartenant à un même individu. Cette pratique est intéressante car elle permet de juger, au-delà de l'évolution de la moyenne du groupe d'une condition à l'autre, dans quelle mesure les individus diffèrent dans leur évolution entre les deux conditions testées.
-
-Pour pouvoir faire ces graphiques, il a fallu user de plusieurs nouvelles techniques : 
-
-- Pour montrer les moyennes, il a fallu utiliser la fonction `stat_summary()`. Cette fonction sert à visualiser un résumé statistique identifié grâce à l'argument `fun`. On peut choisir sa forme avec l'argument `geom`.
-- Pour montrer les écarts-types, il a fallu là aussi utiliser la fonction `stat_summary()`, cette fois en utilisant l'argument `fun.data` avec la valeur `mean_sdl`, et l'argument `fun.args` que l'on a configuré pour déterminer le nombre d'écart-types que la longueur de la barre d'erreur devait représenter (ici, c'est une fois l'écart-type, obtenu avec `mult = 1`).
-- Pour montrer les aires représentant les densités de probabilité, il a fallu utiliser la fonction `geom_half_violin()` du package `gghalves`. L'argument `side`permet de choisir de quel côté l'on veut que l'aire apparaisse (à droite ou à gauche quand on est à la verticale).
-- Pour montrer les données individuelles sans risquer qu'elle ne se superposent de trop, on a utilisé la fonction `geom_point()`, l'argument `position` et la fonction `position_jitter()`. A l'intérieur de la fonction `position_jitter()`, l'argument `seed` (la graine en français) désigne le nombre sur lequel se base l'ordinateur pour générer un résultat pseudo-aléatoire. Quand on regarde le graphique, les données individuelles apparaissent décalées aléatoirement sur le plan latéral. Cet effet aléatoire est l'intérêt même d'une fonction dite `jitter()`, mais cet effet aléatoire est en réalité prédéfini de telle sorte à ce que si on fixe la graine (`seed`), alors on obtiendra toujours le même effet aléatoire sur le graphique. Ceci est très important car cela permet d'aligner les lignes individuelles (cf. graphiques pour données pairées) avec les données (les points) individuelles, cela en configurant de manière identique l'argument `seed`.
-- Pour mettre en vis-à-vis les données individuelles avec l'élément statistique dans les cas de données non pairées, la technique a consisté à décaler latéralement les données individuelles vers la gauche à l'aide de la fonction `stage()`, et à décaler latéralement l'élément statistique vers la droite à l'aide de l'argument `position` et de la fonction `position_nudge()`. A noter que l'argument `alpha`permet de rajouter de la transparence aux points pour permettre de voir là où les données se superposeraient davantage, ce qui est difficilement évitable quand il y a beaucoup de données.
-- Pour mettre en vis-à-vis les données individuelles avec l'élément statistique dans les cas de données pairées, la technique a consisté à laisser les données individuelles centrées sur les axes relatifs à chacune des deux conditions testées, cela avec un mouvement aléatoire identique imposé aux données individuelles et aux lignes individuelles (l'argument `width` fixe l'importance du mouvement latéral aléatoire). De plus, il a fallu décaler latéralement l'élément statistique soit vers la droite, soit vers la gauche selon la condition concernée, cela à l'aide de l'argument `position` et de la fonction `position_nudge()`. Pour pouvoir appliquer un mouvement latéral différent selon la condition concernée, il a fallu proposer un morceau de code (avec `stat_summary()` ou `geom_boxplot()` ou `geom_half_violin()`) spécifique à chacun des éléments statistiques à montrer, chose ayant été réalisée en indiquant la partie du jeu de données concernée à l'intérieur de la fonction générant l'élément statistique (e.g., `data =  Blink2 %>% filter(Condition == "Oscillating")`).
-
-Récemment, il a été proposé dans la littérature d'user de graphiques appelés *rainclouds plots* qui combineraient les avantages de plusieurs techniques graphiques et statistiques et par là même pallieraient les manques ou défauts inhérents à chacune des techniques vues ci-dessus [@allenRaincloudPlotsMultiplatform2019]. Ces *rainclouds plots* utilisent : 
-
-- Les données individuelles, qui permettent de bien voir les différences individuelles, les *outliers*, et des patterns de distribution inattendus ;
-- Une aire montrant la densité de probabilité, qui permet de donner une idée relativement précise de la distribution (chose difficile à obtenir à partir seulement des observations individuelles) ; 
-- Une boîte à moustaches, qui permet de se faire une idée résumée relativement robuste de la distribution dans la population d'intérêt (via la médiane et les quartiles) ; selon les cas, d'autres statistiques, comme la moyenne et l'écart-type, peuvent être utilisées à la place ou en plus de la boîte à moustaches [@allenRaincloudPlotsMultiplatform2019].
-
-Les blocs de code ci-dessous et la Figure \@ref(fig:raindcloudplotsBiv) proposent plusieurs options d'utilisation du *raincloud plot*. 
-
-```{r }
-#####################
-# Données non pairées
-#####################
 
 # Raincloud plots classiques
 A <-
-  ggplot(data = iris, aes(x = Species, y = Sepal.Length, color = Species, fill = Species)) +
+  ggplot(data = iris_two_species, aes(x = Species, y = Sepal.Length, color = Species, fill = Species)) +
   geom_point(aes(x = stage(start = Species, after_scale = x - 0.1)),
              position = position_jitter(seed = 123, width = 0.08, height = NULL),
              size = 4, alpha = 0.3) +
@@ -748,16 +603,15 @@ A <-
   geom_boxplot(position = position_nudge(x = 0.1),
                width = 0.1, colour = "black", alpha = 0.3, outlier.shape = NA) +
   ggtitle("A") +
-  set_text_size +
   theme(legend.position = "none") +
   coord_flip()
 
 
 # Raincloud plots basculés à la verticale
 B <-
-  ggplot(data = iris, aes(x = Species, y = Sepal.Length, color = Species, fill = Species)) +
+  ggplot(data = iris_two_species, aes(x = Species, y = Sepal.Length, color = Species, fill = Species)) +
   geom_point(aes(x = stage(start = Species, after_scale = x - 0.1)),
-             position = position_jitter(seed = 123, width = 0.08, height = NULL),
+             position = position_jitter(seed = 123, width = 0.06, height = NULL),
              size = 4, alpha = 0.3) +
   geom_half_violin(side = "r",
                    position = position_nudge(x = 0.1, y = 0),
@@ -765,16 +619,20 @@ B <-
   geom_boxplot(position = position_nudge(x = 0.1),
                width = 0.1, colour = "black", alpha = 0.3, outlier.shape = NA) +
   ggtitle("B") +
-  set_text_size +
   theme(legend.position = "none")
 
 
 # Raincloud plots avec aires montrant les densités de probabilité sur une même ligne
 # horizontale
 C <-
-  ggplot(data = iris, aes(x = 0, y = Sepal.Length, color = Species, fill = Species)) +
-  geom_point(aes(x = - 0.2),
-             position = position_jitter(seed = 123, width = 0.08, height = NULL),
+  ggplot(data = iris_two_species, aes(x = 0, y = Sepal.Length, color = Species, fill = Species)) +
+  geom_point(data = iris_two_species %>% filter(Species == "setosa"),
+             aes(x = -0.21),
+             position = position_jitter(seed = 123, width = 0.02, height = NULL),
+             size = 4, alpha = 0.3) +
+  geom_point(data = iris_two_species %>% filter(Species == "versicolor"),
+             aes(x = -0.13),
+             position = position_jitter(seed = 123, width = 0.02, height = NULL),
              size = 4, alpha = 0.3) +
   geom_half_violin(side = "r",
                    position = position_nudge(x = 0.1, y = 0),
@@ -782,7 +640,6 @@ C <-
   geom_boxplot(position = position_dodge(width = 0.2),
                width = 0.1, colour = "black", alpha = 0.3, outlier.shape = NA) +
   ggtitle("C") +
-  set_text_size +
   theme(legend.position = "bottom",
         axis.title.y = element_blank(),
         axis.text.y = element_blank(),
@@ -792,31 +649,34 @@ C <-
 # Raincloud plots avec aires montrant les densités de probabilité sur une même ligne
 # verticale
 D <-
-  ggplot(data = iris, aes(x = 0, y = Sepal.Length, color = Species, fill = Species)) +
-  geom_point(aes(x = - 0.2),
-             position = position_jitter(seed = 123, width = 0.08, height = NULL),
+  ggplot(data = iris_two_species, aes(x = 0, y = Sepal.Length, color = Species, fill = Species)) +
+  geom_point(data = iris_two_species %>% filter(Species == "setosa"),
+             aes(x = -0.17),
+             position = position_jitter(seed = 123, width = 0.02, height = NULL),
+             size = 4, alpha = 0.3) +
+  geom_point(data = iris_two_species %>% filter(Species == "versicolor"),
+             aes(x = -0.11),
+             position = position_jitter(seed = 123, width = 0.02, height = NULL),
              size = 4, alpha = 0.3) +
   geom_half_violin(side = "r",
                    position = position_nudge(x = 0.1, y = 0),
                    size = 1, alpha = 0.4) +
-  geom_boxplot(position = position_dodge(width = 0.15),
-               width = 0.1, colour = "black", alpha = 0.3, outlier.shape = NA) +
+  geom_boxplot(position = position_dodge(width = 0.12),
+               width = 0.07, colour = "black", alpha = 0.3, outlier.shape = NA) +
   ggtitle("D") +
-  set_text_size +
   theme(legend.position = "bottom",
         axis.title.x = element_blank(),
         axis.text.x = element_blank(),
         axis.ticks.x = element_blank())
 
 
-#################
-# Données pairées
-#################
+#################################
+# Graphiques avec données pairées
+#################################
 
-# Raincloud plots classiques avec moyennes et écart-types et ligne reliant les moyennes
+# Raincloud plots classiques avec moyennes et écart-types et lignes reliant les moyennes
 E <-
-  ggplot(data = Blink2, aes(x = Condition, y = Blink_rate, 
-                            colour = Condition, fill = Condition)) +
+  ggplot(data = Blink2, aes(x = Condition, y = Blink_rate,  colour = Condition, fill = Condition)) +
   geom_point(aes(x = stage(start = Condition, after_scale = x - 0.15)),
              position = position_jitter(seed = 123, width = 0.03),
              size = 4, alpha = 0.3) +
@@ -837,18 +697,16 @@ E <-
                geom = "line",
                fun = "mean", 
                position = position_nudge(0.1),
-               size = 1.5, color = "grey50",  linetype = "dashed") +
+               size = 1.5, color = "grey50",  linetype = "dotted") +
   ggtitle("E") +
-  set_text_size +
   theme(legend.position = "none") +
   coord_flip()
 
 
-# Raincloud plots avec moyennes et écart-types et ligne reliant les moyennes 
+# Raincloud plots avec moyennes et écart-types et lignes reliant les moyennes 
 # basculés à la verticale
 F <-
-  ggplot(data = Blink2, aes(x = Condition, y = Blink_rate, 
-                            colour = Condition, fill = Condition)) +
+  ggplot(data = Blink2, aes(x = Condition, y = Blink_rate,  colour = Condition, fill = Condition)) +
   geom_point(aes(x = stage(start = Condition, after_scale = x - 0.15)),
              position = position_jitter(seed = 123, width = 0.03),
              size = 4, alpha = 0.3) +
@@ -869,22 +727,20 @@ F <-
                geom = "line",
                fun = "mean", 
                position = position_nudge(0.1),
-               size = 1.5, color = "grey50",  linetype = "dashed") +
+               size = 1.5, color = "grey50",  linetype = "dotted") +
   ggtitle("F") +
-  set_text_size +
   theme(legend.position = "none")
 
 
 # Raincloud plots avec aires montrant les densités de probabilité sur une même ligne
 # horizontale
 G <-
-  ggplot(data = Blink2, aes(x = Condition, y = Blink_rate, 
-                            colour = Condition, fill = Condition)) +
+  ggplot(data = Blink2, aes(x = Condition, y = Blink_rate, colour = Condition, fill = Condition)) +
   geom_point(position = position_jitter(seed = 123, width = 0.03),
              size = 4, alpha = 0.3) + 
   geom_line(aes(group = Subject),
             position = position_jitter(seed = 123, width = 0.03),
-             size = 2, alpha = 0.3, color = "gray") + 
+            size = 2, alpha = 0.3, color = "gray") + 
   geom_half_violin(aes(x = 2.17),
                    side = "r",
                    position = position_dodge(width = 0),
@@ -893,7 +749,6 @@ G <-
                position = position_dodge(width = 0.1),
                width = 0.08, colour = "black", alpha = 0.3, outlier.shape = NA) +
   ggtitle("G") +
-  set_text_size +
   theme(legend.position = "bottom",
         axis.title.y = element_blank(),
         axis.text.y = element_blank(),
@@ -904,13 +759,12 @@ G <-
 # Raincloud plots avec aires montrant les densités de probabilité sur une même ligne
 # verticale
 H <-
-  ggplot(data = Blink2, aes(x = Condition, y = Blink_rate, 
-                            colour = Condition, fill = Condition)) +
+  ggplot(data = Blink2, aes(x = Condition, y = Blink_rate, colour = Condition, fill = Condition)) +
   geom_point(position = position_jitter(seed = 123, width = 0.03),
              size = 4, alpha = 0.3) + 
   geom_line(aes(group = Subject),
             position = position_jitter(seed = 123, width = 0.03),
-             size = 2, alpha = 0.3, color = "gray") + 
+            size = 2, alpha = 0.3, color = "gray") + 
   geom_half_violin(aes(x = 2.17),
                    side = "r",
                    position = position_dodge(width = 0),
@@ -919,12 +773,17 @@ H <-
                position = position_dodge(width = 0.1),
                width = 0.08, colour = "black", alpha = 0.3, outlier.shape = NA) +
   ggtitle("H") +
-  set_text_size +
   theme(legend.position = "bottom",
         axis.title.x = element_blank(),
         axis.text.x = element_blank(),
         axis.ticks.x = element_blank())
 
+####################################################
+# Sources ayant aidé à la réalisation des graphiques
+####################################################
+
+# Pour déplacer l'axe des observations individuelles : https://github.com/tidyverse/ggplot2/issues/4491
+# Pour la conception des raincloud plots : https://github.com/jorvlan/raincloudplots
 ```
 
 ```{r raindcloudplotsBiv, fig.align="center", echo = FALSE,  fig.width = 20, fig.height = 15, fig.cap="Exemples de raindcloud plots pour des données non pairées (A à D) et pairées (E à H)"}
@@ -932,13 +791,21 @@ library(patchwork)
 (A |B | C | D) / (E | F | G | H)
 ```
 
-### Etudier numériquement la relation
+Remarquons que pour les graphiques G et H de la Figure \@ref(fig:raindcloudplotsBiv) (qui comptent parmi ceux montrant des données pairées), on s'est attaché à montrer les lignes matérialisant le lien entre chaque donnée appartenant à un même individu. Cette pratique est intéressante car elle permet de juger, au-delà de l'évolution de la moyenne du groupe d'une condition à l'autre, la mesure selon laquelle les individus diffèrent dans leur évolution entre les deux conditions testées.
 
-De manière générale, étudier la relation entre une variable quantitative et une variable qualitative revient souvent à comparer les valeurs que prend la variable quantitative en fonction des modalités de la variable qualitative. Les analyses qui peuvent être faites dépendent du nombre de groupes de valeurs (qui dépendent du nombre de modalités) à comparer (2 ou plus), et du caractère pairé (dépendant) ou non des données. L'observation de différences de scores entre les modalités pourrait alors indiquer qu'il y a un lien entre la variable qualitative (qu'on pourrait appeler **variable facteur**) et la variable quantitative (qu'on pourrait appeler **variable réponse**). (A noter que la démonstration d'un lien de cause à effet entre la variable quantitative et la variable qualitative ne pourra être effective que si l'on a sciemment fait varier les modalités de la variable qualitative pour en observer la conséquence sur les valeurs de la variable quantitative.)
+Pour pouvoir faire les graphiques de la Figure \@ref(fig:raindcloudplotsBiv), il a fallu user de plusieurs nouvelles techniques : 
+
+- Pour montrer les aires représentant les densités de probabilité (*the clouds*), il a fallu utiliser la fonction `geom_half_violin()` du package `gghalves`. L'argument `side`permet de choisir de quel côté l'on veut que l'aire apparaisse (à droite ou à gauche quand on est à la verticale). Ces *clouds* ont parfois été légèrement déplacés à l'aide de l'argument `position` et de la fonction `position_nudge()` ou bien resserés à l'aide de la fonction `position_dodge()`.
+- Pour montrer les données individuelles (*the rain*) sans risquer qu'elle ne se superposent de trop, on a utilisé la fonction `geom_point()`, l'argument `position` et la fonction `position_jitter()`. A l'intérieur de la fonction `position_jitter()`, l'argument `seed` (la graine en français) désigne le nombre sur lequel se base l'ordinateur pour générer un résultat pseudo-aléatoire. Quand on regarde les graphiques, les données individuelles apparaissent décalées aléatoirement sur le plan vertical (ou latéral selon l'orientation du graphique), l'importance du décalage étant contrôlée par l'argument `width`. Cet effet aléatoire est l'intérêt même d'une fonction dite `jitter`, et cet effet est en réalité prédéfini de telle sorte à ce que si on utilise toujours le même numéro de graine (`seed`), alors on obtiendra toujours le même effet aléatoire sur le graphique. Ceci est très important car cela permet d'aligner les lignes individuelles avec les données (les points) individuelles (cf. graphiques G et H de la Figure \@ref(fig:raindcloudplotsBiv)) lorsqu'on veut générer un mouvement aléatoire des données sur le graphique. On peut aussi noter que certains graphiques ont nécessité un décalage manuel de l'axe le long duquel les données individuelles sont montrées, en utilisant la fonction `stage()` avec l'argument `x = ` (cf. graphiques A, B, E, F de la Figure \@ref(fig:raindcloudplotsBiv)) ou simplement une valeur numérique pour l'argument `x = ` dans la fonction `aes()` (cf. graphiques C et D, de la Figure \@ref(fig:raindcloudplotsBiv)).
+- Pour montrer les moyennes (cf. graphiques E et F de la Figure \@ref(fig:raindcloudplotsBiv)), il a fallu utiliser la fonction `stat_summary()`. Cette fonction sert à visualiser un résumé statistique identifié grâce à l'argument `fun`. On peut choisir sa forme avec l'argument `geom`.
+- Pour montrer les écarts-types (cf. graphiques E et F de la Figure \@ref(fig:raindcloudplotsBiv)), il a fallu là aussi utiliser la fonction `stat_summary()`, cette fois en utilisant l'argument `fun.data` avec la valeur `mean_sdl`, et l'argument `fun.args` que l'on a configuré pour déterminer le nombre d'écarts-types que la longueur de la barre d'erreur devait représenter (ici, c'est une fois l'écart-type, obtenu avec `mult = 1`).
+
+### Etudier numériquement la relation
+De manière générale, étudier la relation entre une variable quantitative et une variable qualitative revient souvent à comparer les valeurs que prend la variable quantitative en fonction des modalités de la variable qualitative. L'observation de différences de scores entre les modalités pourrait alors indiquer qu'il y a un lien entre la variable qualitative (qu'on pourrait appeler **variable facteur**) et la variable quantitative (qu'on pourrait appeler **variable réponse**). A noter que la démonstration d'un lien de cause à effet entre la variable quantitative et la variable qualitative ne pourra être effective que si l'on a sciemment fait varier les modalités de la variable qualitative pour en observer la conséquence sur les valeurs de la variable quantitative.
+
+De prime abord, l'analyse qui pourrait être envisagée pour comparer deux groupes serait d'utiliser simplement la différence entre les moyennes ou les médianes des deux groupes. Toutefois, en se restreignant à cela, il pourrait être difficile de porter un jugement sur la grandeur relative de la différence entre les groupes comparés, qu'on pourrait appeler **taille d'effet**. Il serait également difficile de comparer cette taille d'effet avec celles observées dans d'autres études, en particulier celles traitant de sujets différents, car étant calculée de la sorte, la taille d'effet serait extrêmement inhérente à la nature des variables investiguées et à la grandeur des valeurs mesurées dans l'étude. Il est donc intéressant, dans ce genre de situation, de standardiser la différence de scores obtenue entre les deux groupes. Dans la littérature, la procédure de standardisation a été très développée pour la comparaison de moyennes. Pour cette raison, les sous-parties suivantes qui traitent de la comparaison de deux groupes présentent essentiellement les calculs  pour obtenir une taille d'effet en vue de comparer des moyennes. Ces calculs sont repris de l'article de Daniel Lakens [-@lakensCalculatingReportingEffect2013]. Quelques mots seront toutefois donnés pour les situations pour lesquelles ces calculs risqueraient de ne pas être appropriés.
 
 *Cas de deux groupes de données indépendants (données non pairées)*
-
-De prime abord, l'analyse qui pourrait être envisagée pour comparer deux groupes de données quantitatives (e.g., des valeurs de taille) non pairées, qui seraient donc relatives à deux modalités différentes d'une variable qualitative (e.g., le sexe), serait de comparer les moyennes, ou les médianes des groupes. Toutefois, en se restreignant à cela, il pourrait être difficile de porter un jugement sur la grandeur relative de la différence qui serait observée, qu'on pourrait appeler **taille d'effet**. Il serait également difficile de comparer cette taille d'effet avec celles observées dans d'autres études, car étant calculée de la sorte, elle serait extrêmement inhérente aux variables et valeurs mesurées dans l'étude. Il est donc intéressant, dans ce genre de situation, de standardiser la différence des moyennes ou médianes obtenues pour les deux groupes. Cette procédure de standardisation a été très développée dans le cadre de comparaisons de moyennes, et les calculs suivants, repris de l'article de D. Lakens [-@lakensCalculatingReportingEffect2013], s'inscrivent donc dans ce cadre.
 
 **$d_{s}$ de Cohen**
 
@@ -946,43 +813,10 @@ Classiquement, l'indice statistique utilisé pour calculer une différence de mo
 
 $$d_{s} = \frac{\overline{X_{1}} - \overline{X_{2}}} {\sqrt{\frac{(N_{1} - 1) s_{1}^2 + (N_{2} - 1) s_{2}^2} {N_{1} + N_{2} - 2}}}$$
 
-Dans R, le $d_{s}$ de Cohen peut être calculé à l'aide de la fonction `cohens_d()` du package `effectsize`, qui nécessite d'être installé puis chargé avant d'être utilisé. Pour illustrer l'utilisation de cette fonction, on peut utiliser le jeu de données `iris_two_species` crée par nos soins pour l'exemple à partir du jeu de données `iris` et qui contient notamment la variable quantitative `Sepal.Length`, et deux modalités de la variable qualitative `Species` (`setosa` et `versicolor`).
-
-```{r iris2peciesview, warning = FALSE, fig.align="center", fig.cap="Visualisation des données de `iris_two_species`"}
-
-# Création du jeu de données
-iris_two_species <-
-  iris %>% 
-  filter(Species == "setosa" | Species == "versicolor")
-
-# Visualisation graphique  
-ggplot(data = iris_two_species, aes(x = Species, y = Sepal.Length, 
-                                    color = Species, fill = Species)) +
-  geom_point(aes(x = stage(start = Species, after_scale = x - 0.1)),
-             position = position_jitter(seed = 123, width = 0.08, height = NULL),
-             size = 4, alpha = 0.3) +
-  geom_half_violin(side = "r",
-                   position = position_nudge(x = 0.1, y = 0),
-                   size = 1, alpha = 0.4) +
-  stat_summary(geom = "errorbar",
-               fun.data = "mean_sdl",
-               fun.args = list(mult = 1),
-               position = position_nudge(0.1), 
-               size = 1.1, width = 0.05) +
-  stat_summary(geom = "point",
-               fun = "mean", 
-               position = position_nudge(0.1),
-               size = 5,) +
-  theme(legend.position = "none")
-```
-
-Le $d_{s}$ de Cohen s'obtient alors de la manière suivante : 
-
-```{r effectsize loading, echo = FALSE, warning=FALSE, message=FALSE}
-library(effectsize)
-```
+Dans R, le $d_{s}$ de Cohen peut être calculé à l'aide de la fonction `cohens_d()` du package `effectsize`, qui nécessite d'être installé puis chargé avant d'être utilisé. 
 
 ```{r cohens d between, warning=FALSE, message=FALSE}
+library(effectsize)
 cohens_d(Sepal.Length ~ Species, data = iris_two_species, paired = FALSE, pooled_sd = TRUE)
 ```
 
@@ -992,7 +826,7 @@ Dans cet exemple, on remarque qu'on a bien cherché à savoir comment les donné
 levels(iris_two_species$Species)
 ```
 
-L'ordre des modalités affichées nous indique que `setosa` est la modalité 1, et que `versicolor` est la modalité 2. (On remarque par ailleurs que l'utilisation précédente de la fonction `filter()` a certes permis de sélectionner les données d'intérêt pour notre nouveau jeu de données `iris_two_species`, mais a malgré cela permis la conservation de toutes les modalités d'origine liées à la variable `Species` dans le jeu de données `iris`.) Par conséquent, le $d_{s}$ de Cohen de -2.10 obtenu plus haut indique que la longueur des sépals (`Sepal.Length`) pour l'espèce `setosa` est inférieure à celles des sépals de l'espèce `versicolor`. Cette interprétation est en cohérence avec le graphique réalisé au préalable. Si l'on avait voulu avoir le calcul inverse (`versicolor` - `setosa`), il aurait  fallu reconfigurer l'ordre des modalités, par exemple à l'aide de la fonction `fct_relevel()` du package `forcats` comme montré à la fin du chapite 3.
+L'ordre des modalités affichées nous indique que `setosa` est la modalité 1, et que `versicolor` est la modalité 2. (On remarque par ailleurs que l'utilisation précédente de la fonction `filter()` a certes permis de sélectionner les données d'intérêt pour notre nouveau jeu de données `iris_two_species`, mais a malgré cela permis la conservation de toutes les modalités d'origine liées à la variable `Species` dans le jeu de données `iris`.) Par conséquent, le $d_{s}$ de Cohen de -2.10 obtenu plus haut indique que la longueur des sépals (`Sepal.Length`) pour l'espèce `setosa` est inférieure à celles des sépales de l'espèce `versicolor`. Cette interprétation est en cohérence avec le graphique réalisé au préalable (cf. Figure \@ref(fig:raindcloudplotsBiv)). Si l'on avait voulu avoir le calcul inverse (`versicolor` - `setosa`), il aurait  fallu reconfigurer l'ordre des modalités, par exemple à l'aide de la fonction `fct_relevel()` du package `forcats` comme montré à la fin du chapite 3.
 
 Une fois que l'on a calculé une taille d'effet, il est toujours intéressant d'essayer de formuler un jugement sur l'importance, l'ampleur de l'effet. En ce sens, des valeurs seuils ont été proposées dans la littérature (Cohen, 1988; in Lakens [-@lakensCalculatingReportingEffect2013]). Ces valeurs, valables pour interpréter des tailles d'effet dans le cadre d'une étude de type *between-subject design*, sont montrées dans le tableau ci-dessous.
 
@@ -1011,7 +845,7 @@ flextable(
 
 Ces valeurs sont relativement arbitraires, et l'interprétation de la taille de l'effet et des conséquences qu'il peut avoir en pratique ne devrait pas être liée de manière trop rigide à ces valeurs [@lakensCalculatingReportingEffect2013].
 
-Il existe également une autre approche pour interpréter une valeur de taille d'effet : l'approche *Common Language explanation* [@lakensCalculatingReportingEffect2013]. Cette approche consiste à faire le lien entre la valeur de la taille d'effet et les probabilités de rencontrer des valeurs similaires ou supérieures dans les groupes comparés. Par exemple, lorsqu'on obtient un $d_{s}$ de Cohen de 0.80, cela peut se traduire par le fait qu'il y a 71.4 % de chances qu'une personne prise au hasard dans le groupe avec la meilleure moyenne ait un score plus élevé qu'une personne qui serait prise au hasard dans le groupe avec la moyenne la plus basse des deux groupes. Kristoffer Magnusson a réalisé une page web qui permet d'utiliser l'approche *Common Language explanation* pour n'importe quelle valeur de taille d'effet dans le cadre d'une étude de type *between-subject design*. Jetez un oeil ici : https://rpsychologist.com/cohend.
+Il existe également une autre approche pour interpréter une valeur de taille d'effet : l'approche *Common Language explanation* [@lakensCalculatingReportingEffect2013]. Cette approche consiste à faire le lien entre la valeur de la taille d'effet et les probabilités de rencontrer des valeurs similaires ou supérieures dans un groupe comparé à un autre. Par exemple, lorsqu'on obtient un $d_{s}$ de Cohen de 0.80, cela peut se traduire par le fait qu'il y a 71.4 % de chances qu'une personne prise au hasard dans le groupe avec la meilleure moyenne ait un score plus élevé qu'une personne qui serait prise au hasard dans le groupe avec la moyenne la plus basse des deux groupes. Kristoffer Magnusson a réalisé une page web qui permet d'utiliser l'approche *Common Language explanation* pour n'importe quelle valeur de taille d'effet dans le cadre d'une étude de type *between-subject design*. Jetez donc un oeil au lien suivant pour plus de détails : https://rpsychologist.com/cohend.
 
 **$g_{s}$ de Hedges**
 
@@ -1029,19 +863,22 @@ Ici, la valeur ne change pas beaucoup par rapport au cas précédent, car l'effe
 
 **Delta de Glass**
 
-Dans certains cas où l'on souhaiterait comparer les scores de deux groupes indépendants pour tester l'effet de deux conditions expérimentales différentes, l'expérimentation en tant que telle peut influencer, au-delà de la moyenne, l'écart-type de la variable réponse dans un des deux groupes. On peut se trouver dans ce genre de situation lorsque l'on compare les données post-programme d'un groupe entrainé ou traité à celles d'un groupe contrôle. En effet, le groupe entraîné/traité peut voir son écart-type changé au terme d'un programme en raison d'une réponse individuelle hétérogène à ce programme, ce qui ne sera pas en principe le cas du groupe contrôle. Dans ce genre de situation, des indices statistiques autres que le $g_{s}$ de Hedges mériteraient d'être calculés, tels que le $\Delta$ de Glass [@lakensCalculatingReportingEffect2013] :
+Dans certains cas où l'on souhaiterait comparer les scores de deux groupes indépendants pour tester l'effet de deux conditions expérimentales différentes, l'expérimentation en tant que telle peut influencer, au-delà de la moyenne, l'écart-type de la variable réponse dans un des deux groupes. On peut se trouver dans ce genre de situation lorsque l'on compare les données post-programme d'un groupe entrainé ou traité à celles d'un groupe contrôle. En effet, le groupe entraîné/traité peut voir son écart-type changé au terme d'un programme en raison d'une réponse individuelle hétérogène à ce programme, ce qui ne sera pas en principe le cas du groupe contrôle. Dans ce genre de situations, des indices statistiques autres que le $g_{s}$ de Hedges mériteraient d'être calculés, tels que le $\Delta$ de Glass [@lakensCalculatingReportingEffect2013] :
 
 $$\Delta = \frac{\overline{X_{1}} - \overline{X_{2}}} {s_{2}}$$
 
 
 Le calcul du $\Delta$ de Glass est dans l'idée le même que celui du $d_{s}$ de Cohen, sauf que la différence entre les moyennes des deux groupes n'est pas divisée par l'écart-type commun des deux groupes, mais par celui d'un seul des deux groupes, qui serait en principe celui qui représenterait la condition contrôle ou la condition de référence. Une pratique souvent recommandée pour comparer dans ce genre de situation les scores post-programme de deux groupes (un groupe entraîné/traité et un groupe contrôle) serait d'utiliser l'écart-type des scores du groupe contrôle obtenu en pré-programme [@lakensCalculatingReportingEffect2013]. 
 
-Dans R, le $\Delta$ de Glass lié à un échantillon de population peut être calculé à l'aide de la fonction `glass_delta()` du package `effectsize`. Attention, l'écart-type utilisé dans le code suivant est celui de la variable quantitative associée à la modalité 2 de la variable qualitative, qui est toujours `versicolor` dans cet exemple (exemple dont le contexte n'est certes pas celui d'un programme dont on cherche l'effet, mais le principe d'utilisation du code reste le même).
+Dans R, le delta ($\Delta$) de Glass lié à un échantillon de population peut être calculé à l'aide de la fonction `glass_delta()` du package `effectsize`. Attention, l'écart-type utilisé dans le code suivant est celui de la variable quantitative associée à la modalité 2 de la variable qualitative, qui est toujours `versicolor` dans cet exemple (exemple dont le contexte n'est certes pas celui d'un programme dont on cherche l'effet, mais le principe d'utilisation du code reste le même).
 
 ```{r glass delta between}
 glass_delta(Sepal.Length ~ Species, data = iris_two_species)
 ```
 
+**Cas particuliers**
+
+Certaines situations peuvent rendre la comparaison de moyennes non pertinente. C'est par exemple le cas lorsque l'un des deux groupes (voire les deux) présentent des données aberrantes, en particulier en présence de petits échantillons. L'utilisation des moyennes dans ce cas pourrait ne pas être pertinente car ces moyennes ne refléteraient alors pas correctement les tendances centrales (et donc les groupes associés). Dans ces cas là, mieux vaut observer les médianes de chaque groupe et chercher à voir si les distributions sont en décalage ou non. 
 
 *Cas de deux groupes de données dépendants (données pairées)*
 
@@ -1051,49 +888,7 @@ Le calcul classique pour obtenir la taille d'effet désignant l'écart entre deu
 
 $$d_{z} = \frac{\overline{X} _{diff}}{s_{diff}},$$
 
-$\overline{X} _{diff}$ désignant la moyenne des différences relatives à chaque pair de valeurs obtenues dans les deux conditions comparées, et $s_{diff}$ désignant l'écart-type de ces différences. Dans R, le $d_{z}$ peut être obtenu à nouveau avec la fonction `cohens_d()` du package `effectsize`. Pour illustrer cela, nous allons à nouveau utiliser le jeu de données `Blink` associé au package `PairedData` qui doit être installé et chargé pour être utilisé. 
-
-```{r}
-Blink
-```
-
-
-Pour la suite de l'analyse, on peut, comme réalisé plus haut, reconfigurer le jeu de données `Blink` de telle sorte à bien avoir les conditions testées dans une même colonne et les valeurs correspondantes dans la colonne d'à côté, avec la modalité `Straight` en tant que première modalité à considérer dans les fonctions à suivre. Le nouveau jeu de données s'appelle alors `Blink2`.
-
-```{r Blinkreconfiguration, echo = FALSE, message = FALSE, fig.align = "center", fig.cap="Données du jeu de données `Blink2`"}
-Blink2 <-
-  Blink %>%
-  pivot_longer(cols = c(Straight, Oscillating), 
-               names_to = "Condition", values_to = "Blink_rate") %>%
-  mutate(Condition = fct_relevel(Condition, "Straight", "Oscillating"))
-
-Blink2
-
-  ggplot(data = Blink2, aes(x = Condition, y = Blink_rate, 
-                            colour = Condition, fill = Condition)) +
-  geom_point(aes(x = stage(start = Condition, after_scale = x - 0.15)),
-             position = position_jitter(seed = 123, width = 0.03),
-             size = 4, alpha = 0.3) +
-  geom_half_violin(side = "r", 
-                   position = position_nudge(0.1), 
-                   size = 1, alpha = 0.4) +  
-  geom_boxplot(width = 0.08, colour = "black", alpha = 0.3, outlier.shape = NA) + 
-  stat_summary(geom = "errorbar",
-               fun.data = "mean_sdl",
-               fun.args = list(mult = 1),
-               position = position_nudge(0.1), 
-               size = 1.1, width = 0.05) +
-  stat_summary(geom = "point",
-               fun = "mean", 
-               position = position_nudge(0.1),
-               size = 3,) +
-  stat_summary(aes(group = 1),
-               geom = "line",
-               fun = "mean", 
-               position = position_nudge(0.1),
-               size = 1.5, color = "grey50",  linetype = "dashed") +
-  theme(legend.position = "none")
-```
+$\overline{X} _{diff}$ désignant la moyenne des différences relatives à chaque pair de valeurs obtenues dans les deux conditions comparées, et $s_{diff}$ désigne l'écart-type de ces différences. Dans R, le $d_{z}$ peut être obtenu à nouveau avec la fonction `cohens_d()` du package `effectsize`. Pour illustrer cela, nous allons à nouveau utiliser le jeu de données `Blink2` crée plus haut pour les exemples de graphiques.
 
 Dans R, on peut alors calculer $d_{z}$ à nouveau à l'aide de la fonction `cohens_d()` du package `effectsize` comme ceci :
 
@@ -1101,7 +896,7 @@ Dans R, on peut alors calculer $d_{z}$ à nouveau à l'aide de la fonction `cohe
 cohens_d(Blink_rate ~ Condition, data = Blink2, paired = TRUE, pooled_sd = TRUE)
 ```
 
-Toutefois, d'après Lakens [-@lakensCalculatingReportingEffect2013], il peut être intéressant de rapporter plutôt un indice de taille d'effet qui ne serait pas influencé par le fait que les données des deux groupes à comparer soient corrélées (car dépendantes), notamment en vue de rendre comparable cette taille d'effet à celles obtenues dans le cadre d'études de type *between-subject design*, pour plus facilemement conduire des méta-analyses par la suite par exemple. La recommandation de Lakens [-@lakensCalculatingReportingEffect2013] serait alors d'utiliser l'indice $d_{av}$, dont le calcul serait le suivant : 
+Toutefois, d'après Lakens [-@lakensCalculatingReportingEffect2013], il peut être intéressant de rapporter plutôt un indice de taille d'effet qui ne serait pas influencé par le fait que les données des deux groupes à comparer soient corrélées (car dépendantes), notamment en vue de rendre comparable cette taille d'effet à celles obtenues dans le cadre d'études de type *between-subject design*, pour plus facilement conduire des méta-analyses par la suite par exemple. La recommandation de Lakens [-@lakensCalculatingReportingEffect2013] serait alors d'utiliser l'indice $d_{av}$, dont le calcul serait le suivant : 
 
 $$d_{av} = \frac{\overline{X} _{diff}}{\sqrt{\frac{s_{1}^2 + s_{2}^2} {2}}}$$
 
@@ -1111,7 +906,7 @@ Ce calcul reviendrait donc à diviser la moyenne des différences par l'écart-t
 cohens_d(Blink_rate ~ Condition, data = Blink2, paired = FALSE, pooled_sd = FALSE)
 ```
 
-En effet, que l'on fasse la moyenne des différences (ce qui serait attendu pour le présent calcul) ou la différence entre deux moyennes (ce qui est finalement fait par la fonction tel que configurée ci-dessus), cela ne change rien avec des données pairées. Le numérateur $\overline{X} _{diff}$ reste donc correctement calculé même avec cette configuration de fonction qui est faite initialement pour des groupes indépendants. Le fait d'indiquer `pooled_sd = FALSE` change le calcul du dénominateur que nous avions rencontré initialement pour le calcul de $d_{s}$, cela pour obtenir le calcul attendu pour le $d_{av}$.
+En effet, que l'on fasse la moyenne des différences (ce qui serait attendu pour le présent calcul) ou la différence entre deux moyennes (ce qui est finalement fait par la fonction telle que configurée ci-dessus), cela ne change rien avec des données pairées. Le numérateur $\overline{X} _{diff}$ reste donc correctement calculé même avec cette configuration de fonction qui est faite initialement pour des groupes indépendants. Le fait d'indiquer `pooled_sd = FALSE` change le calcul du dénominateur que nous avions rencontré initialement pour le calcul de $d_{s}$, cela pour obtenir le calcul attendu pour le $d_{av}$.
 
 **$g_{av}$ de Hedges**
 
@@ -1127,6 +922,69 @@ Toutefois, comme le rappelle Lakens [-@lakensCalculatingReportingEffect2013], le
 detach(package:PairedData)
 detach(package:MASS)
 ```
+
+**Cas particuliers**
+
+Lorsque la présence de valeurs aberrantes peut fausser le calcul de la taille d'effet que l'on cherche à caractériser dans la population étudiée, une première idée pourrait être ici de faire la différence des médianes des deux groupes. Toutefois, comme le rappellent Weissegerber et al. [-@weissgerberBarLineGraphs2015], cette approche n'est mathématiquement pas correcte dans le cas présent. La bonne méthode est de calculer la médiane des différences. Le code ci-dessous présente donc un exemple de visualisation graphique et de calcul de médiane des différences, ici à partir du jeu de données `Blink`.
+
+```{r}
+# Configuration du jeu de données
+Blink2 <-
+  Blink %>%
+  mutate(Difference = Straight - Oscillating) %>%
+  pivot_longer(cols = c(Straight, Oscillating, Difference), 
+               names_to = "Condition", 
+               values_to = "Blink_rate") %>%
+  mutate(Condition = fct_relevel(Condition, "Straight", "Oscillating", "Difference"))
+  
+# Visualisation graphique
+A <-
+  ggplot(data = Blink2 %>% filter(Condition != "Difference"), aes(x = Condition, y = Blink_rate, 
+                            colour = Condition, fill = Condition)) +
+  geom_point(position = position_jitter(seed = 123, width = 0.03),
+             size = 4, alpha = 0.3) + 
+  geom_line(aes(group = Subject),
+            position = position_jitter(seed = 123, width = 0.03),
+            size = 2, alpha = 0.3, color = "gray") + 
+  geom_half_violin(aes(x = 2.17),
+                   side = "r",
+                   position = position_dodge(width = 0),
+                   size = 1, alpha = 0.4) +  
+  geom_boxplot(aes(x = 2.1),
+               position = position_dodge(width = 0.1),
+               width = 0.08, colour = "black", alpha = 0.3, outlier.shape = NA) +
+  ggtitle("A") +
+  theme(legend.position = "bottom",
+        axis.title.x = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
+  
+B <-
+  ggplot(data = Blink2 %>% filter(Condition == "Difference"), aes(x = Condition, y = Blink_rate)) +
+  geom_point(aes(x = stage(start = Condition, after_scale = x - 0.15)),
+             position = position_jitter(seed = 123, width = 0.03),
+             size = 4, alpha = 0.3) +
+  geom_half_violin(side = "r", 
+                   position = position_nudge(0.1), 
+                   size = 1, alpha = 0.4) +  
+  geom_boxplot(width = 0.08, colour = "black", alpha = 0.3, outlier.shape = NA) +
+  labs(x = "") +
+  ggtitle("B") + 
+  theme(legend.position = "none")
+
+```
+
+```{r, echo = F}
+A / B
+```
+```{r}
+# Code pour calculer la médiane des différences
+ Blink %>%
+  mutate(Difference = Straight - Oscillating) %>%
+  summarise(median_diff = median(Difference))
+```
+
+
 
 ## Résumé
 
