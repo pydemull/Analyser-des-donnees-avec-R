@@ -5,7 +5,7 @@ Réaliser une analyse bivariée désigne le fait d'étudier la relation qui peut
 ### Etudier graphiquement la relation
 Comme dans le cadre d'analyses univariées, une bonne pratique, lorsqu'on étudie une relation bivariée, est de faire un graphique. Avec des variables quantitatives, il s'agit de montrer les valeurs d'une variable en fonction des valeurs de l'autre variable, chose que permet un simple nuage de points. Plusieurs types de relations peuvent alors être rencontrés, ces relations pouvant potentiellement s'apparenter à autant de fonctions mathématiques que l'on connaît. Parmi les plus connues, on a par exemple les relations linéaires, les relations logarithmiques, ou encore les relations quadratiques, qui sont illustrées ci-dessous.
 
-```{r relationshipsIllustrations, message = FALSE, warning = FALSE, echo = FALSE, fig.align ="center", fig.cap="Différentes formes de relation"}
+```{r relationshipsIllustrations, message = FALSE, warning = FALSE, echo = FALSE, fig.cap="Différentes formes de relation"}
 
 # Jeu de données pour la relation linéaire
 set.seed(123)
@@ -60,7 +60,7 @@ g_quad <-
 
 Avec R, pour obtenir un nuage de points à partir d'un jeu de données, il est possible d'utiliser la fonction `ggplot()` en l'associant à la fonction `geom_point()` du package `ggplot2`, comme dans l'exemple ci-dessous qui utilise le jeu de données `mtcars` (qui est intégré à R de base) et les variables `hp` (*gross horsepower*) et `mpg` (*miles/US gallon*). Dans cet exemple, on peut voir que la relation semble gobalement linéaire négative (voire curvilinéaire négative si l'on donne de l'importance au point isolé à droite du graphique).
 
-```{r scatterplot, fig.align = "center", fig.cap="Exemple de nuage de points"}
+```{r scatterplot,  fig.cap="Exemple de nuage de points"}
 ggplot(data = mtcars, aes(x = hp, y = mpg)) + 
   geom_point()
 ```
@@ -71,7 +71,7 @@ ggplot(data = mtcars, aes(x = hp, y = mpg)) +
 
 Lorsque la relation étudiée semble linéaire, l'étude numérique classique consiste à calculer le coefficient de corrélation de Pearson, noté $r$, dont la valeur vise à renseigner dans quelle mesure le nuage de points représentant le lien entre les deux variables étudiées suit une droite. Avant de se lancer dans le calcul du coefficient de corrélation de Pearson pour étudier la relation entre une variable $X$ et une variable $Y$, il peut donc être utile de compléter le nuage de points montré ci-dessus avec une droite d'équation de type $Y = aX + b$. Cette équation serait la meilleure modélisation possible de la relation linéaire entre $X$ et $Y$, de telle sorte que parmi l'infinité d'équations qui pourraient lier $X$ à $Y$, c'est cette équation qui au total donnerait la plus petite erreur lorsque l'on voudrait prédire $Y$ à partir de $X$. Si $X$ et $Y$ sont liées de manière linéaire, alors le nuage des points relatifs aux deux variables devrait s'étaler le long de cette droite. Pour obtenir cette droite en plus du nuage de points, il est possible d'utiliser la fonction `geom_smooth()` du package `ggplot2`.
 
-```{r scatterplotLine, fig.align ="center", fig.cap="Nuage de points avec droite de régression"}
+```{r scatterplotLine, fig.cap="Nuage de points avec droite de régression"}
 ggplot(data = mtcars, aes(x = hp, y = mpg)) + 
   geom_point() +
   geom_smooth(formula = y ~ x, method = "lm", se = FALSE)
@@ -107,12 +107,13 @@ flextable(
   align(align = "center", part = "all" ) %>%
   hline_top(part = "all", border = fp_border(width = 1.5)) %>%
   hline_bottom(part = "all", border = fp_border(width = 1.5)) %>%
-  set_caption("Calcul de la covariance")
+  set_caption("Calcul de la covariance") %>% 
+  autofit()
 ```
 
 Ce que ce tableau peut permettre de rendre compte, c'est que plus les deux variables étudiées évolueront de manière consistante dans des sens identiques comme avec $X1$ et $Y1$, ou de manière consistante dans des sens opposés comme avec $X1$ et $Y3$, plus les produits $(X{i} - \overline{X}) (Y{i} - \overline{Y})$ donneront respectivement des grands scores positifs ou des grands scores négatifs, et moins les scores $(X{i} - \overline{X}) (Y{i} - \overline{Y})$ à additionner pour le calcul de la covariance s'annuleront. En effet, avec une relation relativement linéaire et positive les scores seront plus systématiquement positifs, et avec une relation relativement linéaire et négative les scores seront plus systématiquement négatifs. Toutefois, lorsqu'on aura des variables qui n'évolueront pas de manière consistante dans le même sens ou dans un sens opposé comme avec $X1$ et $Y2$, les scores positifs et négatifs liés aux calculs $(X{i} - \overline{X}) (Y{i} - \overline{Y})$ auront tendance à s'annuler et donneront lieu à une somme des scores $(X{i} - \overline{X}) (Y{i} - \overline{Y})$ diminuée, et donc à une covariance et au final à un coefficient de corrélation de Pearson tirés vers 0. Ces différents cas de figure et les calculs $(X{i} - \overline{X}) (Y{i} - \overline{Y})$ correspondants sont illustrés sur la figure ci-dessous. Sur cette figure, chaque carré correspond au calcul $(X{i} - \overline{X}) (Y{i} - \overline{Y})$, le carré étant bleu lorsque le résultat du calcul est positif, et rouge lorsque le résultat est négatif. L'aire d'un carré illustre la grandeur du score issu du calcul. Sur les figures de gauche et de droite, on distingue une relation linéaire parfaite, ce qui maximise les scores à additionner pour le calcul de la covariance, dans le positif pour la figure de gauche et dans le négatif pour la figure de droite. Au milieu, on remarque que le manque de relation linéaire donne lieu à des carrés à la fois bleus et rouges, indiquant que les scores associés aux calculs $(X{i} - \overline{X}) (Y{i} - \overline{Y})$ de la covariance s'annulent et diminuent ainsi la valeur finale de la covariance.
 
-```{r graphCov, fig.align ="center", echo = FALSE, fig.width = 10, warning = FALSE, fig.cap="Détermination de la covariance"}
+```{r graphCov, echo = FALSE, fig.width = 10, warning = FALSE, fig.cap="Détermination de la covariance"}
 df <- 
   df %>%
   mutate(signX1Y1 = ifelse(X1Y1 > 0, "pos", "neg"),
@@ -206,14 +207,15 @@ flextable(
   align(align = "center", part = "all" ) %>%
   hline_top(part = "all", border = fp_border(width = 1.5)) %>%
   hline_bottom(part = "all", border = fp_border(width = 1.5)) %>%
-  set_caption("Valeurs de taille d'effet associées aux valeurs de corrélation")
+  set_caption("Valeurs de taille d'effet associées aux valeurs de corrélation") %>% 
+  autofit()
 ```
 
 Pour visualiser le lien que l'on peut faire entre la forme du nuage de points et la valeur du coefficient de corrélation de Pearson que l'on peut obtenir, la page web proposée par Kristoffer Magnusson (https://rpsychologist.com/correlation) peut être particulièrement intéressante. Cette page web donne la possibilité de faire varier manuellement la valeur du coefficient de corrélation de Pearson pour ensuite voir un nuage de points type correspondant à cette valeur. Faites un essai !
 
 A noter que la valeur du coefficient de corrélation de Pearson est très dépendante de la manière dont sont distribuées les variables, avec une influence particulière de la variabilité des données [@halperinSpuriousCorrelationsCauses1986]. L'influence de la variabilité est illustrée sur la figure ci-dessous. A gauche, on observe un nuage de points représentant une population complète, avec en conséquence une variablité le long des axes $X$ et $Y$ relativement importante. La valeur du coefficient de corrélation de Pearson est ici particulièrement élevée. A droite, on observe exactement les mêmes valeurs, mais sur un intervalle dont l'étendue a été manuellement restreinte, diminuant ainsi la variabilité. On observe alors une diminution de la valeur du coefficient de corrélation de Pearson, alors qu'il s'agit à l'origine du même jeu de données que celui de gauche. Cet exemple doit faire prendre conscience qu'il faut faire attention lorsqu'on cherche à comparer des coefficient de corrélation de Pearson obtenus avec différents échantillons présentant des caractéristiques différentes, car si ces échantillons n'ont pas les mêmes niveaux de variabilité, les valeurs des coefficients de corrélation ne seront pas vraiment comparables, en sachant que c'est l'échantillon qui présente la plus grande variabilité qui aura mathématiquement plus de chances de présenter une valeur de coefficient de corrélation plus élevée.
 
-```{r spuriousCorrelations, echo = FALSE, warning=FALSE, message=FALSE,  fig.align ="center", fig.cap = "Coefficient de corrélation de Pearson et variabilité des données"}
+```{r spuriousCorrelations, echo = FALSE, warning=FALSE, message=FALSE,  fig.cap = "Coefficient de corrélation de Pearson et variabilité des données"}
 g_lin <- 
   ggplot(data = data_lin, aes(x = x, y = y)) + 
   geom_point() +
@@ -239,7 +241,7 @@ g_lin | g_lin_sel
 
 Un exemple extrême de l'influence de la variabilité des données sur la valeur du coefficient de corrélation de Pearson est montré sur la figure ci-dessous. Les deux graphiques montrent exactement les mêmes données, à ceci près que sur le graphique de droite, on a remplacé en ordonnées une valeur du graphique de gauche pour lui donner la valeur de 10. L'influence de cette action sur la valeur du coefficient de corrélation est particulièrement nette, alors qu'une seule valeur a été modifée. Ceci montre qu'il faut faire attention aux valeurs extrêmes qui pourraient grandement influencer la valeur de corrélation obtenue, notamment en présence d'échantillons de taille relativement faible. Dans le cas où la valeur du coefficient de corrélation de Pearson serait très influencée par une valeur, il pourrait être une bonne pratique de calculer la valeur du coefficient de corrélation avec et sans cette valeur afin de pouvoir quantifier son influence sur la relation étudiée [@halperinSpuriousCorrelationsCauses1986]. Une alternative pourrait être aussi d'étudier la relation à l'aide d'autres types de coefficients que celui de Pearson, tels que celui de Spearman, présenté plus bas. Toutes ces informations doivent en tous les cas faire prendre conscience qu'il n'est pas toujours pertinent de calculer le coefficient de corrélation de Pearson. En ce sens, lorsqu'on cherche à inférer la valeur du coefficient de corrélation de Pearson dans la population étudiée, il convient de vérifier certains prérequis, lesquels seront abordés plus tard dans ce livre. 
 
-```{r spuriousCorrelationBis,  echo = FALSE, , fig.align ="center", message = FALSE, warning = FALSE, fig.cap="Coefficient de corrélation de Pearson et outliers"}
+```{r spuriousCorrelationBis,  echo = FALSE, , message = FALSE, warning = FALSE, fig.cap="Coefficient de corrélation de Pearson et outliers"}
 data1 <- tibble(x = c(0, 1, 2, 3, 4, 5), y = c(2, 4, 3, 2, 3, 4))
 data2 <- tibble(x = c(0, 1, 2, 3, 4, 5), y = c(2, 4, 3, 2, 3, 10))
 
@@ -286,7 +288,8 @@ flextable(
   align(align = "center", part = "all" ) %>%
   hline_top(part = "all", border = fp_border(width = 1.5)) %>%
   hline_bottom(part = "all", border = fp_border(width = 1.5)) %>%
-  set_caption("Les rangs d'une variable")
+  set_caption("Les rangs d'une variable") %>% 
+  autofit()
 ```
 
 Le fait d'étudier l'existence d'une relation linéaire entre les rangs et non plus entre les valeurs de deux variables permet de s'affranchir de l'influence possible de valeurs très extrêmes, dans l'une et/ou l'autre variable, sur le calcul final de la corrélation. Pour déterminer alors la valeur de la corrélation, une manière de procéder est d'appliquer la méthode de calcul du coefficient de corrélation de Pearson en utilisant non plus les valeurs des variables, mais les rangs correspondants. Cette methode, c'est celle du calcul du coefficient de corrélation de Spearman (*rho*). Si l'on suit *stricto sensu* cette définition, nous pourrions alors utiliser le code suivant pour avoir le coefficient de corrélation de Spearman :
@@ -319,7 +322,7 @@ mtcars %>%
 
 En matière d'interprétation, des valeurs de *rho* positives indiqueront que les deux variables mises en lien tendent à augmenter simultanément, on parlera alors de **relation monotone positive**. Dans le cas inverse, des valeurs négatives indiqueront que les deux variables mises en lien tendent à diminuer simultanément, on parlera alors de relation **monotone négative**. A noter cependant que de par son calcul, la valeur de *rho* ne permet pas de renseigner sur la forme de relation qu'il pourrait y avoir entre les valeurs des deux variables (e.g., linéaire ou curvilinéaire par exemple). Ceci est illustré sur la figure ci-dessous. La figure de gauche montre la relation entre les valeurs des variables $X$ et $Y$, qui est caractérisée par un coefficient de corrélation de Spearman (*rho*) de 1, indiquant donc que la relation est parfaitement monotone positive, sans préjuger de la forme particulière que pourrait présenter la relation. Pour mieux comprendre pourquoi cette valeur de *rho* est de 1, la figure de droite montre la relation entre les rangs de ces deux variables $X$ et $Y$. On voit en effet que la relation entre les rangs est effectivement parfaitement linéaire.
 
-```{r ranksvvaluesspearman, echo = FALSE, fig.align = "center", fig.cap="Explication du caractère monotone d'une variable évalué par le coefficient de Spearman"}
+```{r ranksvvaluesspearman, echo = FALSE, fig.cap="Explication du caractère monotone d'une variable évalué par le coefficient de Spearman"}
 a <- 
   data.frame(x = seq(1, 50, 1)) %>%
   mutate(y = log(x)) %>%
@@ -356,7 +359,12 @@ library(vcd)
 
 JointSports_new <- 
   JointSports %>%
-  mutate(opinion = fct_relevel(opinion, "very bad", "bad", "indifferent", "good", "very good"),
+  mutate(opinion = fct_relevel(opinion, 
+                               "very bad", 
+                               "bad", 
+                               "indifferent", 
+                               "good", 
+                               "very good"),
          gender = fct_relevel(gender, "Girl", "Boy")) %>%
   group_by(gender, opinion) %>%
   summarize(Freq = sum(Freq))
@@ -416,19 +424,36 @@ year <- c(rep("1983", 656), rep("1985", 615))
 grade <- c(rep("1st", 350), rep("3rd", 306), rep("1st", 354), rep("3rd", 261))
 gender <- c(rep("Boy", 134), rep("Girl", 216), rep("Boy", 115), rep("Girl", 191), rep("Boy", 157), rep("Girl", 197), rep("Boy", 104), rep("Girl", 157))
 opinion <- c(
-  rep("very good", 31), rep("good", 51), rep("indifferent", 38), rep("bad", 10), rep("very bad", 4), 
-  rep("very good", 103), rep("good", 67), rep("indifferent", 29), rep("bad", 15), rep("very bad", 2), 
-  rep("very good", 23), rep("good", 39), rep("indifferent", 36), rep("bad", 15), rep("very bad", 2), 
-  rep("very good", 61), rep("good", 72), rep("indifferent", 39), rep("bad", 16), rep("very bad", 3), 
-  rep("very good", 41), rep("good", 67), rep("indifferent", 35), rep("bad", 12), rep("very bad", 2), 
-  rep("very good", 77), rep("good", 80), rep("indifferent", 27), rep("bad", 10), rep("very bad", 3), 
-  rep("very good", 31), rep("good", 31), rep("indifferent", 31), rep("bad", 4), rep("very bad", 7), 
-  rep("very good", 52), rep("good", 70), rep("indifferent", 28), rep("bad", 4), rep("very bad", 3)
+  rep("very good", 31), rep("good", 51), rep("indifferent", 38), 
+  rep("bad", 10), rep("very bad", 4), 
+  rep("very good", 103), rep("good", 67), rep("indifferent", 29), 
+  rep("bad", 15), rep("very bad", 2), 
+  rep("very good", 23), rep("good", 39), rep("indifferent", 36), 
+  rep("bad", 15), rep("very bad", 2), 
+  rep("very good", 61), rep("good", 72), rep("indifferent", 39), 
+  rep("bad", 16), rep("very bad", 3), 
+  rep("very good", 41), rep("good", 67), rep("indifferent", 35), 
+  rep("bad", 12), rep("very bad", 2), 
+  rep("very good", 77), rep("good", 80), rep("indifferent", 27), 
+  rep("bad", 10), rep("very bad", 3), 
+  rep("very good", 31), rep("good", 31), rep("indifferent", 31), 
+  rep("bad", 4), rep("very bad", 7), 
+  rep("very good", 52), rep("good", 70), rep("indifferent", 28), 
+  rep("bad", 4), rep("very bad", 3)
   )
 
 JointSports_full <- 
-  data.frame(id = id, year = year, grade = grade, gender = gender, opinion = opinion) %>%
-  mutate(opinion = fct_relevel(opinion, "very bad", "bad", "indifferent", "good", "very good"))
+  data.frame(id = id, 
+             year = year, 
+             grade = grade, 
+             gender = gender, 
+             opinion = opinion) %>%
+  mutate(opinion = fct_relevel(opinion, 
+                               "very bad", 
+                               "bad", 
+                               "indifferent", 
+                               "good", 
+                               "very good"))
 ```
 
 Une fois que l'on a un jeu de données complet sous la main, il est possible de créer ce qu'on appelle un **tableau de contingence**, c'est-à-dire ici un tableau qui récapitule numériquement les effectifs à la croisée des deux variables qui nous intéressent. Pour faire cela, on peut utiliser la fonction `table()` en suivant différentes méthodes montrées ci-dessous. (Le code montré ci-dessous aboutit aux mêmes informations que celles montrées sur la Figure \@ref(fig:stackedBarsBiv) ci-dessus.
@@ -593,7 +618,8 @@ Blink2 <-
 
 # Raincloud plots classiques
 A <-
-  ggplot(data = iris_two_species, aes(x = Species, y = Sepal.Length, color = Species, fill = Species)) +
+  ggplot(data = iris_two_species, aes(x = Species, y = Sepal.Length, 
+                                      colour = Species, fill = Species)) +
   geom_point(aes(x = stage(start = Species, after_scale = x - 0.1)),
              position = position_jitter(seed = 123, width = 0.08, height = NULL),
              size = 4, alpha = 0.3) +
@@ -609,7 +635,8 @@ A <-
 
 # Raincloud plots basculés à la verticale
 B <-
-  ggplot(data = iris_two_species, aes(x = Species, y = Sepal.Length, color = Species, fill = Species)) +
+  ggplot(data = iris_two_species, aes(x = Species, y = Sepal.Length, 
+                                      colour = Species, fill = Species)) +
   geom_point(aes(x = stage(start = Species, after_scale = x - 0.1)),
              position = position_jitter(seed = 123, width = 0.06, height = NULL),
              size = 4, alpha = 0.3) +
@@ -625,7 +652,8 @@ B <-
 # Raincloud plots avec aires montrant les densités de probabilité sur une même ligne
 # horizontale
 C <-
-  ggplot(data = iris_two_species, aes(x = 0, y = Sepal.Length, color = Species, fill = Species)) +
+  ggplot(data = iris_two_species, aes(x = 0, y = Sepal.Length, 
+                                      colour = Species, fill = Species)) +
   geom_point(data = iris_two_species %>% filter(Species == "setosa"),
              aes(x = -0.21),
              position = position_jitter(seed = 123, width = 0.02, height = NULL),
@@ -649,7 +677,8 @@ C <-
 # Raincloud plots avec aires montrant les densités de probabilité sur une même ligne
 # verticale
 D <-
-  ggplot(data = iris_two_species, aes(x = 0, y = Sepal.Length, color = Species, fill = Species)) +
+  ggplot(data = iris_two_species, aes(x = 0, y = Sepal.Length, 
+                                      colour = Species, fill = Species)) +
   geom_point(data = iris_two_species %>% filter(Species == "setosa"),
              aes(x = -0.17),
              position = position_jitter(seed = 123, width = 0.02, height = NULL),
@@ -676,7 +705,8 @@ D <-
 
 # Raincloud plots classiques avec moyennes et écart-types et lignes reliant les moyennes
 E <-
-  ggplot(data = Blink2, aes(x = Condition, y = Blink_rate,  colour = Condition, fill = Condition)) +
+  ggplot(data = Blink2, aes(x = Condition, y = Blink_rate,  
+                            colour = Condition, fill = Condition)) +
   geom_point(aes(x = stage(start = Condition, after_scale = x - 0.15)),
              position = position_jitter(seed = 123, width = 0.03),
              size = 4, alpha = 0.3) +
@@ -706,7 +736,8 @@ E <-
 # Raincloud plots avec moyennes et écart-types et lignes reliant les moyennes 
 # basculés à la verticale
 F <-
-  ggplot(data = Blink2, aes(x = Condition, y = Blink_rate,  colour = Condition, fill = Condition)) +
+  ggplot(data = Blink2, aes(x = Condition, y = Blink_rate,  
+                            colour = Condition, fill = Condition)) +
   geom_point(aes(x = stage(start = Condition, after_scale = x - 0.15)),
              position = position_jitter(seed = 123, width = 0.03),
              size = 4, alpha = 0.3) +
@@ -735,7 +766,8 @@ F <-
 # Raincloud plots avec aires montrant les densités de probabilité sur une même ligne
 # horizontale
 G <-
-  ggplot(data = Blink2, aes(x = Condition, y = Blink_rate, colour = Condition, fill = Condition)) +
+  ggplot(data = Blink2, aes(x = Condition, y = Blink_rate, 
+                            colour = Condition, fill = Condition)) +
   geom_point(position = position_jitter(seed = 123, width = 0.03),
              size = 4, alpha = 0.3) + 
   geom_line(aes(group = Subject),
@@ -759,7 +791,8 @@ G <-
 # Raincloud plots avec aires montrant les densités de probabilité sur une même ligne
 # verticale
 H <-
-  ggplot(data = Blink2, aes(x = Condition, y = Blink_rate, colour = Condition, fill = Condition)) +
+  ggplot(data = Blink2, aes(x = Condition, y = Blink_rate, 
+                            colour = Condition, fill = Condition)) +
   geom_point(position = position_jitter(seed = 123, width = 0.03),
              size = 4, alpha = 0.3) + 
   geom_line(aes(group = Subject),
@@ -782,8 +815,10 @@ H <-
 # Sources ayant aidé à la réalisation des graphiques
 ####################################################
 
-# Pour déplacer l'axe des observations individuelles : https://github.com/tidyverse/ggplot2/issues/4491
-# Pour la conception des raincloud plots : https://github.com/jorvlan/raincloudplots
+# Pour déplacer l'axe des observations individuelles : 
+# https://github.com/tidyverse/ggplot2/issues/4491
+# Pour la conception des raincloud plots : 
+# https://github.com/jorvlan/raincloudplots
 ```
 
 ```{r raindcloudplotsBiv, fig.align="center", echo = FALSE,  fig.width = 20, fig.height = 15, fig.cap="Exemples de raindcloud plots pour des données non pairées (A à D) et pairées (E à H)"}
@@ -796,7 +831,7 @@ Remarquons que pour les graphiques G et H de la Figure \@ref(fig:raindcloudplots
 Pour pouvoir faire les graphiques de la Figure \@ref(fig:raindcloudplotsBiv), il a fallu user de plusieurs nouvelles techniques : 
 
 - Pour montrer les aires représentant les densités de probabilité (*the clouds*), il a fallu utiliser la fonction `geom_half_violin()` du package `gghalves`. L'argument `side`permet de choisir de quel côté l'on veut que l'aire apparaisse (à droite ou à gauche quand on est à la verticale). Ces *clouds* ont parfois été légèrement déplacés à l'aide de l'argument `position` et de la fonction `position_nudge()` ou bien resserés à l'aide de la fonction `position_dodge()`.
-- Pour montrer les données individuelles (*the rain*) sans risquer qu'elle ne se superposent de trop, on a utilisé la fonction `geom_point()`, l'argument `position` et la fonction `position_jitter()`. A l'intérieur de la fonction `position_jitter()`, l'argument `seed` (la graine en français) désigne le nombre sur lequel se base l'ordinateur pour générer un résultat pseudo-aléatoire. Quand on regarde les graphiques, les données individuelles apparaissent décalées aléatoirement sur le plan vertical (ou latéral selon l'orientation du graphique), l'importance du décalage étant contrôlée par l'argument `width`. Cet effet aléatoire est l'intérêt même d'une fonction dite `jitter`, et cet effet est en réalité prédéfini de telle sorte à ce que si on utilise toujours le même numéro de graine (`seed`), alors on obtiendra toujours le même effet aléatoire sur le graphique. Ceci est très important car cela permet d'aligner les lignes individuelles avec les données (les points) individuelles (cf. graphiques G et H de la Figure \@ref(fig:raindcloudplotsBiv)) lorsqu'on veut générer un mouvement aléatoire des données sur le graphique. On peut aussi noter que certains graphiques ont nécessité un décalage manuel de l'axe le long duquel les données individuelles sont montrées, en utilisant la fonction `stage()` avec l'argument `x = ` (cf. graphiques A, B, E, F de la Figure \@ref(fig:raindcloudplotsBiv)) ou simplement une valeur numérique pour l'argument `x = ` dans la fonction `aes()` (cf. graphiques C et D, de la Figure \@ref(fig:raindcloudplotsBiv)).
+- Pour montrer les données individuelles (*the rain*) sans risquer qu'elle ne se superposent de trop, on a utilisé la fonction `geom_point()`, l'argument `position` et la fonction `position_jitter()`. A l'intérieur de la fonction `position_jitter()`, l'argument `seed` (la graine en français) désigne le nombre sur lequel se base l'ordinateur pour générer un résultat pseudo-aléatoire. Quand on regarde les graphiques, les données individuelles apparaissent décalées aléatoirement sur le plan vertical (ou latéral selon l'orientation du graphique), l'importance du décalage étant contrôlée par l'argument `width`. Cet effet aléatoire est l'intérêt même d'une fonction dite `jitter`, et cet effet est en réalité prédéfini de telle sorte que si on utilise toujours le même numéro de graine (`seed`), alors on obtiendra toujours le même effet aléatoire sur le graphique. Ceci est très important car cela permet d'aligner les lignes individuelles avec les données (les points) individuelles (cf. graphiques G et H de la Figure \@ref(fig:raindcloudplotsBiv)) lorsqu'on veut générer un mouvement aléatoire des données sur le graphique. On peut aussi noter que certains graphiques ont nécessité un décalage manuel de l'axe le long duquel les données individuelles sont montrées, en utilisant la fonction `stage()` avec l'argument `x = ` (cf. graphiques A, B, E, F de la Figure \@ref(fig:raindcloudplotsBiv)) ou avec simplement une valeur numérique pour l'argument `x = ` dans la fonction `aes()` (cf. graphiques C et D, de la Figure \@ref(fig:raindcloudplotsBiv)).
 - Pour montrer les moyennes (cf. graphiques E et F de la Figure \@ref(fig:raindcloudplotsBiv)), il a fallu utiliser la fonction `stat_summary()`. Cette fonction sert à visualiser un résumé statistique identifié grâce à l'argument `fun`. On peut choisir sa forme avec l'argument `geom`.
 - Pour montrer les écarts-types (cf. graphiques E et F de la Figure \@ref(fig:raindcloudplotsBiv)), il a fallu là aussi utiliser la fonction `stat_summary()`, cette fois en utilisant l'argument `fun.data` avec la valeur `mean_sdl`, et l'argument `fun.args` que l'on a configuré pour déterminer le nombre d'écarts-types que la longueur de la barre d'erreur devait représenter (ici, c'est une fois l'écart-type, obtenu avec `mult = 1`).
 
@@ -805,7 +840,7 @@ De manière générale, étudier la relation entre une variable quantitative et 
 
 De prime abord, l'analyse qui pourrait être envisagée pour comparer deux groupes serait d'utiliser simplement la différence entre les moyennes ou les médianes des deux groupes. Toutefois, en se restreignant à cela, il pourrait être difficile de porter un jugement sur la grandeur relative de la différence entre les groupes comparés, qu'on pourrait appeler **taille d'effet**. Il serait également difficile de comparer cette taille d'effet avec celles observées dans d'autres études, en particulier celles traitant de sujets différents, car étant calculée de la sorte, la taille d'effet serait extrêmement inhérente à la nature des variables investiguées et à la grandeur des valeurs mesurées dans l'étude. Il est donc intéressant, dans ce genre de situation, de standardiser la différence de scores obtenue entre les deux groupes. Dans la littérature, la procédure de standardisation a été très développée pour la comparaison de moyennes. Pour cette raison, les sous-parties suivantes qui traitent de la comparaison de deux groupes présentent essentiellement les calculs  pour obtenir une taille d'effet en vue de comparer des moyennes. Ces calculs sont repris de l'article de Daniel Lakens [-@lakensCalculatingReportingEffect2013]. Quelques mots seront toutefois donnés pour les situations pour lesquelles ces calculs risqueraient de ne pas être appropriés.
 
-*Cas de deux groupes de données indépendants (données non pairées)*
+####Cas de deux groupes de données indépendants (données non pairées)
 
 **$d_{s}$ de Cohen**
 
@@ -817,7 +852,10 @@ Dans R, le $d_{s}$ de Cohen peut être calculé à l'aide de la fonction `cohens
 
 ```{r cohens d between, warning=FALSE, message=FALSE}
 library(effectsize)
-cohens_d(Sepal.Length ~ Species, data = iris_two_species, paired = FALSE, pooled_sd = TRUE)
+cohens_d(Sepal.Length ~ Species, 
+         data = iris_two_species, 
+         paired = FALSE, 
+         pooled_sd = TRUE)
 ```
 
 Dans cet exemple, on remarque qu'on a bien cherché à savoir comment les données de la variable `Sepal.Length` pouvaient différer en fonction (`~`) des modalités de la variable `Species`. Si la fonction nous donne un résultat, il faut toutefois bien faire attention au sens du calcul qui a été réalisé. Configurée de la sorte, la fonction `cohens_d()` réalise la différence **modalité 1 - modalité 2**. Il faut donc savoir quelle est la modalité 1 et quelle est la modalité 2 dans la variable `Species` pour ensuite pouvoir interpréter le signe du résultat, qui est négatif ici avec la valeur de -2.10. Pour ce faire, on peut utiliser la fonction `levels()` :
@@ -840,7 +878,8 @@ flextable(
   align(align = "center", part = "all" ) %>%
   hline_top(part = "all", border = fp_border(width = 1.5)) %>%
   hline_bottom(part = "all", border = fp_border(width = 1.5)) %>%
-  set_caption( "Termes pour qualifier la taille d'effet dans le cadre d'une comparaison de moyennes associées à des variables indépendantes")
+  set_caption( "Termes pour qualifier la taille d'effet dans le cadre d'une comparaison de moyennes associées à des variables indépendantes") %>% 
+  autofit()
 ```
 
 Ces valeurs sont relativement arbitraires, et l'interprétation de la taille de l'effet et des conséquences qu'il peut avoir en pratique ne devrait pas être liée de manière trop rigide à ces valeurs [@lakensCalculatingReportingEffect2013].
@@ -856,7 +895,10 @@ $$g_{s} = d_{s} (1 - \frac{3}{4(N_{1} + N_{2}) - 9})$$
 Dans R, le $g_{s}$ de Hedges lié à un échantillon de population peut être calculé à l'aide de la fonction `hedges_g()` du package `effectsize` :
 
 ```{r hedges g between}
-hedges_g(Sepal.Length ~ Species, data = iris_two_species, paired = FALSE, pooled_sd = TRUE)
+hedges_g(Sepal.Length ~ Species, 
+         data = iris_two_species, 
+         paired = FALSE, 
+         pooled_sd = TRUE)
 ```
 
 Ici, la valeur ne change pas beaucoup par rapport au cas précédent, car l'effectif n'est pas si petit que cela ($N_{1}$ + $N_{2}$ = 100 ici, ce qui fait que la correction appliquée au $d_{s}$ de Cohen est minime).
@@ -873,14 +915,15 @@ Le calcul du $\Delta$ de Glass est dans l'idée le même que celui du $d_{s}$ de
 Dans R, le delta ($\Delta$) de Glass lié à un échantillon de population peut être calculé à l'aide de la fonction `glass_delta()` du package `effectsize`. Attention, l'écart-type utilisé dans le code suivant est celui de la variable quantitative associée à la modalité 2 de la variable qualitative, qui est toujours `versicolor` dans cet exemple (exemple dont le contexte n'est certes pas celui d'un programme dont on cherche l'effet, mais le principe d'utilisation du code reste le même).
 
 ```{r glass delta between}
-glass_delta(Sepal.Length ~ Species, data = iris_two_species)
+glass_delta(Sepal.Length ~ Species, 
+            data = iris_two_species)
 ```
 
 **Cas particuliers**
 
 Certaines situations peuvent rendre la comparaison de moyennes non pertinente. C'est par exemple le cas lorsque l'un des deux groupes (voire les deux) présentent des données aberrantes, en particulier en présence de petits échantillons. L'utilisation des moyennes dans ce cas pourrait ne pas être pertinente car ces moyennes ne refléteraient alors pas correctement les tendances centrales (et donc les groupes associés). Dans ces cas là, mieux vaut observer les médianes de chaque groupe et chercher à voir si les distributions sont en décalage ou non. 
 
-*Cas de deux groupes de données dépendants (données pairées)*
+####Cas de deux groupes de données dépendants (données pairées)
 
 **$d_{z}$ et $d_{av}$ de Cohen**
 
@@ -903,7 +946,10 @@ $$d_{av} = \frac{\overline{X} _{diff}}{\sqrt{\frac{s_{1}^2 + s_{2}^2} {2}}}$$
 Ce calcul reviendrait donc à diviser la moyenne des différences par l'écart-type moyen relatif aux deux groupes de données. Pour obtenir $d_{av}$, il est possible de repartir de la fonction `cohens_d()` et de sa configuration pour des groupes indépendants, mais en indiquant `pooled_sd = FALSE` dans la fonction, comme ci-dessous : 
 
 ```{r cohens dav within, warning=FALSE, message=FALSE}
-cohens_d(Blink_rate ~ Condition, data = Blink2, paired = FALSE, pooled_sd = FALSE)
+cohens_d(Blink_rate ~ Condition, 
+         data = Blink2, 
+         paired = FALSE, 
+         pooled_sd = FALSE)
 ```
 
 En effet, que l'on fasse la moyenne des différences (ce qui serait attendu pour le présent calcul) ou la différence entre deux moyennes (ce qui est finalement fait par la fonction telle que configurée ci-dessus), cela ne change rien avec des données pairées. Le numérateur $\overline{X} _{diff}$ reste donc correctement calculé même avec cette configuration de fonction qui est faite initialement pour des groupes indépendants. Le fait d'indiquer `pooled_sd = FALSE` change le calcul du dénominateur que nous avions rencontré initialement pour le calcul de $d_{s}$, cela pour obtenir le calcul attendu pour le $d_{av}$.
@@ -913,7 +959,10 @@ En effet, que l'on fasse la moyenne des différences (ce qui serait attendu pour
 Comme dans le cas de l'étude de groupes indépendants, $d_{av}$ et ses dérivés sont biaisés. Il peut donc être à nouveau préférable de calculer le $g_{av}$ de Hedges avec la fonction `hedges_g()` configurée comme ceci : 
 
 ```{r hedges gav within, warning=FALSE, message=FALSE}
-hedges_g(Blink_rate ~ Condition, data = Blink2, paired = FALSE, pooled_sd = FALSE)
+hedges_g(Blink_rate ~ Condition, 
+         data = Blink2, 
+         paired = FALSE, 
+         pooled_sd = FALSE)
 ```
 
 Toutefois, comme le rappelle Lakens [-@lakensCalculatingReportingEffect2013], le $g_{av}$ de Hedges ne serait pas complètement non biaisé.
@@ -939,8 +988,8 @@ Blink2 <-
   
 # Visualisation graphique
 A <-
-  ggplot(data = Blink2 %>% filter(Condition != "Difference"), aes(x = Condition, y = Blink_rate, 
-                            colour = Condition, fill = Condition)) +
+  ggplot(data = Blink2 %>% filter(Condition != "Difference"), 
+         aes(x = Condition, y = Blink_rate,  colour = Condition, fill = Condition)) +
   geom_point(position = position_jitter(seed = 123, width = 0.03),
              size = 4, alpha = 0.3) + 
   geom_line(aes(group = Subject),
@@ -960,7 +1009,8 @@ A <-
         axis.ticks.x = element_blank())
   
 B <-
-  ggplot(data = Blink2 %>% filter(Condition == "Difference"), aes(x = Condition, y = Blink_rate)) +
+  ggplot(data = Blink2 %>% filter(Condition == "Difference"), 
+         aes(x = Condition, y = Blink_rate)) +
   geom_point(aes(x = stage(start = Condition, after_scale = x - 0.15)),
              position = position_jitter(seed = 123, width = 0.03),
              size = 4, alpha = 0.3) +
@@ -974,7 +1024,7 @@ B <-
 
 ```
 
-```{r, echo = F}
+```{r, echo = FALSE, fig.cap = "Exemple de figure pour montrer la médiane des différences dans le cas de données pairées"}
 A / B
 ```
 ```{r}

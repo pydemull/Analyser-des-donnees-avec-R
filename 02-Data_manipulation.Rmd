@@ -17,12 +17,13 @@ flextable(
              taille = c(1.80, 1.93, 1.50, 1.95, 1.52, 1.87, 1.83), 
              nb_victoires = c(45, 90, 100, 43, 34, 67, 79),
              niveau = c(1, 3, 4, 1, 2, 2, 3)
-  ), cwidth = 2) %>%
+  )) %>%
   theme_zebra() %>%
   hline_top(part = "all", border = fp_border(width = 1.5)) %>%
   hline_bottom(part = "all", border = fp_border(width = 1.5)) %>%
   align(align = "center", part = "all" ) %>%
-  set_caption("Exemple de base de données")
+  set_caption("Exemple de base de données") %>% 
+  autofit()
 ```
 
 La base de données prend donc la forme d’un tableau. Plusieurs principes sont à respecter en général lors de la création d’une base de données. Tout d’abord, les lignes de la base de données (qu'on appelle des **observations**) doivent correspondre le cas échéant à des individus bien identifiés. Ensuite, chaque colonne doit correspondre à une variable. L’ensemble des données contenues dans une même ligne correspond donc aux données relatives aux différentes variables (e.g., la taille, le poids, le sexe, etc.) qui auraient été obtenues chez un même individu. Dans le cas d’études où l'on évaluerait une ou plusieurs variables plusieurs fois  chez un même individu (i.e., à différentes moments, dans différentes conditions), il peut convenir de créer autant de lignes que de fois où les variables auraient été évaluées. Par exemple, le tableau ci-dessous représente une base de données (certes très sommaire) contenant des données d'individus dont on aurait évalué le poids deux fois, avant et après un programme de prise en charge. On remarque alors qu'il y a deux lignes par individu qui correspondent aux deux temps d'évaluation. La taille, elle, n'aura été évaluée qu'une seule fois, en début de programme, mais pour éviter de laisser des cellules vides, alors la valeur aura été reproduite dans la seconde ligne.
@@ -41,7 +42,8 @@ flextable(
   hline_top(part = "all", border = fp_border(width = 1.5)) %>%
   hline_bottom(part = "all", border = fp_border(width = 1.5)) %>%
   align(align = "center", part = "all" ) %>%
-  set_caption("Organisation d'une base de données avec des mesures répétées")
+  set_caption("Organisation d'une base de données avec des mesures répétées") %>% 
+  autofit()
 ```
 
 En principe, les données de la base qui ont été obtenues selon la même procédure d’acquisition représentent le même type de choses. Ces choses sont appelées des **variables** car elles varient selon les individus qui ont été étudiés et les conditions de mesure qui ont été mises en oeuvre (dans le cas où il y en aurait plusieurs). Lorsque ces choses ne sont pas censées varier, on parle de **constantes**. Une base de données peut comporter plusieurs variables de natures différentes :
@@ -197,7 +199,8 @@ flextable(
   hline_bottom(part = "all", border = fp_border(width = 1.5)) %>%
   align(j = 1, align="left", part="all") %>%
   align(j = 2, align="center", part="all") %>%
-  set_caption("Les opérateurs utilisables avec la fonction `filter()`")
+  set_caption("Les opérateurs utilisables avec la fonction `filter()`") %>% 
+  autofit()
 ```
 
 De plus, dans la configuration du code, ces opérateurs peuvent être couplés à l'opérateur `|` (OU) et à l'opérateur `&` (ET). Dans l'exemple ci-dessous, le code permet, à partir du jeu de données `iris`, de ne garder que les lignes du jeu de données qui contiennent les noms d'espèce *setosa* OU *virginica*, ET en même temps qui affichent une longueur de sépale inférieure ou égale à 5.
