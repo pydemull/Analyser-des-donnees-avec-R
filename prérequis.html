@@ -24,7 +24,7 @@
 <meta name="author" content="Pierre-Yves de Müllenheim" />
 
 
-<meta name="date" content="2021-07-23" />
+<meta name="date" content="2021-07-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -196,7 +196,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2.2" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#etudier-numériquement-la-relation-1"><i class="fa fa-check"></i><b>4.2.2</b> Etudier numériquement la relation</a></li>
 </ul></li>
 <li class="chapter" data-level="4.3" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#relation-entre-une-variable-quantitative-et-une-variable-qualitative"><i class="fa fa-check"></i><b>4.3</b> Relation entre une variable quantitative et une variable qualitative</a><ul>
-<li class="chapter" data-level="4.3.1" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#etudier-graphiquement-la-relation-2"><i class="fa fa-check"></i><b>4.3.1</b> Etudier graphiquement la relation</a></li>
+<li class="chapter" data-level="4.3.1" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#comparaison-de-deux-groupes-de-données"><i class="fa fa-check"></i><b>4.3.1</b> Comparaison de deux groupes de données</a></li>
 <li class="chapter" data-level="4.3.2" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#etudier-numériquement-la-relation-2"><i class="fa fa-check"></i><b>4.3.2</b> Etudier numériquement la relation</a></li>
 </ul></li>
 <li class="chapter" data-level="4.4" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#résumé-3"><i class="fa fa-check"></i><b>4.4</b> Résumé</a></li>
@@ -364,7 +364,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 Le nombre d’arguments dépend des fonctions. Certaines n’en n’ont qu’un, d’autres peuvent en avoir un très grand nombre. Dans une fonction, certains arguments doivent obligatoirement recevoir une valeur indiquée par nos soins, alors que d’autres arguments ne seront tout simplement pas utilisés si on ne leur associe pas une valeur particulière. Enfin, certains arguments prendront une valeur par défaut associée à la fonction si l’on écrit rien les concernant dans la fonction. Dans la fonction <code>plot()</code>, seul l’argument <code>x</code> doit obligatoirement recevoir une valeur pour que la fonction puisse être utilisée. Dans notre exemple, le fait d’avoir en plus associer une valeur à l’argument <code>y</code> permet à la fonction de non pas montrer uniquement les données de la variable <code>x</code>, mais de réaliser un graphique en montrant les données de <code>y</code> en fonction de <code>x</code>, comme ci-dessous :</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="prérequis.html#cb35-1"></a><span class="kw">plot</span>(<span class="dt">x =</span> iris<span class="op">$</span>Sepal.Length, <span class="dt">y =</span> iris<span class="op">$</span>Petal.Length)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:plotfunction2"></span>
-<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/plotfunction2-1.png" alt="Graphique obtenu avec un paramétrage explicite de la fonction `plot()`" width="70%" />
+<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/plotfunction2-1.png" alt="Graphique obtenu avec un paramétrage explicite de la fonction `plot()`" width="70%" />
 <p class="caption">
 Figure 1.1: Graphique obtenu avec un paramétrage explicite de la fonction <code>plot()</code>
 </p>
@@ -376,7 +376,7 @@ Figure 1.1: Graphique obtenu avec un paramétrage explicite de la fonction <code
 <p>En revanche, si nous avions inversé l’ordre d’écriture des variables dans la fonction sans préciser les noms des arguments, nous aurions eu un résultat différent du graphique précédent (cf. figure ci-dessous, où les variables en x et en y ont été inversées par rapport au graphique précédent) :</p>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="prérequis.html#cb38-1"></a><span class="kw">plot</span>(iris<span class="op">$</span>Petal.Length, iris<span class="op">$</span>Sepal.Length)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:plotfunction5"></span>
-<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/plotfunction5-1.png" alt="Graphique obtenu avec un paramétrage implicite de la fonction `plot()`" width="70%" />
+<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/plotfunction5-1.png" alt="Graphique obtenu avec un paramétrage implicite de la fonction `plot()`" width="70%" />
 <p class="caption">
 Figure 1.2: Graphique obtenu avec un paramétrage implicite de la fonction <code>plot()</code>
 </p>
@@ -397,7 +397,7 @@ Figure 1.2: Graphique obtenu avec un paramétrage implicite de la fonction <code
 <div id="divers" class="section level3">
 <h3><span class="header-section-number">1.2.5</span> Divers</h3>
 <p>Au fur et à mesure que l’on écrit un script, une bonne pratique consiste à régulièrement créer des sections avec des titres et d’ajouter des commentaires pour certaines analyses. Afin de ne pas rendre activable les lignes de code qui ne serviraient qu’à écrire des titres ou des commentaires, il convient d’utiliser le symbole <code>#</code> devant l’écriture du code.</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="prérequis.html#cb42-1"></a><span class="co">### Titre de section 1 ----------------------------------------------------------------</span></span>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="prérequis.html#cb42-1"></a><span class="co">### Titre de section 1 -------------------------------------------</span></span>
 <span id="cb42-2"><a href="prérequis.html#cb42-2"></a><span class="co">## Sous-titre 1</span></span>
 <span id="cb42-3"><a href="prérequis.html#cb42-3"></a>  <span class="co"># Commentaire 1</span></span></code></pre></div>
 <p>Étant donné que l’erreur est difficile à éviter à un moment donné ou à un autre lorsqu’on commence à écrire son propre code ou à utiliser un code qui vient de quelqu’un d’autre, il est utile de reconnaître les situations dans lesquelles une erreur est survenue. La situation la plus évidente est l’apparition d’un texte en rouge dans la Console. Lorsqu’il s’agit bel et bien d’une erreur (car il peut ne s’agir parfois que d’un message d’alerte ou d’information), le texte en rouge décrit l’erreur qui a été détectée et qui empêche le code d’être entièrement activé. De manière moins visible, il est possible parfois d’observer un <code>+</code> tout en bas de la Console. Cela survient lorsque le code lancé à l’instant est incomplet (e.g., une parenthèse a été oubliée). Si cela arrive, il vaut mieux appuyer sur <strong>Echap</strong>, trouver l’erreur dans le code, et relancer la commande. Avant de relancer la commande, il faut s’assurer que R donne effectivement la main pour lancer une nouvelle instruction. C’est le cas lorsque le symbole <code>&gt;</code> est observé dans la Console. Enfin, RStudio permet d’utiliser un certain nombre de raccourcis clavier. Pour en avoir une vue d’ensemble, appuyer sur <strong>Alt+Shift+K</strong>.</p>
