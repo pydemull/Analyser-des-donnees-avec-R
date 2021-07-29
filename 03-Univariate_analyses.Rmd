@@ -1,6 +1,6 @@
 
 # Analyses descriptives univariées
-Réaliser une analyse descriptive univariée signifie que l'on s'intéresse à une seule variable en particulier. L'enjeu est ici de prendre connaissance de la distribution de la variable, c'est-à-dire de la manière selon laquelle se répartissent les observations en fonction des valeurs que prend la variable. Autrement dit, il s'agit d'avoir une idée du nombre d'observations (qui peut être le nombre d'individus dans certains cas, tels que dans des études portant sur l'être humain) en lien avec les différentes valeurs qui ont été obtenues. De manière complémentaire, l'analyse descriptive univariée vise à prendre connaissance des indices statistiques qui caractérisent la variable, ainsi qu'à déterminer les indices statistiques qui seraient les plus pertinents pour la résumer.
+Réaliser une analyse descriptive univariée signifie que l'on s'intéresse à une seule variable en particulier. L'enjeu est ici de prendre connaissance de la distribution de la variable, c'est-à-dire de la manière selon laquelle se répartissent les observations en fonction des valeurs que prend la variable. De manière complémentaire, l'analyse descriptive univariée vise à prendre connaissance des indices statistiques qui caractérisent la variable, ainsi qu'à déterminer ceux qui seraient les plus pertinents pour la résumer.
 
 Dans cette partie, les notions de **population** et d'**échantillon** vont revenir à plusieurs reprises. La notion de population désigne tous les individus existant qui satisfont à un ou plusieurs critères particuliers (e.g., les adultes de moins de 30 ans). En général, lorsque l'on souhaite étudier un phénomène dans une population cible, il est impossible de prendre en compte tous les individus de la population en question. L'alternative est alors de conduire l'étude sur un échantillon, c'est-à-dire une fraction de la population composée d'individus qui représentent la population étudiée. La distinction entre population et échantillon est importante à faire à plusieurs égards. Si l'étude n'a pu être conduite que sur un échantillon, cela implique de mettre en oeuvre des procédures statistiques pour estimer avec plus ou moins d'incertitude le résultat réel concernant la population étudiée, cela à partir du résultat trouvé dans l'échantillon observé. La seule analyse descriptive de l'échantillon ne suffit donc pas en soit à décrire une population. En revanche, lorsque l'étude a pu être conduite sur l'ensemble de la population à étudier (e.g., l'équipe de France dans un sport donné), il n'y a par définition pas lieu de chercher à conduire des procédures statistiques particulières pour estimer le résultat réel pour la population en question. Dans ce chapitre, les procédures d'analyse proposées servent en général à seulement décrire la variable telle qu'elle est donnée à voir à partir des données que l'on a en sa possession. L'objectif n'est donc pas ici de discuter particulièrement des statistiques les plus pertinentes à utiliser lorsqu'il s'agit de chercher à résumer la distribution d'une variable à l'échelle d'une population à partir d'un échantillon initial. Pour le moment, il s'agit d'être en mesure de décrire l'échantillon (ou la population si les données obtenues concernent toute la population) que l'on a sous les yeux.
 
@@ -10,12 +10,12 @@ Dans le cadre de cette partie, nous allons commencer à voir comment produire de
 ### Visualiser la distribution de la variable
 Dans le cadre de l'analyse de variables quantitatives, il est toujours utile de d'abord visualiser graphiquement la distribution des données à l'aide d'un **histogramme**. Un histogramme, c'est un graphique avec des barres dont la largeur représente un intervalle donné de valeurs numériques, et dont la hauteur représente le nombre d'observations associées à une valeur qui est située dans l'intervalle en question. Plus une barre est longue, plus il y a d'observations concernées par l'intervalle de valeurs. Un exemple d'histogramme est montré ci-dessous.
 
-```{r geomhistogram, fig.cap = "Exemple d'histogramme"}
+```{r geomhistogram, fig.cap = "Exemple d'histogramme", out.width='80%'}
 ggplot(data = iris, aes(x = Sepal.Length)) + 
   geom_histogram(fill = "white", color = "black")
 ```
 
-Pour générer cet histogramme, nous avons utilisé les fonctions `ggplot()` et `geom_histogram()` du package `ggplot2`. La fonction `ggplot()` est nécessaire pour initier le graphique. Si on lance la commande `ggplot()` dans la Console, on peut voir qu'un écran grisé apparaît à droite de l'écran du PC dans la fenêtre **Plots** de RStudio. Cet écran grisé est tel un tableau vierge qui ne demande qu'à être complété grâce à des commandes supplémentaires que l'on doit préciser dans le code. Dans le code montré ci-dessus, on remarque que la fonction `ggplot()` a été configurée à l'aide de deux arguments : `data`, et `aes()`. L'argument `data` désigne le jeu de données à partir duquel n'importe quelle autre fonctionnalité du package `ggplot2` sera utilisée si rien d'autre n'est précisé dans le reste du code. Comme on peut le voir, le jeu de données utilisé ici est `iris`, que nous avons déjà rencontré dans la partie précédente. L'argument `aes()`, lui, permet de désigner les données à partir desquelles les éléments graphiques indiqués par la suite devront être réalisés. Dans le cadre d'une analyse univariée, nous n'avons besoin que d'une seule variable. Celle-ci peut être renseignée à droite de `x =`, et on aura reconnu ici le nom d'une variable effectivement présente dans le jeu de données `iris`. Une fois que ces informations sont renseignées, nous ne sommes pas encore en mesure de voir un quelconque graphique. Pour cela, il faut que la fonction `ggplot()` soit accompagnée d'une fonction qui permette d'indiquer quel type de graphique on veut. C'est à cela que sert ici la fonction `geom_histogram()`. On peut noter que l'ajout de cette fonction a été réalisé grâce au signe `+`, en écrivant la fonction *après* ce signe. La fonction `geom_histogram()` aurait pu être écrite directement après le symbole `+`, mais pour des raisons de lisibilité, nous sommes allés à la ligne. (Attention : Aller à la ligne *avant* le signe `+` n'est en revanche pas possible.) De manière intéressante (et importante) pour la suite, on pourra noter que dans ce cas de figure, nous aurions pu aussi utiliser le symbole *pipe* (`%>%`) pour enchaîner la création d'un graphique à la suite de l'écriture du jeu de données qu'on aurait indiqué initialement dans le code, comme cela : 
+Pour générer cet histogramme, nous avons utilisé les fonctions `ggplot()` et `geom_histogram()` du package `ggplot2`. La fonction `ggplot()` est nécessaire pour initier le graphique. Si on lance la commande `ggplot()` dans la Console, on peut voir qu'un écran grisé apparaît à droite de l'écran du PC dans la fenêtre **Plots** de RStudio. Cet écran grisé est tel un tableau vierge qui ne demande qu'à être complété grâce à des commandes supplémentaires que l'on doit préciser dans le code. Dans le code montré ci-dessus, on remarque que la fonction `ggplot()` a été configurée à l'aide de deux éléments : l'argument `data`, et la fonction `aes()`. L'argument `data` désigne le jeu de données à partir duquel n'importe quelle autre fonctionnalité du package `ggplot2` sera utilisée si rien d'autre n'est précisé dans le reste du code. Comme on peut le voir, le jeu de données utilisé ici est `iris`, que nous avons déjà rencontré dans la partie précédente. La fonction `aes()`, elle, permet de désigner les données à partir desquelles les éléments graphiques indiqués par la suite devront être réalisés. Dans le cadre d'une analyse univariée, nous n'avons besoin que d'une seule variable. Celle-ci peut être renseignée à droite de `x =`, et on aura reconnu dans le code ci-dessus le nom d'une variable effectivement présente dans le jeu de données `iris`. Une fois que ces informations sont renseignées, nous ne sommes pas encore en mesure de voir un quelconque graphique. Pour cela, il faut que la fonction `ggplot()` soit accompagnée d'une fonction qui permette d'indiquer quel type de graphique on veut. C'est à cela que sert ici la fonction `geom_histogram()`. On peut noter que l'ajout de cette fonction a été réalisé grâce au signe `+`, en écrivant la fonction *après* ce signe. La fonction `geom_histogram()` aurait pu être écrite directement après le symbole `+`, mais pour des raisons de lisibilité, nous sommes allés à la ligne. (Attention : Aller à la ligne *avant* le signe `+` n'est en revanche pas possible.) De manière intéressante et importante pour la suite, on pourra noter que dans ce cas de figure, nous aurions pu aussi utiliser le symbole *pipe* (`%>%`) pour enchaîner la création d'un graphique à la suite de l'écriture du jeu de données qu'on aurait indiqué initialement dans le code, comme cela : 
 
 ```{r geom_histogram with pipe, eval = FALSE}
 iris %>% 
@@ -25,7 +25,7 @@ iris %>%
 # On remarque ici que l'argument `data = ` dans `ggplot()` a dû être enlevé.
 ```
 
-Comme l'indique le message qui accompagne le graphique, l'histogramme a été réalisé sur la base de 30 *bins*. Cela signifie que pour faire ce graphique, R a découpé en 30 intervalles égaux l'intervalle allant de la valeur la plus faible de la variable (i.e., le minimum) à la valeur la plus élevée de la variable (i.e., le maximum). Il s'agit de la méthode par défaut utilisée par la fonction `geom_histogram()`. Toutefois, cette méthode par défaut n'est pas vraiment adaptée, comme cela l'est indiqué d'ailleurs dans la documentation d'aide associée à cette fonction. Et puis, lorsqu'il s'agit d'appréhender au mieux la distribution d'une variable avec un histogramme, une bonne pratique est d'observer ce qu'il se passe avec différentes largeurs de *bins*. La largeur d'une *bin* peut être modifiée à l'aide de l'argument `binwidth`. L'unité de la valeur associée à cet argument correspond à l'unité de la variable étudiée.
+Comme l'indique le message qui accompagne le graphique, l'histogramme a été réalisé sur la base de 30 *bins*. Cela signifie que pour faire ce graphique, R a découpé en 30 intervalles égaux l'intervalle allant de la valeur la plus faible de la variable (i.e., le minimum) à la valeur la plus élevée de la variable (i.e., le maximum). Il s'agit de la méthode par défaut utilisée par la fonction `geom_histogram()`. Toutefois, cette méthode par défaut n'est pas vraiment adaptée, comme cela l'est indiqué d'ailleurs dans la documentation d'aide associée à cette fonction. Et puis, lorsqu'il s'agit d'appréhender au mieux la distribution d'une variable avec un histogramme, une bonne pratique est d'observer ce qu'il se passe avec différentes largeurs de *bins*. La largeur d'une *bin* peut être modifiée à l'aide de l'argument `binwidth`. L'unité de la valeur associée à cet argument correspond à l'unité de la variable étudiée (cf. code ci-dessous et Figure \@ref(fig:geomhistogramVariedBinwidth2)).
 
 ```{r patchwork, include = FALSE, message = FALSE}
 library(patchwork)
@@ -43,7 +43,7 @@ ggplot(data = iris, aes(x = Sepal.Length)) +
   ggtitle("binwidth = 0.7")
 ```
 
-```{r geomhistogramVariedBinwidth2, echo = FALSE,  fig.cap="Différentes largeurs d'intervalles pour un histogramme"}
+```{r geomhistogramVariedBinwidth2, out.width='80%', echo = FALSE,  fig.cap="Différentes largeurs d'intervalles pour un histogramme"}
 
 g1 <- ggplot(data = iris, aes(x = Sepal.Length)) + 
   geom_histogram(binwidth  = 0.3, fill = "white", color = "black") +
@@ -56,19 +56,19 @@ g2 <- ggplot(data = iris, aes(x = Sepal.Length)) +
 g1 | g2
 ```
 
-En plus de l'histogramme, une autre manière de prendre connaissance graphiquement de la distribution des données d'une variable quantitative est d'utiliser une **boîte à moustaches**. Pour ce faire, il convient d'utiliser la fonction `geom_boxplot()`, comme illustré ci-dessous. (On pourra noter l'ajout d'une ligne de code avec une fonction `theme()` dont on ne présentera pas les détails ici ; cette fonction nous sert juste ici à ne pas montrer des chiffres qui auraient été ajoutés par défaut sur l'axe Y de gauche du graphique et qui n'auraient eu aucun intérêt.)
+En plus de l'histogramme, une autre manière de prendre connaissance graphiquement de la distribution des données d'une variable quantitative est d'utiliser une **boîte à moustaches**. Pour ce faire, il convient d'utiliser la fonction `geom_boxplot()`, comme montré dans le code ci-dessous. Le résultat de ce code est montré sur la Figure \@ref(fig:geomboxplot). On pourra noter ci-dessous l'ajout d'une ligne de code avec une fonction `theme()` dont on ne présentera pas les détails ici ; cette fonction nous sert juste ici à ne pas montrer des chiffres qui auraient été ajoutés par défaut sur l'axe Y de gauche du graphique et qui n'auraient eu aucun intérêt.
 
-```{r geomboxplot, fig.height=3, fig.cap="Exemple de boîte à moustaches"}
+```{r geomboxplot,  fig.height=2, fig.cap="Exemple de boîte à moustaches"}
 ggplot(data = iris, aes(x = Sepal.Length)) + 
   geom_boxplot() +
     theme(axis.text.y = element_blank(), 
           axis.ticks.y = element_blank())
 ```
 
-La boîte à moustaches nous livre plusieurs informations. Tout d'abord, ses extrémités nous indiquent ce qu'on appelle le premier quartile (ici représenté par le bord gauche de la boîte) et le troisième quartile (ici représenté par le bord droit de la boîte). Le premier quartile (Q1) désigne la valeur en-dessous de laquelle on retrouve 25 % des observations de la variable (i.e., 25 % des observations sont associées à une valeur plus faible que Q1), alors que le troisième quartile (Q3) représente la valeur en-dessous de laquelle on retrouve 75 % des observations (i.e., 75 % des observations sont associées à une valeur plus faible que Q3). Cela indique alors que sur le graphique montré ci-dessus, l'intervalle qui sépare le bord gauche du bord droit de la boîte contient 50 % des observations. La ligne noire à l'intérieur de la boîte blanche désigne la médiane, qui est la valeur pour laquelle on a 50 % des observations qui ont une valeur inférieure à cette valeur repère, et pour laquelle on a 50 % des observations qui ont une valeur supérieure à cette valeur repère. Les lignes noires en-dehors de la boîte sont les moustaches. Dans le cas présent, la moustache de gauche s'étend jusqu'à la valeur minimale de la variable, et la moustache de droite s'étend jusqu'à la valeur maximale de la variable. Dans le cas où le minimum (ou le maximum) aurait été éloigné de la médiane de plus de 1.5 fois la différence entre Q3 et Q1 (qu'on appelle **intervalle interquartile**), l'extrémité de la moustache se serait arrêtée à la dernière valeur avant cette limite, et toute valeur ayant dépassé cette limite aurait été représentée par un point. Pour illustrer ce dernier cas de figure, on peut modifier manuellement une valeur de la variable Sepal.Length de telle sorte à ce qu'il y ait une nouvelle valeur qui soit particulièrement éloignée de la boîte. Une telle valeur s'appelle un *outlier*.
+La boîte à moustaches (cf. Figure \@ref(fig:geomboxplot)) nous livre plusieurs informations. Tout d'abord, ses extrémités nous indiquent ce qu'on appelle le premier quartile (ici représenté par le bord gauche de la boîte) et le troisième quartile (ici représenté par le bord droit de la boîte). Le premier quartile (Q1) désigne la valeur en-dessous de laquelle on retrouve 25 % des observations de la variable (i.e., 25 % des observations sont associées à une valeur plus faible que Q1), alors que le troisième quartile (Q3) représente la valeur en-dessous de laquelle on retrouve 75 % des observations (i.e., 75 % des observations sont associées à une valeur plus faible que Q3). Cela indique alors que sur la Figure \@ref(fig:geomboxplot), l'intervalle qui sépare le bord gauche du bord droit de la boîte contient 50 % des observations. La ligne noire à l'intérieur de la boîte blanche désigne la médiane, qui est la valeur pour laquelle on a 50 % des observations qui ont une valeur inférieure à cette valeur repère, et pour laquelle on a 50 % des observations qui ont une valeur supérieure à cette valeur repère. Les lignes noires en-dehors de la boîte sont les moustaches. Dans le cas présent, la moustache de gauche s'étend jusqu'à la valeur minimale de la variable, et la moustache de droite s'étend jusqu'à la valeur maximale de la variable. Si le minimum (ou le maximum) avait été éloigné de la médiane de plus de 1.5 fois la différence entre Q3 et Q1 (qu'on appelle **intervalle interquartile**), l'extrémité de la moustache se serait arrêtée à la dernière valeur avant cette limite, et toute valeur ayant dépassé cette limite aurait été représentée par un point. Pour illustrer ce dernier cas de figure, on peut modifier manuellement une valeur de la variable `Sepal.Length` du jeu de données `iris` de telle sorte à ce qu'il y ait une nouvelle valeur qui soit particulièrement éloignée de la boîte. Une telle valeur s'appelle un *outlier*.
 
-```{r geomboxplotModified, fig.height=3, fig.cap="Visualisation d'un outlier"}
- # On modifie ici, pour l'exemple, la valeur de la 3ème observation
+```{r geomboxplotModified, fig.height=2, fig.cap="Visualisation d'un outlier"}
+# On modifie ici, pour l'exemple, la valeur de la 3ème observation
 # en lui assignant la valeur 12.
 
 iris$Sepal.Length[3] <- 12     
@@ -79,7 +79,7 @@ ggplot(data = iris, aes(x = Sepal.Length)) +
           axis.ticks.y = element_blank())
 ```
 
-Une boîte à moustaches a donc notamment l'intérêt de mettre en évidence des valeurs qui apparaissent comme "étranges" par rapport au reste des données. Lorsqu'il semble évident que l'*outlier* est une valeur erronnée (ou quand on veut tout simplement vérifier qu'il s'agit d'une erreur ou non), il est intéressant de savoir à quelle observation (i.e., à quel individu dans certains contextes) cette valeur étrange appartient, pour ensuite éventuellement la corriger. Malheureusement, la fonction `geom_boxplot()` ne dispose pas d'argument pour permettre d'identifier facilement à quelle observation appartient cette valeur. Cependant, on peut s'appuyer sur des fonctions créées manuellement dans R pour parvenir à cela. Dans ce cas de figure, le site https://stackoverflow.com est souvent intéressant car riche de solutions. C'est d'ailleurs en provenance de ce site que vient la fonction montrée ci-dessous (https://stackoverflow.com/questions/33524669/labeling-outliers-of-boxplots-in-r) qui va nous permettre ensuite de savoir, à partir du graphique, à quelle observation correspond cette donnée étrange.
+Une boîte à moustaches a donc notamment l'intérêt de mettre en évidence des valeurs qui apparaissent comme "étranges" par rapport au reste des données. Lorsqu'il semble évident que l'*outlier* est une valeur erronée, ou quand on veut tout simplement vérifier qu'il s'agit d'une erreur ou non, il est intéressant de savoir à quelle observation (i.e., à quel individu dans certains contextes) cette valeur étrange appartient, pour ensuite éventuellement la corriger. Malheureusement, la fonction `geom_boxplot()` ne dispose pas d'argument pour permettre d'identifier facilement à quelle observation appartient cette valeur. Cependant, on peut s'appuyer sur des fonctions créées manuellement dans R pour parvenir à cela. Dans ce cas de figure, le site https://stackoverflow.com est souvent intéressant car riche de solutions. C'est d'ailleurs en provenance de ce site que vient la fonction montrée ci-dessous (https://stackoverflow.com/questions/33524669/labeling-outliers-of-boxplots-in-r) qui va nous permettre ensuite de savoir, à partir du graphique, à quelle observation correspond cette donnée étrange.
 
 ```{r is_outlier function}
 is_outlier <- function(x) {
@@ -87,18 +87,18 @@ is_outlier <- function(x) {
 }
 ```
 
-Voici donc, ci-dessus, à quoi ressemble une fonction à son état brut, avec : le nom de la fonction à gauche de la flèche d'assignation (`<-`), la commande `function()` qui permet d'amorcer la création de la fonction, et les lignes de code entre les accolades { } qui indiquent les actions que la fonction réalise. La seule chose qu'il faut comprendre à ce stade, c'est que cette fonction, qui va donc s'appeler par la suite `is_outlier()`, a besoin pour fonctionner qu'on lui indique un nom de variable (représenté par la lettre `x` dans le code ci-dessus), et que le résultat de cette fonction sera une nouvelle variable qui contiendra seulement des `TRUE` ou des `FALSE`, en sachant que `TRUE` correspondra au fait que la valeur de la variable étudiée était un *outlier*, et que `FALSE` correspondra au fait que la valeur de la variable étudiée n'était pas un *outlier*. (Notons ici que la définition d'un *outlier* est la même que celle décrite plus haut, à savoir une valeur qui serait éloignée de la médiane de plus de 1.5 fois l'intervalle interquartile.) Mais regardons concrètement ce que donne cette fonction lorsqu'elle est appliquée à la variable Sepal.Length du jeu de données `iris` (NB : La fonction ne marchera que si elle a été activée/créée auparavant) :
+Voici donc, ci-dessus, à quoi ressemble une fonction à son état brut, avec : le nom de la fonction à gauche de la flèche d'assignation (`<-`), la commande `function()` qui permet d'amorcer la création de la fonction, et les lignes de code entre les accolades { } qui indiquent les actions que la fonction réalise. La seule chose qu'il faut comprendre à ce stade, c'est que cette fonction, qui va donc s'appeler par la suite `is_outlier()`, a besoin pour fonctionner qu'on lui indique un nom de variable (représenté par la lettre `x` dans le code ci-dessus), et que le résultat de cette fonction sera une nouvelle variable qui contiendra seulement des `TRUE` ou des `FALSE`, en sachant que `TRUE` correspondra au fait que la valeur de la variable étudiée était un *outlier*, et que `FALSE` correspondra au fait que la valeur de la variable étudiée n'était pas un *outlier*. (Notons ici que la définition d'un *outlier* est la même que celle décrite plus haut, à savoir une valeur qui serait éloignée de la médiane de plus de 1.5 fois l'intervalle interquartile.) Mais regardons concrètement ce que donne cette fonction lorsqu'elle est appliquée à la variable `Sepal.Length` du jeu de données `iris` (NB : La fonction ne marchera que si elle a été activée/créée auparavant) :
 
 ```{r is_outlier function result}
 is_outlier(x = iris$Sepal.Length)
 ```
 
-Quand on regarde bien, on voit que la troisème observation de cette nouvelle variable que l'on vient de créer (seulement de manière temporaire ici car on ne l'a pas assignée à un nom) contient la valeur `TRUE`, ce qui est en accord avec la valeur que nous avons introduite auparavant dans la variable Sepal.Length. Le fait d'observer ces valeurs `TRUE` et `FALSE` n'est évidemment pas une stratégie très pratique pour déterminer à quelle observation correspondrait l'*outlier*, et c'est pourquoi l'étape suivante consiste à montrer comment on peut se servir de cette fonction `is_outlier()` pour faire apparaître sur un graphique de boîte à moustaches les observations à qui appartiendraient les valeurs étranges.
+Quand on regarde bien, on voit que la troisième observation de cette nouvelle variable que l'on vient de créer (seulement de manière temporaire ici car on ne l'a pas assignée à un nom) contient la valeur `TRUE`, ce qui est en accord avec la valeur que nous avons introduite auparavant dans la variable `Sepal.Length`. Le fait d'observer ces valeurs `TRUE` et `FALSE` n'est évidemment pas une stratégie très pratique pour déterminer à quelle observation correspondrait l'*outlier*, et c'est pourquoi l'étape suivante consiste à montrer comment on peut se servir de cette fonction `is_outlier()` pour faire apparaître sur un graphique de boîte à moustaches les observations à qui appartiendraient les valeurs étranges (cf. Figure \@ref(fig:geomboxplotOutlierId)).
 
-```{r geomboxplotOutlierId, fig.height=3, fig.cap="Identification d'un outlier"}
+```{r geomboxplotOutlierId, fig.height=2, fig.cap="Identification d'un outlier"}
 
 iris %>%
-  # Ajout d'un numéro id pour les observations.
+  # Ajout d'un numéro id pour les observations
   mutate(id = as.factor(rep(1:50, times = 3)), 
          # Création d'une nouvelle variable appelée id_outlier
          id_outlier = ifelse(is_outlier(x = Sepal.Length), id, "")) %>% 
@@ -111,7 +111,7 @@ iris %>%
           axis.title.y = element_blank())
 ```
 
-Il y a plusieurs choses à expliquer par rapport au graphique qui comporte à présent, comme on peut le voir ci-dessus, le numéro id associé à l'observation pour laquelle nous avions modifié la valeur. Tout d'abord, il faut noter qu'avant de créer le graphique, nous avons ajouté temporairement au jeu de données, avec la fonction `mutate()`, la variable `id_outlier`. Cette variable a été créée à l'aide de deux fonctions en réalité : la fonction `ifelse()`, et la fonction `is_outlier()` qu'on a présentée succintement plus haut. Ici, la fonction `ifelse()` a fonctionné comme cela : si la fonction `id_outlier()` renvoyait la valeur `TRUE`, alors on conservait le numéro id de la variable Sepal.Length, sinon, on ne mettait rien. Cela veut dire que la variable id_outlier ne contenait que les numéros id pour lesquels la fonction `is_outlier()` avait renvoyé la valeur `TRUE`. Pour visualiser ce qu'il s'est passé, on peut revoir la conséquence du début du code qui a permis de faire le graphique (cf. à droite du tableau ci-dessous) : 
+Il y a plusieurs choses à expliquer par rapport au graphique de la Figure \@ref(fig:geomboxplotOutlierId) qui comporte à présent le numéro `id` associé à l'observation pour laquelle nous avions modifié la valeur. Tout d'abord, il faut noter qu'avant de créer le graphique, nous avons ajouté temporairement au jeu de données, avec la fonction `mutate()`, la variable `id_outlier`. Cette variable a été créée à l'aide de deux fonctions en réalité : la fonction `ifelse()`, et la fonction `is_outlier()` qu'on a présentée succinctement plus haut. Ici, la fonction `ifelse()` a fonctionné comme cela : si la fonction `id_outlier()` renvoyait la valeur `TRUE`, alors on conservait le numéro `id` de la variable `Sepal.Length`, sinon, on ne mettait rien. Cela veut dire que la variable `id_outlier` ne contenait que les numéros `id` pour lesquels la fonction `is_outlier()` avait renvoyé la valeur `TRUE`. Pour visualiser ce qu'il s'est passé, on peut revoir la conséquence du début du code qui a permis de faire le graphique (cf. colonne de droite dans le résultat ci-dessous) : 
 
 ```{r tabular vizualisation of id.outlier}
 iris %>%
@@ -120,16 +120,16 @@ iris %>%
   dplyr::select(id, Sepal.Length, id_outlier)
 ```
 
-Une fois cette procédure réalisée, le reste du code, et notamment la fonction `geom_text()`, a permis d'ajouter des éléments textuels au graphique, en l'occurence en s'appuyant sur la variable id_outlier, tel que configuré avec l'argument `aes()` de la fonction `geom_text()`. Lorsque la valeur anormale identifiée est effectivement une erreur de saisie dans la base de données, il convient de corriger la valeur avec la fonction d'assignation comme nous l'avons fait précédemment :
+Une fois cette procédure réalisée, le reste du code, et notamment la fonction `geom_text()`, a permis d'ajouter des éléments textuels au graphique, en l’occurrence en s'appuyant sur la variable `id_outlier`, tel que configuré avec la fonction `aes()` à l'intérieur de la fonction `geom_text()`. Lorsque la valeur anormale identifiée est effectivement une erreur de saisie dans la base de données, il convient de corriger la valeur avec la fonction d'assignation comme nous l'avons fait précédemment :
 
 ```{r outlier correction}
 iris$Sepal.Length[3] <- 4.7  
 # Le nombre entre crochets désigne la position de l'observation dans la variable.
 ```
 
-On remarque ainsi qu'au-delà de prendre connaissance de la forme de la distribution, passer par ces étapes graphiques permet aussi de s'assurer qu'il n'y a pas eu d'erreur lors de la saisie des données dans la base (du moins, pas d'erreur visible et qui risquerait d'impacter grandement les calculs futurs). Passer par l'analyse graphique est donc recommandé avant de pouvoir se fier aux résultats numériques que l'on pourrait calculer par la suite, tels que les indices statistiques qui permettent de résumer numériquement une variable. Afin de faciliter l'analyse graphique de la distribution de la variable étudiée, nous avons crée une fonction, appelée `plot_distri()` (cf. ci-dessous), visant à produire à la fois un histogramme et une boîte à moustaches représentant la variable étudiée, ainsi qu'un graphique de type nuage de points montrant les valeurs individuelles (la fonction a été configurée de telle sorte à ce que les points apparaissent davantage de couleur blanche là où il y a plus d'observations ; les observations isolées seront montrées avec des points relativement transparents).
+On remarque ainsi qu'au-delà de prendre connaissance de la forme de la distribution, passer par ces étapes graphiques permet aussi de s'assurer qu'il n'y a pas eu d'erreur lors de la saisie des données dans la base (du moins, pas d'erreur visible et qui risquerait d'impacter grandement les calculs futurs). Passer par l'analyse graphique est donc recommandé avant de pouvoir se fier aux résultats numériques que l'on pourrait calculer par la suite, tels que les indices statistiques qui permettent de résumer numériquement une variable. Afin de faciliter l'analyse graphique de la distribution de la variable étudiée, nous avons crée une fonction, appelée `plot_distri()` (cf. ci-dessous), visant à produire à la fois un histogramme et une boîte à moustaches représentant la variable étudiée, ainsi qu'un graphique de type nuage de points montrant les valeurs individuelles.
 
-```{r plot_distri}
+```{r}
 plot_distri <- function(x = NULL, binwidth = NULL) {
   require(ggplot2)
   require(magrittr)
@@ -168,15 +168,67 @@ plot_distri <- function(x = NULL, binwidth = NULL) {
 }
 ```
 
-L'utilisation de la fonction `plot_distri()` est illustrée ci-dessous (pour rappel, il est important d'activer/créer la fonction avant de pouvoir l'utiliser) :
 
-```{r gdistriExample, message = FALSE, out.width = '50%', fig.cap="Visualisation de la distribution avec la fonction `plot_distri()`"}
+L'utilisation de la fonction `plot_distri()` est illustrée sur la Figure \@ref(fig:plotdistriExample) (pour rappel, il est important d'activer/créer la fonction avant de pouvoir l'utiliser) :
+
+```{r , message = FALSE, eval = F}
 plot_distri(x = iris$Sepal.Length, binwidth = 0.3)
 ```
 
-Lors de l'analyse de données, différentes formes typiques de distribution peuvent être rencontrées, notamment des formes **gaussiennes**, **asymétriques**, **leptocurtiques**, et **platycurtiques** [@dartCommentDecrireDistribution2003]. Ces formes sont illustrées sur la figure ci-dessous. Les formes gaussiennes sont observées en présence de variables suivant ce qu'on appelle une **loi normale**. Très souvent, on associe une distribution gaussienne, et donc une loi normale, à une distribution en forme de cloche, bien que  l'analogie à la cloche pourrait se discuter. Les formes asymétriques traduisent le fait que la majorité des observations sont concentrées sur une extrémité de l'intervalle des valeurs possibles, et qu'il existe des observations, non majoritaires, avec des valeurs pouvant être très éloignées de la majorité des données, mais seulement d'un seul côté de la distribution. Enfin, les formes leptocurtiques et platycurtiques sont appelées ainsi par comparaison à la forme gaussienne. En présence d'une forme leptocurtique, la distribution s'avère plus pointue, avec des queues (qui sont les extrémités de la distribution) plus longues qu'avec une forme gaussienne. Dans le cadre d'une distribution platycurtique, la distribution est plus aplatie, avec des queues plus courtes qu'avec une forme gaussienne [@dartCommentDecrireDistribution2003]. La distribution uniforme est un cas particulier de distribution platycurtique, et c'est cette distribution qui est en réalité montrée sur la figure ci-dessous.
+```{r plotdistriExample, message = FALSE, echo = FALSE, out.width = '70%', fig.cap="Visualisation de la distribution à l'aide de plusieurs procédures graphiques"}
+p <- plot_distri(x = iris$Sepal.Length, binwidth = 0.3)
+p
+```
 
-```{r variousDistributions, echo = FALSE, message = FALSE, fig.cap="Différents types de distributions"}
+Lors de l'analyse de données, différentes formes typiques de distribution peuvent être rencontrées, notamment des formes **gaussiennes**, **asymétriques**, **leptocurtiques**, et **platycurtiques** [@dartCommentDecrireDistribution2003]. Ces formes sont illustrées sur la Figure \@ref(fig:variousDistributions). Les formes gaussiennes sont observées en présence de variables suivant ce qu'on appelle une **loi normale**. Très souvent, on associe une distribution gaussienne, et donc une loi normale, à une distribution en forme de cloche, bien que  l'analogie à la cloche pourrait se discuter. Les formes asymétriques traduisent le fait que la majorité des observations sont concentrées sur une extrémité de l'intervalle des valeurs possibles, et qu'il existe des observations, non majoritaires, avec des valeurs pouvant être très éloignées de la majorité des données, mais seulement d'un seul côté de la distribution. Enfin, les formes leptocurtiques et platycurtiques sont appelées ainsi par comparaison à la forme gaussienne. En présence d'une forme leptocurtique, la distribution s'avère plus pointue, avec des queues (qui sont les extrémités de la distribution) plus longues qu'avec une forme gaussienne. Dans le cadre d'une distribution platycurtique, la distribution est plus aplatie, avec des queues plus courtes qu'avec une forme gaussienne [@dartCommentDecrireDistribution2003]. La distribution uniforme est un cas particulier de distribution platycurtique, et c'est cette distribution qui est en réalité montrée sur la Figure \@ref(fig:variousDistributions).
+
+```{r, echo = F}
+plot_distri <- function(x = NULL, binwidth = NULL, size_axis_title = 15, size_axis_text = 10) {
+  require(ggplot2)
+  require(magrittr)
+  require(patchwork)
+  
+  data <- as.data.frame(x)
+  names(data) <- "x"
+  
+  g1 <- 
+    data %>%
+    ggplot(aes(x = x)) +
+    geom_histogram(binwidth = binwidth, fill = "white", color = "black") +
+    coord_cartesian(xlim = c(min(x, na.rm = TRUE), max(x, na.rm = TRUE))) +
+    theme(axis.title.x = element_blank(),
+          axis.title.y = element_text(size = size_axis_title),
+          axis.text = element_text(size = size_axis_text))
+  
+  g2 <- 
+    data %>% 
+    ggplot(aes(x = x)) +
+    geom_boxplot() +
+    coord_cartesian(xlim = c(min(x, na.rm = TRUE), max(x, na.rm = TRUE))) +
+    theme(axis.text.y = element_blank(),
+          axis.title.x = element_blank(),
+          axis.ticks.y = element_blank(),
+          axis.title.y = element_text(size = size_axis_title),
+          axis.text = element_text(size = size_axis_text))
+  
+    g3 <- 
+      data %>% 
+      ggplot(aes(x = x)) +
+      geom_point(aes(x = x, y = ""), shape = 21, fill = "white", alpha = 0.5, size = 3,
+                 position = position_jitter(seed = 123, width = 0.04)) +
+      ylab("") +
+      coord_cartesian(xlim = c(min(x, na.rm = TRUE), max(x, na.rm = TRUE))) +
+      theme(axis.text.y = element_blank(),
+          axis.ticks.y = element_blank(),
+          axis.title.y = element_text(size = size_axis_title),
+          axis.text = element_text(size = size_axis_text))
+    
+  g1 + g2 + g3 + plot_layout(nrow = 3, heights = c(2, 0.2, 0.2))
+}
+```
+
+
+```{r variousDistributions, echo = FALSE, message = FALSE, fig.width= 20, fig.height=20, fig.cap="Différents types de distributions"}
 set.seed(123)
 gauss <- rnorm(n = 1000, mean = 0, sd = 1)
 set.seed(123)
@@ -188,7 +240,7 @@ plati <- runif(n = 1000, min = -5, max = 5)
 
 TextPlot_gauss <- 
             ggplot() + 
-            annotate(geom = "text", x = 4, y = 1, size = 5, label = "Gaussienne") +
+            annotate(geom = "text", x = 4, y = 1, size = 12, label = "Gaussienne") +
             theme(
               plot.background = element_blank(), 
               panel.grid.major = element_blank(),
@@ -204,7 +256,7 @@ TextPlot_gauss <-
             )
 TextPlot_skew_right <- 
             ggplot() + 
-            annotate(geom = "text", x = 4, y = 1, size = 5, label = "Asymétrique") +
+            annotate(geom = "text", x = 4, y = 1, size = 12, label = "Asymétrique") +
             theme(
               plot.background = element_blank(), 
               panel.grid.major = element_blank(),
@@ -220,7 +272,7 @@ TextPlot_skew_right <-
             )
 TextPlot_lepto <- 
             ggplot() + 
-            annotate(geom = "text", x = 4, y = 1, size = 5, label = "Leptocurtique") +
+            annotate(geom = "text", x = 4, y = 1, size = 12, label = "Leptocurtique") +
             theme(
               plot.background = element_blank(), 
               panel.grid.major = element_blank(),
@@ -236,7 +288,7 @@ TextPlot_lepto <-
             )
 TextPlot_plati <- 
             ggplot() + 
-            annotate(geom = "text", x = 4, y = 1, size = 5, label = "Platycurtique") +
+            annotate(geom = "text", x = 4, y = 1, size = 12, label = "Platycurtique") +
             theme(
               plot.background = element_blank(), 
               panel.grid.major = element_blank(),
@@ -251,16 +303,16 @@ TextPlot_plati <-
               axis.line = element_blank()
             )
 
-gauss_g <- plot_distri(x = gauss)
-skew_right_g <- plot_distri(x = skew_right)
-lepto_g <- plot_distri(x = lepto) +  coord_cartesian(xlim = c(-5, 5))
-plati_g <- plot_distri(x = plati)
+gauss_g <- plot_distri(x = gauss, size_axis_title  = 30, size_axis_text = 20)
+skew_right_g <- plot_distri(x = skew_right, size_axis_title  = 30, size_axis_text = 20)
+lepto_g <- plot_distri(x = lepto, size_axis_title  = 30, size_axis_text = 20) +  coord_cartesian(xlim = c(-5, 5))
+plati_g <- plot_distri(x = plati, size_axis_title  = 30, size_axis_text = 20)
 
 (TextPlot_gauss | TextPlot_skew_right) /
 (gauss_g | skew_right_g) /
 (TextPlot_lepto | TextPlot_plati) /
 (lepto_g | plati_g) +
-plot_layout(heights = c(0.3, 1, 0.3, 1))
+plot_layout(heights = c(0.1, 2, 0.1, 2))
 ```
 
 
@@ -275,7 +327,7 @@ Les indices de position servent à donner un ordre de grandeur de la variable. A
 
 Si l'on pose que *N* est le nombre de valeurs dans une variable (on parle également de **taille** de la variable), que *i* est la i-ème observation (i-ème position) dans la variable, et que $X{i}$ est la valeur associée à la i-ème position, alors le calcul de la moyenne, notée $\overline{X}$, peut être écrit tel que ci-dessous :
 $$\overline{X} = \frac{1}{N}\sum_{i=1}^{N} X{i}$$
-Cette expression mathématique signifie que la moyenne s'obtient en additionnant ($\sum$) les valeurs allant de la position 1 à la position *N* de la variable, et en divisant le tout par le nombre total de valeurs *N* contenues dans la variable. Pour mieux comprendre, prenons par exemple une variable qui ne contiendrait que les cinq premières valeurs de la variable Sepal.Length du jeu de données `iris` et qu'on appelle `sample_iris`.
+Cette expression mathématique signifie que la moyenne s'obtient en additionnant ($\sum$) les valeurs allant de la position 1 à la position *N* de la variable, et en divisant le tout par le nombre total de valeurs *N* contenues dans la variable. Pour mieux comprendre, prenons par exemple une variable qui ne contiendrait que les cinq premières valeurs de la variable `Sepal.Length` du jeu de données `iris` et qu'on appelle `sample_iris`.
 
 ```{r sample from iris for mean calculation}
 sample_iris <- iris$Sepal.Length[1:5]
@@ -385,7 +437,7 @@ median(x = vec)
 
 Contrairement à la moyenne, la médiane prend donc en compte moins d'informations relatives aux données. Toutefois, en tant que valeur "du milieu", la médiane présente l'intérêt de ne pas être influencée par les valeurs extrêmes. En raison de cela, la médiane est susceptible de mieux refléter la tendance centrale que la moyenne en présence de faibles échantillons avec des *outliers*, ou en présence d'une forme de distribution asymétrique. Ce dernier cas est illustré sur la figure ci-dessous.
 
-```{r mediansSkewedVariables, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Médiane d'une variable présentant une distribution asymétrique"}
+```{r mediansSkewedVariables, out.width  = '80%', echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Médiane d'une variable présentant une distribution asymétrique"}
 # Graphique pour la distribution gaussienne
 set.seed(123)
 gauss <- tibble(x = rnorm(n = 1000, mean = 0, sd = 1))
@@ -544,9 +596,9 @@ table_quant, cwidth = 2) %>%
 
 Le tableau montre les données sur lesquelles R s'est appuyé pour déterminer les valeurs des quantiles recherchés (i.e., les quantiles 0.25 et 0.75 pour Q1 et Q3, respectivement). Les données du tableau sont bien celles relatives à notre variable `vec`, dont on peut reconnaître les valeurs dans la colonne de droite du tableau.  La colonne "Quantile" montre les fractions (ou portions) de la variable `vec` associées aux valeurs de la variable compte tenu de leurs rangs respectifs. Par exemple, la valeur 25.6, dont le rang est 6, correspond au quantile 0.71 (approximativement). Cela veut dire que 71 % des observations ont une valeur inférieure ou égale à 25.6. Il faut savoir qu'il existe en réalité plusieurs manières de déterminer la valeur du quantile que représente chaque valeur. Dans le cas présent, le quantile représenté, que l'on va noter *q*, a été déterminé selon la formule suivante : 
 $$q = (k - 1 ) / (N - 1)$$
-Dans le calcul ci-dessus, *k* désigne le rang de la valeur considérée, et *N* désigne la taille de la variable étudiée (i.e., le nombre total de valeurs). Comme on peut le voir dans le tableau ci-dessus, cette méthode de calcul conduit nécessairement à attribuer le quantile 0 à la valeur de rang 1, et la quantile 1 à la valeur de rang *N*. Lorsque le nombre de valeurs fait que les quantiles 0.25 et 0.75 n'existent pas, R réalise une interpolation de la valeur correspondant au quantile recherché, cela à partir des quantiles qui existent et qui encadrent le quantile recherché, ainsi qu'à partir des valeurs correspondant à ces quantiles. Dans le cas présent, il s'agit plus précisément d'une interpolation linéaire. Voyons ci-dessous en quoi cela consiste.
+Dans le calcul ci-dessus, *k* désigne le rang de la valeur considérée, et *N* désigne la taille de la variable étudiée (i.e., le nombre total de valeurs). Comme on peut le voir dans le tableau ci-dessus, cette méthode de calcul conduit nécessairement à attribuer le quantile 0 à la valeur de rang 1, et la quantile 1 à la valeur de rang *N*. Lorsque le nombre de valeurs fait que les quantiles 0.25 et 0.75 n'existent pas, R réalise une interpolation de la valeur correspondant au quantile recherché, cela à partir des quantiles qui existent et qui encadrent le quantile recherché, ainsi qu'à partir des valeurs correspondant à ces quantiles. Dans le cas présent, il s'agit plus précisément d'une interpolation linéaire. Voyons sur la Figure \@ref(fig:graphicContinuouQuantiles) en quoi cela consiste.
 
-```{r graphicContinuouQuantiles, echo = FALSE, fig.cap="Calcul des quartiles avec une variable quantitative continue"}
+```{r graphicContinuouQuantiles, out.width = '80%', echo = FALSE, fig.cap="Calcul des quartiles avec une variable quantitative continue"}
 model1 <- lm(Valeur ~ Quantile, data = table_quant[c(2, 3), c(2, 3)])
 model2 <- lm(Valeur ~ Quantile, data = table_quant[c(6, 7), c(2, 3)])
 
@@ -608,7 +660,7 @@ skewness(x = iris$Sepal.Width, type = 3)
 Comme on peut le voir dans l'aide associée à la fonction `skewness()`, il existe en réalité plusieurs méthodes de calcul du coefficient d'asymétrie. La méthode de `type` 3, qui est celle configurée par défaut pour cette fonction, consiste à faire le calcul suivant :
 
 $$\gamma_{1} =  \frac{1}{s^3} {\frac{\sum_{i=1}^{N} (X{i} - \overline{X})^3}{N}}$$
-Dans ce calcul, *s* désigne l'écart-type non biaisé de la variable, et *N* désigne la taille de la variable. Avec cette méthode, on obtient un coefficient négatif lorsque la distribution est asymétrique à gauche (longue queue vers la gauche), un coefficient de 0 lorsque la distribution est parfaitement symétrique, et un coefficient positif lorsque la distribution est asymétrique à droite (longue queue vers la droite). Ceci est illustré sur la figure ci-dessous.
+Dans ce calcul, *s* désigne l'écart-type non biaisé de la variable, et *N* désigne la taille de la variable. Avec cette méthode, on obtient un coefficient négatif lorsque la distribution est asymétrique à gauche (longue queue vers la gauche), un coefficient de 0 lorsque la distribution est parfaitement symétrique, et un coefficient positif lorsque la distribution est asymétrique à droite (longue queue vers la droite). Ceci est illustré sur la Figure \@ref(fig:skeweddistri).
 
 ```{r skeweddistri, echo = FALSE, message = FALSE, warning = FALSE, fig.cap="Valeur du Skewness selon la forme de la distribution"}
 set.seed(123)
@@ -784,7 +836,7 @@ kurtosis(x = iris$Sepal.Width, type = 3)
 Comme on peut le voir dans l'aide associée à la fonction `kurtosis()`, il existe en réalité plusieurs méthodes de calcul du coefficient d'aplatissement. La méthode de `type` 3, qui est celle configurée par défaut pour cette fonction, consiste à faire le calcul suivant :
 
 $$\gamma_{2} =  \frac{1}{s^4} {\frac{\sum_{i=1}^{N} (X{i} - \overline{X})^4}{N}} -3$$
-Dans ce calcul, *s* désigne l'écart-type non biaisé de la variable, et *N* désigne la taille de la variable. Avec cette méthode, on obtient un coefficient négatif lorsque la distribution est particulièrement aplatie par rapport à une distribution suivant une loi normale (distribution platycurtique), un coefficient de 0 lorsque la distribution suit une loi normale (distribution mésocurtique), et un coefficient positif lorsque la distribution est particulièrement pointue par rapport à une loi normale (distribution leptocurtique). Ceci est illustré sur la figure ci-dessous.
+Dans ce calcul, *s* désigne l'écart-type non biaisé de la variable, et *N* désigne la taille de la variable. Avec cette méthode, on obtient un coefficient négatif lorsque la distribution est particulièrement aplatie par rapport à une distribution suivant une loi normale (distribution platycurtique), un coefficient de 0 lorsque la distribution suit une loi normale (distribution mésocurtique), et un coefficient positif lorsque la distribution est particulièrement pointue par rapport à une loi normale (distribution leptocurtique). Ceci est illustré sur la Figure \@ref(fig:kurtosisdistri).
 
 ```{r kurtosisdistri, echo = FALSE, message = FALSE, warning = FALSE,  fig.cap="Valeur du Kurtosis selon la forme de la distribution"}
 library(LaplacesDemon)
@@ -931,9 +983,9 @@ Lorsqu'il s'agit de simplement décrire une distribution des données obtenues �
 2. Approximativement **95.5 %** des observations sont comprises dans l'intervalle [$\overline{X}$ - 2 *s* ; $\overline{X}$ + 2 *s*],
 3. Approximativement **99.7 %** des observations sont comprises dans l'intervalle [$\overline{X}$ - 3 *s* ; $\overline{X}$ + 3 *s*].
 
-Ceci est illustré sur la figure ci-dessous.
+Ceci est illustré sur la Figure \@ref(fig:ObservationsWithinSdMutiplesGaussianDistri).
 
-```{r ObservationsWithinSdMutiplesGaussianDistri, echo = FALSE, warning = FALSE, message = FALSE, fig.cap="Proportions des observations incluses dans différents intervalles liés à des multiples de l'écart-type"}
+```{r ObservationsWithinSdMutiplesGaussianDistri, out.width = '80%', echo = FALSE, warning = FALSE, message = FALSE, fig.cap="Proportions des observations incluses dans différents intervalles liés à des multiples de l'écart-type"}
 set.seed(123)
 vec <- tibble(x = rnorm(1000000, 15, 3))
 df <- with(density(vec$x), data.frame(x, y))
@@ -1154,7 +1206,7 @@ D <-
   
 ### Déterminer la tendance centrale
 
-Dans le cadre de variables qualitatives, la tendance centrale peut être renseignée à l'aide du mode en présence d'une variable nominale, et à l'aide de la médiane ou du mode en présence d'une variable ordinale [@gonzalesMeasuresCentralTendency2001]. Avec des variables qualitatives, il est possible de prendre connaissance du mode facilement à l'aide d'un tableau de résultats qui récapitulerait, par ordre décroissant, les effectifs et les proportions associées aux différentes modalités de la variable étudiée. Ce type de tableau peut être obtenu à l'aide de la fonction `freq()` du package `questionr`, qu'il convient d'installer et charger au préalable afin de pouvoir l'utiliser. Dans le tableau ci-dessous, le mode de la variable `color` dans le jeu de données `diamonds` est la modalité présente sur la première ligne du tableau.
+Dans le cadre de variables qualitatives, la tendance centrale peut être renseignée à l'aide du mode en présence d'une variable nominale, et à l'aide de la médiane ou du mode en présence d'une variable ordinale [@gonzalesMeasuresCentralTendency2001]. Avec des variables qualitatives, il est possible de prendre connaissance du mode facilement à l'aide d'un tableau de résultats qui récapitulerait, par ordre décroissant, les effectifs et les proportions associées aux différentes modalités de la variable étudiée. Ce type de tableau peut être obtenu à l'aide de la fonction `freq()` du package `questionr`, qu'il convient d'installer et charger au préalable afin de pouvoir l'utiliser. Dans l'exemple ci-dessous, le mode de la variable `color` dans le jeu de données `diamonds` est la modalité présente sur la première ligne du tableau.
 
 ```{r mode for var qual, message = FALSE, warning = FALSE}
 library(questionr)
@@ -1165,8 +1217,10 @@ freq(diamonds$color, valid = TRUE, total = TRUE, sort = "dec")
 ## Résumé
 * En statistiques, la notion de population désigne l'ensemble des individus existant qui présentent un ou plusieurs critères d'intérêt. Un échantillon est alors une fraction de la population étudiée, composée d'individus qui en principe sont représentatifs de la population étudiée.
 * Avec R, les graphiques peuvent être réalisés, en autres, à l'aide du package `ggplot2` et des fonctions associées.
-
-* Lors de l'analyse d'une variable quantitative, une première étape doit être de visualiser graphiquement la distribution des observations. Cela peut se faire à l'aide d'un histogramme (`ggplot2::geom_histogram()`), d'une boîte à moustaches (`ggplot2::geom_boxplot()`), ou encore d'un nuage de points (`ggplot2::geom_point()`). 
+* Lors de l'analyse d'une variable quantitative, une première étape doit être de visualiser graphiquement la distribution des observations. Cela peut se faire à l'aide :
+ - d'un histogramme (`ggplot2::geom_histogram()`) ;
+ - d'une boîte à moustaches (`ggplot2::geom_boxplot()`) ; 
+ - ou encore d'un nuage de points (`ggplot2::geom_point()`). 
 * Ces trois derniers types de graphiques peuvent être obtenus simultanément à l'aide de la fonction `plot_distri()` présentée dans ce chapitre.
 * La distribution d'une variable quantitative peut être notamment (mais pas seulement) de forme gaussienne, asymétrique, leptocurtique, ou encore platycurtique.
 * Les indices de position disponibles pour résumer une variable quantitative sont la moyenne (`mean()`), la médiane (`median()`), le mode (`lsr::modeOf()`), et la moyenne rognée (`mean(trim = ...)`).
