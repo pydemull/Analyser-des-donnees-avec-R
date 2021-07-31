@@ -325,7 +325,7 @@ Les indices de position servent à donner un ordre de grandeur de la variable. A
 
 *La moyenne*
 
-Si l'on pose que *N* est le nombre de valeurs dans une variable (on parle également de **taille** de la variable), que *i* est la i-ème observation (i-ème position) dans la variable, et que $X{i}$ est la valeur associée à la i-ème position, alors le calcul de la moyenne, notée $\overline{X}$, peut être écrit tel que ci-dessous :
+Si l'on pose que *N* est le nombre de valeurs dans une variable (on parle également de **taille** de la variable), que *i* est la i-ème observation (i-ème position) dans la variable, et que $X{i}$ est la valeur associée à la i-ème position, alors le calcul de la moyenne, notée $\overline{X}$, peut être écrit de la manière suivante :
 $$\overline{X} = \frac{1}{N}\sum_{i=1}^{N} X{i}$$
 Cette expression mathématique signifie que la moyenne s'obtient en additionnant ($\sum$) les valeurs allant de la position 1 à la position *N* de la variable, et en divisant le tout par le nombre total de valeurs *N* contenues dans la variable. Pour mieux comprendre, prenons par exemple une variable qui ne contiendrait que les cinq premières valeurs de la variable `Sepal.Length` du jeu de données `iris` et qu'on appelle `sample_iris`.
 
@@ -366,9 +366,9 @@ La gestion des valeurs manquantes telle que nous venons de la voir s’effectue 
 mean(x = iris$Sepal.Length)
 ```
 
-La moyenne, c'est en quelque sorte le "centre de gravité" de la variable [@navarroLearningStatistics2018]. L'un de ses intérêts est que son calcul prend en compte toutes les informations contenues dans la variable, ce qui est utile quand on a relativement peu de données [@navarroLearningStatistics2018]. En revanche, un inconvénient est qu'elle est très sensible aux valeurs extrêmes, et en particulier aux valeurs qui seraient particulièrement basses ou particulièrement élevées par rapport à la majorité des valeurs de la variable (il s'agirait ici d'*outliers*), et cela est d'autant plus vrai lorsque la taille de l'échantillon étudié est faible. Dans ce dernier cas, il y a donc un risque assez important que la moyenne ne représente pas bien la tendance centrale, c'est-à-dire la valeur ou la zone de valeurs où sont situées la majorité des observations. Ce risque existe aussi même avec des tailles d'échantillon relativement importantes lorsque la distribution est asymétrique, comme illustré sur la figure ci-dessous. Sur cette figure, on peut voir qu'avec une distribution gaussienne, la moyenne correspond parfaitement à la tendance centrale. En revanche, avec une distribution asymétrique à droite, on voit que la moyenne est "tirée vers la droite" par rapport à la tendance centrale sous l'effet des valeurs, certes moins nombreuses, mais d'une grandeur plus importante.
+La moyenne, c'est en quelque sorte le "centre de gravité" de la variable [@navarroLearningStatistics2018]. L'un de ses intérêts est que son calcul prend en compte toutes les informations contenues dans la variable, ce qui est utile quand on a relativement peu de données [@navarroLearningStatistics2018]. En revanche, un inconvénient est qu'elle est très sensible aux valeurs extrêmes, et en particulier aux valeurs qui seraient particulièrement basses ou particulièrement élevées par rapport à la majorité des valeurs de la variable (il s'agirait ici d'*outliers*), et cela est d'autant plus vrai lorsque la taille de l'échantillon étudié est faible. Dans ce dernier cas, il y a donc un risque assez important que la moyenne ne représente pas bien la tendance centrale, c'est-à-dire la valeur ou la zone de valeurs où sont situées la majorité des observations. Ce risque existe aussi même avec des tailles d'échantillon relativement importantes lorsque la distribution est asymétrique, comme illustré sur la Figure \@ref(fig:meansSkewedVariables). Sur cette figure, on peut voir qu'avec une distribution gaussienne, la moyenne correspond parfaitement à la tendance centrale. En revanche, avec une distribution asymétrique à droite, on voit que la moyenne est "tirée vers la droite" par rapport à la tendance centrale sous l'effet des valeurs, certes moins nombreuses, mais d'une grandeur plus importante.
 
-```{r meansSkewedVariables, echo = FALSE, message = FALSE, warning = FALSE, fig.cap="Moyenne d'une variable présentant une distribution asymétrique"}
+```{r meansSkewedVariables, out.width = '80%', echo = FALSE, message = FALSE, warning = FALSE, fig.cap="Moyenne d'une variable présentant une distribution asymétrique"}
 # Get legend function
 get_legend <- function(myggplot){
   tmp <- ggplot_gtable(ggplot_build(myggplot))
@@ -386,7 +386,8 @@ mean_gauss_g <-
   geom_histogram(aes(x = x), fill = "white", color = "black") +
   geom_segment(aes(x = mean_gauss, xend = mean_gauss, y = 0, yend = Inf, color = "red"), size = 1.2) +
   xlab("x") +
- theme(legend.position="none") 
+  theme(legend.position="none") +
+  ggtitle("Gaussienne")
 
 # Graphique pour la distribution asymétrique
 set.seed(123)
@@ -402,12 +403,12 @@ mean_skew_g <-
   scale_color_discrete(labels = "Moyenne")
 
 leg <- get_legend(mean_skew_g)
-mean_skew_g <- mean_skew_g + theme(legend.position="none") 
+mean_skew_g <- mean_skew_g + theme(legend.position="none") +
+ggtitle("Asymétrique")
 
-(TextPlot_gauss | TextPlot_skew_right) /
+
 (mean_gauss_g | mean_skew_g) /
-leg +
-plot_layout(heights = c(0.1, 1, 0.1))
+leg + plot_layout(heights = c(2, 0.2))
 ```
 
 *La médiane*
@@ -420,7 +421,7 @@ names(iris_sort) <- c(1, 2, 3, 4, 5)
 iris_sort
 ```
 
-Dans le cas où le nombre d'observations contenues dans la variable étudiée serait un nombre pair, la médiane s'obtiendrait différemment. En effet, avec une variable qui contiendrait par exemple six valeurs, la médiane serait associée, selon la méthode expliquée ci-dessus, au rang (6 + 1) / 2 = 3.5, or ce rang, évidemment, n'existe pas. Dans ce cas, la médiane s'obtient en faisant la moyenne des deux nombres du milieu. Par exemple, ci-dessous, la médiane correspond à la moyenne des valeurs de la 3ème et de la 4ème observation, ce qui donne 4.95.
+Dans le cas où le nombre d'observations contenues dans la variable étudiée serait un nombre pair, la médiane s'obtiendrait différemment. En effet, avec une variable qui contiendrait par exemple six valeurs, la médiane serait associée, selon la méthode expliquée ci-dessus, au rang (6 + 1) / 2 = 3.5, or ce rang n'existe pas. Dans ce cas, la médiane s'obtient en faisant la moyenne des deux nombres du milieu. Par exemple, ci-dessous, la médiane correspond à la moyenne des valeurs de la 3ème et de la 4ème observation, ce qui donne 4.95.
 
 ```{r example median 2, echo = FALSE}
 iris_sort2 <- sort(iris$Sepal.Length[1:6])
@@ -435,7 +436,7 @@ vec <- c(4.6, 4.7, 4.9, 5.0, 5.1, 5.4)
 median(x = vec)
 ```
 
-Contrairement à la moyenne, la médiane prend donc en compte moins d'informations relatives aux données. Toutefois, en tant que valeur "du milieu", la médiane présente l'intérêt de ne pas être influencée par les valeurs extrêmes. En raison de cela, la médiane est susceptible de mieux refléter la tendance centrale que la moyenne en présence de faibles échantillons avec des *outliers*, ou en présence d'une forme de distribution asymétrique. Ce dernier cas est illustré sur la figure ci-dessous.
+Contrairement à la moyenne, la médiane prend donc en compte moins d'informations relatives aux données. Toutefois, en tant que valeur "du milieu", la médiane présente l'intérêt de ne pas être influencée par les valeurs extrêmes. En raison de cela, la médiane est susceptible de mieux refléter la tendance centrale que la moyenne en présence de petits échantillons avec des *outliers*, ou en présence d'une forme de distribution asymétrique. Ce dernier cas est illustré sur la Figure \@ref(fig:mediansSkewedVariables).
 
 ```{r mediansSkewedVariables, out.width  = '80%', echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Médiane d'une variable présentant une distribution asymétrique"}
 # Graphique pour la distribution gaussienne
@@ -449,7 +450,8 @@ median_gauss_g <-
   geom_segment(aes(x = mean_gauss, xend = mean_gauss, y = 0, yend = Inf, color = "Moyenne"), size = 1.2) +
   geom_segment(aes(x = median_gauss, xend = median_gauss, y = 0, yend = Inf, color = "Médiane"), size = 1.2) +
   xlab("x") +
- theme(legend.position="none") 
+ theme(legend.position="none")  +
+  ggtitle("Gaussienne")
 
 # Graphique pour la distribution asymétrique
 set.seed(123)
@@ -464,15 +466,15 @@ median_skew_g <-
   xlab("x") +
   theme(legend.position="bottom", legend.text = element_text(size = 13)) +
   labs(color = "") +
-  scale_color_discrete(limits = c("Moyenne", "Médiane"), labels = c("Moyenne", "Médiane"))
+  scale_color_discrete(limits = c("Moyenne", "Médiane"), labels = c("Moyenne", "Médiane"))  +
+  ggtitle("Asymétrique")
 
 leg <- get_legend(median_skew_g)
 median_skew_g <- median_skew_g + theme(legend.position="none") 
 
-(TextPlot_gauss | TextPlot_skew_right) /
 (median_gauss_g | median_skew_g) /
 leg +
-plot_layout(heights = c(0.1, 1, 0.1))
+plot_layout(heights = c(1, 0.2))
 ```
 
 *La moyenne rognée*
@@ -483,7 +485,7 @@ Parfois, il est possible de rencontrer ce qu'on appelle la moyenne rognée. Le p
 mean(x = iris$Sepal.Length, trim = 0.05)
 ```
 
-Dans l'exemple ci-dessus, le code a été configuré pour rogner 5 % des observations situées aux extrémités de la variable. Notons que lorsque l'argument `trim` est mis à 0 (ce qui est son paramétrage par défaut), cela consiste à calculer la moyenne normale, et que lorsque l'argument `trim` est mis à 0.50, cela revient à calculer la médiane puisque la fonction supprime alors 50 % des observations de part et d'autre du milieu de la variable.
+Dans l'exemple de code précédent, la fonction a été configurée pour rogner 5 % des observations situées à chaque extrémité de la variable (i.e., les observations en-dessous du 5ème percentile, et celles au-dessus du 95ème percentile). Notons que lorsque l'argument `trim` est mis à 0 (ce qui est son paramétrage par défaut), cela consiste à calculer la moyenne normale, et que lorsque l'argument `trim` est mis à 0.50, cela revient à calculer la médiane puisque la fonction supprime alors 50 % des observations de part et d'autre du milieu de la variable.
 
 *Le mode*
 
@@ -491,18 +493,22 @@ Le mode désigne la valeur qui est la plus fréquemment retrouvée dans une vari
 
 ```{r mode}
 library(lsr)
-modeOf(x = iris$Sepal.Length)    # Détermination du mode.
-maxFreq(x = iris$Sepal.Length)   # Détermination de la fréquence du mode.
+
+# Détermination du mode
+modeOf(x = iris$Sepal.Length)   
+
+# Détermination de la fréquence du mode
+maxFreq(x = iris$Sepal.Length)
 ```
 
-Bien que cela ne soit pas le cas dans l'exemple ci-dessus, il faut comprendre qu'il est à tout à fait possible d'avoir plusieurs modes si plusieurs valeurs reviennent à des fréquences maximales similaires dans la variable. Dans ce cas, la fonction `modeOf()` affichera les différentes valeurs de mode, et la fonction `maxFreq()` continuera de n'afficher qu'une seule valeur de fréquence puisque par définition, le mode désigne la valeur associée à la fréquence d'apparition maximale dans la variable, or il ne peut n'y avoir qu'une seule fréquence maximale... Cela signifie quelque part qu'une variable peut contenenir autant de modes que de valeurs si chaque valeur n'est représentée qu'une seule fois dans la variable. Cet inconvénient est probablement l'une des raisons pour lesquelles le mode n'est que très peu utilisé, si ce n'est jamais utilisé, pour décrire la tendance centrale d'une variable quantitative.
+Bien que cela ne soit pas le cas dans l'exemple ci-dessus, il faut comprendre qu'il est à tout à fait possible d'avoir plusieurs modes si plusieurs valeurs reviennent à des fréquences similaires dans la variable. Dans ce cas, la fonction `modeOf()` affichera les différentes valeurs de mode, et la fonction `maxFreq()` continuera de n'afficher qu'une seule valeur de fréquence puisque par définition, le mode désigne la valeur associée à la fréquence d'apparition maximale dans la variable, or il ne peut n'y avoir qu'une seule fréquence maximale... Cela signifie qu'une variable peut contenenir autant de modes que de valeurs si chaque valeur n'est représentée qu'une seule fois dans la variable. Cet inconvénient est probablement l'une des raisons pour lesquelles le mode n'est que très peu utilisé, si ce n'est jamais utilisé, pour décrire la tendance centrale d'une variable quantitative.
 
 ### Les indices de dispersion
 Les indices de dispersion permettent de rendre compte de la manière selon laquelle les observations sont étalées, ou réparties, autour des indices de position. Plusieurs statistiques sont disponibles pour caractériser la dispersion, à savoir : l’**étendue**, l’**écart-type**, et l’**intervalle interquartile**.
 
 *L'étendue*
 
-L’étendue est la mesure la plus simple de la dispersion des données contenues dans une variable. Elle est exprimée avec la plus petite valeur (minimum) et la plus grande valeur (maximum) observée, ou alors parfois avec la différence de ces deux valeurs. Par exemple, dans la variable ci-dessous dont les données ont été classées en ordre croissant, le minimum est 4.5, le maximum est 20.2, et l'étendue peut être donnée par l'intervalle [4.5 - 20.2]. Pour obtenir ces différents résultats dans R, il est possible d'utiliser les fonctions `min()`, `max()`, et `range()`. L'amplitude de l'intervalle serait ici de : 20.2-4.5 = 15.7.
+L’étendue est la mesure la plus simple de la dispersion des données contenues dans une variable. Elle est exprimée avec la plus petite valeur (minimum) et la plus grande valeur (maximum) observée, ou alors parfois avec la différence de ces deux valeurs. Par exemple, dans la variable ci-dessous dont les données ont été classées en ordre croissant, le minimum est 4.5, le maximum est 20.2, et l'étendue peut être donnée par l'intervalle [4.5 -- 20.2]. Pour obtenir ces différents résultats dans R, il est possible d'utiliser les fonctions `min()`, `max()`, et `range()`. L'amplitude de l'intervalle serait ici de : 20.2-4.5 = 15.7.
 
 ```{r range}
 vec <- c(4.5, 7.8, 10.8, 13.9, 20.2)
@@ -532,7 +538,7 @@ sd(x = vec)
 
 *L'intervalle interquartile*
 
-L’intervalle interquartile désigne l’étendue entre le premier (Q1) et le troisième (Q3) quartile d’une variable. Comme expliqué auparavant dans le cadre de la boîte à moustaches, Q1 et Q3 désignent respectivement les valeurs en-dessous desquelles 25 % et 75 % des observations de la variable se trouvent [@chatellierMoyenneMedianeLeurs2003]. Pour un échantillon de taille *N*, la procédure classique pour calculer les quartiles est différente selon que le rapport *N* / 4 est un nombre entier ou non. Lorsque ce rapport n’est pas un nombre entier, Q1 est la valeur correspondant au rang immédiatement supérieur à *N* / 4. Par exemple, pour la variable ci-dessous, qui a une taille *N* de 5 valeurs, le rapport *N* / 4 est égal à 1.25. Q1 est donc la valeur correspond au rang directement supérieur, c'est-à-dire au rang 2, qui est ici la valeur 7.8.
+L’intervalle interquartile désigne l’étendue entre le premier quartile (Q1) et le troisième quartile (Q3) d’une variable. Comme expliqué auparavant dans le cadre de la boîte à moustaches, Q1 et Q3 désignent respectivement les valeurs en-dessous desquelles 25 % et 75 % des observations de la variable se trouvent [@chatellierMoyenneMedianeLeurs2003]. Pour un échantillon de taille *N*, la procédure classique pour calculer les quartiles est différente selon que le rapport *N* / 4 est un nombre entier ou non. Lorsque ce rapport n’est pas un nombre entier, Q1 est la valeur correspondant au rang immédiatement supérieur à *N* / 4. Par exemple, pour la variable ci-dessous, qui a une taille *N* de 5 valeurs, le rapport *N* / 4 est égal à 1.25. Q1 est donc la valeur correspond au rang directement supérieur, c'est-à-dire au rang 2, qui est ici la valeur 7.8.
 
 ```{r quartile 1 N non entier, echo = FALSE}
 names(vec) <- c(1, 2, 3, 4, 5)
@@ -547,13 +553,13 @@ names(vec) <- seq(1:8)
 vec
 ```
 
-La démarche demeure la même pour déterminer Q3, à ceci près qu’on utilise le nombre 3*N* et non plus le nombre *N* pour les calculs [@labreucheDifferentsTypesVariables2010]. Cette méthode de calcul, classique, est en principe à privilégier en présence d'une variable discrète. Si l'on souhaite obtenir les quartiles selon cette méthode avec le logiciel R, il faut utiliser la fonction `quantile()` de la manière suivante : 
+La démarche demeure la même pour déterminer Q3, à ceci près qu’on utilise le nombre 3*N* et non plus le nombre *N* pour les calculs [@labreucheDifferentsTypesVariables2010]. Cette méthode de calcul est en principe à privilégier en présence d'une variable discrète. Si l'on souhaite obtenir les quartiles selon cette méthode avec le logiciel R, il faut utiliser la fonction `quantile()` de la manière suivante : 
 
 ```{r fonction quantile type 2}
 quantile(x = vec, probs = c(0.25, 0.75), type = 2)
 ```
 
-On remarque ici que la fonction `quantile()` a plusieurs arguments. L'argument `probs` désigne les quantiles que l'on souhaite obtenir. Ici, le quantile 0.25 correspond à Q1, et le quantile 0.75 correspond à Q3. L'argument `type` permet de configurer le type de calcul à effectuer pour obtenir les valeurs des quantiles recherchés. L'indication du chiffre 2 pour l'argument `type` permet d'obtenir les quantiles selon la méthode de calcul présentée ci-dessus, qui, comme nous l'avons précisé, est dédiée à l'étude d'une variable quantitative discrète. Par défaut, en revanche, la fonction `quantile()` utilise le chiffre 7 pour l'argument `type`, ce qui renvoie à une méthode de calcul des quantiles qui serait davantage pertinente pour étudier des variables quantitatives continues. Comparons les résultats obtenus avec les deux méthodes de calcul : 
+On remarque ici que la fonction `quantile()` a plusieurs arguments. L'argument `probs` désigne les quantiles que l'on souhaite obtenir. Le quantile 0.25 correspond à Q1, et le quantile 0.75 correspond à Q3. L'argument `type` permet de configurer le type de calcul à effectuer pour obtenir les valeurs des quantiles recherchés. L'indication du chiffre 2 pour l'argument `type` permet d'obtenir les quantiles selon la méthode de calcul présentée ci-dessus, qui, comme nous l'avons précisé, est dédiée à l'étude d'une variable quantitative discrète. Par défaut, en revanche, la fonction `quantile()` utilise le chiffre 7 pour l'argument `type`, ce qui renvoie à une méthode de calcul des quantiles qui serait davantage pertinente pour étudier des variables quantitatives continues. Comparons les résultats obtenus avec les deux méthodes de calcul : 
 
 ```{r quantilesCompaMethods, echo = FALSE}
 library(flextable)
@@ -571,7 +577,7 @@ flextable(
   align(align = "center", part = "all" ) %>%
   hline_top(part = "all", border = fp_border(width = 1.5)) %>%
   hline_bottom(part = "all", border = fp_border(width = 1.5)) %>%
-  set_caption("Comparaison des quantiles obtenus selon différentes configurations de la fonction `quantile()`")  %>% 
+  set_caption("Comparaison des quantiles obtenus selon différentes configurations de la fonction quantile()")  %>% 
   autofit()
 ```
 
@@ -598,7 +604,7 @@ Le tableau montre les données sur lesquelles R s'est appuyé pour déterminer l
 $$q = (k - 1 ) / (N - 1)$$
 Dans le calcul ci-dessus, *k* désigne le rang de la valeur considérée, et *N* désigne la taille de la variable étudiée (i.e., le nombre total de valeurs). Comme on peut le voir dans le tableau ci-dessus, cette méthode de calcul conduit nécessairement à attribuer le quantile 0 à la valeur de rang 1, et la quantile 1 à la valeur de rang *N*. Lorsque le nombre de valeurs fait que les quantiles 0.25 et 0.75 n'existent pas, R réalise une interpolation de la valeur correspondant au quantile recherché, cela à partir des quantiles qui existent et qui encadrent le quantile recherché, ainsi qu'à partir des valeurs correspondant à ces quantiles. Dans le cas présent, il s'agit plus précisément d'une interpolation linéaire. Voyons sur la Figure \@ref(fig:graphicContinuouQuantiles) en quoi cela consiste.
 
-```{r graphicContinuouQuantiles, out.width = '80%', echo = FALSE, fig.cap="Calcul des quartiles avec une variable quantitative continue"}
+```{r graphicContinuouQuantiles, out.width = '60%', echo = FALSE, fig.cap="Calcul des quartiles Q1 et Q3 avec une variable quantitative continue"}
 model1 <- lm(Valeur ~ Quantile, data = table_quant[c(2, 3), c(2, 3)])
 model2 <- lm(Valeur ~ Quantile, data = table_quant[c(6, 7), c(2, 3)])
 
@@ -657,12 +663,12 @@ library(e1071)
 skewness(x = iris$Sepal.Width, type = 3)
 ```
 
-Comme on peut le voir dans l'aide associée à la fonction `skewness()`, il existe en réalité plusieurs méthodes de calcul du coefficient d'asymétrie. La méthode de `type` 3, qui est celle configurée par défaut pour cette fonction, consiste à faire le calcul suivant :
+Comme on peut le voir dans l'aide associée à la fonction `skewness()`, il existe en réalité plusieurs méthodes de calcul du coefficient d'asymétrie (noté $\gamma_{1}$ ci-dessous). La méthode de `type` 3, qui est celle configurée par défaut pour cette fonction, consiste à faire le calcul suivant :
 
 $$\gamma_{1} =  \frac{1}{s^3} {\frac{\sum_{i=1}^{N} (X{i} - \overline{X})^3}{N}}$$
 Dans ce calcul, *s* désigne l'écart-type non biaisé de la variable, et *N* désigne la taille de la variable. Avec cette méthode, on obtient un coefficient négatif lorsque la distribution est asymétrique à gauche (longue queue vers la gauche), un coefficient de 0 lorsque la distribution est parfaitement symétrique, et un coefficient positif lorsque la distribution est asymétrique à droite (longue queue vers la droite). Ceci est illustré sur la Figure \@ref(fig:skeweddistri).
 
-```{r skeweddistri, echo = FALSE, message = FALSE, warning = FALSE, fig.cap="Valeur du Skewness selon la forme de la distribution"}
+```{r skeweddistri, out.width = '70%', echo = FALSE, message = FALSE, warning = FALSE, fig.cap="Valeur du Skewness selon la forme de la distribution"}
 set.seed(123)
 chis_1 <- tibble(x = rchisq(1000, 1))
 set.seed(123)
@@ -676,7 +682,7 @@ gauss <- tibble(x = rnorm(n = 1000, mean = 0, sd = 1))
 
 TextPlot_chisq1 <- 
             ggplot() + 
-            annotate(geom = "text", x = 4, y = 1, size = 5, label = bquote(paste(gamma[1], " = ", .(round(skewness(chis_1$x), 2))))) +
+            annotate(geom = "text", x = 4, y = 1, size = 3, label = bquote(paste(gamma[1], " = ", .(round(skewness(chis_1$x), 2))))) +
             theme(
               plot.background = element_blank(), 
               panel.grid.major = element_blank(),
@@ -693,7 +699,7 @@ TextPlot_chisq1 <-
 
 TextPlot_chisq4 <- 
             ggplot() + 
-            annotate(geom = "text", x = 4, y = 1, size = 5, label = bquote(paste(gamma[1], " = ", .(round(skewness(chis_4$x), 2))))) +
+            annotate(geom = "text", x = 4, y = 1, size = 3, label = bquote(paste(gamma[1], " = ", .(round(skewness(chis_4$x), 2))))) +
             theme(
               plot.background = element_blank(), 
               panel.grid.major = element_blank(),
@@ -710,7 +716,7 @@ TextPlot_chisq4 <-
 
 TextPlot_gauss <- 
             ggplot() + 
-            annotate(geom = "text", x = 4, y = 1, size = 5, label = bquote(paste(gamma[1], " = ", .(round(skewness(gauss$x), 2))))) +
+            annotate(geom = "text", x = 4, y = 1, size = 3, label = bquote(paste(gamma[1], " = ", .(round(skewness(gauss$x), 2))))) +
             theme(
               plot.background = element_blank(), 
               panel.grid.major = element_blank(),
@@ -727,7 +733,7 @@ TextPlot_gauss <-
 
 TextPlot_chisq4_neg <- 
             ggplot() + 
-            annotate(geom = "text", x = 4, y = 1, size = 5, label = bquote(paste(gamma[1], " = ", .(round(skewness(chis_4_neg$x), 2))))) +
+            annotate(geom = "text", x = 4, y = 1, size = 3, label = bquote(paste(gamma[1], " = ", .(round(skewness(chis_4_neg$x), 2))))) +
             theme(
               plot.background = element_blank(), 
               panel.grid.major = element_blank(),
@@ -744,7 +750,7 @@ TextPlot_chisq4_neg <-
 
 TextPlot_chisq1_neg <- 
             ggplot() + 
-            annotate(geom = "text", x = 4, y = 1, size = 5, label = bquote(paste(gamma[1], " = ", .(round(skewness(chis_1_neg$x), 2))))) +
+            annotate(geom = "text", x = 4, y = 1, size = 3, label = bquote(paste(gamma[1], " = ", .(round(skewness(chis_1_neg$x), 2))))) +
             theme(
               plot.background = element_blank(), 
               panel.grid.major = element_blank(),
@@ -833,12 +839,12 @@ library(e1071)
 kurtosis(x = iris$Sepal.Width, type = 3)
 ```
 
-Comme on peut le voir dans l'aide associée à la fonction `kurtosis()`, il existe en réalité plusieurs méthodes de calcul du coefficient d'aplatissement. La méthode de `type` 3, qui est celle configurée par défaut pour cette fonction, consiste à faire le calcul suivant :
+Comme on peut le voir dans l'aide associée à la fonction `kurtosis()`, il existe en réalité plusieurs méthodes de calcul du coefficient d'aplatissement (noté $\gamma_{2}$ ci-dessous) . La méthode de `type` 3, qui est celle configurée par défaut pour cette fonction, consiste à faire le calcul suivant :
 
 $$\gamma_{2} =  \frac{1}{s^4} {\frac{\sum_{i=1}^{N} (X{i} - \overline{X})^4}{N}} -3$$
 Dans ce calcul, *s* désigne l'écart-type non biaisé de la variable, et *N* désigne la taille de la variable. Avec cette méthode, on obtient un coefficient négatif lorsque la distribution est particulièrement aplatie par rapport à une distribution suivant une loi normale (distribution platycurtique), un coefficient de 0 lorsque la distribution suit une loi normale (distribution mésocurtique), et un coefficient positif lorsque la distribution est particulièrement pointue par rapport à une loi normale (distribution leptocurtique). Ceci est illustré sur la Figure \@ref(fig:kurtosisdistri).
 
-```{r kurtosisdistri, echo = FALSE, message = FALSE, warning = FALSE,  fig.cap="Valeur du Kurtosis selon la forme de la distribution"}
+```{r kurtosisdistri, out.width = '70%', echo = FALSE, message = FALSE, warning = FALSE,  fig.cap="Valeur du Kurtosis selon la forme de la distribution"}
 library(LaplacesDemon)
 set.seed(123)
 unif <- tibble(x = runif(1000, -5, 5))
@@ -849,7 +855,7 @@ gauss <- tibble(x = rnorm(n = 1000, mean = 0, sd = 1))
 
 TextPlot_unif <- 
             ggplot() + 
-            annotate(geom = "text", x = 4, y = 1, size = 5, label = bquote(paste(gamma[2], " = ", .(round(kurtosis(unif$x), 2))))) +
+            annotate(geom = "text", x = 4, y = 1, size = 3, label = bquote(paste(gamma[2], " = ", .(round(kurtosis(unif$x), 2))))) +
             theme(
               plot.background = element_blank(), 
               panel.grid.major = element_blank(),
@@ -866,7 +872,7 @@ TextPlot_unif <-
 
 TextPlot_gauss <- 
             ggplot() + 
-            annotate(geom = "text", x = 4, y = 1, size = 5, label = bquote(paste(gamma[2], " = ", .(round(kurtosis(gauss$x), 2))))) +
+            annotate(geom = "text", x = 4, y = 1, size = 3, label = bquote(paste(gamma[2], " = ", .(round(kurtosis(gauss$x), 2))))) +
             theme(
               plot.background = element_blank(), 
               panel.grid.major = element_blank(),
@@ -884,7 +890,7 @@ TextPlot_gauss <-
 
 TextPlot_laplace <- 
             ggplot() + 
-            annotate(geom = "text", x = 4, y = 1, size = 5, label = bquote(paste(gamma[2], " = ", .(round(kurtosis(laplace$x), 2))))) +
+            annotate(geom = "text", x = 4, y = 1, size = 3, label = bquote(paste(gamma[2], " = ", .(round(kurtosis(laplace$x), 2))))) +
             theme(
               plot.background = element_blank(), 
               panel.grid.major = element_blank(),
@@ -985,7 +991,7 @@ Lorsqu'il s'agit de simplement décrire une distribution des données obtenues �
 
 Ceci est illustré sur la Figure \@ref(fig:ObservationsWithinSdMutiplesGaussianDistri).
 
-```{r ObservationsWithinSdMutiplesGaussianDistri, out.width = '80%', echo = FALSE, warning = FALSE, message = FALSE, fig.cap="Proportions des observations incluses dans différents intervalles liés à des multiples de l'écart-type"}
+```{r ObservationsWithinSdMutiplesGaussianDistri, out.width = '80%', echo = FALSE, warning = FALSE, message = FALSE, fig.cap="Proportions des observations incluses dans différents intervalles liés à la moyenne et à des multiples de l'écart-type"}
 set.seed(123)
 vec <- tibble(x = rnorm(1000000, 15, 3))
 df <- with(density(vec$x), data.frame(x, y))
@@ -1033,9 +1039,9 @@ g3 <-
 g1 / g2 / g3
 ```
 
-Lorsqu'il s'agit plus précisément de vouloir renseigner sur la tendance centrale relative à l'échantillon étudié, le choix dépend de la forme de la distribution observée. Lorsque la distribution est gaussienne, la moyenne, la médiane, et le mode, sont similaires et donc se valent. Toutefois, lorsque la distribution est asymétrique et unimodale (i.e., avec un seul pic), le mode reflètera mieux la tendance centrale. De plus, lorsque la distribution est asymétrique, la médiane aura tendance à mieux représenter la tendance centrale que la moyenne [@rousseletReactionTimesOther2020]. Notons que dans certains cas où la distribution semble asymétrique, la médiane peut se retrouver malgré tout plus éloignée du mode que la moyenne, comme illustré dans l'exemple ci-dessous emprunté à Gonzales et al. [-@gonzalesMeasuresCentralTendency2001].
+Lorsqu'il s'agit plus précisément de vouloir renseigner sur la tendance centrale relative à l'échantillon étudié, le choix dépend de la forme de la distribution observée. Lorsque la distribution est gaussienne, la moyenne, la médiane, et le mode, sont similaires et donc se valent. Toutefois, lorsque la distribution est asymétrique et unimodale (i.e., avec un seul pic), le mode reflètera mieux la tendance centrale. De plus, lorsque la distribution est asymétrique, la médiane aura tendance à mieux représenter la tendance centrale que la moyenne [@rousseletReactionTimesOther2020]. Notons que dans certains cas où la distribution semble asymétrique, la médiane peut se retrouver malgré tout plus éloignée du mode que la moyenne, comme illustré dans l'exemple emprunté à Gonzales et al. qui est montré sur la Figure \@ref(fig:MeanAboveLedianAsym) [-@gonzalesMeasuresCentralTendency2001].
 
-```{r MeanAboveLedianAsym, echo = FALSE, warning = FALSE, message = FALSE, fig.cap = "Moyenne et médiane dans le cadre d'une distribution asymétrique"}
+```{r MeanAboveLedianAsym, out.width='80%', echo = FALSE, warning = FALSE, message = FALSE, fig.cap = "Moyenne et médiane dans le cadre d'une distribution asymétrique"}
 x_asym <- tibble(x = c(18, 20, 22, 24, 26, 29, 35, 35, 39))
 ggplot(data = x_asym) +
   geom_histogram(aes(x = x), fill = "white", color = "black") +
@@ -1052,9 +1058,9 @@ ggplot(data = x_asym) +
 
 ### Visualiser la distribution de la variable
 
-Comme dans le cadre de variables quantitatives, une bonne pratique est de visualiser graphiquement la distribution de la variable. Ici, il s'agit plus précisémement de prendre connaissance des effectifs correspondant aux différentes modalités de la variable. Une manière rapide de procéder pour cela est d'utiliser la fonction `ggplot()` et la fonction `geom_bar()`. Illustrons cela avec le jeu de données `diamonds`, qui contient notamment la variable qualitative `color`.
+Comme dans le cadre de variables quantitatives, une bonne pratique est de visualiser graphiquement la distribution d'une variable qualitative avant de l'analyser. Ici, il s'agit plus précisément de prendre connaissance des effectifs correspondant aux différentes modalités de la variable. Une manière rapide de procéder pour cela est d'utiliser la fonction `ggplot()` et la fonction `geom_bar()`. Illustrons cela avec le jeu de données `diamonds`, qui contient notamment la variable qualitative `color`.
 
-```{r geombar, fig.cap="Exemple de diagramme en barres"}
+```{r geombar, out.width = '70%', fig.cap="Exemple de diagramme en barres"}
 # Aperçu du jeu de données
 diamonds
 
@@ -1064,13 +1070,17 @@ diamonds %>%
     geom_bar()
 ```
 
-Bien que rapide, cette manière de procéder devient vite limitée lorsque l'on veut améliorer le graphique, tel qu'en ajoutant les valeurs des effectifs au-dessus des barres ou encore en changeant l'ordre d'apparition des barres. Pour gagner en capacité de modification du graphique, on peut d'abord passer par une étape intermédiaire consistant à créer un mini-jeu de données où la variable `color` serait déjà résumée à l'aide des fonctions `group_by()` et `summarize()` du package `dplyr`, de telle sorte à n'avoir que la valeur de l'effectif en regard de chaque modalité. Ceci est montré dans le code ci-dessous. Si l'on poursuit le code avec les fonctions `ggplot()` et `geom_bar()`, on arrive alors au même résultat que précédemment. (On note qu'il a fallu adapter l'argument `stat` de la fonction `geom_bar()` pour que le graphique montre bien en ordonnées la valeur de la variable nouvellement appelée `count`, qui comprend les effectifs de chaque modalité.)
+Bien que rapide, la manière de procéder avec le code montré ci-avant devient vite limitée lorsque l'on veut enrichir le graphique, tel qu'en ajoutant les valeurs des effectifs au-dessus des barres ou encore en changeant l'ordre de disposition des barres. Pour gagner en capacité de modification du graphique, on peut d'abord passer par une étape intermédiaire consistant à créer un mini-jeu de données où la variable `color` serait déjà résumée à l'aide des fonctions `group_by()` et `summarize()` du package `dplyr`, de telle sorte à n'avoir que la valeur de l'effectif en regard de chaque modalité. Ceci est montré dans le code ci-dessous.
 
-```{r geombarEnhanced, message = FALSE, fig.cap="Diagramme en barres obtenu avec une seconde méthode d'écriture du code"}
+```{r geombarEnhanced, message = FALSE}
 diamonds %>% 
   group_by(color) %>%
   summarize(count = n())
+```
 
+Si l'on poursuit le code avec les fonctions `ggplot()` et `geom_bar()` (cf. code ci-dessous), on arrive alors au même résultat que précédemment (cf Figure \@ref(fig:geombar)). On note qu'il a fallu adapter l'argument `stat` de la fonction `geom_bar()` pour que le graphique montre bien en ordonnées la valeur de la variable nouvellement appelée `count`, qui comprend les effectifs de chaque modalité.
+
+```{r, eval = FALSE}
 diamonds %>% 
   group_by(color) %>%
   summarize(count = n()) %>%
@@ -1078,7 +1088,7 @@ diamonds %>%
      geom_bar(stat = "identity")
 ```
 
-Certes, pour le moment, cette seconde procédure n'a fait que rajouter des étapes par rapport à la première procédure. Toutefois, en reprenant la logique de la seconde procédure, on peut à présent créer des graphiques en barres plus élaborés relativement facilement.
+Certes, pour le moment, cette seconde procédure n'a fait que rajouter des étapes par rapport à la première procédure. Toutefois, en reprenant la logique de la seconde procédure, on peut à présent créer des graphiques en barres plus élaborés relativement facilement, comme montré ci-dessous.
 
 ```{r geom_bar enhanced 2, message = FALSE}
 # Diagramme en barres avec les effectifs affichés à proximité des barres
@@ -1146,7 +1156,7 @@ F <-
 (A | B | C) / (D | E | F)
 ```
 
-Dans le code montré ci-dessus, on remarque que le réagencement manuel des barres (cf. graphique B) a pu être réalisé grâce à la fonction `fct_relevel()` du package `forcats`. Pour les autres diagrammes, la réorganisation des barres en ordre croissant ou décroissant sur la base de la valeur de l'effectif (`count`) a pu se faire grâce à la fonction `fct_reorder()` du package `forcats`. Les noms des arguments de ces fonctions n'ont pas été indiqués pour alléger le code. Le plus important, c'est d'indiquer en premier argument la variable dont l'ordre d'apparition des modalités doit être réorganisé (il s'agissait de la variable `color` dans cet exemple). En second argument, il convient d'indiquer la logique de réorganisation de l'apparition des modalités (ce qui a été fait sur la base des valeurs de la variable `count` dans les exemples ci-dessus utilisant la fonction `fct_reorder()`).
+Dans le code montré ci-dessus, on remarque que le réagencement manuel des barres (cf. graphique B) a pu être réalisé grâce à la fonction `fct_relevel()` du package `forcats`. Pour les autres diagrammes, la réorganisation des barres en ordre croissant ou décroissant sur la base de la valeur de l'effectif (`count`) a pu se faire grâce à la fonction `fct_reorder()` du package `forcats`. Les noms des arguments de ces fonctions n'ont pas été indiqués pour alléger le code. Le plus important, c'est d'indiquer en premier dans la fonction la variable dont l'ordre d'apparition des modalités doit être réorganisé (il s'agissait de la variable `color` dans cet exemple). En second, il convient d'indiquer la logique de réorganisation de l'apparition des modalités (ce qui a été fait sur la base des valeurs de la variable `count` dans les exemples ci-dessus utilisant la fonction `fct_reorder()`).
 
 Toujours dans le code montré ci-dessus, on peut voir aussi, dans la fonction `geom_text()` du graphique A, la présence de l'argument `nudge_y`. Cet argument permet de régler le décalage entre le haut de la barre et le texte. L'ordre de grandeur du chiffre indiqué est celui de la variable indiquée en ordonnées.
 
@@ -1206,7 +1216,7 @@ D <-
   
 ### Déterminer la tendance centrale
 
-Dans le cadre de variables qualitatives, la tendance centrale peut être renseignée à l'aide du mode en présence d'une variable nominale, et à l'aide de la médiane ou du mode en présence d'une variable ordinale [@gonzalesMeasuresCentralTendency2001]. Avec des variables qualitatives, il est possible de prendre connaissance du mode facilement à l'aide d'un tableau de résultats qui récapitulerait, par ordre décroissant, les effectifs et les proportions associées aux différentes modalités de la variable étudiée. Ce type de tableau peut être obtenu à l'aide de la fonction `freq()` du package `questionr`, qu'il convient d'installer et charger au préalable afin de pouvoir l'utiliser. Dans l'exemple ci-dessous, le mode de la variable `color` dans le jeu de données `diamonds` est la modalité présente sur la première ligne du tableau.
+Dans le cadre de variables qualitatives, la tendance centrale peut être renseignée à l'aide du mode en présence d'une variable nominale, et à l'aide de la médiane ou du mode en présence d'une variable ordinale [@gonzalesMeasuresCentralTendency2001]. Avec des variables qualitatives, il est possible de prendre connaissance du mode facilement à l'aide d'un tableau de résultats qui récapitule, par ordre décroissant, les effectifs et les proportions associées aux différentes modalités de la variable étudiée. Ce type de tableau peut être obtenu à l'aide de la fonction `freq()` du package `questionr`, qu'il convient d'installer et charger au préalable afin de pouvoir l'utiliser. Dans l'exemple ci-dessous, le mode de la variable `color` dans le jeu de données `diamonds` est la modalité présente sur la première ligne du tableau.
 
 ```{r mode for var qual, message = FALSE, warning = FALSE}
 library(questionr)
@@ -1218,11 +1228,11 @@ freq(diamonds$color, valid = TRUE, total = TRUE, sort = "dec")
 * En statistiques, la notion de population désigne l'ensemble des individus existant qui présentent un ou plusieurs critères d'intérêt. Un échantillon est alors une fraction de la population étudiée, composée d'individus qui en principe sont représentatifs de la population étudiée.
 * Avec R, les graphiques peuvent être réalisés, en autres, à l'aide du package `ggplot2` et des fonctions associées.
 * Lors de l'analyse d'une variable quantitative, une première étape doit être de visualiser graphiquement la distribution des observations. Cela peut se faire à l'aide :
- - d'un histogramme (`ggplot2::geom_histogram()`) ;
- - d'une boîte à moustaches (`ggplot2::geom_boxplot()`) ; 
- - ou encore d'un nuage de points (`ggplot2::geom_point()`). 
+  +  d'un histogramme avec la fonction `ggplot2::geom_histogram()` ;
+  +  d'une boîte à moustaches avec la fonction `ggplot2::geom_boxplot()` ; 
+  +  ou encore d'un nuage de points avec la fonction `ggplot2::geom_point()`. 
 * Ces trois derniers types de graphiques peuvent être obtenus simultanément à l'aide de la fonction `plot_distri()` présentée dans ce chapitre.
-* La distribution d'une variable quantitative peut être notamment (mais pas seulement) de forme gaussienne, asymétrique, leptocurtique, ou encore platycurtique.
+* La distribution d'une variable quantitative peut être notamment de forme gaussienne, asymétrique, leptocurtique, ou encore platycurtique.
 * Les indices de position disponibles pour résumer une variable quantitative sont la moyenne (`mean()`), la médiane (`median()`), le mode (`lsr::modeOf()`), et la moyenne rognée (`mean(trim = ...)`).
 * Les indices de dispersion disponibles pour résumer une variable quantitative sont l'étendue (`min()`, `max()`, `range()`), l'écart-type (`sd()`), et les quartiles (`quantile(probs = c(0.25, 0.75))`).
 * L'indice statistique permettant de décrire le niveau d'asymétrie d'une variable quantitative est le coefficient d'asymétrie (`e1071::skewness()`).
