@@ -1,22 +1,33 @@
 --- 
 title: "Analyser des données avec R"
 author: "Pierre-Yves de Müllenheim"
+description: "Introduction à l'analyse des données avec R"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 
 toc-title: "Sommaire"
 lang: fr
-geometry: margin=1in
 
 documentclass: book
-bibliography: bibliography.bib
+bibliography: [bibliography.bib, packages.bib]
+biblio-title: Références, heading=bibintoc
+biblio-style: apa
+geometry: "left=4cm, right=3cm, top=2.5cm, bottom=2.5cm"
+
 csl: apa.csl
-description: "Introduction à l'analyse des données avec R"
 link-citations: yes
 github-repo: pydemull/Analyser-des-donnees-avec-R
 url: pydemull.github.io/Analyser-des-donnees-avec-R
 ---
+\renewcommand{\listfigurename}{Liste des figures}
+\renewcommand{\figurename}{Figure}
+\renewcommand{\tablename}{Tableau}
+
+\listoftables
+
+\listoffigures
+
 
 # Introduction {-}
 Ce livre vise à servir de support à des enseignements auprès d'étudiants qui découvrent les analyses statistiques en même temps que le langage de programmation R. Ce livre n'est donc pas dédié exclusivement aux statistiques, ni exclusivement dédié à R. D'autres ouvrages proposent des contenus plus spécialisés, et donc plus poussés, et c'est vers ces ouvrages qu'il convient d'aller pour davantage maîtriser les fondamentaux des statistiques ou toutes les subtilités du langage R. 
@@ -31,12 +42,33 @@ Dans ce livre, les exemples de code apparaissent dans des zones grisées, et les
 
 ```{r setup, echo = FALSE}
 knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.align ="center")
+options(width = 70)
 ```
 
 ```{r include=FALSE}
 # automatically create a bib database for R packages
 knitr::write_bib(c(
-  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+  .packages(), 
+    'rmarkdown',
+    'bookdown',
+    'knitr',
+    'tidyverse',
+    'Hmisc',
+    'patchwork',
+    'lsr',
+    'e1071',
+    'LaplacesDemon',
+    'psych',
+    'questionr',
+    'grid',
+    'vcd',
+    'ggthemes',
+    'effectsize',
+    'PairedData',
+    'flextable',
+    'officer',
+    'gghalves',
+    'correlation'
 ), 'packages.bib')
 options(crayon.enabled = FALSE)
 ```

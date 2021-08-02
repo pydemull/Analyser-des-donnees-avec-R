@@ -8,7 +8,7 @@ Dans le cadre de cette partie, nous allons commencer à voir comment produire de
 
 ## Variables quantitatives
 ### Visualiser la distribution de la variable
-Dans le cadre de l'analyse de variables quantitatives, il est toujours utile de d'abord visualiser graphiquement la distribution des données à l'aide d'un **histogramme**. Un histogramme, c'est un graphique avec des barres dont la largeur représente un intervalle donné de valeurs numériques, et dont la hauteur représente le nombre d'observations associées à une valeur qui est située dans l'intervalle en question. Plus une barre est longue, plus il y a d'observations concernées par l'intervalle de valeurs. Un exemple d'histogramme est montré ci-dessous.
+Dans le cadre de l'analyse de variables quantitatives, il est toujours utile de d'abord visualiser graphiquement la distribution des données à l'aide d'un **histogramme**. Un histogramme, c'est un graphique avec des barres dont la largeur représente un intervalle donné de valeurs numériques, et dont la hauteur représente le nombre d'observations associées à une valeur qui est située dans l'intervalle en question. Plus une barre est longue, plus il y a d'observations concernées par l'intervalle de valeurs. Un exemple d'histogramme est montré sur la Figure \@ref(fig:geomhistogram).
 
 ```{r geomhistogram, fig.cap = "Exemple d'histogramme", out.width='80%'}
 ggplot(data = iris, aes(x = Sepal.Length)) + 
@@ -65,7 +65,7 @@ ggplot(data = iris, aes(x = Sepal.Length)) +
           axis.ticks.y = element_blank())
 ```
 
-La boîte à moustaches (cf. Figure \@ref(fig:geomboxplot)) nous livre plusieurs informations. Tout d'abord, ses extrémités nous indiquent ce qu'on appelle le premier quartile (ici représenté par le bord gauche de la boîte) et le troisième quartile (ici représenté par le bord droit de la boîte). Le premier quartile (Q1) désigne la valeur en-dessous de laquelle on retrouve 25 % des observations de la variable (i.e., 25 % des observations sont associées à une valeur plus faible que Q1), alors que le troisième quartile (Q3) représente la valeur en-dessous de laquelle on retrouve 75 % des observations (i.e., 75 % des observations sont associées à une valeur plus faible que Q3). Cela indique alors que sur la Figure \@ref(fig:geomboxplot), l'intervalle qui sépare le bord gauche du bord droit de la boîte contient 50 % des observations. La ligne noire à l'intérieur de la boîte blanche désigne la médiane, qui est la valeur pour laquelle on a 50 % des observations qui ont une valeur inférieure à cette valeur repère, et pour laquelle on a 50 % des observations qui ont une valeur supérieure à cette valeur repère. Les lignes noires en-dehors de la boîte sont les moustaches. Dans le cas présent, la moustache de gauche s'étend jusqu'à la valeur minimale de la variable, et la moustache de droite s'étend jusqu'à la valeur maximale de la variable. Si le minimum (ou le maximum) avait été éloigné de la médiane de plus de 1.5 fois la différence entre Q3 et Q1 (qu'on appelle **intervalle interquartile**), l'extrémité de la moustache se serait arrêtée à la dernière valeur avant cette limite, et toute valeur ayant dépassé cette limite aurait été représentée par un point. Pour illustrer ce dernier cas de figure, on peut modifier manuellement une valeur de la variable `Sepal.Length` du jeu de données `iris` de telle sorte à ce qu'il y ait une nouvelle valeur qui soit particulièrement éloignée de la boîte. Une telle valeur s'appelle un *outlier*.
+La boîte à moustaches (cf. Figure \@ref(fig:geomboxplot)) nous livre plusieurs informations. Tout d'abord, ses extrémités nous indiquent ce qu'on appelle le premier quartile (ici représenté par le bord gauche de la boîte) et le troisième quartile (ici représenté par le bord droit de la boîte). Le premier quartile (Q1) désigne la valeur en-dessous de laquelle on retrouve 25 % des observations de la variable (i.e., 25 % des observations sont associées à une valeur plus faible que Q1), alors que le troisième quartile (Q3) représente la valeur en-dessous de laquelle on retrouve 75 % des observations (i.e., 75 % des observations sont associées à une valeur plus faible que Q3). Cela indique alors que sur la Figure \@ref(fig:geomboxplot), l'intervalle qui sépare le bord gauche du bord droit de la boîte contient 50 % des observations. La ligne noire à l'intérieur de la boîte blanche désigne la médiane, qui est la valeur pour laquelle on a 50 % des observations qui ont une valeur inférieure à cette valeur repère, et pour laquelle on a 50 % des observations qui ont une valeur supérieure à cette valeur repère. Les lignes noires en-dehors de la boîte sont les moustaches. Dans le cas présent, la moustache de gauche s'étend jusqu'à la valeur minimale de la variable, et la moustache de droite s'étend jusqu'à la valeur maximale de la variable. Si le minimum (ou le maximum) avait été éloigné de la médiane de plus de 1.5 fois la différence entre Q3 et Q1 (qu'on appelle **intervalle interquartile**), l'extrémité de la moustache se serait arrêtée à la dernière valeur avant cette limite, et toute valeur ayant dépassé cette limite aurait été représentée par un point. Pour illustrer ce dernier cas de figure, on peut modifier manuellement une valeur de la variable `Sepal.Length` du jeu de données `iris` de telle sorte à ce qu'il y ait une nouvelle valeur qui soit particulièrement éloignée de la boîte. Une telle valeur s'appelle un *outlier* (cf. Figure \@ref(fig:geomboxplotModified))
 
 ```{r geomboxplotModified, fig.height=2, fig.cap="Visualisation d'un outlier"}
 # On modifie ici, pour l'exemple, la valeur de la 3ème observation
@@ -83,7 +83,7 @@ Une boîte à moustaches a donc notamment l'intérêt de mettre en évidence des
 
 ```{r is_outlier function}
 is_outlier <- function(x) {
-  return(x < quantile(x, 0.25) - 1.5 * IQR(x) | x > quantile(x, 0.75) + 1.5 * IQR(x))
+  x < quantile(x, 0.25) - 1.5 * IQR(x) | x > quantile(x, 0.75) + 1.5 * IQR(x)
 }
 ```
 
@@ -124,7 +124,8 @@ Une fois cette procédure réalisée, le reste du code, et notamment la fonction
 
 ```{r outlier correction}
 iris$Sepal.Length[3] <- 4.7  
-# Le nombre entre crochets désigne la position de l'observation dans la variable.
+# Le nombre entre crochets désigne la position de l'observation 
+# dans la variable.
 ```
 
 On remarque ainsi qu'au-delà de prendre connaissance de la forme de la distribution, passer par ces étapes graphiques permet aussi de s'assurer qu'il n'y a pas eu d'erreur lors de la saisie des données dans la base (du moins, pas d'erreur visible et qui risquerait d'impacter grandement les calculs futurs). Passer par l'analyse graphique est donc recommandé avant de pouvoir se fier aux résultats numériques que l'on pourrait calculer par la suite, tels que les indices statistiques qui permettent de résumer numériquement une variable. Afin de faciliter l'analyse graphique de la distribution de la variable étudiée, nous avons crée une fonction, appelée `plot_distri()` (cf. ci-dessous), visant à produire à la fois un histogramme et une boîte à moustaches représentant la variable étudiée, ainsi qu'un graphique de type nuage de points montrant les valeurs individuelles.
@@ -157,7 +158,8 @@ plot_distri <- function(x = NULL, binwidth = NULL) {
     g3 <- 
       data %>% 
       ggplot(aes(x = x)) +
-      geom_point(aes(x = x, y = ""), shape = 21, fill = "white", alpha = 0.5, size = 3,
+      geom_point(aes(x = x, y = ""), 
+                 shape = 21, fill = "white", alpha = 0.5, size = 3,
                  position = position_jitter(seed = 123, width = 0.04)) +
       ylab("") +
       coord_cartesian(xlim = c(min(x, na.rm = TRUE), max(x, na.rm = TRUE))) +
@@ -368,7 +370,7 @@ mean(x = iris$Sepal.Length)
 
 La moyenne, c'est en quelque sorte le "centre de gravité" de la variable [@navarroLearningStatistics2018]. L'un de ses intérêts est que son calcul prend en compte toutes les informations contenues dans la variable, ce qui est utile quand on a relativement peu de données [@navarroLearningStatistics2018]. En revanche, un inconvénient est qu'elle est très sensible aux valeurs extrêmes, et en particulier aux valeurs qui seraient particulièrement basses ou particulièrement élevées par rapport à la majorité des valeurs de la variable (il s'agirait ici d'*outliers*), et cela est d'autant plus vrai lorsque la taille de l'échantillon étudié est faible. Dans ce dernier cas, il y a donc un risque assez important que la moyenne ne représente pas bien la tendance centrale, c'est-à-dire la valeur ou la zone de valeurs où sont situées la majorité des observations. Ce risque existe aussi même avec des tailles d'échantillon relativement importantes lorsque la distribution est asymétrique, comme illustré sur la Figure \@ref(fig:meansSkewedVariables). Sur cette figure, on peut voir qu'avec une distribution gaussienne, la moyenne correspond parfaitement à la tendance centrale. En revanche, avec une distribution asymétrique à droite, on voit que la moyenne est "tirée vers la droite" par rapport à la tendance centrale sous l'effet des valeurs, certes moins nombreuses, mais d'une grandeur plus importante.
 
-```{r meansSkewedVariables, out.width = '80%', echo = FALSE, message = FALSE, warning = FALSE, fig.cap="Moyenne d'une variable présentant une distribution asymétrique"}
+```{r meansSkewedVariables, out.width = '80%', echo = FALSE, message = FALSE, warning = FALSE, fig.cap="Effet de la forme de la distribution sur la position de la moyenne"}
 # Get legend function
 get_legend <- function(myggplot){
   tmp <- ggplot_gtable(ggplot_build(myggplot))
@@ -438,7 +440,7 @@ median(x = vec)
 
 Contrairement à la moyenne, la médiane prend donc en compte moins d'informations relatives aux données. Toutefois, en tant que valeur "du milieu", la médiane présente l'intérêt de ne pas être influencée par les valeurs extrêmes. En raison de cela, la médiane est susceptible de mieux refléter la tendance centrale que la moyenne en présence de petits échantillons avec des *outliers*, ou en présence d'une forme de distribution asymétrique. Ce dernier cas est illustré sur la Figure \@ref(fig:mediansSkewedVariables).
 
-```{r mediansSkewedVariables, out.width  = '80%', echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Médiane d'une variable présentant une distribution asymétrique"}
+```{r mediansSkewedVariables, out.width  = '80%', echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Effet de la forme de la distribution sur la position de la médiane"}
 # Graphique pour la distribution gaussienne
 set.seed(123)
 gauss <- tibble(x = rnorm(n = 1000, mean = 0, sd = 1))
@@ -604,7 +606,7 @@ Le tableau montre les données sur lesquelles R s'est appuyé pour déterminer l
 $$q = (k - 1 ) / (N - 1)$$
 Dans le calcul ci-dessus, *k* désigne le rang de la valeur considérée, et *N* désigne la taille de la variable étudiée (i.e., le nombre total de valeurs). Comme on peut le voir dans le tableau ci-dessus, cette méthode de calcul conduit nécessairement à attribuer le quantile 0 à la valeur de rang 1, et la quantile 1 à la valeur de rang *N*. Lorsque le nombre de valeurs fait que les quantiles 0.25 et 0.75 n'existent pas, R réalise une interpolation de la valeur correspondant au quantile recherché, cela à partir des quantiles qui existent et qui encadrent le quantile recherché, ainsi qu'à partir des valeurs correspondant à ces quantiles. Dans le cas présent, il s'agit plus précisément d'une interpolation linéaire. Voyons sur la Figure \@ref(fig:graphicContinuouQuantiles) en quoi cela consiste.
 
-```{r graphicContinuouQuantiles, out.width = '60%', echo = FALSE, fig.cap="Calcul des quartiles Q1 et Q3 avec une variable quantitative continue"}
+```{r graphicContinuouQuantiles, out.width = '60%', echo = FALSE, fig.cap="Détermination des quartiles Q1 et Q3 avec une variable quantitative continue"}
 model1 <- lm(Valeur ~ Quantile, data = table_quant[c(2, 3), c(2, 3)])
 model2 <- lm(Valeur ~ Quantile, data = table_quant[c(6, 7), c(2, 3)])
 
@@ -682,7 +684,7 @@ gauss <- tibble(x = rnorm(n = 1000, mean = 0, sd = 1))
 
 TextPlot_chisq1 <- 
             ggplot() + 
-            annotate(geom = "text", x = 4, y = 1, size = 3, label = bquote(paste(gamma[1], " = ", .(round(skewness(chis_1$x), 2))))) +
+            annotate(geom = "text", x = 4, y = 1, size = 4, label = bquote(paste(gamma[1], " = ", .(round(skewness(chis_1$x), 2))))) +
             theme(
               plot.background = element_blank(), 
               panel.grid.major = element_blank(),
@@ -699,7 +701,7 @@ TextPlot_chisq1 <-
 
 TextPlot_chisq4 <- 
             ggplot() + 
-            annotate(geom = "text", x = 4, y = 1, size = 3, label = bquote(paste(gamma[1], " = ", .(round(skewness(chis_4$x), 2))))) +
+            annotate(geom = "text", x = 4, y = 1, size = 4, label = bquote(paste(gamma[1], " = ", .(round(skewness(chis_4$x), 2))))) +
             theme(
               plot.background = element_blank(), 
               panel.grid.major = element_blank(),
@@ -716,7 +718,7 @@ TextPlot_chisq4 <-
 
 TextPlot_gauss <- 
             ggplot() + 
-            annotate(geom = "text", x = 4, y = 1, size = 3, label = bquote(paste(gamma[1], " = ", .(round(skewness(gauss$x), 2))))) +
+            annotate(geom = "text", x = 4, y = 1, size = 4, label = bquote(paste(gamma[1], " = ", .(round(skewness(gauss$x), 2))))) +
             theme(
               plot.background = element_blank(), 
               panel.grid.major = element_blank(),
@@ -733,7 +735,7 @@ TextPlot_gauss <-
 
 TextPlot_chisq4_neg <- 
             ggplot() + 
-            annotate(geom = "text", x = 4, y = 1, size = 3, label = bquote(paste(gamma[1], " = ", .(round(skewness(chis_4_neg$x), 2))))) +
+            annotate(geom = "text", x = 4, y = 1, size = 4, label = bquote(paste(gamma[1], " = ", .(round(skewness(chis_4_neg$x), 2))))) +
             theme(
               plot.background = element_blank(), 
               panel.grid.major = element_blank(),
@@ -750,7 +752,7 @@ TextPlot_chisq4_neg <-
 
 TextPlot_chisq1_neg <- 
             ggplot() + 
-            annotate(geom = "text", x = 4, y = 1, size = 3, label = bquote(paste(gamma[1], " = ", .(round(skewness(chis_1_neg$x), 2))))) +
+            annotate(geom = "text", x = 4, y = 1, size = 4, label = bquote(paste(gamma[1], " = ", .(round(skewness(chis_1_neg$x), 2))))) +
             theme(
               plot.background = element_blank(), 
               panel.grid.major = element_blank(),
@@ -855,7 +857,7 @@ gauss <- tibble(x = rnorm(n = 1000, mean = 0, sd = 1))
 
 TextPlot_unif <- 
             ggplot() + 
-            annotate(geom = "text", x = 4, y = 1, size = 3, label = bquote(paste(gamma[2], " = ", .(round(kurtosis(unif$x), 2))))) +
+            annotate(geom = "text", x = 4, y = 1, size = 4, label = bquote(paste(gamma[2], " = ", .(round(kurtosis(unif$x), 2))))) +
             theme(
               plot.background = element_blank(), 
               panel.grid.major = element_blank(),
@@ -872,7 +874,7 @@ TextPlot_unif <-
 
 TextPlot_gauss <- 
             ggplot() + 
-            annotate(geom = "text", x = 4, y = 1, size = 3, label = bquote(paste(gamma[2], " = ", .(round(kurtosis(gauss$x), 2))))) +
+            annotate(geom = "text", x = 4, y = 1, size = 4, label = bquote(paste(gamma[2], " = ", .(round(kurtosis(gauss$x), 2))))) +
             theme(
               plot.background = element_blank(), 
               panel.grid.major = element_blank(),
@@ -890,7 +892,7 @@ TextPlot_gauss <-
 
 TextPlot_laplace <- 
             ggplot() + 
-            annotate(geom = "text", x = 4, y = 1, size = 3, label = bquote(paste(gamma[2], " = ", .(round(kurtosis(laplace$x), 2))))) +
+            annotate(geom = "text", x = 4, y = 1, size = 4, label = bquote(paste(gamma[2], " = ", .(round(kurtosis(laplace$x), 2))))) +
             theme(
               plot.background = element_blank(), 
               panel.grid.major = element_blank(),
@@ -1041,7 +1043,7 @@ g1 / g2 / g3
 
 Lorsqu'il s'agit plus précisément de vouloir renseigner sur la tendance centrale relative à l'échantillon étudié, le choix dépend de la forme de la distribution observée. Lorsque la distribution est gaussienne, la moyenne, la médiane, et le mode, sont similaires et donc se valent. Toutefois, lorsque la distribution est asymétrique et unimodale (i.e., avec un seul pic), le mode reflètera mieux la tendance centrale. De plus, lorsque la distribution est asymétrique, la médiane aura tendance à mieux représenter la tendance centrale que la moyenne [@rousseletReactionTimesOther2020]. Notons que dans certains cas où la distribution semble asymétrique, la médiane peut se retrouver malgré tout plus éloignée du mode que la moyenne, comme illustré dans l'exemple emprunté à Gonzales et al. qui est montré sur la Figure \@ref(fig:MeanAboveLedianAsym) [-@gonzalesMeasuresCentralTendency2001].
 
-```{r MeanAboveLedianAsym, out.width='80%', echo = FALSE, warning = FALSE, message = FALSE, fig.cap = "Moyenne et médiane dans le cadre d'une distribution asymétrique"}
+```{r MeanAboveLedianAsym, out.width='80%', echo = FALSE, warning = FALSE, message = FALSE, fig.cap = "Exemples de positions de la moyenne et de la médiane dans le cadre d'une distribution asymétrique"}
 x_asym <- tibble(x = c(18, 20, 22, 24, 26, 29, 35, 35, 39))
 ggplot(data = x_asym) +
   geom_histogram(aes(x = x), fill = "white", color = "black") +
@@ -1098,7 +1100,8 @@ A <-
   summarize(count = n()) %>%
   ggplot(aes(x = color, y = count)) +
      geom_bar(stat = "identity") +
-     geom_text(aes(label = count, x = color, y = count), size = 2, nudge_y = 700) +
+     geom_text(aes(label = count, x = color, y = count), 
+               size = 2, nudge_y = 700) +
      ggtitle("A")
 
 # Diagramme en barres réorganisées manuellement
@@ -1106,7 +1109,8 @@ B <-
   diamonds %>% 
   group_by(color) %>%
   summarize(count = n()) %>%
-  ggplot(aes(x = fct_relevel(color, "J", "I", "H", "G", "F", "E", "D"), y = count)) +
+  ggplot(aes(x = fct_relevel(color, "J", "I", "H", "G", "F", "E", "D"), 
+             y = count)) +
      geom_bar(stat = "identity") +
      xlab("color") +
      ggtitle("B") 
@@ -1172,7 +1176,8 @@ A <-
   summarize(count = n()) %>%
   ggplot(aes(x = "", y = count, fill = color)) +
   geom_bar(stat = "identity", na.rm = TRUE) +
-  geom_text(aes(label = count), size = 2, position = position_stack(vjust = 0.5)) +
+  geom_text(aes(label = count), size = 2, 
+            position = position_stack(vjust = 0.5)) +
   ggtitle("A")
   
 # Diagramme en barres empilées montrant les proportions
@@ -1194,7 +1199,8 @@ C <-
   ggplot(aes(x = "", y = count, fill = color)) +
   geom_bar(stat = "identity", position = "stack") +
   coord_polar(theta = "y", start = 0, direction = -1) +
-  geom_text(aes(label = count), size = 2, position = position_stack(vjust = 0.5)) +
+  geom_text(aes(label = count), size = 2, 
+            position = position_stack(vjust = 0.5)) +
   ggtitle("C")
 
 # Diagramme circulaire montrant les proportions

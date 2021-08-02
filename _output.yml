@@ -8,10 +8,15 @@ bookdown::gitbook:
         <li><a href="https://github.com/rstudio/bookdown" target="blank">Publié avec bookdown</a></li>
     sharing:
       github: true
+    download: ["pdf", "epub"]
 
 bookdown::epub_book: default
 
 bookdown::pdf_book:
-    latex_engine: xelatex
-    includes:
-      in_header: preamble.tex
+  includes:
+    in_header: preamble.tex
+  latex_engine: xelatex
+  citation_package: biblatex
+  keep_tex: yes
+
+
