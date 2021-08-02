@@ -24,7 +24,7 @@
 <meta name="author" content="Pierre-Yves de Müllenheim" />
 
 
-<meta name="date" content="2021-07-31" />
+<meta name="date" content="2021-08-02" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -197,9 +197,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="4.3" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#relation-entre-une-variable-quantitative-et-une-variable-qualitative"><i class="fa fa-check"></i><b>4.3</b> Relation entre une variable quantitative et une variable qualitative</a><ul>
 <li class="chapter" data-level="4.3.1" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#comparaison-de-deux-groupes-de-données"><i class="fa fa-check"></i><b>4.3.1</b> Comparaison de deux groupes de données</a></li>
-<li class="chapter" data-level="4.3.2" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#étudier-numériquement-la-relation-2"><i class="fa fa-check"></i><b>4.3.2</b> Étudier numériquement la relation</a></li>
+<li class="chapter" data-level="4.3.2" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#cas-de-deux-groupes-de-données-indépendants-données-non-pairées"><i class="fa fa-check"></i><b>4.3.2</b> Cas de deux groupes de données indépendants (données non pairées)</a></li>
+<li class="chapter" data-level="4.3.3" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#comparaison-de-trois-groupes-de-données-et-plus"><i class="fa fa-check"></i><b>4.3.3</b> Comparaison de trois groupes de données et plus</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#résumé-3"><i class="fa fa-check"></i><b>4.4</b> Résumé</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="régressions.html"><a href="régressions.html"><i class="fa fa-check"></i><b>5</b> Régressions</a><ul>
 <li class="chapter" data-level="5.1" data-path="régressions.html"><a href="régressions.html#régression-linéaire-simple"><i class="fa fa-check"></i><b>5.1</b> Régression linéaire simple</a><ul>
@@ -373,7 +373,7 @@ Figure 1.1: Graphique obtenu avec un paramétrage explicite de la fonction plot(
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="prérequis.html#cb36-1"></a><span class="kw">plot</span>(<span class="dt">y =</span> iris<span class="op">$</span>Petal.Length, <span class="dt">x =</span> iris<span class="op">$</span>Sepal.Length)</span></code></pre></div>
 <p>Ce changement d’ordre n’est possible que lorsque les arguments sont explicitement précisés dans la fonction. Il est aussi possible de configurer une fonction en mettant des valeurs sans avoir à écrire les noms des arguments. Cependant, lorsque les noms des arguments ne sont pas précisés, R associe les valeurs (celles que l’on a mises) aux arguments de la fonction en suivant l’ordre par défaut des arguments avec lequel la fonction a été configurée. Ainsi, si nous voulons avoir, pour le graphique associé à notre exemple, la variable <code>Sepal.Length</code> en <code>x</code>, et la variable <code>Petal.Length</code> en <code>y</code>, on peut très bien écrire la fonction comme ceci :</p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="prérequis.html#cb37-1"></a><span class="kw">plot</span>(iris<span class="op">$</span>Sepal.Length, iris<span class="op">$</span>Petal.Length)</span></code></pre></div>
-<p>En revanche, si nous avions inversé l’ordre d’écriture des variables dans la fonction sans préciser les noms des arguments (cf. code ci-dessous), nous aurions eu un résultat différent du graphique précédent (cf. Figure <a href="prérequis.html#fig:plotfunction5">1.2</a>, où les variables en x et en y ont été inversées par rapport au graphique précédent) :</p>
+<p>En revanche, si nous avions inversé l’ordre d’écriture des variables dans la fonction sans préciser les noms des arguments (cf. code ci-dessous), nous aurions eu un résultat différent du graphique précédent (cf. Figure <a href="prérequis.html#fig:plotfunction5">1.2</a>, où les variables en x et en y ont été inversées par rapport au graphique précédent).</p>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="prérequis.html#cb38-1"></a><span class="kw">plot</span>(iris<span class="op">$</span>Petal.Length, iris<span class="op">$</span>Sepal.Length)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:plotfunction5"></span>
 <img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/plotfunction5-1.png" alt="Graphique obtenu avec un paramétrage implicite de la fonction plot()" width="70%" />
@@ -473,7 +473,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": null,
+"download": ["Analyser des données avec R.pdf", "Analyser des données avec R.epub"],
 "toc": {
 "collapse": "subsection"
 }
