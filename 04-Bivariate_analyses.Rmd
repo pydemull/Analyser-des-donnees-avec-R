@@ -600,9 +600,9 @@ ggplot(data = recap_dep2, aes(x = department, y = prop, fill = gender)) +
 Autrement dit, les hommes se retrouvaient avec un pourcentage de réussite global bien meilleur que celui des femmes seulement parce que, comparativement aux femmes, les hommes s'étaient en proportion davantage engagés dans les départements où les taux de réussite étaient bien meilleurs.
 
 ## Relation entre une variable quantitative et une variable qualitative
-Lorsqu'on analyse une variable quantitative en fonction d'une variable qualitative, on peut avoir des données quantitatives qui sont non pairées (étude de type *between-subject design* en anglais) ou pairées (étude de type *within-subject design* en anglais). Avoir des données non pairées signifie que les données quantitatives correspondant aux différentes modalités de la variable qualitative étudiée ne sont pas liées. Un exemple simple, pour ce premier cas, peut être l'analyse de la taille des individus en fonction du sexe. Dans ce cas, les données quantitatives de taille pour les personnes de sexe masculin, de sexe féminin, et de sexe indéterminé, proviendront forcément d'individus différents et ne formeront donc pas des paires. Les cas de données pairées se retrouvent dans les études dans lesquelles plusieurs individus sont évalués plusieurs fois dans des conditions similaires ou différentes et que l'on cherche à comparer. En sciences du sport, un exemple relativement classique est de tester la performance d'endurance (variable quantitative) en ayant pris (condition de test) ou non (condition contrôle) une substance potentiellement ergonénique, la prise de substance ou non étant les modalités d'une même variable qualitative de type condition. Dans ce cas là, tous les individus auront des données dans les deux conditions et ces données seront donc pairées (dépendantes).
+Lorsqu'on analyse une variable quantitative en fonction d'une variable qualitative, on peut avoir des données quantitatives qui sont non appariées (étude de type *between-subject design* en anglais) ou appariées (étude de type *within-subject design* en anglais). Avoir des données non appariées signifie que les données quantitatives correspondant aux différentes modalités de la variable qualitative étudiée ne sont pas liées. Un exemple simple, pour ce premier cas, peut être l'analyse de la taille des individus en fonction du sexe. Dans ce cas, les données quantitatives de taille pour les personnes de sexe masculin, de sexe féminin, et de sexe indéterminé, proviendront forcément d'individus différents et ne formeront donc pas des paires. Les cas de données appariées se retrouvent dans les études dans lesquelles plusieurs individus sont évalués plusieurs fois dans des conditions similaires ou différentes et que l'on cherche à comparer. En sciences du sport, un exemple relativement classique est de tester la performance d'endurance (variable quantitative) en ayant pris (condition de test) ou non (condition contrôle) une substance potentiellement ergonénique, la prise de substance ou non étant les modalités d'une même variable qualitative de type condition. Dans ce cas là, tous les individus auront des données dans les deux conditions et ces données seront donc appariées (dépendantes).
 
-Étant donné que les contraintes graphiques et les statistiques à calculer diffèrent selon que l'on est en présence de (i) deux groupes (1 variable quantitative x 1 variable qualitative avec 2 modalités) ou (ii) trois groupes et plus (1 variable quantitative x 1 variable qualitative avec 3 modalités ou plus), en particulier lorsque les données sont pairées, les procédures graphiques et calculatoires présentées ci-après sont distinguées selon ces deux grands cas de figure.
+Étant donné que les contraintes graphiques et les statistiques à calculer diffèrent selon que l'on est en présence de (i) deux groupes (1 variable quantitative x 1 variable qualitative avec 2 modalités) ou (ii) trois groupes et plus (1 variable quantitative x 1 variable qualitative avec 3 modalités ou plus), en particulier lorsque les données sont appariées, les procédures graphiques et calculatoires présentées ci-après sont distinguées selon ces deux grands cas de figure.
 
 ### Comparaison de deux groupes de données
 
@@ -624,15 +624,15 @@ library(gghalves)
 Les éléments de code proposés ci-après pour déplacer l'axe des observations individuelles proviennent de la page web https://github.com/tidyverse/ggplot2/issues/4491, et ceux ayant permis de réaliser les *clouds* proviennent de l'article de Allen et al. [@allenRaincloudPlotsMultiplatform2019] et de la page web https://github.com/jorvlan/raincloudplots.
 
 ```{r}
-# Configuration du jeu de données pour les exemples avec données non pairées
+# Configuration du jeu de données pour les exemples avec données non appariées
 iris_two_species <-
   iris %>% filter(Species != "virginica")
 ```
 
 ```{r }
-##########################################################
-# Raincloud plots à l'horizontale pour données non pairées
-##########################################################
+############################################################
+# Raincloud plots à l'horizontale pour données non appariées
+############################################################
 
 
 # Raincloud plots classiques
@@ -676,16 +676,16 @@ B <-
   coord_flip()
 ```
 
-```{r raindcloudplotsBivUnpaired1, out.height= '40%', echo = FALSE, fig.cap="Exemples de raindcloud plots à l'horizontale pour des données non pairées"}
+```{r raindcloudplotsBivUnpaired1, out.height= '40%', echo = FALSE, fig.cap="Exemples de raindcloud plots à l'horizontale pour des données non appariées"}
 library(patchwork)
 (A | B)
 ```
 
 
 ```{r }
-#########################################################
-# Raincloud plots à la verticale pour données non pairées
-#########################################################
+###########################################################
+# Raincloud plots à la verticale pour données non appariées
+###########################################################
 
 # Raincloud plots classiques
 A <-
@@ -708,7 +708,7 @@ B <-
                                       colour = Species, fill = Species)) +
   geom_point(data = iris_two_species %>% filter(Species == "setosa"),
              aes(x = -0.17),
-             position = position_jitter(seed = 123, width = 0.02, height = NULL),
+             position = position_jitter(seed = 123, width = 0.017, height = NULL),
              size = 3, alpha = 0.3) +
   geom_point(data = iris_two_species %>% filter(Species == "versicolor"),
              aes(x = -0.11),
@@ -726,15 +726,15 @@ B <-
         axis.ticks.x = element_blank())
 ```
 
-```{r raindcloudplotsBivUnpaired2, out.height= '40%',  echo = FALSE, fig.cap="Exemples de raindcloud plots à la vertciale pour des données non pairées"}
+```{r raindcloudplotsBivUnpaired2, out.height= '40%',  echo = FALSE, fig.cap="Exemples de raindcloud plots à la verticale pour des données non appariées"}
 library(patchwork)
 (A | B)
 ```
 
-La reproduction des graphiques proposés pour les données pairées (cf. Figures \@ref(fig:raindcloudplotsBivPaired1) et \@ref(fig:raindcloudplotsBivPaired2)) nécessite l'installation du package `PairedData` et le chargement du jeu de données associé `Blink`. Pour information, `Blink` contient les données de taux de clignotement des yeux obtenues chez 12 sujets et dans deux conditions différentes : une tâche où il fallait diriger un stylo selon une trajectoire rectiligne (modalité `Straight`) ; et une tâche où il fallait diriger un stylo selon une trajectoire présentant des oscillations (`Oscillating`).
+La reproduction des graphiques proposés pour les données appariées (cf. Figures \@ref(fig:raindcloudplotsBivPaired1) et \@ref(fig:raindcloudplotsBivPaired2)) nécessite l'installation du package `PairedData` et le chargement du jeu de données associé `Blink`. Pour information, `Blink` contient les données de taux de clignotement des yeux obtenues chez 12 sujets et dans deux conditions différentes : une tâche où il fallait diriger un stylo selon une trajectoire rectiligne (modalité `Straight`) ; et une tâche où il fallait diriger un stylo selon une trajectoire présentant des oscillations (`Oscillating`).
 
 ```{r}
-# Configuration du jeu de données pour les exemples avec données pairées
+# Configuration du jeu de données pour les exemples avec données appariées
 library(PairedData)
 data(Blink)
 
@@ -747,9 +747,9 @@ Blink2 <-
 ```
 
 ```{r}
-######################################################
-# Raincloud plots à l'horizontale pour données pairées
-######################################################
+########################################################
+# Raincloud plots à l'horizontale pour données appariées
+########################################################
 
 # Raincloud plots classiques avec moyennes et écart-types et une ligne reliant 
 # les moyennes
@@ -809,14 +809,14 @@ B <-
   coord_flip()
 ```
 
-```{r raindcloudplotsBivPaired1, echo = FALSE,  out.height='40%', fig.cap="Exemples de raindcloud plots à l'horizontale  pour des données pairées"}
+```{r raindcloudplotsBivPaired1, echo = FALSE,  out.height='40%', fig.cap="Exemples de raindcloud plots à l'horizontale  pour des données appariées"}
 (A |B)
 ```
 
 ```{r}
-#####################################################
-# Raincloud plots à la verticale pour données pairées
-#####################################################
+#######################################################
+# Raincloud plots à la verticale pour données appariées
+#######################################################
 
 # Raincloud plots classiques avec moyennes et écart-types et une ligne reliant 
 # les moyennes 
@@ -874,7 +874,7 @@ B <-
         axis.ticks.x = element_blank())
 ```
 
-```{r raindcloudplotsBivPaired2, echo = FALSE,  out.height='40%', fig.cap="Exemples de raindcloud plots à la verticale pour des données pairées"}
+```{r raindcloudplotsBivPaired2, echo = FALSE,  out.height='40%', fig.cap="Exemples de raindcloud plots à la verticale pour des données appariées"}
 (A |B)
 ```
 
@@ -884,7 +884,7 @@ On remarque que pour les graphiques des figures \@ref(fig:raindcloudplotsBivPair
 Pour pouvoir faire les *raincloud plots*, il a fallu user de plusieurs nouvelles techniques : 
 
 - Pour montrer les aires représentant les densités de probabilité (*the clouds*), il a fallu utiliser la fonction `geom_half_violin()` du package `gghalves`. L'argument `side` permet de choisir de quel côté l'on veut que l'aire apparaisse (à droite ou à gauche quand on est à la verticale). Ces *clouds* ont parfois été légèrement déplacés à l'aide de l'argument `position` et de la fonction `position_nudge()` ou bien resserés à l'aide de la fonction `position_dodge()`.
-- Pour montrer les données individuelles (*the rain*) sans risquer qu'elle ne se superposent de trop, on a utilisé la fonction `geom_point()`, l'argument `position` et la fonction `position_jitter()`. À l'intérieur de la fonction `position_jitter()`, l'argument `seed` (la graine en français) désigne le nombre sur lequel se base l'ordinateur pour générer un résultat pseudo-aléatoire. Quand on regarde les graphiques, les données individuelles apparaissent décalées aléatoirement sur le plan vertical (ou latéral selon l'orientation du graphique), l'importance du décalage étant contrôlée par l'argument `width`. Cet effet aléatoire est l'intérêt même d'une fonction dite `jitter`, et cet effet est en réalité prédéfini de telle sorte que si on utilise toujours le même numéro de graine (`seed`), alors on obtiendra toujours le même effet aléatoire sur le graphique. Ceci est très important car cela permet d'aligner les lignes individuelles avec les données (les points) individuelles (cf. graphiques B des Figures \@ref(fig:raindcloudplotsBivPaired1) et \@ref(fig:raindcloudplotsBivPaired2)) lorsqu'on veut générer un mouvement aléatoire des données sur le graphique. On peut aussi noter que certains graphiques ont nécessité un décalage manuel de l'axe le long duquel les données individuelles sont montrées, en utilisant la fonction `stage()` avec l'argument `x = `,  ou en utilisant simplement une valeur numérique pour l'argument `x = ` dans la fonction `aes()`.
+- Pour montrer les données individuelles (*the rain*) sans risquer qu'elle ne se superposent de trop, on a utilisé la fonction `geom_point()`, l'argument `position` et la fonction `position_jitter()`. À l'intérieur de la fonction `position_jitter()`, l'argument `seed` (la graine en français) désigne le nombre sur lequel se base l'ordinateur pour générer un résultat pseudo-aléatoire. Quand on regarde les graphiques, les données individuelles apparaissent décalées aléatoirement sur le plan vertical (ou horizontal selon l'orientation du graphique), l'importance du décalage étant contrôlée par l'argument `width`. Cet effet aléatoire est l'intérêt même d'une fonction dite `jitter`, et cet effet est en réalité prédéfini de telle sorte que si on utilise toujours le même numéro de graine (`seed`), alors on obtiendra toujours le même effet aléatoire sur le graphique. Ceci est très important car cela permet d'aligner les lignes individuelles avec les données (les points) individuelles (cf. graphiques B des Figures \@ref(fig:raindcloudplotsBivPaired1) et \@ref(fig:raindcloudplotsBivPaired2)) lorsqu'on veut générer un mouvement aléatoire des données sur le graphique. On peut aussi noter que certains graphiques ont nécessité un décalage manuel de l'axe le long duquel les données individuelles sont montrées, en utilisant la fonction `stage()` avec l'argument `x = `,  ou en utilisant simplement une valeur numérique pour l'argument `x = ` dans la fonction `aes()`.
 - Pour montrer les moyennes (cf. graphiques A des Figures \@ref(fig:raindcloudplotsBivPaired1) et \@ref(fig:raindcloudplotsBivPaired2)), il a fallu utiliser la fonction `stat_summary()`. Cette fonction peut servir à visualiser un résumé statistique identifié grâce à l'argument `fun`. On peut choisir sa forme avec l'argument `geom`. Lorsque l'on veut montrer la ligne qui relie les moyennes d'un même groupe dans des conditions différentes, la subtilité consiste à écrire `group = 1` à l'intérieur de la fonction `aes()`.
 - Pour montrer les écarts-types (cf. graphiques A des Figures \@ref(fig:raindcloudplotsBivPaired1) et \@ref(fig:raindcloudplotsBivPaired2)), il a fallu là aussi utiliser la fonction `stat_summary()`, cette fois en utilisant l'argument `fun.data` avec la valeur `mean_sdl`, et l'argument `fun.args` que l'on a configuré pour déterminer le nombre d'écarts-types que la longueur de la barre d'erreur devait représenter (ici, c'est une fois l'écart-type, obtenu avec `mult = 1`).
 
@@ -893,11 +893,11 @@ De manière générale, étudier la relation entre une variable quantitative et 
 
 De prime abord, l'analyse qui pourrait être envisagée pour comparer deux groupes serait d'utiliser simplement la différence entre les moyennes des deux groupes. Toutefois, en se restreignant à cela, il pourrait être difficile de porter un jugement sur la grandeur relative de la différence entre les groupes comparés, qu'on pourrait appeler **taille d'effet**. Il serait également difficile de comparer cette taille d'effet avec celles observées dans d'autres études, en particulier celles traitant de sujets différents, car étant calculée de la sorte, la taille d'effet serait inhérente à la nature des variables investiguées et à la grandeur des valeurs mesurées dans l'étude. Il est donc intéressant, dans ce genre de situation, de standardiser la différence de scores obtenue entre les deux groupes. Dans la littérature, la procédure de standardisation a été très développée pour la comparaison de moyennes. Pour cette raison, les sous-parties suivantes qui traitent de la comparaison de deux groupes présentent essentiellement les calculs  pour obtenir une taille d'effet en vue de comparer des moyennes. Ces calculs sont repris de l'article de Lakens [-@lakensCalculatingReportingEffect2013]. Quelques mots seront toutefois donnés pour les situations pour lesquelles ces calculs risqueraient de ne pas être appropriés.
 
-### Cas de deux groupes de données indépendants (données non pairées)
+### Cas de deux groupes de données indépendants (données non appariées)
 
 **$d_{s}$ de Cohen**
 
-Classiquement, l'indice statistique utilisé pour calculer une différence de moyennes de manière standardisée entre deux groupes de données non pairées, à partir d'échantillons de population, est le $d_{s}$ de Cohen. Cette statistique se calcule en faisant la différence entre les moyennes des deux groupes à comparer, et en divisant cette différence par l'écart-type commun des valeurs de chacun des deux groupes. Ce calcul est montré ci-dessous : 
+Classiquement, l'indice statistique utilisé pour calculer une différence de moyennes de manière standardisée entre deux groupes de données non appariées, à partir d'échantillons de population, est le $d_{s}$ de Cohen. Cette statistique se calcule en faisant la différence entre les moyennes des deux groupes à comparer, et en divisant cette différence par l'écart-type commun des valeurs de chacun des deux groupes. Ce calcul est montré ci-dessous : 
 
 $$d_{s} = \frac{\overline{X}_{1} - \overline{X}_{2}} {\sqrt{\frac{(N_{1} - 1) s_{1}^2 + (N_{2} - 1) s_{2}^2} {N_{1} + N_{2} - 2}}}$$
 
@@ -976,7 +976,7 @@ glass_delta(Sepal.Length ~ Species,
 
 Certaines situations peuvent rendre la comparaison de moyennes non pertinente. C'est par exemple le cas lorsque l'un des deux groupes (voire les deux) présentent des données aberrantes, en particulier en présence de petits échantillons. L'utilisation des moyennes dans ce cas pourrait ne pas être pertinente car ces moyennes ne refléteraient alors pas correctement les tendances centrales (et donc les groupes associés). Dans ces cas là, mieux vaut observer les médianes de chaque groupe et chercher à voir si les distributions sont en décalage ou non. 
 
-#### Cas de deux groupes de données dépendants (données pairées)
+#### Cas de deux groupes de données dépendants (données appariées)
 
 **$d_{z}$ et $d_{av}$ de Cohen**
 
@@ -1005,7 +1005,7 @@ cohens_d(Blink_rate ~ Condition,
          pooled_sd = FALSE)
 ```
 
-En effet, que l'on fasse la moyenne des différences (ce qui serait attendu pour le présent calcul) ou la différence entre deux moyennes (ce qui est finalement fait par la fonction telle que configurée ci-dessus), cela ne change rien avec des données pairées. Le numérateur $\overline{X} _{diff}$ reste donc correctement calculé même avec cette configuration de fonction qui est faite initialement pour des groupes indépendants. Le fait d'indiquer `pooled_sd = FALSE` change le calcul du dénominateur que nous avions rencontré initialement pour le calcul de $d_{s}$, cela pour obtenir le calcul attendu pour le $d_{av}$.
+En effet, que l'on fasse la moyenne des différences (ce qui serait attendu pour le présent calcul) ou la différence entre deux moyennes (ce qui est finalement fait par la fonction telle que configurée ci-dessus), cela ne change rien avec des données appariées. Le numérateur $\overline{X} _{diff}$ reste donc correctement calculé même avec cette configuration de fonction qui est faite initialement pour des groupes indépendants. Le fait d'indiquer `pooled_sd = FALSE` change le calcul du dénominateur que nous avions rencontré initialement pour le calcul de $d_{s}$, cela pour obtenir le calcul attendu pour le $d_{av}$.
 
 **$g_{av}$ de Hedges**
 
@@ -1074,7 +1074,7 @@ B <-
 
 ```
 
-```{r, out.height='40%', echo = FALSE, fig.cap = "Exemple de figure pour montrer la médiane des différences dans le cas de données pairées"}
+```{r, out.height='40%', echo = FALSE, fig.cap = "Exemple de figure pour montrer la médiane des différences dans le cas de données appariées"}
 A | B
 ```
 
