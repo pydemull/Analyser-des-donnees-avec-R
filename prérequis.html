@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapitre 1 Prérequis | Analyser des données avec R</title>
   <meta name="description" content="Introduction à l’analyse des données avec R" />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapitre 1 Prérequis | Analyser des données avec R" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Pierre-Yves de Müllenheim" />
 
 
-<meta name="date" content="2021-08-07" />
+<meta name="date" content="2021-08-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,7 @@
   
 <link rel="prev" href="index.html"/>
 <link rel="next" href="importation-et-manipulation-dune-base-de-données.html"/>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -197,7 +197,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="4.3" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#relation-entre-une-variable-quantitative-et-une-variable-qualitative"><i class="fa fa-check"></i><b>4.3</b> Relation entre une variable quantitative et une variable qualitative</a><ul>
 <li class="chapter" data-level="4.3.1" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#comparaison-de-deux-groupes-de-données"><i class="fa fa-check"></i><b>4.3.1</b> Comparaison de deux groupes de données</a></li>
-<li class="chapter" data-level="4.3.2" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#cas-de-deux-groupes-de-données-indépendants-données-non-pairées"><i class="fa fa-check"></i><b>4.3.2</b> Cas de deux groupes de données indépendants (données non pairées)</a></li>
+<li class="chapter" data-level="4.3.2" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#cas-de-deux-groupes-de-données-indépendants-données-non-appariées"><i class="fa fa-check"></i><b>4.3.2</b> Cas de deux groupes de données indépendants (données non appariées)</a></li>
 <li class="chapter" data-level="4.3.3" data-path="analyses-descriptives-bivariées.html"><a href="analyses-descriptives-bivariées.html#comparaison-de-trois-groupes-de-données-et-plus"><i class="fa fa-check"></i><b>4.3.3</b> Comparaison de trois groupes de données et plus</a></li>
 </ul></li>
 </ul></li>
@@ -363,8 +363,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Comme nous pouvons l’observer ci-dessus, pour utiliser une fonction, il faut d’abord écrire son nom, puis mettre des parenthèses pour qu’on puisse écrire des informations à l’intérieur. Ces informations, elles sont de deux natures. D’un côté il y a les <strong>arguments</strong> (qui sont <code>x</code> et <code>y</code> dans l’exemple ci-dessus), et d’un autre côté il y a les <strong>valeurs</strong> (qui sont les variables <code>Sepal.Length</code> et <code>Petal.Length</code> du jeu de données <code>iris</code> dans l’exemple ci-dessus). Notons ici que le concept de valeur est à prendre au sens général du terme. Dans ce cadre là, une valeur pourrait tout aussi bien désigner des nombres ou des lettres, des vecteurs, des jeux de données, etc. Avec certaines fonctions, nous aurions pu mettre le nom de la variable seul et mettre le nom du jeu de données en face d’un autre argument, mais cela n’était pas possible ici. Comme nous pouvons le voir également, l’argument et la valeur sont toujours mis en lien par le biais du signe <code>=</code>. (Attention : Nous verrons plus tard qu’avec certaines fonctions, l’écriture qui est à gauche du signe <code>=</code> est en fait le nom d’une nouvelle variable à créer, mais laissons cela de côté pour le moment.)
 Le nombre d’arguments dépend des fonctions. Certaines n’en n’ont qu’un, d’autres peuvent en avoir un très grand nombre. Dans une fonction, certains arguments doivent obligatoirement recevoir une valeur indiquée par nos soins, alors que d’autres arguments ne seront tout simplement pas utilisés si on ne leur associe pas une valeur particulière. Enfin, certains arguments prendront une valeur par défaut associée à la fonction si l’on écrit rien les concernant dans la fonction. Dans la fonction <code>plot()</code>, seul l’argument <code>x</code> doit obligatoirement recevoir une valeur pour que la fonction puisse être utilisée. Dans notre exemple, le fait d’avoir en plus associer une valeur à l’argument <code>y</code> permet à la fonction de non pas montrer uniquement les données de la variable <code>x</code>, mais de réaliser un graphique en montrant les données de <code>y</code> en fonction de <code>x</code>, comme illustré sur la Figure <a href="prérequis.html#fig:plotfunction2">1.1</a> :</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="prérequis.html#cb35-1"></a><span class="kw">plot</span>(<span class="dt">x =</span> iris<span class="op">$</span>Sepal.Length, <span class="dt">y =</span> iris<span class="op">$</span>Petal.Length)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:plotfunction2"></span>
-<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/plotfunction2-1.png" alt="Graphique obtenu avec un paramétrage explicite de la fonction plot()" width="70%" />
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:plotfunction2"></span>
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/plotfunction2-1.png" alt="Graphique obtenu avec un paramétrage explicite de la fonction plot()" width="70%" />
 <p class="caption">
 Figure 1.1: Graphique obtenu avec un paramétrage explicite de la fonction plot()
 </p>
@@ -375,8 +375,8 @@ Figure 1.1: Graphique obtenu avec un paramétrage explicite de la fonction plot(
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="prérequis.html#cb37-1"></a><span class="kw">plot</span>(iris<span class="op">$</span>Sepal.Length, iris<span class="op">$</span>Petal.Length)</span></code></pre></div>
 <p>En revanche, si nous avions inversé l’ordre d’écriture des variables dans la fonction sans préciser les noms des arguments (cf. code ci-dessous), nous aurions eu un résultat différent du graphique précédent (cf. Figure <a href="prérequis.html#fig:plotfunction5">1.2</a>, où les variables en x et en y ont été inversées par rapport au graphique précédent).</p>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="prérequis.html#cb38-1"></a><span class="kw">plot</span>(iris<span class="op">$</span>Petal.Length, iris<span class="op">$</span>Sepal.Length)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:plotfunction5"></span>
-<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/plotfunction5-1.png" alt="Graphique obtenu avec un paramétrage implicite de la fonction plot()" width="70%" />
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:plotfunction5"></span>
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/plotfunction5-1.png" alt="Graphique obtenu avec un paramétrage implicite de la fonction plot()" width="70%" />
 <p class="caption">
 Figure 1.2: Graphique obtenu avec un paramétrage implicite de la fonction plot()
 </p>
@@ -474,6 +474,10 @@ gitbook.start({
 "text": null
 },
 "download": [["Analyser-des-données-avec-R.pdf", "PDF"], ["Analyser-des-données-avec-R.epub", "EPUB"]],
+"search": {
+"engine": "lunr",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }
