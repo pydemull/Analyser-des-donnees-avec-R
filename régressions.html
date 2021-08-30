@@ -241,7 +241,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 où <span class="math inline">\(\hat{Y}\)</span> désigne les prédictions faites à partir du modèle, et <span class="math inline">\(Y\)</span> désigne les valeurs réelles que l’on a cherché à prédire à partir du modèle. Le terme <span class="math inline">\(\hat{Y} - Y\)</span> (ou <span class="math inline">\(RES\)</span>) doit se concevoir comme une variable contenant toutes les différences <span class="math inline">\(\hat{Y}{i} - Y{i}\)</span> qu’on appelle des <strong>résidus</strong>. Ainsi, le terme <span class="math inline">\({Var(\hat{Y} - Y) }\)</span> désigne la variance des résidus (ou encore la variance des erreurs). Au final, le ratio <span class="math inline">\({\frac {Var(\hat{Y} - Y) } {Var(Y)}}\)</span> traduit la part de variance non expliquée (non détectée) par le modèle, et le <span class="math inline">\(R^2\)</span> se calcule en faisant 1 moins ce ratio. (À noter qu’on peut trouver ailleurs d’autres manières de présenter ce coefficient <span class="math inline">\(R^2\)</span>, avec des formules initiales différentes, mais mathématiquement, les méthodes restent équivalentes).</p>
 <p>La Figure <a href="régressions.html#fig:graphsee">5.1</a> illustre la notion de <strong>résidu</strong> et ce qu’elle représente dans le calcul du <span class="math inline">\(R^2\)</span>. Sur cette figure, les points représentent les valeurs <span class="math inline">\(Y{i}\)</span> en fonction des valeurs <span class="math inline">\(X{i}\)</span>, la ligne bleue représente le modèle de régression linéaire (i.e., toutes les valeurs <span class="math inline">\(\hat{Y}{i}\)</span> qui seraient prédites à partir du modèle et des valeurs <span class="math inline">\(X{i}\)</span>), et les segments rouges représentent les résidus (i.e., les différences qu’on a à chaque fois entre <span class="math inline">\(\hat{Y}{i}\)</span> et <span class="math inline">\(Y{i}\)</span>). Pour un modèle donné, plus ces segments rouges seront nombreux et grands, plus cela signifiera que les erreurs de prédiction du modèle sont nombreuses et grandes, que la part de variance non expliquée par le modèle est grande, et que la valeur du <span class="math inline">\(R^2\)</span> pour ce modèle est éloignée de 1. Ainsi, le coeffient <span class="math inline">\(R^2\)</span> peut aller de la valeur 0 (signifiant que le modèle n’explique aucune variation de <span class="math inline">\(Y\)</span>), à la valeur de 1 (signifiant que le modèle explique toute les variations de <span class="math inline">\(Y\)</span>). Plus la valeur de <span class="math inline">\(R^2\)</span> d’un modèle linéaire se rapprochera de 1, plus cela suggérera que la relation étudiée est effectivement linéaire. Le coefficient de détermination <span class="math inline">\(R^2\)</span> associé à un modèle linéaire est mathématiquement lié au coefficient de corrélation de Pearson (<span class="math inline">\(r\)</span>), <span class="math inline">\(r\)</span> étant la racine carrée du <span class="math inline">\(R^2\)</span>.</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:graphsee"></span>
-<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/graphsee-1.png" alt="Illustration d'un modèle linéaire (en bleu) et de ses résidus (en rouge)" width="70%" />
+<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/graphsee-1.png" alt="Illustration d'un modèle linéaire (en bleu) et de ses résidus (en rouge)" width="70%" />
 <p class="caption">
 Figure 5.1: Illustration d’un modèle linéaire (en bleu) et de ses résidus (en rouge)
 </p>
@@ -313,7 +313,7 @@ Figure 5.1: Illustration d’un modèle linéaire (en bleu) et de ses résidus (
 <span id="cb213-7"><a href="régressions.html#cb213-7"></a>                                        <span class="st">&quot; ; SEE = &quot;</span>, .(<span class="kw">round</span>(SEE, <span class="dt">digits =</span> <span class="dv">3</span>)))), </span>
 <span id="cb213-8"><a href="régressions.html#cb213-8"></a>           <span class="dt">x =</span> <span class="dv">50</span>, <span class="dt">y =</span> <span class="dv">35</span>, <span class="dt">hjust =</span> <span class="dv">0</span>, <span class="dt">size =</span> <span class="dv">5</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:graphLinStats"></span>
-<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/graphLinStats-1.png" alt="Régression linéaire avec les informations correspondantes" width="70%" />
+<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/graphLinStats-1.png" alt="Régression linéaire avec les informations correspondantes" width="70%" />
 <p class="caption">
 Figure 5.2: Régression linéaire avec les informations correspondantes
 </p>
@@ -321,7 +321,7 @@ Figure 5.2: Régression linéaire avec les informations correspondantes
 <p><em>La leçon du quartet d’Anscombe</em></p>
 <p>Encore une fois, lorsqu’on étudie un phénomène, ici l’existence d’une relation linéaire, il est important de d’abord faire un graphique montrant les données. Cette première étape graphique est importante car les valeurs numériques qui peuvent être obtenues pour le coefficient <span class="math inline">\(R^2\)</span> (et donc aussi pour le coefficient de corrélation de Pearson), et la statistique <span class="math inline">\(SEE\)</span>, ne peuvent à elles seules garantir l’aspect linéaire d’une relation. Un exemple qui permet d’illustrer cela est le quartet d’Anscombe <span class="citation">(<a href="#ref-anscombeGraphsStatisticalAnalysis1973" role="doc-biblioref">1973</a>)</span>. Il s’agit de quatre jeux de données dont les représentations graphiques sont montrées sur la Figure <a href="régressions.html#fig:anscombeQuartetGraph">5.3</a>.</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:anscombeQuartetGraph"></span>
-<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/anscombeQuartetGraph-1.png" alt="Le quartet d'Anscombe" width="70%" />
+<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/anscombeQuartetGraph-1.png" alt="Le quartet d'Anscombe" width="70%" />
 <p class="caption">
 Figure 5.3: Le quartet d’Anscombe
 </p>
@@ -386,7 +386,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": [["Analyser-des-données-avec-R.pdf", "PDF"], ["Analyser-des-données-avec-R.epub", "EPUB"]],
+"download": null,
 "search": {
 "engine": "lunr",
 "options": null
