@@ -50,11 +50,13 @@ jobs:
       - name: Install dependencies
         run: |
           pak::local_install_dev_deps()
+          tinytex::install_tinytex()
         shell: Rscript {0}
       
       - name: Render Book
         run: |
-           bookdown::render_book("index.Rmd")
+           bookdown::render_book("index.Rmd", "bookdown::bs4_book")
+           bookdown::render_book("index.Rmd", "bookdown::pdf_book")
         shell: Rscript {0}
         
       - uses: actions/upload-artifact@v1
