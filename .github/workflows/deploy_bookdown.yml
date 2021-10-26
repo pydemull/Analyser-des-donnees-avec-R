@@ -53,7 +53,7 @@ jobs:
         shell: Rscript {0}
       
       - name: Render Book
-        run: Rscript -e 'bookdown::render_book("index.Rmd", bookdown::bs4_book(template = "./bs4_book_temp.html"))'
+        run: Rscript -e 'bookdown::render_book("index.Rmd")'
       - uses: actions/upload-artifact@v1
         with:
           name: _book
