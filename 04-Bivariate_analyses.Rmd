@@ -238,7 +238,7 @@ g_lin_sel <-
 g_lin | g_lin_sel
 ```
 
-Un deuxième exemple de l'influence de la variabilité sur la valeur du coefficient de corrélation de Pearson est montré sur la Figure \@ref(fig:spuriousCorrelationBis). Les deux graphiques de cette figure montrent exactement les mêmes données, à ceci près que sur le graphique de droite, on a remplacé en ordonnées une valeur du graphique de gauche pour lui donner la valeur de 10. L'influence de cette simlpe action sur la valeur du coefficient de corrélation de Pearson est nette. Ceci montre qu'il faut faire attention aux valeurs extrêmes qui pourraient grandement influencer la variabilité des données d'une variable et au final la valeur de corrélation obtenue, notamment en présence d'échantillons de taille relativement faible. Dans le cas où la valeur du coefficient de corrélation de Pearson serait très influencée par une valeur, il pourrait être une bonne pratique de calculer la valeur du coefficient de corrélation de Pearson avec et sans cette valeur afin de pouvoir quantifier son influence sur la relation étudiée [@halperinSpuriousCorrelationsCauses1986]. Une alternative pourrait être aussi d'étudier la relation à l'aide d'autres types de coefficients que celui de Pearson, tels que celui de Spearman, présenté plus bas. Cet exemple doit faire prendre conscience qu'il n'est pas toujours pertinent de calculer le coefficient de corrélation de Pearson. En ce sens, lorsqu'on cherche à inférer la valeur du coefficient de corrélation de Pearson dans la population étudiée, il convient de vérifier certains prérequis, lesquels sont abordés plus loin dans ce livre. 
+Un deuxième exemple de l'influence de la variabilité sur la valeur du coefficient de corrélation de Pearson est montré sur la Figure \@ref(fig:spuriousCorrelationBis). Les deux graphiques de cette figure montrent exactement les mêmes données, à ceci près que sur le graphique de droite, on a remplacé en ordonnées une valeur du graphique de gauche pour lui donner la valeur de 10. L'influence de cette simple action sur la valeur du coefficient de corrélation de Pearson est nette. Ceci montre qu'il faut faire attention aux valeurs extrêmes qui pourraient grandement influencer la variabilité des données d'une variable et au final la valeur de corrélation obtenue, notamment en présence d'échantillons de taille relativement faible. Dans le cas où la valeur du coefficient de corrélation de Pearson serait très influencée par une valeur, il pourrait être une bonne pratique de calculer la valeur du coefficient de corrélation de Pearson avec et sans cette valeur afin de pouvoir quantifier son influence sur la relation étudiée [@halperinSpuriousCorrelationsCauses1986]. Une alternative pourrait être aussi d'étudier la relation à l'aide d'autres types de coefficients que celui de Pearson, tels que celui de Spearman, présenté plus bas. Cet exemple doit faire prendre conscience qu'il n'est pas toujours pertinent de calculer le coefficient de corrélation de Pearson. En ce sens, lorsqu'on cherche à inférer la valeur du coefficient de corrélation de Pearson dans la population étudiée, il convient de vérifier certains prérequis, lesquels sont abordés plus loin dans ce livre. 
 
 ```{r spuriousCorrelationBis,  out.width='70%', echo = FALSE, message = FALSE, warning = FALSE, fig.cap="Influence d'une valeur extrême sur la valeur du coefficient de corrélation de Pearson en présence d'un petit échantillon"}
 data1 <- tibble(x = c(0, 1, 2, 3, 4, 5), y = c(2, 4, 3, 2, 3, 4))
@@ -905,10 +905,12 @@ Dans R, le $d_{s}$ de Cohen peut être calculé à l'aide de la fonction `cohens
 
 ```{r cohens d between, warning=FALSE, message=FALSE}
 library(effectsize)
-cohens_d(Sepal.Length ~ Species, 
-         data = iris_two_species, 
-         paired = FALSE, 
-         pooled_sd = TRUE)
+cohens_d(
+  Sepal.Length ~ Species, 
+  data = iris_two_species, 
+  paired = FALSE, 
+  pooled_sd = TRUE
+  )
 ```
 
 Dans cet exemple, on remarque qu'on a bien cherché à savoir comment les données de la variable `Sepal.Length` pouvaient différer en fonction (`~`) des modalités de la variable `Species`. Si la fonction nous donne un résultat, il faut toutefois bien faire attention au sens du calcul qui a été réalisé. Configurée de la sorte, la fonction `cohens_d()` réalise la différence **modalité 1 - modalité 2**. Il faut donc savoir quelle est la modalité 1 et quelle est la modalité 2 dans la variable `Species` pour ensuite pouvoir interpréter le signe du résultat, qui est négatif ici avec la valeur de -2.10. Pour ce faire, on peut utiliser la fonction `levels()` :
@@ -948,10 +950,12 @@ $$g_{s} = d_{s} (1 - \frac{3}{4(N_{1} + N_{2}) - 9})$$
 Dans R, le $g_{s}$ de Hedges lié à un échantillon de population peut être calculé à l'aide de la fonction `hedges_g()` du package `effectsize` :
 
 ```{r hedges g between}
-hedges_g(Sepal.Length ~ Species, 
-         data = iris_two_species, 
-         paired = FALSE, 
-         pooled_sd = TRUE)
+hedges_g(
+  Sepal.Length ~ Species,
+  data = iris_two_species, 
+  paired = FALSE, 
+  pooled_sd = TRUE
+  )
 ```
 
 Ici, la valeur ne change pas beaucoup par rapport au cas précédent, car l'effectif n'est pas si petit que cela ($N_{1}$ + $N_{2}$ = 100 ici, ce qui fait que la correction appliquée au $d_{s}$ de Cohen est minime).
@@ -989,7 +993,12 @@ $\overline{X} _{diff}$ désignant la moyenne des différences relatives à chaqu
 Dans R, on peut alors calculer $d_{z}$ à nouveau à l'aide de la fonction `cohens_d()` du package `effectsize` comme ceci :
 
 ```{r cohens dz within, warning=FALSE, message=FALSE}
-cohens_d(Blink_rate ~ Condition, data = Blink2, paired = TRUE, pooled_sd = TRUE)
+cohens_d(
+  Blink_rate ~ Condition, 
+  data = Blink2, 
+  paired = TRUE, 
+  pooled_sd = TRUE
+  )
 ```
 
 Toutefois, d'après Lakens [-@lakensCalculatingReportingEffect2013], il peut être intéressant de rapporter plutôt un indice de taille d'effet qui ne serait pas influencé par le fait que les données des deux groupes à comparer soient corrélées (car dépendantes), notamment en vue de rendre comparable cette taille d'effet à celles obtenues dans le cadre d'études de type *between-subject design*, pour plus facilement conduire des méta-analyses par la suite par exemple. La recommandation de Lakens [-@lakensCalculatingReportingEffect2013] serait alors d'utiliser l'indice $d_{av}$, dont le calcul serait le suivant : 
@@ -999,10 +1008,12 @@ $$d_{av} = \frac{\overline{X} _{diff}}{\sqrt{\frac{s_{1}^2 + s_{2}^2} {2}}}$$
 Ce calcul reviendrait donc à diviser la moyenne des différences par l'écart-type moyen relatif aux deux groupes de données. Pour obtenir $d_{av}$, il est possible de repartir de la fonction `cohens_d()` et de sa configuration pour des groupes indépendants, mais en indiquant `pooled_sd = FALSE` dans la fonction, comme ci-dessous : 
 
 ```{r cohens dav within, warning=FALSE, message=FALSE}
-cohens_d(Blink_rate ~ Condition, 
-         data = Blink2, 
-         paired = FALSE, 
-         pooled_sd = FALSE)
+cohens_d(
+  Blink_rate ~ Condition,
+  data = Blink2, 
+  paired = FALSE, 
+  pooled_sd = FALSE
+  )
 ```
 
 En effet, que l'on fasse la moyenne des différences (ce qui serait attendu pour le présent calcul) ou la différence entre deux moyennes (ce qui est finalement fait par la fonction telle que configurée ci-dessus), cela ne change rien avec des données appariées. Le numérateur $\overline{X} _{diff}$ reste donc correctement calculé même avec cette configuration de fonction qui est faite initialement pour des groupes indépendants. Le fait d'indiquer `pooled_sd = FALSE` change le calcul du dénominateur que nous avions rencontré initialement pour le calcul de $d_{s}$, cela pour obtenir le calcul attendu pour le $d_{av}$.
@@ -1012,10 +1023,12 @@ En effet, que l'on fasse la moyenne des différences (ce qui serait attendu pour
 Comme dans le cas de l'étude de groupes indépendants, $d_{av}$ et ses dérivés sont biaisés. Il peut donc être à nouveau préférable de calculer le $g_{av}$ de Hedges avec la fonction `hedges_g()` configurée comme ceci : 
 
 ```{r hedges gav within, warning=FALSE, message=FALSE}
-hedges_g(Blink_rate ~ Condition, 
-         data = Blink2, 
-         paired = FALSE, 
-         pooled_sd = FALSE)
+hedges_g(
+  Blink_rate ~ Condition,
+  data = Blink2, 
+  paired = FALSE, 
+  pooled_sd = FALSE
+  )
 ```
 
 Toutefois, comme le rappelle Lakens [-@lakensCalculatingReportingEffect2013], le $g_{av}$ de Hedges ne serait pas complètement non biaisé.
