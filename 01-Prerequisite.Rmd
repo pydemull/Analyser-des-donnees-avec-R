@@ -1,12 +1,12 @@
 # Prérequis
 ## Installation de R et RStudio
-R et RStudio sont deux logiciels en libre accès sur internet. Le logiciel R peut être utilisé indépendamment de l’utilisation du logiciel RStudio. En revanche, l’utilisation du logiciel RStudio requiert au préalable l’installation du logiciel R. En effet, RStudio est un logiciel qui permet d’utiliser les fonctionnalités de R tout en proposant une interface d’utilisation plus agréable et fonctionnelle que l’interface à l’origine proposée pour le logiciel R, qui est très basique. Les explications présentées au cours de ce document considèrent que l'utilisateur fonctionne avec RStudio.
+R et RStudio sont deux logiciels en libre accès sur internet. Le logiciel R peut être utilisé indépendamment du logiciel RStudio. En revanche, l’utilisation du logiciel RStudio requiert au préalable l’installation du logiciel R. En effet, RStudio est un logiciel qui permet d’utiliser les fonctionnalités de R tout en proposant une interface d’utilisation plus agréable et fonctionnelle que l’interface à l’origine proposée pour le logiciel R, qui est très basique. Les explications présentées au cours de ce document considèrent que l'utilisateur fonctionne avec RStudio.
 
 ### Installer R sur WINDOWS
 * Aller sur le site https://cran.rstudio.com.
 * Sur la page web qui s’affiche, l’encart du haut **Download and Install R** montre les différents liens de téléchargement possibles selon le système d’exploitation utilisé. Cliquer sur le lien **Download R for Windows**.
 * Dans la nouvelle fenêtre qui vient de s’ouvrir, cliquer sur **install R for the first time**.
-* Dans la nouvelle fenêtre qui vient de s’ouvrir, cliquer sur le premier lien en haut de la page : **Download R X.X.X. for Windows**. Exécuter le fichier s'il est proposé de le faire. Si ce n’est pas le cas, il est probable que le téléchargement du fichier ait été lancé automatiquement. Retrouver le fichier ainsi téléchargé sur le PC (une fois son enregistrement terminé), puis exécuter le fichier. 
+* Dans la nouvelle fenêtre qui vient de s’ouvrir, cliquer sur le premier lien en haut de la page : **Download R-X.X.X. for Windows**. Exécuter le fichier s'il est proposé de le faire. Si ce n’est pas le cas, il est probable que le téléchargement du fichier ait été lancé automatiquement. Retrouver le fichier ainsi téléchargé sur le PC (une fois son enregistrement terminé), puis exécuter le fichier. 
 * Suivre la procédure d’installation par défaut en cliquant à chaque fois sur **Suivant**.
 * Une fois l’installation terminée, double-cliquer sur l’icône du bureau (**R x64 X.X.X**) pour vérifier que l’ouverture du logiciel R s’effectue correctement.
 
@@ -124,12 +124,14 @@ df$IMC <- df$Poids / (df$Taille/100) ^ 2
 df
 ```
 
-Lorsque plusieurs objets ont été assignés à des noms, il est possible de vouloir supprimer certaines assignations, par exemple en raison du fait qu'un objet aurait été assigné par erreur. Pour supprimer une assignation, il est possible d'utiliser la fonction `rm()`. L'instruction `rm(list = ls())` supprime toutes les assignations qui ont été réalisées auparavant.
+Lorsque plusieurs objets ont été assignés à des noms, il est possible de vouloir supprimer certaines assignations, par exemple en raison du fait qu'un objet aurait été assigné par erreur. Pour supprimer une assignation, il est possible d'utiliser la fonction `rm()`.
 
 ```{r objects deletion}
 rm(vec1)
 ```
 
+L'instruction `rm(list = ls())` supprime toutes les assignations qui ont été réalisées auparavant.
+ 
 ### Utiliser des fonctions
 Dans les exemples de code précédents, nous avons utilisé plusieurs fonctions : la fonction `sqrt()`, la fonction `c()`, la fonction `data.frame()`, et la fonction `rm()`. Par la suite, nous serons amenés à voir comment l'on crée une fonction et comment l'on arrive finalement à n'avoir qu'une expression suivie de parenthèses à utiliser pour faire un ensemble d'actions automatiquement. Mais avant cela, il est important de savoir globalement comment une fonction s'utilise. Cela est important car il est rapidement possible de se rendre compte qu'utiliser R, c'est utiliser des fonctions. De plus, lorsque l'on souhaite réaliser une nouvelle analyse avec une fonction que l'on n'a jamais utilisée auparavant, il est nécessaire de pouvoir en comprendre la structure et d'être en mesure d'en comprendre le fonctionnement pour pouvoir l'utiliser.
 
@@ -174,26 +176,26 @@ Au regard de ce qu'il vient d'être expliqué, il est donc une bonne pratique, a
 
 Toutefois, paradoxalement, l'aide n'est pas toujours facile à comprendre pour ceux qui n'ont pas un niveau d'expertise avancé avec R. Pour bien comprendre comment on peut utiliser une fonction, internet peut être une excellente ressource car il regorge de sites et d'exemples crées par la communauté R. L'un des sites sur lesquels on tombe souvent lors d'une recherche internet est le site https://stackoverflow.com. Une bonne partie des problèmes de compréhension et d'utilisation des fonctions de R que l'on rencontre peuvent être résolus en consultant des exemples venant de ce site.
 
-### Installer et charger des packages
-R fonctionne en bonne partie sur la base de fonctions qui permettent de réaliser automatiquement différents types de calculs. Ces fonctions sont regroupées dans des ensembles qu'on appelle des packages. La version d'installation initialle du logiciel R dispose d'un ensemble de packages de base qui permettent de réaliser un très grand nombre d'analyses. Toutefois, la version de base de R impose parfois des manières d'écrire certaines instructions qui sont peu intuitives ou qui parfois ne permettent tout simplement pas de faire les analyses souhaitées. Pour palier ces problèmes, des packages sont régulièrement crées et actualisés par la communauté R. Pour pouvoir les utiliser, il est nécessaire de d'abord installer le package additionnel grâce à la fonction `install.packages()`. L'une des collections de packages les plus utiles pour manipuler des tableaux de données et effectuer des analyses statistiques et graphiques est celle du `tidyverse`, qui a été pensée notamment pour faciliter l'écriture des lignes de code.
+### Installer et charger des *packages*
+R fonctionne en bonne partie sur la base de fonctions qui permettent de réaliser automatiquement différents types de calculs. Ces fonctions sont regroupées dans des ensembles qu'on appelle des *packages*. La version d'installation initialle du logiciel R dispose d'un ensemble de *packages* de base qui permettent de réaliser un très grand nombre d'analyses. Toutefois, la version de base de R impose parfois des manières d'écrire certaines instructions qui sont peu intuitives ou qui parfois ne permettent tout simplement pas de faire les analyses souhaitées. Pour palier ces problèmes, des *packages* sont régulièrement crées et actualisés par la communauté R. Pour pouvoir les utiliser, il est nécessaire de d'abord installer le *package* additionnel grâce à la fonction `install.packages()`. L'une des collections de *packages* les plus utiles pour manipuler des tableaux de données et effectuer des analyses statistiques et graphiques est celle du `tidyverse`, qui a été pensée notamment pour faciliter l'écriture des lignes de code.
 
 ```{r packages installation, eval = FALSE}
 install.packages("tidyverse")
 ```
 
-Une fois que le package a été installé (ou l'ensemble de packages s'il s'agit d'une collection comme dans le cas du `tidyverse`), une étape supplémentaire est nécessaire pour pouvoir utiliser les fonctions qu'il contient : il faut le charger dans l'environnement R. Pour cela, il est possible d'utiliser la fonction `library()`.
+Une fois que le *package* a été installé (ou l'ensemble de *packages* s'il s'agit d'une collection comme dans le cas du `tidyverse`), une étape supplémentaire est nécessaire pour pouvoir utiliser les fonctions qu'il contient : il faut le charger dans l'environnement R. Pour cela, il est possible d'utiliser la fonction `library()`.
 
 ```{r packages loading, message = FALSE, warning = FALSE}
 library(tidyverse)
 ```
 
-Lorsque l'on charge la collection de packages `tidyverse`, on peut observer dans la Console que plusieurs packages sont chargés en même temps : `ggplot2`, pour la visualisation de données ; `dplyr`, pour la manipulation de données ; `tidyr`, pour l'organiation des tableaux de données ; `readr`, pour l'importation de jeux de données ; `purrr`, pour la programmation ; `tibble`, pour le formatage de tableaux de données ; `stringr`, pour la gestion des chaînes de caractères ; `forcats`, pour la gestion de variables qualitatives. Si nous avons téléchargé et chargé l'ensemble des packages du `tidyverse`, nous aurions pu aussi installé et chargé un seul de ces packages à la fois, comme pour la plupart des packages qui existent.
+Lorsque l'on charge la collection de *packages* `tidyverse`, on peut observer dans la Console que plusieurs *packages* sont chargés en même temps : `ggplot2`, pour la visualisation de données ; `dplyr`, pour la manipulation de données ; `tidyr`, pour l'organiation des tableaux de données ; `readr`, pour l'importation de jeux de données ; `purrr`, pour la programmation ; `tibble`, pour le formatage de tableaux de données ; `stringr`, pour la gestion des chaînes de caractères ; `forcats`, pour la gestion de variables qualitatives. Si nous avons téléchargé et chargé l'ensemble des *packages* du `tidyverse`, nous aurions pu aussi installé et chargé un seul de ces *packages* à la fois, comme pour la plupart des *packages* qui existent.
 
 ### Divers
 Au fur et à mesure que l'on écrit un script, une bonne pratique consiste à régulièrement créer des sections avec des titres et d'ajouter des commentaires pour certaines analyses. Afin de ne pas rendre activable les lignes de code qui ne serviraient qu'à écrire des titres ou des commentaires, il convient d'utiliser le symbole `#` devant l'écriture du code.
 
 ```{r comments}
-### Titre de section 1 -------------------------------------------
+# Titre de section 1 -------------------------------------------
 ## Sous-titre 1
   # Commentaire 1
 ```
@@ -210,7 +212,7 @@ Au fur et à mesure que l'on écrit un script, une bonne pratique consiste à r�
 * Pour supprimer une assignation, utiliser la fonction `rm()`.
 * L'utilisation de R repose sur l'utilisation de fonctions. Une fonction s'utilise en écrivant son nom, suivi de parenthèses à l'intérieur desquelles on peut préciser les arguments qui nous intéressent et indiquer les valeurs nécessaires selon les besoins des analyses.
 * Pour demander l'aide de R à propos d'une fonction, écrire `?` suivi du nom de la fonction.
-* Pour installer un package, utiliser la fonction `install.packages()`.
+* Pour installer un *package*, utiliser la fonction `install.packages()`.
 * Un code peut être écrit directement dans la **Console**, ou dans une fenêtre **Script**. Pour activer le code à partir d'un script, utiliser le bouton **Run** ou **Ctrl + Entrée**. 
 * Les noms et les objets associés apparaissent dans la fenêtre **Environnement**.
 * Pour écrire des titres et des commentaires dans un script, utiliser un `#` avant l'écriture du code.
