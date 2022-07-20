@@ -10,7 +10,7 @@ Dans le cadre de cette partie, nous allons commencer à voir comment produire de
 ### Visualiser la distribution de la variable
 Dans le cadre de l'analyse de variables quantitatives, il est toujours utile de d'abord visualiser graphiquement la distribution des données à l'aide d'un **histogramme**. Un histogramme, c'est un graphique avec des barres dont la largeur représente un intervalle donné de valeurs numériques, et dont la hauteur représente le nombre d'observations associées à une valeur qui est située dans l'intervalle en question. Plus une barre est longue, plus il y a d'observations concernées par l'intervalle de valeurs. Un exemple d'histogramme est montré sur la Figure \@ref(fig:geomhistogram).
 
-```{r geomhistogram, fig.cap = "Exemple d'histogramme", out.width='80%'}
+```{r geomhistogram, fig.cap = "Exemple d'histogramme", out.width='90%'}
 ggplot(data = iris, aes(x = Sepal.Length)) + 
   geom_histogram(fill = "white", color = "black")
 ```
@@ -43,7 +43,7 @@ ggplot(data = iris, aes(x = Sepal.Length)) +
   ggtitle("binwidth = 0.7")
 ```
 
-```{r geomhistogramVariedBinwidth2, out.width='80%', echo = FALSE,  fig.cap="Différentes largeurs d'intervalles pour un histogramme"}
+```{r geomhistogramVariedBinwidth2, out.width='90%', echo = FALSE,  fig.cap="Différentes largeurs d'intervalles pour un histogramme"}
 
 g1 <- ggplot(data = iris, aes(x = Sepal.Length)) + 
   geom_histogram(binwidth  = 0.3, fill = "white", color = "black") +
@@ -58,7 +58,7 @@ g1 | g2
 
 En plus de l'histogramme, une autre manière de prendre connaissance graphiquement de la distribution des données d'une variable quantitative est d'utiliser une **boîte à moustaches**. Pour ce faire, il convient d'utiliser la fonction `geom_boxplot()`, comme montré dans le code ci-dessous. Le résultat de ce code est montré sur la Figure \@ref(fig:geomboxplot). On pourra noter ci-dessous l'ajout d'une ligne de code avec une fonction `theme()` dont on ne présentera pas les détails ici ; cette fonction nous sert juste ici à ne pas montrer des chiffres qui auraient été ajoutés par défaut sur l'axe Y de gauche du graphique et qui n'auraient eu aucun intérêt.
 
-```{r geomboxplot,  fig.height=2, fig.cap="Exemple de boîte à moustaches", out.width='80%'}
+```{r geomboxplot,  fig.height=2, fig.cap="Exemple de boîte à moustaches", out.width='90%'}
 ggplot(data = iris, aes(x = Sepal.Length)) + 
   geom_boxplot() +
     theme(axis.text.y = element_blank(), 
@@ -67,7 +67,7 @@ ggplot(data = iris, aes(x = Sepal.Length)) +
 
 La boîte à moustaches (cf. Figure \@ref(fig:geomboxplot)) nous livre plusieurs informations. Tout d'abord, ses extrémités nous indiquent ce qu'on appelle le premier quartile (ici représenté par le bord gauche de la boîte) et le troisième quartile (ici représenté par le bord droit de la boîte). Le premier quartile (Q1) désigne la valeur en-dessous de laquelle on retrouve 25 % des observations de la variable (i.e., 25 % des observations sont associées à une valeur plus faible que Q1), alors que le troisième quartile (Q3) représente la valeur en-dessous de laquelle on retrouve 75 % des observations (i.e., 75 % des observations sont associées à une valeur plus faible que Q3). Cela indique alors que sur la Figure \@ref(fig:geomboxplot), l'intervalle qui sépare le bord gauche du bord droit de la boîte contient 50 % des observations. La ligne noire à l'intérieur de la boîte blanche désigne la médiane, qui est la valeur pour laquelle on a 50 % des observations qui ont une valeur inférieure à cette valeur repère, et pour laquelle on a 50 % des observations qui ont une valeur supérieure à cette valeur repère. Les lignes noires en-dehors de la boîte sont les moustaches. Dans le cas présent, la moustache de gauche s'étend jusqu'à la valeur minimale de la variable, et la moustache de droite s'étend jusqu'à la valeur maximale de la variable. Si le minimum (ou le maximum) avait été éloigné de la médiane de plus de 1.5 fois la différence entre Q3 et Q1 (qu'on appelle **intervalle interquartile**), l'extrémité de la moustache se serait arrêtée à la dernière valeur avant cette limite, et toute valeur ayant dépassé cette limite aurait été représentée par un point. Pour illustrer ce dernier cas de figure, on peut modifier manuellement une valeur de la variable `Sepal.Length` du jeu de données `iris` de telle sorte à ce qu'il y ait une nouvelle valeur qui soit particulièrement éloignée de la boîte. Une telle valeur s'appelle un *outlier* (cf. Figure \@ref(fig:geomboxplotModified)).
 
-```{r geomboxplotModified, fig.height=2, fig.cap="Visualisation d'un outlier", out.width='80%'}
+```{r geomboxplotModified, fig.height=2, fig.cap="Visualisation d'un outlier", out.width='90%'}
 # On modifie ici, pour l'exemple, la valeur de la 3ème observation
 # en lui assignant la valeur 12.
 iris$Sepal.Length[3] <- 12     
@@ -95,7 +95,7 @@ is_outlier(x = iris$Sepal.Length)
 
 Quand on regarde bien, on voit que la troisième observation de cette nouvelle variable que l'on vient de créer (seulement de manière temporaire ici car on ne l'a pas assignée à un nom) contient la valeur `TRUE`, ce qui est en accord avec la valeur que nous avons introduite auparavant dans la variable `Sepal.Length`. Le fait d'observer ces valeurs `TRUE` et `FALSE` n'est évidemment pas une stratégie très pratique pour déterminer à quelle observation correspondrait l'*outlier*, et c'est pourquoi l'étape suivante consiste à montrer comment on peut se servir de cette fonction `is_outlier()` pour faire apparaître sur un graphique de boîte à moustaches les observations à qui appartiendraient les valeurs étranges (cf. Figure \@ref(fig:geomboxplotOutlierId)).
 
-```{r geomboxplotOutlierId, fig.height=2, fig.cap="Identification d'un outlier", out.width='80%'}
+```{r geomboxplotOutlierId, fig.height=2, fig.cap="Identification d'un outlier", out.width='90%'}
 
 iris %>%
   # Ajout d'un numéro id pour les observations
@@ -136,17 +136,19 @@ On remarque ainsi qu'au-delà de prendre connaissance de la forme de la distribu
 * Une boîte à moustaches, qui est intéressante pour avoir une vue résumée de la distribution.
 * Un nuage de points des données individuelles, qui est très intéressant pour avoir une vue précise des valeurs obtenues par les individus et pour avoir une idée plus claire de la grandeur du nombre d'observations présentes dans le jeu de données (chose non renseignée par les deux éléments précédents).
 
-```{r, raincloudUnivar, fig.cap="Exemple de raincloud plot", out.width='80%'}
+```{r, raincloudUnivar, fig.cap="Exemple de raincloud plot", out.width='90%'}
 
-# Code modifié à partir de https://www.cedricscherer.com/2021/06/06/visualizing-distributions-with-raincloud-plots-and-how-to-create-them-with-ggplot2/
-library(gghalves)
+# Code modifié à partir de https://www.cedricscherer.com/2021/06/06/visualizing-
+# distributions-with-raincloud-plots-and-how-to-create-them-with-ggplot2/
+
 library(ggdist)
+library(gghalves)
 
 ggplot(data = iris, aes(x = "", y = Sepal.Length)) + 
   ggdist::stat_halfeye(
     ## Ajuste le lissage de la courbe de densité
     adjust = .5, 
-    ## Ajuste l'aire située sous la courbe de densité
+    ## Ajuste la hauteur de l'aire située sous la courbe de densité
     width = .6, 
     .width = 0, 
     point_colour = NA
@@ -169,8 +171,8 @@ ggplot(data = iris, aes(x = "", y = Sepal.Length)) +
 # Buidling function for future plots
 
 rain_cloud <- function(data, x, y){
-library(ggdist)
-library(gghalves)
+require(ggdist)
+require(gghalves)
 
  ggplot(data = data, aes(x = {{x}}, y = {{y}})) + 
   ggdist::stat_halfeye(
@@ -182,7 +184,7 @@ library(gghalves)
     point_colour = NA
     ) + 
   geom_boxplot(
-    width = .15, 
+    width = .1, 
     outlier.shape = NA
   ) +
   gghalves::geom_half_point(
@@ -201,20 +203,19 @@ library(gghalves)
 
 Lorsqu'on regarde le code ci-dessus qui a permis de créer le *raincould plot*, on remarque l'arrivée de deux nouveaux packages : `ggdist` et `gghalves`. Ces packages doivent être installés et chargés avant de pouvoir être utilisés. La package `ggdist` est utilisé avec la fonction `stat_halfeye()`, qui sert à montrer l'aire sous la courbe de densité en gris sur la figure ci-dessus. Plus l'aire est grande au niveau d'un intervalle de valeurs de données, plus il est probable de rencontrer les valeurs concernées lorsqu'on prend au hasard des observations du jeu de données. Plusieurs arguments peuvent en réalité servir à calculer cette aire et finalement modifier sa forme. L'argument `adjust` de la fonction `stat_halfeye()` sert en quelque sorte à ajuster le lissage de l'aire de densité : plus sa valeur sera élevée, plus l'aire sera lissée. 
 
-Pour montrer les données individuelles (*the rain*) sans risquer qu’elle ne se superposent de trop, on a utilisé la fonction `geom_half_point()` du package `gghalves`, l’argument `transformation` et la fonction `position_jitter()`. À l’intérieur de la fonction position_jitter(), l’argument seed (la graine en français) désigne le nombre sur lequel se base l’ordinateur pour générer un résultat pseudo-aléatoire. Quand on regarde les graphiques, les données individuelles apparaissent décalées aléatoirement sur le plan vertical. Cet effet aléatoire est l’intérêt même d’une fonction dite "jitter", et cet effet est en réalité prédéfini de telle sorte que si on utilise toujours le même numéro de graine (`seed`), alors on obtiendra toujours le même effet aléatoire sur le graphique.
+Pour montrer les données individuelles (*the rain*) sans risquer qu’elle ne se superposent de trop, on a utilisé la fonction `geom_half_point()` du package `gghalves`, l’argument `transformation` et la fonction `position_jitter()`. À l’intérieur de la fonction `position_jitter()`, l’argument `seed` (la graine en français) désigne le nombre sur lequel se base l’ordinateur pour générer un résultat pseudo-aléatoire. Quand on regarde le graphique ci-dessus, les données individuelles apparaissent décalées aléatoirement sur le plan vertical. Cet effet aléatoire est l’intérêt même d’une fonction dite "jitter", et cet effet est en réalité prédéfini de telle sorte que si on utilise toujours le même numéro de graine (`seed`), alors on obtiendra toujours le même effet aléatoire sur le graphique.
 
 Les autres éléments de code sont là pour des considérations esthétiques et ne seront pas décrites ici. Il reste bien sûr possible de lire l'aide associée à ces fonctions pour gagner en maîtrise de ce type de graphique.
 
 Lors de l'analyse de données, différentes formes typiques de distribution peuvent être rencontrées, notamment des formes **gaussiennes**, **asymétriques**, **leptocurtiques**, et **platycurtiques** [@dartCommentDecrireDistribution2003]. Ces formes sont illustrées sur la Figure \@ref(fig:variousDistributions). Les formes gaussiennes sont observées en présence de variables suivant ce qu'on appelle une **loi normale**. Très souvent, on associe une distribution gaussienne, et donc une loi normale, à une distribution en forme de cloche, bien que  l'analogie à la cloche pourrait se discuter. Les formes asymétriques traduisent le fait que la majorité des observations sont concentrées sur une extrémité de l'intervalle des valeurs possibles, et qu'il existe des observations, non majoritaires, avec des valeurs pouvant être très éloignées de la majorité des données, mais seulement d'un seul côté de la distribution. Enfin, les formes leptocurtiques et platycurtiques sont appelées ainsi par comparaison à la forme gaussienne. En présence d'une forme leptocurtique, la distribution s'avère plus pointue, avec des queues (qui sont les extrémités de la distribution) plus longues qu'avec une forme gaussienne. Dans le cadre d'une distribution platycurtique, la distribution est plus aplatie, avec des queues plus courtes qu'avec une forme gaussienne [@dartCommentDecrireDistribution2003]. La distribution uniforme est un cas particulier de distribution platycurtique, et c'est cette distribution qui est en réalité montrée sur la Figure \@ref(fig:variousDistributions).
 
-```{r variousDistributions, echo = FALSE, message = FALSE, fig.cap="Différents types de distributions", out.width='80%'}
+```{r variousDistributions, echo = FALSE, message = FALSE, fig.cap="Différents types de distributions", out.width='100%'}
 set.seed(123)
 gauss <- tibble(values = rnorm(n = 1000, mean = 0, sd = 1))
 set.seed(123)
 skew_right <- tibble(values = rchisq(1000, 2))
 set.seed(123)
 lepto <- tibble(values = rcauchy(n = 10000, location = 0, scale = 1)) %>% filter(values <= 5 & values >= -5)
-set.seed(123)
 plati <- tibble(values = runif(n = 1000, min = -5, max = 5))
 
 gauss_g <- rain_cloud(data = gauss, x = "", y = values) + labs(title = "Gaussienne")
@@ -279,7 +280,7 @@ mean(x = iris$Sepal.Length)
 
 La moyenne, c'est en quelque sorte le "centre de gravité" de la variable [@navarroLearningStatistics2018]. L'un de ses intérêts est que son calcul prend en compte toutes les informations contenues dans la variable, ce qui est utile quand on a relativement peu de données [@navarroLearningStatistics2018]. En revanche, un inconvénient est qu'elle est très sensible aux valeurs extrêmes, et en particulier aux valeurs qui seraient particulièrement basses ou particulièrement élevées par rapport à la majorité des valeurs de la variable (il s'agirait ici d'*outliers*), et cela est d'autant plus vrai lorsque la taille de l'échantillon étudié est faible. Dans ce dernier cas, il y a donc un risque assez important que la moyenne ne représente pas bien la tendance centrale, c'est-à-dire la valeur ou la zone de valeurs où sont situées la majorité des observations. Ce risque existe aussi même avec des tailles d'échantillon relativement importantes lorsque la distribution est asymétrique, comme illustré sur la Figure \@ref(fig:meansSkewedVariables). Sur cette figure, on peut voir qu'avec une distribution gaussienne, la moyenne correspond parfaitement à la tendance centrale. En revanche, avec une distribution asymétrique à droite, on voit que la moyenne est "tirée vers la droite" par rapport à la tendance centrale sous l'effet des valeurs, certes moins nombreuses, mais d'une grandeur plus importante.
 
-```{r meansSkewedVariables, out.width = '80%', echo = FALSE, message = FALSE, warning = FALSE, fig.cap="Effet de la forme de la distribution sur la position de la moyenne"}
+```{r meansSkewedVariables, out.width = '90%', echo = FALSE, message = FALSE, warning = FALSE, fig.cap="Effet de la forme de la distribution sur la position de la moyenne"}
 # Get legend function
 get_legend <- function(myggplot){
   tmp <- ggplot_gtable(ggplot_build(myggplot))
@@ -349,7 +350,7 @@ median(x = vec)
 
 Contrairement à la moyenne, la médiane prend donc en compte moins d'informations relatives aux données. Toutefois, en tant que valeur "du milieu", la médiane présente l'intérêt de ne pas être influencée par les valeurs extrêmes. En raison de cela, la médiane est susceptible de mieux refléter la tendance centrale que la moyenne en présence de petits échantillons avec des *outliers*, ou en présence d'une forme de distribution asymétrique. Ce dernier cas est illustré sur la Figure \@ref(fig:mediansSkewedVariables).
 
-```{r mediansSkewedVariables, out.width  = '80%', echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Effet de la forme de la distribution sur la position de la médiane"}
+```{r mediansSkewedVariables, out.width  = '90%', echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Effet de la forme de la distribution sur la position de la médiane"}
 # Graphique pour la distribution gaussienne
 set.seed(123)
 gauss <- tibble(x = rnorm(n = 1000, mean = 0, sd = 1))
@@ -515,7 +516,7 @@ Le tableau montre les données sur lesquelles R s'est appuyé pour déterminer l
 $$q = (k - 1 ) / (N - 1)$$
 Dans le calcul ci-dessus, *k* désigne le rang de la valeur considérée, et *N* désigne la taille de la variable étudiée (i.e., le nombre total de valeurs). Comme on peut le voir dans le tableau ci-dessus, cette méthode de calcul conduit nécessairement à attribuer le quantile 0 à la valeur de rang 1, et la quantile 1 à la valeur de rang *N*. Lorsque le nombre de valeurs fait que les quantiles 0.25 et 0.75 n'existent pas, R réalise une interpolation de la valeur correspondant au quantile recherché, cela à partir des quantiles qui existent et qui encadrent le quantile recherché, ainsi qu'à partir des valeurs correspondant à ces quantiles. Dans le cas présent, il s'agit plus précisément d'une interpolation linéaire. Voyons sur la Figure \@ref(fig:graphicContinuouQuantiles) en quoi cela consiste.
 
-```{r graphicContinuouQuantiles, out.width = '80%', echo = FALSE, fig.cap="Détermination des quartiles Q1 et Q3 avec une variable quantitative continue"}
+```{r graphicContinuouQuantiles, out.width = '90%', echo = FALSE, fig.cap="Détermination des quartiles Q1 et Q3 avec une variable quantitative continue"}
 model1 <- lm(Valeur ~ Quantile, data = table_quant[c(2, 3), c(2, 3)])
 model2 <- lm(Valeur ~ Quantile, data = table_quant[c(6, 7), c(2, 3)])
 
@@ -579,7 +580,7 @@ Comme on peut le voir dans l'aide associée à la fonction `skewness()`, il exis
 $$\gamma_{1} =  \frac{1}{s^3} {\frac{\sum_{i=1}^{N} (X{i} - \overline{X})^3}{N}}$$
 Dans ce calcul, *s* désigne l'écart-type non biaisé de la variable, et *N* désigne la taille de la variable. Avec cette méthode, on obtient un coefficient négatif lorsque la distribution est asymétrique à gauche (longue queue vers la gauche), un coefficient de 0 lorsque la distribution est parfaitement symétrique, et un coefficient positif lorsque la distribution est asymétrique à droite (longue queue vers la droite). Ceci est illustré sur la Figure \@ref(fig:skeweddistri).
 
-```{r skeweddistri, out.width = '80%', echo = FALSE, message = FALSE, warning = FALSE, fig.cap="Valeur du Skewness selon la forme de la distribution"}
+```{r skeweddistri, out.width = '90%', echo = FALSE, message = FALSE, warning = FALSE, fig.cap="Valeur du Skewness selon la forme de la distribution"}
 set.seed(123)
 chis_1 <- tibble(x = rchisq(1000, 1))
 set.seed(123)
@@ -755,7 +756,7 @@ Comme on peut le voir dans l'aide associée à la fonction `kurtosis()`, il exis
 $$\gamma_{2} =  \frac{1}{s^4} {\frac{\sum_{i=1}^{N} (X{i} - \overline{X})^4}{N}} -3$$
 Dans ce calcul, *s* désigne l'écart-type non biaisé de la variable, et *N* désigne la taille de la variable. Avec cette méthode, on obtient un coefficient négatif lorsque la distribution est particulièrement aplatie par rapport à une distribution suivant une loi normale (distribution platycurtique), un coefficient de 0 lorsque la distribution suit une loi normale (distribution mésocurtique), et un coefficient positif lorsque la distribution est particulièrement pointue par rapport à une loi normale (distribution leptocurtique). Ceci est illustré sur la Figure \@ref(fig:kurtosisdistri).
 
-```{r kurtosisdistri, out.width = '80%', echo = FALSE, message = FALSE, warning = FALSE,  fig.cap="Valeur du Kurtosis selon la forme de la distribution"}
+```{r kurtosisdistri, out.width = '90%', echo = FALSE, message = FALSE, warning = FALSE,  fig.cap="Valeur du Kurtosis selon la forme de la distribution"}
 library(LaplacesDemon)
 set.seed(123)
 unif <- tibble(x = runif(1000, -5, 5))
@@ -902,7 +903,7 @@ Lorsqu'il s'agit de simplement décrire une distribution des données obtenues �
 
 Ceci est illustré sur la Figure \@ref(fig:ObservationsWithinSdMutiplesGaussianDistri).
 
-```{r ObservationsWithinSdMutiplesGaussianDistri, out.width = '80%', echo = FALSE, warning = FALSE, message = FALSE, fig.cap="Proportions des observations incluses dans différents intervalles liés à la moyenne et à des multiples de l'écart-type"}
+```{r ObservationsWithinSdMutiplesGaussianDistri, out.width = '90%', echo = FALSE, warning = FALSE, message = FALSE, fig.cap="Proportions des observations incluses dans différents intervalles liés à la moyenne et à des multiples de l'écart-type"}
 set.seed(123)
 vec <- tibble(x = rnorm(1000000, 15, 3))
 df <- with(density(vec$x), data.frame(x, y))
@@ -952,7 +953,7 @@ g1 / g2 / g3
 
 Lorsqu'il s'agit plus précisément de vouloir renseigner sur la tendance centrale relative à l'échantillon étudié, le choix dépend de la forme de la distribution observée. Lorsque la distribution est gaussienne, la moyenne, la médiane, et le mode, sont similaires et donc se valent. Toutefois, lorsque la distribution est asymétrique et unimodale (i.e., avec un seul pic), le mode reflètera mieux la tendance centrale. De plus, lorsque la distribution est asymétrique, la médiane aura tendance à mieux représenter la tendance centrale que la moyenne [@rousseletReactionTimesOther2020]. Notons que dans certains cas où la distribution semble asymétrique, la médiane peut se retrouver malgré tout plus éloignée du mode que la moyenne, comme illustré dans l'exemple emprunté à Gonzales et al. [-@gonzalesMeasuresCentralTendency2001] qui est montré sur la Figure \@ref(fig:MeanAboveLedianAsym).
 
-```{r MeanAboveLedianAsym, out.width='80%', echo = FALSE, warning = FALSE, message = FALSE, fig.cap = "Exemples de positions de la moyenne et de la médiane dans le cadre d'une distribution asymétrique"}
+```{r MeanAboveLedianAsym, out.width='90%', echo = FALSE, warning = FALSE, message = FALSE, fig.cap = "Exemples de positions de la moyenne et de la médiane dans le cadre d'une distribution asymétrique"}
 x_asym <- tibble(x = c(18, 20, 22, 24, 26, 29, 35, 35, 39))
 ggplot(data = x_asym) +
   geom_histogram(aes(x = x), fill = "white", color = "black") +
@@ -1132,7 +1133,7 @@ freq(diamonds$color, valid = TRUE, total = TRUE, sort = "dec")
 
 ## Résumé
 * En statistiques, la notion de population désigne l'ensemble des individus existant qui présentent un ou plusieurs critères d'intérêt. Un échantillon est alors une fraction de la population étudiée, composée d'individus qui en principe sont représentatifs de la population étudiée.
-* Avec R, les graphiques peuvent être réalisés, en autres, à l'aide du package `ggplot2` et des fonctions associées.
+* Avec R, les graphiques peuvent être réalisés, entre autres, à l'aide du package `ggplot2` et des fonctions associées.
 * Lors de l'analyse d'une variable quantitative, une première étape doit être de visualiser graphiquement la distribution des observations. Cela peut se faire à l'aide :
   +  d'un histogramme avec la fonction `ggplot2::geom_histogram()` ;
   +  d'une boîte à moustaches avec la fonction `ggplot2::geom_boxplot()` ; 
