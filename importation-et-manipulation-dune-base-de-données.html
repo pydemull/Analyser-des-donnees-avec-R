@@ -7,7 +7,7 @@
 <title>Chapitre 2 Importation et manipulation d’une base de données | Analyser des données avec R</title>
 <meta name="author" content="Pierre-Yves de Müllenheim">
 <meta name="description" content="2.1 Comprendre ce qu’est une base de données Lorsqu’on souhaite répondre à une question, la démarche scientifique classique consiste à effectuer une série de mesures ou d’observations selon un...">
-<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta name="generator" content="bookdown 0.27 with bs4_book()">
 <meta property="og:title" content="Chapitre 2 Importation et manipulation d’une base de données | Analyser des données avec R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://github.com/pydemull/Analyser-des-donnees-avec-R/importation-et-manipulation-dune-base-de-données.html">
@@ -17,8 +17,9 @@
 <meta name="twitter:description" content="2.1 Comprendre ce qu’est une base de données Lorsqu’on souhaite répondre à une question, la démarche scientifique classique consiste à effectuer une série de mesures ou d’observations selon un...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet">
+<link href="libs/tabwid-1.0.0/scrool.css" rel="stylesheet">
 <!-- Code fom Dexter to custom bs4_book template: https://stackoverflow.com/questions/66128954/change-right-sidebar-header-in-bs4-book-bookdown --><script>
       $(function() {
           $("#toc h2").html("Dans ce chapitre");
@@ -27,7 +28,10 @@
       $(function() {
           $("#main-nav h2").html("Sommaire");
       });
-  </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS -->
+  </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
 </head>
 <body data-spy="scroll" data-target="#toc">
 
@@ -73,7 +77,7 @@
 </h2>
 <p>Lorsqu’on souhaite répondre à une question, la démarche scientifique classique consiste à effectuer une série de mesures ou d’observations selon un protocole qui a été conçu en cohérence avec la question posée. En principe, ces mesures ou observations donnent lieu à l’obtention de valeurs. Ces valeurs peuvent être de forme numérique (e.g., les valeurs de taille de différents individus) ou de forme littérale (e.g., les valeurs de sexe de différents individus). Quelle que soit leur forme, les valeurs que l’on obtient dans un contexte qui est connu, comme dans le cas d’un protocole de mesures, ont un sens bien défini car elles sont associées à des choses que l’on a cherché à caractériser. Lorsqu’une valeur est porteuse d’un sens bien défini, on peut alors considérer qu’il s’agit d’une <strong>donnée</strong>.
 Très souvent, pour répondre à une question, il est nécessaire d’acquérir plusieurs données qui seraient relatives à différentes choses que l’on a cherché à caractériser (e.g., la taille, la couleur, le poids, etc.), et qui seraient relatives également à différents individus chez qui l’on aurait souhaité caractériser ces choses. Afin de conduire les analyses qui permettraient de répondre à la question posée, il convient alors de répertorier toutes les données acquises dans un même document, et plus exactement dans un même fichier, qui serait la base de données, telle que présentée dans le Tableau <a href="importation-et-manipulation-dune-base-de-donn%C3%A9es.html#tab:database">2.1</a>.</p>
-<template id="1134fbc2-b717-4040-94c1-266bdd9a1e6b"><style>
+<template id="57cb3afd-25f0-4ab6-967b-03255e00a362"><style>
 .tabwid table{
   border-spacing:0px !important;
   border-collapse:collapse;
@@ -109,74 +113,74 @@ background-color: transparent;
 }
 </style>
 <div class="tabwid">
-<style>.cl-bf461676{}.cl-bf3afb4c{font-family:'Helvetica';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-bf3afb92{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-bf3b1a46{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-bf3b6dc0{width:85.3pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf3b6dca{width:50.5pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf3b6dd4{width:55.4pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf3b6dd5{width:45.6pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf3b6dd6{width:30.3pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf3b6dd7{width:50.5pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf3b6dde{width:85.3pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf3b6ddf{width:45.6pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf3b6de8{width:55.4pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf3b6de9{width:30.3pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf3b6dea{width:50.5pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf3b6df2{width:55.4pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf3b6df3{width:45.6pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf3b6df4{width:85.3pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf3b6dfc{width:30.3pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf3b6dfd{width:50.5pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf3b6dfe{width:45.6pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf3b6dff{width:55.4pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf3b6e06{width:30.3pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf3b6e07{width:85.3pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf3b6e10{width:50.5pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf3b6e1a{width:85.3pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf3b6e1b{width:30.3pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf3b6e1c{width:45.6pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf3b6e1d{width:55.4pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf3b6e1e{width:45.6pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf3b6e24{width:55.4pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf3b6e25{width:50.5pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf3b6e2e{width:85.3pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf3b6e2f{width:30.3pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf3b6e30{width:55.4pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf3b6e38{width:85.3pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf3b6e39{width:45.6pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf3b6e3a{width:50.5pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf3b6e3b{width:30.3pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf3b6e7e{width:50.5pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf3b6e88{width:30.3pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf3b6e89{width:45.6pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf3b6e92{width:85.3pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf3b6e93{width:55.4pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<div class="inline-table"><table class="cl-bf461676">
+<style>.cl-d65b5602{}.cl-d6507d7c{font-family:'Helvetica';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-d6507d9a{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-d6509b4a{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-d650ecb2{width:85.3pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d650ecbc{width:50.5pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d650ecbd{width:55.4pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d650ecc6{width:45.6pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d650ecc7{width:30.3pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d650ecd0{width:50.5pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d650ecd1{width:85.3pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d650ecda{width:45.6pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d650ecdb{width:55.4pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d650ece4{width:30.3pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d650ece5{width:50.5pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d650ece6{width:55.4pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d650ecee{width:45.6pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d650ecef{width:85.3pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d650ecf0{width:30.3pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d650ecf8{width:50.5pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d650ecf9{width:45.6pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d650ecfa{width:55.4pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d650ed02{width:30.3pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d650ed03{width:85.3pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d650ed04{width:50.5pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d650ed0c{width:85.3pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d650ed0d{width:30.3pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d650ed0e{width:45.6pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d650ed16{width:55.4pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d650ed17{width:45.6pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d650ed18{width:55.4pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d650ed20{width:50.5pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d650ed21{width:85.3pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d650ed22{width:30.3pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d650ed2a{width:55.4pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d650ed2b{width:85.3pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d650ed34{width:45.6pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d650ed35{width:50.5pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d650ed36{width:30.3pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d650ed3e{width:50.5pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d650ed3f{width:30.3pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d650ed40{width:45.6pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d650ed48{width:85.3pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d650ed49{width:55.4pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<div class="inline-table"><table class="cl-d65b5602">
 <caption class="Table Caption">
 <p><span id="tab:database">Tableau 2.1: </span>Exemple de base de données</p>
 </caption>
 <thead><tr style="overflow-wrap:break-word;">
-<td class="cl-bf3b6e88"><p class="cl-bf3b1a46"><span class="cl-bf3afb4c">id</span></p></td>
-<td class="cl-bf3b6e7e"><p class="cl-bf3b1a46"><span class="cl-bf3afb4c">genre</span></p></td>
-<td class="cl-bf3b6e89"><p class="cl-bf3b1a46"><span class="cl-bf3afb4c">taille</span></p></td>
-<td class="cl-bf3b6e92"><p class="cl-bf3b1a46"><span class="cl-bf3afb4c">nb_victoires</span></p></td>
-<td class="cl-bf3b6e93"><p class="cl-bf3b1a46"><span class="cl-bf3afb4c">niveau</span></p></td>
+<td class="cl-d650ed3f"><p class="cl-d6509b4a"><span class="cl-d6507d7c">id</span></p></td>
+<td class="cl-d650ed3e"><p class="cl-d6509b4a"><span class="cl-d6507d7c">genre</span></p></td>
+<td class="cl-d650ed40"><p class="cl-d6509b4a"><span class="cl-d6507d7c">taille</span></p></td>
+<td class="cl-d650ed48"><p class="cl-d6509b4a"><span class="cl-d6507d7c">nb_victoires</span></p></td>
+<td class="cl-d650ed49"><p class="cl-d6509b4a"><span class="cl-d6507d7c">niveau</span></p></td>
 </tr></thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-bf3b6dd6"><p class="cl-bf3b1a46"><span class="cl-bf3afb92">1</span></p></td>
-<td class="cl-bf3b6dca"><p class="cl-bf3b1a46"><span class="cl-bf3afb92">H</span></p></td>
-<td class="cl-bf3b6dd5"><p class="cl-bf3b1a46"><span class="cl-bf3afb92">1.80</span></p></td>
-<td class="cl-bf3b6dc0"><p class="cl-bf3b1a46"><span class="cl-bf3afb92">45</span></p></td>
-<td class="cl-bf3b6dd4"><p class="cl-bf3b1a46"><span class="cl-bf3afb92">1</span></p></td>
+<td class="cl-d650ecc7"><p class="cl-d6509b4a"><span class="cl-d6507d9a">1</span></p></td>
+<td class="cl-d650ecbc"><p class="cl-d6509b4a"><span class="cl-d6507d9a">H</span></p></td>
+<td class="cl-d650ecc6"><p class="cl-d6509b4a"><span class="cl-d6507d9a">1.80</span></p></td>
+<td class="cl-d650ecb2"><p class="cl-d6509b4a"><span class="cl-d6507d9a">45</span></p></td>
+<td class="cl-d650ecbd"><p class="cl-d6509b4a"><span class="cl-d6507d9a">1</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-bf3b6de9"><p class="cl-bf3b1a46"><span class="cl-bf3afb92">2</span></p></td>
-<td class="cl-bf3b6dd7"><p class="cl-bf3b1a46"><span class="cl-bf3afb92">H</span></p></td>
-<td class="cl-bf3b6ddf"><p class="cl-bf3b1a46"><span class="cl-bf3afb92">1.93</span></p></td>
-<td class="cl-bf3b6dde"><p class="cl-bf3b1a46"><span class="cl-bf3afb92">90</span></p></td>
-<td class="cl-bf3b6de8"><p class="cl-bf3b1a46"><span class="cl-bf3afb92">3</span></p></td>
+<td class="cl-d650ece4"><p class="cl-d6509b4a"><span class="cl-d6507d9a">2</span></p></td>
+<td class="cl-d650ecd0"><p class="cl-d6509b4a"><span class="cl-d6507d9a">H</span></p></td>
+<td class="cl-d650ecda"><p class="cl-d6509b4a"><span class="cl-d6507d9a">1.93</span></p></td>
+<td class="cl-d650ecd1"><p class="cl-d6509b4a"><span class="cl-d6507d9a">90</span></p></td>
+<td class="cl-d650ecdb"><p class="cl-d6509b4a"><span class="cl-d6507d9a">3</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-bf3b6dfc"><p class="cl-bf3b1a46"><span class="cl-bf3afb92">3</span></p></td>
-<td class="cl-bf3b6dea"><p class="cl-bf3b1a46"><span class="cl-bf3afb92">H</span></p></td>
-<td class="cl-bf3b6df3"><p class="cl-bf3b1a46"><span class="cl-bf3afb92">1.50</span></p></td>
-<td class="cl-bf3b6df4"><p class="cl-bf3b1a46"><span class="cl-bf3afb92">100</span></p></td>
-<td class="cl-bf3b6df2"><p class="cl-bf3b1a46"><span class="cl-bf3afb92">4</span></p></td>
+<td class="cl-d650ecf0"><p class="cl-d6509b4a"><span class="cl-d6507d9a">3</span></p></td>
+<td class="cl-d650ece5"><p class="cl-d6509b4a"><span class="cl-d6507d9a">H</span></p></td>
+<td class="cl-d650ecee"><p class="cl-d6509b4a"><span class="cl-d6507d9a">1.50</span></p></td>
+<td class="cl-d650ecef"><p class="cl-d6509b4a"><span class="cl-d6507d9a">100</span></p></td>
+<td class="cl-d650ece6"><p class="cl-d6509b4a"><span class="cl-d6507d9a">4</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-bf3b6e06"><p class="cl-bf3b1a46"><span class="cl-bf3afb92">4</span></p></td>
-<td class="cl-bf3b6dfd"><p class="cl-bf3b1a46"><span class="cl-bf3afb92">F</span></p></td>
-<td class="cl-bf3b6dfe"><p class="cl-bf3b1a46"><span class="cl-bf3afb92">1.95</span></p></td>
-<td class="cl-bf3b6e07"><p class="cl-bf3b1a46"><span class="cl-bf3afb92">43</span></p></td>
-<td class="cl-bf3b6dff"><p class="cl-bf3b1a46"><span class="cl-bf3afb92">1</span></p></td>
+<td class="cl-d650ed02"><p class="cl-d6509b4a"><span class="cl-d6507d9a">4</span></p></td>
+<td class="cl-d650ecf8"><p class="cl-d6509b4a"><span class="cl-d6507d9a">F</span></p></td>
+<td class="cl-d650ecf9"><p class="cl-d6509b4a"><span class="cl-d6507d9a">1.95</span></p></td>
+<td class="cl-d650ed03"><p class="cl-d6509b4a"><span class="cl-d6507d9a">43</span></p></td>
+<td class="cl-d650ecfa"><p class="cl-d6509b4a"><span class="cl-d6507d9a">1</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-bf3b6e1b"><p class="cl-bf3b1a46"><span class="cl-bf3afb92">5</span></p></td>
-<td class="cl-bf3b6e10"><p class="cl-bf3b1a46"><span class="cl-bf3afb92">F</span></p></td>
-<td class="cl-bf3b6e1c"><p class="cl-bf3b1a46"><span class="cl-bf3afb92">1.52</span></p></td>
-<td class="cl-bf3b6e1a"><p class="cl-bf3b1a46"><span class="cl-bf3afb92">34</span></p></td>
-<td class="cl-bf3b6e1d"><p class="cl-bf3b1a46"><span class="cl-bf3afb92">2</span></p></td>
+<td class="cl-d650ed0d"><p class="cl-d6509b4a"><span class="cl-d6507d9a">5</span></p></td>
+<td class="cl-d650ed04"><p class="cl-d6509b4a"><span class="cl-d6507d9a">F</span></p></td>
+<td class="cl-d650ed0e"><p class="cl-d6509b4a"><span class="cl-d6507d9a">1.52</span></p></td>
+<td class="cl-d650ed0c"><p class="cl-d6509b4a"><span class="cl-d6507d9a">34</span></p></td>
+<td class="cl-d650ed16"><p class="cl-d6509b4a"><span class="cl-d6507d9a">2</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-bf3b6e2f"><p class="cl-bf3b1a46"><span class="cl-bf3afb92">6</span></p></td>
-<td class="cl-bf3b6e25"><p class="cl-bf3b1a46"><span class="cl-bf3afb92">H</span></p></td>
-<td class="cl-bf3b6e1e"><p class="cl-bf3b1a46"><span class="cl-bf3afb92">1.87</span></p></td>
-<td class="cl-bf3b6e2e"><p class="cl-bf3b1a46"><span class="cl-bf3afb92">67</span></p></td>
-<td class="cl-bf3b6e24"><p class="cl-bf3b1a46"><span class="cl-bf3afb92">2</span></p></td>
+<td class="cl-d650ed22"><p class="cl-d6509b4a"><span class="cl-d6507d9a">6</span></p></td>
+<td class="cl-d650ed20"><p class="cl-d6509b4a"><span class="cl-d6507d9a">H</span></p></td>
+<td class="cl-d650ed17"><p class="cl-d6509b4a"><span class="cl-d6507d9a">1.87</span></p></td>
+<td class="cl-d650ed21"><p class="cl-d6509b4a"><span class="cl-d6507d9a">67</span></p></td>
+<td class="cl-d650ed18"><p class="cl-d6509b4a"><span class="cl-d6507d9a">2</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-bf3b6e3b"><p class="cl-bf3b1a46"><span class="cl-bf3afb92">7</span></p></td>
-<td class="cl-bf3b6e3a"><p class="cl-bf3b1a46"><span class="cl-bf3afb92">H</span></p></td>
-<td class="cl-bf3b6e39"><p class="cl-bf3b1a46"><span class="cl-bf3afb92">1.83</span></p></td>
-<td class="cl-bf3b6e38"><p class="cl-bf3b1a46"><span class="cl-bf3afb92">79</span></p></td>
-<td class="cl-bf3b6e30"><p class="cl-bf3b1a46"><span class="cl-bf3afb92">3</span></p></td>
+<td class="cl-d650ed36"><p class="cl-d6509b4a"><span class="cl-d6507d9a">7</span></p></td>
+<td class="cl-d650ed35"><p class="cl-d6509b4a"><span class="cl-d6507d9a">H</span></p></td>
+<td class="cl-d650ed34"><p class="cl-d6509b4a"><span class="cl-d6507d9a">1.83</span></p></td>
+<td class="cl-d650ed2b"><p class="cl-d6509b4a"><span class="cl-d6507d9a">79</span></p></td>
+<td class="cl-d650ed2a"><p class="cl-d6509b4a"><span class="cl-d6507d9a">3</span></p></td>
 </tr>
 </tbody>
 </table></div>
-</div></template><div class="flextable-shadow-host" id="e33efa47-4352-4938-8dca-6a5b5f3302bb"></div>
+</div></template><div class="flextable-shadow-host" id="d1984303-02ad-41d5-9419-e60c32d00689"></div>
 <script>
-var dest = document.getElementById("e33efa47-4352-4938-8dca-6a5b5f3302bb");
-var template = document.getElementById("1134fbc2-b717-4040-94c1-266bdd9a1e6b");
+var dest = document.getElementById("d1984303-02ad-41d5-9419-e60c32d00689");
+var template = document.getElementById("57cb3afd-25f0-4ab6-967b-03255e00a362");
 var caption = template.content.querySelector("caption");
 if(caption) {
   caption.style.cssText = "display:block;text-align:center;";
@@ -188,7 +192,7 @@ var fantome = dest.attachShadow({mode: 'open'});
 var templateContent = template.content;
 fantome.appendChild(templateContent);
 </script><p>La base de données prend donc la forme d’un tableau. Plusieurs principes sont à respecter en général lors de la création d’une base de données. Tout d’abord, les lignes de la base de données (qu’on appelle des <strong>observations</strong>) doivent correspondre le cas échéant à des individus bien identifiés. Ensuite, chaque colonne doit correspondre à une variable. L’ensemble des données contenues dans une même ligne correspond donc aux données relatives aux différentes variables (e.g., la taille, le poids, le sexe, etc.) qui auraient été obtenues chez un même individu. Dans le cas d’études où l’on évaluerait une ou plusieurs variables plusieurs fois chez un même individu (i.e., à différentes moments, dans différentes conditions), il peut convenir de créer autant de lignes que de fois où les variables auraient été évaluées. Par exemple, le Tableau <a href="importation-et-manipulation-dune-base-de-donn%C3%A9es.html#tab:databasePlusObs">2.2</a> représente une base de données, certes très sommaire, qui contient des données d’individus dont on aurait évalué le poids deux fois, avant et après un programme de prise en charge. On remarque alors qu’il y a deux lignes par individu qui correspondent aux deux temps d’évaluation. La taille, elle, n’a été évaluée qu’une seule fois, en début de programme, mais pour éviter de laisser des cellules vides, la valeur initiale de la taille a été reproduite dans la seconde ligne.</p>
-<template id="7070985e-38a2-4cea-ab42-cb7463aaffc9"><style>
+<template id="a95b6ccd-732c-4fec-9e1d-5151801837b7"><style>
 .tabwid table{
   border-spacing:0px !important;
   border-collapse:collapse;
@@ -224,48 +228,48 @@ background-color: transparent;
 }
 </style>
 <div class="tabwid">
-<style>.cl-bf714c38{}.cl-bf6001a8{font-family:'Helvetica';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-bf6001bc{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-bf6014f4{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-bf604cee{width:80.5pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf604cf8{width:30.3pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf604d02{width:49.9pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf604d03{width:45.6pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf604d0c{width:45.6pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf604d16{width:80.5pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf604d17{width:30.3pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf604d20{width:49.9pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf604d21{width:30.3pt;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf604d22{width:49.9pt;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf604d2a{width:45.6pt;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf604d2b{width:80.5pt;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf604d2c{width:30.3pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf604d34{width:49.9pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf604d35{width:45.6pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bf604d3e{width:80.5pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<div class="inline-table"><table class="cl-bf714c38">
+<style>.cl-d68551d2{}.cl-d67a467a{font-family:'Helvetica';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-d67a4684{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-d67a5de0{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-d67a9d6e{width:80.5pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d67a9d78{width:30.3pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d67a9d82{width:49.9pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d67a9d8c{width:45.6pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d67a9d8d{width:45.6pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d67a9d8e{width:80.5pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d67a9d96{width:30.3pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d67a9d97{width:49.9pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d67a9da0{width:30.3pt;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d67a9da1{width:49.9pt;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d67a9daa{width:45.6pt;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d67a9dab{width:80.5pt;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d67a9dac{width:30.3pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d67a9dad{width:49.9pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d67a9db4{width:45.6pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d67a9dbe{width:80.5pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<div class="inline-table"><table class="cl-d68551d2">
 <caption class="Table Caption">
 <p><span id="tab:databasePlusObs">Tableau 2.2: </span>Organisation d’une base de données avec des mesures répétées</p>
 </caption>
 <thead><tr style="overflow-wrap:break-word;">
-<td class="cl-bf604d2c"><p class="cl-bf6014f4"><span class="cl-bf6001a8">id</span></p></td>
-<td class="cl-bf604d35"><p class="cl-bf6014f4"><span class="cl-bf6001a8">taille</span></p></td>
-<td class="cl-bf604d3e"><p class="cl-bf6014f4"><span class="cl-bf6001a8">temps_eval</span></p></td>
-<td class="cl-bf604d34"><p class="cl-bf6014f4"><span class="cl-bf6001a8">poids</span></p></td>
+<td class="cl-d67a9dac"><p class="cl-d67a5de0"><span class="cl-d67a467a">id</span></p></td>
+<td class="cl-d67a9db4"><p class="cl-d67a5de0"><span class="cl-d67a467a">taille</span></p></td>
+<td class="cl-d67a9dbe"><p class="cl-d67a5de0"><span class="cl-d67a467a">temps_eval</span></p></td>
+<td class="cl-d67a9dad"><p class="cl-d67a5de0"><span class="cl-d67a467a">poids</span></p></td>
 </tr></thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-bf604cf8"><p class="cl-bf6014f4"><span class="cl-bf6001bc">1</span></p></td>
-<td class="cl-bf604d03"><p class="cl-bf6014f4"><span class="cl-bf6001bc">1.75</span></p></td>
-<td class="cl-bf604cee"><p class="cl-bf6014f4"><span class="cl-bf6001bc">pre</span></p></td>
-<td class="cl-bf604d02"><p class="cl-bf6014f4"><span class="cl-bf6001bc">75</span></p></td>
+<td class="cl-d67a9d78"><p class="cl-d67a5de0"><span class="cl-d67a4684">1</span></p></td>
+<td class="cl-d67a9d8c"><p class="cl-d67a5de0"><span class="cl-d67a4684">1.75</span></p></td>
+<td class="cl-d67a9d6e"><p class="cl-d67a5de0"><span class="cl-d67a4684">pre</span></p></td>
+<td class="cl-d67a9d82"><p class="cl-d67a5de0"><span class="cl-d67a4684">75</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-bf604d17"><p class="cl-bf6014f4"><span class="cl-bf6001bc">1</span></p></td>
-<td class="cl-bf604d0c"><p class="cl-bf6014f4"><span class="cl-bf6001bc">1.75</span></p></td>
-<td class="cl-bf604d16"><p class="cl-bf6014f4"><span class="cl-bf6001bc">post</span></p></td>
-<td class="cl-bf604d20"><p class="cl-bf6014f4"><span class="cl-bf6001bc">73</span></p></td>
+<td class="cl-d67a9d96"><p class="cl-d67a5de0"><span class="cl-d67a4684">1</span></p></td>
+<td class="cl-d67a9d8d"><p class="cl-d67a5de0"><span class="cl-d67a4684">1.75</span></p></td>
+<td class="cl-d67a9d8e"><p class="cl-d67a5de0"><span class="cl-d67a4684">post</span></p></td>
+<td class="cl-d67a9d97"><p class="cl-d67a5de0"><span class="cl-d67a4684">73</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-bf604cf8"><p class="cl-bf6014f4"><span class="cl-bf6001bc">2</span></p></td>
-<td class="cl-bf604d03"><p class="cl-bf6014f4"><span class="cl-bf6001bc">1.89</span></p></td>
-<td class="cl-bf604cee"><p class="cl-bf6014f4"><span class="cl-bf6001bc">pre</span></p></td>
-<td class="cl-bf604d02"><p class="cl-bf6014f4"><span class="cl-bf6001bc">90</span></p></td>
+<td class="cl-d67a9d78"><p class="cl-d67a5de0"><span class="cl-d67a4684">2</span></p></td>
+<td class="cl-d67a9d8c"><p class="cl-d67a5de0"><span class="cl-d67a4684">1.89</span></p></td>
+<td class="cl-d67a9d6e"><p class="cl-d67a5de0"><span class="cl-d67a4684">pre</span></p></td>
+<td class="cl-d67a9d82"><p class="cl-d67a5de0"><span class="cl-d67a4684">90</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-bf604d21"><p class="cl-bf6014f4"><span class="cl-bf6001bc">2</span></p></td>
-<td class="cl-bf604d2a"><p class="cl-bf6014f4"><span class="cl-bf6001bc">1.89</span></p></td>
-<td class="cl-bf604d2b"><p class="cl-bf6014f4"><span class="cl-bf6001bc">post</span></p></td>
-<td class="cl-bf604d22"><p class="cl-bf6014f4"><span class="cl-bf6001bc">88</span></p></td>
+<td class="cl-d67a9da0"><p class="cl-d67a5de0"><span class="cl-d67a4684">2</span></p></td>
+<td class="cl-d67a9daa"><p class="cl-d67a5de0"><span class="cl-d67a4684">1.89</span></p></td>
+<td class="cl-d67a9dab"><p class="cl-d67a5de0"><span class="cl-d67a4684">post</span></p></td>
+<td class="cl-d67a9da1"><p class="cl-d67a5de0"><span class="cl-d67a4684">88</span></p></td>
 </tr>
 </tbody>
 </table></div>
-</div></template><div class="flextable-shadow-host" id="484707b7-c7f7-4f6e-b095-5cb2d1d8d889"></div>
+</div></template><div class="flextable-shadow-host" id="d36e05af-0077-4ae3-9a03-7cad313c7d15"></div>
 <script>
-var dest = document.getElementById("484707b7-c7f7-4f6e-b095-5cb2d1d8d889");
-var template = document.getElementById("7070985e-38a2-4cea-ab42-cb7463aaffc9");
+var dest = document.getElementById("d36e05af-0077-4ae3-9a03-7cad313c7d15");
+var template = document.getElementById("a95b6ccd-732c-4fec-9e1d-5151801837b7");
 var caption = template.content.querySelector("caption");
 if(caption) {
   caption.style.cssText = "display:block;text-align:center;";
@@ -276,11 +280,103 @@ if(caption) {
 var fantome = dest.attachShadow({mode: 'open'});
 var templateContent = template.content;
 fantome.appendChild(templateContent);
-</script><p>En principe, les données de la base qui ont été obtenues selon la même procédure d’acquisition représentent le même type de choses. Ces choses sont appelées des <strong>variables</strong> car elles varient selon les individus qui ont été étudiés et les conditions de mesure qui ont été mises en oeuvre (dans le cas où il y en aurait plusieurs). Lorsque ces choses ne sont pas censées varier, on parle de <strong>constantes</strong>. Une base de données peut comporter plusieurs variables de natures différentes :</p>
-<ul>
-<li>Des <strong>variables quantitatives</strong>, qui comportent des nombres. Parmi les variables quantitatives, on distingue celles qui sont continues et celles qui sont discrètes. Les variables quantitatives continues contiennent des nombres pouvant comporter théoriquement un nombre infini de décimales (e.g., la taille, le poids, etc.). Au contraire, les variables quantitatives discrètes ne peuvent contenir théoriquement que des nombres finis (e.g., le nombre de victoires sportives au cours d’une année). Certaines variables en théorie discrètes sont cependant souvent considérées comme continues tant le nombre de valeurs théoriquement possibles pour la variable est grand, tel que pour le nombre de globules blancs mesurés dans le sang <span class="citation">(Labreuche, <a href="r%C3%A9f%C3%A9rences.html#ref-labreucheDifferentsTypesVariables2010" role="doc-biblioref">2010</a>)</span>.</li>
-<li>Des <strong>variables qualitatives</strong>, qui contiennent des valeurs désignant non pas des quantités mais des modalités. Ces modalités peuvent être exprimées sous forme littérale ou numérique. Parmi les variables qualitatives, on distingue celles qui sont nominales et celles qui sont ordinales. Les variables qualitatives nominales contiennent des modalités qui ne peuvent pas être ordonnées (e.g., les couleurs, les genres, etc.). Au contraire, les variables qualitatives ordinales contiennent des modalités qui peuvent être ordonnées (e.g., les niveaux de compétition sportive : départemental ; régional ; interrégional ; national ; international). Les variables qualitatives ordinales qui prendraient des valeurs numériques pour indiquer par exemple un niveau d’expertise (e.g., 1, 2, 3, et 4) se différencient des variables quantitatives discrètes par l’absence d’information sur la distance qui sépare les nombres de cette variable <span class="citation">(Labreuche, <a href="r%C3%A9f%C3%A9rences.html#ref-labreucheDifferentsTypesVariables2010" role="doc-biblioref">2010</a>)</span>.</li>
-</ul>
+</script><p>En principe, les données de la base qui ont été obtenues selon la même procédure d’acquisition représentent le même type de choses. Ces choses sont appelées des <strong>variables</strong> car elles varient selon les individus qui ont été étudiés et les conditions de mesure qui ont été mises en oeuvre (dans le cas où il y en aurait plusieurs). Lorsque ces choses ne sont pas censées varier, on parle de <strong>constantes</strong>. Une base de données peut comporter des variables de types différents (Tableau <a href="importation-et-manipulation-dune-base-de-donn%C3%A9es.html#tab:typesVariables">2.3</a>).</p>
+<template id="7a5d71ee-df71-460f-9fdf-263a3bc00160"><style>
+.tabwid table{
+  border-spacing:0px !important;
+  border-collapse:collapse;
+  line-height:1;
+  margin-left:auto;
+  margin-right:auto;
+  border-width: 0;
+  display: table;
+  margin-top: 1.275em;
+  margin-bottom: 1.275em;
+  border-color: transparent;
+}
+.tabwid_left table{
+  margin-left:0;
+}
+.tabwid_right table{
+  margin-right:0;
+}
+.tabwid td {
+    padding: 0;
+}
+.tabwid a {
+  text-decoration: none;
+}
+.tabwid thead {
+    background-color: transparent;
+}
+.tabwid tfoot {
+    background-color: transparent;
+}
+.tabwid table tr {
+background-color: transparent;
+}
+</style>
+<div class="tabwid">
+<style>.cl-d6aec9b8{}.cl-d6a527fa{font-family:'Helvetica';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-d6a5280e{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-d6a53c9a{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-d6a53ca4{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-d6a588bc{width:68.2pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d6a588d0{width:63.9pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d6a588d1{width:84.1pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d6a588da{width:63.9pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d6a588db{width:68.2pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d6a588e4{width:84.1pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d6a588e5{width:63.9pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d6a588e6{width:68.2pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d6a588ee{width:84.1pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d6a588ef{width:68.2pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d6a588f8{width:63.9pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d6a588f9{width:84.1pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d6a58902{width:63.9pt;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d6a58903{width:68.2pt;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d6a58904{width:84.1pt;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d6a5890c{width:68.2pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d6a5890d{width:84.1pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d6a5890e{width:63.9pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<div class="inline-table"><table class="cl-d6aec9b8">
+<caption class="Table Caption">
+<p><span id="tab:typesVariables">Tableau 2.3: </span>Les différents types de variables</p>
+</caption>
+<thead><tr style="overflow-wrap:break-word;">
+<td class="cl-d6a5890d"><p class="cl-d6a53c9a"><span class="cl-d6a527fa">Type</span></p></td>
+<td class="cl-d6a5890c"><p class="cl-d6a53ca4"><span class="cl-d6a527fa">Continue</span></p></td>
+<td class="cl-d6a5890e"><p class="cl-d6a53ca4"><span class="cl-d6a527fa">Discrete</span></p></td>
+</tr></thead>
+<tbody>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-d6a588d1"><p class="cl-d6a53c9a"><span class="cl-d6a527fa">Quantitative</span></p></td>
+<td class="cl-d6a588bc"><p class="cl-d6a53ca4"><span class="cl-d6a5280e"></span></p></td>
+<td class="cl-d6a588d0"><p class="cl-d6a53ca4"><span class="cl-d6a5280e"></span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-d6a588e4"><p class="cl-d6a53c9a"><span class="cl-d6a5280e">Intervalle</span></p></td>
+<td class="cl-d6a588db"><p class="cl-d6a53ca4"><span class="cl-d6a5280e">X</span></p></td>
+<td class="cl-d6a588da"><p class="cl-d6a53ca4"><span class="cl-d6a5280e">X</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-d6a588ee"><p class="cl-d6a53c9a"><span class="cl-d6a5280e">Ratio</span></p></td>
+<td class="cl-d6a588e6"><p class="cl-d6a53ca4"><span class="cl-d6a5280e">X</span></p></td>
+<td class="cl-d6a588e5"><p class="cl-d6a53ca4"><span class="cl-d6a5280e">X</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-d6a588f9"><p class="cl-d6a53c9a"><span class="cl-d6a527fa">Qualitative</span></p></td>
+<td class="cl-d6a588ef"><p class="cl-d6a53ca4"><span class="cl-d6a5280e"></span></p></td>
+<td class="cl-d6a588f8"><p class="cl-d6a53ca4"><span class="cl-d6a5280e"></span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-d6a588ee"><p class="cl-d6a53c9a"><span class="cl-d6a5280e">Nominale</span></p></td>
+<td class="cl-d6a588e6"><p class="cl-d6a53ca4"><span class="cl-d6a5280e"></span></p></td>
+<td class="cl-d6a588e5"><p class="cl-d6a53ca4"><span class="cl-d6a5280e">X</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-d6a58904"><p class="cl-d6a53c9a"><span class="cl-d6a5280e">Ordinale</span></p></td>
+<td class="cl-d6a58903"><p class="cl-d6a53ca4"><span class="cl-d6a5280e"></span></p></td>
+<td class="cl-d6a58902"><p class="cl-d6a53ca4"><span class="cl-d6a5280e">X</span></p></td>
+</tr>
+</tbody>
+</table></div>
+</div></template><div class="flextable-shadow-host" id="447dc00b-2d1c-4493-bcfb-b559abd3fe11"></div>
+<script>
+var dest = document.getElementById("447dc00b-2d1c-4493-bcfb-b559abd3fe11");
+var template = document.getElementById("7a5d71ee-df71-460f-9fdf-263a3bc00160");
+var caption = template.content.querySelector("caption");
+if(caption) {
+  caption.style.cssText = "display:block;text-align:center;";
+  var newcapt = document.createElement("p");
+  newcapt.appendChild(caption)
+  dest.parentNode.insertBefore(newcapt, dest.previousSibling);
+}
+var fantome = dest.attachShadow({mode: 'open'});
+var templateContent = template.content;
+fantome.appendChild(templateContent);
+</script><p>Les <strong>variables quantitatives</strong> (aussi dites numériques) comportent des nombres dont les différences entre eux ont un sens. Parmi les variables quantitatives, il est possible de plus précisément distinguer celles qui peuvent être associées seulement à une <strong>échelle d’intervalles</strong>, et celles qui peuvent être aussi associées à une <strong>échelle de ratios</strong>. Les variables étant associables seulement à une <strong>échelle d’intervalles</strong> ont la particularité de ne pas avoir de zéro naturel, de sorte que multiplier ou diviser les valeurs de cette variable n’aurait pas de sens. Un exemple de ce type de variables pourrait être la température exprimée en degrés Celsius. Avec cette variable, il est seulement possible de décrire le fait qu’il fait x degrés plus chaud ou plus froid à un endroit par rapport à un autre, mais cela n’aurait pas de sens de dire qu’il ferait deux fois plus chaud à un endroit où il y aurait 20°C par rapport à un endroit où il y aurait seulement 10°C. Il serait possible de le dire si 0°C correspondrait à “pas de température du tout”, mais cela n’est évidemment pas le cas (cet exemple est repris de Danielle Navarro <span class="citation">(<a href="r%C3%A9f%C3%A9rences.html#ref-navarroLearningStatistics2018" role="doc-biblioref">2018</a>)</span>. En revanche, les variables pouvant être associées à une échelle de ratios présentent des valeurs qui, en plus de permettre de calculer des différences numériques qui ont un sens, peuvent être multipliées ou divisées, comme par exemple le temps de réaction à un stimulus donné.</p>
+<p>En plus de la distinction échelle d’intervalles / échelle de ratios, les variables quantitatives peuvent être considérées comme étant soit <strong>continues</strong>, soit <strong>discrètes</strong>. Les variables quantitatives continues contiennent des nombres pouvant comporter théoriquement un nombre infini de décimales (e.g., la taille, le poids, etc.). Au contraire, les variables quantitatives discrètes ne peuvent contenir théoriquement que des nombres finis (e.g., le nombre de victoires sportives au cours d’une année). Certaines variables en théorie discrètes sont cependant souvent considérées comme continues tant le nombre de valeurs théoriquement possibles pour la variable est grand, tel que pour le nombre de globules blancs mesurés dans le sang <span class="citation">(Labreuche, <a href="r%C3%A9f%C3%A9rences.html#ref-labreucheDifferentsTypesVariables2010" role="doc-biblioref">2010</a>)</span>.</p>
+<p>Les <strong>variables qualitatives</strong> (aussi dites catégorielles), elles, contiennent des valeurs désignant non pas des quantités mais des modalités. Ces variables sont donc forcément discrètes. Les modalités peuvent être exprimées sous forme littérale ou numérique. Parmi les variables qualitatives, on distingue celles qui sont <strong>nominales</strong> et celles qui sont <strong>ordinales</strong>. Les variables qualitatives nominales contiennent des modalités qui ne peuvent pas être ordonnées (e.g., les couleurs, les genres, etc.). Au contraire, les variables qualitatives ordinales contiennent des modalités qui peuvent être ordonnées (e.g., les niveaux de compétition sportive : départemental ; régional ; interrégional ; national ; international). Les variables qualitatives ordinales qui prendraient des valeurs numériques pour indiquer par exemple un niveau d’expertise (e.g., 1, 2, 3, et 4) se différencient des variables quantitatives discrètes par l’absence d’information sur la distance qui sépare les nombres de cette variable <span class="citation">(Labreuche, <a href="r%C3%A9f%C3%A9rences.html#ref-labreucheDifferentsTypesVariables2010" role="doc-biblioref">2010</a>)</span>.</p>
 </div>
 <div id="fixer-le-répertoire-de-travail" class="section level2">
 <h2>
@@ -295,18 +391,18 @@ La prochaine manipulation à faire est alors de <strong>Fixer le répertoire</st
 <h2>
 <span class="header-section-number">2.3</span> Importer la base de données<a class="anchor" aria-label="anchor" href="#importer-la-base-de-donn%C3%A9es"><i class="fas fa-link"></i></a>
 </h2>
-<p>Il existe plusieurs fonctions pour importer une base de données dans RStudio. La fonction <code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv2()</a></code> du package <code>readr</code> permet d’importer par exemple des fichiers .csv qui, structurellement, séparent les données avec des points-virgules. C’est généralement le type de structure de fichier .csv que l’on obtient après avoir réalisé un export à partir du logiciel Excel. Pour illustrer ici l’importation d’une base de données, il est d’abord possible d’en créer une dans le répertoire de travail actif, cela en exportant un tableau de données qui existe déjà avec le logiciel R. Le logiciel R dispose en effet d’un grand nombre de jeux de données différents que tout utilisateur peut consulter et manipuler. L’ensemble des jeux de données disponibles suite à l’installation par défaut de R est visible en lançant dans la Console la commande <code><a href="https://rdrr.io/r/utils/data.html">data()</a></code>. Au fur et à mesure de la découverte des analyses montrées dans ce document, différents jeux de données seront utilisés en fonction des besoins. Pour le moment, il est possible d’utiliser le jeu de données qui s’appelle <code>iris</code>. Même si on ne le voit pas dans la fenêtre Environnement de RStudio, il est bel et bien là, disponible, prêt à être utilisé. Afin d’exporter ce jeu de données dans le répertoire de travail fixé au préalable, il est possible d’utiliser la fonction <code><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv2()</a></code> du package <code>readr</code>. Pour cela, il suffit d’utiliser le nom du jeu de données, puis d’indiquer entre guillemets le nom que l’on veut que le fichier exporté ait, tout en n’oubliant pas de mettre l’extension .csv à la fin du nom pour indiquer le format d’export, comme ci-dessous.</p>
+<p>Il existe plusieurs fonctions pour importer une base de données dans RStudio. La fonction <code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv2()</a></code> du package <code>readr</code> permet d’importer par exemple des fichiers .csv qui, structurellement, séparent les données avec des points-virgules. C’est généralement le type de structure de fichier .csv que l’on obtient après avoir réalisé un export .csv à partir du logiciel Excel. Pour illustrer ici l’importation d’une base de données, il est d’abord possible d’en créer une dans le répertoire de travail actif, cela en exportant un tableau de données qui existe déjà avec le logiciel R. Le logiciel R dispose en effet d’un grand nombre de jeux de données différents que tout utilisateur peut consulter et manipuler. L’ensemble des jeux de données disponibles suite à l’installation par défaut de R est visible en lançant dans la Console la commande <code><a href="https://rdrr.io/r/utils/data.html">data()</a></code>. Au fur et à mesure de la découverte des analyses montrées dans ce document, différents jeux de données seront utilisés en fonction des besoins. Pour le moment, il est possible d’utiliser le jeu de données qui s’appelle <code>iris</code>. Même si on ne le voit pas dans la fenêtre Environnement de RStudio, il est bel et bien là, disponible, prêt à être utilisé. Afin d’exporter ce jeu de données dans le répertoire de travail fixé au préalable, il est possible d’utiliser la fonction <code><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv2()</a></code> du package <code>readr</code>. Pour cela, il suffit d’utiliser le nom du jeu de données, puis d’indiquer entre guillemets le nom que l’on veut que le fichier exporté ait, tout en n’oubliant pas de mettre l’extension .csv à la fin du nom pour indiquer le format d’export, comme ci-dessous.</p>
 <div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv2</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">iris</span>, file <span class="op">=</span> <span class="st">"iris.csv"</span><span class="op">)</span></code></pre></div>
-<p>Si la commande ci-dessus est activée dans RStudio et que l’on jette ensuite un oeil dans le répertoire de travail, il est alors possible d’y voir un nouveau fichier .csv du nom de <code>iris</code>. Maintenant qu’il existe une base de données dans le répertoire de travail actif, il est possible de concrétiser la procédure de son importation dans RStudio. Comme évoqué plus tôt dans ce document, il est intéressant, et en réalité nécessaire, d’assigner cette base de données à un nom pour pouvoir plus facilement manipuler le jeu de données par la suite. Ici, nous allons tout naturellement associer ce nouvel objet au nom <code>iris</code>, tel que montré ci-dessous.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv2</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">iris</span>, file <span class="op">=</span> <span class="st">"iris.csv"</span><span class="op">)</span></span></code></pre></div>
+<p>Si la commande ci-dessus est activée dans RStudio et que l’on jette ensuite un oeil dans le répertoire de travail, il est alors possible d’y voir un nouveau fichier .csv du nom de <code>iris</code>. Maintenant qu’il existe une base de données dans le répertoire de travail actif, il est possible de concrétiser la procédure de son importation dans RStudio. Comme évoqué plus tôt dans ce document, il est intéressant, et en réalité nécessaire, d’assigner cette base de données à un nom pour pouvoir plus facilement manipuler le jeu de données par la suite. Ici, nous allons tout simplement associer ce nouvel objet au nom <code>iris</code>, tel que montré ci-dessous.</p>
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv2</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"iris.csv"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">iris</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv2</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"iris.csv"</span><span class="op">)</span></span></code></pre></div>
 <p>Suite à l’activation de la commande, RStudio nous montre un message d’information sur la manière dont la fonction <code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv2()</a></code> a configuré le jeu de données importé. Ce message apparaît car la fonction importe le jeu de données non pas sous la forme d’un <em>data frame</em> comme nous avons pu en créer auparavant, mais sous la forme d’un <em>tibble</em>, qui désigne un format de tableau que l’on ne peut obtenir qu’en passant par le biais de fonctions associées à l’ensemble de packages <code>tidyverse</code>. Pour comprendre l’intérêt d’un <em>tibble</em>, revenons au format classique d’un <em>data frame</em> à l’aide de la fonction <code><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame()</a></code>.</p>
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">iris</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span></code></pre></div>
 <p>À présent, regardons ce qu’il se passe si on lance le nom <code>iris</code> dans la Console…</p>
 <div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">iris</span></span></code></pre></div>
 <pre><code>##     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
 ## 1            5.1         3.5          1.4         0.2     setosa
 ## 2            4.9         3.0          1.4         0.2     setosa
@@ -460,8 +556,8 @@ La prochaine manipulation à faire est alors de <strong>Fixer le répertoire</st
 ## 150          5.9         3.0          5.1         1.8  virginica</code></pre>
 <p>RStudio nous montre tout le jeu de données dans la Console, ce qui n’est pas très utile, d’autant plus que l’on peut perdre de vue la première ligne de titre lorsque le jeu de données contient beaucoup de lignes. Retournons donc au format <em>tibble</em> grâce à la fonction <code><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble()</a></code> du package <code>tibble</code>, et voyons ce qu’il se passe lorsqu’on lance à nouveau le nom <code>iris</code> dans la Console.</p>
 <div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
-<span class="va">iris</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">iris</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
+<span><span class="va">iris</span></span></code></pre></div>
 <pre><code>## # A tibble: 150 × 5
 ##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
 ##           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;chr&gt;  
@@ -475,7 +571,8 @@ La prochaine manipulation à faire est alors de <strong>Fixer le répertoire</st
 ##  8          5           3.4          1.5         0.2 setosa 
 ##  9          4.4         2.9          1.4         0.2 setosa 
 ## 10          4.9         3.1          1.5         0.1 setosa 
-## # … with 140 more rows</code></pre>
+## # … with 140 more rows
+## # ℹ Use `print(n = ...)` to see more rows</code></pre>
 <p>Cette fois, RStudio n’affiche que les premières lignes du jeu de données, et il fournit en plus de cela des informations quant aux types de variables présentes dans le jeu de données, en-dessous de la ligne de titres. Maintenant que la base de données a été importée, il ne reste plus qu’à voir différentes fonctions pour pouvoir configurer la base de données telle qu’on la voudrait pour réaliser confortablement les analyses.</p>
 </div>
 <div id="manipuler-la-base-de-données" class="section level2">
@@ -486,7 +583,7 @@ La prochaine manipulation à faire est alors de <strong>Fixer le répertoire</st
 <h3>
 <span class="header-section-number">2.4.1</span> Vérifier le succès de l’importation de la base<a class="anchor" aria-label="anchor" href="#v%C3%A9rifier-le-succ%C3%A8s-de-limportation-de-la-base"><i class="fas fa-link"></i></a>
 </h3>
-<p>Avant de débuter les analyses de la base de données, une bonne pratique est de vérifier si la base de données a été correctement importée avec RStudio. Une manière rapide de faire cela est de regarder le nombre d’observations (i.e., de lignes) et de variables (i.e., de colonnes) associés à l’objet crée lors de l’importation et visible dans la fenêtre Environnement de RStudio, puis de cliquer sur le nom associé à l’objet. Lors de l’étape précédente, nous avons importé le jeu de données <code>iris</code> en l’appelant ainsi. Lorsque l’on cherche le nom <code>iris</code> dans la fenêtre Environnement, on peut voir que l’objet associé contient 150 observations et 5 variables, signes que la structure du jeu de données a été bien interprétée par R si l’on sait que ce sont effectivement les dimensions du jeu de données en question. Puis, lorsque l’on clique sur le nom <code>iris</code> dans la liste des noms montrés dans la fenêtre Environnement, RStudio ouvre un onglet qui contient les données. Il est alors possible de voir d’un simple coup d’oeil si les données sont bien présentes et organisées en lignes et en colonnes comme attendu.</p>
+<p>Avant de débuter les analyses de la base de données, une bonne pratique est de vérifier si la base de données a été correctement importée avec RStudio. Une manière rapide de faire cela est de regarder les nombres d’observations (i.e., de lignes) et de variables (i.e., de colonnes) associés à l’objet crée lors de l’importation et visibles dans la fenêtre Environnement de RStudio, puis de cliquer sur le nom associé à l’objet. Lors de l’étape précédente, nous avons importé le jeu de données <code>iris</code> en l’appelant ainsi. Lorsque l’on cherche le nom <code>iris</code> dans la fenêtre Environnement, on peut voir que l’objet associé contient 150 observations et 5 variables, signes que la structure du jeu de données a été bien interprétée par R si l’on sait que ce sont effectivement les dimensions du jeu de données en question. Puis, lorsque l’on clique sur le nom <code>iris</code> dans la liste des noms montrés dans la fenêtre Environnement, RStudio ouvre un onglet qui contient les données. Il est alors possible de voir d’un simple coup d’oeil si les données sont bien présentes et organisées en lignes et en colonnes comme attendu.</p>
 </div>
 <div id="vérifier-et-reconfigurer-les-types-des-variables-de-la-base" class="section level3">
 <h3>
@@ -494,7 +591,7 @@ La prochaine manipulation à faire est alors de <strong>Fixer le répertoire</st
 </h3>
 <p>Il convient de vérifier que les types des variables que RStudio a associés aux variables du jeu de données importé soient bien en accord avec ce qui était attendu. Pour vérifier les types des variables, il est possible d’utiliser la fonction <code><a href="https://rdrr.io/r/utils/str.html">str()</a></code> avec le nom auquel on a associé la base de données.</p>
 <div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## tibble [150 × 5] (S3: tbl_df/tbl/data.frame)
 ##  $ Sepal.Length: num [1:150] 5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...
 ##  $ Sepal.Width : num [1:150] 3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...
@@ -511,7 +608,7 @@ La prochaine manipulation à faire est alors de <strong>Fixer le répertoire</st
 </ul>
 <p>Le logiciel R s’appuie donc sur une classification des types de variables plus complexe que celle que nous avons présentée précédemment. On peut noter que les abbréviations montrées pour indiquer le type de variable en utilisant la fonction <code><a href="https://rdrr.io/r/utils/str.html">str()</a></code> sont différentes de celles montrées lorsque l’on observe un jeu de données au format <em>tibble</em> dans la Console, mais ces différences reflètent en réalité principalement une divergence dans les stratégies d’écriture de l’information par les concepteurs des packages et des fonctions. En outre, si l’on veut déterminer le type d’une seule variable, ou plus globalement le type de l’objet qui nous intéresse, on peut utiliser la fonction <code><a href="https://rdrr.io/r/base/class.html">class()</a></code>. Utiliser un nom de variable avec cette fonction renverra le type de la variable, comme montré ci-dessous.</p>
 <div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Length</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Length</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] "numeric"</code></pre>
 <p>Lorsque le type d’une variable ne correspond pas à celui attendu après avoir importé la base de données dans RStudio, il peut être utile de se questionner sur les erreurs qui ont pu causer cela. Lorsque l’on obtient une variable de type <em>Factor</em> ou de type <em>chr</em> alors qu’une variable de type <em>num</em> étaient attendue, une cause possible est que l’importation du jeu de données a été réalisée avec une fonction d’importation mal configurée par rapport au contenu du jeu de données. Par exemple, il est possible que la fonction d’importation du jeu de données reconnaissait les nombres décimaux seulement lorsqu’ils avaient des points (e.g., 24.3) alors qu’en réalité les nombres décimaux étaient écrits avec des virgules (e.g., 24,3) dans la base de données. Une autre possibilité est que l’on n’ait pas indiqué, dans la fonction d’importation, sous quelle forme se présentaient les valeurs manquantes de la base de données. Par exemple, avec des valeurs manquantes qui seraient notées “NA” dans des variables numériques de la base de données, l’usage de certaines fonctions d’importation sans indiquer à l’intérieur que “NA” désigne “valeur manquante” conduira R à interpréter les variables concernées comme des variables <em>chr</em>. En utilisant la fonction <code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv2()</a></code> du package <code>readr</code>, ces écueils sont plus facilement évités car les paramètres par défaut de la fonction nous facilitent le travail. En revanche, d’autres fonctions, plus anciennes, comme <code><a href="https://rdrr.io/r/utils/read.table.html">read.csv2()</a></code> qui est une fonction de base de R, nécessitent plus de vigilance.</p>
 <p>Lorsque la modification du type de la variable est nécessaire, une stratégie possible est de créer une variable portant exactement le même nom à partir de la variable initiale et à laquelle on applique une fonction capable d’imposer un certain type de variable. Il existe une fonction pour chaque type de variable à définir, notamment :</p>
@@ -523,14 +620,14 @@ La prochaine manipulation à faire est alors de <strong>Fixer le répertoire</st
 </ul>
 <p>Par exemple, nous aurions pu vouloir faire en sorte que toutes les variables du jeu de données <code>iris</code> soient de type texte :</p>
 <div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Length</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Length</span><span class="op">)</span>
-<span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Width</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Width</span><span class="op">)</span>
-<span class="va">iris</span><span class="op">$</span><span class="va">Petal.Length</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">Petal.Length</span><span class="op">)</span>
-<span class="va">iris</span><span class="op">$</span><span class="va">Petal.Width</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">Petal.Width</span><span class="op">)</span>
-<span class="va">iris</span><span class="op">$</span><span class="va">Species</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Length</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Length</span><span class="op">)</span></span>
+<span><span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Width</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Width</span><span class="op">)</span></span>
+<span><span class="va">iris</span><span class="op">$</span><span class="va">Petal.Length</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">Petal.Length</span><span class="op">)</span></span>
+<span><span class="va">iris</span><span class="op">$</span><span class="va">Petal.Width</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">Petal.Width</span><span class="op">)</span></span>
+<span><span class="va">iris</span><span class="op">$</span><span class="va">Species</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span></span></code></pre></div>
 <p>Remarquons qu’à chaque fois, le nom de variable écrit à gauche de la flèche d’assignation est exactement le même que celui qui est écrit à droite de la flèche d’assignation dans la fonction <code><a href="https://rdrr.io/r/base/character.html">as.character()</a></code>, ce qui implique que la création de la nouvelle variable entraîne la suppression et le remplacement de la précédente qui portait le même nom. Il est possible de vérifier la conséquence de ces commandes avec la fonction <code><a href="https://rdrr.io/r/utils/str.html">str()</a></code>.</p>
 <div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## tibble [150 × 5] (S3: tbl_df/tbl/data.frame)
 ##  $ Sepal.Length: chr [1:150] "5.1" "4.9" "4.7" "4.6" ...
 ##  $ Sepal.Width : chr [1:150] "3.5" "3" "3.2" "3.1" ...
@@ -539,13 +636,13 @@ La prochaine manipulation à faire est alors de <strong>Fixer le répertoire</st
 ##  $ Species     : chr [1:150] "setosa" "setosa" "setosa" "setosa" ...</code></pre>
 <p>Cette stratégie de modification du type de la variable peut convenir lorsqu’il y a peu de variables à modifier. Cependant, lorsque la liste s’allonge, il peut être plus lisible, en matière de code, de fonctionner avec le symbole <code>%&gt;%</code> (qu’on appelle <em>pipe</em>), et la fonction <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> du package <code>dplyr</code>.</p>
 <div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris</span> <span class="op">&lt;-</span> 
-  <span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>Sepal.Length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Sepal.Length</span><span class="op">)</span>,
-         Sepal.Width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Sepal.Width</span><span class="op">)</span>,
-         Petal.Length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Petal.Length</span><span class="op">)</span>,
-         Petal.Width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Petal.Width</span><span class="op">)</span>,
-         Species <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Species</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">iris</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>Sepal.Length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Sepal.Length</span><span class="op">)</span>,</span>
+<span>         Sepal.Width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Sepal.Width</span><span class="op">)</span>,</span>
+<span>         Petal.Length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Petal.Length</span><span class="op">)</span>,</span>
+<span>         Petal.Width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Petal.Width</span><span class="op">)</span>,</span>
+<span>         Species <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Species</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Ici, le symbole <code>%&gt;%</code> permet d’indiquer à R que toutes les fonctions qui sont écrites après ce symbole s’appliquent à ce qui a été défini avant ce symbole. La fonction <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>, dont nous reparlerons peu après, permet de créer de nouvelles variables dans le cadre de cette stratégie, soit en écrasant les anciennes variables si les anciens noms sont conservés, soit en créant de nouvelles variables si de nouveaux noms sont utilisés. Remarquons également qu’avec ce code, nous venons de créer un nouvel objet (en l’assignant à nouveau au nom <code>iris</code>) à partir de l’ancien objet, mais dont on a transformé les types des variables, perdant dans le même temps l’ancien objet.</p>
 </div>
 <div id="sélectionner-des-variables-avec-select" class="section level3">
@@ -554,8 +651,8 @@ La prochaine manipulation à faire est alors de <strong>Fixer le répertoire</st
 </h3>
 <p>Certains jeux de données peuvent être très larges, c’est-à-dire qu’ils peuvent contenir beaucoup de colonnes, parfois inutiles, et qui peuvent être gênantes lorsque l’on veut avoir une vue claire du contenu du jeu de données. La fonction <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> du package <code>dplyr</code> permet de sélectionner des colonnes facilement.</p>
 <div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Petal.Length</span>, <span class="va">Petal.Width</span>, <span class="va">Species</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Petal.Length</span>, <span class="va">Petal.Width</span>, <span class="va">Species</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## # A tibble: 150 × 3
 ##    Petal.Length Petal.Width Species
 ##           &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  
@@ -569,20 +666,21 @@ La prochaine manipulation à faire est alors de <strong>Fixer le répertoire</st
 ##  8          1.5         0.2 setosa 
 ##  9          1.4         0.2 setosa 
 ## 10          1.5         0.1 setosa 
-## # … with 140 more rows</code></pre>
+## # … with 140 more rows
+## # ℹ Use `print(n = ...)` to see more rows</code></pre>
 </div>
 <div id="renommer-des-variables-avec-rename" class="section level3">
 <h3>
 <span class="header-section-number">2.4.4</span> Renommer des variables avec <code>rename()</code><a class="anchor" aria-label="anchor" href="#renommer-des-variables-avec-rename"><i class="fas fa-link"></i></a>
 </h3>
-<p>Il est possible que certains titres de variables ne soient pas clairs ou trop longs, ce qui peut être gênant pour écrire un code le plus lisible possible. La fonction <code><a href="https://dplyr.tidyverse.org/reference/rename.html">rename()</a></code> du package <code>dplyr</code> permet de gérer cela. Dans l’exemple ci-dessous, on observe que le nouveau nom doit être écrit à gauche du signe <code>=</code>, alors que l’ancien nom doit être écrit à droite du signe <code>=</code>. Si le nom d’origine contient au moins une espace entre deux mots, il convient d’encadrer le nom à remplacer par des guillemets (" ").</p>
+<p>Il est possible que certains titres de variables ne soient pas clairs ou trop longs, ce qui peut être gênant pour écrire un code le plus lisible possible. La fonction <code><a href="https://dplyr.tidyverse.org/reference/rename.html">rename()</a></code> du package <code>dplyr</code> permet de gérer cela. Dans l’exemple ci-dessous, on observe que le nouveau nom doit être écrit à gauche du signe <code>=</code>, alors que l’ancien nom doit être écrit à droite du signe <code>=</code>. Si le nom d’origine contient au moins une espace entre deux mots, ou encore s’il contient des caractères spéciaux, il convient d’encadrer le nom à remplacer par des guillemets (" ").</p>
 <div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>Sepal_long <span class="op">=</span> <span class="va">Sepal.Length</span>,
-         Sepal_lar <span class="op">=</span> <span class="va">Sepal.Width</span>,
-         Petal_long <span class="op">=</span> <span class="va">Petal.Length</span>,
-         Petal_lar <span class="op">=</span> <span class="va">Petal.Width</span>,
-         Especes <span class="op">=</span> <span class="va">Species</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>Sepal_long <span class="op">=</span> <span class="va">Sepal.Length</span>,</span>
+<span>         Sepal_lar <span class="op">=</span> <span class="va">Sepal.Width</span>,</span>
+<span>         Petal_long <span class="op">=</span> <span class="va">Petal.Length</span>,</span>
+<span>         Petal_lar <span class="op">=</span> <span class="va">Petal.Width</span>,</span>
+<span>         Especes <span class="op">=</span> <span class="va">Species</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## # A tibble: 150 × 5
 ##    Sepal_long Sepal_lar Petal_long Petal_lar Especes
 ##         &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt; &lt;fct&gt;  
@@ -596,7 +694,8 @@ La prochaine manipulation à faire est alors de <strong>Fixer le répertoire</st
 ##  8        5         3.4        1.5       0.2 setosa 
 ##  9        4.4       2.9        1.4       0.2 setosa 
 ## 10        4.9       3.1        1.5       0.1 setosa 
-## # … with 140 more rows</code></pre>
+## # … with 140 more rows
+## # ℹ Use `print(n = ...)` to see more rows</code></pre>
 </div>
 <div id="créer-des-variables-avec-mutate" class="section level3">
 <h3>
@@ -604,31 +703,32 @@ La prochaine manipulation à faire est alors de <strong>Fixer le répertoire</st
 </h3>
 <p>Certaines analyses peuvent nécessiter d’ajouter des variables à partir de calculs réalisés sur des variables qui existent déjà dans le jeu de données. La fonction <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>, du package <code>dplyr</code>, et que nous avons déjà rencontrée précédemment, permet cela. Dans l’exemple ci-dessous, on observe que le nom de la nouvelle variable à créer est à gauche du signe <code>=</code> et que le calcul créant les nouvelles valeurs est décrit à droite du signe <code>=</code>.</p>
 <div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>ratio_sepal <span class="op">=</span> <span class="va">Sepal.Length</span> <span class="op">/</span> <span class="va">Sepal.Width</span>, 
-         ratio_petal <span class="op">=</span> <span class="va">Petal.Length</span> <span class="op">/</span> <span class="va">Petal.Width</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>ratio_sepal <span class="op">=</span> <span class="va">Sepal.Length</span> <span class="op">/</span> <span class="va">Sepal.Width</span>, </span>
+<span>         ratio_petal <span class="op">=</span> <span class="va">Petal.Length</span> <span class="op">/</span> <span class="va">Petal.Width</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## # A tibble: 150 × 7
-##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
-##           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  
-##  1          5.1         3.5          1.4         0.2 setosa 
-##  2          4.9         3            1.4         0.2 setosa 
-##  3          4.7         3.2          1.3         0.2 setosa 
-##  4          4.6         3.1          1.5         0.2 setosa 
-##  5          5           3.6          1.4         0.2 setosa 
-##  6          5.4         3.9          1.7         0.4 setosa 
-##  7          4.6         3.4          1.4         0.3 setosa 
-##  8          5           3.4          1.5         0.2 setosa 
-##  9          4.4         2.9          1.4         0.2 setosa 
-## 10          4.9         3.1          1.5         0.1 setosa 
-## # … with 140 more rows, and 2 more variables: ratio_sepal &lt;dbl&gt;,
-## #   ratio_petal &lt;dbl&gt;</code></pre>
+##    Sepal.Length Sepal.Width Petal.Le…¹ Petal…² Species ratio…³ ratio…⁴
+##           &lt;dbl&gt;       &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt; &lt;fct&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+##  1          5.1         3.5        1.4     0.2 setosa     1.46    7   
+##  2          4.9         3          1.4     0.2 setosa     1.63    7   
+##  3          4.7         3.2        1.3     0.2 setosa     1.47    6.5 
+##  4          4.6         3.1        1.5     0.2 setosa     1.48    7.5 
+##  5          5           3.6        1.4     0.2 setosa     1.39    7   
+##  6          5.4         3.9        1.7     0.4 setosa     1.38    4.25
+##  7          4.6         3.4        1.4     0.3 setosa     1.35    4.67
+##  8          5           3.4        1.5     0.2 setosa     1.47    7.5 
+##  9          4.4         2.9        1.4     0.2 setosa     1.52    7   
+## 10          4.9         3.1        1.5     0.1 setosa     1.58   15   
+## # … with 140 more rows, and abbreviated variable names ¹​Petal.Length,
+## #   ²​Petal.Width, ³​ratio_sepal, ⁴​ratio_petal
+## # ℹ Use `print(n = ...)` to see more rows</code></pre>
 </div>
 <div id="sélectionner-des-lignes-avec-filter" class="section level3">
 <h3>
 <span class="header-section-number">2.4.6</span> Sélectionner des lignes avec <code>filter()</code><a class="anchor" aria-label="anchor" href="#s%C3%A9lectionner-des-lignes-avec-filter"><i class="fas fa-link"></i></a>
 </h3>
-<p>En fonction des besoins de l’analyse, on peut vouloir ne retenir que certaines lignes du fichier de données. La fonction <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> du package <code>dplyr</code> est faite pour réaliser ce filtrage. Plusieurs opérateurs sont disponibles pour ne retenir que les lignes que l’on veut (cf. Tableau <a href="importation-et-manipulation-dune-base-de-donn%C3%A9es.html#tab:SymbolsFilter">2.3</a>).</p>
-<template id="ba751733-3289-411d-b5cb-d4106b571fcf"><style>
+<p>En fonction des besoins de l’analyse, on peut vouloir ne retenir que certaines lignes du fichier de données. La fonction <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> du package <code>dplyr</code> est faite pour réaliser ce filtrage. Plusieurs opérateurs sont disponibles pour ne retenir que les lignes que l’on veut (cf. Tableau <a href="importation-et-manipulation-dune-base-de-donn%C3%A9es.html#tab:SymbolsFilter">2.4</a>).</p>
+<template id="0da9d36a-7d5e-41b9-b1ec-084c04fbc476"><style>
 .tabwid table{
   border-spacing:0px !important;
   border-collapse:collapse;
@@ -664,38 +764,38 @@ background-color: transparent;
 }
 </style>
 <div class="tabwid">
-<style>.cl-c03f3fbc{}.cl-c02ef6ca{font-family:'Helvetica';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-c02ef6de{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-c02f0df4{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-c02f0dfe{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-c02f5494{width:107.4pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c02f549e{width:73.1pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c02f549f{width:107.4pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c02f54a0{width:73.1pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c02f54a8{width:107.4pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c02f54a9{width:73.1pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c02f54b2{width:73.1pt;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c02f54b3{width:107.4pt;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c02f54bc{width:73.1pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c02f54c6{width:107.4pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<div class="inline-table"><table class="cl-c03f3fbc">
+<style>.cl-d75dc83c{}.cl-d754a360{font-family:'Helvetica';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-d754a36a{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-d754b9ae{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-d754b9b8{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-d7550102{width:107.4pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d755010c{width:73.1pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d7550116{width:107.4pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d7550117{width:73.1pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d7550120{width:107.4pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d7550121{width:73.1pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d755012a{width:73.1pt;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d755012b{width:107.4pt;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d7550134{width:73.1pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d7550135{width:107.4pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<div class="inline-table"><table class="cl-d75dc83c">
 <caption class="Table Caption">
-<p><span id="tab:SymbolsFilter">Tableau 2.3: </span>Les opérateurs utilisables avec la fonction filter()</p>
+<p><span id="tab:SymbolsFilter">Tableau 2.4: </span>Les opérateurs utilisables avec la fonction filter()</p>
 </caption>
 <thead><tr style="overflow-wrap:break-word;">
-<td class="cl-c02f54c6"><p class="cl-c02f0df4"><span class="cl-c02ef6ca">Opération</span></p></td>
-<td class="cl-c02f54bc"><p class="cl-c02f0dfe"><span class="cl-c02ef6ca">Opérateur</span></p></td>
+<td class="cl-d7550135"><p class="cl-d754b9ae"><span class="cl-d754a360">Opération</span></p></td>
+<td class="cl-d7550134"><p class="cl-d754b9b8"><span class="cl-d754a360">Opérateur</span></p></td>
 </tr></thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-c02f5494"><p class="cl-c02f0df4"><span class="cl-c02ef6de">Égal</span></p></td>
-<td class="cl-c02f549e"><p class="cl-c02f0dfe"><span class="cl-c02ef6de">==</span></p></td>
+<td class="cl-d7550102"><p class="cl-d754b9ae"><span class="cl-d754a36a">Égal</span></p></td>
+<td class="cl-d755010c"><p class="cl-d754b9b8"><span class="cl-d754a36a">==</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-c02f549f"><p class="cl-c02f0df4"><span class="cl-c02ef6de">Inférieur ou égal</span></p></td>
-<td class="cl-c02f54a0"><p class="cl-c02f0dfe"><span class="cl-c02ef6de">&lt;=</span></p></td>
+<td class="cl-d7550116"><p class="cl-d754b9ae"><span class="cl-d754a36a">Inférieur ou égal</span></p></td>
+<td class="cl-d7550117"><p class="cl-d754b9b8"><span class="cl-d754a36a">&lt;=</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-c02f54a8"><p class="cl-c02f0df4"><span class="cl-c02ef6de">Supérieur ou égal</span></p></td>
-<td class="cl-c02f54a9"><p class="cl-c02f0dfe"><span class="cl-c02ef6de">&gt;=</span></p></td>
+<td class="cl-d7550120"><p class="cl-d754b9ae"><span class="cl-d754a36a">Supérieur ou égal</span></p></td>
+<td class="cl-d7550121"><p class="cl-d754b9b8"><span class="cl-d754a36a">&gt;=</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-c02f54b3"><p class="cl-c02f0df4"><span class="cl-c02ef6de">Différent de</span></p></td>
-<td class="cl-c02f54b2"><p class="cl-c02f0dfe"><span class="cl-c02ef6de">!=</span></p></td>
+<td class="cl-d755012b"><p class="cl-d754b9ae"><span class="cl-d754a36a">Différent de</span></p></td>
+<td class="cl-d755012a"><p class="cl-d754b9b8"><span class="cl-d754a36a">!=</span></p></td>
 </tr>
 </tbody>
 </table></div>
-</div></template><div class="flextable-shadow-host" id="ede609f1-6a08-4832-a770-551d8369cf3d"></div>
+</div></template><div class="flextable-shadow-host" id="94234406-7a2f-4229-b71e-672662ef89c1"></div>
 <script>
-var dest = document.getElementById("ede609f1-6a08-4832-a770-551d8369cf3d");
-var template = document.getElementById("ba751733-3289-411d-b5cb-d4106b571fcf");
+var dest = document.getElementById("94234406-7a2f-4229-b71e-672662ef89c1");
+var template = document.getElementById("0da9d36a-7d5e-41b9-b1ec-084c04fbc476");
 var caption = template.content.querySelector("caption");
 if(caption) {
   caption.style.cssText = "display:block;text-align:center;";
@@ -708,9 +808,9 @@ var templateContent = template.content;
 fantome.appendChild(templateContent);
 </script><p>De plus, dans la configuration du code, ces opérateurs peuvent être couplés à l’opérateur <code>|</code> (OU) et à l’opérateur <code>&amp;</code> (ET). Dans l’exemple ci-dessous, le code permet, à partir du jeu de données <code>iris</code>, de ne garder que les lignes du jeu de données qui contiennent les noms d’espèce <em>setosa</em> OU <em>virginica</em>, ET en même temps qui affichent une longueur de sépale inférieure ou égale à 5.</p>
 <div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">(</span><span class="va">Species</span> <span class="op">==</span> <span class="st">"setosa"</span> <span class="op">|</span> <span class="va">Species</span> <span class="op">==</span> <span class="st">"virginica"</span><span class="op">)</span> <span class="op">&amp;</span>
-          <span class="va">Sepal.Length</span> <span class="op">&lt;=</span> <span class="fl">5</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">(</span><span class="va">Species</span> <span class="op">==</span> <span class="st">"setosa"</span> <span class="op">|</span> <span class="va">Species</span> <span class="op">==</span> <span class="st">"virginica"</span><span class="op">)</span> <span class="op">&amp;</span></span>
+<span>          <span class="va">Sepal.Length</span> <span class="op">&lt;=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## # A tibble: 29 × 5
 ##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
 ##           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  
@@ -724,7 +824,8 @@ fantome.appendChild(templateContent);
 ##  8          4.9         3.1          1.5         0.1 setosa 
 ##  9          4.8         3.4          1.6         0.2 setosa 
 ## 10          4.8         3            1.4         0.1 setosa 
-## # … with 19 more rows</code></pre>
+## # … with 19 more rows
+## # ℹ Use `print(n = ...)` to see more rows</code></pre>
 </div>
 <div id="réordonner-les-lignes-avec-arrange" class="section level3">
 <h3>
@@ -732,8 +833,8 @@ fantome.appendChild(templateContent);
 </h3>
 <p>On peut vouloir trier les lignes du jeu de données selon un certain ordre, en fonction des valeurs d’une variable donnée. La fonction <code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code> du package <code>dplyr</code> est très utile pour gérer ce genre de réalisation. L’exemple ci-dessous conduit à trier les données selon un ordre croissant en fonction des valeurs de la variable <code>Sepal.Length</code>. Le fait de mettre le symbole <code>-</code> devant le nom de la variable aurait conduit à un tri décroissant.</p>
 <div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">Sepal.Length</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">Sepal.Length</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## # A tibble: 150 × 5
 ##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
 ##           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  
@@ -747,7 +848,8 @@ fantome.appendChild(templateContent);
 ##  8          4.6         3.6          1           0.2 setosa 
 ##  9          4.6         3.2          1.4         0.2 setosa 
 ## 10          4.7         3.2          1.3         0.2 setosa 
-## # … with 140 more rows</code></pre>
+## # … with 140 more rows
+## # ℹ Use `print(n = ...)` to see more rows</code></pre>
 </div>
 <div id="résumer-des-variables-avec-group_by-et-summarize" class="section level3">
 <h3>
@@ -755,10 +857,10 @@ fantome.appendChild(templateContent);
 </h3>
 <p>Bien qu’une base de données puisse contenir énormément de lignes, on peut n’en vouloir que la version résumée. Les fonctions <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> et <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> du package <code>dplyr</code> permettent de faire cela aisément. Dans l’exemple ci-dessous, la fonction <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> permet d’indiquer que les calculs réalisés par la suite avec la fonction <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> doivent être exécutés pour les modalités de la variable <code>Species</code> prises séparément. La fonction <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code>, quant à elle, permet d’exéctuer différents calculs. Dans l’exemple ci-dessous, il s’agit de moyennes, obtenues à l’aide de la fonction <code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code>. De plus, la fonction <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> permet, comme montré ci-dessous, d’indiquer à gauche du <code>=</code> le nom du titre du calcul alors effectué .</p>
 <div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">Species</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>mean_sep_len <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">Sepal.Length</span><span class="op">)</span>,
-            mean_sep_wid <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">Sepal.Width</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">Species</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>mean_sep_len <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">Sepal.Length</span><span class="op">)</span>,</span>
+<span>            mean_sep_wid <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">Sepal.Width</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## # A tibble: 3 × 3
 ##   Species    mean_sep_len mean_sep_wid
 ##   &lt;fct&gt;             &lt;dbl&gt;        &lt;dbl&gt;
@@ -767,14 +869,14 @@ fantome.appendChild(templateContent);
 ## 3 virginica          6.59         2.97</code></pre>
 <p>Au cours des illustrations montrant l’usage des fonctions <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> jusqu’à <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code>, il aura été possible de noter que les commandes n’écrasaient pas le jeu de données initial, ni ne créaient de nouveaux jeux de données, car aucune assignation à un nom n’était faite. Lorsqu’une assignation est réalisée, il est conseillé d’utiliser un nouveau nom, différent de celui utilisé pour le jeu de données initial, pour pouvoir revenir au jeu de données originel lorsque cela est souhaité. Ci-dessous un exemple de création d’un nouvel objet de type tableau (assigné au nom <code>iris2</code>) à partir de l’utilisation de la plupart des fonctions que nous venons de voir et qui peuvent être utilisées dans un même bloc de code grâce au <em>pipe</em> (<code>%&gt;%</code>).</p>
 <div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris2</span> <span class="op">&lt;-</span> 
-  <span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Petal.Length</span>, <span class="va">Petal.Width</span>, <span class="va">Species</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>Petal_len <span class="op">=</span> <span class="va">Petal.Length</span>, Petal_wid <span class="op">=</span> <span class="va">Petal.Width</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>Petal_ratio <span class="op">=</span> <span class="va">Petal_len</span> <span class="op">/</span> <span class="va">Petal_wid</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">(</span><span class="va">Species</span> <span class="op">==</span> <span class="st">"setosa"</span> <span class="op">|</span> <span class="va">Species</span> <span class="op">==</span> <span class="st">"virginica"</span><span class="op">)</span> <span class="op">&amp;</span> <span class="va">Petal_ratio</span> <span class="op">&gt;</span> <span class="fl">8</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="op">-</span><span class="va">Petal_ratio</span><span class="op">)</span>
-<span class="va">iris2</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">iris2</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Petal.Length</span>, <span class="va">Petal.Width</span>, <span class="va">Species</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>Petal_len <span class="op">=</span> <span class="va">Petal.Length</span>, Petal_wid <span class="op">=</span> <span class="va">Petal.Width</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>Petal_ratio <span class="op">=</span> <span class="va">Petal_len</span> <span class="op">/</span> <span class="va">Petal_wid</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">(</span><span class="va">Species</span> <span class="op">==</span> <span class="st">"setosa"</span> <span class="op">|</span> <span class="va">Species</span> <span class="op">==</span> <span class="st">"virginica"</span><span class="op">)</span> <span class="op">&amp;</span> <span class="va">Petal_ratio</span> <span class="op">&gt;</span> <span class="fl">8</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="op">-</span><span class="va">Petal_ratio</span><span class="op">)</span></span>
+<span><span class="va">iris2</span></span></code></pre></div>
 <pre><code>## # A tibble: 7 × 4
 ##   Petal_len Petal_wid Species Petal_ratio
 ##       &lt;dbl&gt;     &lt;dbl&gt; &lt;fct&gt;         &lt;dbl&gt;
@@ -792,13 +894,13 @@ fantome.appendChild(templateContent);
 </h3>
 <p>Il convient de respecter certaines règles de base lors de la conception d’une base de données (e.g., mettre les observations en lignes et les variables en colonnes). Toutefois, dans certains cas, même après avoir bien respecté les règles, la manière selon laquelle la base de données a été organisée peut ne pas être encore adéquate pour pouvoir utiliser certaines fonctions. Prenons par exemple le cas où toutes les valeurs numériques d’une variable quantitative auraient été mises dans une même colonne en regard d’une variable qualitative pour que chaque valeur numérique corresponde à une modalité de cette variable qualitative (c’est le cas, par exemple, avec le jeu de données <code>iris</code>), et que la fonction à utiliser nécessiterait que l’on ait une colonne pour chacune des modalités de la variable qualitative, avec des colonnes mises côte à côte. Une fonction qui permet alors de passer d’un format “long” (i.e., toutes les valeurs numériques sont dans la même colonne) à un format “large” (i.e., les valeurs numériques sont réparties dans différentes colonnes selon la modalité à laquelle elles sont associées), est la fonction <code><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider()</a></code> du package <code>tidyr</code>. Pour pouvoir utiliser cette fonction, il faut qu’il y ait une variable permettant d’identifier à quels individus ou groupes appartiennent les données dont on va changer l’organisation. Dans une base de données classique, il y a toujours une variable présente pour cela. Toutefois, dans le jeu de données <code>iris</code>, il n’y a pas une telle variable. Pour pouvoir illustrer l’utilisation de la fonction <code><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider()</a></code>, nous avons donc ajouté arbitrairement une variable <code>id</code> grâce à la fonction <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> pour simuler le fait que les données de <code>iris</code> auraient été acquises en référence à des individus bien identifiés, avec à chaque fois une valeur pour les trois modalités de la variable <code>Species</code>.</p>
 <div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris2</span> <span class="op">&lt;-</span> 
-  <span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">50</span>, times <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">Species</span>,  <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">Species</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="op">)</span>
-<span class="va">iris2</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">iris2</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">50</span>, times <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">Species</span>,  <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">Species</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">iris2</span></span></code></pre></div>
 <pre><code>## # A tibble: 150 × 6
 ##       id Species    Sepal.Length Sepal.Width Petal.Length Petal.Width
 ##    &lt;int&gt; &lt;fct&gt;             &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;
@@ -812,44 +914,47 @@ fantome.appendChild(templateContent);
 ##  8     3 versicolor          6.9         3.1          4.9         1.5
 ##  9     3 virginica           7.1         3            5.9         2.1
 ## 10     4 setosa              4.6         3.1          1.5         0.2
-## # … with 140 more rows</code></pre>
+## # … with 140 more rows
+## # ℹ Use `print(n = ...)` to see more rows</code></pre>
 <p>La fonction <code><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider()</a></code> permet alors de mettre en colonnes les valeurs des variables sélectionnées pour chacune des trois modalités de la variable <code>Species</code>.</p>
 <div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris3</span> <span class="op">&lt;-</span> 
-  <span class="va">iris2</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">Species</span>, 
-              values_from <span class="op">=</span> <span class="va">Sepal.Length</span> <span class="op">:</span> <span class="va">Petal.Width</span><span class="op">)</span>
-<span class="va">iris3</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">iris3</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="va">iris2</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">Species</span>, </span>
+<span>              values_from <span class="op">=</span> <span class="va">Sepal.Length</span> <span class="op">:</span> <span class="va">Petal.Width</span><span class="op">)</span></span>
+<span><span class="va">iris3</span></span></code></pre></div>
 <pre><code>## # A tibble: 50 × 13
-##       id Sepal.Length_setosa Sepal.Length_versicolor Sepal.Length_vir…
-##    &lt;int&gt;               &lt;dbl&gt;                   &lt;dbl&gt;             &lt;dbl&gt;
-##  1     1                 5.1                     7                 6.3
-##  2     2                 4.9                     6.4               5.8
-##  3     3                 4.7                     6.9               7.1
-##  4     4                 4.6                     5.5               6.3
-##  5     5                 5                       6.5               6.5
-##  6     6                 5.4                     5.7               7.6
-##  7     7                 4.6                     6.3               4.9
-##  8     8                 5                       4.9               7.3
-##  9     9                 4.4                     6.6               6.7
-## 10    10                 4.9                     5.2               7.2
-## # … with 40 more rows, and 9 more variables:
-## #   Sepal.Width_setosa &lt;dbl&gt;, Sepal.Width_versicolor &lt;dbl&gt;,
-## #   Sepal.Width_virginica &lt;dbl&gt;, Petal.Length_setosa &lt;dbl&gt;,
+##       id Sepal.Lengt…¹ Sepal…² Sepal…³ Sepal…⁴ Sepal…⁵ Sepal…⁶ Petal…⁷
+##    &lt;int&gt;         &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1     1           5.1     7       6.3     3.5     3.2     3.3     1.4
+##  2     2           4.9     6.4     5.8     3       3.2     2.7     1.4
+##  3     3           4.7     6.9     7.1     3.2     3.1     3       1.3
+##  4     4           4.6     5.5     6.3     3.1     2.3     2.9     1.5
+##  5     5           5       6.5     6.5     3.6     2.8     3       1.4
+##  6     6           5.4     5.7     7.6     3.9     2.8     3       1.7
+##  7     7           4.6     6.3     4.9     3.4     3.3     2.5     1.4
+##  8     8           5       4.9     7.3     3.4     2.4     2.9     1.5
+##  9     9           4.4     6.6     6.7     2.9     2.9     2.5     1.4
+## 10    10           4.9     5.2     7.2     3.1     2.7     3.6     1.5
+## # … with 40 more rows, 5 more variables:
 ## #   Petal.Length_versicolor &lt;dbl&gt;, Petal.Length_virginica &lt;dbl&gt;,
 ## #   Petal.Width_setosa &lt;dbl&gt;, Petal.Width_versicolor &lt;dbl&gt;,
-## #   Petal.Width_virginica &lt;dbl&gt;</code></pre>
+## #   Petal.Width_virginica &lt;dbl&gt;, and abbreviated variable names
+## #   ¹​Sepal.Length_setosa, ²​Sepal.Length_versicolor,
+## #   ³​Sepal.Length_virginica, ⁴​Sepal.Width_setosa,
+## #   ⁵​Sepal.Width_versicolor, ⁶​Sepal.Width_virginica, …
+## # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</code></pre>
 <p>L’argument <code>names_from</code> a permis d’indiquer la variable à partir de laquelle on a dispatché les valeurs en colonnes, et l’argument <code>values_from</code> a permis de préciser les variables pour lesquelles on voulait que les valeurs numériques soient dispatchées. L’utilisation des deux-points (<code>:</code>) nous a permis de sélectionner toutes les variables allant de <code>Sepal.Length</code> à <code>Petal.Width</code> dans le jeu de données.</p>
 <p>Dans une situation inverse à celle que nous venons de voir, nous pourrions avoir les données représentées en colonnes (comme c’est le cas avec le jeu de données <code>iris3</code> crée ci-dessus), alors que nous les voudrions en lignes (comme c’était le cas avec le jeu de données <code>iris</code> à l’origine). La fonction <code>pivot_longer</code> permet de faire ce genre de conversion. Pour observer ce que cette fonction réalise, sélectionnons seulement les colonnes avec les valeurs de sépales en plus de la colonne <code>id</code>, tel que montré ci-dessous :</p>
 <div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
-<code class="sourceCode R">  <span class="va">iris3</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">id</span>, 
-         <span class="va">Sepal.Length_setosa</span>, 
-         <span class="va">Sepal.Length_versicolor</span>, 
-         <span class="va">Sepal.Length_virginica</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="va">id</span><span class="op">)</span>, 
-               names_to <span class="op">=</span> <span class="st">"Species"</span>, 
-               values_to <span class="op">=</span> <span class="st">"Sepal_len"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span>  <span class="va">iris3</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">id</span>, </span>
+<span>         <span class="va">Sepal.Length_setosa</span>, </span>
+<span>         <span class="va">Sepal.Length_versicolor</span>, </span>
+<span>         <span class="va">Sepal.Length_virginica</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="va">id</span><span class="op">)</span>, </span>
+<span>               names_to <span class="op">=</span> <span class="st">"Species"</span>, </span>
+<span>               values_to <span class="op">=</span> <span class="st">"Sepal_len"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## # A tibble: 150 × 3
 ##       id Species                 Sepal_len
 ##    &lt;int&gt; &lt;chr&gt;                       &lt;dbl&gt;
@@ -863,14 +968,15 @@ fantome.appendChild(templateContent);
 ##  8     3 Sepal.Length_versicolor       6.9
 ##  9     3 Sepal.Length_virginica        7.1
 ## 10     4 Sepal.Length_setosa           4.6
-## # … with 140 more rows</code></pre>
+## # … with 140 more rows
+## # ℹ Use `print(n = ...)` to see more rows</code></pre>
 <p>Dans la fonction <code><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer()</a></code> ci-dessus, nous avons indiqué à l’aide de l’argument <code>cols</code> et de la fonction <code><a href="https://rdrr.io/r/base/c.html">c()</a></code> avec le signe <code>-</code> la colonne que nous ne voulions pas utiliser avec la fonction (c’était plus rapide que d’indiquer dans la fonction <code><a href="https://rdrr.io/r/base/c.html">c()</a></code> les trois colonnes à utiliser). L’argument <code>names_to</code> nous a permis de donner un nom à la variable qualitative qui comporte à présent les modalités associées aux valeurs numériques, et l’argument <code>values_to</code> nous a permis de donner un nom à la colonne où se trouvent maintenant les valeurs numériques.</p>
 <p>Lorsque l’on veut utiliser la fonction <code><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer()</a></code> sur plusieurs colonnes qui sont écrites avec la même logique (par exemple, avec un nom composé de deux morceaux séparés par un <code>_</code>, avec un morceau pour indiquer la chose mesurée, et un autre morceau pour indiquer la modalité), il convient de procéder comme ci-dessous :</p>
 <div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
-<code class="sourceCode R">  <span class="va">iris3</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">Sepal.Length_setosa</span> <span class="op">:</span> <span class="va">Petal.Width_virginica</span><span class="op">)</span>, 
-               names_to <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">".value"</span>, <span class="st">"Species"</span><span class="op">)</span>,
-               names_sep <span class="op">=</span> <span class="st">"_"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span>  <span class="va">iris3</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">Sepal.Length_setosa</span> <span class="op">:</span> <span class="va">Petal.Width_virginica</span><span class="op">)</span>, </span>
+<span>               names_to <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">".value"</span>, <span class="st">"Species"</span><span class="op">)</span>,</span>
+<span>               names_sep <span class="op">=</span> <span class="st">"_"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## # A tibble: 150 × 6
 ##       id Species    Sepal.Length Sepal.Width Petal.Length Petal.Width
 ##    &lt;int&gt; &lt;chr&gt;             &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;
@@ -884,7 +990,8 @@ fantome.appendChild(templateContent);
 ##  8     3 versicolor          6.9         3.1          4.9         1.5
 ##  9     3 virginica           7.1         3            5.9         2.1
 ## 10     4 setosa              4.6         3.1          1.5         0.2
-## # … with 140 more rows</code></pre>
+## # … with 140 more rows
+## # ℹ Use `print(n = ...)` to see more rows</code></pre>
 <p>Dans le code montré ci-dessus, l’argument <code>cols</code> a permis de sélectionner toutes les colonnes situées à droite de la colonne <code>id</code>, l’argument <code>names_to</code> a permis d’indiquer qu’il faut garder des colonnes spécifiques nommées avec le premier morceau du nom des variables antérieures (le mot <code>".value"</code> permet cela), et le mot <code>"Species"</code> a permis de nommer la colonne avec les espèces d’iris qui étaient les seconds morceaux des noms des variables antérieures.</p>
 <p>Nous venons de voir plusieurs fonctions qui peuvent être très utiles pour pouvoir facilement préparer sa base de données en vue des futures analyses. Il ne s’agit que d’une vue très superficielle de tout le potentiel de manipulation des données qu’ont ces fonctions. Pour une vue plus approndie des possibilités qu’offrent ces fonctions, la lecture de l’ouvrage <em>R for Data Science</em> d’Hadley Wickham et de Garrett Grolemund <span class="citation">(<a href="r%C3%A9f%C3%A9rences.html#ref-wickhamDataScience2017" role="doc-biblioref">2017</a>)</span> sera particulièrement enrichissante. Cet ouvrage est en libre accès ici : <a href="https://r4ds.had.co.nz" class="uri">https://r4ds.had.co.nz</a>.</p>
 </div>
@@ -895,8 +1002,8 @@ fantome.appendChild(templateContent);
 </h2>
 <ul>
 <li>La base de données est un tableau comportant l’ensemble des données avec les observations organisées en lignes et les variables organisées en colonnes.</li>
-<li>Les grands types de variables que l’on peut retrouver dans une base de données sont les variables quantitatives continues, les variables quantitatives discrètes, les variables qualitatives nominales, et les variables qualitatives ordinales.</li>
-<li>Avant d’initier un travail d’analyse, il peut être utile de fixer le répertoire avec la fonction <code><a href="https://rdrr.io/r/base/getwd.html">setwd()</a></code>.</li>
+<li>Les grands types de variables que l’on peut retrouver dans une base de données sont les variables quantitatives (avec une échelle d’intervalles ou une échelle de ratios) et les variables qualitatives (nominales ou ordinales).</li>
+<li>Avant de débuter un travail d’analyse, il est conseillé d’initialiser un projet (en créant un fichier .Rproj) dans un dossier où se trouvent le ou les fichiers à analyser.</li>
 <li>Pour importer un jeu de données au format .csv, il est possible d’utiliser la fonction <code><a href="https://readr.tidyverse.org/reference/read_delim.html">readr::read_csv2()</a></code>.</li>
 <li>Pour exporter un jeu de données au format .csv, il est possible d’utiliser la fonction <code><a href="https://readr.tidyverse.org/reference/write_delim.html">readr::write_csv2()</a></code>.</li>
 <li>Pour mettre un tableau de donnnées au format <em>data frame</em>, utiliser la fonction <code><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame()</a></code>.</li>
@@ -910,7 +1017,7 @@ fantome.appendChild(templateContent);
 <li>Pour trier les lignes d’un tableau de données, utiliser la fonction <code><a href="https://dplyr.tidyverse.org/reference/arrange.html">dplyr::arrange()</a></code>.</li>
 <li>Pour résumer les variables d’un tableau de données, utiliser les fonctions <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">dplyr::group_by()</a></code> et <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">dplyr::summarize()</a></code>.</li>
 <li>Pour passer d’un tableau de données au format <em>long</em> à un tableau de données au format <em>wide</em>, utiliser la fonction <code><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">tidyr::pivot_wider()</a></code>.</li>
-<li>Pour passer d’un tableau de données au uformat <em>wide</em> à un tableau de données au format <em>long</em>, utiliser la fonction <code><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">tidyr::pivot_longer()</a></code>.</li>
+<li>Pour passer d’un tableau de données au format <em>wide</em> à un tableau de données au format <em>long</em>, utiliser la fonction <code><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">tidyr::pivot_longer()</a></code>.</li>
 <li>Pour enchaîner l’application de fonctions, utiliser le symbole <code>%&gt;%</code> (<em>pipe</em>, package <code>magrittr</code>).</li>
 </ul>
 </div>
@@ -956,7 +1063,7 @@ fantome.appendChild(templateContent);
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Analyser des données avec R</strong>" was written by Pierre-Yves de Müllenheim. It was last built on 2022-02-24.</p>
+    <p>"<strong>Analyser des données avec R</strong>" was written by Pierre-Yves de Müllenheim. It was last built on 2022-07-20.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

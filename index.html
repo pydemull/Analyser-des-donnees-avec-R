@@ -7,7 +7,7 @@
 <title>Introduction | Analyser des données avec R</title>
 <meta name="author" content="Pierre-Yves de Müllenheim">
 <meta name="description" content="Introduction à l’analyse des données avec R">
-<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta name="generator" content="bookdown 0.27 with bs4_book()">
 <meta property="og:title" content="Introduction | Analyser des données avec R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://github.com/pydemull/Analyser-des-donnees-avec-R">
@@ -17,8 +17,9 @@
 <meta name="twitter:description" content="Introduction à l’analyse des données avec R">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet">
+<link href="libs/tabwid-1.0.0/scrool.css" rel="stylesheet">
 <!-- Code fom Dexter to custom bs4_book template: https://stackoverflow.com/questions/66128954/change-right-sidebar-header-in-bs4-book-bookdown --><script>
       $(function() {
           $("#toc h2").html("Dans ce chapitre");
@@ -27,7 +28,10 @@
       $(function() {
           $("#main-nav h2").html("Sommaire");
       });
-  </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS -->
+  </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
 </head>
 <body data-spy="scroll" data-target="#toc">
 
@@ -68,7 +72,7 @@
 </h1>
 <p>Ce livre vise à servir de support à des enseignements auprès d’étudiants qui découvrent les analyses statistiques en même temps que le langage de programmation R. Ce livre n’est donc pas dédié exclusivement aux statistiques, ni exclusivement dédié à R. D’autres ouvrages proposent des contenus plus spécialisés, et donc plus poussés, et c’est vers ces ouvrages qu’il convient d’aller pour davantage maîtriser les fondamentaux des statistiques ou toutes les subtilités du langage R.</p>
 <p>Bien que le langage R puisse être utilisé via le logiciel R en tant que tel, les procédures décrites dans ce livre supposent que l’utilisation du logiciel R s’effectue en réalité à l’aide de l’environnement proposé par le logiciel RStudio, qui est plus confortable en matière d’utilisation que l’interface initialement associée au logiciel R. Que cela soit via l’interface de base associée au logiciel R ou via l’environnement proposé par RStudio, l’utilisation du langage R pour obtenir le résultat d’une analyse nécessite d’écrire des lignes de code. Si cela peut s’avérer plus complexe et/ou fastidieux à utiliser au départ qu’un logiciel classique où il suffit de cliquer sur des boutons pour obtenir le résultat de l’analyse, cela vaut la peine de prendre le temps d’apprendre à programmer avec R (et préférentiellement via RStudio), au moins pour les raisons suivantes : les logiciels R et RStudio sont en accès libre sur internet ; il existe de nombreuses aides documentaires, notamment sur internet, qui permettent de programmer n’importe quelle analyse ou manipulation de données, aussi sophistiquée soit elle ; il est possible de conserver les lignes de code pour pouvoir refaire plus tard les analyses, ou pour pouvoir appliquer ces lignes de code à d’autres données, ou encore pour partager ces lignes de code avec d’autres personnes. De par sa gratuité et sa capacité à permettre le partage des analyses réalisées, R et RStudio sont ainsi une très bonne option pour embrasser la tendance actuelle, encore timide, de l’<em>open science</em>, consistant à permettre à tout un chacun de savoir ce qui a été fait en matière d’analyses et à pouvoir reproduire ces analyses. Enfin, le langage R, notamment via l’utilisation de RStudio, permet de faire bien plus que des analyses de données (e.g., automatisation d’analyses, développement d’applications web, construction de sites internet et de curriculum vitae, etc.), ce qui en fait un outil de travail polyvalent et donc particulièrement intéressant.</p>
-<p>L’appropriation du contenu de ce livre suppose une lecture relativement linéaire des chapitres, du moins en vue de comprendre comment utiliser le langage R. Plusieurs exemples de code, en particulier pour la conception de graphiques, utilisent ce qu’on appelle des packages qui sont à télécharger et à installer sur l’ordinateur, puis à charger lorsque le logiciel est ouvert. Une fois que les consignes d’installation et de chargement de ces packages ont été explicitement données au cours d’un chapitre, leur utilisation dans le chapitre en cours et dans les chapitres suivants suppose implicitement que ces packages ont été chargés et sont donc prêts à être utilisés.</p>
+<p>L’appropriation du contenu de ce livre suppose une lecture relativement linéaire des chapitres, du moins en vue de comprendre comment utiliser le langage R. Plusieurs exemples de code, en particulier pour la conception de graphiques, utilisent ce qu’on appelle des <em>packages</em> qui sont à télécharger et à installer sur l’ordinateur, puis à charger lorsque le logiciel est ouvert. Une fois que les consignes d’installation et de chargement de ces packages ont été explicitement données au cours d’un chapitre, leur utilisation dans le chapitre en cours et dans les chapitres suivants suppose implicitement que ces packages ont été chargés et sont donc prêts à être utilisés.</p>
 <p>Dans ce livre, les exemples de code apparaissent dans des zones grisées, et les résultats qui pourraient apparaître à l’écran dans RStudio une fois le code activé sont précédés d’un double dièse (##). Par moment, les noms des fonctions sont écrits à la suite des noms des packages dont elles dépendent, comme ceci : <code>package::fonction()</code>.</p>
 <p><strong>Une version PDF de ce livre est disponible en ligne <a href="https://pydemull.github.io/Analyser-des-donnees-avec-R/Analyser-des-donn%C3%A9es-avec-R.pdf">ici</a>.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;&lt;a href="https://pydemull.github.io/Analyser-des-donnees-avec-R/Analyser-des-donn%C3%A9es-avec-R.pdf" class="uri"&gt;https://pydemull.github.io/Analyser-des-donnees-avec-R/Analyser-des-données-avec-R.pdf&lt;/a&gt;&lt;/p&gt;'><sup>1</sup></a></strong></p>
 <p><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Licence Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png"></a><br>Ce livre, qui est en cours d’élaboration, est mis à disposition selon les termes de la <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Licence Creative Commons Attribution - Pas d’Utilisation Commerciale - Partage dans les Mêmes Conditions 4.0 International</a>.</p>
@@ -97,7 +101,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Analyser des données avec R</strong>" was written by Pierre-Yves de Müllenheim. It was last built on 2022-02-24.</p>
+    <p>"<strong>Analyser des données avec R</strong>" was written by Pierre-Yves de Müllenheim. It was last built on 2022-07-20.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

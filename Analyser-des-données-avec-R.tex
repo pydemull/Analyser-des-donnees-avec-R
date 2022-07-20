@@ -133,7 +133,7 @@
 
 \title{Analyser des données avec R}
 \author{Pierre-Yves de Müllenheim}
-\date{2022-02-24}
+\date{2022-07-20}
 
 \begin{document}
 \maketitle
@@ -159,7 +159,7 @@ Ce livre vise à servir de support à des enseignements auprès d'étudiants qui
 
 Bien que le langage R puisse être utilisé via le logiciel R en tant que tel, les procédures décrites dans ce livre supposent que l'utilisation du logiciel R s'effectue en réalité à l'aide de l'environnement proposé par le logiciel RStudio, qui est plus confortable en matière d'utilisation que l'interface initialement associée au logiciel R. Que cela soit via l'interface de base associée au logiciel R ou via l'environnement proposé par RStudio, l'utilisation du langage R pour obtenir le résultat d'une analyse nécessite d'écrire des lignes de code. Si cela peut s'avérer plus complexe et/ou fastidieux à utiliser au départ qu'un logiciel classique où il suffit de cliquer sur des boutons pour obtenir le résultat de l'analyse, cela vaut la peine de prendre le temps d'apprendre à programmer avec R (et préférentiellement via RStudio), au moins pour les raisons suivantes : les logiciels R et RStudio sont en accès libre sur internet ; il existe de nombreuses aides documentaires, notamment sur internet, qui permettent de programmer n'importe quelle analyse ou manipulation de données, aussi sophistiquée soit elle ; il est possible de conserver les lignes de code pour pouvoir refaire plus tard les analyses, ou pour pouvoir appliquer ces lignes de code à d'autres données, ou encore pour partager ces lignes de code avec d'autres personnes. De par sa gratuité et sa capacité à permettre le partage des analyses réalisées, R et RStudio sont ainsi une très bonne option pour embrasser la tendance actuelle, encore timide, de l'\emph{open science}, consistant à permettre à tout un chacun de savoir ce qui a été fait en matière d'analyses et à pouvoir reproduire ces analyses. Enfin, le langage R, notamment via l'utilisation de RStudio, permet de faire bien plus que des analyses de données (e.g., automatisation d'analyses, développement d'applications web, construction de sites internet et de curriculum vitae, etc.), ce qui en fait un outil de travail polyvalent et donc particulièrement intéressant.
 
-L'appropriation du contenu de ce livre suppose une lecture relativement linéaire des chapitres, du moins en vue de comprendre comment utiliser le langage R. Plusieurs exemples de code, en particulier pour la conception de graphiques, utilisent ce qu'on appelle des packages qui sont à télécharger et à installer sur l'ordinateur, puis à charger lorsque le logiciel est ouvert. Une fois que les consignes d'installation et de chargement de ces packages ont été explicitement données au cours d'un chapitre, leur utilisation dans le chapitre en cours et dans les chapitres suivants suppose implicitement que ces packages ont été chargés et sont donc prêts à être utilisés.
+L'appropriation du contenu de ce livre suppose une lecture relativement linéaire des chapitres, du moins en vue de comprendre comment utiliser le langage R. Plusieurs exemples de code, en particulier pour la conception de graphiques, utilisent ce qu'on appelle des \emph{packages} qui sont à télécharger et à installer sur l'ordinateur, puis à charger lorsque le logiciel est ouvert. Une fois que les consignes d'installation et de chargement de ces packages ont été explicitement données au cours d'un chapitre, leur utilisation dans le chapitre en cours et dans les chapitres suivants suppose implicitement que ces packages ont été chargés et sont donc prêts à être utilisés.
 
 Dans ce livre, les exemples de code apparaissent dans des zones grisées, et les résultats qui pourraient apparaître à l'écran dans RStudio une fois le code activé sont précédés d'un double dièse (\#\#). Par moment, les noms des fonctions sont écrits à la suite des noms des packages dont elles dépendent, comme ceci : \texttt{package::fonction()}.
 
@@ -173,7 +173,7 @@ Ce livre, qui est en cours d'élaboration, est mis à disposition selon les term
 \hypertarget{installation-de-r-et-rstudio}{%
 \section{Installation de R et RStudio}\label{installation-de-r-et-rstudio}}
 
-R et RStudio sont deux logiciels en libre accès sur internet. Le logiciel R peut être utilisé indépendamment de l'utilisation du logiciel RStudio. En revanche, l'utilisation du logiciel RStudio requiert au préalable l'installation du logiciel R. En effet, RStudio est un logiciel qui permet d'utiliser les fonctionnalités de R tout en proposant une interface d'utilisation plus agréable et fonctionnelle que l'interface à l'origine proposée pour le logiciel R, qui est très basique. Les explications présentées au cours de ce document considèrent que l'utilisateur fonctionne avec RStudio.
+R et RStudio sont deux logiciels en libre accès sur internet. Le logiciel R peut être utilisé indépendamment du logiciel RStudio. En revanche, l'utilisation du logiciel RStudio requiert au préalable l'installation du logiciel R. En effet, RStudio est un logiciel qui permet d'utiliser les fonctionnalités de R tout en proposant une interface d'utilisation plus agréable et fonctionnelle que l'interface à l'origine proposée pour le logiciel R, qui est très basique. Les explications présentées au cours de ce document considèrent que l'utilisateur fonctionne avec RStudio.
 
 \hypertarget{installer-r-sur-windows}{%
 \subsection{Installer R sur WINDOWS}\label{installer-r-sur-windows}}
@@ -187,7 +187,7 @@ R et RStudio sont deux logiciels en libre accès sur internet. Le logiciel R peu
 \item
   Dans la nouvelle fenêtre qui vient de s'ouvrir, cliquer sur \textbf{install R for the first time}.
 \item
-  Dans la nouvelle fenêtre qui vient de s'ouvrir, cliquer sur le premier lien en haut de la page : \textbf{Download R X.X.X. for Windows}. Exécuter le fichier s'il est proposé de le faire. Si ce n'est pas le cas, il est probable que le téléchargement du fichier ait été lancé automatiquement. Retrouver le fichier ainsi téléchargé sur le PC (une fois son enregistrement terminé), puis exécuter le fichier.
+  Dans la nouvelle fenêtre qui vient de s'ouvrir, cliquer sur le premier lien en haut de la page : \textbf{Download R-X.X.X. for Windows}. Exécuter le fichier s'il est proposé de le faire. Si ce n'est pas le cas, il est probable que le téléchargement du fichier ait été lancé automatiquement. Retrouver le fichier ainsi téléchargé sur le PC (une fois son enregistrement terminé), puis exécuter le fichier.
 \item
   Suivre la procédure d'installation par défaut en cliquant à chaque fois sur \textbf{Suivant}.
 \item
@@ -461,13 +461,15 @@ ou encore des objets contenant un tableau de données, en créant par exemple un
 ## 6    151    70    F 30.70041
 \end{verbatim}
 
-Lorsque plusieurs objets ont été assignés à des noms, il est possible de vouloir supprimer certaines assignations, par exemple en raison du fait qu'un objet aurait été assigné par erreur. Pour supprimer une assignation, il est possible d'utiliser la fonction \texttt{rm()}. L'instruction \texttt{rm(list\ =\ ls())} supprime toutes les assignations qui ont été réalisées auparavant.
+Lorsque plusieurs objets ont été assignés à des noms, il est possible de vouloir supprimer certaines assignations, par exemple en raison du fait qu'un objet aurait été assigné par erreur. Pour supprimer une assignation, il est possible d'utiliser la fonction \texttt{rm()}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{rm}\NormalTok{(vec1)}
 \end{Highlighting}
 \end{Shaded}
+
+L'instruction \texttt{rm(list\ =\ ls())} supprime toutes les assignations qui ont été réalisées auparavant.
 
 \hypertarget{utiliser-des-fonctions}{%
 \subsection{Utiliser des fonctions}\label{utiliser-des-fonctions}}
@@ -546,9 +548,9 @@ Au regard de ce qu'il vient d'être expliqué, il est donc une bonne pratique, a
 Toutefois, paradoxalement, l'aide n'est pas toujours facile à comprendre pour ceux qui n'ont pas un niveau d'expertise avancé avec R. Pour bien comprendre comment on peut utiliser une fonction, internet peut être une excellente ressource car il regorge de sites et d'exemples crées par la communauté R. L'un des sites sur lesquels on tombe souvent lors d'une recherche internet est le site \url{https://stackoverflow.com}. Une bonne partie des problèmes de compréhension et d'utilisation des fonctions de R que l'on rencontre peuvent être résolus en consultant des exemples venant de ce site.
 
 \hypertarget{installer-et-charger-des-packages}{%
-\subsection{Installer et charger des packages}\label{installer-et-charger-des-packages}}
+\subsection{\texorpdfstring{Installer et charger des \emph{packages}}{Installer et charger des packages}}\label{installer-et-charger-des-packages}}
 
-R fonctionne en bonne partie sur la base de fonctions qui permettent de réaliser automatiquement différents types de calculs. Ces fonctions sont regroupées dans des ensembles qu'on appelle des packages. La version d'installation initialle du logiciel R dispose d'un ensemble de packages de base qui permettent de réaliser un très grand nombre d'analyses. Toutefois, la version de base de R impose parfois des manières d'écrire certaines instructions qui sont peu intuitives ou qui parfois ne permettent tout simplement pas de faire les analyses souhaitées. Pour palier ces problèmes, des packages sont régulièrement crées et actualisés par la communauté R. Pour pouvoir les utiliser, il est nécessaire de d'abord installer le package additionnel grâce à la fonction \texttt{install.packages()}. L'une des collections de packages les plus utiles pour manipuler des tableaux de données et effectuer des analyses statistiques et graphiques est celle du \texttt{tidyverse}, qui a été pensée notamment pour faciliter l'écriture des lignes de code.
+R fonctionne en bonne partie sur la base de fonctions qui permettent de réaliser automatiquement différents types de calculs. Ces fonctions sont regroupées dans des ensembles qu'on appelle des \emph{packages}. La version d'installation initialle du logiciel R dispose d'un ensemble de \emph{packages} de base qui permettent de réaliser un très grand nombre d'analyses. Toutefois, la version de base de R impose parfois des manières d'écrire certaines instructions qui sont peu intuitives ou qui parfois ne permettent tout simplement pas de faire les analyses souhaitées. Pour palier ces problèmes, des \emph{packages} sont régulièrement crées et actualisés par la communauté R. Pour pouvoir les utiliser, il est nécessaire de d'abord installer le \emph{package} additionnel grâce à la fonction \texttt{install.packages()}. L'une des collections de \emph{packages} les plus utiles pour manipuler des tableaux de données et effectuer des analyses statistiques et graphiques est celle du \texttt{tidyverse}, qui a été pensée notamment pour faciliter l'écriture des lignes de code.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -556,7 +558,7 @@ R fonctionne en bonne partie sur la base de fonctions qui permettent de réalise
 \end{Highlighting}
 \end{Shaded}
 
-Une fois que le package a été installé (ou l'ensemble de packages s'il s'agit d'une collection comme dans le cas du \texttt{tidyverse}), une étape supplémentaire est nécessaire pour pouvoir utiliser les fonctions qu'il contient : il faut le charger dans l'environnement R. Pour cela, il est possible d'utiliser la fonction \texttt{library()}.
+Une fois que le \emph{package} a été installé (ou l'ensemble de \emph{packages} s'il s'agit d'une collection comme dans le cas du \texttt{tidyverse}), une étape supplémentaire est nécessaire pour pouvoir utiliser les fonctions qu'il contient : il faut le charger dans l'environnement R. Pour cela, il est possible d'utiliser la fonction \texttt{library()}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -564,7 +566,7 @@ Une fois que le package a été installé (ou l'ensemble de packages s'il s'agit
 \end{Highlighting}
 \end{Shaded}
 
-Lorsque l'on charge la collection de packages \texttt{tidyverse}, on peut observer dans la Console que plusieurs packages sont chargés en même temps : \texttt{ggplot2}, pour la visualisation de données ; \texttt{dplyr}, pour la manipulation de données ; \texttt{tidyr}, pour l'organiation des tableaux de données ; \texttt{readr}, pour l'importation de jeux de données ; \texttt{purrr}, pour la programmation ; \texttt{tibble}, pour le formatage de tableaux de données ; \texttt{stringr}, pour la gestion des chaînes de caractères ; \texttt{forcats}, pour la gestion de variables qualitatives. Si nous avons téléchargé et chargé l'ensemble des packages du \texttt{tidyverse}, nous aurions pu aussi installé et chargé un seul de ces packages à la fois, comme pour la plupart des packages qui existent.
+Lorsque l'on charge la collection de \emph{packages} \texttt{tidyverse}, on peut observer dans la Console que plusieurs \emph{packages} sont chargés en même temps : \texttt{ggplot2}, pour la visualisation de données ; \texttt{dplyr}, pour la manipulation de données ; \texttt{tidyr}, pour l'organiation des tableaux de données ; \texttt{readr}, pour l'importation de jeux de données ; \texttt{purrr}, pour la programmation ; \texttt{tibble}, pour le formatage de tableaux de données ; \texttt{stringr}, pour la gestion des chaînes de caractères ; \texttt{forcats}, pour la gestion de variables qualitatives. Si nous avons téléchargé et chargé l'ensemble des \emph{packages} du \texttt{tidyverse}, nous aurions pu aussi installé et chargé un seul de ces \emph{packages} à la fois, comme pour la plupart des \emph{packages} qui existent.
 
 \hypertarget{divers}{%
 \subsection{Divers}\label{divers}}
@@ -573,7 +575,7 @@ Au fur et à mesure que l'on écrit un script, une bonne pratique consiste à r�
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{### Titre de section 1 -------------------------------------------}
+\CommentTok{# Titre de section 1 -------------------------------------------}
 \CommentTok{## Sous-titre 1}
   \CommentTok{# Commentaire 1}
 \end{Highlighting}
@@ -605,7 +607,7 @@ Au fur et à mesure que l'on écrit un script, une bonne pratique consiste à r�
 \item
   Pour demander l'aide de R à propos d'une fonction, écrire \texttt{?} suivi du nom de la fonction.
 \item
-  Pour installer un package, utiliser la fonction \texttt{install.packages()}.
+  Pour installer un \emph{package}, utiliser la fonction \texttt{install.packages()}.
 \item
   Un code peut être écrit directement dans la \textbf{Console}, ou dans une fenêtre \textbf{Script}. Pour activer le code à partir d'un script, utiliser le bouton \textbf{Run} ou \textbf{Ctrl + Entrée}.
 \item
@@ -751,15 +753,78 @@ La base de données prend donc la forme d'un tableau. Plusieurs principes sont �
 
 \end{longtable}
 
-En principe, les données de la base qui ont été obtenues selon la même procédure d'acquisition représentent le même type de choses. Ces choses sont appelées des \textbf{variables} car elles varient selon les individus qui ont été étudiés et les conditions de mesure qui ont été mises en oeuvre (dans le cas où il y en aurait plusieurs). Lorsque ces choses ne sont pas censées varier, on parle de \textbf{constantes}. Une base de données peut comporter plusieurs variables de natures différentes :
+En principe, les données de la base qui ont été obtenues selon la même procédure d'acquisition représentent le même type de choses. Ces choses sont appelées des \textbf{variables} car elles varient selon les individus qui ont été étudiés et les conditions de mesure qui ont été mises en oeuvre (dans le cas où il y en aurait plusieurs). Lorsque ces choses ne sont pas censées varier, on parle de \textbf{constantes}. Une base de données peut comporter des variables de types différents (Tableau \ref{tab:typesVariables}).
 
-\begin{itemize}
-\tightlist
-\item
-  Des \textbf{variables quantitatives}, qui comportent des nombres. Parmi les variables quantitatives, on distingue celles qui sont continues et celles qui sont discrètes. Les variables quantitatives continues contiennent des nombres pouvant comporter théoriquement un nombre infini de décimales (e.g., la taille, le poids, etc.). Au contraire, les variables quantitatives discrètes ne peuvent contenir théoriquement que des nombres finis (e.g., le nombre de victoires sportives au cours d'une année). Certaines variables en théorie discrètes sont cependant souvent considérées comme continues tant le nombre de valeurs théoriquement possibles pour la variable est grand, tel que pour le nombre de globules blancs mesurés dans le sang \autocite{labreucheDifferentsTypesVariables2010}.
-\item
-  Des \textbf{variables qualitatives}, qui contiennent des valeurs désignant non pas des quantités mais des modalités. Ces modalités peuvent être exprimées sous forme littérale ou numérique. Parmi les variables qualitatives, on distingue celles qui sont nominales et celles qui sont ordinales. Les variables qualitatives nominales contiennent des modalités qui ne peuvent pas être ordonnées (e.g., les couleurs, les genres, etc.). Au contraire, les variables qualitatives ordinales contiennent des modalités qui peuvent être ordonnées (e.g., les niveaux de compétition sportive : départemental ; régional ; interrégional ; national ; international). Les variables qualitatives ordinales qui prendraient des valeurs numériques pour indiquer par exemple un niveau d'expertise (e.g., 1, 2, 3, et 4) se différencient des variables quantitatives discrètes par l'absence d'information sur la distance qui sépare les nombres de cette variable \autocite{labreucheDifferentsTypesVariables2010}.
-\end{itemize}
+\providecommand{\docline}[3]{\noalign{\global\setlength{\arrayrulewidth}{#1}}\arrayrulecolor[HTML]{#2}\cline{#3}}
+
+\setlength{\tabcolsep}{2pt}
+
+\renewcommand*{\arraystretch}{1.5}
+
+\begin{longtable}[c]{|p{1.17in}|p{0.95in}|p{0.89in}}
+
+\caption{Les différents types de variables
+}\label{tab:typesVariables}\\
+
+\hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}-}
+
+\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\cellcolor[HTML]{CFCFCF}\raggedright}p{\dimexpr 1.17in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{11}\selectfont{\textcolor[HTML]{000000}{\textbf{Type}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\cellcolor[HTML]{CFCFCF}\centering}p{\dimexpr 0.95in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{11}\selectfont{\textcolor[HTML]{000000}{\textbf{Continue}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\cellcolor[HTML]{CFCFCF}\centering}p{\dimexpr 0.89in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\fontsize{11}{11}\selectfont{\textcolor[HTML]{000000}{\textbf{Discrete}}}} \\
+
+\hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}-}
+
+\endfirsthead
+
+\hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}-}
+
+\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\cellcolor[HTML]{CFCFCF}\raggedright}p{\dimexpr 1.17in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{11}\selectfont{\textcolor[HTML]{000000}{\textbf{Type}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\cellcolor[HTML]{CFCFCF}\centering}p{\dimexpr 0.95in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{11}\selectfont{\textcolor[HTML]{000000}{\textbf{Continue}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\cellcolor[HTML]{CFCFCF}\centering}p{\dimexpr 0.89in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\fontsize{11}{11}\selectfont{\textcolor[HTML]{000000}{\textbf{Discrete}}}} \\
+
+\hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}-}\endhead
+
+
+
+\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\cellcolor[HTML]{EFEFEF}\raggedright}p{\dimexpr 1.17in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{11}\selectfont{\textcolor[HTML]{000000}{\textbf{Quantitative}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\cellcolor[HTML]{EFEFEF}\centering}p{\dimexpr 0.95in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{11}\selectfont{\textcolor[HTML]{000000}{}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\cellcolor[HTML]{EFEFEF}\centering}p{\dimexpr 0.89in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\fontsize{11}{11}\selectfont{\textcolor[HTML]{000000}{}}} \\
+
+
+
+
+
+\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 1.17in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{11}\selectfont{\textcolor[HTML]{000000}{Intervalle}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 0.95in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{11}\selectfont{\textcolor[HTML]{000000}{X}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 0.89in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\fontsize{11}{11}\selectfont{\textcolor[HTML]{000000}{X}}} \\
+
+
+
+
+
+\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\cellcolor[HTML]{EFEFEF}\raggedright}p{\dimexpr 1.17in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{11}\selectfont{\textcolor[HTML]{000000}{Ratio}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\cellcolor[HTML]{EFEFEF}\centering}p{\dimexpr 0.95in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{11}\selectfont{\textcolor[HTML]{000000}{X}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\cellcolor[HTML]{EFEFEF}\centering}p{\dimexpr 0.89in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\fontsize{11}{11}\selectfont{\textcolor[HTML]{000000}{X}}} \\
+
+
+
+
+
+\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 1.17in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{11}\selectfont{\textcolor[HTML]{000000}{\textbf{Qualitative}}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 0.95in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{11}\selectfont{\textcolor[HTML]{000000}{}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 0.89in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\fontsize{11}{11}\selectfont{\textcolor[HTML]{000000}{}}} \\
+
+
+
+
+
+\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\cellcolor[HTML]{EFEFEF}\raggedright}p{\dimexpr 1.17in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{11}\selectfont{\textcolor[HTML]{000000}{Nominale}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\cellcolor[HTML]{EFEFEF}\centering}p{\dimexpr 0.95in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{11}\selectfont{\textcolor[HTML]{000000}{}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\cellcolor[HTML]{EFEFEF}\centering}p{\dimexpr 0.89in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\fontsize{11}{11}\selectfont{\textcolor[HTML]{000000}{X}}} \\
+
+
+
+
+
+\multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\raggedright}p{\dimexpr 1.17in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{11}\selectfont{\textcolor[HTML]{000000}{Ordinale}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 0.95in+0\tabcolsep+0\arrayrulewidth}}{\fontsize{11}{11}\selectfont{\textcolor[HTML]{000000}{}}} & \multicolumn{1}{!{\color[HTML]{000000}\vrule width 0pt}>{\centering}p{\dimexpr 0.89in+0\tabcolsep+0\arrayrulewidth}!{\color[HTML]{000000}\vrule width 0pt}}{\fontsize{11}{11}\selectfont{\textcolor[HTML]{000000}{X}}} \\
+
+\hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}-}
+
+
+
+\end{longtable}
+
+Les \textbf{variables quantitatives} (aussi dites numériques) comportent des nombres dont les différences entre eux ont un sens. Parmi les variables quantitatives, il est possible de plus précisément distinguer celles qui peuvent être associées seulement à une \textbf{échelle d'intervalles}, et celles qui peuvent être aussi associées à une \textbf{échelle de ratios}. Les variables étant associables seulement à une \textbf{échelle d'intervalles} ont la particularité de ne pas avoir de zéro naturel, de sorte que multiplier ou diviser les valeurs de cette variable n'aurait pas de sens. Un exemple de ce type de variables pourrait être la température exprimée en degrés Celsius. Avec cette variable, il est seulement possible de décrire le fait qu'il fait x degrés plus chaud ou plus froid à un endroit par rapport à un autre, mais cela n'aurait pas de sens de dire qu'il ferait deux fois plus chaud à un endroit où il y aurait 20°C par rapport à un endroit où il y aurait seulement 10°C. Il serait possible de le dire si 0°C correspondrait à ``pas de température du tout'', mais cela n'est évidemment pas le cas (cet exemple est repris de Danielle Navarro \autocite*{navarroLearningStatistics2018}. En revanche, les variables pouvant être associées à une échelle de ratios présentent des valeurs qui, en plus de permettre de calculer des différences numériques qui ont un sens, peuvent être multipliées ou divisées, comme par exemple le temps de réaction à un stimulus donné.
+
+En plus de la distinction échelle d'intervalles / échelle de ratios, les variables quantitatives peuvent être considérées comme étant soit \textbf{continues}, soit \textbf{discrètes}. Les variables quantitatives continues contiennent des nombres pouvant comporter théoriquement un nombre infini de décimales (e.g., la taille, le poids, etc.). Au contraire, les variables quantitatives discrètes ne peuvent contenir théoriquement que des nombres finis (e.g., le nombre de victoires sportives au cours d'une année). Certaines variables en théorie discrètes sont cependant souvent considérées comme continues tant le nombre de valeurs théoriquement possibles pour la variable est grand, tel que pour le nombre de globules blancs mesurés dans le sang \autocite{labreucheDifferentsTypesVariables2010}.
+
+Les \textbf{variables qualitatives} (aussi dites catégorielles), elles, contiennent des valeurs désignant non pas des quantités mais des modalités. Ces variables sont donc forcément discrètes. Les modalités peuvent être exprimées sous forme littérale ou numérique. Parmi les variables qualitatives, on distingue celles qui sont \textbf{nominales} et celles qui sont \textbf{ordinales}. Les variables qualitatives nominales contiennent des modalités qui ne peuvent pas être ordonnées (e.g., les couleurs, les genres, etc.). Au contraire, les variables qualitatives ordinales contiennent des modalités qui peuvent être ordonnées (e.g., les niveaux de compétition sportive : départemental ; régional ; interrégional ; national ; international). Les variables qualitatives ordinales qui prendraient des valeurs numériques pour indiquer par exemple un niveau d'expertise (e.g., 1, 2, 3, et 4) se différencient des variables quantitatives discrètes par l'absence d'information sur la distance qui sépare les nombres de cette variable \autocite{labreucheDifferentsTypesVariables2010}.
 
 \hypertarget{fixer-le-ruxe9pertoire-de-travail}{%
 \section{Fixer le répertoire de travail}\label{fixer-le-ruxe9pertoire-de-travail}}
@@ -774,7 +839,7 @@ Une seconde manière de procéder est de créer un fichier .Rproj dans le dossie
 \hypertarget{importer-la-base-de-donnuxe9es}{%
 \section{Importer la base de données}\label{importer-la-base-de-donnuxe9es}}
 
-Il existe plusieurs fonctions pour importer une base de données dans RStudio. La fonction \texttt{read\_csv2()} du package \texttt{readr} permet d'importer par exemple des fichiers .csv qui, structurellement, séparent les données avec des points-virgules. C'est généralement le type de structure de fichier .csv que l'on obtient après avoir réalisé un export à partir du logiciel Excel. Pour illustrer ici l'importation d'une base de données, il est d'abord possible d'en créer une dans le répertoire de travail actif, cela en exportant un tableau de données qui existe déjà avec le logiciel R. Le logiciel R dispose en effet d'un grand nombre de jeux de données différents que tout utilisateur peut consulter et manipuler. L'ensemble des jeux de données disponibles suite à l'installation par défaut de R est visible en lançant dans la Console la commande \texttt{data()}. Au fur et à mesure de la découverte des analyses montrées dans ce document, différents jeux de données seront utilisés en fonction des besoins. Pour le moment, il est possible d'utiliser le jeu de données qui s'appelle \texttt{iris}. Même si on ne le voit pas dans la fenêtre Environnement de RStudio, il est bel et bien là, disponible, prêt à être utilisé. Afin d'exporter ce jeu de données dans le répertoire de travail fixé au préalable, il est possible d'utiliser la fonction \texttt{write\_csv2()} du package \texttt{readr}. Pour cela, il suffit d'utiliser le nom du jeu de données, puis d'indiquer entre guillemets le nom que l'on veut que le fichier exporté ait, tout en n'oubliant pas de mettre l'extension .csv à la fin du nom pour indiquer le format d'export, comme ci-dessous.
+Il existe plusieurs fonctions pour importer une base de données dans RStudio. La fonction \texttt{read\_csv2()} du package \texttt{readr} permet d'importer par exemple des fichiers .csv qui, structurellement, séparent les données avec des points-virgules. C'est généralement le type de structure de fichier .csv que l'on obtient après avoir réalisé un export .csv à partir du logiciel Excel. Pour illustrer ici l'importation d'une base de données, il est d'abord possible d'en créer une dans le répertoire de travail actif, cela en exportant un tableau de données qui existe déjà avec le logiciel R. Le logiciel R dispose en effet d'un grand nombre de jeux de données différents que tout utilisateur peut consulter et manipuler. L'ensemble des jeux de données disponibles suite à l'installation par défaut de R est visible en lançant dans la Console la commande \texttt{data()}. Au fur et à mesure de la découverte des analyses montrées dans ce document, différents jeux de données seront utilisés en fonction des besoins. Pour le moment, il est possible d'utiliser le jeu de données qui s'appelle \texttt{iris}. Même si on ne le voit pas dans la fenêtre Environnement de RStudio, il est bel et bien là, disponible, prêt à être utilisé. Afin d'exporter ce jeu de données dans le répertoire de travail fixé au préalable, il est possible d'utiliser la fonction \texttt{write\_csv2()} du package \texttt{readr}. Pour cela, il suffit d'utiliser le nom du jeu de données, puis d'indiquer entre guillemets le nom que l'on veut que le fichier exporté ait, tout en n'oubliant pas de mettre l'extension .csv à la fin du nom pour indiquer le format d'export, comme ci-dessous.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -782,7 +847,7 @@ Il existe plusieurs fonctions pour importer une base de données dans RStudio. L
 \end{Highlighting}
 \end{Shaded}
 
-Si la commande ci-dessus est activée dans RStudio et que l'on jette ensuite un oeil dans le répertoire de travail, il est alors possible d'y voir un nouveau fichier .csv du nom de \texttt{iris}. Maintenant qu'il existe une base de données dans le répertoire de travail actif, il est possible de concrétiser la procédure de son importation dans RStudio. Comme évoqué plus tôt dans ce document, il est intéressant, et en réalité nécessaire, d'assigner cette base de données à un nom pour pouvoir plus facilement manipuler le jeu de données par la suite. Ici, nous allons tout naturellement associer ce nouvel objet au nom \texttt{iris}, tel que montré ci-dessous.
+Si la commande ci-dessus est activée dans RStudio et que l'on jette ensuite un oeil dans le répertoire de travail, il est alors possible d'y voir un nouveau fichier .csv du nom de \texttt{iris}. Maintenant qu'il existe une base de données dans le répertoire de travail actif, il est possible de concrétiser la procédure de son importation dans RStudio. Comme évoqué plus tôt dans ce document, il est intéressant, et en réalité nécessaire, d'assigner cette base de données à un nom pour pouvoir plus facilement manipuler le jeu de données par la suite. Ici, nous allons tout simplement associer ce nouvel objet au nom \texttt{iris}, tel que montré ci-dessous.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -984,6 +1049,7 @@ RStudio nous montre tout le jeu de données dans la Console, ce qui n'est pas tr
 ##  9          4.4         2.9          1.4         0.2 setosa 
 ## 10          4.9         3.1          1.5         0.1 setosa 
 ## # ... with 140 more rows
+## # i Use `print(n = ...)` to see more rows
 \end{verbatim}
 
 Cette fois, RStudio n'affiche que les premières lignes du jeu de données, et il fournit en plus de cela des informations quant aux types de variables présentes dans le jeu de données, en-dessous de la ligne de titres. Maintenant que la base de données a été importée, il ne reste plus qu'à voir différentes fonctions pour pouvoir configurer la base de données telle qu'on la voudrait pour réaliser confortablement les analyses.
@@ -994,7 +1060,7 @@ Cette fois, RStudio n'affiche que les premières lignes du jeu de données, et i
 \hypertarget{vuxe9rifier-le-succuxe8s-de-limportation-de-la-base}{%
 \subsection{Vérifier le succès de l'importation de la base}\label{vuxe9rifier-le-succuxe8s-de-limportation-de-la-base}}
 
-Avant de débuter les analyses de la base de données, une bonne pratique est de vérifier si la base de données a été correctement importée avec RStudio. Une manière rapide de faire cela est de regarder le nombre d'observations (i.e., de lignes) et de variables (i.e., de colonnes) associés à l'objet crée lors de l'importation et visible dans la fenêtre Environnement de RStudio, puis de cliquer sur le nom associé à l'objet. Lors de l'étape précédente, nous avons importé le jeu de données \texttt{iris} en l'appelant ainsi. Lorsque l'on cherche le nom \texttt{iris} dans la fenêtre Environnement, on peut voir que l'objet associé contient 150 observations et 5 variables, signes que la structure du jeu de données a été bien interprétée par R si l'on sait que ce sont effectivement les dimensions du jeu de données en question. Puis, lorsque l'on clique sur le nom \texttt{iris} dans la liste des noms montrés dans la fenêtre Environnement, RStudio ouvre un onglet qui contient les données. Il est alors possible de voir d'un simple coup d'oeil si les données sont bien présentes et organisées en lignes et en colonnes comme attendu.
+Avant de débuter les analyses de la base de données, une bonne pratique est de vérifier si la base de données a été correctement importée avec RStudio. Une manière rapide de faire cela est de regarder les nombres d'observations (i.e., de lignes) et de variables (i.e., de colonnes) associés à l'objet crée lors de l'importation et visibles dans la fenêtre Environnement de RStudio, puis de cliquer sur le nom associé à l'objet. Lors de l'étape précédente, nous avons importé le jeu de données \texttt{iris} en l'appelant ainsi. Lorsque l'on cherche le nom \texttt{iris} dans la fenêtre Environnement, on peut voir que l'objet associé contient 150 observations et 5 variables, signes que la structure du jeu de données a été bien interprétée par R si l'on sait que ce sont effectivement les dimensions du jeu de données en question. Puis, lorsque l'on clique sur le nom \texttt{iris} dans la liste des noms montrés dans la fenêtre Environnement, RStudio ouvre un onglet qui contient les données. Il est alors possible de voir d'un simple coup d'oeil si les données sont bien présentes et organisées en lignes et en colonnes comme attendu.
 
 \hypertarget{vuxe9rifier-et-reconfigurer-les-types-des-variables-de-la-base}{%
 \subsection{Vérifier et reconfigurer les types des variables de la base}\label{vuxe9rifier-et-reconfigurer-les-types-des-variables-de-la-base}}
@@ -1132,12 +1198,13 @@ Certains jeux de données peuvent être très larges, c'est-à-dire qu'ils peuve
 ##  9          1.4         0.2 setosa 
 ## 10          1.5         0.1 setosa 
 ## # ... with 140 more rows
+## # i Use `print(n = ...)` to see more rows
 \end{verbatim}
 
 \hypertarget{renommer-des-variables-avec-rename}{%
 \subsection{\texorpdfstring{Renommer des variables avec \texttt{rename()}}{Renommer des variables avec rename()}}\label{renommer-des-variables-avec-rename}}
 
-Il est possible que certains titres de variables ne soient pas clairs ou trop longs, ce qui peut être gênant pour écrire un code le plus lisible possible. La fonction \texttt{rename()} du package \texttt{dplyr} permet de gérer cela. Dans l'exemple ci-dessous, on observe que le nouveau nom doit être écrit à gauche du signe \texttt{=}, alors que l'ancien nom doit être écrit à droite du signe \texttt{=}. Si le nom d'origine contient au moins une espace entre deux mots, il convient d'encadrer le nom à remplacer par des guillemets (" ").
+Il est possible que certains titres de variables ne soient pas clairs ou trop longs, ce qui peut être gênant pour écrire un code le plus lisible possible. La fonction \texttt{rename()} du package \texttt{dplyr} permet de gérer cela. Dans l'exemple ci-dessous, on observe que le nouveau nom doit être écrit à gauche du signe \texttt{=}, alors que l'ancien nom doit être écrit à droite du signe \texttt{=}. Si le nom d'origine contient au moins une espace entre deux mots, ou encore s'il contient des caractères spéciaux, il convient d'encadrer le nom à remplacer par des guillemets (" ").
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1165,6 +1232,7 @@ Il est possible que certains titres de variables ne soient pas clairs ou trop lo
 ##  9        4.4       2.9        1.4       0.2 setosa 
 ## 10        4.9       3.1        1.5       0.1 setosa 
 ## # ... with 140 more rows
+## # i Use `print(n = ...)` to see more rows
 \end{verbatim}
 
 \hypertarget{cruxe9er-des-variables-avec-mutate}{%
@@ -1182,20 +1250,21 @@ Certaines analyses peuvent nécessiter d'ajouter des variables à partir de calc
 
 \begin{verbatim}
 ## # A tibble: 150 x 7
-##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
-##           <dbl>       <dbl>        <dbl>       <dbl> <fct>  
-##  1          5.1         3.5          1.4         0.2 setosa 
-##  2          4.9         3            1.4         0.2 setosa 
-##  3          4.7         3.2          1.3         0.2 setosa 
-##  4          4.6         3.1          1.5         0.2 setosa 
-##  5          5           3.6          1.4         0.2 setosa 
-##  6          5.4         3.9          1.7         0.4 setosa 
-##  7          4.6         3.4          1.4         0.3 setosa 
-##  8          5           3.4          1.5         0.2 setosa 
-##  9          4.4         2.9          1.4         0.2 setosa 
-## 10          4.9         3.1          1.5         0.1 setosa 
-## # ... with 140 more rows, and 2 more variables: ratio_sepal <dbl>,
-## #   ratio_petal <dbl>
+##    Sepal.Length Sepal.Width Petal.Le~1 Petal~2 Species ratio~3 ratio~4
+##           <dbl>       <dbl>      <dbl>   <dbl> <fct>     <dbl>   <dbl>
+##  1          5.1         3.5        1.4     0.2 setosa     1.46    7   
+##  2          4.9         3          1.4     0.2 setosa     1.63    7   
+##  3          4.7         3.2        1.3     0.2 setosa     1.47    6.5 
+##  4          4.6         3.1        1.5     0.2 setosa     1.48    7.5 
+##  5          5           3.6        1.4     0.2 setosa     1.39    7   
+##  6          5.4         3.9        1.7     0.4 setosa     1.38    4.25
+##  7          4.6         3.4        1.4     0.3 setosa     1.35    4.67
+##  8          5           3.4        1.5     0.2 setosa     1.47    7.5 
+##  9          4.4         2.9        1.4     0.2 setosa     1.52    7   
+## 10          4.9         3.1        1.5     0.1 setosa     1.58   15   
+## # ... with 140 more rows, and abbreviated variable names
+## #   1: Petal.Length, 2: Petal.Width, 3: ratio_sepal, 4: ratio_petal
+## # i Use `print(n = ...)` to see more rows
 \end{verbatim}
 
 \hypertarget{suxe9lectionner-des-lignes-avec-filter}{%
@@ -1281,6 +1350,7 @@ De plus, dans la configuration du code, ces opérateurs peuvent être couplés �
 ##  9          4.8         3.4          1.6         0.2 setosa 
 ## 10          4.8         3            1.4         0.1 setosa 
 ## # ... with 19 more rows
+## # i Use `print(n = ...)` to see more rows
 \end{verbatim}
 
 \hypertarget{ruxe9ordonner-les-lignes-avec-arrange}{%
@@ -1310,6 +1380,7 @@ On peut vouloir trier les lignes du jeu de données selon un certain ordre, en f
 ##  9          4.6         3.2          1.4         0.2 setosa 
 ## 10          4.7         3.2          1.3         0.2 setosa 
 ## # ... with 140 more rows
+## # i Use `print(n = ...)` to see more rows
 \end{verbatim}
 
 \hypertarget{ruxe9sumer-des-variables-avec-group_by-et-summarize}{%
@@ -1395,6 +1466,7 @@ Il convient de respecter certaines règles de base lors de la conception d'une b
 ##  9     3 virginica           7.1         3            5.9         2.1
 ## 10     4 setosa              4.6         3.1          1.5         0.2
 ## # ... with 140 more rows
+## # i Use `print(n = ...)` to see more rows
 \end{verbatim}
 
 La fonction \texttt{pivot\_wider()} permet alors de mettre en colonnes les valeurs des variables sélectionnées pour chacune des trois modalités de la variable \texttt{Species}.
@@ -1411,24 +1483,26 @@ La fonction \texttt{pivot\_wider()} permet alors de mettre en colonnes les valeu
 
 \begin{verbatim}
 ## # A tibble: 50 x 13
-##       id Sepal.Length_setosa Sepal.Length_versicolor Sepal.Length_vir~
-##    <int>               <dbl>                   <dbl>             <dbl>
-##  1     1                 5.1                     7                 6.3
-##  2     2                 4.9                     6.4               5.8
-##  3     3                 4.7                     6.9               7.1
-##  4     4                 4.6                     5.5               6.3
-##  5     5                 5                       6.5               6.5
-##  6     6                 5.4                     5.7               7.6
-##  7     7                 4.6                     6.3               4.9
-##  8     8                 5                       4.9               7.3
-##  9     9                 4.4                     6.6               6.7
-## 10    10                 4.9                     5.2               7.2
-## # ... with 40 more rows, and 9 more variables:
-## #   Sepal.Width_setosa <dbl>, Sepal.Width_versicolor <dbl>,
-## #   Sepal.Width_virginica <dbl>, Petal.Length_setosa <dbl>,
+##       id Sepal.Lengt~1 Sepal~2 Sepal~3 Sepal~4 Sepal~5 Sepal~6 Petal~7
+##    <int>         <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
+##  1     1           5.1     7       6.3     3.5     3.2     3.3     1.4
+##  2     2           4.9     6.4     5.8     3       3.2     2.7     1.4
+##  3     3           4.7     6.9     7.1     3.2     3.1     3       1.3
+##  4     4           4.6     5.5     6.3     3.1     2.3     2.9     1.5
+##  5     5           5       6.5     6.5     3.6     2.8     3       1.4
+##  6     6           5.4     5.7     7.6     3.9     2.8     3       1.7
+##  7     7           4.6     6.3     4.9     3.4     3.3     2.5     1.4
+##  8     8           5       4.9     7.3     3.4     2.4     2.9     1.5
+##  9     9           4.4     6.6     6.7     2.9     2.9     2.5     1.4
+## 10    10           4.9     5.2     7.2     3.1     2.7     3.6     1.5
+## # ... with 40 more rows, 5 more variables:
 ## #   Petal.Length_versicolor <dbl>, Petal.Length_virginica <dbl>,
 ## #   Petal.Width_setosa <dbl>, Petal.Width_versicolor <dbl>,
-## #   Petal.Width_virginica <dbl>
+## #   Petal.Width_virginica <dbl>, and abbreviated variable names
+## #   1: Sepal.Length_setosa, 2: Sepal.Length_versicolor,
+## #   3: Sepal.Length_virginica, 4: Sepal.Width_setosa,
+## #   5: Sepal.Width_versicolor, 6: Sepal.Width_virginica, ...
+## # i Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names
 \end{verbatim}
 
 L'argument \texttt{names\_from} a permis d'indiquer la variable à partir de laquelle on a dispatché les valeurs en colonnes, et l'argument \texttt{values\_from} a permis de préciser les variables pour lesquelles on voulait que les valeurs numériques soient dispatchées. L'utilisation des deux-points (\texttt{:}) nous a permis de sélectionner toutes les variables allant de \texttt{Sepal.Length} à \texttt{Petal.Width} dans le jeu de données.
@@ -1463,6 +1537,7 @@ Dans une situation inverse à celle que nous venons de voir, nous pourrions avoi
 ##  9     3 Sepal.Length_virginica        7.1
 ## 10     4 Sepal.Length_setosa           4.6
 ## # ... with 140 more rows
+## # i Use `print(n = ...)` to see more rows
 \end{verbatim}
 
 Dans la fonction \texttt{pivot\_longer()} ci-dessus, nous avons indiqué à l'aide de l'argument \texttt{cols} et de la fonction \texttt{c()} avec le signe \texttt{-} la colonne que nous ne voulions pas utiliser avec la fonction (c'était plus rapide que d'indiquer dans la fonction \texttt{c()} les trois colonnes à utiliser). L'argument \texttt{names\_to} nous a permis de donner un nom à la variable qualitative qui comporte à présent les modalités associées aux valeurs numériques, et l'argument \texttt{values\_to} nous a permis de donner un nom à la colonne où se trouvent maintenant les valeurs numériques.
@@ -1493,6 +1568,7 @@ Lorsque l'on veut utiliser la fonction \texttt{pivot\_longer()} sur plusieurs co
 ##  9     3 virginica           7.1         3            5.9         2.1
 ## 10     4 setosa              4.6         3.1          1.5         0.2
 ## # ... with 140 more rows
+## # i Use `print(n = ...)` to see more rows
 \end{verbatim}
 
 Dans le code montré ci-dessus, l'argument \texttt{cols} a permis de sélectionner toutes les colonnes situées à droite de la colonne \texttt{id}, l'argument \texttt{names\_to} a permis d'indiquer qu'il faut garder des colonnes spécifiques nommées avec le premier morceau du nom des variables antérieures (le mot \texttt{".value"} permet cela), et le mot \texttt{"Species"} a permis de nommer la colonne avec les espèces d'iris qui étaient les seconds morceaux des noms des variables antérieures.
@@ -1507,9 +1583,9 @@ Nous venons de voir plusieurs fonctions qui peuvent être très utiles pour pouv
 \item
   La base de données est un tableau comportant l'ensemble des données avec les observations organisées en lignes et les variables organisées en colonnes.
 \item
-  Les grands types de variables que l'on peut retrouver dans une base de données sont les variables quantitatives continues, les variables quantitatives discrètes, les variables qualitatives nominales, et les variables qualitatives ordinales.
+  Les grands types de variables que l'on peut retrouver dans une base de données sont les variables quantitatives (avec une échelle d'intervalles ou une échelle de ratios) et les variables qualitatives (nominales ou ordinales).
 \item
-  Avant d'initier un travail d'analyse, il peut être utile de fixer le répertoire avec la fonction \texttt{setwd()}.
+  Avant de débuter un travail d'analyse, il est conseillé d'initialiser un projet (en créant un fichier .Rproj) dans un dossier où se trouvent le ou les fichiers à analyser.
 \item
   Pour importer un jeu de données au format .csv, il est possible d'utiliser la fonction \texttt{readr::read\_csv2()}.
 \item
@@ -1537,7 +1613,7 @@ Nous venons de voir plusieurs fonctions qui peuvent être très utiles pour pouv
 \item
   Pour passer d'un tableau de données au format \emph{long} à un tableau de données au format \emph{wide}, utiliser la fonction \texttt{tidyr::pivot\_wider()}.
 \item
-  Pour passer d'un tableau de données au uformat \emph{wide} à un tableau de données au format \emph{long}, utiliser la fonction \texttt{tidyr::pivot\_longer()}.
+  Pour passer d'un tableau de données au format \emph{wide} à un tableau de données au format \emph{long}, utiliser la fonction \texttt{tidyr::pivot\_longer()}.
 \item
   Pour enchaîner l'application de fonctions, utiliser le symbole \texttt{\%\textgreater{}\%} (\emph{pipe}, package \texttt{magrittr}).
 \end{itemize}
@@ -1547,9 +1623,9 @@ Nous venons de voir plusieurs fonctions qui peuvent être très utiles pour pouv
 
 Réaliser une analyse descriptive univariée signifie que l'on s'intéresse à une seule variable en particulier. L'enjeu est ici de prendre connaissance de la distribution de la variable, c'est-à-dire de la manière selon laquelle se répartissent les observations en fonction des valeurs que prend la variable. De manière complémentaire, l'analyse descriptive univariée vise à prendre connaissance des indices statistiques qui caractérisent la variable, ainsi qu'à déterminer ceux qui seraient les plus pertinents pour la résumer.
 
-Dans cette partie, les notions de \textbf{population} et d'\textbf{échantillon} vont revenir à plusieurs reprises. La notion de population désigne tous les individus existant qui satisfont à un ou plusieurs critères particuliers (e.g., les adultes de moins de 30 ans). En général, lorsque l'on souhaite étudier un phénomène dans une population cible, il est impossible de prendre en compte tous les individus de la population en question. L'alternative est alors de conduire l'étude sur un échantillon, c'est-à-dire une fraction de la population composée d'individus qui représentent la population étudiée. La distinction entre population et échantillon est importante à faire à plusieurs égards. Si l'étude n'a pu être conduite que sur un échantillon, cela implique de mettre en oeuvre des procédures statistiques pour estimer avec plus ou moins d'incertitude le résultat réel concernant la population étudiée, cela à partir du résultat trouvé dans l'échantillon observé. La seule analyse descriptive de l'échantillon ne suffit donc pas en soit à décrire une population. En revanche, lorsque l'étude a pu être conduite sur l'ensemble de la population à étudier (e.g., l'équipe de France dans un sport donné), il n'y a par définition pas lieu de chercher à conduire des procédures statistiques particulières pour estimer le résultat réel pour la population en question. Dans ce chapitre, les procédures d'analyse proposées servent en général à seulement décrire la variable telle qu'elle est donnée à voir à partir des données que l'on a en sa possession. L'objectif n'est donc pas ici de discuter particulièrement des statistiques les plus pertinentes à utiliser lorsqu'il s'agit de chercher à résumer la distribution d'une variable à l'échelle d'une population à partir d'un échantillon initial. Pour le moment, il s'agit d'être en mesure de décrire l'échantillon (ou la population si les données obtenues concernent toute la population) que l'on a sous les yeux.
+Dans cette partie, les notions de \textbf{population} et d'\textbf{échantillon} vont revenir à plusieurs reprises. La notion de population désigne tous les individus existant qui satisfont à un ou plusieurs critères particuliers (e.g., les adultes de moins de 30 ans). En général, lorsque l'on souhaite étudier un phénomène dans une population cible, il est impossible de prendre en compte tous les individus de la population en question. L'alternative est alors de conduire l'étude sur un échantillon, c'est-à-dire une fraction de la population composée d'individus qui représentent la population étudiée. La distinction entre population et échantillon est importante à faire à plusieurs égards. Si une étude n'a pu être conduite que sur un échantillon, cela implique de mettre en oeuvre des procédures statistiques pour estimer avec plus ou moins d'incertitude le résultat réel concernant la population étudiée, cela à partir du résultat trouvé dans l'échantillon observé. La seule analyse descriptive de l'échantillon ne suffit donc pas en soit à décrire une population. En revanche, lorsque l'étude a pu être conduite sur l'ensemble de la population à étudier (e.g., l'équipe de France dans un sport donné), il n'y a par définition pas lieu de chercher à conduire des procédures statistiques particulières pour estimer le résultat réel pour la population en question. Dans ce chapitre, les procédures d'analyse proposées servent en général à seulement décrire la variable telle qu'elle est donnée à voir à partir des données que l'on a en sa possession. L'objectif n'est donc pas ici de discuter particulièrement des statistiques les plus pertinentes à utiliser lorsqu'il s'agit de chercher à résumer la distribution d'une variable à l'échelle d'une population à partir d'un échantillon initial. Pour le moment, il s'agit d'être en mesure de décrire l'échantillon (ou la population si les données obtenues concernent toute la population) que l'on a sous les yeux.
 
-Dans le cadre de cette partie, nous allons commencer à voir comment produire des graphiques dans RStudio, et par là-même, découvrir progressivement le package ggplot2. Le package ggplot2 n'est pas le plus simple à utiliser lorsque l'on découvre le logiciel R. D'ailleurs, de nombreux manuels portant sur R privilégient les packages et fonctions de base de R lorsqu'il s'agit de montrer comment obtenir des graphiques relativement simples pour analyser ses données. Cependant, les packages et fonctions de base de R sont rapidement limités lorsqu'il s'agit de réaliser des graphiques relativement complexes. Le parti pris ici est donc d'initier dès à présent à l'utilisation du package ggplot2 pour réaliser des graphiques, même simples, afin de pouvoir être plus rapidement à l'aise dès lors qu'il s'agira par la suite de produire des graphiques relativement élaborés à l'aide de ce package. Cependant, l'ambition n'est pas ici de permettre la maîtrise complète du package ggplot2. Pour cela, il vaut mieux se référer à des documentations spécialisées telles que la seconde édition de l'ouvrage \emph{ggplot2} d'Hadley Wickham \autocite*{wickhamGgplot22016}, en sachant qu'une troisième édition est en cours de développement et est accessible en ligne ici : \url{https://ggplot2-book.org}.
+Dans le cadre de cette partie, nous allons commencer à voir comment produire des graphiques dans RStudio, et par là-même, découvrir progressivement le package \texttt{ggplot2}. Le package \texttt{ggplot2} n'est pas le plus simple à utiliser lorsque l'on découvre le logiciel R. D'ailleurs, de nombreux manuels portant sur R privilégient les packages et fonctions de base de R lorsqu'il s'agit de montrer comment obtenir des graphiques relativement simples pour analyser ses données. Cependant, les packages et fonctions de base de R sont rapidement limités lorsqu'il s'agit de réaliser des graphiques relativement complexes. Le parti pris ici est donc d'initier dès à présent à l'utilisation du package \texttt{ggplot2} pour réaliser des graphiques, même simples, afin de pouvoir être plus rapidement à l'aise dès lors qu'il s'agira par la suite de produire des graphiques relativement élaborés à l'aide de ce package. Cependant, l'ambition n'est pas ici de permettre la maîtrise complète du package \texttt{ggplot2}. Pour cela, il vaut mieux se référer à des documentations spécialisées telles que la seconde édition de l'ouvrage \emph{ggplot2} d'Hadley Wickham \autocite*{wickhamGgplot22016}, en sachant qu'une troisième édition est en cours de développement et est accessible en ligne ici : \url{https://ggplot2-book.org}.
 
 \hypertarget{variables-quantitatives}{%
 \section{Variables quantitatives}\label{variables-quantitatives}}
@@ -1575,7 +1651,7 @@ Dans le cadre de l'analyse de variables quantitatives, il est toujours utile de 
 \caption{Exemple d'histogramme}\label{fig:geomhistogram}
 \end{figure}
 
-Pour générer cet histogramme, nous avons utilisé les fonctions \texttt{ggplot()} et \texttt{geom\_histogram()} du package \texttt{ggplot2}. La fonction \texttt{ggplot()} est nécessaire pour initier le graphique. Si on lance la commande \texttt{ggplot()} dans la Console, on peut voir qu'un écran grisé apparaît à droite de l'écran du PC dans la fenêtre \textbf{Plots} de RStudio. Cet écran grisé est tel un tableau vierge qui ne demande qu'à être complété grâce à des commandes supplémentaires que l'on doit préciser dans le code. Dans le code montré ci-dessus, on remarque que la fonction \texttt{ggplot()} a été configurée à l'aide de deux éléments : l'argument \texttt{data}, et la fonction \texttt{aes()}. L'argument \texttt{data} désigne le jeu de données à partir duquel n'importe quelle autre fonctionnalité du package \texttt{ggplot2} sera utilisée si rien d'autre n'est précisé dans le reste du code. Comme on peut le voir, le jeu de données utilisé ici est \texttt{iris}, que nous avons déjà rencontré dans la partie précédente. La fonction \texttt{aes()}, elle, permet de désigner les données à partir desquelles les éléments graphiques indiqués par la suite devront être réalisés. Dans le cadre d'une analyse univariée, nous n'avons besoin que d'une seule variable. Celle-ci peut être renseignée à droite de \texttt{x\ =}, et on aura reconnu dans le code ci-dessus le nom d'une variable effectivement présente dans le jeu de données \texttt{iris}. Une fois que ces informations sont renseignées, nous ne sommes pas encore en mesure de voir un quelconque graphique. Pour cela, il faut que la fonction \texttt{ggplot()} soit accompagnée d'une fonction qui permette d'indiquer quel type de graphique on veut. C'est à cela que sert ici la fonction \texttt{geom\_histogram()}. On peut noter que l'ajout de cette fonction a été réalisé grâce au signe \texttt{+}, en écrivant la fonction \emph{après} ce signe. La fonction \texttt{geom\_histogram()} aurait pu être écrite directement après le symbole \texttt{+}, mais pour des raisons de lisibilité, nous sommes allés à la ligne. (Attention : Aller à la ligne \emph{avant} le signe \texttt{+} n'est en revanche pas possible.) De manière intéressante et importante pour la suite, on pourra noter que dans ce cas de figure, nous aurions pu aussi utiliser le symbole \emph{pipe} (\texttt{\%\textgreater{}\%}) pour enchaîner la création d'un graphique à la suite de l'écriture du jeu de données qu'on aurait indiqué initialement dans le code, comme cela :
+Pour générer cet histogramme, nous avons utilisé les fonctions \texttt{ggplot()} et \texttt{geom\_histogram()} du package \texttt{ggplot2}. La fonction \texttt{ggplot()} est nécessaire pour initier le graphique. Si on lance la commande \texttt{ggplot()} dans la Console, on peut voir qu'un écran grisé apparaît à droite de l'écran du PC dans la fenêtre \textbf{Plots} de RStudio. Cet écran grisé est tel un tableau vierge qui ne demande qu'à être complété grâce à des commandes supplémentaires que l'on doit préciser dans le code. Dans le code montré ci-dessus, on remarque que la fonction \texttt{ggplot()} a été configurée à l'aide de deux éléments : l'argument \texttt{data}, et la fonction \texttt{aes()}. L'argument \texttt{data} permet de désigner le jeu de données à partir duquel n'importe quelle autre fonctionnalité du package \texttt{ggplot2} sera utilisée si rien d'autre n'est précisé dans le reste du code. Comme on peut le voir, le jeu de données utilisé ici est \texttt{iris}, que nous avons déjà rencontré dans la partie précédente. La fonction \texttt{aes()}, elle, permet de désigner les données à partir desquelles les éléments graphiques indiqués par la suite devront être réalisés. Dans le cadre d'une analyse univariée, nous n'avons besoin que d'une seule variable. Celle-ci peut être renseignée à droite de \texttt{x\ =}, et on aura reconnu dans le code ci-dessus le nom d'une variable effectivement présente dans le jeu de données \texttt{iris}. Une fois que ces informations sont renseignées, nous ne sommes pas encore en mesure de voir un quelconque graphique. Pour cela, il faut que la fonction \texttt{ggplot()} soit accompagnée d'une fonction qui permette d'indiquer quel type de graphique on veut. C'est à cela que sert ici la fonction \texttt{geom\_histogram()}. On peut noter que l'ajout de cette fonction a été réalisé grâce au signe \texttt{+}, en écrivant la fonction \emph{après} ce signe. La fonction \texttt{geom\_histogram()} aurait pu être écrite directement après le symbole \texttt{+}, mais pour des raisons de lisibilité, nous sommes allés à la ligne. (Attention : Aller à la ligne \emph{avant} le signe \texttt{+} n'est en revanche pas possible.) De manière intéressante et importante pour la suite, on pourra noter que dans ce cas de figure, nous aurions pu aussi utiliser le symbole \emph{pipe} (\texttt{\%\textgreater{}\%}) pour enchaîner la création d'un graphique à la suite de l'écriture du jeu de données qu'on aurait indiqué initialement dans le code, comme cela :
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1625,22 +1701,22 @@ En plus de l'histogramme, une autre manière de prendre connaissance graphiqueme
 
 \begin{figure}
 
-{\centering \includegraphics{Analyser-des-données-avec-R_files/figure-latex/geomboxplot-1} 
+{\centering \includegraphics[width=0.8\linewidth]{Analyser-des-données-avec-R_files/figure-latex/geomboxplot-1} 
 
 }
 
 \caption{Exemple de boîte à moustaches}\label{fig:geomboxplot}
 \end{figure}
 
-La boîte à moustaches (cf.~Figure \ref{fig:geomboxplot}) nous livre plusieurs informations. Tout d'abord, ses extrémités nous indiquent ce qu'on appelle le premier quartile (ici représenté par le bord gauche de la boîte) et le troisième quartile (ici représenté par le bord droit de la boîte). Le premier quartile (Q1) désigne la valeur en-dessous de laquelle on retrouve 25 \% des observations de la variable (i.e., 25 \% des observations sont associées à une valeur plus faible que Q1), alors que le troisième quartile (Q3) représente la valeur en-dessous de laquelle on retrouve 75 \% des observations (i.e., 75 \% des observations sont associées à une valeur plus faible que Q3). Cela indique alors que sur la Figure \ref{fig:geomboxplot}, l'intervalle qui sépare le bord gauche du bord droit de la boîte contient 50 \% des observations. La ligne noire à l'intérieur de la boîte blanche désigne la médiane, qui est la valeur pour laquelle on a 50 \% des observations qui ont une valeur inférieure à cette valeur repère, et pour laquelle on a 50 \% des observations qui ont une valeur supérieure à cette valeur repère. Les lignes noires en-dehors de la boîte sont les moustaches. Dans le cas présent, la moustache de gauche s'étend jusqu'à la valeur minimale de la variable, et la moustache de droite s'étend jusqu'à la valeur maximale de la variable. Si le minimum (ou le maximum) avait été éloigné de la médiane de plus de 1.5 fois la différence entre Q3 et Q1 (qu'on appelle \textbf{intervalle interquartile}), l'extrémité de la moustache se serait arrêtée à la dernière valeur avant cette limite, et toute valeur ayant dépassé cette limite aurait été représentée par un point. Pour illustrer ce dernier cas de figure, on peut modifier manuellement une valeur de la variable \texttt{Sepal.Length} du jeu de données \texttt{iris} de telle sorte à ce qu'il y ait une nouvelle valeur qui soit particulièrement éloignée de la boîte. Une telle valeur s'appelle un \emph{outlier} (cf.~Figure \ref{fig:geomboxplotModified})
+La boîte à moustaches (cf.~Figure \ref{fig:geomboxplot}) nous livre plusieurs informations. Tout d'abord, ses extrémités nous indiquent ce qu'on appelle le premier quartile (ici représenté par le bord gauche de la boîte) et le troisième quartile (ici représenté par le bord droit de la boîte). Le premier quartile (Q1) désigne la valeur en-dessous de laquelle on retrouve 25 \% des observations de la variable (i.e., 25 \% des observations sont associées à une valeur plus faible que Q1), alors que le troisième quartile (Q3) représente la valeur en-dessous de laquelle on retrouve 75 \% des observations (i.e., 75 \% des observations sont associées à une valeur plus faible que Q3). Cela indique alors que sur la Figure \ref{fig:geomboxplot}, l'intervalle qui sépare le bord gauche du bord droit de la boîte contient 50 \% des observations. La ligne noire à l'intérieur de la boîte blanche désigne la médiane, qui est la valeur pour laquelle on a 50 \% des observations qui ont une valeur inférieure à cette valeur repère, et pour laquelle on a 50 \% des observations qui ont une valeur supérieure à cette valeur repère. Les lignes noires en-dehors de la boîte sont les moustaches. Dans le cas présent, la moustache de gauche s'étend jusqu'à la valeur minimale de la variable, et la moustache de droite s'étend jusqu'à la valeur maximale de la variable. Si le minimum (ou le maximum) avait été éloigné de la médiane de plus de 1.5 fois la différence entre Q3 et Q1 (qu'on appelle \textbf{intervalle interquartile}), l'extrémité de la moustache se serait arrêtée à la dernière valeur avant cette limite, et toute valeur ayant dépassé cette limite aurait été représentée par un point. Pour illustrer ce dernier cas de figure, on peut modifier manuellement une valeur de la variable \texttt{Sepal.Length} du jeu de données \texttt{iris} de telle sorte à ce qu'il y ait une nouvelle valeur qui soit particulièrement éloignée de la boîte. Une telle valeur s'appelle un \emph{outlier} (cf.~Figure \ref{fig:geomboxplotModified}).
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# On modifie ici, pour l'exemple, la valeur de la 3ème observation}
 \CommentTok{# en lui assignant la valeur 12.}
-
 \NormalTok{iris}\OperatorTok{$}\NormalTok{Sepal.Length[}\DecValTok{3}\NormalTok{] <-}\StringTok{ }\DecValTok{12}     
 
+\CommentTok{# Obtention du graphique}
 \KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ iris, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Sepal.Length)) }\OperatorTok{+}\StringTok{   }
 \StringTok{  }\KeywordTok{geom_boxplot}\NormalTok{() }\OperatorTok{+}
 \StringTok{    }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{axis.text.y =} \KeywordTok{element_blank}\NormalTok{(), }
@@ -1650,14 +1726,14 @@ La boîte à moustaches (cf.~Figure \ref{fig:geomboxplot}) nous livre plusieurs 
 
 \begin{figure}
 
-{\centering \includegraphics{Analyser-des-données-avec-R_files/figure-latex/geomboxplotModified-1} 
+{\centering \includegraphics[width=0.8\linewidth]{Analyser-des-données-avec-R_files/figure-latex/geomboxplotModified-1} 
 
 }
 
 \caption{Visualisation d'un outlier}\label{fig:geomboxplotModified}
 \end{figure}
 
-Une boîte à moustaches a donc notamment l'intérêt de mettre en évidence des valeurs qui apparaissent comme ``étranges'' par rapport au reste des données. Lorsqu'il semble évident que l'\emph{outlier} est une valeur erronée, ou quand on veut tout simplement vérifier qu'il s'agit d'une erreur ou non, il est intéressant de savoir à quelle observation (i.e., à quel individu dans certains contextes) cette valeur étrange appartient, pour ensuite éventuellement la corriger. Malheureusement, la fonction \texttt{geom\_boxplot()} ne dispose pas d'argument pour permettre d'identifier facilement à quelle observation appartient cette valeur. Cependant, on peut s'appuyer sur des fonctions créées manuellement dans R pour parvenir à cela. Dans ce cas de figure, le site \url{https://stackoverflow.com} est souvent intéressant car riche de solutions. C'est d'ailleurs en provenance de ce site que vient la fonction montrée ci-dessous (\url{https://stackoverflow.com/questions/33524669/labeling-outliers-of-boxplots-in-r}) qui va nous permettre ensuite de savoir, à partir du graphique, à quelle observation correspond cette donnée étrange.
+Une boîte à moustaches a donc notamment l'intérêt de mettre en évidence des valeurs qui apparaissent comme ``étranges'' par rapport au reste des données. Lorsqu'il semble évident que l'\emph{outlier} est une valeur erronée, ou quand on veut tout simplement vérifier qu'il s'agit d'une erreur ou non, il est intéressant de savoir à quelle observation (i.e., à quel individu dans certains contextes) cette valeur étrange appartient, pour ensuite éventuellement la corriger. Malheureusement, la fonction \texttt{geom\_boxplot()} ne dispose pas d'argument pour permettre d'identifier facilement à quelle observation appartient cette valeur. Cependant, on peut s'appuyer sur des fonctions créées manuellement dans R pour parvenir à cela. Dans ce cas de figure, le site \url{https://stackoverflow.com} est souvent intéressant car riche de solutions. C'est d'ailleurs en provenance de ce site que vient la fonction montrée ci-dessous (voir \href{https://stackoverflow.com/questions/33524669/labeling-outliers-of-boxplots-in-r}{ici}) qui va nous permettre ensuite de savoir, à partir du graphique, à quelle observation correspond cette donnée étrange.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1667,7 +1743,7 @@ Une boîte à moustaches a donc notamment l'intérêt de mettre en évidence des
 \end{Highlighting}
 \end{Shaded}
 
-Voici donc, ci-dessus, à quoi ressemble une fonction à son état brut, avec : le nom de la fonction à gauche de la flèche d'assignation (\texttt{\textless{}-}), la commande \texttt{function()} qui permet d'amorcer la création de la fonction, et les lignes de code entre les accolades \{ \} qui indiquent les actions que la fonction réalise. La seule chose qu'il faut comprendre à ce stade, c'est que cette fonction, qui va donc s'appeler par la suite \texttt{is\_outlier()}, a besoin pour fonctionner qu'on lui indique un nom de variable (représenté par la lettre \texttt{x} dans le code ci-dessus), et que le résultat de cette fonction sera une nouvelle variable qui contiendra seulement des \texttt{TRUE} ou des \texttt{FALSE}, en sachant que \texttt{TRUE} correspondra au fait que la valeur de la variable étudiée était un \emph{outlier}, et que \texttt{FALSE} correspondra au fait que la valeur de la variable étudiée n'était pas un \emph{outlier}. (Notons ici que la définition d'un \emph{outlier} est la même que celle décrite plus haut, à savoir une valeur qui serait éloignée de Q1 ou de Q3 de plus de 1.5 fois l'intervalle interquartile.) Mais regardons concrètement ce que donne cette fonction lorsqu'elle est appliquée à la variable \texttt{Sepal.Length} du jeu de données \texttt{iris} (NB : La fonction ne marchera que si elle a été activée/créée auparavant) :
+Voici donc, ci-dessus, à quoi ressemble une fonction à son état brut, avec : le nom de la fonction à gauche de la flèche d'assignation (\texttt{\textless{}-}), la commande \texttt{function()} qui permet d'amorcer la création de la fonction, et les lignes de code entre les accolades \texttt{\{\ \}} qui indiquent les actions que la fonction réalise. La seule chose qu'il faut comprendre à ce stade, c'est que cette fonction, qui va donc s'appeler par la suite \texttt{is\_outlier()}, a besoin pour fonctionner qu'on lui indique un nom de variable (représenté par la lettre \texttt{x} dans le code ci-dessus), et que le résultat de cette fonction sera une nouvelle variable qui contiendra seulement des \texttt{TRUE} ou des \texttt{FALSE}, en sachant que \texttt{TRUE} correspondra au fait que la valeur de la variable étudiée était un \emph{outlier}, et que \texttt{FALSE} correspondra au fait que la valeur de la variable étudiée n'était pas un \emph{outlier}. (Notons ici que la définition d'un \emph{outlier} est la même que celle décrite plus haut, à savoir une valeur qui serait éloignée de Q1 ou de Q3 de plus de 1.5 fois l'intervalle interquartile.) Mais regardons concrètement ce que donne cette fonction lorsqu'elle est appliquée à la variable \texttt{Sepal.Length} du jeu de données \texttt{iris} (NB : La fonction ne marchera que si elle a été activée/créée auparavant) :
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1714,7 +1790,7 @@ Quand on regarde bien, on voit que la troisième observation de cette nouvelle v
 
 \begin{figure}
 
-{\centering \includegraphics{Analyser-des-données-avec-R_files/figure-latex/geomboxplotOutlierId-1} 
+{\centering \includegraphics[width=0.8\linewidth]{Analyser-des-données-avec-R_files/figure-latex/geomboxplotOutlierId-1} 
 
 }
 
@@ -1747,6 +1823,7 @@ Il y a plusieurs choses à expliquer par rapport au graphique de la Figure \ref{
 ##  9 9              4.4 ""        
 ## 10 10             4.9 ""        
 ## # ... with 140 more rows
+## # i Use `print(n = ...)` to see more rows
 \end{verbatim}
 
 Une fois cette procédure réalisée, le reste du code, et notamment la fonction \texttt{geom\_text()}, a permis d'ajouter des éléments textuels au graphique, en l'occurrence en s'appuyant sur la variable \texttt{id\_outlier}, tel que configuré avec la fonction \texttt{aes()} à l'intérieur de la fonction \texttt{geom\_text()}. Lorsque la valeur anormale identifiée est effectivement une erreur de saisie dans la base de données, il convient de corriger la valeur avec la fonction d'assignation comme nous l'avons fait précédemment :
@@ -1759,128 +1836,76 @@ Une fois cette procédure réalisée, le reste du code, et notamment la fonction
 \end{Highlighting}
 \end{Shaded}
 
-On remarque ainsi qu'au-delà de prendre connaissance de la forme de la distribution, passer par ces étapes graphiques permet aussi de s'assurer qu'il n'y a pas eu d'erreur lors de la saisie des données dans la base (du moins, pas d'erreur visible et qui risquerait d'impacter grandement les calculs futurs). Passer par l'analyse graphique est donc recommandé avant de pouvoir se fier aux résultats numériques que l'on pourrait calculer par la suite, tels que les indices statistiques qui permettent de résumer numériquement une variable. Afin de faciliter l'analyse graphique de la distribution de la variable étudiée, nous avons crée une fonction, appelée \texttt{plot\_distri()} (cf.~ci-dessous), visant à produire à la fois un histogramme et une boîte à moustaches représentant la variable étudiée, ainsi qu'un graphique de type nuage de points montrant les valeurs individuelles.
+On remarque ainsi qu'au-delà de prendre connaissance de la forme de la distribution, passer par ces étapes graphiques permet aussi de s'assurer qu'il n'y a pas eu d'erreur lors de la saisie des données dans la base (du moins, pas d'erreur visible et qui risquerait d'impacter grandement les calculs futurs). \textbf{Passer par l'analyse graphique est donc recommandé avant de pouvoir se fier aux résultats numériques que l'on pourrait calculer par la suite, tels que les indices statistiques qui permettent de résumer numériquement une variable.}
+
+À noter que si l'histogramme et la boîte à moustaches sont des graphiques classiques pour étudier la distribution d'une variable quantitative, il est aussi possible avec R de créer ce qu'on appelle un \emph{raincloud plot}, tel qu'illustré sur la Figure \ref{fig:raincloudUnivar}. Le \href{https://www.cedricscherer.com/2021/06/06/visualizing-distributions-with-raincloud-plots-and-how-to-create-them-with-ggplot2/}{post du blog de Cédric Scherer} fournit une description très intéressante et riche de l'intérêt de ce type de graphiques. Le \emph{raincloud plot} se compose de trois éléments :
+
+\begin{itemize}
+\tightlist
+\item
+  Une aire sous la courbe de densité, qui représente une estimation de la fréquence d'apparition d'une valeur donnée dans l'échantillon étudié. Cet élément est intéressant pour prendre pleinement conscience de la forme de la distribution.
+\item
+  Une boîte à moustaches, qui est intéressante pour avoir une vue résumée de la distribution.
+\item
+  Un nuage de points des données individuelles, qui est très intéressant pour avoir une vue précise des valeurs obtenues par les individus et pour avoir une idée plus claire de la grandeur du nombre d'observations présentes dans le jeu de données (chose non renseignée par les deux éléments précédents).
+\end{itemize}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{plot_distri <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(}\DataTypeTok{x =} \OtherTok{NULL}\NormalTok{, }\DataTypeTok{binwidth =} \OtherTok{NULL}\NormalTok{) \{}
-  \KeywordTok{require}\NormalTok{(ggplot2)}
-  \KeywordTok{require}\NormalTok{(magrittr)}
-  \KeywordTok{require}\NormalTok{(patchwork)}
-  
-\NormalTok{  data <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(x)}
-  \KeywordTok{names}\NormalTok{(data) <-}\StringTok{ "x"}
-  
-\NormalTok{  g1 <-}\StringTok{ }
-\StringTok{    }\NormalTok{data }\OperatorTok{%>%}
-\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ x)) }\OperatorTok{+}
-\StringTok{    }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{binwidth =}\NormalTok{ binwidth, }\DataTypeTok{fill =} \StringTok{"white"}\NormalTok{, }\DataTypeTok{color =} \StringTok{"black"}\NormalTok{) }\OperatorTok{+}
-\StringTok{    }\KeywordTok{coord_cartesian}\NormalTok{(}\DataTypeTok{xlim =} \KeywordTok{c}\NormalTok{(}\KeywordTok{min}\NormalTok{(x, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{), }\KeywordTok{max}\NormalTok{(x, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{))) }\OperatorTok{+}
-\StringTok{    }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{axis.title.x =} \KeywordTok{element_blank}\NormalTok{())}
-  
-\NormalTok{  g2 <-}\StringTok{ }
-\StringTok{    }\NormalTok{data }\OperatorTok{%>%}\StringTok{ }
-\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ x)) }\OperatorTok{+}
-\StringTok{    }\KeywordTok{geom_boxplot}\NormalTok{() }\OperatorTok{+}
-\StringTok{    }\KeywordTok{coord_cartesian}\NormalTok{(}\DataTypeTok{xlim =} \KeywordTok{c}\NormalTok{(}\KeywordTok{min}\NormalTok{(x, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{), }\KeywordTok{max}\NormalTok{(x, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{))) }\OperatorTok{+}
-\StringTok{    }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{axis.text.y =} \KeywordTok{element_blank}\NormalTok{(),}
-          \DataTypeTok{axis.title.x =} \KeywordTok{element_blank}\NormalTok{(),}
-          \DataTypeTok{axis.ticks.y =} \KeywordTok{element_blank}\NormalTok{())}
-  
-\NormalTok{    g3 <-}\StringTok{ }
-\StringTok{      }\NormalTok{data }\OperatorTok{%>%}\StringTok{ }
-\StringTok{      }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ x)) }\OperatorTok{+}
-\StringTok{      }\KeywordTok{geom_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ x, }\DataTypeTok{y =} \StringTok{""}\NormalTok{), }
-                 \DataTypeTok{shape =} \DecValTok{21}\NormalTok{, }\DataTypeTok{fill =} \StringTok{"white"}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.5}\NormalTok{, }\DataTypeTok{size =} \DecValTok{3}\NormalTok{,}
-                 \DataTypeTok{position =} \KeywordTok{position_jitter}\NormalTok{(}\DataTypeTok{seed =} \DecValTok{123}\NormalTok{, }\DataTypeTok{width =} \FloatTok{0.04}\NormalTok{)) }\OperatorTok{+}
-\StringTok{      }\KeywordTok{ylab}\NormalTok{(}\StringTok{""}\NormalTok{) }\OperatorTok{+}
-\StringTok{      }\KeywordTok{coord_cartesian}\NormalTok{(}\DataTypeTok{xlim =} \KeywordTok{c}\NormalTok{(}\KeywordTok{min}\NormalTok{(x, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{), }\KeywordTok{max}\NormalTok{(x, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{))) }\OperatorTok{+}
-\StringTok{      }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{axis.text.y =} \KeywordTok{element_blank}\NormalTok{(),}
-          \DataTypeTok{axis.ticks.y =} \KeywordTok{element_blank}\NormalTok{())}
-  
-\NormalTok{  g1 }\OperatorTok{+}\StringTok{ }\NormalTok{g2 }\OperatorTok{+}\StringTok{ }\NormalTok{g3 }\OperatorTok{+}\StringTok{ }\KeywordTok{plot_layout}\NormalTok{(}\DataTypeTok{nrow =} \DecValTok{3}\NormalTok{, }\DataTypeTok{heights =} \KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\FloatTok{0.2}\NormalTok{, }\FloatTok{0.2}\NormalTok{))}
-\NormalTok{\}}
+\CommentTok{# Code modifié à partir de https://www.cedricscherer.com/2021/06/06/visualizing-distributions-with-raincloud-plots-and-how-to-create-them-with-ggplot2/}
+\KeywordTok{library}\NormalTok{(gghalves)}
+\KeywordTok{library}\NormalTok{(ggdist)}
+
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ iris, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \StringTok{""}\NormalTok{, }\DataTypeTok{y =}\NormalTok{ Sepal.Length)) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\NormalTok{ggdist}\OperatorTok{::}\KeywordTok{stat_halfeye}\NormalTok{(}
+    \CommentTok{## Ajuste le lissage de la courbe de densité}
+    \DataTypeTok{adjust =} \FloatTok{.5}\NormalTok{, }
+    \CommentTok{## Ajuste l'aire située sous la courbe de densité}
+    \DataTypeTok{width =} \FloatTok{.6}\NormalTok{, }
+    \DataTypeTok{.width =} \DecValTok{0}\NormalTok{, }
+    \DataTypeTok{point_colour =} \OtherTok{NA}
+\NormalTok{    ) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_boxplot}\NormalTok{(}
+    \DataTypeTok{width =} \FloatTok{.15}\NormalTok{, }
+    \DataTypeTok{outlier.shape =} \OtherTok{NA}
+\NormalTok{  ) }\OperatorTok{+}
+\StringTok{  }\NormalTok{gghalves}\OperatorTok{::}\KeywordTok{geom_half_point}\NormalTok{(}
+    \DataTypeTok{side =} \StringTok{"l"}\NormalTok{, }
+    \DataTypeTok{range_scale =} \FloatTok{.4}\NormalTok{, }
+    \DataTypeTok{alpha =} \FloatTok{.3}\NormalTok{,}
+    \DataTypeTok{transformation =} \KeywordTok{position_jitter}\NormalTok{(}\DataTypeTok{seed =} \DecValTok{123}\NormalTok{)}
+\NormalTok{  ) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{coord_flip}\NormalTok{(}\DataTypeTok{xlim =} \KeywordTok{c}\NormalTok{(}\FloatTok{1.2}\NormalTok{, }\OtherTok{NA}\NormalTok{)) }
 \end{Highlighting}
 \end{Shaded}
-
-L'utilisation de la fonction \texttt{plot\_distri()} est illustrée sur la Figure \ref{fig:plotdistriExample} (pour rappel, il est important d'activer/créer la fonction avant de pouvoir l'utiliser) :
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{plot_distri}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ iris}\OperatorTok{$}\NormalTok{Sepal.Length, }\DataTypeTok{binwidth =} \FloatTok{0.3}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics{Analyser-des-données-avec-R_files/figure-latex/unnamed-chunk-3-1} \end{center}
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.7\linewidth]{Analyser-des-données-avec-R_files/figure-latex/plotdistriExample-1} 
+{\centering \includegraphics[width=0.8\linewidth]{Analyser-des-données-avec-R_files/figure-latex/raincloudUnivar-1} 
 
 }
 
-\caption{Visualisation de la distribution à l'aide de plusieurs procédures graphiques}\label{fig:plotdistriExample}
+\caption{Exemple de raincloud plot}\label{fig:raincloudUnivar}
 \end{figure}
+
+Lorsqu'on regarde le code ci-dessus qui a permis de créer le \emph{raincould plot}, on remarque l'arrivée de deux nouveaux packages : \texttt{ggdist} et \texttt{gghalves}. Ces packages doivent être installés et chargés avant de pouvoir être utilisés. La package \texttt{ggdist} est utilisé avec la fonction \texttt{stat\_halfeye()}, qui sert à montrer l'aire sous la courbe de densité en gris sur la figure ci-dessus. Plus l'aire est grande au niveau d'un intervalle de valeurs de données, plus il est probable de rencontrer les valeurs concernées lorsqu'on prend au hasard des observations du jeu de données. Plusieurs arguments peuvent en réalité servir à calculer cette aire et finalement modifier sa forme. L'argument \texttt{adjust} de la fonction \texttt{stat\_halfeye()} sert en quelque sorte à ajuster le lissage de l'aire de densité : plus sa valeur sera élevée, plus l'aire sera lissée.
+
+Pour montrer les données individuelles (\emph{the rain}) sans risquer qu'elle ne se superposent de trop, on a utilisé la fonction \texttt{geom\_half\_point()} du package \texttt{gghalves}, l'argument \texttt{transformation} et la fonction \texttt{position\_jitter()}. À l'intérieur de la fonction position\_jitter(), l'argument seed (la graine en français) désigne le nombre sur lequel se base l'ordinateur pour générer un résultat pseudo-aléatoire. Quand on regarde les graphiques, les données individuelles apparaissent décalées aléatoirement sur le plan vertical. Cet effet aléatoire est l'intérêt même d'une fonction dite ``jitter'', et cet effet est en réalité prédéfini de telle sorte que si on utilise toujours le même numéro de graine (\texttt{seed}), alors on obtiendra toujours le même effet aléatoire sur le graphique.
+
+Les autres éléments de code sont là pour des considérations esthétiques et ne seront pas décrites ici. Il reste bien sûr possible de lire l'aide associée à ces fonctions pour gagner en maîtrise de ce type de graphique.
 
 Lors de l'analyse de données, différentes formes typiques de distribution peuvent être rencontrées, notamment des formes \textbf{gaussiennes}, \textbf{asymétriques}, \textbf{leptocurtiques}, et \textbf{platycurtiques} \autocite{dartCommentDecrireDistribution2003}. Ces formes sont illustrées sur la Figure \ref{fig:variousDistributions}. Les formes gaussiennes sont observées en présence de variables suivant ce qu'on appelle une \textbf{loi normale}. Très souvent, on associe une distribution gaussienne, et donc une loi normale, à une distribution en forme de cloche, bien que l'analogie à la cloche pourrait se discuter. Les formes asymétriques traduisent le fait que la majorité des observations sont concentrées sur une extrémité de l'intervalle des valeurs possibles, et qu'il existe des observations, non majoritaires, avec des valeurs pouvant être très éloignées de la majorité des données, mais seulement d'un seul côté de la distribution. Enfin, les formes leptocurtiques et platycurtiques sont appelées ainsi par comparaison à la forme gaussienne. En présence d'une forme leptocurtique, la distribution s'avère plus pointue, avec des queues (qui sont les extrémités de la distribution) plus longues qu'avec une forme gaussienne. Dans le cadre d'une distribution platycurtique, la distribution est plus aplatie, avec des queues plus courtes qu'avec une forme gaussienne \autocite{dartCommentDecrireDistribution2003}. La distribution uniforme est un cas particulier de distribution platycurtique, et c'est cette distribution qui est en réalité montrée sur la Figure \ref{fig:variousDistributions}.
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{plot_distri <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(}\DataTypeTok{x =} \OtherTok{NULL}\NormalTok{, }\DataTypeTok{binwidth =} \OtherTok{NULL}\NormalTok{, }\DataTypeTok{size_axis_title =} \DecValTok{15}\NormalTok{, }\DataTypeTok{size_axis_text =} \DecValTok{10}\NormalTok{) \{}
-  \KeywordTok{require}\NormalTok{(ggplot2)}
-  \KeywordTok{require}\NormalTok{(magrittr)}
-  \KeywordTok{require}\NormalTok{(patchwork)}
-  
-\NormalTok{  data <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(x)}
-  \KeywordTok{names}\NormalTok{(data) <-}\StringTok{ "x"}
-  
-\NormalTok{  g1 <-}\StringTok{ }
-\StringTok{    }\NormalTok{data }\OperatorTok{%>%}
-\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ x)) }\OperatorTok{+}
-\StringTok{    }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{binwidth =}\NormalTok{ binwidth, }\DataTypeTok{fill =} \StringTok{"white"}\NormalTok{, }\DataTypeTok{color =} \StringTok{"black"}\NormalTok{) }\OperatorTok{+}
-\StringTok{    }\KeywordTok{coord_cartesian}\NormalTok{(}\DataTypeTok{xlim =} \KeywordTok{c}\NormalTok{(}\KeywordTok{min}\NormalTok{(x, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{), }\KeywordTok{max}\NormalTok{(x, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{))) }\OperatorTok{+}
-\StringTok{    }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{axis.title.x =} \KeywordTok{element_blank}\NormalTok{(),}
-          \DataTypeTok{axis.title.y =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size =}\NormalTok{ size_axis_title),}
-          \DataTypeTok{axis.text =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size =}\NormalTok{ size_axis_text))}
-  
-\NormalTok{  g2 <-}\StringTok{ }
-\StringTok{    }\NormalTok{data }\OperatorTok{%>%}\StringTok{ }
-\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ x)) }\OperatorTok{+}
-\StringTok{    }\KeywordTok{geom_boxplot}\NormalTok{() }\OperatorTok{+}
-\StringTok{    }\KeywordTok{coord_cartesian}\NormalTok{(}\DataTypeTok{xlim =} \KeywordTok{c}\NormalTok{(}\KeywordTok{min}\NormalTok{(x, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{), }\KeywordTok{max}\NormalTok{(x, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{))) }\OperatorTok{+}
-\StringTok{    }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{axis.text.y =} \KeywordTok{element_blank}\NormalTok{(),}
-          \DataTypeTok{axis.title.x =} \KeywordTok{element_blank}\NormalTok{(),}
-          \DataTypeTok{axis.ticks.y =} \KeywordTok{element_blank}\NormalTok{(),}
-          \DataTypeTok{axis.title.y =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size =}\NormalTok{ size_axis_title),}
-          \DataTypeTok{axis.text =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size =}\NormalTok{ size_axis_text))}
-  
-\NormalTok{    g3 <-}\StringTok{ }
-\StringTok{      }\NormalTok{data }\OperatorTok{%>%}\StringTok{ }
-\StringTok{      }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ x)) }\OperatorTok{+}
-\StringTok{      }\KeywordTok{geom_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ x, }\DataTypeTok{y =} \StringTok{""}\NormalTok{), }\DataTypeTok{shape =} \DecValTok{21}\NormalTok{, }\DataTypeTok{fill =} \StringTok{"white"}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.5}\NormalTok{, }\DataTypeTok{size =} \DecValTok{3}\NormalTok{,}
-                 \DataTypeTok{position =} \KeywordTok{position_jitter}\NormalTok{(}\DataTypeTok{seed =} \DecValTok{123}\NormalTok{, }\DataTypeTok{width =} \FloatTok{0.04}\NormalTok{)) }\OperatorTok{+}
-\StringTok{      }\KeywordTok{ylab}\NormalTok{(}\StringTok{""}\NormalTok{) }\OperatorTok{+}
-\StringTok{      }\KeywordTok{coord_cartesian}\NormalTok{(}\DataTypeTok{xlim =} \KeywordTok{c}\NormalTok{(}\KeywordTok{min}\NormalTok{(x, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{), }\KeywordTok{max}\NormalTok{(x, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{))) }\OperatorTok{+}
-\StringTok{      }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{axis.text.y =} \KeywordTok{element_blank}\NormalTok{(),}
-          \DataTypeTok{axis.ticks.y =} \KeywordTok{element_blank}\NormalTok{(),}
-          \DataTypeTok{axis.title.y =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size =}\NormalTok{ size_axis_title),}
-          \DataTypeTok{axis.text =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size =}\NormalTok{ size_axis_text))}
-    
-\NormalTok{  g1 }\OperatorTok{+}\StringTok{ }\NormalTok{g2 }\OperatorTok{+}\StringTok{ }\NormalTok{g3 }\OperatorTok{+}\StringTok{ }\KeywordTok{plot_layout}\NormalTok{(}\DataTypeTok{nrow =} \DecValTok{3}\NormalTok{, }\DataTypeTok{heights =} \KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\FloatTok{0.2}\NormalTok{, }\FloatTok{0.2}\NormalTok{))}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
 \begin{figure}
 
-{\centering \includegraphics{Analyser-des-données-avec-R_files/figure-latex/variousDistributions-1} 
+{\centering \includegraphics[width=0.8\linewidth]{Analyser-des-données-avec-R_files/figure-latex/variousDistributions-1} 
 
 }
 
 \caption{Différents types de distributions}\label{fig:variousDistributions}
 \end{figure}
 
-Comme il le sera vu plus tard, de nombreuses analyses statistiques reposent sur l'hypothèse que la variable étudiée est gaussienne. Il est donc important de chercher à savoir, graphiquement dans un premier temps, si la distribution de la variable est effectivement gaussienne. Le fait d'être capable d'identifier les autres formes de distribution peut être aussi important afin de mener des analyses appropriées. Dans les exemples montrés ci-dessus, les distributions ont été créées à partir de 1000 valeurs générées de manière aléatoire de telle sorte à suivre des lois prédéfinies et ainsi illustrer différentes distributions possibles. C'est pour cette raison que les formes de distribution montrées sur la figure ci-dessus sont si nettes. Lorsque l'on travaille dans certains domaines ou contextes, tel qu'avec l'être humain, il peut être compliqué d'obtenir autant de données, et les formes de distribution seront alors plus dures à identifier.
+Comme il le sera vu plus tard, de nombreuses analyses statistiques reposent sur l'hypothèse que la variable étudiée est gaussienne dans la population d'intérêt. Il est donc important de chercher à savoir, graphiquement dans un premier temps, si la distribution de la variable est effectivement gaussienne dans la population d'intérêt, cela à partir de l'échantillon que l'on a sous les yeux. Le fait d'être capable d'identifier les autres formes de distribution peut être aussi important afin de mener des analyses appropriées. Dans les exemples montrés ci-dessus, les distributions ont été créées à partir de 1000 valeurs générées de manière aléatoire de telle sorte à suivre des lois prédéfinies et ainsi illustrer différentes distributions possibles. C'est pour cette raison que les formes de distribution montrées sur la figure ci-dessus sont si nettes. Lorsque l'on travaille dans certains domaines ou contextes, tel qu'avec l'être humain, il peut être compliqué d'obtenir autant de données, et les formes de distribution seront alors plus dures à identifier.
 
 Une fois qu'une première analyse graphique des données a été réalisée, il peut être utile de chercher à résumer de manière numérique la variable. Plusieurs types de statistiques peuvent être utilisés à cet effet : les \textbf{indices de position}, les \textbf{indices de dispersion}, les \textbf{indices d'asymétrie}, et les \textbf{indices d'aplatissement}.
 
@@ -2146,7 +2171,7 @@ L'écart-type est la mesure de dispersion classiquement associée à la moyenne.
 
 \emph{L'intervalle interquartile}
 
-L'intervalle interquartile désigne l'étendue entre le premier quartile (Q1) et le troisième quartile (Q3) d'une variable. Comme expliqué auparavant dans le cadre de la boîte à moustaches, Q1 et Q3 désignent respectivement les valeurs en-dessous desquelles 25 \% et 75 \% des observations de la variable se trouvent \autocite{chatellierMoyenneMedianeLeurs2003}. Pour un échantillon de taille \emph{N}, la procédure classique pour calculer les quartiles est différente selon que le rapport \emph{N} / 4 est un nombre entier ou non. Lorsque ce rapport n'est pas un nombre entier, Q1 est la valeur correspondant au rang immédiatement supérieur à \emph{N} / 4. Par exemple, pour la variable ci-dessous, qui a une taille \emph{N} de 5 valeurs, le rapport \emph{N} / 4 est égal à 1.25. Q1 est donc la valeur correspond au rang directement supérieur, c'est-à-dire au rang 2, qui est ici la valeur 7.8.
+L'intervalle interquartile désigne l'étendue entre le premier quartile (Q1) et le troisième quartile (Q3) d'une variable. Comme expliqué auparavant dans le cadre de la boîte à moustaches, Q1 et Q3 désignent respectivement les valeurs en-dessous desquelles 25 \% et 75 \% des observations de la variable se trouvent \autocite{chatellierMoyenneMedianeLeurs2003}. Pour un échantillon de taille \emph{N}, la procédure classique pour calculer les quartiles est différente selon que le rapport \emph{N} / 4 est un nombre entier ou non. Lorsque ce rapport n'est pas un nombre entier, Q1 est la valeur correspondant au rang immédiatement supérieur à \emph{N} / 4. Par exemple, pour la variable ci-dessous, qui a une taille \emph{N} de 5 valeurs, le rapport \emph{N} / 4 est égal à 1.25. Q1 est donc la valeur correspondant au rang directement supérieur, c'est-à-dire au rang 2, qui est ici la valeur 7.8.
 
 \begin{verbatim}
 ##    1    2    3    4    5 
@@ -2301,7 +2326,7 @@ Dans le calcul ci-dessus, \emph{k} désigne le rang de la valeur considérée, e
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.6\linewidth]{Analyser-des-données-avec-R_files/figure-latex/graphicContinuouQuantiles-1} 
+{\centering \includegraphics[width=0.8\linewidth]{Analyser-des-données-avec-R_files/figure-latex/graphicContinuouQuantiles-1} 
 
 }
 
@@ -2337,7 +2362,7 @@ Dans ce calcul, \emph{s} désigne l'écart-type non biaisé de la variable, et \
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.7\linewidth]{Analyser-des-données-avec-R_files/figure-latex/skeweddistri-1} 
+{\centering \includegraphics[width=0.8\linewidth]{Analyser-des-données-avec-R_files/figure-latex/skeweddistri-1} 
 
 }
 
@@ -2373,7 +2398,7 @@ Dans ce calcul, \emph{s} désigne l'écart-type non biaisé de la variable, et \
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.7\linewidth]{Analyser-des-données-avec-R_files/figure-latex/kurtosisdistri-1} 
+{\centering \includegraphics[width=0.8\linewidth]{Analyser-des-données-avec-R_files/figure-latex/kurtosisdistri-1} 
 
 }
 
@@ -2402,26 +2427,38 @@ La fonction \texttt{describe()} peut être utilisée sur une variable donnée :
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{describe}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ iris}\OperatorTok{$}\NormalTok{Sepal.Width, }\DataTypeTok{quant =} \KeywordTok{c}\NormalTok{(}\FloatTok{0.25}\NormalTok{, }\FloatTok{0.75}\NormalTok{))}
+\NormalTok{psych}\OperatorTok{::}\KeywordTok{describe}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ iris}\OperatorTok{$}\NormalTok{Sepal.Width, }\DataTypeTok{quant =} \KeywordTok{c}\NormalTok{(}\FloatTok{0.25}\NormalTok{, }\FloatTok{0.75}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## [150 obs.] 
-## numeric: 3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...
-## min: 2 - max: 4.4 - NAs: 0 (0%) - 23 unique values
+##   vars   n mean   sd median trimmed  mad min max range skew kurtosis
+## 1    1 150 3.06 0.44      3    3.04 0.44   2 4.4   2.4 0.31     0.14
+##     se Q0.25 Q0.75
+## 1 0.04   2.8   3.3
 \end{verbatim}
 
 La fonction \texttt{describe()} peut être aussi utilisée sur un jeu de données entier. (Attention, les résumés numériques fournis pour les variables qualitatives n'auront pas de sens ; les variables qualitatives détectées sont indiquées avec un astérisque dans le tableau de résultats.)
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{describe}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ iris, }\DataTypeTok{quant =} \KeywordTok{c}\NormalTok{(}\FloatTok{0.25}\NormalTok{, }\FloatTok{0.75}\NormalTok{))}
+\NormalTok{psych}\OperatorTok{::}\KeywordTok{describe}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ iris, }\DataTypeTok{quant =} \KeywordTok{c}\NormalTok{(}\FloatTok{0.25}\NormalTok{, }\FloatTok{0.75}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## NULL
+##              vars   n mean   sd median trimmed  mad min max range
+## Sepal.Length    1 150 5.84 0.83   5.80    5.81 1.04 4.3 7.9   3.6
+## Sepal.Width     2 150 3.06 0.44   3.00    3.04 0.44 2.0 4.4   2.4
+## Petal.Length    3 150 3.76 1.77   4.35    3.76 1.85 1.0 6.9   5.9
+## Petal.Width     4 150 1.20 0.76   1.30    1.18 1.04 0.1 2.5   2.4
+## Species*        5 150 2.00 0.82   2.00    2.00 1.48 1.0 3.0   2.0
+##               skew kurtosis   se Q0.25 Q0.75
+## Sepal.Length  0.31    -0.61 0.07   5.1   6.4
+## Sepal.Width   0.31     0.14 0.04   2.8   3.3
+## Petal.Length -0.27    -1.42 0.14   1.6   5.1
+## Petal.Width  -0.10    -1.36 0.06   0.3   1.8
+## Species*      0.00    -1.52 0.07   1.0   3.0
 \end{verbatim}
 
 On retrouve la plupart des statistiques que nous avons vues jusqu'à présent, notamment le \emph{skewness} et le \emph{kurtosis} qui ont été ici calculés avec la méthode par défaut du package \texttt{e1071}. Pour changer la méthode de calcul de ces deux coefficients, il suffit de modifier l'argument \texttt{type} de la fonction, comme dans le cadre de l'utilisation du package \texttt{e1071} et des fonctions \texttt{skewness()} et \texttt{kurtosis()} associées. On notera cependant qu'il ne semble pas possible de modifier la méthode de calcul des quantiles, qui sont ici calculés selon la méthode par défaut configurée telle qu'avec la fonction \texttt{quantile()}.
@@ -2430,7 +2467,7 @@ Enfin, il est aussi possible d'obtenir ces récapitulatifs numériques en foncti
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{describeBy}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ iris, }\DataTypeTok{quant =} \KeywordTok{c}\NormalTok{(}\FloatTok{0.25}\NormalTok{, }\FloatTok{0.75}\NormalTok{), }\DataTypeTok{group =}\NormalTok{ iris}\OperatorTok{$}\NormalTok{Species)}
+\NormalTok{psych}\OperatorTok{::}\KeywordTok{describeBy}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ iris, }\DataTypeTok{quant =} \KeywordTok{c}\NormalTok{(}\FloatTok{0.25}\NormalTok{, }\FloatTok{0.75}\NormalTok{), }\DataTypeTok{group =}\NormalTok{ iris}\OperatorTok{$}\NormalTok{Species)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2509,7 +2546,7 @@ Ceci est illustré sur la Figure \ref{fig:ObservationsWithinSdMutiplesGaussianDi
 \caption{Proportions des observations incluses dans différents intervalles liés à la moyenne et à des multiples de l'écart-type}\label{fig:ObservationsWithinSdMutiplesGaussianDistri}
 \end{figure}
 
-Lorsqu'il s'agit plus précisément de vouloir renseigner sur la tendance centrale relative à l'échantillon étudié, le choix dépend de la forme de la distribution observée. Lorsque la distribution est gaussienne, la moyenne, la médiane, et le mode, sont similaires et donc se valent. Toutefois, lorsque la distribution est asymétrique et unimodale (i.e., avec un seul pic), le mode reflètera mieux la tendance centrale. De plus, lorsque la distribution est asymétrique, la médiane aura tendance à mieux représenter la tendance centrale que la moyenne \autocite{rousseletReactionTimesOther2020}. Notons que dans certains cas où la distribution semble asymétrique, la médiane peut se retrouver malgré tout plus éloignée du mode que la moyenne, comme illustré dans l'exemple emprunté à Gonzales et al.~qui est montré sur la Figure \ref{fig:MeanAboveLedianAsym} \autocite*{gonzalesMeasuresCentralTendency2001}.
+Lorsqu'il s'agit plus précisément de vouloir renseigner sur la tendance centrale relative à l'échantillon étudié, le choix dépend de la forme de la distribution observée. Lorsque la distribution est gaussienne, la moyenne, la médiane, et le mode, sont similaires et donc se valent. Toutefois, lorsque la distribution est asymétrique et unimodale (i.e., avec un seul pic), le mode reflètera mieux la tendance centrale. De plus, lorsque la distribution est asymétrique, la médiane aura tendance à mieux représenter la tendance centrale que la moyenne \autocite{rousseletReactionTimesOther2020}. Notons que dans certains cas où la distribution semble asymétrique, la médiane peut se retrouver malgré tout plus éloignée du mode que la moyenne, comme illustré dans l'exemple emprunté à Gonzales et al.~\autocite*{gonzalesMeasuresCentralTendency2001} qui est montré sur la Figure \ref{fig:MeanAboveLedianAsym}.
 
 \begin{figure}
 
@@ -2550,6 +2587,7 @@ Comme dans le cadre de variables quantitatives, une bonne pratique est de visual
 ##  9  0.22 Fair      E     VS2      65.1    61   337  3.87  3.78  2.49
 ## 10  0.23 Very Good H     VS1      59.4    61   338  4     4.05  2.39
 ## # ... with 53,930 more rows
+## # i Use `print(n = ...)` to see more rows
 \end{verbatim}
 
 \begin{Shaded}
@@ -2570,19 +2608,18 @@ Comme dans le cadre de variables quantitatives, une bonne pratique est de visual
 \caption{Exemple de diagramme en barres}\label{fig:geombar}
 \end{figure}
 
-Bien que rapide, la manière de procéder avec le code montré ci-avant devient vite limitée lorsque l'on veut enrichir le graphique, tel qu'en ajoutant les valeurs des effectifs au-dessus des barres ou encore en changeant l'ordre de disposition des barres. Pour gagner en capacité de modification du graphique, on peut d'abord passer par une étape intermédiaire consistant à créer un mini-jeu de données où la variable \texttt{color} serait déjà résumée à l'aide des fonctions \texttt{group\_by()} et \texttt{summarize()} du package \texttt{dplyr}, de telle sorte à n'avoir que la valeur de l'effectif en regard de chaque modalité. Ceci est montré dans le code ci-dessous.
+Bien que rapide, la manière de procéder avec le code montré ci-avant devient vite limitée lorsque l'on veut enrichir le graphique, tel qu'en ajoutant les valeurs des effectifs au-dessus des barres ou encore en changeant l'ordre de disposition des barres. Pour gagner en capacité de modification du graphique, on peut d'abord passer par une étape intermédiaire consistant à créer un mini-jeu de données où la variable \texttt{color} serait déjà résumée à l'aide de la fonction \texttt{count} du package \texttt{dplyr}, de telle sorte à n'avoir que la valeur de l'effectif en regard de chaque modalité. Ceci est montré dans le code ci-dessous.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{diamonds }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{group_by}\NormalTok{(color) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{count =} \KeywordTok{n}\NormalTok{())}
+\StringTok{  }\KeywordTok{count}\NormalTok{(color)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 ## # A tibble: 7 x 2
-##   color count
+##   color     n
 ##   <ord> <int>
 ## 1 D      6775
 ## 2 E      9797
@@ -2593,80 +2630,73 @@ Bien que rapide, la manière de procéder avec le code montré ci-avant devient 
 ## 7 J      2808
 \end{verbatim}
 
-Si l'on poursuit le code avec les fonctions \texttt{ggplot()} et \texttt{geom\_bar()} (cf.~code ci-dessous), on arrive alors au même résultat que précédemment (cf Figure \ref{fig:geombar}). On note qu'il a fallu adapter l'argument \texttt{stat} de la fonction \texttt{geom\_bar()} pour que le graphique montre bien en ordonnées la valeur de la variable nouvellement appelée \texttt{count}, qui comprend les effectifs de chaque modalité.
+Si l'on poursuit le code avec les fonctions \texttt{ggplot()} et \texttt{geom\_bar()} (cf.~code ci-dessous), on arrive alors au même résultat que précédemment (cf Figure \ref{fig:geombar}). On note qu'il a fallu adapter l'argument \texttt{stat} de la fonction \texttt{geom\_bar()} pour que le graphique montre bien en ordonnées la valeur de la variable nouvellement appelée \texttt{n}, qui comprend les effectifs de chaque modalité.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{diamonds }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{group_by}\NormalTok{(color) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{count =} \KeywordTok{n}\NormalTok{()) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ color, }\DataTypeTok{y =}\NormalTok{ count)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{count}\NormalTok{(color) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ color, }\DataTypeTok{y =}\NormalTok{ n)) }\OperatorTok{+}
 \StringTok{     }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{stat =} \StringTok{"identity"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-Certes, pour le moment, cette seconde procédure n'a fait que rajouter des étapes par rapport à la première procédure. Toutefois, en reprenant la logique de la seconde procédure, on peut à présent créer des graphiques en barres plus élaborés relativement facilement, comme montré ci-dessous.
+Certes, pour le moment, cette seconde procédure n'a fait que rajouter une ligne de code par rapport à la première procédure. Toutefois, en reprenant la logique de la seconde procédure, on peut à présent créer des graphiques en barres plus élaborés relativement facilement, comme montré ci-dessous.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# Diagramme en barres avec les effectifs affichés à proximité des barres}
 \NormalTok{A <-}\StringTok{ }
-\StringTok{  }\NormalTok{diamonds }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{group_by}\NormalTok{(color) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{count =} \KeywordTok{n}\NormalTok{()) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ color, }\DataTypeTok{y =}\NormalTok{ count)) }\OperatorTok{+}
+\StringTok{  }\NormalTok{diamonds }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{count}\NormalTok{(color) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ color, }\DataTypeTok{y =}\NormalTok{ n)) }\OperatorTok{+}
 \StringTok{     }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{stat =} \StringTok{"identity"}\NormalTok{) }\OperatorTok{+}
-\StringTok{     }\KeywordTok{geom_text}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{label =}\NormalTok{ count, }\DataTypeTok{x =}\NormalTok{ color, }\DataTypeTok{y =}\NormalTok{ count), }
+\StringTok{     }\KeywordTok{geom_text}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{label =}\NormalTok{ n, }\DataTypeTok{x =}\NormalTok{ color, }\DataTypeTok{y =}\NormalTok{ n), }
                \DataTypeTok{size =} \DecValTok{2}\NormalTok{, }\DataTypeTok{nudge_y =} \DecValTok{700}\NormalTok{) }\OperatorTok{+}
 \StringTok{     }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"A"}\NormalTok{)}
 
 \CommentTok{# Diagramme en barres réorganisées manuellement}
 \NormalTok{B <-}\StringTok{ }
-\StringTok{  }\NormalTok{diamonds }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{group_by}\NormalTok{(color) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{count =} \KeywordTok{n}\NormalTok{()) }\OperatorTok{%>%}
+\StringTok{  }\NormalTok{diamonds }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{count}\NormalTok{(color) }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{fct_relevel}\NormalTok{(color, }\StringTok{"J"}\NormalTok{, }\StringTok{"I"}\NormalTok{, }\StringTok{"H"}\NormalTok{, }\StringTok{"G"}\NormalTok{, }\StringTok{"F"}\NormalTok{, }\StringTok{"E"}\NormalTok{, }\StringTok{"D"}\NormalTok{), }
-             \DataTypeTok{y =}\NormalTok{ count)) }\OperatorTok{+}
+             \DataTypeTok{y =}\NormalTok{ n)) }\OperatorTok{+}
 \StringTok{     }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{stat =} \StringTok{"identity"}\NormalTok{) }\OperatorTok{+}
 \StringTok{     }\KeywordTok{xlab}\NormalTok{(}\StringTok{"color"}\NormalTok{) }\OperatorTok{+}
 \StringTok{     }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"B"}\NormalTok{) }
 
 \CommentTok{# Diagramme en barres réorganisées en ordre croissant}
 \NormalTok{C <-}\StringTok{ }
-\StringTok{  }\NormalTok{diamonds }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{group_by}\NormalTok{(color) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{count =} \KeywordTok{n}\NormalTok{()) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{fct_reorder}\NormalTok{(color, count), }\DataTypeTok{y =}\NormalTok{ count)) }\OperatorTok{+}
+\StringTok{  }\NormalTok{diamonds }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{count}\NormalTok{(color) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{fct_reorder}\NormalTok{(color, n), }\DataTypeTok{y =}\NormalTok{ n)) }\OperatorTok{+}
 \StringTok{     }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{stat =} \StringTok{"identity"}\NormalTok{) }\OperatorTok{+}
 \StringTok{     }\KeywordTok{xlab}\NormalTok{(}\StringTok{"color"}\NormalTok{) }\OperatorTok{+}
 \StringTok{     }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"C"}\NormalTok{) }
 
 \CommentTok{# Diagramme en barres réorganisées en ordre décroissant}
 \NormalTok{D <-}\StringTok{ }
-\StringTok{  }\NormalTok{diamonds }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{group_by}\NormalTok{(color) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{count =} \KeywordTok{n}\NormalTok{()) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{fct_reorder}\NormalTok{(color, }\OperatorTok{-}\NormalTok{count), }\DataTypeTok{y =}\NormalTok{ count)) }\OperatorTok{+}
+\StringTok{  }\NormalTok{diamonds }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{count}\NormalTok{(color) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{fct_reorder}\NormalTok{(color, }\OperatorTok{-}\NormalTok{n), }\DataTypeTok{y =}\NormalTok{ n)) }\OperatorTok{+}
 \StringTok{     }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{stat =} \StringTok{"identity"}\NormalTok{) }\OperatorTok{+}
 \StringTok{     }\KeywordTok{xlab}\NormalTok{(}\StringTok{"color"}\NormalTok{) }\OperatorTok{+}
 \StringTok{     }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"D"}\NormalTok{) }
 
 \CommentTok{# Diagramme en barres pivoté}
 \NormalTok{E <-}\StringTok{ }
-\StringTok{  }\NormalTok{diamonds }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{group_by}\NormalTok{(color) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{count =} \KeywordTok{n}\NormalTok{()) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{fct_reorder}\NormalTok{(color, }\OperatorTok{-}\NormalTok{count), }\DataTypeTok{y =}\NormalTok{ count)) }\OperatorTok{+}
+\StringTok{  }\NormalTok{diamonds }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{count}\NormalTok{(color) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{fct_reorder}\NormalTok{(color, }\OperatorTok{-}\NormalTok{n), }\DataTypeTok{y =}\NormalTok{ n)) }\OperatorTok{+}
 \StringTok{  }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{stat =} \StringTok{"identity"}\NormalTok{) }\OperatorTok{+}
 \StringTok{     }\KeywordTok{coord_flip}\NormalTok{() }\OperatorTok{+}
 \StringTok{     }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"E"}\NormalTok{)}
 
 \CommentTok{# Dotplot pivoté}
 \NormalTok{F <-}\StringTok{ }
-\StringTok{  }\NormalTok{diamonds }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{group_by}\NormalTok{(color) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{count =} \KeywordTok{n}\NormalTok{()) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{fct_reorder}\NormalTok{(color, }\OperatorTok{-}\NormalTok{count), }\DataTypeTok{y =}\NormalTok{ count)) }\OperatorTok{+}
+\StringTok{  }\NormalTok{diamonds }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{count}\NormalTok{(color) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{fct_reorder}\NormalTok{(color, }\OperatorTok{-}\NormalTok{n), }\DataTypeTok{y =}\NormalTok{ n)) }\OperatorTok{+}
 \StringTok{     }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
 \StringTok{     }\KeywordTok{coord_flip}\NormalTok{() }\OperatorTok{+}
 \StringTok{     }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"F"}\NormalTok{)}
@@ -2682,7 +2712,7 @@ Certes, pour le moment, cette seconde procédure n'a fait que rajouter des étap
 \caption{Différentes sortes de diagrammes en barres}\label{fig:geombarEnhancedGraph}
 \end{figure}
 
-Dans le code montré ci-dessus, on remarque que le réagencement manuel des barres (cf.~graphique B) a pu être réalisé grâce à la fonction \texttt{fct\_relevel()} du package \texttt{forcats}. Pour les autres diagrammes, la réorganisation des barres en ordre croissant ou décroissant sur la base de la valeur de l'effectif (\texttt{count}) a pu se faire grâce à la fonction \texttt{fct\_reorder()} du package \texttt{forcats}. Les noms des arguments de ces fonctions n'ont pas été indiqués pour alléger le code. Le plus important, c'est d'indiquer en premier dans la fonction la variable dont l'ordre d'apparition des modalités doit être réorganisé (il s'agissait de la variable \texttt{color} dans cet exemple). En second, il convient d'indiquer la logique de réorganisation de l'apparition des modalités (ce qui a été fait sur la base des valeurs de la variable \texttt{count} dans les exemples ci-dessus utilisant la fonction \texttt{fct\_reorder()}).
+Dans le code montré ci-dessus, on remarque que le réagencement manuel des barres (cf.~graphique B) a pu être réalisé grâce à la fonction \texttt{fct\_relevel()} du package \texttt{forcats}. Pour les autres diagrammes, la réorganisation des barres en ordre croissant ou décroissant sur la base de la valeur de l'effectif (\texttt{n}) a pu se faire grâce à la fonction \texttt{fct\_reorder()} du package \texttt{forcats}. Les noms des arguments de ces fonctions n'ont pas été indiqués pour alléger le code. Le plus important, c'est d'indiquer en premier dans la fonction la variable dont l'ordre d'apparition des modalités doit être réorganisé (il s'agissait de la variable \texttt{color} dans cet exemple). En second, il convient d'indiquer la logique de réorganisation de l'apparition des modalités (ce qui a été fait sur la base des valeurs de la variable \texttt{n} dans les exemples ci-dessus utilisant la fonction \texttt{fct\_reorder()}).
 
 Toujours dans le code montré ci-dessus, on peut voir aussi, dans la fonction \texttt{geom\_text()} du graphique A, la présence de l'argument \texttt{nudge\_y}. Cet argument permet de régler le décalage entre le haut de la barre et le texte. L'ordre de grandeur du chiffre indiqué est celui de la variable indiquée en ordonnées.
 
@@ -2694,12 +2724,11 @@ En plus des effectifs, il est aussi possible de prendre connaissance de la distr
 \begin{Highlighting}[]
 \CommentTok{# Diagramme en barres empilées montrant les effectifs}
 \NormalTok{A <-}\StringTok{ }
-\StringTok{  }\NormalTok{diamonds }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{group_by}\NormalTok{(color) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{count =} \KeywordTok{n}\NormalTok{()) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \StringTok{""}\NormalTok{, }\DataTypeTok{y =}\NormalTok{ count, }\DataTypeTok{fill =}\NormalTok{ color)) }\OperatorTok{+}
+\StringTok{  }\NormalTok{diamonds }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{count}\NormalTok{(color) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \StringTok{""}\NormalTok{, }\DataTypeTok{y =}\NormalTok{ n, }\DataTypeTok{fill =}\NormalTok{ color)) }\OperatorTok{+}
 \StringTok{  }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{stat =} \StringTok{"identity"}\NormalTok{, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_text}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{label =}\NormalTok{ count), }\DataTypeTok{size =} \DecValTok{2}\NormalTok{, }
+\StringTok{  }\KeywordTok{geom_text}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{label =}\NormalTok{ n), }\DataTypeTok{size =} \DecValTok{2}\NormalTok{, }
             \DataTypeTok{position =} \KeywordTok{position_stack}\NormalTok{(}\DataTypeTok{vjust =} \FloatTok{0.5}\NormalTok{)) }\OperatorTok{+}
 \StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"A"}\NormalTok{)}
   
@@ -2791,10 +2820,8 @@ Dans le cadre de variables qualitatives, la tendance centrale peut être renseig
   \item
     d'une boîte à moustaches avec la fonction \texttt{ggplot2::geom\_boxplot()} ;
   \item
-    ou encore d'un nuage de points avec la fonction \texttt{ggplot2::geom\_point()}.
+    ou encore d'un \emph{raincloud plot} avec les fonctions \texttt{ggdist::stat\_halfeye()}, \texttt{ggplot2::geom\_boxplot()}, et \texttt{gghalves::geom\_half\_point()}.
   \end{itemize}
-\item
-  Ces trois derniers types de graphiques peuvent être obtenus simultanément à l'aide de la fonction \texttt{plot\_distri()} présentée dans ce chapitre.
 \item
   La distribution d'une variable quantitative peut être notamment de forme gaussienne, asymétrique, leptocurtique, ou encore platycurtique.
 \item
@@ -3065,7 +3092,7 @@ Pour visualiser le lien que l'on peut faire entre la forme du nuage de points et
 \caption{Influence de la diminution de la variabilité sur la valeur du coefficient de corrélation de Pearson}\label{fig:spuriousCorrelations}
 \end{figure}
 
-Un deuxième exemple de l'influence de la variabilité sur la valeur du coefficient de corrélation de Pearson est montré sur la Figure \ref{fig:spuriousCorrelationBis}. Les deux graphiques de cette figure montrent exactement les mêmes données, à ceci près que sur le graphique de droite, on a remplacé en ordonnées une valeur du graphique de gauche pour lui donner la valeur de 10. L'influence de cette simlpe action sur la valeur du coefficient de corrélation de Pearson est nette. Ceci montre qu'il faut faire attention aux valeurs extrêmes qui pourraient grandement influencer la variabilité des données d'une variable et au final la valeur de corrélation obtenue, notamment en présence d'échantillons de taille relativement faible. Dans le cas où la valeur du coefficient de corrélation de Pearson serait très influencée par une valeur, il pourrait être une bonne pratique de calculer la valeur du coefficient de corrélation de Pearson avec et sans cette valeur afin de pouvoir quantifier son influence sur la relation étudiée \autocite{halperinSpuriousCorrelationsCauses1986}. Une alternative pourrait être aussi d'étudier la relation à l'aide d'autres types de coefficients que celui de Pearson, tels que celui de Spearman, présenté plus bas. Cet exemple doit faire prendre conscience qu'il n'est pas toujours pertinent de calculer le coefficient de corrélation de Pearson. En ce sens, lorsqu'on cherche à inférer la valeur du coefficient de corrélation de Pearson dans la population étudiée, il convient de vérifier certains prérequis, lesquels sont abordés plus loin dans ce livre.
+Un deuxième exemple de l'influence de la variabilité sur la valeur du coefficient de corrélation de Pearson est montré sur la Figure \ref{fig:spuriousCorrelationBis}. Les deux graphiques de cette figure montrent exactement les mêmes données, à ceci près que sur le graphique de droite, on a remplacé en ordonnées une valeur du graphique de gauche pour lui donner la valeur de 10. L'influence de cette simple action sur la valeur du coefficient de corrélation de Pearson est nette. Ceci montre qu'il faut faire attention aux valeurs extrêmes qui pourraient grandement influencer la variabilité des données d'une variable et au final la valeur de corrélation obtenue, notamment en présence d'échantillons de taille relativement faible. Dans le cas où la valeur du coefficient de corrélation de Pearson serait très influencée par une valeur, il pourrait être une bonne pratique de calculer la valeur du coefficient de corrélation de Pearson avec et sans cette valeur afin de pouvoir quantifier son influence sur la relation étudiée \autocite{halperinSpuriousCorrelationsCauses1986}. Une alternative pourrait être aussi d'étudier la relation à l'aide d'autres types de coefficients que celui de Pearson, tels que celui de Spearman, présenté plus bas. Cet exemple doit faire prendre conscience qu'il n'est pas toujours pertinent de calculer le coefficient de corrélation de Pearson. En ce sens, lorsqu'on cherche à inférer la valeur du coefficient de corrélation de Pearson dans la population étudiée, il convient de vérifier certains prérequis, lesquels sont abordés plus loin dans ce livre.
 
 \begin{figure}
 
@@ -4030,10 +4057,12 @@ Dans R, le \(d_{s}\) de Cohen peut être calculé à l'aide de la fonction \text
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{library}\NormalTok{(effectsize)}
-\KeywordTok{cohens_d}\NormalTok{(Sepal.Length }\OperatorTok{~}\StringTok{ }\NormalTok{Species, }
-         \DataTypeTok{data =}\NormalTok{ iris_two_species, }
-         \DataTypeTok{paired =} \OtherTok{FALSE}\NormalTok{, }
-         \DataTypeTok{pooled_sd =} \OtherTok{TRUE}\NormalTok{)}
+\KeywordTok{cohens_d}\NormalTok{(}
+\NormalTok{  Sepal.Length }\OperatorTok{~}\StringTok{ }\NormalTok{Species, }
+  \DataTypeTok{data =}\NormalTok{ iris_two_species, }
+  \DataTypeTok{paired =} \OtherTok{FALSE}\NormalTok{, }
+  \DataTypeTok{pooled_sd =} \OtherTok{TRUE}
+\NormalTok{  )}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4110,10 +4139,12 @@ Dans R, le \(g_{s}\) de Hedges lié à un échantillon de population peut être 
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{hedges_g}\NormalTok{(Sepal.Length }\OperatorTok{~}\StringTok{ }\NormalTok{Species, }
-         \DataTypeTok{data =}\NormalTok{ iris_two_species, }
-         \DataTypeTok{paired =} \OtherTok{FALSE}\NormalTok{, }
-         \DataTypeTok{pooled_sd =} \OtherTok{TRUE}\NormalTok{)}
+\KeywordTok{hedges_g}\NormalTok{(}
+\NormalTok{  Sepal.Length }\OperatorTok{~}\StringTok{ }\NormalTok{Species,}
+  \DataTypeTok{data =}\NormalTok{ iris_two_species, }
+  \DataTypeTok{paired =} \OtherTok{FALSE}\NormalTok{, }
+  \DataTypeTok{pooled_sd =} \OtherTok{TRUE}
+\NormalTok{  )}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4169,7 +4200,12 @@ Dans R, on peut alors calculer \(d_{z}\) à nouveau à l'aide de la fonction \te
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{cohens_d}\NormalTok{(Blink_rate }\OperatorTok{~}\StringTok{ }\NormalTok{Condition, }\DataTypeTok{data =}\NormalTok{ Blink2, }\DataTypeTok{paired =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{pooled_sd =} \OtherTok{TRUE}\NormalTok{)}
+\KeywordTok{cohens_d}\NormalTok{(}
+\NormalTok{  Blink_rate }\OperatorTok{~}\StringTok{ }\NormalTok{Condition, }
+  \DataTypeTok{data =}\NormalTok{ Blink2, }
+  \DataTypeTok{paired =} \OtherTok{TRUE}\NormalTok{, }
+  \DataTypeTok{pooled_sd =} \OtherTok{TRUE}
+\NormalTok{  )}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4187,10 +4223,12 @@ Ce calcul reviendrait donc à diviser la moyenne des différences par l'écart-t
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{cohens_d}\NormalTok{(Blink_rate }\OperatorTok{~}\StringTok{ }\NormalTok{Condition, }
-         \DataTypeTok{data =}\NormalTok{ Blink2, }
-         \DataTypeTok{paired =} \OtherTok{FALSE}\NormalTok{, }
-         \DataTypeTok{pooled_sd =} \OtherTok{FALSE}\NormalTok{)}
+\KeywordTok{cohens_d}\NormalTok{(}
+\NormalTok{  Blink_rate }\OperatorTok{~}\StringTok{ }\NormalTok{Condition,}
+  \DataTypeTok{data =}\NormalTok{ Blink2, }
+  \DataTypeTok{paired =} \OtherTok{FALSE}\NormalTok{, }
+  \DataTypeTok{pooled_sd =} \OtherTok{FALSE}
+\NormalTok{  )}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4210,10 +4248,12 @@ Comme dans le cas de l'étude de groupes indépendants, \(d_{av}\) et ses dériv
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{hedges_g}\NormalTok{(Blink_rate }\OperatorTok{~}\StringTok{ }\NormalTok{Condition, }
-         \DataTypeTok{data =}\NormalTok{ Blink2, }
-         \DataTypeTok{paired =} \OtherTok{FALSE}\NormalTok{, }
-         \DataTypeTok{pooled_sd =} \OtherTok{FALSE}\NormalTok{)}
+\KeywordTok{hedges_g}\NormalTok{(}
+\NormalTok{  Blink_rate }\OperatorTok{~}\StringTok{ }\NormalTok{Condition,}
+  \DataTypeTok{data =}\NormalTok{ Blink2, }
+  \DataTypeTok{paired =} \OtherTok{FALSE}\NormalTok{, }
+  \DataTypeTok{pooled_sd =} \OtherTok{FALSE}
+\NormalTok{  )}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4279,11 +4319,11 @@ Lorsque la présence de valeurs aberrantes peut fausser le calcul de la taille d
 
 \begin{figure}
 
-{\centering \includegraphics[height=0.4\textheight]{Analyser-des-données-avec-R_files/figure-latex/unnamed-chunk-14-1} 
+{\centering \includegraphics[height=0.4\textheight]{Analyser-des-données-avec-R_files/figure-latex/unnamed-chunk-12-1} 
 
 }
 
-\caption{Exemple de figure pour montrer la médiane des différences dans le cas de données appariées}\label{fig:unnamed-chunk-14}
+\caption{Exemple de figure pour montrer la médiane des différences dans le cas de données appariées}\label{fig:unnamed-chunk-12}
 \end{figure}
 
 \begin{Shaded}
