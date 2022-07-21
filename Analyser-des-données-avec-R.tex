@@ -1890,11 +1890,11 @@ On remarque ainsi qu'au-delà de prendre connaissance de la forme de la distribu
 \caption{Exemple de raincloud plot}\label{fig:raincloudUnivar}
 \end{figure}
 
-Lorsqu'on regarde le code ci-dessus qui a permis de créer le \emph{raincould plot}, on remarque l'arrivée de deux nouveaux packages : \texttt{ggdist} et \texttt{gghalves}. Ces packages doivent être installés et chargés avant de pouvoir être utilisés. Le package \texttt{ggdist} est utilisé avec la fonction \texttt{stat\_halfeye()}, qui sert à montrer sur la figure ci-dessus l'aire grise sous la courbe de densité. Plus cette aire est grande au niveau d'un intervalle de valeurs donné, plus il est probable de rencontrer les valeurs concernées lorsqu'on prend au hasard des observations du jeu de données. Plusieurs arguments peuvent en réalité servir à calculer la courbe de densité et finalement modifier sa forme et celle de l'aire qu'il y a en-dessous. Parmi eux, l'argument \texttt{adjust} de la fonction \texttt{stat\_halfeye()} sert en quelque sorte à ajuster le lissage de la courbe de densité : plus sa valeur sera élevée, plus la courbe sera lissée.
+Lorsqu'on regarde le code ci-dessus qui a permis de créer le \emph{raincould plot}, on remarque l'arrivée de deux nouveaux packages : \texttt{ggdist} et \texttt{gghalves}. Ces packages doivent être installés et chargés avant de pouvoir être utilisés. Le package \texttt{ggdist} est utilisé avec la fonction \texttt{stat\_halfeye()}, qui sert à montrer sur la figure ci-dessus l'aire grise sous la courbe de densité (\emph{the cloud}). Plus cette aire est grande au niveau d'un intervalle de valeurs donné, plus il est probable de rencontrer les valeurs concernées lorsqu'on prend au hasard des observations du jeu de données. Plusieurs arguments peuvent en réalité servir à calculer la courbe de densité et finalement modifier sa forme et celle de l'aire qu'il y a en-dessous. Parmi eux, l'argument \texttt{adjust} de la fonction \texttt{stat\_halfeye()} sert en quelque sorte à ajuster le lissage de la courbe de densité : plus sa valeur sera élevée, plus la courbe sera lissée.
 
 Pour montrer les données individuelles (\emph{the rain}) sans risquer qu'elles ne se superposent de trop, on a utilisé la fonction \texttt{geom\_half\_point()} du package \texttt{gghalves}, l'argument \texttt{transformation}, et la fonction \texttt{position\_jitter()}. À l'intérieur de la fonction \texttt{position\_jitter()}, l'argument \texttt{seed} (la graine en français) désigne le nombre sur lequel se base l'ordinateur pour générer un résultat pseudo-aléatoire. Quand on regarde le graphique ci-dessus, les données individuelles apparaissent décalées aléatoirement sur le plan vertical. Cet effet aléatoire est l'intérêt même d'une fonction dite ``jitter'', et cet effet est en réalité prédéfini de telle sorte que si on utilise toujours le même numéro de graine (\texttt{seed}), alors on obtiendra toujours le même effet aléatoire sur le graphique.
 
-Les autres éléments de code sont là pour des considérations esthétiques et ne seront pas décrites ici. Il reste bien sûr possible de lire l'aide associée à ces fonctions pour gagner en maîtrise de ce type de graphique.
+Les autres éléments de code sont là pour des considérations esthétiques et ne seront pas décrits ici. Il reste bien sûr possible de lire l'aide associée à ces fonctions pour gagner en maîtrise de ce type de graphique.
 
 Lors de l'analyse de données, différentes formes typiques de distribution peuvent être rencontrées, notamment des formes \textbf{gaussiennes}, \textbf{asymétriques}, \textbf{leptocurtiques}, et \textbf{platycurtiques} \autocite{dartCommentDecrireDistribution2003}. Ces formes sont illustrées sur la Figure \ref{fig:variousDistributions}. Les formes gaussiennes sont observées en présence de variables suivant ce qu'on appelle une \textbf{loi normale}. Très souvent, on associe une distribution gaussienne, et donc une loi normale, à une distribution en forme de cloche, bien que l'analogie à la cloche pourrait se discuter. Les formes asymétriques traduisent le fait que la majorité des observations sont concentrées sur une extrémité de l'intervalle des valeurs possibles, et qu'il existe des observations, non majoritaires, avec des valeurs pouvant être très éloignées de la majorité des données, mais seulement d'un seul côté de la distribution. Enfin, les formes leptocurtiques et platycurtiques sont appelées ainsi par comparaison à la forme gaussienne. En présence d'une forme leptocurtique, la distribution s'avère plus pointue, avec des queues (qui sont les extrémités de la distribution) plus longues qu'avec une forme gaussienne. Dans le cadre d'une distribution platycurtique, la distribution est plus aplatie, avec des queues plus courtes qu'avec une forme gaussienne \autocite{dartCommentDecrireDistribution2003}. La distribution uniforme est un cas particulier de distribution platycurtique, et c'est cette distribution qui est en réalité montrée sur la Figure \ref{fig:variousDistributions}.
 
@@ -2364,7 +2364,7 @@ Dans ce calcul, \emph{s} désigne l'écart-type non biaisé de la variable, et \
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.9\linewidth]{Analyser-des-données-avec-R_files/figure-latex/skeweddistri-1} 
+{\centering \includegraphics[width=1\linewidth]{Analyser-des-données-avec-R_files/figure-latex/skeweddistri-1} 
 
 }
 
@@ -2400,7 +2400,7 @@ Dans ce calcul, \emph{s} désigne l'écart-type non biaisé de la variable, et \
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.9\linewidth]{Analyser-des-données-avec-R_files/figure-latex/kurtosisdistri-1} 
+{\centering \includegraphics[width=1\linewidth]{Analyser-des-données-avec-R_files/figure-latex/kurtosisdistri-1} 
 
 }
 
@@ -2603,7 +2603,7 @@ Comme dans le cadre de variables quantitatives, une bonne pratique est de visual
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.7\linewidth]{Analyser-des-données-avec-R_files/figure-latex/geombar-1} 
+{\centering \includegraphics[width=0.8\linewidth]{Analyser-des-données-avec-R_files/figure-latex/geombar-1} 
 
 }
 
@@ -2707,11 +2707,11 @@ Certes, pour le moment, cette seconde procédure n'a fait que rajouter une ligne
 
 \begin{figure}
 
-{\centering \includegraphics{Analyser-des-données-avec-R_files/figure-latex/geombarEnhancedGraph-1} 
+{\centering \includegraphics[width=1\linewidth]{Analyser-des-données-avec-R_files/figure-latex/geombarEnhancedGraph, -1} 
 
 }
 
-\caption{Différentes sortes de diagrammes en barres}\label{fig:geombarEnhancedGraph}
+\caption{Différentes sortes de diagrammes en barres}(\#fig:geombarEnhancedGraph, )
 \end{figure}
 
 Dans le code montré ci-dessus, on remarque que le réagencement manuel des barres (cf.~graphique B) a pu être réalisé grâce à la fonction \texttt{fct\_relevel()} du package \texttt{forcats}. Pour les autres diagrammes, la réorganisation des barres en ordre croissant ou décroissant sur la base de la valeur de l'effectif (\texttt{n}) a pu se faire grâce à la fonction \texttt{fct\_reorder()} du package \texttt{forcats}. Les noms des arguments de ces fonctions n'ont pas été indiqués pour alléger le code. Le plus important, c'est d'indiquer en premier dans la fonction la variable dont l'ordre d'apparition des modalités doit être réorganisé (il s'agissait de la variable \texttt{color} dans cet exemple). En second, il convient d'indiquer la logique de réorganisation de l'apparition des modalités (ce qui a été fait sur la base des valeurs de la variable \texttt{n} dans les exemples ci-dessus utilisant la fonction \texttt{fct\_reorder()}).

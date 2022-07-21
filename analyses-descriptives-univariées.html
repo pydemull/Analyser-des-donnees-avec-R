@@ -254,9 +254,9 @@ Figure 3.5: Identification d’un outlier
 Figure 3.6: Exemple de raincloud plot
 </p>
 </div>
-<p>Lorsqu’on regarde le code ci-dessus qui a permis de créer le <em>raincould plot</em>, on remarque l’arrivée de deux nouveaux packages : <code>ggdist</code> et <code>gghalves</code>. Ces packages doivent être installés et chargés avant de pouvoir être utilisés. Le package <code>ggdist</code> est utilisé avec la fonction <code><a href="http://mjskay.github.io/ggdist/reference/stat_halfeye.html">stat_halfeye()</a></code>, qui sert à montrer sur la figure ci-dessus l’aire grise sous la courbe de densité. Plus cette aire est grande au niveau d’un intervalle de valeurs donné, plus il est probable de rencontrer les valeurs concernées lorsqu’on prend au hasard des observations du jeu de données. Plusieurs arguments peuvent en réalité servir à calculer la courbe de densité et finalement modifier sa forme et celle de l’aire qu’il y a en-dessous. Parmi eux, l’argument <code>adjust</code> de la fonction <code><a href="http://mjskay.github.io/ggdist/reference/stat_halfeye.html">stat_halfeye()</a></code> sert en quelque sorte à ajuster le lissage de la courbe de densité : plus sa valeur sera élevée, plus la courbe sera lissée.</p>
+<p>Lorsqu’on regarde le code ci-dessus qui a permis de créer le <em>raincould plot</em>, on remarque l’arrivée de deux nouveaux packages : <code>ggdist</code> et <code>gghalves</code>. Ces packages doivent être installés et chargés avant de pouvoir être utilisés. Le package <code>ggdist</code> est utilisé avec la fonction <code><a href="http://mjskay.github.io/ggdist/reference/stat_halfeye.html">stat_halfeye()</a></code>, qui sert à montrer sur la figure ci-dessus l’aire grise sous la courbe de densité (<em>the cloud</em>). Plus cette aire est grande au niveau d’un intervalle de valeurs donné, plus il est probable de rencontrer les valeurs concernées lorsqu’on prend au hasard des observations du jeu de données. Plusieurs arguments peuvent en réalité servir à calculer la courbe de densité et finalement modifier sa forme et celle de l’aire qu’il y a en-dessous. Parmi eux, l’argument <code>adjust</code> de la fonction <code><a href="http://mjskay.github.io/ggdist/reference/stat_halfeye.html">stat_halfeye()</a></code> sert en quelque sorte à ajuster le lissage de la courbe de densité : plus sa valeur sera élevée, plus la courbe sera lissée.</p>
 <p>Pour montrer les données individuelles (<em>the rain</em>) sans risquer qu’elles ne se superposent de trop, on a utilisé la fonction <code><a href="https://rdrr.io/pkg/gghalves/man/geom_half_point.html">geom_half_point()</a></code> du package <code>gghalves</code>, l’argument <code>transformation</code>, et la fonction <code><a href="https://ggplot2.tidyverse.org/reference/position_jitter.html">position_jitter()</a></code>. À l’intérieur de la fonction <code><a href="https://ggplot2.tidyverse.org/reference/position_jitter.html">position_jitter()</a></code>, l’argument <code>seed</code> (la graine en français) désigne le nombre sur lequel se base l’ordinateur pour générer un résultat pseudo-aléatoire. Quand on regarde le graphique ci-dessus, les données individuelles apparaissent décalées aléatoirement sur le plan vertical. Cet effet aléatoire est l’intérêt même d’une fonction dite “jitter”, et cet effet est en réalité prédéfini de telle sorte que si on utilise toujours le même numéro de graine (<code>seed</code>), alors on obtiendra toujours le même effet aléatoire sur le graphique.</p>
-<p>Les autres éléments de code sont là pour des considérations esthétiques et ne seront pas décrites ici. Il reste bien sûr possible de lire l’aide associée à ces fonctions pour gagner en maîtrise de ce type de graphique.</p>
+<p>Les autres éléments de code sont là pour des considérations esthétiques et ne seront pas décrits ici. Il reste bien sûr possible de lire l’aide associée à ces fonctions pour gagner en maîtrise de ce type de graphique.</p>
 <p>Lors de l’analyse de données, différentes formes typiques de distribution peuvent être rencontrées, notamment des formes <strong>gaussiennes</strong>, <strong>asymétriques</strong>, <strong>leptocurtiques</strong>, et <strong>platycurtiques</strong> <span class="citation">(Dart &amp; Chatellier, <a href="r%C3%A9f%C3%A9rences.html#ref-dartCommentDecrireDistribution2003" role="doc-biblioref">2003</a>)</span>. Ces formes sont illustrées sur la Figure <a href="analyses-descriptives-univari%C3%A9es.html#fig:variousDistributions">3.7</a>. Les formes gaussiennes sont observées en présence de variables suivant ce qu’on appelle une <strong>loi normale</strong>. Très souvent, on associe une distribution gaussienne, et donc une loi normale, à une distribution en forme de cloche, bien que l’analogie à la cloche pourrait se discuter. Les formes asymétriques traduisent le fait que la majorité des observations sont concentrées sur une extrémité de l’intervalle des valeurs possibles, et qu’il existe des observations, non majoritaires, avec des valeurs pouvant être très éloignées de la majorité des données, mais seulement d’un seul côté de la distribution. Enfin, les formes leptocurtiques et platycurtiques sont appelées ainsi par comparaison à la forme gaussienne. En présence d’une forme leptocurtique, la distribution s’avère plus pointue, avec des queues (qui sont les extrémités de la distribution) plus longues qu’avec une forme gaussienne. Dans le cadre d’une distribution platycurtique, la distribution est plus aplatie, avec des queues plus courtes qu’avec une forme gaussienne <span class="citation">(Dart &amp; Chatellier, <a href="r%C3%A9f%C3%A9rences.html#ref-dartCommentDecrireDistribution2003" role="doc-biblioref">2003</a>)</span>. La distribution uniforme est un cas particulier de distribution platycurtique, et c’est cette distribution qui est en réalité montrée sur la Figure <a href="analyses-descriptives-univari%C3%A9es.html#fig:variousDistributions">3.7</a>.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:variousDistributions"></span>
@@ -394,7 +394,7 @@ Figure 3.9: Effet de la forme de la distribution sur la position de la médiane
 <pre><code>##   25%   75% 
 ##  9.30 31.55</code></pre>
 <p>On remarque ici que la fonction <code><a href="https://rdrr.io/r/stats/quantile.html">quantile()</a></code> a plusieurs arguments. L’argument <code>probs</code> désigne les quantiles que l’on souhaite obtenir. Le quantile 0.25 correspond à Q1, et le quantile 0.75 correspond à Q3. L’argument <code>type</code> permet de configurer le type de calcul à effectuer pour obtenir les valeurs des quantiles recherchés. L’indication du chiffre 2 pour l’argument <code>type</code> permet d’obtenir les quantiles selon la méthode de calcul présentée ci-dessus, qui, comme nous l’avons précisé, est dédiée à l’étude d’une variable quantitative discrète. Par défaut, en revanche, la fonction <code><a href="https://rdrr.io/r/stats/quantile.html">quantile()</a></code> utilise le chiffre 7 pour l’argument <code>type</code>, ce qui renvoie à une méthode de calcul des quantiles qui serait davantage pertinente pour étudier des variables quantitatives continues. Comparons les résultats obtenus avec les deux méthodes de calcul :</p>
-<template id="1b1e2c9a-4f87-4461-85d1-46c51bb61153"><style>
+<template id="b3372e0f-ca1b-4ea7-be76-3e9da5041ac5"><style>
 .tabwid table{
   border-spacing:0px !important;
   border-collapse:collapse;
@@ -430,33 +430,33 @@ background-color: transparent;
 }
 </style>
 <div class="tabwid">
-<style>.cl-6cf3215c{}.cl-6ceb5b48{font-family:'Helvetica';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-6ceb5b5c{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-6ceb71e6{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-6cebad3c{width:64.5pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6cebad50{width:55.4pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6cebad51{width:64.5pt;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6cebad5a{width:55.4pt;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6cebad64{width:64.5pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6cebad65{width:55.4pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<div class="inline-table"><table class="cl-6cf3215c">
+<style>.cl-3b532f4a{}.cl-3b4bcd40{font-family:'Helvetica';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-3b4bcd4a{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-3b4be064{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-3b4c1e6c{width:64.5pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3b4c1e76{width:55.4pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3b4c1e80{width:64.5pt;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3b4c1e81{width:55.4pt;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3b4c1e8a{width:64.5pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3b4c1e8b{width:55.4pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<div class="inline-table"><table class="cl-3b532f4a">
 <caption class="Table Caption">
 <p><span id="tab:quantilesCompaMethods">Tableau 3.1: </span>Comparaison des quantiles obtenus selon différentes configurations de la fonction quantile()</p>
 </caption>
 <thead><tr style="overflow-wrap:break-word;">
-<td class="cl-6cebad64"><p class="cl-6ceb71e6"><span class="cl-6ceb5b48">Quantile</span></p></td>
-<td class="cl-6cebad65"><p class="cl-6ceb71e6"><span class="cl-6ceb5b48">Type 2</span></p></td>
-<td class="cl-6cebad65"><p class="cl-6ceb71e6"><span class="cl-6ceb5b48">Type 7</span></p></td>
+<td class="cl-3b4c1e8a"><p class="cl-3b4be064"><span class="cl-3b4bcd40">Quantile</span></p></td>
+<td class="cl-3b4c1e8b"><p class="cl-3b4be064"><span class="cl-3b4bcd40">Type 2</span></p></td>
+<td class="cl-3b4c1e8b"><p class="cl-3b4be064"><span class="cl-3b4bcd40">Type 7</span></p></td>
 </tr></thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-6cebad3c"><p class="cl-6ceb71e6"><span class="cl-6ceb5b5c">0.25</span></p></td>
-<td class="cl-6cebad50"><p class="cl-6ceb71e6"><span class="cl-6ceb5b5c">9.30</span></p></td>
-<td class="cl-6cebad50"><p class="cl-6ceb71e6"><span class="cl-6ceb5b5c">10.050</span></p></td>
+<td class="cl-3b4c1e6c"><p class="cl-3b4be064"><span class="cl-3b4bcd4a">0.25</span></p></td>
+<td class="cl-3b4c1e76"><p class="cl-3b4be064"><span class="cl-3b4bcd4a">9.30</span></p></td>
+<td class="cl-3b4c1e76"><p class="cl-3b4be064"><span class="cl-3b4bcd4a">10.050</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-6cebad51"><p class="cl-6ceb71e6"><span class="cl-6ceb5b5c">0.75</span></p></td>
-<td class="cl-6cebad5a"><p class="cl-6ceb71e6"><span class="cl-6ceb5b5c">31.55</span></p></td>
-<td class="cl-6cebad5a"><p class="cl-6ceb71e6"><span class="cl-6ceb5b5c">28.575</span></p></td>
+<td class="cl-3b4c1e80"><p class="cl-3b4be064"><span class="cl-3b4bcd4a">0.75</span></p></td>
+<td class="cl-3b4c1e81"><p class="cl-3b4be064"><span class="cl-3b4bcd4a">31.55</span></p></td>
+<td class="cl-3b4c1e81"><p class="cl-3b4be064"><span class="cl-3b4bcd4a">28.575</span></p></td>
 </tr>
 </tbody>
 </table></div>
-</div></template><div class="flextable-shadow-host" id="67cd5f8f-755a-4595-ae0e-0508cbfd5386"></div>
+</div></template><div class="flextable-shadow-host" id="3c4ebdf2-e5d1-4d57-a8d9-885f7d9baaa4"></div>
 <script>
-var dest = document.getElementById("67cd5f8f-755a-4595-ae0e-0508cbfd5386");
-var template = document.getElementById("1b1e2c9a-4f87-4461-85d1-46c51bb61153");
+var dest = document.getElementById("3c4ebdf2-e5d1-4d57-a8d9-885f7d9baaa4");
+var template = document.getElementById("b3372e0f-ca1b-4ea7-be76-3e9da5041ac5");
 var caption = template.content.querySelector("caption");
 if(caption) {
   caption.style.cssText = "display:block;text-align:center;";
@@ -468,7 +468,7 @@ var fantome = dest.attachShadow({mode: 'open'});
 var templateContent = template.content;
 fantome.appendChild(templateContent);
 </script><p>On remarque que les résultats de la fonction <code><a href="https://rdrr.io/r/stats/quantile.html">quantile()</a></code> sont différents selon la configuration de l’argument <code>type</code>. Le choix de la configuration est donc important. Pour comprendre comment R a calculé les valeurs associées aux quantiles 0.25 et 0.75 dans le cadre de la seconde méthode (i.e., avec <code>type</code> = 7), regardons le tableau ci-dessous.</p>
-<template id="f49ea596-982e-4368-94a2-92924e63f9bd"><style>
+<template id="eeb22e30-67c2-4243-8fd9-2b74a142146e"><style>
 .tabwid table{
   border-spacing:0px !important;
   border-collapse:collapse;
@@ -504,63 +504,63 @@ background-color: transparent;
 }
 </style>
 <div class="tabwid">
-<style>.cl-6d154930{}.cl-6d0d11f2{font-family:'Helvetica';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-6d0d1206{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-6d0d262e{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-6d0d64c2{width:48pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6d0d64cc{width:54.2pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6d0d64cd{width:72.5pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6d0d64d6{width:54.2pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6d0d64d7{width:48pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6d0d64e0{width:72.5pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6d0d64ea{width:54.2pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6d0d64eb{width:72.5pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6d0d64ec{width:48pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6d0d64f4{width:48pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6d0d64f5{width:54.2pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6d0d64fe{width:72.5pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6d0d64ff{width:72.5pt;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6d0d6508{width:48pt;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6d0d6509{width:54.2pt;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6d0d650a{width:72.5pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6d0d6512{width:48pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6d0d6513{width:54.2pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<div class="inline-table"><table class="cl-6d154930">
+<style>.cl-3b734d98{}.cl-3b6b4bc0{font-family:'Helvetica';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-3b6b4bca{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-3b6b5f66{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-3b6b9b7a{width:48pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3b6b9b84{width:54.2pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3b6b9b85{width:72.5pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3b6b9b8e{width:54.2pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3b6b9b98{width:48pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3b6b9b99{width:72.5pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3b6b9ba2{width:54.2pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3b6b9ba3{width:72.5pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3b6b9ba4{width:48pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3b6b9bac{width:48pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3b6b9bad{width:54.2pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3b6b9be8{width:72.5pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3b6b9be9{width:72.5pt;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3b6b9bf2{width:48pt;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3b6b9bf3{width:54.2pt;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3b6b9bfc{width:72.5pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3b6b9bfd{width:48pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3b6b9bfe{width:54.2pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<div class="inline-table"><table class="cl-3b734d98">
 <caption class="Table Caption">
 <p><span id="tab:quantilesContinuousMethod">Tableau 3.2: </span>Quantiles d’une variable quantitative continue</p>
 </caption>
 <thead><tr style="overflow-wrap:break-word;">
-<td class="cl-6d0d6512"><p class="cl-6d0d262e"><span class="cl-6d0d11f2">Rang</span></p></td>
-<td class="cl-6d0d650a"><p class="cl-6d0d262e"><span class="cl-6d0d11f2">Quantile</span></p></td>
-<td class="cl-6d0d6513"><p class="cl-6d0d262e"><span class="cl-6d0d11f2">Valeur</span></p></td>
+<td class="cl-3b6b9bfd"><p class="cl-3b6b5f66"><span class="cl-3b6b4bc0">Rang</span></p></td>
+<td class="cl-3b6b9bfc"><p class="cl-3b6b5f66"><span class="cl-3b6b4bc0">Quantile</span></p></td>
+<td class="cl-3b6b9bfe"><p class="cl-3b6b5f66"><span class="cl-3b6b4bc0">Valeur</span></p></td>
 </tr></thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-6d0d64c2"><p class="cl-6d0d262e"><span class="cl-6d0d1206">1</span></p></td>
-<td class="cl-6d0d64cd"><p class="cl-6d0d262e"><span class="cl-6d0d1206">0.0000000</span></p></td>
-<td class="cl-6d0d64cc"><p class="cl-6d0d262e"><span class="cl-6d0d1206">4.5</span></p></td>
+<td class="cl-3b6b9b7a"><p class="cl-3b6b5f66"><span class="cl-3b6b4bca">1</span></p></td>
+<td class="cl-3b6b9b85"><p class="cl-3b6b5f66"><span class="cl-3b6b4bca">0.0000000</span></p></td>
+<td class="cl-3b6b9b84"><p class="cl-3b6b5f66"><span class="cl-3b6b4bca">4.5</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-6d0d64d7"><p class="cl-6d0d262e"><span class="cl-6d0d1206">2</span></p></td>
-<td class="cl-6d0d64e0"><p class="cl-6d0d262e"><span class="cl-6d0d1206">0.1428571</span></p></td>
-<td class="cl-6d0d64d6"><p class="cl-6d0d262e"><span class="cl-6d0d1206">7.8</span></p></td>
+<td class="cl-3b6b9b98"><p class="cl-3b6b5f66"><span class="cl-3b6b4bca">2</span></p></td>
+<td class="cl-3b6b9b99"><p class="cl-3b6b5f66"><span class="cl-3b6b4bca">0.1428571</span></p></td>
+<td class="cl-3b6b9b8e"><p class="cl-3b6b5f66"><span class="cl-3b6b4bca">7.8</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-6d0d64ec"><p class="cl-6d0d262e"><span class="cl-6d0d1206">3</span></p></td>
-<td class="cl-6d0d64eb"><p class="cl-6d0d262e"><span class="cl-6d0d1206">0.2857143</span></p></td>
-<td class="cl-6d0d64ea"><p class="cl-6d0d262e"><span class="cl-6d0d1206">10.8</span></p></td>
+<td class="cl-3b6b9ba4"><p class="cl-3b6b5f66"><span class="cl-3b6b4bca">3</span></p></td>
+<td class="cl-3b6b9ba3"><p class="cl-3b6b5f66"><span class="cl-3b6b4bca">0.2857143</span></p></td>
+<td class="cl-3b6b9ba2"><p class="cl-3b6b5f66"><span class="cl-3b6b4bca">10.8</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-6d0d64d7"><p class="cl-6d0d262e"><span class="cl-6d0d1206">4</span></p></td>
-<td class="cl-6d0d64e0"><p class="cl-6d0d262e"><span class="cl-6d0d1206">0.4285714</span></p></td>
-<td class="cl-6d0d64d6"><p class="cl-6d0d262e"><span class="cl-6d0d1206">13.9</span></p></td>
+<td class="cl-3b6b9b98"><p class="cl-3b6b5f66"><span class="cl-3b6b4bca">4</span></p></td>
+<td class="cl-3b6b9b99"><p class="cl-3b6b5f66"><span class="cl-3b6b4bca">0.4285714</span></p></td>
+<td class="cl-3b6b9b8e"><p class="cl-3b6b5f66"><span class="cl-3b6b4bca">13.9</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-6d0d64f4"><p class="cl-6d0d262e"><span class="cl-6d0d1206">5</span></p></td>
-<td class="cl-6d0d64fe"><p class="cl-6d0d262e"><span class="cl-6d0d1206">0.5714286</span></p></td>
-<td class="cl-6d0d64f5"><p class="cl-6d0d262e"><span class="cl-6d0d1206">20.2</span></p></td>
+<td class="cl-3b6b9bac"><p class="cl-3b6b5f66"><span class="cl-3b6b4bca">5</span></p></td>
+<td class="cl-3b6b9be8"><p class="cl-3b6b5f66"><span class="cl-3b6b4bca">0.5714286</span></p></td>
+<td class="cl-3b6b9bad"><p class="cl-3b6b5f66"><span class="cl-3b6b4bca">20.2</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-6d0d64d7"><p class="cl-6d0d262e"><span class="cl-6d0d1206">6</span></p></td>
-<td class="cl-6d0d64e0"><p class="cl-6d0d262e"><span class="cl-6d0d1206">0.7142857</span></p></td>
-<td class="cl-6d0d64d6"><p class="cl-6d0d262e"><span class="cl-6d0d1206">25.6</span></p></td>
+<td class="cl-3b6b9b98"><p class="cl-3b6b5f66"><span class="cl-3b6b4bca">6</span></p></td>
+<td class="cl-3b6b9b99"><p class="cl-3b6b5f66"><span class="cl-3b6b4bca">0.7142857</span></p></td>
+<td class="cl-3b6b9b8e"><p class="cl-3b6b5f66"><span class="cl-3b6b4bca">25.6</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-6d0d64ec"><p class="cl-6d0d262e"><span class="cl-6d0d1206">7</span></p></td>
-<td class="cl-6d0d64eb"><p class="cl-6d0d262e"><span class="cl-6d0d1206">0.8571429</span></p></td>
-<td class="cl-6d0d64ea"><p class="cl-6d0d262e"><span class="cl-6d0d1206">37.5</span></p></td>
+<td class="cl-3b6b9ba4"><p class="cl-3b6b5f66"><span class="cl-3b6b4bca">7</span></p></td>
+<td class="cl-3b6b9ba3"><p class="cl-3b6b5f66"><span class="cl-3b6b4bca">0.8571429</span></p></td>
+<td class="cl-3b6b9ba2"><p class="cl-3b6b5f66"><span class="cl-3b6b4bca">37.5</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-6d0d6508"><p class="cl-6d0d262e"><span class="cl-6d0d1206">8</span></p></td>
-<td class="cl-6d0d64ff"><p class="cl-6d0d262e"><span class="cl-6d0d1206">1.0000000</span></p></td>
-<td class="cl-6d0d6509"><p class="cl-6d0d262e"><span class="cl-6d0d1206">43.9</span></p></td>
+<td class="cl-3b6b9bf2"><p class="cl-3b6b5f66"><span class="cl-3b6b4bca">8</span></p></td>
+<td class="cl-3b6b9be9"><p class="cl-3b6b5f66"><span class="cl-3b6b4bca">1.0000000</span></p></td>
+<td class="cl-3b6b9bf3"><p class="cl-3b6b5f66"><span class="cl-3b6b4bca">43.9</span></p></td>
 </tr>
 </tbody>
 </table></div>
-</div></template><div class="flextable-shadow-host" id="4ed2f9c8-d191-4c50-af8e-3605d819286a"></div>
+</div></template><div class="flextable-shadow-host" id="79214e84-3940-4782-b450-914e3a5f0793"></div>
 <script>
-var dest = document.getElementById("4ed2f9c8-d191-4c50-af8e-3605d819286a");
-var template = document.getElementById("f49ea596-982e-4368-94a2-92924e63f9bd");
+var dest = document.getElementById("79214e84-3940-4782-b450-914e3a5f0793");
+var template = document.getElementById("eeb22e30-67c2-4243-8fd9-2b74a142146e");
 var caption = template.content.querySelector("caption");
 if(caption) {
   caption.style.cssText = "display:block;text-align:center;";
@@ -598,7 +598,7 @@ Figure 3.10: Détermination des quartiles Q1 et Q3 avec une variable quantitativ
 Dans ce calcul, <em>s</em> désigne l’écart-type non biaisé de la variable, et <em>N</em> désigne la taille de la variable. Avec cette méthode, on obtient un coefficient négatif lorsque la distribution est asymétrique à gauche (longue queue vers la gauche), un coefficient de 0 lorsque la distribution est parfaitement symétrique, et un coefficient positif lorsque la distribution est asymétrique à droite (longue queue vers la droite). Ceci est illustré sur la Figure <a href="analyses-descriptives-univari%C3%A9es.html#fig:skeweddistri">3.11</a>.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:skeweddistri"></span>
-<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/skeweddistri-1.png" alt="Valeur du Skewness selon la forme de la distribution" width="90%"><p class="caption">
+<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/skeweddistri-1.png" alt="Valeur du Skewness selon la forme de la distribution" width="100%"><p class="caption">
 Figure 3.11: Valeur du Skewness selon la forme de la distribution
 </p>
 </div>
@@ -617,7 +617,7 @@ Joanes et Gill <span class="citation">(<a href="r%C3%A9f%C3%A9rences.html#ref-jo
 Dans ce calcul, <em>s</em> désigne l’écart-type non biaisé de la variable, et <em>N</em> désigne la taille de la variable. Avec cette méthode, on obtient un coefficient négatif lorsque la distribution est particulièrement aplatie par rapport à une distribution suivant une loi normale (distribution platycurtique), un coefficient de 0 lorsque la distribution suit une loi normale (distribution mésocurtique), et un coefficient positif lorsque la distribution est particulièrement pointue par rapport à une loi normale (distribution leptocurtique). Ceci est illustré sur la Figure <a href="analyses-descriptives-univari%C3%A9es.html#fig:kurtosisdistri">3.12</a>.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:kurtosisdistri"></span>
-<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/kurtosisdistri-1.png" alt="Valeur du Kurtosis selon la forme de la distribution" width="90%"><p class="caption">
+<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/kurtosisdistri-1.png" alt="Valeur du Kurtosis selon la forme de la distribution" width="100%"><p class="caption">
 Figure 3.12: Valeur du Kurtosis selon la forme de la distribution
 </p>
 </div>
@@ -764,7 +764,7 @@ Figure 3.14: Exemples de positions de la moyenne et de la médiane dans le cadre
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:geombar"></span>
-<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/geombar-1.png" alt="Exemple de diagramme en barres" width="70%"><p class="caption">
+<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/geombar-1.png" alt="Exemple de diagramme en barres" width="80%"><p class="caption">
 Figure 3.15: Exemple de diagramme en barres
 </p>
 </div>
@@ -846,9 +846,8 @@ Figure 3.15: Exemple de diagramme en barres
 <span>     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"F"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:geombarEnhancedGraph"></span>
-<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/geombarEnhancedGraph-1.png" alt="Différentes sortes de diagrammes en barres" width="672"><p class="caption">
-Figure 3.16: Différentes sortes de diagrammes en barres
+<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/geombarEnhancedGraph,%20-1.png" alt="Différentes sortes de diagrammes en barres" width="100%"><p class="caption">
+(#fig:geombarEnhancedGraph, )Différentes sortes de diagrammes en barres
 </p>
 </div>
 <p>Dans le code montré ci-dessus, on remarque que le réagencement manuel des barres (cf. graphique B) a pu être réalisé grâce à la fonction <code><a href="https://forcats.tidyverse.org/reference/fct_relevel.html">fct_relevel()</a></code> du package <code>forcats</code>. Pour les autres diagrammes, la réorganisation des barres en ordre croissant ou décroissant sur la base de la valeur de l’effectif (<code>n</code>) a pu se faire grâce à la fonction <code><a href="https://forcats.tidyverse.org/reference/fct_reorder.html">fct_reorder()</a></code> du package <code>forcats</code>. Les noms des arguments de ces fonctions n’ont pas été indiqués pour alléger le code. Le plus important, c’est d’indiquer en premier dans la fonction la variable dont l’ordre d’apparition des modalités doit être réorganisé (il s’agissait de la variable <code>color</code> dans cet exemple). En second, il convient d’indiquer la logique de réorganisation de l’apparition des modalités (ce qui a été fait sur la base des valeurs de la variable <code>n</code> dans les exemples ci-dessus utilisant la fonction <code><a href="https://forcats.tidyverse.org/reference/fct_reorder.html">fct_reorder()</a></code>).</p>
@@ -903,7 +902,7 @@ Figure 3.16: Différentes sortes de diagrammes en barres
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:geombarPropEnhancedGraph"></span>
 <img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/geombarPropEnhancedGraph-1.png" alt="Différentes sortes de diagrammes pour représenter des proportions" width="672"><p class="caption">
-Figure 3.17: Différentes sortes de diagrammes pour représenter des proportions
+Figure 3.16: Différentes sortes de diagrammes pour représenter des proportions
 </p>
 </div>
 </div>
