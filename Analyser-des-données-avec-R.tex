@@ -133,7 +133,7 @@
 
 \title{Analyser des données avec R}
 \author{Pierre-Yves de Müllenheim}
-\date{2022-07-20}
+\date{2022-07-21}
 
 \begin{document}
 \maketitle
@@ -1644,7 +1644,7 @@ Dans le cadre de l'analyse de variables quantitatives, il est toujours utile de 
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.8\linewidth]{Analyser-des-données-avec-R_files/figure-latex/geomhistogram-1} 
+{\centering \includegraphics[width=0.9\linewidth]{Analyser-des-données-avec-R_files/figure-latex/geomhistogram-1} 
 
 }
 
@@ -1681,7 +1681,7 @@ Comme l'indique le message qui accompagne le graphique, l'histogramme a été r�
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.8\linewidth]{Analyser-des-données-avec-R_files/figure-latex/geomhistogramVariedBinwidth2-1} 
+{\centering \includegraphics[width=0.9\linewidth]{Analyser-des-données-avec-R_files/figure-latex/geomhistogramVariedBinwidth2-1} 
 
 }
 
@@ -1701,7 +1701,7 @@ En plus de l'histogramme, une autre manière de prendre connaissance graphiqueme
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.8\linewidth]{Analyser-des-données-avec-R_files/figure-latex/geomboxplot-1} 
+{\centering \includegraphics[width=0.9\linewidth]{Analyser-des-données-avec-R_files/figure-latex/geomboxplot-1} 
 
 }
 
@@ -1726,7 +1726,7 @@ La boîte à moustaches (cf.~Figure \ref{fig:geomboxplot}) nous livre plusieurs 
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.8\linewidth]{Analyser-des-données-avec-R_files/figure-latex/geomboxplotModified-1} 
+{\centering \includegraphics[width=0.9\linewidth]{Analyser-des-données-avec-R_files/figure-latex/geomboxplotModified-1} 
 
 }
 
@@ -1790,7 +1790,7 @@ Quand on regarde bien, on voit que la troisième observation de cette nouvelle v
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.8\linewidth]{Analyser-des-données-avec-R_files/figure-latex/geomboxplotOutlierId-1} 
+{\centering \includegraphics[width=0.9\linewidth]{Analyser-des-données-avec-R_files/figure-latex/geomboxplotOutlierId-1} 
 
 }
 
@@ -1852,15 +1852,17 @@ On remarque ainsi qu'au-delà de prendre connaissance de la forme de la distribu
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# Code modifié à partir de https://www.cedricscherer.com/2021/06/06/visualizing-distributions-with-raincloud-plots-and-how-to-create-them-with-ggplot2/}
-\KeywordTok{library}\NormalTok{(gghalves)}
+\CommentTok{# Code modifié à partir de https://www.cedricscherer.com/2021/06/06/visualizing-}
+\CommentTok{# distributions-with-raincloud-plots-and-how-to-create-them-with-ggplot2/}
+
 \KeywordTok{library}\NormalTok{(ggdist)}
+\KeywordTok{library}\NormalTok{(gghalves)}
 
 \KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ iris, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \StringTok{""}\NormalTok{, }\DataTypeTok{y =}\NormalTok{ Sepal.Length)) }\OperatorTok{+}\StringTok{ }
 \StringTok{  }\NormalTok{ggdist}\OperatorTok{::}\KeywordTok{stat_halfeye}\NormalTok{(}
     \CommentTok{## Ajuste le lissage de la courbe de densité}
     \DataTypeTok{adjust =} \FloatTok{.5}\NormalTok{, }
-    \CommentTok{## Ajuste l'aire située sous la courbe de densité}
+    \CommentTok{## Ajuste la hauteur de l'aire située sous la courbe de densité}
     \DataTypeTok{width =} \FloatTok{.6}\NormalTok{, }
     \DataTypeTok{.width =} \DecValTok{0}\NormalTok{, }
     \DataTypeTok{point_colour =} \OtherTok{NA}
@@ -1881,16 +1883,16 @@ On remarque ainsi qu'au-delà de prendre connaissance de la forme de la distribu
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.8\linewidth]{Analyser-des-données-avec-R_files/figure-latex/raincloudUnivar-1} 
+{\centering \includegraphics[width=0.9\linewidth]{Analyser-des-données-avec-R_files/figure-latex/raincloudUnivar-1} 
 
 }
 
 \caption{Exemple de raincloud plot}\label{fig:raincloudUnivar}
 \end{figure}
 
-Lorsqu'on regarde le code ci-dessus qui a permis de créer le \emph{raincould plot}, on remarque l'arrivée de deux nouveaux packages : \texttt{ggdist} et \texttt{gghalves}. Ces packages doivent être installés et chargés avant de pouvoir être utilisés. La package \texttt{ggdist} est utilisé avec la fonction \texttt{stat\_halfeye()}, qui sert à montrer l'aire sous la courbe de densité en gris sur la figure ci-dessus. Plus l'aire est grande au niveau d'un intervalle de valeurs de données, plus il est probable de rencontrer les valeurs concernées lorsqu'on prend au hasard des observations du jeu de données. Plusieurs arguments peuvent en réalité servir à calculer cette aire et finalement modifier sa forme. L'argument \texttt{adjust} de la fonction \texttt{stat\_halfeye()} sert en quelque sorte à ajuster le lissage de l'aire de densité : plus sa valeur sera élevée, plus l'aire sera lissée.
+Lorsqu'on regarde le code ci-dessus qui a permis de créer le \emph{raincould plot}, on remarque l'arrivée de deux nouveaux packages : \texttt{ggdist} et \texttt{gghalves}. Ces packages doivent être installés et chargés avant de pouvoir être utilisés. Le package \texttt{ggdist} est utilisé avec la fonction \texttt{stat\_halfeye()}, qui sert à montrer sur la figure ci-dessus l'aire grise sous la courbe de densité. Plus cette aire est grande au niveau d'un intervalle de valeurs donné, plus il est probable de rencontrer les valeurs concernées lorsqu'on prend au hasard des observations du jeu de données. Plusieurs arguments peuvent en réalité servir à calculer la courbe de densité et finalement modifier sa forme et celle de l'aire qu'il y a en-dessous. Parmi eux, l'argument \texttt{adjust} de la fonction \texttt{stat\_halfeye()} sert en quelque sorte à ajuster le lissage de la courbe de densité : plus sa valeur sera élevée, plus la courbe sera lissée.
 
-Pour montrer les données individuelles (\emph{the rain}) sans risquer qu'elle ne se superposent de trop, on a utilisé la fonction \texttt{geom\_half\_point()} du package \texttt{gghalves}, l'argument \texttt{transformation} et la fonction \texttt{position\_jitter()}. À l'intérieur de la fonction position\_jitter(), l'argument seed (la graine en français) désigne le nombre sur lequel se base l'ordinateur pour générer un résultat pseudo-aléatoire. Quand on regarde les graphiques, les données individuelles apparaissent décalées aléatoirement sur le plan vertical. Cet effet aléatoire est l'intérêt même d'une fonction dite ``jitter'', et cet effet est en réalité prédéfini de telle sorte que si on utilise toujours le même numéro de graine (\texttt{seed}), alors on obtiendra toujours le même effet aléatoire sur le graphique.
+Pour montrer les données individuelles (\emph{the rain}) sans risquer qu'elles ne se superposent de trop, on a utilisé la fonction \texttt{geom\_half\_point()} du package \texttt{gghalves}, l'argument \texttt{transformation}, et la fonction \texttt{position\_jitter()}. À l'intérieur de la fonction \texttt{position\_jitter()}, l'argument \texttt{seed} (la graine en français) désigne le nombre sur lequel se base l'ordinateur pour générer un résultat pseudo-aléatoire. Quand on regarde le graphique ci-dessus, les données individuelles apparaissent décalées aléatoirement sur le plan vertical. Cet effet aléatoire est l'intérêt même d'une fonction dite ``jitter'', et cet effet est en réalité prédéfini de telle sorte que si on utilise toujours le même numéro de graine (\texttt{seed}), alors on obtiendra toujours le même effet aléatoire sur le graphique.
 
 Les autres éléments de code sont là pour des considérations esthétiques et ne seront pas décrites ici. Il reste bien sûr possible de lire l'aide associée à ces fonctions pour gagner en maîtrise de ce type de graphique.
 
@@ -1898,7 +1900,7 @@ Lors de l'analyse de données, différentes formes typiques de distribution peuv
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.8\linewidth]{Analyser-des-données-avec-R_files/figure-latex/variousDistributions-1} 
+{\centering \includegraphics[width=1\linewidth]{Analyser-des-données-avec-R_files/figure-latex/variousDistributions-1} 
 
 }
 
@@ -2006,7 +2008,7 @@ La moyenne, c'est en quelque sorte le ``centre de gravité'' de la variable \aut
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.8\linewidth]{Analyser-des-données-avec-R_files/figure-latex/meansSkewedVariables-1} 
+{\centering \includegraphics[width=0.9\linewidth]{Analyser-des-données-avec-R_files/figure-latex/meansSkewedVariables-1} 
 
 }
 
@@ -2046,7 +2048,7 @@ Contrairement à la moyenne, la médiane prend donc en compte moins d'informatio
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.8\linewidth]{Analyser-des-données-avec-R_files/figure-latex/mediansSkewedVariables-1} 
+{\centering \includegraphics[width=0.9\linewidth]{Analyser-des-données-avec-R_files/figure-latex/mediansSkewedVariables-1} 
 
 }
 
@@ -2326,7 +2328,7 @@ Dans le calcul ci-dessus, \emph{k} désigne le rang de la valeur considérée, e
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.8\linewidth]{Analyser-des-données-avec-R_files/figure-latex/graphicContinuouQuantiles-1} 
+{\centering \includegraphics[width=0.9\linewidth]{Analyser-des-données-avec-R_files/figure-latex/graphicContinuouQuantiles-1} 
 
 }
 
@@ -2362,7 +2364,7 @@ Dans ce calcul, \emph{s} désigne l'écart-type non biaisé de la variable, et \
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.8\linewidth]{Analyser-des-données-avec-R_files/figure-latex/skeweddistri-1} 
+{\centering \includegraphics[width=0.9\linewidth]{Analyser-des-données-avec-R_files/figure-latex/skeweddistri-1} 
 
 }
 
@@ -2398,7 +2400,7 @@ Dans ce calcul, \emph{s} désigne l'écart-type non biaisé de la variable, et \
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.8\linewidth]{Analyser-des-données-avec-R_files/figure-latex/kurtosisdistri-1} 
+{\centering \includegraphics[width=0.9\linewidth]{Analyser-des-données-avec-R_files/figure-latex/kurtosisdistri-1} 
 
 }
 
@@ -2539,7 +2541,7 @@ Ceci est illustré sur la Figure \ref{fig:ObservationsWithinSdMutiplesGaussianDi
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.8\linewidth]{Analyser-des-données-avec-R_files/figure-latex/ObservationsWithinSdMutiplesGaussianDistri-1} 
+{\centering \includegraphics[width=0.9\linewidth]{Analyser-des-données-avec-R_files/figure-latex/ObservationsWithinSdMutiplesGaussianDistri-1} 
 
 }
 
@@ -2550,7 +2552,7 @@ Lorsqu'il s'agit plus précisément de vouloir renseigner sur la tendance centra
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.8\linewidth]{Analyser-des-données-avec-R_files/figure-latex/MeanAboveLedianAsym-1} 
+{\centering \includegraphics[width=0.9\linewidth]{Analyser-des-données-avec-R_files/figure-latex/MeanAboveLedianAsym-1} 
 
 }
 
@@ -2809,7 +2811,7 @@ Dans le cadre de variables qualitatives, la tendance centrale peut être renseig
 \item
   En statistiques, la notion de population désigne l'ensemble des individus existant qui présentent un ou plusieurs critères d'intérêt. Un échantillon est alors une fraction de la population étudiée, composée d'individus qui en principe sont représentatifs de la population étudiée.
 \item
-  Avec R, les graphiques peuvent être réalisés, en autres, à l'aide du package \texttt{ggplot2} et des fonctions associées.
+  Avec R, les graphiques peuvent être réalisés, entre autres, à l'aide du package \texttt{ggplot2} et des fonctions associées.
 \item
   Lors de l'analyse d'une variable quantitative, une première étape doit être de visualiser graphiquement la distribution des observations. Cela peut se faire à l'aide :
 
