@@ -201,11 +201,11 @@ require(gghalves)
 }
 ```
 
-Lorsqu'on regarde le code ci-dessus qui a permis de créer le *raincould plot*, on remarque l'arrivée de deux nouveaux packages : `ggdist` et `gghalves`. Ces packages doivent être installés et chargés avant de pouvoir être utilisés. Le package `ggdist` est utilisé avec la fonction `stat_halfeye()`, qui sert à montrer sur la figure ci-dessus l'aire grise sous la courbe de densité. Plus cette aire est grande au niveau d'un intervalle de valeurs donné, plus il est probable de rencontrer les valeurs concernées lorsqu'on prend au hasard des observations du jeu de données. Plusieurs arguments peuvent en réalité servir à calculer la courbe de densité et finalement modifier sa forme et celle de l'aire qu'il y a en-dessous. Parmi eux, l'argument `adjust` de la fonction `stat_halfeye()` sert en quelque sorte à ajuster le lissage de la courbe de densité : plus sa valeur sera élevée, plus la courbe sera lissée. 
+Lorsqu'on regarde le code ci-dessus qui a permis de créer le *raincould plot*, on remarque l'arrivée de deux nouveaux packages : `ggdist` et `gghalves`. Ces packages doivent être installés et chargés avant de pouvoir être utilisés. Le package `ggdist` est utilisé avec la fonction `stat_halfeye()`, qui sert à montrer sur la figure ci-dessus l'aire grise sous la courbe de densité (*the cloud*). Plus cette aire est grande au niveau d'un intervalle de valeurs donné, plus il est probable de rencontrer les valeurs concernées lorsqu'on prend au hasard des observations du jeu de données. Plusieurs arguments peuvent en réalité servir à calculer la courbe de densité et finalement modifier sa forme et celle de l'aire qu'il y a en-dessous. Parmi eux, l'argument `adjust` de la fonction `stat_halfeye()` sert en quelque sorte à ajuster le lissage de la courbe de densité : plus sa valeur sera élevée, plus la courbe sera lissée. 
 
 Pour montrer les données individuelles (*the rain*) sans risquer qu’elles ne se superposent de trop, on a utilisé la fonction `geom_half_point()` du package `gghalves`, l’argument `transformation`, et la fonction `position_jitter()`. À l’intérieur de la fonction `position_jitter()`, l’argument `seed` (la graine en français) désigne le nombre sur lequel se base l’ordinateur pour générer un résultat pseudo-aléatoire. Quand on regarde le graphique ci-dessus, les données individuelles apparaissent décalées aléatoirement sur le plan vertical. Cet effet aléatoire est l’intérêt même d’une fonction dite "jitter", et cet effet est en réalité prédéfini de telle sorte que si on utilise toujours le même numéro de graine (`seed`), alors on obtiendra toujours le même effet aléatoire sur le graphique.
 
-Les autres éléments de code sont là pour des considérations esthétiques et ne seront pas décrites ici. Il reste bien sûr possible de lire l'aide associée à ces fonctions pour gagner en maîtrise de ce type de graphique.
+Les autres éléments de code sont là pour des considérations esthétiques et ne seront pas décrits ici. Il reste bien sûr possible de lire l'aide associée à ces fonctions pour gagner en maîtrise de ce type de graphique.
 
 Lors de l'analyse de données, différentes formes typiques de distribution peuvent être rencontrées, notamment des formes **gaussiennes**, **asymétriques**, **leptocurtiques**, et **platycurtiques** [@dartCommentDecrireDistribution2003]. Ces formes sont illustrées sur la Figure \@ref(fig:variousDistributions). Les formes gaussiennes sont observées en présence de variables suivant ce qu'on appelle une **loi normale**. Très souvent, on associe une distribution gaussienne, et donc une loi normale, à une distribution en forme de cloche, bien que  l'analogie à la cloche pourrait se discuter. Les formes asymétriques traduisent le fait que la majorité des observations sont concentrées sur une extrémité de l'intervalle des valeurs possibles, et qu'il existe des observations, non majoritaires, avec des valeurs pouvant être très éloignées de la majorité des données, mais seulement d'un seul côté de la distribution. Enfin, les formes leptocurtiques et platycurtiques sont appelées ainsi par comparaison à la forme gaussienne. En présence d'une forme leptocurtique, la distribution s'avère plus pointue, avec des queues (qui sont les extrémités de la distribution) plus longues qu'avec une forme gaussienne. Dans le cadre d'une distribution platycurtique, la distribution est plus aplatie, avec des queues plus courtes qu'avec une forme gaussienne [@dartCommentDecrireDistribution2003]. La distribution uniforme est un cas particulier de distribution platycurtique, et c'est cette distribution qui est en réalité montrée sur la Figure \@ref(fig:variousDistributions).
 
@@ -580,7 +580,7 @@ Comme on peut le voir dans l'aide associée à la fonction `skewness()`, il exis
 $$\gamma_{1} =  \frac{1}{s^3} {\frac{\sum_{i=1}^{N} (X{i} - \overline{X})^3}{N}}$$
 Dans ce calcul, *s* désigne l'écart-type non biaisé de la variable, et *N* désigne la taille de la variable. Avec cette méthode, on obtient un coefficient négatif lorsque la distribution est asymétrique à gauche (longue queue vers la gauche), un coefficient de 0 lorsque la distribution est parfaitement symétrique, et un coefficient positif lorsque la distribution est asymétrique à droite (longue queue vers la droite). Ceci est illustré sur la Figure \@ref(fig:skeweddistri).
 
-```{r skeweddistri, out.width = '90%', echo = FALSE, message = FALSE, warning = FALSE, fig.cap="Valeur du Skewness selon la forme de la distribution"}
+```{r skeweddistri, out.width = '100%', echo = FALSE, message = FALSE, warning = FALSE, fig.cap="Valeur du Skewness selon la forme de la distribution"}
 set.seed(123)
 chis_1 <- tibble(x = rchisq(1000, 1))
 set.seed(123)
@@ -756,7 +756,7 @@ Comme on peut le voir dans l'aide associée à la fonction `kurtosis()`, il exis
 $$\gamma_{2} =  \frac{1}{s^4} {\frac{\sum_{i=1}^{N} (X{i} - \overline{X})^4}{N}} -3$$
 Dans ce calcul, *s* désigne l'écart-type non biaisé de la variable, et *N* désigne la taille de la variable. Avec cette méthode, on obtient un coefficient négatif lorsque la distribution est particulièrement aplatie par rapport à une distribution suivant une loi normale (distribution platycurtique), un coefficient de 0 lorsque la distribution suit une loi normale (distribution mésocurtique), et un coefficient positif lorsque la distribution est particulièrement pointue par rapport à une loi normale (distribution leptocurtique). Ceci est illustré sur la Figure \@ref(fig:kurtosisdistri).
 
-```{r kurtosisdistri, out.width = '90%', echo = FALSE, message = FALSE, warning = FALSE,  fig.cap="Valeur du Kurtosis selon la forme de la distribution"}
+```{r kurtosisdistri, out.width = '100%', echo = FALSE, message = FALSE, warning = FALSE,  fig.cap="Valeur du Kurtosis selon la forme de la distribution"}
 library(LaplacesDemon)
 set.seed(123)
 unif <- tibble(x = runif(1000, -5, 5))
@@ -972,7 +972,7 @@ ggplot(data = x_asym) +
 
 Comme dans le cadre de variables quantitatives, une bonne pratique est de visualiser graphiquement la distribution d'une variable qualitative avant de l'analyser. Ici, il s'agit plus précisément de prendre connaissance des effectifs correspondant aux différentes modalités de la variable. Une manière rapide de procéder pour cela est d'utiliser la fonction `ggplot()` et la fonction `geom_bar()`. Illustrons cela avec le jeu de données `diamonds`, qui contient notamment la variable qualitative `color`.
 
-```{r geombar, out.width = '70%', fig.cap="Exemple de diagramme en barres"}
+```{r geombar, out.width = '80%', fig.cap="Exemple de diagramme en barres"}
 # Aperçu du jeu de données
 diamonds
 
@@ -1058,7 +1058,7 @@ F <-
      ggtitle("F")
 ```
 
-```{r geombarEnhancedGraph, echo = FALSE, message = FALSE,  fig.cap="Différentes sortes de diagrammes en barres"}
+```{r geombarEnhancedGraph, , out.width = '100%', echo = FALSE, message = FALSE,  fig.cap="Différentes sortes de diagrammes en barres"}
 (A | B | C) / (D | E | F)
 ```
 
@@ -1070,7 +1070,7 @@ On observe que la réorganisation des barres selon un ordre croissant ou décroi
 
 En plus des effectifs, il est aussi possible de prendre connaissance de la distribution à l'aide des proportions, c'est-à-dire des ratios entre les effectifs liés aux différentes modalités et l'effectif total. Les proportions peuvent être visualisées avec un diagramme circulaire (i.e., un camembert), avec un diagramme en barres empilées, ou avec des barres disposées côte-à-côte. Les diagrammes circulaires et avec barres empilées mettent en avant le fait que les parties individuelles étudiées font partie d’un même ensemble. Les diagrammes circulaires peuvent être utilisés efficacement à cet effet lorsqu’ils montrent des fractions simples telles qu’un quart, un tiers, ou une moitié. Toutefois, les parties individuelles sont plus facilement comparables lorsqu’on utilise des barres mises côte-à-côte, comme montré ci-avant. Les diagrammes avec barres empilées sont quant à eux difficiles à comprendre lorsqu’il s’agit de n'étudier qu’une seule variable qualitative [@wilkeFundamentalsDataVisualization2018].
 
-```{r diagrams for proportions, message = FALSE}
+```{r diagrams for proportions, message = FALSE, out.width = '100%'}
 # Diagramme en barres empilées montrant les effectifs
 A <- 
   diamonds %>%
