@@ -43,7 +43,7 @@ ggplot(data = iris, aes(x = Sepal.Length)) +
   ggtitle("binwidth = 0.7")
 ```
 
-```{r geomhistogramVariedBinwidth2, out.width='90%', echo = FALSE,  fig.cap="Différentes largeurs d'intervalles pour un histogramme"}
+```{r geomhistogramVariedBinwidth2, out.width='100%', echo = FALSE,  fig.cap="Différentes largeurs d'intervalles pour un histogramme"}
 
 g1 <- ggplot(data = iris, aes(x = Sepal.Length)) + 
   geom_histogram(binwidth  = 0.3, fill = "white", color = "black") +
@@ -58,7 +58,7 @@ g1 | g2
 
 En plus de l'histogramme, une autre manière de prendre connaissance graphiquement de la distribution des données d'une variable quantitative est d'utiliser une **boîte à moustaches**. Pour ce faire, il convient d'utiliser la fonction `geom_boxplot()`, comme montré dans le code ci-dessous. Le résultat de ce code est montré sur la Figure \@ref(fig:geomboxplot). On pourra noter ci-dessous l'ajout d'une ligne de code avec une fonction `theme()` dont on ne présentera pas les détails ici ; cette fonction nous sert juste ici à ne pas montrer des chiffres qui auraient été ajoutés par défaut sur l'axe Y de gauche du graphique et qui n'auraient eu aucun intérêt.
 
-```{r geomboxplot,  fig.height=2, fig.cap="Exemple de boîte à moustaches", out.width='90%'}
+```{r geomboxplot,  fig.cap="Exemple de boîte à moustaches", out.width='90%'}
 ggplot(data = iris, aes(x = Sepal.Length)) + 
   geom_boxplot() +
     theme(axis.text.y = element_blank(), 
@@ -67,7 +67,7 @@ ggplot(data = iris, aes(x = Sepal.Length)) +
 
 La boîte à moustaches (cf. Figure \@ref(fig:geomboxplot)) nous livre plusieurs informations. Tout d'abord, ses extrémités nous indiquent ce qu'on appelle le premier quartile (ici représenté par le bord gauche de la boîte) et le troisième quartile (ici représenté par le bord droit de la boîte). Le premier quartile (Q1) désigne la valeur en-dessous de laquelle on retrouve 25 % des observations de la variable (i.e., 25 % des observations sont associées à une valeur plus faible que Q1), alors que le troisième quartile (Q3) représente la valeur en-dessous de laquelle on retrouve 75 % des observations (i.e., 75 % des observations sont associées à une valeur plus faible que Q3). Cela indique alors que sur la Figure \@ref(fig:geomboxplot), l'intervalle qui sépare le bord gauche du bord droit de la boîte contient 50 % des observations. La ligne noire à l'intérieur de la boîte blanche désigne la médiane, qui est la valeur pour laquelle on a 50 % des observations qui ont une valeur inférieure à cette valeur repère, et pour laquelle on a 50 % des observations qui ont une valeur supérieure à cette valeur repère. Les lignes noires en-dehors de la boîte sont les moustaches. Dans le cas présent, la moustache de gauche s'étend jusqu'à la valeur minimale de la variable, et la moustache de droite s'étend jusqu'à la valeur maximale de la variable. Si le minimum (ou le maximum) avait été éloigné de la médiane de plus de 1.5 fois la différence entre Q3 et Q1 (qu'on appelle **intervalle interquartile**), l'extrémité de la moustache se serait arrêtée à la dernière valeur avant cette limite, et toute valeur ayant dépassé cette limite aurait été représentée par un point. Pour illustrer ce dernier cas de figure, on peut modifier manuellement une valeur de la variable `Sepal.Length` du jeu de données `iris` de telle sorte à ce qu'il y ait une nouvelle valeur qui soit particulièrement éloignée de la boîte. Une telle valeur s'appelle un *outlier* (cf. Figure \@ref(fig:geomboxplotModified)).
 
-```{r geomboxplotModified, fig.height=2, fig.cap="Visualisation d'un outlier", out.width='90%'}
+```{r geomboxplotModified, fig.cap="Visualisation d'un outlier", out.width='90%'}
 # On modifie ici, pour l'exemple, la valeur de la 3ème observation
 # en lui assignant la valeur 12.
 iris$Sepal.Length[3] <- 12     
@@ -95,7 +95,7 @@ is_outlier(x = iris$Sepal.Length)
 
 Quand on regarde bien, on voit que la troisième observation de cette nouvelle variable que l'on vient de créer (seulement de manière temporaire ici car on ne l'a pas assignée à un nom) contient la valeur `TRUE`, ce qui est en accord avec la valeur que nous avons introduite auparavant dans la variable `Sepal.Length`. Le fait d'observer ces valeurs `TRUE` et `FALSE` n'est évidemment pas une stratégie très pratique pour déterminer à quelle observation correspondrait l'*outlier*, et c'est pourquoi l'étape suivante consiste à montrer comment on peut se servir de cette fonction `is_outlier()` pour faire apparaître sur un graphique de boîte à moustaches les observations à qui appartiendraient les valeurs étranges (cf. Figure \@ref(fig:geomboxplotOutlierId)).
 
-```{r geomboxplotOutlierId, fig.height=2, fig.cap="Identification d'un outlier", out.width='90%'}
+```{r geomboxplotOutlierId, fig.cap="Identification d'un outlier", out.width='90%'}
 
 iris %>%
   # Ajout d'un numéro id pour les observations
@@ -280,7 +280,7 @@ mean(x = iris$Sepal.Length)
 
 La moyenne, c'est en quelque sorte le "centre de gravité" de la variable [@navarroLearningStatistics2018]. L'un de ses intérêts est que son calcul prend en compte toutes les informations contenues dans la variable, ce qui est utile quand on a relativement peu de données [@navarroLearningStatistics2018]. En revanche, un inconvénient est qu'elle est très sensible aux valeurs extrêmes, et en particulier aux valeurs qui seraient particulièrement basses ou particulièrement élevées par rapport à la majorité des valeurs de la variable (il s'agirait ici d'*outliers*), et cela est d'autant plus vrai lorsque la taille de l'échantillon étudié est faible. Dans ce dernier cas, il y a donc un risque assez important que la moyenne ne représente pas bien la tendance centrale, c'est-à-dire la valeur ou la zone de valeurs où sont situées la majorité des observations. Ce risque existe aussi même avec des tailles d'échantillon relativement importantes lorsque la distribution est asymétrique, comme illustré sur la Figure \@ref(fig:meansSkewedVariables). Sur cette figure, on peut voir qu'avec une distribution gaussienne, la moyenne correspond parfaitement à la tendance centrale. En revanche, avec une distribution asymétrique à droite, on voit que la moyenne est "tirée vers la droite" par rapport à la tendance centrale sous l'effet des valeurs, certes moins nombreuses, mais d'une grandeur plus importante.
 
-```{r meansSkewedVariables, out.width = '90%', echo = FALSE, message = FALSE, warning = FALSE, fig.cap="Effet de la forme de la distribution sur la position de la moyenne"}
+```{r meansSkewedVariables, out.width = '100%', echo = FALSE, message = FALSE, warning = FALSE, fig.cap="Effet de la forme de la distribution sur la position de la moyenne"}
 # Get legend function
 get_legend <- function(myggplot){
   tmp <- ggplot_gtable(ggplot_build(myggplot))
@@ -350,7 +350,7 @@ median(x = vec)
 
 Contrairement à la moyenne, la médiane prend donc en compte moins d'informations relatives aux données. Toutefois, en tant que valeur "du milieu", la médiane présente l'intérêt de ne pas être influencée par les valeurs extrêmes. En raison de cela, la médiane est susceptible de mieux refléter la tendance centrale que la moyenne en présence de petits échantillons avec des *outliers*, ou en présence d'une forme de distribution asymétrique. Ce dernier cas est illustré sur la Figure \@ref(fig:mediansSkewedVariables).
 
-```{r mediansSkewedVariables, out.width  = '90%', echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Effet de la forme de la distribution sur la position de la médiane"}
+```{r mediansSkewedVariables, out.width  = '100%', echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Effet de la forme de la distribution sur la position de la médiane"}
 # Graphique pour la distribution gaussienne
 set.seed(123)
 gauss <- tibble(x = rnorm(n = 1000, mean = 0, sd = 1))
@@ -1058,7 +1058,7 @@ F <-
      ggtitle("F")
 ```
 
-```{r geombarEnhancedGraph, , out.width = '100%', echo = FALSE, message = FALSE,  fig.cap="Différentes sortes de diagrammes en barres"}
+```{r geombarEnhancedGraph, out.width = '100%', echo = FALSE, message = FALSE,  fig.cap="Différentes sortes de diagrammes en barres"}
 (A | B | C) / (D | E | F)
 ```
 
@@ -1070,7 +1070,7 @@ On observe que la réorganisation des barres selon un ordre croissant ou décroi
 
 En plus des effectifs, il est aussi possible de prendre connaissance de la distribution à l'aide des proportions, c'est-à-dire des ratios entre les effectifs liés aux différentes modalités et l'effectif total. Les proportions peuvent être visualisées avec un diagramme circulaire (i.e., un camembert), avec un diagramme en barres empilées, ou avec des barres disposées côte-à-côte. Les diagrammes circulaires et avec barres empilées mettent en avant le fait que les parties individuelles étudiées font partie d’un même ensemble. Les diagrammes circulaires peuvent être utilisés efficacement à cet effet lorsqu’ils montrent des fractions simples telles qu’un quart, un tiers, ou une moitié. Toutefois, les parties individuelles sont plus facilement comparables lorsqu’on utilise des barres mises côte-à-côte, comme montré ci-avant. Les diagrammes avec barres empilées sont quant à eux difficiles à comprendre lorsqu’il s’agit de n'étudier qu’une seule variable qualitative [@wilkeFundamentalsDataVisualization2018].
 
-```{r diagrams for proportions, message = FALSE, out.width = '100%'}
+```{r diagrams for proportions, message = FALSE}
 # Diagramme en barres empilées montrant les effectifs
 A <- 
   diamonds %>%
@@ -1117,7 +1117,7 @@ D <-
   ggtitle("D")
 ```
 
-```{r geombarPropEnhancedGraph, echo = FALSE, message = FALSE,  fig.cap="Différentes sortes de diagrammes pour représenter des proportions"}
+```{r geombarPropEnhancedGraph, out.width = '100%', echo = FALSE, message = FALSE,  fig.cap="Différentes sortes de diagrammes pour représenter des proportions"}
 (A | B) / (C | D)
 ```
   
