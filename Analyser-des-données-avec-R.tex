@@ -133,7 +133,7 @@
 
 \title{Analyser des données avec R}
 \author{Pierre-Yves de Müllenheim}
-\date{2022-07-21}
+\date{2022-07-26}
 
 \begin{document}
 \maketitle
@@ -1838,17 +1838,19 @@ Une fois cette procédure réalisée, le reste du code, et notamment la fonction
 
 On remarque ainsi qu'au-delà de prendre connaissance de la forme de la distribution, passer par ces étapes graphiques permet aussi de s'assurer qu'il n'y a pas eu d'erreur lors de la saisie des données dans la base (du moins, pas d'erreur visible et qui risquerait d'impacter grandement les calculs futurs). \textbf{Passer par l'analyse graphique est donc recommandé avant de pouvoir se fier aux résultats numériques que l'on pourrait calculer par la suite, tels que les indices statistiques qui permettent de résumer numériquement une variable.}
 
-À noter que si l'histogramme et la boîte à moustaches sont des graphiques classiques pour étudier la distribution d'une variable quantitative, il est aussi possible avec R de créer ce qu'on appelle un \emph{raincloud plot}, tel qu'illustré sur la Figure \ref{fig:raincloudUnivar}. Le \href{https://www.cedricscherer.com/2021/06/06/visualizing-distributions-with-raincloud-plots-and-how-to-create-them-with-ggplot2/}{post du blog de Cédric Scherer} fournit une description très intéressante et riche de l'intérêt de ce type de graphiques. Le \emph{raincloud plot} se compose de trois éléments :
+À noter que si l'histogramme et la boîte à moustaches sont des graphiques classiques pour étudier la distribution d'une variable quantitative, il est aussi possible avec R de créer ce qu'on appelle un \emph{raincloud plot}, tel qu'illustré sur la Figure \ref{fig:raincloudUnivar}. Un \href{https://www.cedricscherer.com/2021/06/06/visualizing-distributions-with-raincloud-plots-and-how-to-create-them-with-ggplot2/}{post du blog de Cédric Scherer} fournit une description très intéressante et riche de l'intérêt de ce type de graphiques. Le \emph{raincloud plot} se compose de trois éléments :
 
 \begin{itemize}
 \tightlist
 \item
-  Une aire sous la courbe de densité, qui représente une estimation de la fréquence d'apparition d'une valeur donnée dans l'échantillon étudié. Cet élément est intéressant pour prendre pleinement conscience de la forme de la distribution.
+  Une aire sous la courbe de densité (\emph{the cloud}), qui représente une estimation de la fréquence d'apparition d'une valeur donnée dans l'échantillon étudié. Cet élément est intéressant pour prendre pleinement conscience de la forme de la distribution. Attention cependant, car les formes des aires et les idées qu'elles donnent des distributions dans la population d'intérêt dépendent beaucoup du nombre d'observations disponibles, et leur utilisation pourrait donc se discuter en présence de peu d'observations.
 \item
-  Une boîte à moustaches, qui est intéressante pour avoir une vue résumée de la distribution.
+  Une boîte à moustaches, qui permet de se faire une idée résumée relativement robuste des distributions dans la population d'intérêt (i.e., insensible aux \emph{outliers} et davantage comparable avec d'autres études) ; selon les cas, d'autres statistiques, comme les moyennes et les écarts-types, peuvent être utilisées à la place ou en plus des boîtes à moustaches \autocite{allenRaincloudPlotsMultiplatform2019}.
 \item
-  Un nuage de points des données individuelles, qui est très intéressant pour avoir une vue précise des valeurs obtenues par les individus et pour avoir une idée plus claire de la grandeur du nombre d'observations présentes dans le jeu de données (chose non renseignée par les deux éléments précédents).
+  Un nuage de points des données individuelles (\emph{the rain}), qui est très intéressant pour avoir une vue précise des valeurs obtenues par les individus, de leurs différences éventuelles, des \emph{outliers} éventuels, voire des \emph{patterns} de distribution éventuellement inattendus ; les données individuelles permettent aussi d'avoir une idée plus claire de la grandeur du nombre d'observations présentes dans le jeu de données (chose non renseignée par les deux éléments précédents).
 \end{itemize}
+
+Parce qu'ils montrent les données individuelles, les \emph{raincloud plots} vont dans le sens du propos de Weissgerber et al.~\autocite*{weissgerberBarLineGraphs2015} qui militent pour la disparition des graphiques en forme de simples bâtons de dynamite, lesquels ayant été souvent utilisés par le passé pour montrer des moyennes et écart-types dans les études. Le problème de ces graphiques en forme de bâtons de dynamite est qu'ils peuvent induire en erreur quant à la réelle forme de la distribution et ils limitent les possibilités du lecteur de juger de la pertinence des choix d'analyses inférentielles qui seraient faits par la suite.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1890,9 +1892,9 @@ On remarque ainsi qu'au-delà de prendre connaissance de la forme de la distribu
 \caption{Exemple de raincloud plot}\label{fig:raincloudUnivar}
 \end{figure}
 
-Lorsqu'on regarde le code ci-dessus qui a permis de créer le \emph{raincould plot}, on remarque l'arrivée de deux nouveaux packages : \texttt{ggdist} et \texttt{gghalves}. Ces packages doivent être installés et chargés avant de pouvoir être utilisés. Le package \texttt{ggdist} est utilisé avec la fonction \texttt{stat\_halfeye()}, qui sert à montrer sur la figure ci-dessus l'aire grise sous la courbe de densité (\emph{the cloud}). Plus cette aire est grande au niveau d'un intervalle de valeurs donné, plus il est probable de rencontrer les valeurs concernées lorsqu'on prend au hasard des observations du jeu de données. Plusieurs arguments peuvent en réalité servir à calculer la courbe de densité et finalement modifier sa forme et celle de l'aire qu'il y a en-dessous. Parmi eux, l'argument \texttt{adjust} de la fonction \texttt{stat\_halfeye()} sert en quelque sorte à ajuster le lissage de la courbe de densité : plus sa valeur sera élevée, plus la courbe sera lissée.
+Lorsqu'on regarde le code ci-dessus qui a permis de créer le \emph{raincould plot}, on remarque l'arrivée de deux nouveaux packages : \texttt{ggdist} et \texttt{gghalves}. Ces packages doivent être installés et chargés avant de pouvoir être utilisés. Le package \texttt{ggdist} est utilisé avec la fonction \texttt{stat\_halfeye()}, qui sert à montrer sur la figure ci-dessus l'aire grise sous la courbe de densité. Plus cette aire est grande au niveau d'un intervalle de valeurs donné, plus il est probable de rencontrer les valeurs concernées lorsqu'on prend au hasard des observations du jeu de données. Plusieurs arguments peuvent en réalité servir à calculer la courbe de densité et finalement modifier sa forme et celle de l'aire qu'il y a en-dessous. Parmi eux, l'argument \texttt{adjust} de la fonction \texttt{stat\_halfeye()} sert en quelque sorte à ajuster le lissage de la courbe de densité : plus sa valeur sera élevée, plus la courbe sera lissée.
 
-Pour montrer les données individuelles (\emph{the rain}) sans risquer qu'elles ne se superposent de trop, on a utilisé la fonction \texttt{geom\_half\_point()} du package \texttt{gghalves}, l'argument \texttt{transformation}, et la fonction \texttt{position\_jitter()}. À l'intérieur de la fonction \texttt{position\_jitter()}, l'argument \texttt{seed} (la graine en français) désigne le nombre sur lequel se base l'ordinateur pour générer un résultat pseudo-aléatoire. Quand on regarde le graphique ci-dessus, les données individuelles apparaissent décalées aléatoirement sur le plan vertical. Cet effet aléatoire est l'intérêt même d'une fonction dite ``jitter'', et cet effet est en réalité prédéfini de telle sorte que si on utilise toujours le même numéro de graine (\texttt{seed}), alors on obtiendra toujours le même effet aléatoire sur le graphique.
+Pour montrer les données individuelles sans risquer qu'elles ne se superposent de trop, on a utilisé la fonction \texttt{geom\_half\_point()} du package \texttt{gghalves}, l'argument \texttt{transformation}, et la fonction \texttt{position\_jitter()}. À l'intérieur de la fonction \texttt{position\_jitter()}, l'argument \texttt{seed} (la graine en français) désigne le nombre sur lequel se base l'ordinateur pour générer un résultat pseudo-aléatoire. Quand on regarde le graphique ci-dessus, les données individuelles apparaissent décalées aléatoirement sur le plan vertical. Cet effet aléatoire est l'intérêt même d'une fonction dite ``jitter'', et cet effet est en réalité prédéfini de telle sorte que si on utilise toujours le même numéro de graine (\texttt{seed}), alors on obtiendra toujours le même effet aléatoire sur le graphique.
 
 Les autres éléments de code sont là pour des considérations esthétiques et ne seront pas décrits ici. Il reste bien sûr possible de lire l'aide associée à ces fonctions pour gagner en maîtrise de ce type de graphique.
 
@@ -2738,10 +2740,10 @@ En plus des effectifs, il est aussi possible de prendre connaissance de la distr
 \NormalTok{B <-}\StringTok{ }
 \StringTok{  }\NormalTok{diamonds }\OperatorTok{%>%}\StringTok{ }
 \StringTok{  }\KeywordTok{group_by}\NormalTok{(color) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{count =} \KeywordTok{n}\NormalTok{() }\OperatorTok{/}\StringTok{ }\KeywordTok{length}\NormalTok{(diamonds}\OperatorTok{$}\NormalTok{color) }\OperatorTok{*}\StringTok{ }\DecValTok{100}\NormalTok{) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \StringTok{""}\NormalTok{, }\DataTypeTok{y =}\NormalTok{ count, }\DataTypeTok{fill =}\NormalTok{ color)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{n =} \KeywordTok{n}\NormalTok{() }\OperatorTok{/}\StringTok{ }\KeywordTok{length}\NormalTok{(diamonds}\OperatorTok{$}\NormalTok{color) }\OperatorTok{*}\StringTok{ }\DecValTok{100}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \StringTok{""}\NormalTok{, }\DataTypeTok{y =}\NormalTok{ n, }\DataTypeTok{fill =}\NormalTok{ color)) }\OperatorTok{+}
 \StringTok{  }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{stat =} \StringTok{"identity"}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_text}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{label =} \KeywordTok{paste0}\NormalTok{(}\KeywordTok{round}\NormalTok{(count, }\DataTypeTok{digits =} \DecValTok{2}\NormalTok{), }\StringTok{" %"}\NormalTok{)), }\DataTypeTok{size =} \DecValTok{2}\NormalTok{, }
+\StringTok{  }\KeywordTok{geom_text}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{label =} \KeywordTok{paste0}\NormalTok{(}\KeywordTok{round}\NormalTok{(n, }\DataTypeTok{digits =} \DecValTok{2}\NormalTok{), }\StringTok{" %"}\NormalTok{)), }\DataTypeTok{size =} \DecValTok{2}\NormalTok{, }
             \DataTypeTok{position =} \KeywordTok{position_stack}\NormalTok{(}\DataTypeTok{vjust =} \FloatTok{0.5}\NormalTok{)) }\OperatorTok{+}
 \StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"B"}\NormalTok{)}
 
@@ -2749,11 +2751,11 @@ En plus des effectifs, il est aussi possible de prendre connaissance de la distr
 \NormalTok{C <-}\StringTok{ }
 \StringTok{  }\NormalTok{diamonds }\OperatorTok{%>%}\StringTok{ }
 \StringTok{  }\KeywordTok{group_by}\NormalTok{(color) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{count =} \KeywordTok{n}\NormalTok{()) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \StringTok{""}\NormalTok{, }\DataTypeTok{y =}\NormalTok{ count, }\DataTypeTok{fill =}\NormalTok{ color)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{n =} \KeywordTok{n}\NormalTok{()) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \StringTok{""}\NormalTok{, }\DataTypeTok{y =}\NormalTok{ n, }\DataTypeTok{fill =}\NormalTok{ color)) }\OperatorTok{+}
 \StringTok{  }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{stat =} \StringTok{"identity"}\NormalTok{, }\DataTypeTok{position =} \StringTok{"stack"}\NormalTok{) }\OperatorTok{+}
 \StringTok{  }\KeywordTok{coord_polar}\NormalTok{(}\DataTypeTok{theta =} \StringTok{"y"}\NormalTok{, }\DataTypeTok{start =} \DecValTok{0}\NormalTok{, }\DataTypeTok{direction =} \DecValTok{-1}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_text}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{label =}\NormalTok{ count), }\DataTypeTok{size =} \DecValTok{2}\NormalTok{, }
+\StringTok{  }\KeywordTok{geom_text}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{label =}\NormalTok{ n), }\DataTypeTok{size =} \DecValTok{2}\NormalTok{, }
             \DataTypeTok{position =} \KeywordTok{position_stack}\NormalTok{(}\DataTypeTok{vjust =} \FloatTok{0.5}\NormalTok{)) }\OperatorTok{+}
 \StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"C"}\NormalTok{)}
 
@@ -2761,11 +2763,11 @@ En plus des effectifs, il est aussi possible de prendre connaissance de la distr
 \NormalTok{D <-}
 \StringTok{  }\NormalTok{diamonds }\OperatorTok{%>%}\StringTok{ }
 \StringTok{  }\KeywordTok{group_by}\NormalTok{(color) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{count =} \KeywordTok{n}\NormalTok{() }\OperatorTok{/}\StringTok{ }\KeywordTok{length}\NormalTok{(diamonds}\OperatorTok{$}\NormalTok{color) }\OperatorTok{*}\StringTok{ }\DecValTok{100}\NormalTok{) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \StringTok{""}\NormalTok{, }\DataTypeTok{y =}\NormalTok{ count, }\DataTypeTok{fill =}\NormalTok{ color)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{n =} \KeywordTok{n}\NormalTok{() }\OperatorTok{/}\StringTok{ }\KeywordTok{length}\NormalTok{(diamonds}\OperatorTok{$}\NormalTok{color) }\OperatorTok{*}\StringTok{ }\DecValTok{100}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \StringTok{""}\NormalTok{, }\DataTypeTok{y =}\NormalTok{ n, }\DataTypeTok{fill =}\NormalTok{ color)) }\OperatorTok{+}
 \StringTok{  }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{stat =} \StringTok{"identity"}\NormalTok{, }\DataTypeTok{position =} \StringTok{"stack"}\NormalTok{) }\OperatorTok{+}
 \StringTok{  }\KeywordTok{coord_polar}\NormalTok{(}\DataTypeTok{theta =} \StringTok{"y"}\NormalTok{, }\DataTypeTok{start =} \DecValTok{0}\NormalTok{, }\DataTypeTok{direction =} \DecValTok{-1}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_text}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{label =} \KeywordTok{paste0}\NormalTok{(}\KeywordTok{round}\NormalTok{(count, }\DataTypeTok{digits =} \DecValTok{2}\NormalTok{), }\StringTok{" %"}\NormalTok{)), }\DataTypeTok{size =} \DecValTok{2}\NormalTok{, }
+\StringTok{  }\KeywordTok{geom_text}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{label =} \KeywordTok{paste0}\NormalTok{(}\KeywordTok{round}\NormalTok{(n, }\DataTypeTok{digits =} \DecValTok{2}\NormalTok{), }\StringTok{" %"}\NormalTok{)), }\DataTypeTok{size =} \DecValTok{2}\NormalTok{, }
             \DataTypeTok{position =} \KeywordTok{position_stack}\NormalTok{(}\DataTypeTok{vjust =} \FloatTok{0.5}\NormalTok{)) }\OperatorTok{+}
 \StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"D"}\NormalTok{)}
 \end{Highlighting}
@@ -2869,7 +2871,7 @@ Comme dans le cadre d'analyses univariées, une bonne pratique, lorsqu'on étudi
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.8\linewidth]{Analyser-des-données-avec-R_files/figure-latex/relationshipsIllustrations-1} 
+{\centering \includegraphics[width=1\linewidth]{Analyser-des-données-avec-R_files/figure-latex/relationshipsIllustrations-1} 
 
 }
 
@@ -2887,7 +2889,7 @@ Avec R, pour obtenir un nuage de points à partir d'un jeu de données, il est p
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.7\linewidth]{Analyser-des-données-avec-R_files/figure-latex/scatterplot-1} 
+{\centering \includegraphics[width=0.9\linewidth]{Analyser-des-données-avec-R_files/figure-latex/scatterplot-1} 
 
 }
 
@@ -2911,11 +2913,11 @@ Lorsque la relation étudiée semble linéaire, l'étude numérique classique co
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.7\linewidth]{Analyser-des-données-avec-R_files/figure-latex/scatterplotLine-1} 
+{\centering \includegraphics[width=0.9\linewidth]{Analyser-des-données-avec-R_files/figure-latex/scatterplotLine-1} 
 
 }
 
-\caption{Nuage de points avec droite de régression pour les variables hp et mpg jeu de données mtcars}\label{fig:scatterplotLine}
+\caption{Nuage de points avec droite de régression pour les variables hp et mpg du jeu de données mtcars}\label{fig:scatterplotLine}
 \end{figure}
 
 Dans la fonction \texttt{geom\_smooth()} qui a été utilisée dans l'exemple ci-dessus, on note que l'argument \texttt{formula} pourrait être considéré comme facultatif car il s'agit ici de la configuration par défaut de la fonction. En revanche, l'argument \texttt{method} doit être ici configuré avec \texttt{"lm"} (pour \emph{linear model}) car ce n'est pas la méthode graphique configurée par défaut dans la fonction. Enfin, l'argument \texttt{se} permet de montrer ou non un intervalle de confiance autour de la droite de régression, ce qui n'a pas été activé ici (par défaut, l'argument \texttt{se} est configuré pour montrer cet intervalle de confiance). Dans l'exemple montré ci-dessus, la représentation graphique encourage fortement à penser que l'un des types de relations à envisager prioritairement dans l'étude des deux variables est la relation linéaire. Cette information rend pertinente l'utilisation du coefficient de corrélation de Pearson pour une étude numérique de la relation en question.
@@ -3003,7 +3005,7 @@ Ce que ce tableau montre, c'est que plus les deux variables étudiées évoluero
 
 \begin{figure}
 
-{\centering \includegraphics{Analyser-des-données-avec-R_files/figure-latex/graphCov-1} 
+{\centering \includegraphics[width=1\linewidth]{Analyser-des-données-avec-R_files/figure-latex/graphCov-1} 
 
 }
 
@@ -3083,44 +3085,44 @@ Sur la base de travaux antérieurs, Hopkins et al.~\autocite*{hopkinsProgressive
 
 Pour visualiser le lien que l'on peut faire entre la forme du nuage de points et la valeur du coefficient de corrélation de Pearson que l'on peut obtenir, la page web proposée par Kristoffer Magnusson (\url{https://rpsychologist.com/correlation}) peut être particulièrement intéressante. Cette page web donne la possibilité de faire varier manuellement la valeur du coefficient de corrélation de Pearson pour ensuite voir un nuage de points type correspondant à cette valeur. Faites un essai !
 
-À noter que la valeur du coefficient de corrélation de Pearson est très dépendante de la variabilité des données, c'est-à-dire du degré d'étalement des valeurs autour de la tendance centrale \autocite{halperinSpuriousCorrelationsCauses1986}. Un premier exemple de l'influence de la variabilité est illustré sur la Figure \ref{fig:spuriousCorrelations}. À gauche de la figure, on observe un nuage de points représentant une relation obtenue entre deux variables quantitatives dans une population complète. La valeur du coefficient de corrélation de Pearson est ici particulièrement élevée. À droite de la figure, on observe exactement les mêmes variables dans la même population que sur le graphique de gauche, mais sur un intervalle dont l'étendue a été manuellement restreinte, diminuant ainsi la variabilité pour les deux variables. On observe alors une diminution de la valeur du coefficient de corrélation de Pearson. Cet exemple doit faire prendre conscience qu'il faut faire attention lorsqu'on cherche à comparer des coefficients de corrélation de Pearson obtenus avec des échantillons différents. En effet, si les variables correspondant respectivement à ces échantillons n'ont pas les mêmes niveaux de variabilité, les valeurs des coefficients de corrélation de Pearson ne seront pas vraiment comparables, en sachant que c'est l'échantillon qui présente la plus grande variabilité qui aura mathématiquement plus de chances de présenter une valeur de coefficient de corrélation de Pearson plus élevée.
+À noter que la valeur du coefficient de corrélation de Pearson est dépendante du degré de dispersion des valeurs autour de la tendance centrale \autocite{halperinSpuriousCorrelationsCauses1986}. Ceci est illustré sur la Figure \ref{fig:spuriousCorrelations}. À gauche de la figure, on observe un nuage de points représentant une relation obtenue entre deux variables quantitatives dans une population complète. La valeur du coefficient de corrélation de Pearson est ici particulièrement élevée. À droite de la figure, on observe exactement les mêmes variables dans la même population que sur le graphique de gauche, mais sur un intervalle dont l'étendue a été manuellement restreinte, diminuant ainsi la variabilité pour les deux variables. On observe alors une diminution de la valeur du coefficient de corrélation de Pearson. Cet exemple doit faire prendre conscience qu'il faut faire attention lorsqu'on cherche à comparer des coefficients de corrélation de Pearson obtenus avec des échantillons différents. En effet, si les variables correspondant respectivement à ces échantillons n'ont pas les mêmes niveaux de variabilité, les valeurs des coefficients de corrélation de Pearson ne seront pas vraiment comparables, en sachant que c'est l'échantillon qui présente la plus grande variabilité qui aura plus de chances de présenter une valeur de coefficient de corrélation de Pearson plus élevée.
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.7\linewidth]{Analyser-des-données-avec-R_files/figure-latex/spuriousCorrelations-1} 
+{\centering \includegraphics[width=0.9\linewidth]{Analyser-des-données-avec-R_files/figure-latex/spuriousCorrelations-1} 
 
 }
 
-\caption{Influence de la diminution de la variabilité sur la valeur du coefficient de corrélation de Pearson}\label{fig:spuriousCorrelations}
+\caption{Influence de la diminution de l'étendue des variables sur la valeur du coefficient de corrélation de Pearson}\label{fig:spuriousCorrelations}
 \end{figure}
 
-Un deuxième exemple de l'influence de la variabilité sur la valeur du coefficient de corrélation de Pearson est montré sur la Figure \ref{fig:spuriousCorrelationBis}. Les deux graphiques de cette figure montrent exactement les mêmes données, à ceci près que sur le graphique de droite, on a remplacé en ordonnées une valeur du graphique de gauche pour lui donner la valeur de 10. L'influence de cette simple action sur la valeur du coefficient de corrélation de Pearson est nette. Ceci montre qu'il faut faire attention aux valeurs extrêmes qui pourraient grandement influencer la variabilité des données d'une variable et au final la valeur de corrélation obtenue, notamment en présence d'échantillons de taille relativement faible. Dans le cas où la valeur du coefficient de corrélation de Pearson serait très influencée par une valeur, il pourrait être une bonne pratique de calculer la valeur du coefficient de corrélation de Pearson avec et sans cette valeur afin de pouvoir quantifier son influence sur la relation étudiée \autocite{halperinSpuriousCorrelationsCauses1986}. Une alternative pourrait être aussi d'étudier la relation à l'aide d'autres types de coefficients que celui de Pearson, tels que celui de Spearman, présenté plus bas. Cet exemple doit faire prendre conscience qu'il n'est pas toujours pertinent de calculer le coefficient de corrélation de Pearson. En ce sens, lorsqu'on cherche à inférer la valeur du coefficient de corrélation de Pearson dans la population étudiée, il convient de vérifier certains prérequis, lesquels sont abordés plus loin dans ce livre.
+Un cas particulier illustrant l'influence du degré de dispersion sur la relation étudiée est montré sur la Figure \ref{fig:simpsonquant}. Cet exemple a pour but de montrer que l'étude d'une relation entre deux variables quantitatives peut aboutir à des conclusions radicalement différentes selon que l'on conduit les analyses à l'échelle d'un groupe entier ou que l'on sépare les analyses par groupe de caractéristiques, en particulier lorsque la distribution des données par groupe est radicalement différente de celle obtenue à l'échelle du groupe entier. Sur la gauche de la Figure \ref{fig:simpsonquant}, le nuage de points représente la relation entre deux variables à l'échelle de l'ensemble du groupe étudié. La variabilité possible pour les deux variables étudiées (V1 et V2 dans l'exemple) est alors maximale. Toutefois, ces données appartiennent en réalité à des sous-groupes distincts (cf.~couleurs sur le graphique de droite de la Figure \ref{fig:simpsonquant}). L'analyse par sous-groupe diminue la variabilité à la fois pour V1 et V2, donnant même lieu ici à des relations de sens opposé à celui observé à l'échelle de l'ensemble du groupe ! Cette situation correspond à ce qu'on appelle un paradoxe de Simpson, lequel se présente lorsque le phénomène que l'on peut observer avec une vue globale est annulé voir inversé lors d'une analyse par sous-groupe. Ici, la grande variabilité associée aux données du graphique de gauche de la Figure \ref{fig:simpsonquant} crée une relation artificiellement et donc faussement positive entre V1 et V2. C'est l'analyse par sous-groupe qui permet de révéler la vraie nature de la relation étudiée.
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.7\linewidth]{Analyser-des-données-avec-R_files/figure-latex/spuriousCorrelationBis-1} 
-
-}
-
-\caption{Influence d'une valeur extrême sur la valeur du coefficient de corrélation de Pearson en présence d'un petit échantillon}\label{fig:spuriousCorrelationBis}
-\end{figure}
-
-Un troisième et dernier exemple de l'influence de la variabilité sur la relation étudiée est montré sur la Figure \ref{fig:simpsonquant}. Cet exemple a pour but de montrer que l'étude d'une relation entre deux variables quantitatives peut aboutir à des conclusions radicalement différentes selon le niveau de variabilité que l'on garde dans l'analyse, lequel pouvant dépendre de si l'on conserve le groupe entier pour l'analyse, ou si l'on sépare les analyses par groupes de caractéristiques. Sur la gauche de la Figure \ref{fig:simpsonquant}, le nuage de points représente la relation entre deux variables à l'échelle de l'ensemble du groupe étudié. La variabilité possible pour les deux variables étudiées (V1 et V2 dans l'exemple) est alors maximale. Toutefois, ces données appartiennent en réalité à des sous-groupes distincts (cf.~couleurs sur le graphique de droite de la Figure \ref{fig:simpsonquant}). L'analyse par groupe diminue la variabilité à la fois pour V1 et V2, donnant lieu alors des relations de sens opposé à celui observé à l'échelle de l'ensemble du groupe. Cette situation correspond à ce qu'on appelle un paradoxe de Simpson, lequel se présente lorsque ce qu'on peut observer de manière globale est annulé voir inversé lors d'une analyse par sous-groupes. Ici, la grande variabilité associée aux données du graphique de gauche de la Figure \ref{fig:simpsonquant} crée une relation artificiellement et donc faussement positive entre V1 et V2. C'est l'analyse par sous-groupe qui permet de révéler la vraie nature de la relation étudiée.
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{Analyser-des-données-avec-R_files/figure-latex/simpsonquant-1} 
+{\centering \includegraphics[width=0.9\linewidth]{Analyser-des-données-avec-R_files/figure-latex/simpsonquant-1} 
 
 }
 
 \caption{Influence du niveau d'analyse (groupe entier vs. sous-groupes) sur la corrélation observée entre deux variables quantitatives}\label{fig:simpsonquant}
 \end{figure}
 
+En outre, la valeur du coefficient de corrélation de Pearson peut être influencée par des valeurs extrêmes, comme montré sur la Figure \ref{fig:spuriousCorrelationBis}. Les deux graphiques de cette figure montrent exactement les mêmes données, à ceci près que sur le graphique de droite, on a remplacé en ordonnées une valeur du graphique de gauche pour lui donner la valeur de 10. L'influence de cette simple action sur la valeur du coefficient de corrélation de Pearson est nette. Ceci montre qu'il faut faire attention aux valeurs extrêmes qui pourraient grandement influencer la variabilité des données d'une variable et au final la valeur de corrélation obtenue, notamment en présence d'échantillons de taille relativement faible. Dans le cas où la valeur du coefficient de corrélation de Pearson serait très influencée par une valeur, il pourrait être une bonne pratique de calculer la valeur du coefficient de corrélation de Pearson avec et sans cette valeur afin de pouvoir quantifier son influence sur la relation étudiée \autocite{halperinSpuriousCorrelationsCauses1986}. Une alternative pourrait être aussi d'étudier la relation à l'aide d'autres types de coefficients que celui de Pearson, tels que celui de Spearman, présenté plus bas. Cet exemple doit faire prendre conscience qu'il n'est pas toujours pertinent de calculer le coefficient de corrélation de Pearson. En ce sens, lorsqu'on cherche à inférer la valeur du coefficient de corrélation de Pearson dans la population étudiée, il convient de vérifier certains prérequis, lesquels sont abordés plus loin dans ce livre.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.9\linewidth]{Analyser-des-données-avec-R_files/figure-latex/spuriousCorrelationBis-1} 
+
+}
+
+\caption{Influence d'une valeur extrême sur la valeur du coefficient de corrélation de Pearson en présence d'un petit échantillon}\label{fig:spuriousCorrelationBis}
+\end{figure}
+
 Lorsque la relation étudiée ne semble pas linéaire mais s'apparente assez clairement à d'autres fonctions mathématiques, telles que des relations logarithmiques ou polynomiales, il est possible de transformer une des variables, voire les deux, pour rendre la relation linéaire et à nouveau étudiable à l'aide du coefficient de corrélation de Pearson \autocite{halperinSpuriousCorrelationsCauses1986}. Toutefois, il est aussi possible de créer des modèles de régression non linéaires afin de regarder si ces modèles correspondent bien aux données. La détermination et la validation d'un modèle non linéaire qui correspondrait bien aux données confirmerait alors que la relation étudiée a une forme particulière et potentiellement prédictible. Les procédures pour explorer différents modèles de régression (linéaires et non linéaires) sont abordées au chapitre suivant. Enfin, une dernière alternative possible, pour étudier la relation entre deux variables quantitatives dont les distributions ne permettraient pas d'utiliser correctement le coefficient de corrélation de Pearson, serait l'utilisation de coefficients de corrélation basés sur les rangs, tels que le coefficient de corrélation de Spearman.
 
 \emph{Le coefficient de corrélation de Spearman}
 
-Lorsque le coefficient de corrélation de Pearson ne permet pas de caractériser fiablement le degré de relation linéaire \textbf{entre les valeurs} de deux variables (e.g., en présence de valeurs aberrantes au sein d'un échantillon de petite taille), une alternative peut être d'étudier le degré de relation linéaire \textbf{entre les rangs} de ces deux variables. Le rang, c'est le classement (ou la position) d'une observation donnée en fonction de sa valeur. Dans une variable, les observations avec les valeurs les plus faibles seront associées aux rangs les plus bas alors que les observations avec les valeurs les plus élevées seront associées aux rangs les plus élevés. Une illustration de la notion de rang est proposée dans le Tableau \ref{tab:tableranks} pour la variable \texttt{hp} du jeu de données \texttt{mtcars}. Dans ce tableau, les lignes ont été ordonnées sur la base des rangs de la variable \texttt{hp}. On pourra remarquer que dans le tableau, nous avons ce qu'on appelle des ex-aequos, c'est-à-dire que plusieurs observations peuvent présenter les mêmes valeurs, et donc avoir le même rang.
+Lorsque le coefficient de corrélation de Pearson ne permet pas de caractériser fiablement le degré de relation linéaire \textbf{entre les valeurs} de deux variables (e.g., en présence de valeurs aberrantes au sein d'un échantillon de petite taille), une alternative peut être d'étudier le degré de relation linéaire \textbf{entre les rangs} de ces deux variables. Le rang, c'est le classement (ou la position) d'une observation donnée au sein d'une variable en fonction de sa valeur. Dans une variable, les observations avec les valeurs les plus faibles seront associées aux rangs les plus bas alors que les observations avec les valeurs les plus élevées seront associées aux rangs les plus élevés. Une illustration de la notion de rang est proposée dans le Tableau \ref{tab:tableranks} pour la variable \texttt{hp} du jeu de données \texttt{mtcars}. Dans ce tableau, les lignes ont été ordonnées sur la base des rangs de la variable \texttt{hp}. On pourra remarquer que dans le tableau, nous avons ce qu'on appelle des ex-aequos, c'est-à-dire que plusieurs observations peuvent présenter les mêmes valeurs, et donc avoir le même rang.
 
 \providecommand{\docline}[3]{\noalign{\global\setlength{\arrayrulewidth}{#1}}\arrayrulecolor[HTML]{#2}\cline{#3}}
 
@@ -3401,7 +3403,7 @@ Si l'on veut produire une représentation graphique qui illustre la valeur de \e
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.6\linewidth]{Analyser-des-données-avec-R_files/figure-latex/graphSpearman-1} 
+{\centering \includegraphics[width=0.9\linewidth]{Analyser-des-données-avec-R_files/figure-latex/graphSpearman-1} 
 
 }
 
@@ -3412,7 +3414,7 @@ En matière d'interprétation, des valeurs de \emph{rho} positives indiqueront q
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.7\linewidth]{Analyser-des-données-avec-R_files/figure-latex/ranksvvaluesspearman-1} 
+{\centering \includegraphics[width=0.9\linewidth]{Analyser-des-données-avec-R_files/figure-latex/ranksvvaluesspearman-1} 
 
 }
 
@@ -3425,7 +3427,7 @@ En matière d'interprétation, des valeurs de \emph{rho} positives indiqueront q
 \hypertarget{uxe9tudier-graphiquement-la-relation-1}{%
 \subsection{Étudier graphiquement la relation}\label{uxe9tudier-graphiquement-la-relation-1}}
 
-Plusieurs types de graphiques peuvent être envisagés lorsqu'il s'agit de visualiser des données relatives au croisement de deux variables qualitatives. Une première approche consiste à utiliser des graphiques avec barres mises côte-à-côte, comme illustré sur la Figure \ref{fig:groupedBarsFigure}, qui a été réalisée à partir du jeu de données \texttt{JointSports}, lequel est utilisable après installation et chargement du package \texttt{vcd}. \texttt{JointSports} contient des données résumées d'effectifs mis en lien avec les modalités de différentes variables qualitatives, comme on aurait pu l'obtenir avec les fonctions \texttt{group\_by()} et \texttt{summarize()} dans les derniers exemples du chapitre précédent. (La différence qu'il y a avec ces précédents exemples est qu'ici, l'effectif est désigné par la variable \texttt{Freq}, alors qu'il s'agissait de la variable \texttt{count} auparavant.) Pour information, \texttt{JointSports} contient les données d'une enquête s'étant intéressée, en 1983 et 1985, aux opinions d'étudiants danois de 16 à 19 ans quant à la pratique sportive mixte.
+Plusieurs types de graphiques peuvent être envisagés lorsqu'il s'agit de visualiser des données relatives au croisement de deux variables qualitatives. Une première approche consiste à utiliser des graphiques avec barres mises côte-à-côte, comme illustré sur la Figure \ref{fig:groupedBarsFigure}, qui a été réalisée à partir du jeu de données \texttt{JointSports}, lequel est utilisable après installation et chargement du package \texttt{vcd}. \texttt{JointSports} contient des données résumées d'effectifs mis en lien avec les modalités de différentes variables qualitatives, comme on aurait pu l'obtenir avec la fonction \texttt{count()} dans les derniers exemples du chapitre précédent. (La différence qu'il y a avec ces précédents exemples est qu'ici, l'effectif est désigné par la variable \texttt{Freq}, alors qu'il s'agissait de la variable \texttt{n} auparavant.) Pour information, \texttt{JointSports} contient les données d'une enquête s'étant intéressée, en 1983 et 1985, aux opinions d'étudiants danois de 16 à 19 ans sur la pratique sportive mixte.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3464,7 +3466,7 @@ Plusieurs types de graphiques peuvent être envisagés lorsqu'il s'agit de visua
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.8\linewidth]{Analyser-des-données-avec-R_files/figure-latex/groupedBarsFigure-1} 
+{\centering \includegraphics[width=1\linewidth]{Analyser-des-données-avec-R_files/figure-latex/groupedBarsFigure-1} 
 
 }
 
@@ -3485,7 +3487,7 @@ Les graphiques \texttt{A} et \texttt{B} de la Figure \ref{fig:groupedBarsFigure}
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.8\linewidth]{Analyser-des-données-avec-R_files/figure-latex/groupedBarsUpgraded-1} 
+{\centering \includegraphics[width=1\linewidth]{Analyser-des-données-avec-R_files/figure-latex/groupedBarsUpgraded-1} 
 
 }
 
@@ -3505,7 +3507,7 @@ Dans certains cas, on peut vouloir comparer les effectifs relatifs aux modalité
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.7\linewidth]{Analyser-des-données-avec-R_files/figure-latex/stackedBarsBiv-1} 
+{\centering \includegraphics[width=0.9\linewidth]{Analyser-des-données-avec-R_files/figure-latex/stackedBarsBiv-1} 
 
 }
 
@@ -3670,7 +3672,7 @@ Si les proportions permettent en principe de mieux comparer les effectifs de sou
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.7\linewidth]{Analyser-des-données-avec-R_files/figure-latex/taballUCBA-1} 
+{\centering \includegraphics[width=0.9\linewidth]{Analyser-des-données-avec-R_files/figure-latex/taballUCBA-1} 
 
 }
 
@@ -3681,7 +3683,7 @@ Toutefois, une analyse par département permettait de voir que les taux de réus
 
 \begin{figure}
 
-{\centering \includegraphics[height=0.55\textheight]{Analyser-des-données-avec-R_files/figure-latex/tabdepUCBA-1} 
+{\centering \includegraphics[width=1\linewidth]{Analyser-des-données-avec-R_files/figure-latex/tabdepUCBA-1} 
 
 }
 
@@ -3692,7 +3694,7 @@ Cette situation, qui peut paraître étonnante, illustre à nouveau ce qu'on app
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.7\linewidth]{Analyser-des-données-avec-R_files/figure-latex/distriUCBA-1} 
+{\centering \includegraphics[width=0.9\linewidth]{Analyser-des-données-avec-R_files/figure-latex/distriUCBA-1} 
 
 }
 
@@ -3706,7 +3708,7 @@ Autrement dit, les hommes se retrouvaient avec un pourcentage de réussite globa
 
 Lorsqu'on analyse une variable quantitative en fonction d'une variable qualitative, on peut avoir des données quantitatives qui sont non appariées (étude de type \emph{between-subject design} en anglais) ou appariées (étude de type \emph{within-subject design} en anglais). Avoir des données non appariées signifie que les données quantitatives correspondant aux différentes modalités de la variable qualitative étudiée ne sont pas liées. Un exemple simple, pour ce premier cas, peut être l'analyse de la taille des individus en fonction du sexe. Dans ce cas, les données quantitatives de taille pour les personnes de sexe masculin, de sexe féminin, et de sexe indéterminé, proviendront forcément d'individus différents et ne formeront donc pas des paires. Les cas de données appariées se retrouvent dans les études dans lesquelles plusieurs individus sont évalués plusieurs fois dans des conditions similaires ou différentes et que l'on cherche à comparer. En sciences du sport, un exemple relativement classique est de tester la performance d'endurance (variable quantitative) en ayant pris (condition de test) ou non (condition contrôle) une substance potentiellement ergonénique, la prise de substance ou non étant les modalités d'une même variable qualitative de type condition. Dans ce cas là, tous les individus auront des données dans les deux conditions et ces données seront donc appariées (dépendantes).
 
-Étant donné que les contraintes graphiques et les statistiques à calculer diffèrent selon que l'on est en présence de (i) deux groupes (1 variable quantitative x 1 variable qualitative avec 2 modalités) ou (ii) trois groupes et plus (1 variable quantitative x 1 variable qualitative avec 3 modalités ou plus), en particulier lorsque les données sont appariées, les procédures graphiques et calculatoires présentées ci-après sont distinguées selon ces deux grands cas de figure.
+Étant donné que les contraintes graphiques et les statistiques à calculer diffèrent selon que l'on est en présence de (i) deux groupes (1 variable quantitative x 1 variable qualitative avec 2 modalités) ou (ii) trois groupes et plus (1 variable quantitative x 1 variable qualitative avec 3 modalités ou plus), les procédures graphiques et calculatoires présentées ci-après sont distinguées selon ces deux grands cas de figure.
 
 \hypertarget{comparaison-de-deux-groupes-de-donnuxe9es}{%
 \subsection{Comparaison de deux groupes de données}\label{comparaison-de-deux-groupes-de-donnuxe9es}}
@@ -3714,33 +3716,17 @@ Lorsqu'on analyse une variable quantitative en fonction d'une variable qualitati
 \hypertarget{uxe9tudier-graphiquement-la-relation-2}{%
 \subsubsection{Étudier graphiquement la relation}\label{uxe9tudier-graphiquement-la-relation-2}}
 
-Lorsque l'on cherche à explorer la relation qu'il peut y avoir entre une variable quantitative et une variable qualitative, il peut être intéressant de visualiser la distribution de la variable quantitative en fonction de chaque modalité de la variable qualitative. Pour faire cela, il a été proposé dans la littérature d'user de graphiques appelés \emph{raincloud plots} qui combinent les avantages de plusieurs techniques graphiques et statistiques et par là même pallient les manques ou défauts inhérents à chacune de ces techniques \autocite{allenRaincloudPlotsMultiplatform2019}. Ces \emph{raincloud plots} utilisent :
+Lorsque l'on cherche à explorer la relation qu'il peut y avoir entre une variable quantitative et une variable qualitative, il peut être intéressant de visualiser la distribution de la variable quantitative en fonction de chaque modalité de la variable qualitative. Pour faire cela, il a été proposé dans la littérature d'user de graphiques appelés \emph{raincloud plots} qui combinent les avantages de plusieurs techniques graphiques et statistiques et par là même pallient les manques ou défauts inhérents à chacune de ces techniques \autocite{allenRaincloudPlotsMultiplatform2019}. Les blocs de code ci-dessous, et les Figures \ref{fig:raindcloudplotsBivUnpaired1}, \ref{fig:raindcloudplotsBivUnpaired2} et \ref{fig:raindcloudplotsBivPaired1}, proposent plusieurs options de mise en oeuvre de ce type de graphiques selon la situation d'étude (avec données non appariées et appariées).
 
-\begin{itemize}
-\tightlist
-\item
-  Les données individuelles (\emph{the rain}), qui permettent de bien voir les différences individuelles, les \emph{outliers}, et des patterns de distribution éventuellement inattendus ;
-\item
-  Des aires montrant les densités de probabilité (\emph{the clouds}), qui permettent de donner une idée relativement précise des distributions (chose difficile à percevoir à partir seulement des observations individuelles) ; à noter que les formes des aires et l'idée qu'elles donnent des distributions dans la population d'intérêt dépendent beaucoup du nombre d'observations disponibles, et leur utilisation pourrait donc se discuter en présence de peu d'observations ;
-\item
-  Des boîtes à moustaches, qui permettent de se faire une idée résumée relativement robuste (i.e., insensible aux \emph{outliers} et davantage comparable entre les études) des distributions dans la population d'intérêt (via les médianes et les quartiles) ; selon les cas, d'autres statistiques, comme les moyennes et les écarts-types, peuvent être utilisées à la place ou en plus des boîtes à moustaches \autocite{allenRaincloudPlotsMultiplatform2019}.
-\end{itemize}
+\emph{Données non appariées}
 
-Parce qu'ils montrent les données individuelles, les \emph{raincloud plots} vont dans le sens du propos de Weissgerber et al.~\autocite*{weissgerberBarLineGraphs2015} qui militent pour la disparition des graphiques en forme de simples bâtons de dynamite, lesquels ayant été souvent utilisés par le passé pour montrer des moyennes et écart-types dans les études. Le problème de ces graphiques en forme de bâtons de dynamite est qu'ils peuvent induire en erreur quant à la réelle forme de la distribution et ils limitent les possibilités du lecteur de juger de la pertinence des choix d'analyses inférentielles qui seraient faits par la suite.
-
-Les blocs de code ci-dessous, et les Figures \ref{fig:raindcloudplotsBivUnpaired1}, \ref{fig:raindcloudplotsBivUnpaired2}, \ref{fig:raindcloudplotsBivPaired1}, et \ref{fig:raindcloudplotsBivPaired2}, proposent plusieurs options d'utilisation du \emph{raincloud plot}. Sur ces figures, les aires représentant les densités de probabilité (\emph{the clouds}) nécessitent l'installation et le chargement du package \texttt{gghalves}.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(gghalves)}
-\end{Highlighting}
-\end{Shaded}
-
-Les éléments de code proposés ci-après pour déplacer l'axe des observations individuelles proviennent de la page web \url{https://github.com/tidyverse/ggplot2/issues/4491}, et ceux ayant permis de réaliser les \emph{clouds} proviennent de l'article de Allen et al.~\autocite{allenRaincloudPlotsMultiplatform2019} et de la page web \url{https://github.com/jorvlan/raincloudplots}.
+Les Figures \ref{fig:raindcloudplotsBivUnpaired1} et \ref{fig:raindcloudplotsBivUnpaired2} et les blocs de code associés montrés ci-dessous permettent d'obtenir des graphiques appropriés pour des données non appariées.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# Configuration du jeu de données pour les exemples avec données non appariées}
+\CommentTok{# (il s'agit ici d'obtenir le jeu de données `iris` avec seulement deux modalités  }
+\CommentTok{# de la variable `Species`, cela en enlevant la modalité `virginica`).}
 \NormalTok{iris_two_species <-}
 \StringTok{  }\NormalTok{iris }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(Species }\OperatorTok{!=}\StringTok{ "virginica"}\NormalTok{)}
 \end{Highlighting}
@@ -3752,52 +3738,149 @@ Les éléments de code proposés ci-après pour déplacer l'axe des observations
 \CommentTok{# Raincloud plots à l'horizontale pour données non appariées}
 \CommentTok{############################################################}
 
-
-\CommentTok{# Raincloud plots classiques}
+\CommentTok{# Raincloud plots classiques (avec boîtes à moustaches)}
 \NormalTok{A <-}
-\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ iris_two_species, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Species, }\DataTypeTok{y =}\NormalTok{ Sepal.Length, }
-                                      \DataTypeTok{colour =}\NormalTok{ Species, }\DataTypeTok{fill =}\NormalTok{ Species)) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{stage}\NormalTok{(}\DataTypeTok{start =}\NormalTok{ Species, }\DataTypeTok{after_scale =}\NormalTok{ x }\OperatorTok{-}\StringTok{ }\FloatTok{0.1}\NormalTok{)),}
-             \DataTypeTok{position =} \KeywordTok{position_jitter}\NormalTok{(}\DataTypeTok{seed =} \DecValTok{123}\NormalTok{, }\DataTypeTok{width =} \FloatTok{0.08}\NormalTok{, }\DataTypeTok{height =} \OtherTok{NULL}\NormalTok{),}
-             \DataTypeTok{size =} \DecValTok{3}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.3}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_half_violin}\NormalTok{(}\DataTypeTok{side =} \StringTok{"r"}\NormalTok{,}
-                   \DataTypeTok{position =} \KeywordTok{position_nudge}\NormalTok{(}\DataTypeTok{x =} \FloatTok{0.1}\NormalTok{, }\DataTypeTok{y =} \DecValTok{0}\NormalTok{),}
-                   \DataTypeTok{size =} \DecValTok{1}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.4}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_boxplot}\NormalTok{(}\DataTypeTok{position =} \KeywordTok{position_nudge}\NormalTok{(}\DataTypeTok{x =} \FloatTok{0.1}\NormalTok{),}
-               \DataTypeTok{width =} \FloatTok{0.1}\NormalTok{, }\DataTypeTok{colour =} \StringTok{"black"}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.3}\NormalTok{, }\DataTypeTok{outlier.shape =} \OtherTok{NA}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"A"}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position =} \StringTok{"none"}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{coord_flip}\NormalTok{()}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ iris_two_species, }
+         \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Species, }\DataTypeTok{y =}\NormalTok{ Sepal.Length, }\DataTypeTok{colour =}\NormalTok{ Species, }\DataTypeTok{fill =}\NormalTok{ Species)) }\OperatorTok{+}
+\StringTok{  }\NormalTok{ggdist}\OperatorTok{::}\KeywordTok{stat_halfeye}\NormalTok{(}
+    \DataTypeTok{adjust =} \FloatTok{.5}\NormalTok{, }
+    \DataTypeTok{width =} \FloatTok{.6}\NormalTok{, }
+    \DataTypeTok{.width =} \DecValTok{0}\NormalTok{, }
+    \DataTypeTok{point_colour =} \OtherTok{NA}
+\NormalTok{    ) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_boxplot}\NormalTok{(}
+    \DataTypeTok{colour =} \StringTok{"black"}\NormalTok{,}
+    \DataTypeTok{width =} \FloatTok{.1}\NormalTok{, }
+    \DataTypeTok{outlier.shape =} \OtherTok{NA}
+\NormalTok{  ) }\OperatorTok{+}
+\StringTok{  }\NormalTok{gghalves}\OperatorTok{::}\KeywordTok{geom_half_point}\NormalTok{(}
+    \DataTypeTok{size =} \DecValTok{2}\NormalTok{, }
+    \DataTypeTok{side =} \StringTok{"l"}\NormalTok{, }
+    \DataTypeTok{range_scale =} \FloatTok{.4}\NormalTok{, }
+    \DataTypeTok{alpha =} \FloatTok{.3}\NormalTok{,}
+    \DataTypeTok{transformation =} \KeywordTok{position_jitter}\NormalTok{(}\DataTypeTok{seed =} \DecValTok{123}\NormalTok{)}
+\NormalTok{  ) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"A"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{coord_flip}\NormalTok{(}\DataTypeTok{xlim =} \KeywordTok{c}\NormalTok{(}\FloatTok{1.2}\NormalTok{, }\OtherTok{NA}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position =} \StringTok{"none"}\NormalTok{)}
 
-\CommentTok{# Raincloud plots avec les nuages sur une même ligne}
+
+\CommentTok{# Raincloud plots avec les nuages sur une même ligne (avec boîtes à moustaches)}
 \NormalTok{B <-}
-\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ iris_two_species, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \DecValTok{0}\NormalTok{, }\DataTypeTok{y =}\NormalTok{ Sepal.Length, }
-                                      \DataTypeTok{colour =}\NormalTok{ Species, }\DataTypeTok{fill =}\NormalTok{ Species)) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ iris_two_species }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(Species }\OperatorTok{==}\StringTok{ "setosa"}\NormalTok{),}
-             \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \FloatTok{-0.21}\NormalTok{),}
-             \DataTypeTok{position =} \KeywordTok{position_jitter}\NormalTok{(}\DataTypeTok{seed =} \DecValTok{123}\NormalTok{, }\DataTypeTok{width =} \FloatTok{0.02}\NormalTok{, }\DataTypeTok{height =} \OtherTok{NULL}\NormalTok{),}
-             \DataTypeTok{size =} \DecValTok{3}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.3}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ iris_two_species }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(Species }\OperatorTok{==}\StringTok{ "versicolor"}\NormalTok{),}
-             \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \FloatTok{-0.13}\NormalTok{),}
-             \DataTypeTok{position =} \KeywordTok{position_jitter}\NormalTok{(}\DataTypeTok{seed =} \DecValTok{123}\NormalTok{, }\DataTypeTok{width =} \FloatTok{0.02}\NormalTok{, }\DataTypeTok{height =} \OtherTok{NULL}\NormalTok{),}
-             \DataTypeTok{size =} \DecValTok{3}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.3}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_half_violin}\NormalTok{(}\DataTypeTok{side =} \StringTok{"r"}\NormalTok{,}
-                   \DataTypeTok{position =} \KeywordTok{position_nudge}\NormalTok{(}\DataTypeTok{x =} \FloatTok{0.1}\NormalTok{, }\DataTypeTok{y =} \DecValTok{0}\NormalTok{),}
-                   \DataTypeTok{size =} \DecValTok{1}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.4}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_boxplot}\NormalTok{(}\DataTypeTok{position =} \KeywordTok{position_dodge}\NormalTok{(}\DataTypeTok{width =} \FloatTok{0.2}\NormalTok{),}
-               \DataTypeTok{width =} \FloatTok{0.1}\NormalTok{, }\DataTypeTok{colour =} \StringTok{"black"}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.3}\NormalTok{, }\DataTypeTok{outlier.shape =} \OtherTok{NA}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"B"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ iris_two_species, }
+         \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \DecValTok{0}\NormalTok{, }\DataTypeTok{y =}\NormalTok{ Sepal.Length, }\DataTypeTok{colour =}\NormalTok{ Species, }\DataTypeTok{fill =}\NormalTok{ Species)) }\OperatorTok{+}
+\StringTok{  }\NormalTok{ggdist}\OperatorTok{::}\KeywordTok{stat_halfeye}\NormalTok{(}
+    \DataTypeTok{adjust =} \FloatTok{.5}\NormalTok{, }
+    \DataTypeTok{width =} \FloatTok{.6}\NormalTok{, }
+    \DataTypeTok{.width =} \DecValTok{0}\NormalTok{, }
+    \DataTypeTok{point_colour =} \OtherTok{NA}\NormalTok{,}
+    \DataTypeTok{alpha =} \FloatTok{0.5}
+\NormalTok{    ) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_boxplot}\NormalTok{(}
+    \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \FloatTok{-0.07}\NormalTok{),}
+    \DataTypeTok{colour =} \StringTok{"black"}\NormalTok{,}
+    \DataTypeTok{width =} \FloatTok{.1}\NormalTok{, }
+    \DataTypeTok{outlier.shape =} \OtherTok{NA}
+\NormalTok{  ) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}
+    \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \FloatTok{-0.25}\NormalTok{),}
+    \DataTypeTok{size =} \DecValTok{2}\NormalTok{, }
+    \DataTypeTok{alpha =} \FloatTok{.5}\NormalTok{,}
+    \DataTypeTok{position =} \KeywordTok{position_jitterdodge}\NormalTok{(}
+                          \DataTypeTok{dodge.width =} \FloatTok{0.1}\NormalTok{,}
+                          \DataTypeTok{seed =} \DecValTok{123}
+\NormalTok{                    )}
+\NormalTok{  ) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"B"}\NormalTok{) }\OperatorTok{+}
 \StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position =} \StringTok{"right"}\NormalTok{,}
         \DataTypeTok{axis.title.y =} \KeywordTok{element_blank}\NormalTok{(),}
         \DataTypeTok{axis.text.y =} \KeywordTok{element_blank}\NormalTok{(),}
         \DataTypeTok{axis.ticks.y =} \KeywordTok{element_blank}\NormalTok{()) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{coord_flip}\NormalTok{()}
+\StringTok{  }\KeywordTok{coord_flip}\NormalTok{() }
+
+
+\CommentTok{# Raincloud plots classiques (avec moyennes et écart-types)}
+\NormalTok{C <-}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ iris_two_species, }
+         \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Species, }\DataTypeTok{y =}\NormalTok{ Sepal.Length, }\DataTypeTok{colour =}\NormalTok{ Species, }\DataTypeTok{fill =}\NormalTok{ Species)) }\OperatorTok{+}
+\StringTok{  }\NormalTok{ggdist}\OperatorTok{::}\KeywordTok{stat_halfeye}\NormalTok{(}
+    \DataTypeTok{adjust =} \FloatTok{.5}\NormalTok{, }
+    \DataTypeTok{width =} \FloatTok{.6}\NormalTok{, }
+    \DataTypeTok{.width =} \DecValTok{0}\NormalTok{, }
+    \DataTypeTok{point_colour =} \OtherTok{NA}
+\NormalTok{    ) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{stat_summary}\NormalTok{(}
+    \DataTypeTok{geom =} \StringTok{"errorbar"}\NormalTok{,}
+    \DataTypeTok{color =} \StringTok{"black"}\NormalTok{,}
+    \DataTypeTok{fun.data =} \StringTok{"mean_sdl"}\NormalTok{,}
+    \DataTypeTok{fun.args =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{mult =} \DecValTok{1}\NormalTok{),}
+    \DataTypeTok{size =} \FloatTok{1.1}\NormalTok{, }
+    \DataTypeTok{width =} \FloatTok{0.08}
+\NormalTok{    ) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{stat_summary}\NormalTok{(}
+    \DataTypeTok{geom =} \StringTok{"point"}\NormalTok{,}
+    \DataTypeTok{fun =} \StringTok{"mean"}\NormalTok{, }
+    \DataTypeTok{color =} \StringTok{"black"}\NormalTok{,}
+    \DataTypeTok{size =} \DecValTok{3}
+\NormalTok{    ) }\OperatorTok{+}
+\StringTok{  }\NormalTok{gghalves}\OperatorTok{::}\KeywordTok{geom_half_point}\NormalTok{(}
+    \DataTypeTok{size =} \DecValTok{2}\NormalTok{, }
+    \DataTypeTok{side =} \StringTok{"l"}\NormalTok{, }
+    \DataTypeTok{range_scale =} \FloatTok{.4}\NormalTok{, }
+    \DataTypeTok{alpha =} \FloatTok{.3}\NormalTok{,}
+    \DataTypeTok{transformation =} \KeywordTok{position_jitter}\NormalTok{(}\DataTypeTok{seed =} \DecValTok{123}\NormalTok{)}
+\NormalTok{  ) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"C"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{coord_flip}\NormalTok{(}\DataTypeTok{xlim =} \KeywordTok{c}\NormalTok{(}\FloatTok{1.2}\NormalTok{, }\OtherTok{NA}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position =} \StringTok{"none"}\NormalTok{)}
+
+
+\CommentTok{# Raincloud plots avec les nuages sur une même ligne (avec moyennes et écart-types)}
+\NormalTok{D <-}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ iris_two_species, }
+         \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \DecValTok{0}\NormalTok{, }\DataTypeTok{y =}\NormalTok{ Sepal.Length, }\DataTypeTok{colour =}\NormalTok{ Species, }\DataTypeTok{fill =}\NormalTok{ Species)) }\OperatorTok{+}
+\StringTok{  }\NormalTok{ggdist}\OperatorTok{::}\KeywordTok{stat_halfeye}\NormalTok{(}
+    \DataTypeTok{adjust =} \FloatTok{.5}\NormalTok{, }
+    \DataTypeTok{width =} \FloatTok{.6}\NormalTok{, }
+    \DataTypeTok{.width =} \DecValTok{0}\NormalTok{, }
+    \DataTypeTok{point_colour =} \OtherTok{NA}\NormalTok{,}
+    \DataTypeTok{alpha =} \FloatTok{0.5}
+\NormalTok{    ) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{stat_summary}\NormalTok{(}
+    \DataTypeTok{geom =} \StringTok{"errorbar"}\NormalTok{,}
+    \DataTypeTok{color =} \StringTok{"black"}\NormalTok{,}
+    \DataTypeTok{fun.data =} \StringTok{"mean_sdl"}\NormalTok{,}
+    \DataTypeTok{fun.args =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{mult =} \DecValTok{1}\NormalTok{),}
+    \DataTypeTok{size =} \FloatTok{1.1}\NormalTok{, }
+    \DataTypeTok{width =} \FloatTok{0.07}
+\NormalTok{    ) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{stat_summary}\NormalTok{(}
+    \DataTypeTok{geom =} \StringTok{"point"}\NormalTok{,}
+    \DataTypeTok{fun =} \StringTok{"mean"}\NormalTok{, }
+    \DataTypeTok{color =} \StringTok{"black"}\NormalTok{,}
+    \DataTypeTok{size =} \DecValTok{3}
+\NormalTok{    ) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}
+    \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \FloatTok{-0.15}\NormalTok{),}
+    \DataTypeTok{size =} \DecValTok{2}\NormalTok{, }
+    \DataTypeTok{alpha =} \FloatTok{.5}\NormalTok{,}
+    \DataTypeTok{position =} \KeywordTok{position_jitterdodge}\NormalTok{(}
+                          \DataTypeTok{dodge.width =} \FloatTok{0.1}\NormalTok{,}
+                          \DataTypeTok{seed =} \DecValTok{123}
+\NormalTok{                    )}
+\NormalTok{  ) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"D"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position =} \StringTok{"right"}\NormalTok{,}
+        \DataTypeTok{axis.title.y =} \KeywordTok{element_blank}\NormalTok{(),}
+        \DataTypeTok{axis.text.y =} \KeywordTok{element_blank}\NormalTok{(),}
+        \DataTypeTok{axis.ticks.y =} \KeywordTok{element_blank}\NormalTok{()) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{coord_flip}\NormalTok{() }
 \end{Highlighting}
 \end{Shaded}
 
 \begin{figure}
 
-{\centering \includegraphics[height=0.4\textheight]{Analyser-des-données-avec-R_files/figure-latex/raindcloudplotsBivUnpaired1-1} 
+{\centering \includegraphics[width=1\linewidth]{Analyser-des-données-avec-R_files/figure-latex/raindcloudplotsBivUnpaired1-1} 
 
 }
 
@@ -3810,39 +3893,134 @@ Les éléments de code proposés ci-après pour déplacer l'axe des observations
 \CommentTok{# Raincloud plots à la verticale pour données non appariées}
 \CommentTok{###########################################################}
 
-\CommentTok{# Raincloud plots classiques}
+\CommentTok{# Raincloud plots classiques (avec boîtes à moustaches)}
 \NormalTok{A <-}
-\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ iris_two_species, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Species, }\DataTypeTok{y =}\NormalTok{ Sepal.Length, }
-                                      \DataTypeTok{colour =}\NormalTok{ Species, }\DataTypeTok{fill =}\NormalTok{ Species)) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{stage}\NormalTok{(}\DataTypeTok{start =}\NormalTok{ Species, }\DataTypeTok{after_scale =}\NormalTok{ x }\OperatorTok{-}\StringTok{ }\FloatTok{0.1}\NormalTok{)),}
-             \DataTypeTok{position =} \KeywordTok{position_jitter}\NormalTok{(}\DataTypeTok{seed =} \DecValTok{123}\NormalTok{, }\DataTypeTok{width =} \FloatTok{0.06}\NormalTok{, }\DataTypeTok{height =} \OtherTok{NULL}\NormalTok{),}
-             \DataTypeTok{size =} \DecValTok{3}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.3}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_half_violin}\NormalTok{(}\DataTypeTok{side =} \StringTok{"r"}\NormalTok{,}
-                   \DataTypeTok{position =} \KeywordTok{position_nudge}\NormalTok{(}\DataTypeTok{x =} \FloatTok{0.1}\NormalTok{, }\DataTypeTok{y =} \DecValTok{0}\NormalTok{),}
-                   \DataTypeTok{size =} \DecValTok{1}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.4}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_boxplot}\NormalTok{(}\DataTypeTok{position =} \KeywordTok{position_nudge}\NormalTok{(}\DataTypeTok{x =} \FloatTok{0.1}\NormalTok{),}
-               \DataTypeTok{width =} \FloatTok{0.1}\NormalTok{, }\DataTypeTok{colour =} \StringTok{"black"}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.3}\NormalTok{, }\DataTypeTok{outlier.shape =} \OtherTok{NA}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"A"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ iris_two_species, }
+         \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Species, }\DataTypeTok{y =}\NormalTok{ Sepal.Length, }\DataTypeTok{colour =}\NormalTok{ Species, }\DataTypeTok{fill =}\NormalTok{ Species)) }\OperatorTok{+}
+\StringTok{  }\NormalTok{ggdist}\OperatorTok{::}\KeywordTok{stat_halfeye}\NormalTok{(}
+    \DataTypeTok{adjust =} \FloatTok{.5}\NormalTok{, }
+    \DataTypeTok{width =} \FloatTok{.6}\NormalTok{, }
+    \DataTypeTok{.width =} \DecValTok{0}\NormalTok{, }
+    \DataTypeTok{point_colour =} \OtherTok{NA}
+\NormalTok{    ) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_boxplot}\NormalTok{(}
+    \DataTypeTok{colour =} \StringTok{"black"}\NormalTok{,}
+    \DataTypeTok{width =} \FloatTok{.1}\NormalTok{, }
+    \DataTypeTok{outlier.shape =} \OtherTok{NA}
+\NormalTok{  ) }\OperatorTok{+}
+\StringTok{  }\NormalTok{gghalves}\OperatorTok{::}\KeywordTok{geom_half_point}\NormalTok{(}
+    \DataTypeTok{size =} \DecValTok{2}\NormalTok{, }
+    \DataTypeTok{side =} \StringTok{"l"}\NormalTok{, }
+    \DataTypeTok{range_scale =} \FloatTok{.4}\NormalTok{, }
+    \DataTypeTok{alpha =} \FloatTok{.3}\NormalTok{,}
+    \DataTypeTok{transformation =} \KeywordTok{position_jitter}\NormalTok{(}\DataTypeTok{seed =} \DecValTok{123}\NormalTok{)}
+\NormalTok{  ) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"A"}\NormalTok{) }\OperatorTok{+}
 \StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position =} \StringTok{"none"}\NormalTok{)}
 
-\CommentTok{# Raincloud plots avec les nuages sur une même ligne}
+
+\CommentTok{# Raincloud plots avec les nuages sur une même ligne (avec boîtes à moustaches)}
 \NormalTok{B <-}
-\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ iris_two_species, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \DecValTok{0}\NormalTok{, }\DataTypeTok{y =}\NormalTok{ Sepal.Length, }
-                                      \DataTypeTok{colour =}\NormalTok{ Species, }\DataTypeTok{fill =}\NormalTok{ Species)) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ iris_two_species }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(Species }\OperatorTok{==}\StringTok{ "setosa"}\NormalTok{),}
-             \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \FloatTok{-0.17}\NormalTok{),}
-             \DataTypeTok{position =} \KeywordTok{position_jitter}\NormalTok{(}\DataTypeTok{seed =} \DecValTok{123}\NormalTok{, }\DataTypeTok{width =} \FloatTok{0.017}\NormalTok{, }\DataTypeTok{height =} \OtherTok{NULL}\NormalTok{),}
-             \DataTypeTok{size =} \DecValTok{3}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.3}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ iris_two_species }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(Species }\OperatorTok{==}\StringTok{ "versicolor"}\NormalTok{),}
-             \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \FloatTok{-0.11}\NormalTok{),}
-             \DataTypeTok{position =} \KeywordTok{position_jitter}\NormalTok{(}\DataTypeTok{seed =} \DecValTok{123}\NormalTok{, }\DataTypeTok{width =} \FloatTok{0.02}\NormalTok{, }\DataTypeTok{height =} \OtherTok{NULL}\NormalTok{),}
-             \DataTypeTok{size =} \DecValTok{3}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.3}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_half_violin}\NormalTok{(}\DataTypeTok{side =} \StringTok{"r"}\NormalTok{,}
-                   \DataTypeTok{position =} \KeywordTok{position_nudge}\NormalTok{(}\DataTypeTok{x =} \FloatTok{0.1}\NormalTok{, }\DataTypeTok{y =} \DecValTok{0}\NormalTok{),}
-                   \DataTypeTok{size =} \DecValTok{1}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.4}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_boxplot}\NormalTok{(}\DataTypeTok{position =} \KeywordTok{position_dodge}\NormalTok{(}\DataTypeTok{width =} \FloatTok{0.12}\NormalTok{),}
-               \DataTypeTok{width =} \FloatTok{0.07}\NormalTok{, }\DataTypeTok{colour =} \StringTok{"black"}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.3}\NormalTok{, }\DataTypeTok{outlier.shape =} \OtherTok{NA}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"B"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ iris_two_species, }
+         \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \DecValTok{0}\NormalTok{, }\DataTypeTok{y =}\NormalTok{ Sepal.Length, }\DataTypeTok{colour =}\NormalTok{ Species, }\DataTypeTok{fill =}\NormalTok{ Species)) }\OperatorTok{+}
+\StringTok{  }\NormalTok{ggdist}\OperatorTok{::}\KeywordTok{stat_halfeye}\NormalTok{(}
+    \DataTypeTok{adjust =} \FloatTok{.5}\NormalTok{, }
+    \DataTypeTok{width =} \FloatTok{.6}\NormalTok{, }
+    \DataTypeTok{.width =} \DecValTok{0}\NormalTok{, }
+    \DataTypeTok{point_colour =} \OtherTok{NA}\NormalTok{,}
+    \DataTypeTok{alpha =} \FloatTok{0.5}
+\NormalTok{    ) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_boxplot}\NormalTok{(}
+    \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \FloatTok{-0.07}\NormalTok{),}
+    \DataTypeTok{colour =} \StringTok{"black"}\NormalTok{,}
+    \DataTypeTok{width =} \FloatTok{.1}\NormalTok{, }
+    \DataTypeTok{outlier.shape =} \OtherTok{NA}
+\NormalTok{  ) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}
+    \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \FloatTok{-0.25}\NormalTok{),}
+    \DataTypeTok{size =} \DecValTok{2}\NormalTok{, }
+    \DataTypeTok{alpha =} \FloatTok{.5}\NormalTok{,}
+    \DataTypeTok{position =} \KeywordTok{position_jitterdodge}\NormalTok{(}
+                          \DataTypeTok{dodge.width =} \FloatTok{0.1}\NormalTok{,}
+                          \DataTypeTok{seed =} \DecValTok{123}
+\NormalTok{                    )}
+\NormalTok{  ) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"B"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position =} \StringTok{"right"}\NormalTok{,}
+        \DataTypeTok{axis.title.x =} \KeywordTok{element_blank}\NormalTok{(),}
+        \DataTypeTok{axis.text.x =} \KeywordTok{element_blank}\NormalTok{(),}
+        \DataTypeTok{axis.ticks.x =} \KeywordTok{element_blank}\NormalTok{()) }
+
+\CommentTok{# Raincloud plots classiques (avec moyennes et écart-types)}
+\NormalTok{C <-}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ iris_two_species, }
+         \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Species, }\DataTypeTok{y =}\NormalTok{ Sepal.Length, }\DataTypeTok{colour =}\NormalTok{ Species, }\DataTypeTok{fill =}\NormalTok{ Species)) }\OperatorTok{+}
+\StringTok{  }\NormalTok{ggdist}\OperatorTok{::}\KeywordTok{stat_halfeye}\NormalTok{(}
+    \DataTypeTok{adjust =} \FloatTok{.5}\NormalTok{, }
+    \DataTypeTok{width =} \FloatTok{.6}\NormalTok{, }
+    \DataTypeTok{.width =} \DecValTok{0}\NormalTok{, }
+    \DataTypeTok{point_colour =} \OtherTok{NA}
+\NormalTok{    ) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{stat_summary}\NormalTok{(}
+    \DataTypeTok{geom =} \StringTok{"errorbar"}\NormalTok{,}
+    \DataTypeTok{color =} \StringTok{"black"}\NormalTok{,}
+    \DataTypeTok{fun.data =} \StringTok{"mean_sdl"}\NormalTok{,}
+    \DataTypeTok{fun.args =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{mult =} \DecValTok{1}\NormalTok{),}
+    \DataTypeTok{size =} \FloatTok{1.1}\NormalTok{, }
+    \DataTypeTok{width =} \FloatTok{0.06}
+\NormalTok{    ) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{stat_summary}\NormalTok{(}
+    \DataTypeTok{geom =} \StringTok{"point"}\NormalTok{,}
+    \DataTypeTok{fun =} \StringTok{"mean"}\NormalTok{, }
+    \DataTypeTok{color =} \StringTok{"black"}\NormalTok{,}
+    \DataTypeTok{size =} \DecValTok{3}
+\NormalTok{    ) }\OperatorTok{+}
+\StringTok{  }\NormalTok{gghalves}\OperatorTok{::}\KeywordTok{geom_half_point}\NormalTok{(}
+    \DataTypeTok{size =} \DecValTok{2}\NormalTok{, }
+    \DataTypeTok{side =} \StringTok{"l"}\NormalTok{, }
+    \DataTypeTok{range_scale =} \FloatTok{.4}\NormalTok{, }
+    \DataTypeTok{alpha =} \FloatTok{.3}\NormalTok{,}
+    \DataTypeTok{transformation =} \KeywordTok{position_jitter}\NormalTok{(}\DataTypeTok{seed =} \DecValTok{123}\NormalTok{)}
+\NormalTok{  ) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"C"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position =} \StringTok{"none"}\NormalTok{)}
+
+
+\CommentTok{# Raincloud plots avec les nuages sur une même ligne (avec moyennes et écart-types)}
+\NormalTok{D <-}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ iris_two_species, }
+         \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \DecValTok{0}\NormalTok{, }\DataTypeTok{y =}\NormalTok{ Sepal.Length, }\DataTypeTok{colour =}\NormalTok{ Species, }\DataTypeTok{fill =}\NormalTok{ Species)) }\OperatorTok{+}
+\StringTok{  }\NormalTok{ggdist}\OperatorTok{::}\KeywordTok{stat_halfeye}\NormalTok{(}
+    \DataTypeTok{adjust =} \FloatTok{.5}\NormalTok{, }
+    \DataTypeTok{width =} \FloatTok{.6}\NormalTok{, }
+    \DataTypeTok{.width =} \DecValTok{0}\NormalTok{, }
+    \DataTypeTok{point_colour =} \OtherTok{NA}\NormalTok{,}
+    \DataTypeTok{alpha =} \FloatTok{0.5}
+\NormalTok{    ) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{stat_summary}\NormalTok{(}
+    \DataTypeTok{geom =} \StringTok{"errorbar"}\NormalTok{,}
+    \DataTypeTok{color =} \StringTok{"black"}\NormalTok{,}
+    \DataTypeTok{fun.data =} \StringTok{"mean_sdl"}\NormalTok{,}
+    \DataTypeTok{fun.args =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{mult =} \DecValTok{1}\NormalTok{),}
+    \DataTypeTok{size =} \FloatTok{1.1}\NormalTok{, }
+    \DataTypeTok{width =} \FloatTok{0.03}
+\NormalTok{    ) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{stat_summary}\NormalTok{(}
+    \DataTypeTok{geom =} \StringTok{"point"}\NormalTok{,}
+    \DataTypeTok{fun =} \StringTok{"mean"}\NormalTok{, }
+    \DataTypeTok{color =} \StringTok{"black"}\NormalTok{,}
+    \DataTypeTok{size =} \DecValTok{3}
+\NormalTok{    ) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}
+    \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \FloatTok{-0.15}\NormalTok{),}
+    \DataTypeTok{size =} \DecValTok{2}\NormalTok{, }
+    \DataTypeTok{alpha =} \FloatTok{.5}\NormalTok{,}
+    \DataTypeTok{position =} \KeywordTok{position_jitterdodge}\NormalTok{(}
+                          \DataTypeTok{dodge.width =} \FloatTok{0.1}\NormalTok{,}
+                          \DataTypeTok{seed =} \DecValTok{123}
+\NormalTok{                    )}
+\NormalTok{  ) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"D"}\NormalTok{) }\OperatorTok{+}
 \StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position =} \StringTok{"right"}\NormalTok{,}
         \DataTypeTok{axis.title.x =} \KeywordTok{element_blank}\NormalTok{(),}
         \DataTypeTok{axis.text.x =} \KeywordTok{element_blank}\NormalTok{(),}
@@ -3852,14 +4030,18 @@ Les éléments de code proposés ci-après pour déplacer l'axe des observations
 
 \begin{figure}
 
-{\centering \includegraphics[height=0.4\textheight]{Analyser-des-données-avec-R_files/figure-latex/raindcloudplotsBivUnpaired2-1} 
+{\centering \includegraphics[width=1\linewidth]{Analyser-des-données-avec-R_files/figure-latex/raindcloudplotsBivUnpaired2-1} 
 
 }
 
 \caption{Exemples de raindcloud plots à la verticale pour des données non appariées}\label{fig:raindcloudplotsBivUnpaired2}
 \end{figure}
 
-La reproduction des graphiques proposés pour les données appariées (cf.~Figures \ref{fig:raindcloudplotsBivPaired1} et \ref{fig:raindcloudplotsBivPaired2}) nécessite l'installation du package \texttt{PairedData} et le chargement du jeu de données associé \texttt{Blink}. Pour information, \texttt{Blink} contient les données de taux de clignotement des yeux obtenues chez 12 sujets et dans deux conditions différentes : une tâche où il fallait diriger un stylo selon une trajectoire rectiligne (modalité \texttt{Straight}) ; et une tâche où il fallait diriger un stylo selon une trajectoire présentant des oscillations (\texttt{Oscillating}).
+Comme vous l'aurez peut-être repéré, il s'agit ici des mêmes techniques de codage qui ont été vues au cours du chapitre précédent lors de la présentation du \emph{raincloud plot}, à ceci près qu'il y a un \emph{mapping} (une mise en lien) des couleurs des éléments graphiques avec les modalités de la variable qualitative étudiée (cf.~arguments \texttt{color} et \texttt{fill} dans la fonction \texttt{aes()} au niveau de la fonction \texttt{ggplot()}). Notons aussi que pour montrer les moyennes et écarts-types sur les figures \ref{fig:raindcloudplotsBivUnpaired1} et \ref{fig:raindcloudplotsBivUnpaired2}, il a fallu utiliser la fonction \texttt{stat\_summary()}. Cette fonction sert à visualiser un résumé statistique identifié. Pour montrer les moyennes, on utilise \texttt{fun\ =\ "mean"}, alors que pour montrer des écarts-types, on utilise \texttt{fun.data\ =\ "mean\_sdl"}. Pour les écarts-types, il faut ajouter \texttt{fun.args\ =\ list(mult\ =\ 1)} pour bien montrer une barre d'erreur ne correspondant qu'à un seul multiple de l'écart-type, car par défaut c'est deux fois l'écart-type qui est montré. On peut choisir la forme avec laquelle présenter le résumé statistique grâce à l'argument \texttt{geom}. On remarque aussi que pour montrer les ``nuages'' sur une même ligne (cf.~graphiques B et D des Figures \ref{fig:raindcloudplotsBivUnpaired1} et \ref{fig:raindcloudplotsBivUnpaired2}), nous avons utilisé \texttt{aes(x\ =\ 0)} dans la fonction \texttt{ggplot()}, et nous avons montré les données individuelles avec la fonction \texttt{geom\_point()} et non plus avec \texttt{gghalves::geom\_half\_point()} comme au chapitre précédent ou même comme avec les graphiques A et C des mêmes figures, cela pour avoir plus de contrôle sur le placement des points sur les graphiques. C'est alors l'argument \texttt{position} et la fonction \texttt{position\_jitterdodge()} qui ont permis de donner un mouvement latéral aléatoire aux points pour qu'ils ne soient pas superposés.
+
+\emph{Données appariées}
+
+La Figure \ref{fig:raindcloudplotsBivPaired1} montre des propositions de graphiques dans le cas de l'étude d'une comparaison de deux groupes de données appariées. Pour ces exemples, nous avons installé le package \texttt{PairedData} et chargé le jeu de données associé, appelé \texttt{Blink}. Pour information, \texttt{Blink} contient des données de taux de clignotement des yeux obtenues chez 12 sujets et dans deux conditions différentes : une tâche où il fallait diriger un stylo selon une trajectoire rectiligne (modalité \texttt{Straight}), et une tâche où il fallait diriger un stylo selon une trajectoire présentant des oscillations (\texttt{Oscillating}). Ce jeu de données a été un peu transformé pour pouvoir passer à l'étape de la conception graphique, comme montré ci-dessous.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3878,172 +4060,119 @@ La reproduction des graphiques proposés pour les données appariées (cf.~Figur
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{########################################################}
-\CommentTok{# Raincloud plots à l'horizontale pour données appariées}
-\CommentTok{########################################################}
-
-\CommentTok{# Raincloud plots classiques avec moyennes et écart-types et une ligne reliant }
-\CommentTok{# les moyennes}
-\NormalTok{A <-}
-\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ Blink2, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Condition, }\DataTypeTok{y =}\NormalTok{ Blink_rate,  }
-                            \DataTypeTok{colour =}\NormalTok{ Condition, }\DataTypeTok{fill =}\NormalTok{ Condition)) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{stage}\NormalTok{(}\DataTypeTok{start =}\NormalTok{ Condition, }\DataTypeTok{after_scale =}\NormalTok{ x }\OperatorTok{-}\StringTok{ }\FloatTok{0.15}\NormalTok{)),}
-             \DataTypeTok{position =} \KeywordTok{position_jitter}\NormalTok{(}\DataTypeTok{seed =} \DecValTok{123}\NormalTok{, }\DataTypeTok{width =} \FloatTok{0.03}\NormalTok{),}
-             \DataTypeTok{size =} \DecValTok{3}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.3}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_half_violin}\NormalTok{(}\DataTypeTok{side =} \StringTok{"r"}\NormalTok{, }
-                   \DataTypeTok{position =} \KeywordTok{position_nudge}\NormalTok{(}\FloatTok{0.1}\NormalTok{), }
-                   \DataTypeTok{size =} \DecValTok{1}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.4}\NormalTok{) }\OperatorTok{+}\StringTok{  }
-\StringTok{  }\KeywordTok{geom_boxplot}\NormalTok{(}\DataTypeTok{width =} \FloatTok{0.08}\NormalTok{, }\DataTypeTok{colour =} \StringTok{"black"}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.3}\NormalTok{, }
-               \DataTypeTok{outlier.shape =} \OtherTok{NA}\NormalTok{) }\OperatorTok{+}\StringTok{ }
-\StringTok{  }\KeywordTok{stat_summary}\NormalTok{(}\DataTypeTok{geom =} \StringTok{"errorbar"}\NormalTok{,}
-               \DataTypeTok{fun.data =} \StringTok{"mean_sdl"}\NormalTok{,}
-               \DataTypeTok{fun.args =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{mult =} \DecValTok{1}\NormalTok{),}
-               \DataTypeTok{position =} \KeywordTok{position_nudge}\NormalTok{(}\FloatTok{0.1}\NormalTok{), }
-               \DataTypeTok{size =} \FloatTok{1.1}\NormalTok{, }\DataTypeTok{width =} \FloatTok{0.08}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{stat_summary}\NormalTok{(}\DataTypeTok{geom =} \StringTok{"point"}\NormalTok{,}
-               \DataTypeTok{fun =} \StringTok{"mean"}\NormalTok{, }
-               \DataTypeTok{position =} \KeywordTok{position_nudge}\NormalTok{(}\FloatTok{0.1}\NormalTok{),}
-               \DataTypeTok{size =} \DecValTok{3}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{stat_summary}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{group =} \DecValTok{1}\NormalTok{),}
-               \DataTypeTok{geom =} \StringTok{"line"}\NormalTok{,}
-               \DataTypeTok{fun =} \StringTok{"mean"}\NormalTok{, }
-               \DataTypeTok{position =} \KeywordTok{position_nudge}\NormalTok{(}\FloatTok{0.1}\NormalTok{),}
-               \DataTypeTok{size =} \FloatTok{1.5}\NormalTok{, }\DataTypeTok{color =} \StringTok{"grey50"}\NormalTok{,  }\DataTypeTok{linetype =} \StringTok{"dotted"}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"A"}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position =} \StringTok{"none"}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{coord_flip}\NormalTok{()}
-
-
-\CommentTok{# Raincloud plots avec les nuages sur une même ligne et les lignes reliant }
-\CommentTok{# les données individuelles}
-\NormalTok{B <-}
-\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ Blink2, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Condition, }\DataTypeTok{y =}\NormalTok{ Blink_rate, }
-                            \DataTypeTok{colour =}\NormalTok{ Condition, }\DataTypeTok{fill =}\NormalTok{ Condition)) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{position =} \KeywordTok{position_jitter}\NormalTok{(}\DataTypeTok{seed =} \DecValTok{123}\NormalTok{, }\DataTypeTok{width =} \FloatTok{0.03}\NormalTok{),}
-             \DataTypeTok{size =} \DecValTok{3}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.3}\NormalTok{) }\OperatorTok{+}\StringTok{ }
-\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{group =}\NormalTok{ Subject),}
-            \DataTypeTok{position =} \KeywordTok{position_jitter}\NormalTok{(}\DataTypeTok{seed =} \DecValTok{123}\NormalTok{, }\DataTypeTok{width =} \FloatTok{0.03}\NormalTok{),}
-            \DataTypeTok{size =} \DecValTok{2}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.3}\NormalTok{, }\DataTypeTok{color =} \StringTok{"gray"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
-\StringTok{  }\KeywordTok{geom_half_violin}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \FloatTok{2.2}\NormalTok{),}
-                   \DataTypeTok{side =} \StringTok{"r"}\NormalTok{,}
-                   \DataTypeTok{position =} \KeywordTok{position_dodge}\NormalTok{(}\DataTypeTok{width =} \DecValTok{0}\NormalTok{),}
-                   \DataTypeTok{size =} \DecValTok{1}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.4}\NormalTok{) }\OperatorTok{+}\StringTok{  }
-\StringTok{  }\KeywordTok{geom_boxplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \FloatTok{2.1}\NormalTok{),}
-               \DataTypeTok{position =} \KeywordTok{position_dodge}\NormalTok{(}\DataTypeTok{width =} \FloatTok{0.1}\NormalTok{),}
-               \DataTypeTok{width =} \FloatTok{0.15}\NormalTok{, }\DataTypeTok{colour =} \StringTok{"black"}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.3}\NormalTok{, }
-               \DataTypeTok{outlier.shape =} \OtherTok{NA}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"B"}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position =} \StringTok{"right"}\NormalTok{,}
-        \DataTypeTok{axis.title.y =} \KeywordTok{element_blank}\NormalTok{(),}
-        \DataTypeTok{axis.text.y =} \KeywordTok{element_blank}\NormalTok{(),}
-        \DataTypeTok{axis.ticks.y =} \KeywordTok{element_blank}\NormalTok{()) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{coord_flip}\NormalTok{()}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{figure}
-
-{\centering \includegraphics[height=0.4\textheight]{Analyser-des-données-avec-R_files/figure-latex/raindcloudplotsBivPaired1-1} 
-
-}
-
-\caption{Exemples de raindcloud plots à l'horizontale  pour des données appariées}\label{fig:raindcloudplotsBivPaired1}
-\end{figure}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \CommentTok{#######################################################}
 \CommentTok{# Raincloud plots à la verticale pour données appariées}
 \CommentTok{#######################################################}
 
-\CommentTok{# Raincloud plots classiques avec moyennes et écart-types et une ligne reliant }
-\CommentTok{# les moyennes }
+\CommentTok{# Raincloud plots classiques à la verticale avec boîtes à moustaches}
 \NormalTok{A <-}
-\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ Blink2, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Condition, }\DataTypeTok{y =}\NormalTok{ Blink_rate,  }
-                            \DataTypeTok{colour =}\NormalTok{ Condition, }\DataTypeTok{fill =}\NormalTok{ Condition)) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{stage}\NormalTok{(}\DataTypeTok{start =}\NormalTok{ Condition, }\DataTypeTok{after_scale =}\NormalTok{ x }\OperatorTok{-}\StringTok{ }\FloatTok{0.15}\NormalTok{)),}
-             \DataTypeTok{position =} \KeywordTok{position_jitter}\NormalTok{(}\DataTypeTok{seed =} \DecValTok{123}\NormalTok{, }\DataTypeTok{width =} \FloatTok{0.03}\NormalTok{),}
-             \DataTypeTok{size =} \DecValTok{3}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.3}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_half_violin}\NormalTok{(}\DataTypeTok{side =} \StringTok{"r"}\NormalTok{, }
-                   \DataTypeTok{position =} \KeywordTok{position_nudge}\NormalTok{(}\FloatTok{0.1}\NormalTok{), }
-                   \DataTypeTok{size =} \DecValTok{1}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.4}\NormalTok{) }\OperatorTok{+}\StringTok{  }
-\StringTok{  }\KeywordTok{geom_boxplot}\NormalTok{(}\DataTypeTok{width =} \FloatTok{0.08}\NormalTok{, }\DataTypeTok{colour =} \StringTok{"black"}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.3}\NormalTok{, }
-               \DataTypeTok{outlier.shape =} \OtherTok{NA}\NormalTok{) }\OperatorTok{+}\StringTok{ }
-\StringTok{  }\KeywordTok{stat_summary}\NormalTok{(}\DataTypeTok{geom =} \StringTok{"errorbar"}\NormalTok{,}
-               \DataTypeTok{fun.data =} \StringTok{"mean_sdl"}\NormalTok{,}
-               \DataTypeTok{fun.args =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{mult =} \DecValTok{1}\NormalTok{),}
-               \DataTypeTok{position =} \KeywordTok{position_nudge}\NormalTok{(}\FloatTok{0.1}\NormalTok{), }
-               \DataTypeTok{size =} \FloatTok{1.1}\NormalTok{, }\DataTypeTok{width =} \FloatTok{0.08}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{stat_summary}\NormalTok{(}\DataTypeTok{geom =} \StringTok{"point"}\NormalTok{,}
-               \DataTypeTok{fun =} \StringTok{"mean"}\NormalTok{, }
-               \DataTypeTok{position =} \KeywordTok{position_nudge}\NormalTok{(}\FloatTok{0.1}\NormalTok{),}
-               \DataTypeTok{size =} \DecValTok{3}\NormalTok{,) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{stat_summary}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{group =} \DecValTok{1}\NormalTok{),}
-               \DataTypeTok{geom =} \StringTok{"line"}\NormalTok{,}
-               \DataTypeTok{fun =} \StringTok{"mean"}\NormalTok{, }
-               \DataTypeTok{position =} \KeywordTok{position_nudge}\NormalTok{(}\FloatTok{0.1}\NormalTok{),}
-               \DataTypeTok{size =} \FloatTok{1.5}\NormalTok{, }\DataTypeTok{color =} \StringTok{"grey50"}\NormalTok{,  }\DataTypeTok{linetype =} \StringTok{"dotted"}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"A"}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position =} \StringTok{"none"}\NormalTok{)}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ Blink2, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Condition, }\DataTypeTok{y =}\NormalTok{ Blink_rate)) }\OperatorTok{+}
+\StringTok{  }\NormalTok{ggdist}\OperatorTok{::}\KeywordTok{stat_halfeye}\NormalTok{(}
+    \KeywordTok{aes}\NormalTok{(}\DataTypeTok{side =} \KeywordTok{ifelse}\NormalTok{(Condition }\OperatorTok{==}\StringTok{ "Straight"}\NormalTok{, }\StringTok{"left"}\NormalTok{, }\StringTok{"right"}\NormalTok{)),}
+    \DataTypeTok{adjust =} \FloatTok{.5}\NormalTok{, }
+    \DataTypeTok{width =} \FloatTok{.6}\NormalTok{, }
+    \DataTypeTok{.width =} \DecValTok{0}\NormalTok{, }
+    \DataTypeTok{point_colour =} \OtherTok{NA}
+\NormalTok{    ) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_boxplot}\NormalTok{(}\DataTypeTok{colour =} \StringTok{"black"}\NormalTok{, }\DataTypeTok{width =} \FloatTok{.1}\NormalTok{, }\DataTypeTok{outlier.shape =} \OtherTok{NA}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}
+    \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{ifelse}\NormalTok{(Condition }\OperatorTok{==}\StringTok{ "Straight"}\NormalTok{, }\FloatTok{1.1}\NormalTok{, }\FloatTok{1.9}\NormalTok{)),}
+    \DataTypeTok{position =} \KeywordTok{position_jitter}\NormalTok{(}\DataTypeTok{seed =} \DecValTok{123}\NormalTok{, }\DataTypeTok{width =} \FloatTok{0.03}\NormalTok{),}
+    \DataTypeTok{size =} \DecValTok{2}\NormalTok{,}
+    \DataTypeTok{color =} \StringTok{"grey50"}
+\NormalTok{  ) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}
+    \KeywordTok{aes}\NormalTok{(}
+      \DataTypeTok{x =} \KeywordTok{ifelse}\NormalTok{(Condition }\OperatorTok{==}\StringTok{ "Straight"}\NormalTok{, }\FloatTok{1.1}\NormalTok{, }\FloatTok{1.9}\NormalTok{),}
+      \DataTypeTok{group =}\NormalTok{ Subject}
+\NormalTok{      ),}
+    \DataTypeTok{position =} \KeywordTok{position_jitter}\NormalTok{(}\DataTypeTok{seed =} \DecValTok{123}\NormalTok{, }\DataTypeTok{width =} \FloatTok{0.03}\NormalTok{),}
+    \DataTypeTok{color =} \StringTok{"grey50"}
+\NormalTok{  ) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{stat_summary}\NormalTok{(}
+    \DataTypeTok{fun =} \StringTok{"median"}\NormalTok{,}
+    \DataTypeTok{geom =} \StringTok{"point"}\NormalTok{,}
+    \DataTypeTok{color =} \StringTok{"black"}\NormalTok{,}
+    \DataTypeTok{size =} \DecValTok{2}
+\NormalTok{  ) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{stat_summary}\NormalTok{(}
+    \KeywordTok{aes}\NormalTok{(}\DataTypeTok{group =} \DecValTok{1}\NormalTok{),}
+    \DataTypeTok{fun =} \StringTok{"median"}\NormalTok{,}
+    \DataTypeTok{geom =} \StringTok{"line"}\NormalTok{,}
+    \DataTypeTok{color =} \StringTok{"black"}\NormalTok{,}
+    \DataTypeTok{size =} \FloatTok{0.7}
+\NormalTok{  ) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"A"}\NormalTok{)}
 
 
-\CommentTok{# Raincloud plots avec les nuages sur une même ligne et les lignes reliant }
-\CommentTok{# les données individuelles}
+\CommentTok{# Raincloud plots classiques à la verticale avec moyennes et écart-types}
 \NormalTok{B <-}
-\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ Blink2, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Condition, }\DataTypeTok{y =}\NormalTok{ Blink_rate, }
-                            \DataTypeTok{colour =}\NormalTok{ Condition, }\DataTypeTok{fill =}\NormalTok{ Condition)) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{position =} \KeywordTok{position_jitter}\NormalTok{(}\DataTypeTok{seed =} \DecValTok{123}\NormalTok{, }\DataTypeTok{width =} \FloatTok{0.03}\NormalTok{),}
-             \DataTypeTok{size =} \DecValTok{3}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.3}\NormalTok{) }\OperatorTok{+}\StringTok{ }
-\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{group =}\NormalTok{ Subject),}
-            \DataTypeTok{position =} \KeywordTok{position_jitter}\NormalTok{(}\DataTypeTok{seed =} \DecValTok{123}\NormalTok{, }\DataTypeTok{width =} \FloatTok{0.03}\NormalTok{),}
-            \DataTypeTok{size =} \DecValTok{2}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.3}\NormalTok{, }\DataTypeTok{color =} \StringTok{"gray"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
-\StringTok{  }\KeywordTok{geom_half_violin}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \FloatTok{2.22}\NormalTok{),}
-                   \DataTypeTok{side =} \StringTok{"r"}\NormalTok{,}
-                   \DataTypeTok{position =} \KeywordTok{position_dodge}\NormalTok{(}\DataTypeTok{width =} \DecValTok{0}\NormalTok{),}
-                   \DataTypeTok{size =} \DecValTok{1}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.4}\NormalTok{) }\OperatorTok{+}\StringTok{  }
-\StringTok{  }\KeywordTok{geom_boxplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \FloatTok{2.1}\NormalTok{),}
-               \DataTypeTok{position =} \KeywordTok{position_dodge}\NormalTok{(}\DataTypeTok{width =} \FloatTok{0.1}\NormalTok{),}
-               \DataTypeTok{width =} \FloatTok{0.15}\NormalTok{, }\DataTypeTok{colour =} \StringTok{"black"}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.3}\NormalTok{, }
-               \DataTypeTok{outlier.shape =} \OtherTok{NA}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"B"}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position =} \StringTok{"right"}\NormalTok{,}
-        \DataTypeTok{axis.title.x =} \KeywordTok{element_blank}\NormalTok{(),}
-        \DataTypeTok{axis.text.x =} \KeywordTok{element_blank}\NormalTok{(),}
-        \DataTypeTok{axis.ticks.x =} \KeywordTok{element_blank}\NormalTok{())}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ Blink2, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Condition, }\DataTypeTok{y =}\NormalTok{ Blink_rate)) }\OperatorTok{+}
+\StringTok{  }\NormalTok{ggdist}\OperatorTok{::}\KeywordTok{stat_halfeye}\NormalTok{(}
+    \KeywordTok{aes}\NormalTok{(}\DataTypeTok{side =} \KeywordTok{ifelse}\NormalTok{(Condition }\OperatorTok{==}\StringTok{ "Straight"}\NormalTok{, }\StringTok{"left"}\NormalTok{, }\StringTok{"right"}\NormalTok{)),}
+    \DataTypeTok{adjust =} \FloatTok{.5}\NormalTok{, }
+    \DataTypeTok{width =} \FloatTok{.6}\NormalTok{, }
+    \DataTypeTok{.width =} \DecValTok{0}\NormalTok{, }
+    \DataTypeTok{point_colour =} \OtherTok{NA}
+\NormalTok{    ) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{stat_summary}\NormalTok{(}
+    \DataTypeTok{fun =} \StringTok{"mean"}\NormalTok{,}
+    \DataTypeTok{geom =} \StringTok{"point"}\NormalTok{,}
+    \DataTypeTok{color =} \StringTok{"black"}\NormalTok{,}
+    \DataTypeTok{size =} \DecValTok{2}
+\NormalTok{  ) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{stat_summary}\NormalTok{(}
+    \DataTypeTok{fun.data  =} \StringTok{"mean_sdl"}\NormalTok{,}
+    \DataTypeTok{geom =} \StringTok{"errorbar"}\NormalTok{,}
+    \DataTypeTok{width =} \FloatTok{0.03}\NormalTok{,}
+    \DataTypeTok{fun.args =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{mul =} \DecValTok{1}\NormalTok{),}
+    \DataTypeTok{color =} \StringTok{"black"}\NormalTok{, }
+    \DataTypeTok{size =} \FloatTok{0.7}
+\NormalTok{  ) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}
+    \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{ifelse}\NormalTok{(Condition }\OperatorTok{==}\StringTok{ "Straight"}\NormalTok{, }\FloatTok{1.1}\NormalTok{, }\FloatTok{1.9}\NormalTok{)),}
+    \DataTypeTok{position =} \KeywordTok{position_jitter}\NormalTok{(}\DataTypeTok{seed =} \DecValTok{123}\NormalTok{, }\DataTypeTok{width =} \FloatTok{0.03}\NormalTok{),}
+    \DataTypeTok{size =} \DecValTok{2}\NormalTok{,}
+    \DataTypeTok{color =} \StringTok{"grey50"}
+\NormalTok{  ) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}
+    \KeywordTok{aes}\NormalTok{(}
+      \DataTypeTok{x =} \KeywordTok{ifelse}\NormalTok{(Condition }\OperatorTok{==}\StringTok{ "Straight"}\NormalTok{, }\FloatTok{1.1}\NormalTok{, }\FloatTok{1.9}\NormalTok{),}
+      \DataTypeTok{group =}\NormalTok{ Subject}
+\NormalTok{      ),}
+    \DataTypeTok{position =} \KeywordTok{position_jitter}\NormalTok{(}\DataTypeTok{seed =} \DecValTok{123}\NormalTok{, }\DataTypeTok{width =} \FloatTok{0.03}\NormalTok{),}
+    \DataTypeTok{color =} \StringTok{"grey50"}
+\NormalTok{  ) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{stat_summary}\NormalTok{(}
+    \KeywordTok{aes}\NormalTok{(}\DataTypeTok{group =} \DecValTok{1}\NormalTok{),}
+    \DataTypeTok{fun =} \StringTok{"mean"}\NormalTok{,}
+    \DataTypeTok{geom =} \StringTok{"line"}\NormalTok{,}
+    \DataTypeTok{color =} \StringTok{"black"}
+\NormalTok{  ) }\OperatorTok{+}
+
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"B"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{figure}
 
-{\centering \includegraphics[height=0.4\textheight]{Analyser-des-données-avec-R_files/figure-latex/raindcloudplotsBivPaired2-1} 
+{\centering \includegraphics[width=1\linewidth]{Analyser-des-données-avec-R_files/figure-latex/raindcloudplotsBivPaired1-1} 
 
 }
 
-\caption{Exemples de raindcloud plots à la verticale pour des données appariées}\label{fig:raindcloudplotsBivPaired2}
+\caption{Exemples de raindcloud plots à la verticale pour des données appariées}\label{fig:raindcloudplotsBivPaired1}
 \end{figure}
 
-On remarque que pour les graphiques des figures \ref{fig:raindcloudplotsBivPaired1} et \ref{fig:raindcloudplotsBivPaired2}, on s'est attaché à montrer les lignes matérialisant le lien entre les données appartenant à un même individu. Cette pratique est intéressante car elle permet de juger, au-delà de l'évolution de la moyenne du groupe d'une condition à l'autre, de la mesure selon laquelle les individus diffèrent dans leur évolution entre les deux conditions testées.
+Les graphiques montrés ci-dessus pour données appariées contiennent des éléments graphiques supplémentaires par rapport à ceux proposés pour les données non appariées : des lignes reliant les données individuelles, et une ligne reliant les statistiques qui représentent les tendances centrales (i.e., les médianes ou les moyennes). Ces deux types d'éléments graphiques sont importants pour explicitement montrer qu'il y a un lien entre les deux conditions de mesure (il s'agit des mêmes individus et donc du même groupe), et cela permet de mettre en évidence à la fois les trajectoires individuelles et celle du groupe entre les deux conditions de mesure.
 
-Pour pouvoir faire les \emph{raincloud plots}, il a fallu user de plusieurs nouvelles techniques :
-
-\begin{itemize}
-\tightlist
-\item
-  Pour montrer les aires représentant les densités de probabilité (\emph{the clouds}), il a fallu utiliser la fonction \texttt{geom\_half\_violin()} du package \texttt{gghalves}. L'argument \texttt{side} permet de choisir de quel côté l'on veut que l'aire apparaisse (à droite ou à gauche quand on est à la verticale). Ces \emph{clouds} ont parfois été légèrement déplacés à l'aide de l'argument \texttt{position} et de la fonction \texttt{position\_nudge()} ou bien resserés à l'aide de la fonction \texttt{position\_dodge()}.
-\item
-  Pour montrer les données individuelles (\emph{the rain}) sans risquer qu'elle ne se superposent de trop, on a utilisé la fonction \texttt{geom\_point()}, l'argument \texttt{position} et la fonction \texttt{position\_jitter()}. À l'intérieur de la fonction \texttt{position\_jitter()}, l'argument \texttt{seed} (la graine en français) désigne le nombre sur lequel se base l'ordinateur pour générer un résultat pseudo-aléatoire. Quand on regarde les graphiques, les données individuelles apparaissent décalées aléatoirement sur le plan vertical (ou horizontal selon l'orientation du graphique), l'importance du décalage étant contrôlée par l'argument \texttt{width}. Cet effet aléatoire est l'intérêt même d'une fonction dite \texttt{jitter}, et cet effet est en réalité prédéfini de telle sorte que si on utilise toujours le même numéro de graine (\texttt{seed}), alors on obtiendra toujours le même effet aléatoire sur le graphique. Ceci est très important car cela permet d'aligner les lignes individuelles avec les données (les points) individuelles (cf.~graphiques B des Figures \ref{fig:raindcloudplotsBivPaired1} et \ref{fig:raindcloudplotsBivPaired2}) lorsqu'on veut générer un mouvement aléatoire des données sur le graphique. On peut aussi noter que certains graphiques ont nécessité un décalage manuel de l'axe le long duquel les données individuelles sont montrées, en utilisant la fonction \texttt{stage()} avec l'argument \texttt{x\ =}, ou en utilisant simplement une valeur numérique pour l'argument \texttt{x\ =} dans la fonction \texttt{aes()}.
-\item
-  Pour montrer les moyennes (cf.~graphiques A des Figures \ref{fig:raindcloudplotsBivPaired1} et \ref{fig:raindcloudplotsBivPaired2}), il a fallu utiliser la fonction \texttt{stat\_summary()}. Cette fonction peut servir à visualiser un résumé statistique identifié grâce à l'argument \texttt{fun}. On peut choisir sa forme avec l'argument \texttt{geom}. Lorsque l'on veut montrer la ligne qui relie les moyennes d'un même groupe dans des conditions différentes, la subtilité consiste à écrire \texttt{group\ =\ 1} à l'intérieur de la fonction \texttt{aes()}.
-\item
-  Pour montrer les écarts-types (cf.~graphiques A des Figures \ref{fig:raindcloudplotsBivPaired1} et \ref{fig:raindcloudplotsBivPaired2}), il a fallu là aussi utiliser la fonction \texttt{stat\_summary()}, cette fois en utilisant l'argument \texttt{fun.data} avec la valeur \texttt{mean\_sdl}, et l'argument \texttt{fun.args} que l'on a configuré pour déterminer le nombre d'écarts-types que la longueur de la barre d'erreur devait représenter (ici, c'est une fois l'écart-type, obtenu avec \texttt{mult\ =\ 1}).
-\end{itemize}
+Pour parvenir à réaliser les graphiques ci-dessus, il a fallu user de quelques techniques supplémentaires par rapport à ce qui avait déjà été vu auparavant. Tout d'abord, on retrouve la fonction \texttt{ggdist::stat\_halfeye()} qui sert toujours à montrer les formes des distributions. Toutefois, on peut noter que l'argument \texttt{side} dans la fonction \texttt{aes()} a été configuré avec une fonction conditionnelle de telle sorte à orienter sur la gauche ou la droite la forme du nuage de la distribution selon la modalité considérée (\texttt{Straight} ou \texttt{Oscillating} ici). Par ailleurs, s'agissant des données individuelles, elles ont été ajoutées ici avec la fonction \texttt{geom\_point()}, avec à nouveau une définition du placement sur l'axe des abscisses (\texttt{x}) ajustée selon la modalité concernée. Pour comprendre l'origine des valeurs \texttt{1.1} et \texttt{1.9} utilisées pour placer les données individuelles le long de l'axe \texttt{x} (cf.~code ci-dessus), il faut savoir qu'un graphique qui a une variable qualitative sur l'axe de abscisses, cela dans le cadre d'une fonction \texttt{ggplot()}, attribue les valeurs de 1 et 2 aux deux modalités du jeu de données, ce qui laisse possible l'ajustement \emph{a posteriori} de la position des données individuelles avec des valeurs numériques. Les lignes individuelles ont été rajoutées à l'aide de la fonction \texttt{geom\_line()} avec la même configuration que pour la fonction \texttt{geom\_point()} afin de bien faire correspondre les points et les lignes. L'élément important supplémentaire à indiquer dans la fonction \texttt{aes()} associée à \texttt{geom\_line()} est l'argument \texttt{group\ =\ Subject} pour bien indiquer que chaque ligne appartient respectivement à un couple d'observations de la variable \texttt{Subject}. Enfin, sur chacun des deux graphiques, les lignes reliant les médianes ou les moyennes ont été ajoutées grâce à la fonction \texttt{stat\_summary()}, avec la particularité de configurer le terme \texttt{group}avec la valeur de \texttt{1}. Il est possible que quelques ajustements manuels doivent être faits pour reproduire ce type de graphiques en présence d'un autre jeu de données, mais la structure globale du code devrait pouvoir constituer une bonne base de départ.
 
 \hypertarget{uxe9tudier-numuxe9riquement-la-relation-2}{%
 \subsubsection{Étudier numériquement la relation}\label{uxe9tudier-numuxe9riquement-la-relation-2}}
 
 De manière générale, étudier la relation entre une variable quantitative et une variable qualitative revient souvent à comparer les valeurs que prend la variable quantitative en fonction des modalités de la variable qualitative. L'observation de différences de scores entre les modalités pourrait alors indiquer qu'il y a un lien entre la variable qualitative (qu'on pourrait appeler \textbf{variable facteur}) et la variable quantitative (qu'on pourrait appeler \textbf{variable réponse}). À noter que la démonstration d'un lien de cause à effet entre la variable quantitative et la variable qualitative ne pourra être effective que si l'on a sciemment fait varier les modalités de la variable qualitative pour en observer la conséquence sur les valeurs de la variable quantitative.
 
-De prime abord, l'analyse qui pourrait être envisagée pour comparer deux groupes serait d'utiliser simplement la différence entre les moyennes des deux groupes. Toutefois, en se restreignant à cela, il pourrait être difficile de porter un jugement sur la grandeur relative de la différence entre les groupes comparés, qu'on pourrait appeler \textbf{taille d'effet}. Il serait également difficile de comparer cette taille d'effet avec celles observées dans d'autres études, en particulier celles traitant de sujets différents, car étant calculée de la sorte, la taille d'effet serait inhérente à la nature des variables investiguées et à la grandeur des valeurs mesurées dans l'étude. Il est donc intéressant, dans ce genre de situation, de standardiser la différence de scores obtenue entre les deux groupes. Dans la littérature, la procédure de standardisation a été très développée pour la comparaison de moyennes. Pour cette raison, les sous-parties suivantes qui traitent de la comparaison de deux groupes présentent essentiellement les calculs pour obtenir une taille d'effet en vue de comparer des moyennes. Ces calculs sont repris de l'article de Lakens \autocite*{lakensCalculatingReportingEffect2013}. Quelques mots seront toutefois donnés pour les situations pour lesquelles ces calculs risqueraient de ne pas être appropriés.
+De prime abord, l'analyse qui pourrait être envisagée pour comparer deux groupes serait d'utiliser simplement la différence entre les moyennes des deux groupes. Toutefois, en se restreignant à cela, il pourrait être difficile de porter un jugement sur la grandeur relative de la différence entre les groupes comparés, qu'on pourrait appeler \textbf{taille d'effet}. Il serait également difficile de comparer cette taille d'effet avec celles observées dans d'autres études, en particulier celles traitant de thématiques différentes, car en étant calculée de la sorte, la taille d'effet serait inhérente à la nature des variables investiguées et à la grandeur des valeurs mesurées dans l'étude. Il est donc intéressant, dans ce genre de situations, de standardiser la différence de scores obtenue entre les deux groupes. Dans la littérature, la procédure de standardisation a été très développée pour la comparaison de moyennes. Pour cette raison, les sous-parties suivantes qui traitent de la comparaison de deux groupes présentent essentiellement les calculs pour obtenir une taille d'effet en vue de comparer des moyennes. Ces calculs sont repris de l'article de Lakens \autocite*{lakensCalculatingReportingEffect2013}. Quelques mots seront toutefois donnés pour les situations pour lesquelles ces calculs risqueraient de ne pas être appropriés.
 
 \hypertarget{cas-de-deux-groupes-de-donnuxe9es-induxe9pendants-donnuxe9es-non-appariuxe9es}{%
 \subsection{Cas de deux groupes de données indépendants (données non appariées)}\label{cas-de-deux-groupes-de-donnuxe9es-induxe9pendants-donnuxe9es-non-appariuxe9es}}
@@ -4088,7 +4217,7 @@ Dans cet exemple, on remarque qu'on a bien cherché à savoir comment les donné
 ## [1] "setosa"     "versicolor" "virginica"
 \end{verbatim}
 
-L'ordre des modalités affichées nous indique que \texttt{setosa} est la modalité 1, et que \texttt{versicolor} est la modalité 2. (On remarque par ailleurs que le jeu de données \texttt{iris\_two\_species} contient toujours trois modalités à la suite du filtrage précédent du jeu de données \texttt{iris} à l'aide de la fonction \texttt{filter()}). Par conséquent, le \(d_{s}\) de Cohen de -2.10 obtenu plus haut indique que la longueur des sépales (\texttt{Sepal.Length}) pour l'espèce \texttt{setosa} est inférieure à celles des sépales de l'espèce \texttt{versicolor}. Cette interprétation est en cohérence avec le graphique réalisé au préalable (cf.~Figures \ref{fig:raindcloudplotsBivUnpaired1} et \ref{fig:raindcloudplotsBivUnpaired2}). Si l'on avait voulu avoir le calcul inverse (\texttt{versicolor} - \texttt{setosa}), il aurait fallu reconfigurer l'ordre des modalités, par exemple à l'aide de la fonction \texttt{fct\_relevel()} du package \texttt{forcats} comme montré à la fin du chapitre 3.
+L'ordre des modalités affichées nous indique que \texttt{setosa} est la modalité 1, et que \texttt{versicolor} est la modalité 2. (On remarque par ailleurs que le jeu de données \texttt{iris\_two\_species} contient toujours trois modalités à la suite du filtrage précédent du jeu de données \texttt{iris} à l'aide de la fonction \texttt{filter()}). Par conséquent, le \(d_{s}\) de Cohen de -2.10 obtenu plus haut indique que la longueur des sépales (\texttt{Sepal.Length}) pour l'espèce \texttt{setosa} est inférieure à celles des sépales de l'espèce \texttt{versicolor}. Cette interprétation est en cohérence avec les graphiques réalisés au préalable (cf.~Figures \ref{fig:raindcloudplotsBivUnpaired1} et \ref{fig:raindcloudplotsBivUnpaired2}). Si l'on avait voulu avoir le calcul inverse (\texttt{versicolor} - \texttt{setosa}), il aurait fallu reconfigurer l'ordre des modalités, par exemple à l'aide de la fonction \texttt{fct\_relevel()} du package \texttt{forcats} comme montré à la fin du chapitre 3.
 
 Une fois que l'on a calculé une taille d'effet, il est toujours intéressant d'essayer de formuler un jugement sur l'importance, l'ampleur de l'effet. En ce sens, des valeurs seuils ont été proposées dans la littérature (Cohen, 1988; in Lakens \autocite*{lakensCalculatingReportingEffect2013}). Ces valeurs, valables pour interpréter des tailles d'effet dans le cadre d'une étude de type \emph{between-subject design}, sont montrées dans le tableau ci-dessous.
 
@@ -4162,7 +4291,7 @@ Ici, la valeur ne change pas beaucoup par rapport au cas précédent, car l'effe
 
 \textbf{Delta de Glass}
 
-Dans certains cas où l'on souhaiterait comparer les scores de deux groupes indépendants pour tester l'effet de deux conditions expérimentales différentes, l'expérimentation en tant que telle peut influencer, au-delà de la moyenne, l'écart-type de la variable réponse dans un des deux groupes. On peut se trouver dans ce genre de situation lorsque l'on compare les données post-programme d'un groupe entrainé ou traité à celles d'un groupe contrôle. En effet, le groupe entraîné/traité peut voir son écart-type changé au terme d'un programme en raison d'une réponse individuelle hétérogène à ce programme, ce qui ne sera pas en principe le cas du groupe contrôle. Dans ce genre de situations, des indices statistiques autres que le \(g_{s}\) de Hedges mériteraient d'être calculés, tels que le delta (\(\Delta\)) de Glass \autocite{lakensCalculatingReportingEffect2013} :
+Dans certains cas où l'on souhaiterait comparer les scores de deux groupes indépendants pour tester l'effet de deux conditions expérimentales différentes, l'expérimentation en tant que telle peut influencer, au-delà de la moyenne, l'écart-type de la variable réponse dans un des deux groupes. On peut se trouver dans ce genre de situation lorsque l'on compare les données post-programme d'un groupe entraîné ou traité à celles d'un groupe contrôle. En effet, le groupe entraîné/traité peut voir son écart-type changé au terme d'un programme en raison d'une réponse individuelle hétérogène à ce programme, ce qui ne sera pas en principe le cas du groupe contrôle. Dans ce genre de situations, des indices statistiques autres que le \(g_{s}\) de Hedges mériteraient d'être calculés, tels que le delta (\(\Delta\)) de Glass \autocite{lakensCalculatingReportingEffect2013} :
 
 \[\Delta = \frac{\overline{X}_{1} - \overline{X}_{2}} {s_{2}}\]
 
@@ -4183,9 +4312,11 @@ Dans R, le \(\Delta\) de Glass lié à un échantillon de population peut être 
 ## -1.80        | [-2.29, -1.31]
 \end{verbatim}
 
+Notons quand même que l'utilisation du \(\Delta\) de Glass semble peu courante dans les études cherchant à tester l'effet d'un programme. L'une des difficultés liées à son utilisation est que cela suggère que les groupes à comparer soient identiques en pré-programme pour la variable étudiée. En général, des procédures un peu plus sophistiquées sont utilisées pour déterminer l'effet d'un programme, en particulier des procédures qui permettent de prendre en compte justement les différences qui peuvent exister entre les groupes en pré-programme.
+
 \textbf{Cas particuliers}
 
-Certaines situations peuvent rendre la comparaison de moyennes non pertinente. C'est par exemple le cas lorsque l'un des deux groupes (voire les deux) présentent des données aberrantes, en particulier en présence de petits échantillons. L'utilisation des moyennes dans ce cas pourrait ne pas être pertinente car ces moyennes ne refléteraient alors pas correctement les tendances centrales (et donc les groupes associés). Dans ces cas là, mieux vaut observer les médianes de chaque groupe et chercher à voir si les distributions sont en décalage ou non.
+Certaines situations peuvent rendre la comparaison de moyennes non pertinente. C'est par exemple le cas lorsque l'un des deux groupes (voire les deux) présentent des données aberrantes ou très extrêmes, en particulier en présence de petits échantillons. L'utilisation des moyennes dans ce cas pourrait ne pas être pertinente car ces moyennes ne refléteraient alors pas correctement les tendances centrales (et donc les groupes associés). Dans ces cas là, mieux vaut observer les médianes de chaque groupe et chercher à voir si les distributions sont en décalage ou non.
 
 \hypertarget{cas-de-deux-groupes-de-donnuxe9es-duxe9pendants-donnuxe9es-appariuxe9es}{%
 \subsubsection{Cas de deux groupes de données dépendants (données appariées)}\label{cas-de-deux-groupes-de-donnuxe9es-duxe9pendants-donnuxe9es-appariuxe9es}}
@@ -4196,9 +4327,7 @@ Le calcul classique pour obtenir la taille d'effet désignant l'écart entre deu
 
 \[d_{z} = \frac{\overline{X} _{diff}}{s_{diff}},\]
 
-\(\overline{X} _{diff}\) désignant la moyenne des différences relatives à chaque pair de valeurs obtenues dans les deux conditions comparées, et \(s_{diff}\) désigne l'écart-type de ces différences. Dans R, le \(d_{z}\) peut être obtenu à nouveau avec la fonction \texttt{cohens\_d()} du package \texttt{effectsize}. Pour illustrer cela, nous allons à nouveau utiliser le jeu de données \texttt{Blink2} crée plus haut pour les exemples de \emph{raincloud plots}.
-
-Dans R, on peut alors calculer \(d_{z}\) à nouveau à l'aide de la fonction \texttt{cohens\_d()} du package \texttt{effectsize} comme ceci :
+\(\overline{X} _{diff}\) désignant la moyenne des différences relatives à chaque pair de valeurs obtenues dans les deux conditions comparées, et \(s_{diff}\) désignant l'écart-type de ces différences. Dans R, le \(d_{z}\) peut être obtenu à nouveau avec la fonction \texttt{cohens\_d()} du package \texttt{effectsize}. Pour illustrer cela, nous allons à nouveau utiliser le jeu de données \texttt{Blink2} crée plus haut pour les exemples de \emph{raincloud plots}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4271,7 +4400,7 @@ Toutefois, comme le rappelle Lakens \autocite*{lakensCalculatingReportingEffect2
 
 \textbf{Cas particuliers}
 
-Lorsque la présence de valeurs aberrantes peut fausser le calcul de la taille d'effet que l'on cherche à caractériser dans la population étudiée, une première idée pourrait être ici de faire la différence des médianes des deux groupes. Toutefois, comme le rappellent Weissegerber et al.~\autocite*{weissgerberBarLineGraphs2015}, cette approche n'est mathématiquement pas correcte dans le cas présent. La bonne méthode est de calculer la médiane des différences. Le code ci-dessous présente donc un exemple de visualisation graphique et de calcul de médiane des différences, ici à partir du jeu de données \texttt{Blink}.
+Lorsque la présence de valeurs aberrantes peut fausser le calcul de la taille d'effet que l'on cherche à caractériser dans la population étudiée, une première idée pourrait être ici de faire la différence des médianes des deux groupes. Toutefois, comme le rappellent Weissegerber et al.~\autocite*{weissgerberBarLineGraphs2015}, cette approche n'est mathématiquement pas correcte dans le cas présent. La bonne méthode est de calculer la médiane des différences. Le code ci-dessous présente donc le calcul de la médiane des différences, ici à partir du jeu de données \texttt{Blink}. La visualisation graphique correspondante pourrait être alors un \emph{raincloud plot} pour une seule variable, celle des différences entre les deux conditions. Le code pour ce type de graphiques a été vu au chapitre précédent.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4286,51 +4415,8 @@ Lorsque la présence de valeurs aberrantes peut fausser le calcul de la taille d
                                  \StringTok{"Straight"}\NormalTok{, }
                                  \StringTok{"Oscillating"}\NormalTok{, }
                                  \StringTok{"Difference"}\NormalTok{))}
-  
-\CommentTok{# Visualisation graphique}
-\NormalTok{A <-}
-\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ Blink2 }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(Condition }\OperatorTok{!=}\StringTok{ "Difference"}\NormalTok{), }
-         \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Condition, }\DataTypeTok{y =}\NormalTok{ Blink_rate,  }
-             \DataTypeTok{colour =}\NormalTok{ Condition, }
-             \DataTypeTok{fill =}\NormalTok{ Condition)) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{position =} \KeywordTok{position_jitter}\NormalTok{(}\DataTypeTok{seed =} \DecValTok{123}\NormalTok{, }\DataTypeTok{width =} \FloatTok{0.03}\NormalTok{),}
-             \DataTypeTok{size =} \DecValTok{3}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.3}\NormalTok{) }\OperatorTok{+}\StringTok{ }
-\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{group =}\NormalTok{ Subject),}
-            \DataTypeTok{position =} \KeywordTok{position_jitter}\NormalTok{(}\DataTypeTok{seed =} \DecValTok{123}\NormalTok{, }\DataTypeTok{width =} \FloatTok{0.03}\NormalTok{),}
-            \DataTypeTok{size =} \DecValTok{2}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.3}\NormalTok{, }\DataTypeTok{color =} \StringTok{"gray"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
-\StringTok{  }\KeywordTok{geom_boxplot}\NormalTok{(}\DataTypeTok{width =} \FloatTok{0.08}\NormalTok{, }\DataTypeTok{colour =} \StringTok{"black"}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.3}\NormalTok{, }
-               \DataTypeTok{outlier.shape =} \OtherTok{NA}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"A"}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position =} \StringTok{"top"}\NormalTok{,}
-        \DataTypeTok{axis.title.x =} \KeywordTok{element_blank}\NormalTok{(),}
-        \DataTypeTok{axis.ticks.x =} \KeywordTok{element_blank}\NormalTok{())}
-  
-\NormalTok{B <-}
-\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ Blink2 }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(Condition }\OperatorTok{==}\StringTok{ "Difference"}\NormalTok{), }
-         \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Condition, }\DataTypeTok{y =}\NormalTok{ Blink_rate)) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{position =} \KeywordTok{position_jitter}\NormalTok{(}\DataTypeTok{seed =} \DecValTok{123}\NormalTok{, }\DataTypeTok{width =} \FloatTok{0.03}\NormalTok{),}
-             \DataTypeTok{size =} \DecValTok{3}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.3}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_boxplot}\NormalTok{(}\DataTypeTok{width =} \FloatTok{0.08}\NormalTok{, }\DataTypeTok{colour =} \StringTok{"black"}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.3}\NormalTok{, }
-               \DataTypeTok{outlier.shape =} \OtherTok{NA}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{scale_x_discrete}\NormalTok{(}\DataTypeTok{labels =} \StringTok{"Straight - Oscillating"}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x =} \StringTok{""}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"B"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
-\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position =} \StringTok{"none"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
 
-\begin{figure}
-
-{\centering \includegraphics[height=0.4\textheight]{Analyser-des-données-avec-R_files/figure-latex/unnamed-chunk-12-1} 
-
-}
-
-\caption{Exemple de figure pour montrer la médiane des différences dans le cas de données appariées}\label{fig:unnamed-chunk-12}
-\end{figure}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{# Code pour calculer la médiane des différences}
+\CommentTok{# Calcul de la médiane des différences}
 \NormalTok{ Blink }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{Difference =}\NormalTok{ Straight }\OperatorTok{-}\StringTok{ }\NormalTok{Oscillating) }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{median_diff =} \KeywordTok{median}\NormalTok{(Difference))}

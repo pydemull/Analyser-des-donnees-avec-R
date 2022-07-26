@@ -91,7 +91,7 @@ Figure 5.1: Illustration d’un modèle linéaire (en bleu) et de ses résidus (
 </p>
 </div>
 <p>Pour déterminer le <span class="math inline">\(R^2\)</span> d’un modèle linéaire avec le logiciel R, il faut d’abord créer ce modèle à l’aide de la fonction <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code>. L’usage simple de cette fonction, tel que montré ci-dessous, permet de prendre connaissance des coefficients du modèle. Dans les résultats issus de l’exemple ci-dessous, l’ordonnée à l’origine est située sous <code>(Intercept)</code>, et le coefficient directeur est situé sous le nom de la variable <span class="math inline">\(X\)</span> du modèle, ici <code>hp</code>. Dans l’exemple ci-dessous, qui utilise le jeu de données <code>mtcars</code>, le modèle nous indique que lorsque <code>hp</code> vaudra 0, l’estimation de <code>mpg</code> vaudra 30.09886, et que pour chaque augmentation d’unité de <code>hp</code>, on aura une diminution de -0.06823 unité de <code>mpg</code>.</p>
-<div class="sourceCode" id="cb200"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb197"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">hp</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ## Call:
@@ -101,7 +101,7 @@ Figure 5.1: Illustration d’un modèle linéaire (en bleu) et de ses résidus (
 ## (Intercept)           hp  
 ##    30.09886     -0.06823</code></pre>
 <p>Pour plus de confort dans l’écriture de la suite du code, il peut être intéressant d’associer le modèle crée avec la fonction <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> à un nom. Pour accéder aux différentes informations statistiques résumant le modèle, on peut alors utiliser la fonction <code><a href="https://rdrr.io/pkg/PairedData/man/summary.html">summary()</a></code> avec le nom choisi pour le modèle.</p>
-<div class="sourceCode" id="cb202"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb199"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">hp</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/PairedData/man/summary.html">summary</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
@@ -137,28 +137,28 @@ Figure 5.1: Illustration d’un modèle linéaire (en bleu) et de ses résidus (
 <span class="header-section-number">5.1.3</span> Graphique récapitulatif<a class="anchor" aria-label="anchor" href="#graphique-r%C3%A9capitulatif"><i class="fas fa-link"></i></a>
 </h3>
 <p>Il est possible d’extraire l’ordonnée à l’origine et la pente (i.e., le coefficient directeur) du modèle de régression, le coefficient <span class="math inline">\(R^2\)</span>, et la statistique <span class="math inline">\(SEE\)</span>, à partir de la liste d’informations obtenue avec la fonction <code><a href="https://rdrr.io/pkg/PairedData/man/summary.html">summary()</a></code>. Le code ci-dessous montre comment faire cela avec l’exemple concernant le jeu de données <code>mtcars</code> :</p>
-<div class="sourceCode" id="cb204"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb201"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Extraction de l'ordonnée à l'origine</span></span>
 <span><span class="va">intercept</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/PairedData/man/summary.html">summary</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">$</span><span class="va">coefficients</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
 <span><span class="va">intercept</span></span></code></pre></div>
 <pre><code>## [1] 30.09886</code></pre>
-<div class="sourceCode" id="cb206"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb203"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Extraction du coefficient directeur</span></span>
 <span><span class="va">slope</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://rdrr.io/pkg/PairedData/man/summary.html">summary</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">$</span><span class="va">coefficients</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span></span>
 <span><span class="va">slope</span></span></code></pre></div>
 <pre><code>## [1] -0.06822828</code></pre>
-<div class="sourceCode" id="cb208"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb205"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Extraction du R2</span></span>
 <span><span class="va">R2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/PairedData/man/summary.html">summary</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">$</span><span class="va">r.squared</span></span>
 <span><span class="va">R2</span></span></code></pre></div>
 <pre><code>## [1] 0.6024373</code></pre>
-<div class="sourceCode" id="cb210"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb207"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Extraction de SEE</span></span>
 <span><span class="va">SEE</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/PairedData/man/summary.html">summary</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">$</span><span class="va">sigma</span></span>
 <span><span class="va">SEE</span></span></code></pre></div>
 <pre><code>## [1] 3.862962</code></pre>
 <p>Une fois extraites et associées à des noms, ces informations peuvent ensuite être réutilisées avec le package <code>ggplot2</code> et la fonction <code><a href="https://ggplot2.tidyverse.org/reference/annotate.html">annotate()</a></code> pour compléter le graphique initial avec des informations statistiques (cf. Figure <a href="r%C3%A9gressions.html#fig:graphLinStats">5.2</a>).</p>
-<div class="sourceCode" id="cb212"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb209"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mtcars</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">hp</span>, y <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span>, se <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
@@ -217,7 +217,7 @@ Figure 5.3: Le quartet d’Anscombe
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Analyser des données avec R</strong>" was written by Pierre-Yves de Müllenheim. It was last built on 2022-07-21.</p>
+    <p>"<strong>Analyser des données avec R</strong>" was written by Pierre-Yves de Müllenheim. It was last built on 2022-07-26.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
