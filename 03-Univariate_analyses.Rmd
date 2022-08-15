@@ -132,7 +132,7 @@ On remarque ainsi qu'au-delà de prendre connaissance de la forme de la distribu
 
 À noter que si l'histogramme et la boîte à moustaches sont des graphiques classiques pour étudier la distribution d'une variable quantitative, il est aussi possible avec R de créer ce qu'on appelle un *raincloud plot*, tel qu'illustré sur la Figure \@ref(fig:raincloudUnivar). Un [post du blog de Cédric Scherer](https://www.cedricscherer.com/2021/06/06/visualizing-distributions-with-raincloud-plots-and-how-to-create-them-with-ggplot2/) fournit une description très intéressante et riche de l'intérêt de ce type de graphiques. Le *raincloud plot* se compose de trois éléments : 
 
-* Une aire sous la courbe de densité (*the cloud*), qui représente une estimation de la fréquence d'apparition d'une valeur donnée dans l'échantillon étudié. Cet élément est intéressant pour prendre pleinement conscience de la forme de la distribution. Attention cependant, car les formes des aires et les idées qu’elles donnent des distributions dans la population d’intérêt dépendent beaucoup du nombre d’observations disponibles, et leur utilisation pourrait donc se discuter en présence de peu d’observations.
+* Une aire sous la courbe représentative de la densité de probabilité (*the cloud*), qui représente une estimation de la fréquence d'apparition d'une valeur donnée dans l'échantillon étudié. Cet élément est intéressant pour prendre pleinement conscience de la forme de la distribution. Attention cependant, car les formes des aires et les idées qu’elles donnent des distributions dans la population d’intérêt dépendent beaucoup du nombre d’observations disponibles, et leur utilisation pourrait donc se discuter en présence de peu d’observations.
 * Une boîte à moustaches, qui permet de se faire une idée résumée relativement robuste des distributions dans la population d'intérêt (i.e., insensible aux *outliers* et davantage comparable avec d'autres études) ; selon les cas, d'autres statistiques, comme les moyennes et les écarts-types, peuvent être utilisées à la place ou en plus des boîtes à moustaches [@allenRaincloudPlotsMultiplatform2019].
 * Un nuage de points des données individuelles (*the rain*), qui est très intéressant pour avoir une vue précise des valeurs obtenues par les individus, de leurs différences éventuelles, des *outliers* éventuels, voire  des *patterns* de distribution éventuellement inattendus ; les données individuelles permettent aussi d'avoir une idée plus claire de la grandeur du nombre d'observations présentes dans le jeu de données (chose non renseignée par les deux éléments précédents).
 
@@ -148,9 +148,9 @@ library(gghalves)
 
 ggplot(data = iris, aes(x = "", y = Sepal.Length)) + 
   ggdist::stat_halfeye(
-    ## Ajuste le lissage de la courbe de densité
+    ## Ajuste le lissage de la courbe représentative de la densité de probabilité
     adjust = .5, 
-    ## Ajuste la hauteur de l'aire située sous la courbe de densité
+    ## Ajuste la hauteur de l'aire située sous la courbe représentative de la densité de probabilité
     width = .6, 
     .width = 0, 
     point_colour = NA
@@ -178,9 +178,9 @@ require(gghalves)
 
  ggplot(data = data, aes(x = {{x}}, y = {{y}})) + 
   ggdist::stat_halfeye(
-    ## Ajuste le lissage de la courbe de densité
+    ## Ajuste le lissage de la courbe représentative de la densité de probabilité
     adjust = .5, 
-    ## Ajuste l'aire située sous la courbe de densité
+    ## Ajuste l'aire située sous la courbe représentative de la densité de probabilité
     width = .6, 
     .width = 0, 
     point_colour = NA
@@ -203,7 +203,7 @@ require(gghalves)
 }
 ```
 
-Lorsqu'on regarde le code ci-dessus qui a permis de créer le *raincould plot*, on remarque l'arrivée de deux nouveaux packages : `ggdist` et `gghalves`. Ces packages doivent être installés et chargés avant de pouvoir être utilisés. Le package `ggdist` est utilisé avec la fonction `stat_halfeye()`, qui sert à montrer sur la figure ci-dessus l'aire grise sous la courbe de densité. Plus cette aire est grande au niveau d'un intervalle de valeurs donné, plus il est probable de rencontrer les valeurs concernées lorsqu'on prend au hasard des observations du jeu de données. Plusieurs arguments peuvent en réalité servir à calculer la courbe de densité et finalement modifier sa forme et celle de l'aire qu'il y a en-dessous. Parmi eux, l'argument `adjust` de la fonction `stat_halfeye()` sert en quelque sorte à ajuster le lissage de la courbe de densité : plus sa valeur sera élevée, plus la courbe sera lissée. 
+Lorsqu'on regarde le code ci-dessus qui a permis de créer le *raincould plot*, on remarque l'arrivée de deux nouveaux packages : `ggdist` et `gghalves`. Ces packages doivent être installés et chargés avant de pouvoir être utilisés. Le package `ggdist` est utilisé avec la fonction `stat_halfeye()`, qui sert à montrer sur la figure ci-dessus l'aire grise sous la courbe représentative de la densité de probabilité. Plus cette aire est grande au niveau d'un intervalle de valeurs donné, plus il est probable de rencontrer les valeurs concernées lorsqu'on prend au hasard des observations du jeu de données. Plusieurs arguments peuvent en réalité servir à calculer la courbe représentative de la densité de probabilité et finalement modifier sa forme et celle de l'aire qu'il y a en-dessous. Parmi eux, l'argument `adjust` de la fonction `stat_halfeye()` sert en quelque sorte à ajuster le lissage de la courbe représentative de la densité de probabilité : plus sa valeur sera élevée, plus la courbe sera lissée. 
 
 Pour montrer les données individuelles sans risquer qu’elles ne se superposent de trop, on a utilisé la fonction `geom_half_point()` du package `gghalves`, l’argument `transformation`, et la fonction `position_jitter()`. À l’intérieur de la fonction `position_jitter()`, l’argument `seed` (la graine en français) désigne le nombre sur lequel se base l’ordinateur pour générer un résultat pseudo-aléatoire. Quand on regarde le graphique ci-dessus, les données individuelles apparaissent décalées aléatoirement sur le plan vertical. Cet effet aléatoire est l’intérêt même d’une fonction dite "jitter", et cet effet est en réalité prédéfini de telle sorte que si on utilise toujours le même numéro de graine (`seed`), alors on obtiendra toujours le même effet aléatoire sur le graphique.
 
