@@ -133,7 +133,7 @@
 
 \title{Analyser des données avec R}
 \author{Pierre-Yves de Müllenheim}
-\date{2022-07-26}
+\date{2022-08-16}
 
 \begin{document}
 \maketitle
@@ -1843,7 +1843,7 @@ On remarque ainsi qu'au-delà de prendre connaissance de la forme de la distribu
 \begin{itemize}
 \tightlist
 \item
-  Une aire sous la courbe de densité (\emph{the cloud}), qui représente une estimation de la fréquence d'apparition d'une valeur donnée dans l'échantillon étudié. Cet élément est intéressant pour prendre pleinement conscience de la forme de la distribution. Attention cependant, car les formes des aires et les idées qu'elles donnent des distributions dans la population d'intérêt dépendent beaucoup du nombre d'observations disponibles, et leur utilisation pourrait donc se discuter en présence de peu d'observations.
+  Une aire sous la courbe représentative de la densité de probabilité (\emph{the cloud}), qui représente une estimation de la fréquence d'apparition d'une valeur donnée dans l'échantillon étudié. Cet élément est intéressant pour prendre pleinement conscience de la forme de la distribution. Attention cependant, car les formes des aires et les idées qu'elles donnent des distributions dans la population d'intérêt dépendent beaucoup du nombre d'observations disponibles, et leur utilisation pourrait donc se discuter en présence de peu d'observations.
 \item
   Une boîte à moustaches, qui permet de se faire une idée résumée relativement robuste des distributions dans la population d'intérêt (i.e., insensible aux \emph{outliers} et davantage comparable avec d'autres études) ; selon les cas, d'autres statistiques, comme les moyennes et les écarts-types, peuvent être utilisées à la place ou en plus des boîtes à moustaches \autocite{allenRaincloudPlotsMultiplatform2019}.
 \item
@@ -1862,9 +1862,9 @@ Parce qu'ils montrent les données individuelles, les \emph{raincloud plots} von
 
 \KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ iris, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \StringTok{""}\NormalTok{, }\DataTypeTok{y =}\NormalTok{ Sepal.Length)) }\OperatorTok{+}\StringTok{ }
 \StringTok{  }\NormalTok{ggdist}\OperatorTok{::}\KeywordTok{stat_halfeye}\NormalTok{(}
-    \CommentTok{## Ajuste le lissage de la courbe de densité}
+    \CommentTok{## Ajuste le lissage de la courbe représentative de la densité de probabilité}
     \DataTypeTok{adjust =} \FloatTok{.5}\NormalTok{, }
-    \CommentTok{## Ajuste la hauteur de l'aire située sous la courbe de densité}
+    \CommentTok{## Ajuste la hauteur de l'aire située sous la courbe représentative de la densité de probabilité}
     \DataTypeTok{width =} \FloatTok{.6}\NormalTok{, }
     \DataTypeTok{.width =} \DecValTok{0}\NormalTok{, }
     \DataTypeTok{point_colour =} \OtherTok{NA}
@@ -1892,7 +1892,7 @@ Parce qu'ils montrent les données individuelles, les \emph{raincloud plots} von
 \caption{Exemple de raincloud plot}\label{fig:raincloudUnivar}
 \end{figure}
 
-Lorsqu'on regarde le code ci-dessus qui a permis de créer le \emph{raincould plot}, on remarque l'arrivée de deux nouveaux packages : \texttt{ggdist} et \texttt{gghalves}. Ces packages doivent être installés et chargés avant de pouvoir être utilisés. Le package \texttt{ggdist} est utilisé avec la fonction \texttt{stat\_halfeye()}, qui sert à montrer sur la figure ci-dessus l'aire grise sous la courbe de densité. Plus cette aire est grande au niveau d'un intervalle de valeurs donné, plus il est probable de rencontrer les valeurs concernées lorsqu'on prend au hasard des observations du jeu de données. Plusieurs arguments peuvent en réalité servir à calculer la courbe de densité et finalement modifier sa forme et celle de l'aire qu'il y a en-dessous. Parmi eux, l'argument \texttt{adjust} de la fonction \texttt{stat\_halfeye()} sert en quelque sorte à ajuster le lissage de la courbe de densité : plus sa valeur sera élevée, plus la courbe sera lissée.
+Lorsqu'on regarde le code ci-dessus qui a permis de créer le \emph{raincould plot}, on remarque l'arrivée de deux nouveaux packages : \texttt{ggdist} et \texttt{gghalves}. Ces packages doivent être installés et chargés avant de pouvoir être utilisés. Le package \texttt{ggdist} est utilisé avec la fonction \texttt{stat\_halfeye()}, qui sert à montrer sur la figure ci-dessus l'aire grise sous la courbe représentative de la densité de probabilité. Plus cette aire est grande au niveau d'un intervalle de valeurs donné, plus il est probable de rencontrer les valeurs concernées lorsqu'on prend au hasard des observations du jeu de données. Plusieurs arguments peuvent en réalité servir à calculer la courbe représentative de la densité de probabilité et finalement modifier sa forme et celle de l'aire qu'il y a en-dessous. Parmi eux, l'argument \texttt{adjust} de la fonction \texttt{stat\_halfeye()} sert en quelque sorte à ajuster le lissage de la courbe représentative de la densité de probabilité : plus sa valeur sera élevée, plus la courbe sera lissée.
 
 Pour montrer les données individuelles sans risquer qu'elles ne se superposent de trop, on a utilisé la fonction \texttt{geom\_half\_point()} du package \texttt{gghalves}, l'argument \texttt{transformation}, et la fonction \texttt{position\_jitter()}. À l'intérieur de la fonction \texttt{position\_jitter()}, l'argument \texttt{seed} (la graine en français) désigne le nombre sur lequel se base l'ordinateur pour générer un résultat pseudo-aléatoire. Quand on regarde le graphique ci-dessus, les données individuelles apparaissent décalées aléatoirement sur le plan vertical. Cet effet aléatoire est l'intérêt même d'une fonction dite ``jitter'', et cet effet est en réalité prédéfini de telle sorte que si on utilise toujours le même numéro de graine (\texttt{seed}), alors on obtiendra toujours le même effet aléatoire sur le graphique.
 
@@ -3098,14 +3098,14 @@ Pour visualiser le lien que l'on peut faire entre la forme du nuage de points et
 
 Un cas particulier illustrant l'influence du degré de dispersion sur la relation étudiée est montré sur la Figure \ref{fig:simpsonquant}. Cet exemple a pour but de montrer que l'étude d'une relation entre deux variables quantitatives peut aboutir à des conclusions radicalement différentes selon que l'on conduit les analyses à l'échelle d'un groupe entier ou que l'on sépare les analyses par groupe de caractéristiques, en particulier lorsque la distribution des données par groupe est radicalement différente de celle obtenue à l'échelle du groupe entier. Sur la gauche de la Figure \ref{fig:simpsonquant}, le nuage de points représente la relation entre deux variables à l'échelle de l'ensemble du groupe étudié. La variabilité possible pour les deux variables étudiées (V1 et V2 dans l'exemple) est alors maximale. Toutefois, ces données appartiennent en réalité à des sous-groupes distincts (cf.~couleurs sur le graphique de droite de la Figure \ref{fig:simpsonquant}). L'analyse par sous-groupe diminue la variabilité à la fois pour V1 et V2, donnant même lieu ici à des relations de sens opposé à celui observé à l'échelle de l'ensemble du groupe ! Cette situation correspond à ce qu'on appelle un paradoxe de Simpson, lequel se présente lorsque le phénomène que l'on peut observer avec une vue globale est annulé voir inversé lors d'une analyse par sous-groupe. Ici, la grande variabilité associée aux données du graphique de gauche de la Figure \ref{fig:simpsonquant} crée une relation artificiellement et donc faussement positive entre V1 et V2. C'est l'analyse par sous-groupe qui permet de révéler la vraie nature de la relation étudiée.
 
-\begin{figure}
+\textbackslash begin\{figure\}
 
-{\centering \includegraphics[width=0.9\linewidth]{Analyser-des-données-avec-R_files/figure-latex/simpsonquant-1} 
+\{\centering \includegraphics[width=0.9\linewidth]{Analyser-des-données-avec-R_files/figure-latex/simpsonquant-1}
 
-}
+\}
 
-\caption{Influence du niveau d'analyse (groupe entier vs. sous-groupes) sur la corrélation observée entre deux variables quantitatives}\label{fig:simpsonquant}
-\end{figure}
+\textbackslash caption\{Influence du niveau d'analyse (groupe entier vs.~sous-groupes) sur la corrélation observée entre deux variables quantitatives (données obtenues grâce à la fonction `simulate\_simpson()' du package `bayestestR'\}\label{fig:simpsonquant}
+\textbackslash end\{figure\}
 
 En outre, la valeur du coefficient de corrélation de Pearson peut être influencée par des valeurs extrêmes, comme montré sur la Figure \ref{fig:spuriousCorrelationBis}. Les deux graphiques de cette figure montrent exactement les mêmes données, à ceci près que sur le graphique de droite, on a remplacé en ordonnées une valeur du graphique de gauche pour lui donner la valeur de 10. L'influence de cette simple action sur la valeur du coefficient de corrélation de Pearson est nette. Ceci montre qu'il faut faire attention aux valeurs extrêmes qui pourraient grandement influencer la variabilité des données d'une variable et au final la valeur de corrélation obtenue, notamment en présence d'échantillons de taille relativement faible. Dans le cas où la valeur du coefficient de corrélation de Pearson serait très influencée par une valeur, il pourrait être une bonne pratique de calculer la valeur du coefficient de corrélation de Pearson avec et sans cette valeur afin de pouvoir quantifier son influence sur la relation étudiée \autocite{halperinSpuriousCorrelationsCauses1986}. Une alternative pourrait être aussi d'étudier la relation à l'aide d'autres types de coefficients que celui de Pearson, tels que celui de Spearman, présenté plus bas. Cet exemple doit faire prendre conscience qu'il n'est pas toujours pertinent de calculer le coefficient de corrélation de Pearson. En ce sens, lorsqu'on cherche à inférer la valeur du coefficient de corrélation de Pearson dans la population étudiée, il convient de vérifier certains prérequis, lesquels sont abordés plus loin dans ce livre.
 
@@ -4343,7 +4343,7 @@ Le calcul classique pour obtenir la taille d'effet désignant l'écart entre deu
 \begin{verbatim}
 ## Cohen's d |       95% CI
 ## ------------------------
-## 2.81      | [1.58, 4.27]
+## 2.81      | [1.51, 4.09]
 \end{verbatim}
 
 Toutefois, d'après Lakens \autocite*{lakensCalculatingReportingEffect2013}, il peut être intéressant de rapporter plutôt un indice de taille d'effet qui ne serait pas influencé par le fait que les données des deux groupes à comparer soient corrélées (car dépendantes), notamment en vue de rendre comparable cette taille d'effet à celles obtenues dans le cadre d'études de type \emph{between-subject design}, pour plus facilement conduire des méta-analyses par la suite par exemple. La recommandation de Lakens \autocite*{lakensCalculatingReportingEffect2013} serait alors d'utiliser l'indice \(d_{av}\), dont le calcul serait le suivant :
@@ -4610,6 +4610,76 @@ Encore une fois, lorsqu'on étudie un phénomène, ici l'existence d'une relatio
 \end{figure}
 
 Bien que d'aspects très différents, ces jeux de données montrent pourtant des variables en abscisses qui ont toutes la même moyenne (\(\overline{X} = 9\)) et le même écart-type (\(s_{X} = 3.32\)), des variables en ordonnées qui ont elles aussi la même moyenne (\(\overline{Y} = 7.5\)) et le même écart-type = (\(s_{Y} = 2.03\)), et des modèles de régression linéaire qui présentent tous la même équation (\(Y = 0.5X + 3\)), le même coefficient de détermination (\(R^2 = 0.67\)) et la même erreur typique d'estimation (\(SEE = 1.24\)). Pour autant, on observe que seul le premier jeu de données (cf.~graphique A de la Figure \ref{fig:anscombeQuartetGraph}) est associé à un modèle linéaire vraiment pertinent. En effet, le graphique B montre bien que la relation n'est pas linéaire mais plutôt quadratique, le graphique C montre que la régression est anormalement influencée par une valeur extrême, et le graphique D montre qu'il n'y a en réalité pas de relation linéaire entre les deux variables et que celle-ci ne semble exister numériquement que grâce à une seule valeur très extrême. Autant le graphique C invite à conserver une analyse de régression linéaire avec éventuellement certains ajustements à réaliser, autant les graphiques B et D indiquent qu'un modèle linéaire n'est pas pertinent en l'état pour caractériser la relation entre les deux variables étudiées.
+
+\hypertarget{notions-de-probabilituxe9}{%
+\chapter{Notions de probabilité}\label{notions-de-probabilituxe9}}
+
+\hypertarget{lois-de-probabilituxe9}{%
+\section{Lois de probabilité}\label{lois-de-probabilituxe9}}
+
+\hypertarget{pruxe9ambule}{%
+\subsection{Préambule}\label{pruxe9ambule}}
+
+Réaliser une inférence statistique consiste à estimer, avec plus ou moins d'incertitude, la valeur (ou l'intervalle incluant la valeur) d'un paramètre statistique relatif à une population, cela à partir de données prélevées dans un échantillon de cette population. Une procédure d'inférence statistique peut concerner n'importe quel paramètre statistique : une moyenne, une médiane, une proportion, un coefficient de corrélation, une différence de moyennes, un rapport de cotes, etc.
+
+Il existe plusieurs approches pour réaliser une inférence statistique, notamment l'approche dite ``fréquentiste'', et celle dite ``bayesienne'' \autocite{navarroLearningStatistics2018}. Quelle que soit l'approche utilisée, les procédures de calcul pour réaliser une inférence statistique requièrent d'utiliser des modélisations ou lois mathématiques que l'on doit configurer pour représenter théoriquement les distributions (testées ou attendues) des variables étudiées dans la population d'intérêt. Ces lois ou modèles, qu'on appelle aussi des lois de probabilité, donnent directement les \textbf{distributions des probabilités} (i.e., les chances de rencontrer telle ou telle valeur dans la population) dans les cas où le paramètre à inférer concerne une variable qualitative. Dans les cas où le paramètre à inférer concerne une variable quantitative, les modèles mathématiques ne donnent pas directement les valeurs de probabilité de rencontrer telle ou telle valeur dans une population. En effet, dans ces situations, les modèles donnent les \textbf{densités de probabilité}. Ceci implique que dans ce type de situations, les probabilités concernent le fait d'avoir des valeurs appartenant à des intervalles donnés, et non pas d'avoir une valeur précise. Cela implique également que pour obtenir la valeur de probabilité relative à un intervalle donné de valeurs, il ne faut pas prendre la valeur directement donnée par le modèle, mais l'intégrale (i.e., l'aire sous la courbe de densité de probabilité) correspondant à l'intervalle de valeurs considéré. Ce qui suit vise à décrire et illustrer des lois de probabilité typiquement utilisées dans les procédures de calculs servant à réaliser des inférences statistiques. Ce chapitre s'inspire largement du chapitre `Introduction to probability' de l'ouvrage de Danielle Navarro \autocite*{navarroLearningStatistics2018}.
+
+\hypertarget{la-loi-binomiale}{%
+\subsection{La loi binomiale}\label{la-loi-binomiale}}
+
+Une variable qualitative binomiale ne peut prendre que deux valeurs possibles, comme par exemple ``succès'' et ``échec'', ``pile'' et ``face'', ``0'' et ``1'', etc. Un exemple classique où l'on est en présence d'une variable binomiale est celui où l'on demande à un certain nombre de personnes de lancer \(N\) fois une pièce non truquée, avec par conséquent ``pile'' et ``face'' comme seuls résultats possibles et autant de chances de tomber sur ``pile'' que sur ``face'' à chaque lancer (\(\theta\) = 0.5, soit une chance sur deux). Une fois les essais de toutes les personnes terminés, la distribution qui en résulte contient alors les proportions de personnes ayant obtenu \(X\) fois ``pile'' après \(N\) lancers de la pièce, \(X\) étant forcément compris entre 0 et \(N\). Les barres de la Figure \ref{fig:distriBinom} montrent à quoi pourrait ressembler la distribution obtenue dans le cadre de cet exemple si l'on demandait à 1000 personnes de lancer 100 fois la pièce. On note que 1000 autres personnes différentes auraient pu donner une distribution un peu différente dans sa forme (cf.~hauteurs des barres du graphique), mais vu le nombre de personnes testées, la forme aurait sans doute été peu différente (ici, les nombres de fois où ``pile'' a été obtenu par les 1000 personnes sont en réalité des valeurs obtenues de manière pseudo-aléatoire par ordinateur). Dans cet exemple, on peut voir que les proportions les plus élevées correspondent aux cas où les personnes ont obtenu aux alentours de 50 fois ``pile'' sur 100 lancers de pièce, ce qui était attendu au regard des conditions de départ (1 chance sur 2 en principe, on encore 50 chances sur 100, d'obtenir ``pile'').
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{Analyser-des-données-avec-R_files/figure-latex/distriBinom-1} 
+
+}
+
+\caption{Distribution des probabilités d'une loi binomiale}\label{fig:distriBinom}
+\end{figure}
+
+Si les barres de la Figure \ref{fig:distriBinom} représentent la réalité des résultats obtenus, il est aussi possible de modéliser mathématiquement ce qu'on aurait été en droit d'attendre comme résultats dans cette situation (i.e., les probabilités - ente 0 et 1, ou encore entre 0 \% et 100 \% des individus) d'obtenir \(X\) fois ``pile'', qu'on peut noter \(P(X)\)) au regard des conditions de départ, à savoir, le nombre d'essais (\(N\)) qui est ici de 100 lancers de dés, et la probabilité d'avoir ``pile'' ou ``face'' à chaque lancer (\(\theta\)), qui est ici de 0.5. La fonction mathématique qui permet de modéliser cela, dans ce type de situation, est la loi binomiale, qu'on note \(X \sim B(\theta, N)\), \(\theta\) étant la probabilité de succès à chaque essai, et \(N\) étant le nombre d'essais. Cette fonction mathématique est montrée ci-dessous et la courbe montrée sur la Figure \ref{fig:distriBinom} est la réprésentation graphique de cette loi déclinée avec les paramètres \(N\) = 100 et \(\theta\) = 0.5.
+
+\[P(X | \theta, N) = \frac{N!}{X!(N-X)!}\theta^X(1-\theta)^{N-X}\]
+
+Notons que ce type de loi mathématique permet certes de déterminer la probabilité d'avoir \(X\) fois ``pile'' sur \(N\) lancers de pièce, mais aussi, par conséquent, la probabilité d'avoir un nombre de fois ``pile'' inférieur ou égal à un nombre de fois donné.
+
+\hypertarget{la-loi-normale-et-lois-apparentuxe9es}{%
+\subsection{La loi normale et lois apparentées}\label{la-loi-normale-et-lois-apparentuxe9es}}
+
+Lorsque l'on travaille avec des variables quantitatives, il est possible de modéliser la distribution théorique des probabilités de rencontrer une valeur dans tel ou tel intervalle à l'aide d'une fonction mathématique appelée \textbf{loi normale}, ou encore \textbf{loi gaussienne}, qu'on note \(X \sim N(\mu, \sigma)\), avec \(\mu\) la moyenne de la variable, et \(\sigma\) l'écart-type de la variable. La forme générale de cette fonction est montrée ci-dessous :
+
+\[p(X | \mu, \sigma) = \frac{1}{\sqrt{2\pi}\sigma} exp(-\frac{(X-\mu)^2}{2\sigma^2}),\]
+\(p(X | \mu, \sigma)\) étant la densité de probabilité correspondant à la valeur \(X\). Il s'agit bien ici de la densité de probabilité, et non pas de la valeur de la probabilité d'obtenir une valeur précise, chose impossible ici. Pour mieux comprendre les valeurs que donne cette loi mathématique, regardons la Figure \ref{fig:distiNorm} (graphique de gauche). Sur cette figure, la courbe noire représente les valeurs données par la fonction définissant la loi normale avec \(\mu\) = 1, et \(\sigma\) = 1. Ces valeurs en réalité n'ont pas vraiment d'intérêt en soi. Par contre, elle permettent de délimiter une aire (en rouge) entre elles et l'axe horizontal, la valeur de cette aire étant pour le coup la probabilité d'obtenir une valeur incluse dans l'intervalle de valeurs relatif à l'aire sous la courbe considérée. Ainsi, l'aire sous l'ensemble de la courbe représentant la densité de probabilité est associée à une probabilité de 1 (il y a par définition, lors d'un tirage au sort, 100 \% de chances de rencontrer une valeur située entre le minimum et le maximum de la variable modélisée à l'aide de cette loi). Dans la même veine, le graphique de droite de la Figure \ref{fig:distiNorm} montre une aire sous la courbe (en rouge) dont la valeur est la probabilité d'obtenir une valeur comprise en 2 et 3 lorsqu'on tire au sort une observation en provenance de la population représentée par cette loi, la probabilité étant ici de 14 \%.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.9\linewidth]{Analyser-des-données-avec-R_files/figure-latex/distiNorm-1} 
+
+}
+
+\caption{Densité de probabilité d'une loi normale}\label{fig:distiNorm}
+\end{figure}
+
+La loi normale peut être mise en lien avec d'autres grandes lois, telles que :
+
+\begin{itemize}
+\item
+  La loi Chi-carré (\(X^2\)) : Lorsque l'on prend les valeurs de plusieurs distributions normales standards (avec des moyennes de 0 et des écarts-types de 1), qu'on les met au carré, puis qu'on les additionne, on obtient une variable suivant une loi \(X^2\) à \(k\) degrés de liberté (cf.Figure \ref{fig:VariousQuantLaws}, graphique A), \(k\) étant le nombre de variables que l'on a mises au carré. Comme on peut le voir sur la Figure \ref{fig:VariousQuantLaws}, la distribution \(X^2\) est plutôt asymétrique, avec des valeurs toujours supérieures à 0.
+\item
+  La loi \emph{t} : Les distributions relatives à des lois \emph{t} ressemblent aux distributions relatives à des lois normales mais avec des plus queues plus épaisses. Un distribution \emph{t} peut être obtenue en divisant les valeurs d'une distribution \(X^2\) par le nombre de degrés de liberté \(k\), puis en prenant leurs racines carrées, et enfin en divisant les valeurs d'une loi normale par la variable obtenue. On obtient alors une distribution \emph{t} à \(k\) degrés de liberté.
+\item
+  La loi \emph{F} : La distribution d'une loi \emph{F} ressemble à celle d'une loi \(X^2\). Une distribution \emph{F} sert à comparer deux distributions \(X^2\).
+\end{itemize}
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{Analyser-des-données-avec-R_files/figure-latex/VariousQuantLaws-1} 
+
+}
+
+\caption{Densité de probabilité de lois chi-carré, t, et F.}\label{fig:VariousQuantLaws}
+\end{figure}
 
 \printbibliography[title=Références, heading=bibintoc]
 

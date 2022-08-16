@@ -7,7 +7,7 @@
 <title>Chapitre 3 Analyses descriptives univariées | Analyser des données avec R</title>
 <meta name="author" content="Pierre-Yves de Müllenheim">
 <meta name="description" content="Réaliser une analyse descriptive univariée signifie que l’on s’intéresse à une seule variable en particulier. L’enjeu est ici de prendre connaissance de la distribution de la variable,...">
-<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta name="generator" content="bookdown 0.28 with bs4_book()">
 <meta property="og:title" content="Chapitre 3 Analyses descriptives univariées | Analyser des données avec R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://github.com/pydemull/Analyser-des-donnees-avec-R/analyses-descriptives-univariées.html">
@@ -59,6 +59,7 @@
 <li><a class="active" href="analyses-descriptives-univari%C3%A9es.html"><span class="header-section-number">3</span> Analyses descriptives univariées</a></li>
 <li><a class="" href="analyses-descriptives-bivari%C3%A9es.html"><span class="header-section-number">4</span> Analyses descriptives bivariées</a></li>
 <li><a class="" href="r%C3%A9gressions.html"><span class="header-section-number">5</span> Régressions</a></li>
+<li><a class="" href="notions-de-probabilit%C3%A9.html"><span class="header-section-number">6</span> Notions de probabilité</a></li>
 <li><a class="" href="r%C3%A9f%C3%A9rences.html">Références</a></li>
 </ul>
 
@@ -88,7 +89,7 @@
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"white"</span>, color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:geomhistogram"></span>
-<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/geomhistogram-1.png" alt="Exemple d'histogramme" width="90%"><p class="caption">
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/geomhistogram-1.png" alt="Exemple d'histogramme" width="90%"><p class="caption">
 Figure 3.1: Exemple d’histogramme
 </p>
 </div>
@@ -112,7 +113,7 @@ Figure 3.1: Exemple d’histogramme
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"binwidth = 0.7"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:geomhistogramVariedBinwidth2"></span>
-<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/geomhistogramVariedBinwidth2-1.png" alt="Différentes largeurs d'intervalles pour un histogramme" width="100%"><p class="caption">
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/geomhistogramVariedBinwidth2-1.png" alt="Différentes largeurs d'intervalles pour un histogramme" width="100%"><p class="caption">
 Figure 3.2: Différentes largeurs d’intervalles pour un histogramme
 </p>
 </div>
@@ -124,7 +125,7 @@ Figure 3.2: Différentes largeurs d’intervalles pour un histogramme
 <span>          axis.ticks.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:geomboxplot"></span>
-<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/geomboxplot-1.png" alt="Exemple de boîte à moustaches" width="90%"><p class="caption">
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/geomboxplot-1.png" alt="Exemple de boîte à moustaches" width="90%"><p class="caption">
 Figure 3.3: Exemple de boîte à moustaches
 </p>
 </div>
@@ -141,7 +142,7 @@ Figure 3.3: Exemple de boîte à moustaches
 <span>          axis.ticks.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:geomboxplotModified"></span>
-<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/geomboxplotModified-1.png" alt="Visualisation d'un outlier" width="90%"><p class="caption">
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/geomboxplotModified-1.png" alt="Visualisation d'un outlier" width="90%"><p class="caption">
 Figure 3.4: Visualisation d’un outlier
 </p>
 </div>
@@ -184,7 +185,7 @@ Figure 3.4: Visualisation d’un outlier
 <span>          axis.title.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:geomboxplotOutlierId"></span>
-<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/geomboxplotOutlierId-1.png" alt="Identification d'un outlier" width="90%"><p class="caption">
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/geomboxplotOutlierId-1.png" alt="Identification d'un outlier" width="90%"><p class="caption">
 Figure 3.5: Identification d’un outlier
 </p>
 </div>
@@ -217,7 +218,7 @@ Figure 3.5: Identification d’un outlier
 <p>On remarque ainsi qu’au-delà de prendre connaissance de la forme de la distribution, passer par ces étapes graphiques permet aussi de s’assurer qu’il n’y a pas eu d’erreur lors de la saisie des données dans la base (du moins, pas d’erreur visible et qui risquerait d’impacter grandement les calculs futurs). <strong>Passer par l’analyse graphique est donc recommandé avant de pouvoir se fier aux résultats numériques que l’on pourrait calculer par la suite, tels que les indices statistiques qui permettent de résumer numériquement une variable.</strong></p>
 <p>À noter que si l’histogramme et la boîte à moustaches sont des graphiques classiques pour étudier la distribution d’une variable quantitative, il est aussi possible avec R de créer ce qu’on appelle un <em>raincloud plot</em>, tel qu’illustré sur la Figure <a href="analyses-descriptives-univari%C3%A9es.html#fig:raincloudUnivar">3.6</a>. Un <a href="https://www.cedricscherer.com/2021/06/06/visualizing-distributions-with-raincloud-plots-and-how-to-create-them-with-ggplot2/">post du blog de Cédric Scherer</a> fournit une description très intéressante et riche de l’intérêt de ce type de graphiques. Le <em>raincloud plot</em> se compose de trois éléments :</p>
 <ul>
-<li>Une aire sous la courbe de densité (<em>the cloud</em>), qui représente une estimation de la fréquence d’apparition d’une valeur donnée dans l’échantillon étudié. Cet élément est intéressant pour prendre pleinement conscience de la forme de la distribution. Attention cependant, car les formes des aires et les idées qu’elles donnent des distributions dans la population d’intérêt dépendent beaucoup du nombre d’observations disponibles, et leur utilisation pourrait donc se discuter en présence de peu d’observations.</li>
+<li>Une aire sous la courbe représentative de la densité de probabilité (<em>the cloud</em>), qui représente une estimation de la fréquence d’apparition d’une valeur donnée dans l’échantillon étudié. Cet élément est intéressant pour prendre pleinement conscience de la forme de la distribution. Attention cependant, car les formes des aires et les idées qu’elles donnent des distributions dans la population d’intérêt dépendent beaucoup du nombre d’observations disponibles, et leur utilisation pourrait donc se discuter en présence de peu d’observations.</li>
 <li>Une boîte à moustaches, qui permet de se faire une idée résumée relativement robuste des distributions dans la population d’intérêt (i.e., insensible aux <em>outliers</em> et davantage comparable avec d’autres études) ; selon les cas, d’autres statistiques, comme les moyennes et les écarts-types, peuvent être utilisées à la place ou en plus des boîtes à moustaches <span class="citation">(Allen et al., <a href="r%C3%A9f%C3%A9rences.html#ref-allenRaincloudPlotsMultiplatform2019" role="doc-biblioref">2019</a>)</span>.</li>
 <li>Un nuage de points des données individuelles (<em>the rain</em>), qui est très intéressant pour avoir une vue précise des valeurs obtenues par les individus, de leurs différences éventuelles, des <em>outliers</em> éventuels, voire des <em>patterns</em> de distribution éventuellement inattendus ; les données individuelles permettent aussi d’avoir une idée plus claire de la grandeur du nombre d’observations présentes dans le jeu de données (chose non renseignée par les deux éléments précédents).</li>
 </ul>
@@ -231,9 +232,9 @@ Figure 3.5: Identification d’un outlier
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">iris</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">""</span>, y <span class="op">=</span> <span class="va">Sepal.Length</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">ggdist</span><span class="fu">::</span><span class="fu"><a href="http://mjskay.github.io/ggdist/reference/stat_halfeye.html">stat_halfeye</a></span><span class="op">(</span></span>
-<span>    <span class="co">## Ajuste le lissage de la courbe de densité</span></span>
+<span>    <span class="co">## Ajuste le lissage de la courbe représentative de la densité de probabilité</span></span>
 <span>    adjust <span class="op">=</span> <span class="fl">.5</span>, </span>
-<span>    <span class="co">## Ajuste la hauteur de l'aire située sous la courbe de densité</span></span>
+<span>    <span class="co">## Ajuste la hauteur de l'aire située sous la courbe représentative de la densité de probabilité</span></span>
 <span>    width <span class="op">=</span> <span class="fl">.6</span>, </span>
 <span>    .width <span class="op">=</span> <span class="fl">0</span>, </span>
 <span>    point_colour <span class="op">=</span> <span class="cn">NA</span></span>
@@ -251,17 +252,17 @@ Figure 3.5: Identification d’un outlier
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span>xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1.2</span>, <span class="cn">NA</span><span class="op">)</span><span class="op">)</span> </span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:raincloudUnivar"></span>
-<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/raincloudUnivar-1.png" alt="Exemple de raincloud plot" width="90%"><p class="caption">
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/raincloudUnivar-1.png" alt="Exemple de raincloud plot" width="90%"><p class="caption">
 Figure 3.6: Exemple de raincloud plot
 </p>
 </div>
-<p>Lorsqu’on regarde le code ci-dessus qui a permis de créer le <em>raincould plot</em>, on remarque l’arrivée de deux nouveaux packages : <code>ggdist</code> et <code>gghalves</code>. Ces packages doivent être installés et chargés avant de pouvoir être utilisés. Le package <code>ggdist</code> est utilisé avec la fonction <code><a href="http://mjskay.github.io/ggdist/reference/stat_halfeye.html">stat_halfeye()</a></code>, qui sert à montrer sur la figure ci-dessus l’aire grise sous la courbe de densité. Plus cette aire est grande au niveau d’un intervalle de valeurs donné, plus il est probable de rencontrer les valeurs concernées lorsqu’on prend au hasard des observations du jeu de données. Plusieurs arguments peuvent en réalité servir à calculer la courbe de densité et finalement modifier sa forme et celle de l’aire qu’il y a en-dessous. Parmi eux, l’argument <code>adjust</code> de la fonction <code><a href="http://mjskay.github.io/ggdist/reference/stat_halfeye.html">stat_halfeye()</a></code> sert en quelque sorte à ajuster le lissage de la courbe de densité : plus sa valeur sera élevée, plus la courbe sera lissée.</p>
+<p>Lorsqu’on regarde le code ci-dessus qui a permis de créer le <em>raincould plot</em>, on remarque l’arrivée de deux nouveaux packages : <code>ggdist</code> et <code>gghalves</code>. Ces packages doivent être installés et chargés avant de pouvoir être utilisés. Le package <code>ggdist</code> est utilisé avec la fonction <code><a href="http://mjskay.github.io/ggdist/reference/stat_halfeye.html">stat_halfeye()</a></code>, qui sert à montrer sur la figure ci-dessus l’aire grise sous la courbe représentative de la densité de probabilité. Plus cette aire est grande au niveau d’un intervalle de valeurs donné, plus il est probable de rencontrer les valeurs concernées lorsqu’on prend au hasard des observations du jeu de données. Plusieurs arguments peuvent en réalité servir à calculer la courbe représentative de la densité de probabilité et finalement modifier sa forme et celle de l’aire qu’il y a en-dessous. Parmi eux, l’argument <code>adjust</code> de la fonction <code><a href="http://mjskay.github.io/ggdist/reference/stat_halfeye.html">stat_halfeye()</a></code> sert en quelque sorte à ajuster le lissage de la courbe représentative de la densité de probabilité : plus sa valeur sera élevée, plus la courbe sera lissée.</p>
 <p>Pour montrer les données individuelles sans risquer qu’elles ne se superposent de trop, on a utilisé la fonction <code><a href="https://rdrr.io/pkg/gghalves/man/geom_half_point.html">geom_half_point()</a></code> du package <code>gghalves</code>, l’argument <code>transformation</code>, et la fonction <code><a href="https://ggplot2.tidyverse.org/reference/position_jitter.html">position_jitter()</a></code>. À l’intérieur de la fonction <code><a href="https://ggplot2.tidyverse.org/reference/position_jitter.html">position_jitter()</a></code>, l’argument <code>seed</code> (la graine en français) désigne le nombre sur lequel se base l’ordinateur pour générer un résultat pseudo-aléatoire. Quand on regarde le graphique ci-dessus, les données individuelles apparaissent décalées aléatoirement sur le plan vertical. Cet effet aléatoire est l’intérêt même d’une fonction dite “jitter”, et cet effet est en réalité prédéfini de telle sorte que si on utilise toujours le même numéro de graine (<code>seed</code>), alors on obtiendra toujours le même effet aléatoire sur le graphique.</p>
 <p>Les autres éléments de code sont là pour des considérations esthétiques et ne seront pas décrits ici. Il reste bien sûr possible de lire l’aide associée à ces fonctions pour gagner en maîtrise de ce type de graphique.</p>
 <p>Lors de l’analyse de données, différentes formes typiques de distribution peuvent être rencontrées, notamment des formes <strong>gaussiennes</strong>, <strong>asymétriques</strong>, <strong>leptocurtiques</strong>, et <strong>platycurtiques</strong> <span class="citation">(Dart &amp; Chatellier, <a href="r%C3%A9f%C3%A9rences.html#ref-dartCommentDecrireDistribution2003" role="doc-biblioref">2003</a>)</span>. Ces formes sont illustrées sur la Figure <a href="analyses-descriptives-univari%C3%A9es.html#fig:variousDistributions">3.7</a>. Les formes gaussiennes sont observées en présence de variables suivant ce qu’on appelle une <strong>loi normale</strong>. Très souvent, on associe une distribution gaussienne, et donc une loi normale, à une distribution en forme de cloche, bien que l’analogie à la cloche pourrait se discuter. Les formes asymétriques traduisent le fait que la majorité des observations sont concentrées sur une extrémité de l’intervalle des valeurs possibles, et qu’il existe des observations, non majoritaires, avec des valeurs pouvant être très éloignées de la majorité des données, mais seulement d’un seul côté de la distribution. Enfin, les formes leptocurtiques et platycurtiques sont appelées ainsi par comparaison à la forme gaussienne. En présence d’une forme leptocurtique, la distribution s’avère plus pointue, avec des queues (qui sont les extrémités de la distribution) plus longues qu’avec une forme gaussienne. Dans le cadre d’une distribution platycurtique, la distribution est plus aplatie, avec des queues plus courtes qu’avec une forme gaussienne <span class="citation">(Dart &amp; Chatellier, <a href="r%C3%A9f%C3%A9rences.html#ref-dartCommentDecrireDistribution2003" role="doc-biblioref">2003</a>)</span>. La distribution uniforme est un cas particulier de distribution platycurtique, et c’est cette distribution qui est en réalité montrée sur la Figure <a href="analyses-descriptives-univari%C3%A9es.html#fig:variousDistributions">3.7</a>.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:variousDistributions"></span>
-<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/variousDistributions-1.png" alt="Différents types de distributions" width="100%"><p class="caption">
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/variousDistributions-1.png" alt="Différents types de distributions" width="100%"><p class="caption">
 Figure 3.7: Différents types de distributions
 </p>
 </div>
@@ -308,7 +309,7 @@ Cette expression mathématique signifie que la moyenne s’obtient en additionna
 <p>La moyenne, c’est en quelque sorte le “centre de gravité” de la variable <span class="citation">(Navarro, <a href="r%C3%A9f%C3%A9rences.html#ref-navarroLearningStatistics2018" role="doc-biblioref">2018</a>)</span>. L’un de ses intérêts est que son calcul prend en compte toutes les informations contenues dans la variable, ce qui est utile quand on a relativement peu de données <span class="citation">(Navarro, <a href="r%C3%A9f%C3%A9rences.html#ref-navarroLearningStatistics2018" role="doc-biblioref">2018</a>)</span>. En revanche, un inconvénient est qu’elle est très sensible aux valeurs extrêmes, et en particulier aux valeurs qui seraient particulièrement basses ou particulièrement élevées par rapport à la majorité des valeurs de la variable (il s’agirait ici d’<em>outliers</em>), et cela est d’autant plus vrai lorsque la taille de l’échantillon étudié est faible. Dans ce dernier cas, il y a donc un risque assez important que la moyenne ne représente pas bien la tendance centrale, c’est-à-dire la valeur ou la zone de valeurs où sont situées la majorité des observations. Ce risque existe aussi même avec des tailles d’échantillon relativement importantes lorsque la distribution est asymétrique, comme illustré sur la Figure <a href="analyses-descriptives-univari%C3%A9es.html#fig:meansSkewedVariables">3.8</a>. Sur cette figure, on peut voir qu’avec une distribution gaussienne, la moyenne correspond parfaitement à la tendance centrale. En revanche, avec une distribution asymétrique à droite, on voit que la moyenne est “tirée vers la droite” par rapport à la tendance centrale sous l’effet des valeurs, certes moins nombreuses, mais d’une grandeur plus importante.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:meansSkewedVariables"></span>
-<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/meansSkewedVariables-1.png" alt="Effet de la forme de la distribution sur la position de la moyenne" width="100%"><p class="caption">
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/meansSkewedVariables-1.png" alt="Effet de la forme de la distribution sur la position de la moyenne" width="100%"><p class="caption">
 Figure 3.8: Effet de la forme de la distribution sur la position de la moyenne
 </p>
 </div>
@@ -327,7 +328,7 @@ Figure 3.8: Effet de la forme de la distribution sur la position de la moyenne
 <p>Contrairement à la moyenne, la médiane prend donc en compte moins d’informations relatives aux données. Toutefois, en tant que valeur “du milieu”, la médiane présente l’intérêt de ne pas être influencée par les valeurs extrêmes. En raison de cela, la médiane est susceptible de mieux refléter la tendance centrale que la moyenne en présence de petits échantillons avec des <em>outliers</em>, ou en présence d’une forme de distribution asymétrique. Ce dernier cas est illustré sur la Figure <a href="analyses-descriptives-univari%C3%A9es.html#fig:mediansSkewedVariables">3.9</a>.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:mediansSkewedVariables"></span>
-<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/mediansSkewedVariables-1.png" alt="Effet de la forme de la distribution sur la position de la médiane" width="100%"><p class="caption">
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/mediansSkewedVariables-1.png" alt="Effet de la forme de la distribution sur la position de la médiane" width="100%"><p class="caption">
 Figure 3.9: Effet de la forme de la distribution sur la position de la médiane
 </p>
 </div>
@@ -395,7 +396,7 @@ Figure 3.9: Effet de la forme de la distribution sur la position de la médiane
 <pre><code>##   25%   75% 
 ##  9.30 31.55</code></pre>
 <p>On remarque ici que la fonction <code><a href="https://rdrr.io/r/stats/quantile.html">quantile()</a></code> a plusieurs arguments. L’argument <code>probs</code> désigne les quantiles que l’on souhaite obtenir. Le quantile 0.25 correspond à Q1, et le quantile 0.75 correspond à Q3. L’argument <code>type</code> permet de configurer le type de calcul à effectuer pour obtenir les valeurs des quantiles recherchés. L’indication du chiffre 2 pour l’argument <code>type</code> permet d’obtenir les quantiles selon la méthode de calcul présentée ci-dessus, qui, comme nous l’avons précisé, est dédiée à l’étude d’une variable quantitative discrète. Par défaut, en revanche, la fonction <code><a href="https://rdrr.io/r/stats/quantile.html">quantile()</a></code> utilise le chiffre 7 pour l’argument <code>type</code>, ce qui renvoie à une méthode de calcul des quantiles qui serait davantage pertinente pour étudier des variables quantitatives continues. Comparons les résultats obtenus avec les deux méthodes de calcul :</p>
-<template id="bc9ea9bd-01f1-4c33-a4ec-ae734cbdfea0"><style>
+<template id="6e735971-146b-4a9b-ada7-ac1376442292"><style>
 .tabwid table{
   border-spacing:0px !important;
   border-collapse:collapse;
@@ -429,35 +430,38 @@ Figure 3.9: Effet de la forme de la distribution sur la position de la médiane
 .tabwid table tr {
 background-color: transparent;
 }
+.katex-display {
+    margin: 0 0 !important;
+}
 </style>
 <div class="tabwid">
-<style>.cl-73fef792{}.cl-73f7daa2{font-family:'Helvetica';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-73f7daac{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-73f7ed76{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-73f8220a{width:64.5pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-73f8221e{width:55.4pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-73f8221f{width:64.5pt;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-73f82220{width:55.4pt;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-73f82228{width:64.5pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-73f82229{width:55.4pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<div class="inline-table"><table class="cl-73fef792">
+<style>.cl-ac9cdb1c{}.cl-ac955b76{font-family:'Helvetica';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-ac955b8a{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-ac956fb2{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-ac95a5ea{width:64.5pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ac95a5f4{width:55.4pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ac95a5f5{width:64.5pt;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ac95a5fe{width:55.4pt;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ac95a5ff{width:64.5pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ac95a600{width:55.4pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<div class="inline-table"><table class="cl-ac9cdb1c">
 <caption class="Table Caption">
 <p><span id="tab:quantilesCompaMethods">Tableau 3.1: </span>Comparaison des quantiles obtenus selon différentes configurations de la fonction quantile()</p>
 </caption>
 <thead><tr style="overflow-wrap:break-word;">
-<td class="cl-73f82228"><p class="cl-73f7ed76"><span class="cl-73f7daa2">Quantile</span></p></td>
-<td class="cl-73f82229"><p class="cl-73f7ed76"><span class="cl-73f7daa2">Type 2</span></p></td>
-<td class="cl-73f82229"><p class="cl-73f7ed76"><span class="cl-73f7daa2">Type 7</span></p></td>
+<td class="cl-ac95a5ff"><p class="cl-ac956fb2"><span class="cl-ac955b76">Quantile</span></p></td>
+<td class="cl-ac95a600"><p class="cl-ac956fb2"><span class="cl-ac955b76">Type 2</span></p></td>
+<td class="cl-ac95a600"><p class="cl-ac956fb2"><span class="cl-ac955b76">Type 7</span></p></td>
 </tr></thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-73f8220a"><p class="cl-73f7ed76"><span class="cl-73f7daac">0.25</span></p></td>
-<td class="cl-73f8221e"><p class="cl-73f7ed76"><span class="cl-73f7daac">9.30</span></p></td>
-<td class="cl-73f8221e"><p class="cl-73f7ed76"><span class="cl-73f7daac">10.050</span></p></td>
+<td class="cl-ac95a5ea"><p class="cl-ac956fb2"><span class="cl-ac955b8a">0.25</span></p></td>
+<td class="cl-ac95a5f4"><p class="cl-ac956fb2"><span class="cl-ac955b8a">9.30</span></p></td>
+<td class="cl-ac95a5f4"><p class="cl-ac956fb2"><span class="cl-ac955b8a">10.050</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-73f8221f"><p class="cl-73f7ed76"><span class="cl-73f7daac">0.75</span></p></td>
-<td class="cl-73f82220"><p class="cl-73f7ed76"><span class="cl-73f7daac">31.55</span></p></td>
-<td class="cl-73f82220"><p class="cl-73f7ed76"><span class="cl-73f7daac">28.575</span></p></td>
+<td class="cl-ac95a5f5"><p class="cl-ac956fb2"><span class="cl-ac955b8a">0.75</span></p></td>
+<td class="cl-ac95a5fe"><p class="cl-ac956fb2"><span class="cl-ac955b8a">31.55</span></p></td>
+<td class="cl-ac95a5fe"><p class="cl-ac956fb2"><span class="cl-ac955b8a">28.575</span></p></td>
 </tr>
 </tbody>
 </table></div>
-</div></template><div class="flextable-shadow-host" id="ca82e9f1-e5ce-4149-a640-1891852e79ff"></div>
+</div></template><div class="flextable-shadow-host" id="fba17563-d049-4e80-9512-d7e17cbfc31d"></div>
 <script>
-var dest = document.getElementById("ca82e9f1-e5ce-4149-a640-1891852e79ff");
-var template = document.getElementById("bc9ea9bd-01f1-4c33-a4ec-ae734cbdfea0");
+var dest = document.getElementById("fba17563-d049-4e80-9512-d7e17cbfc31d");
+var template = document.getElementById("6e735971-146b-4a9b-ada7-ac1376442292");
 var caption = template.content.querySelector("caption");
 if(caption) {
   caption.style.cssText = "display:block;text-align:center;";
@@ -469,7 +473,7 @@ var fantome = dest.attachShadow({mode: 'open'});
 var templateContent = template.content;
 fantome.appendChild(templateContent);
 </script><p>On remarque que les résultats de la fonction <code><a href="https://rdrr.io/r/stats/quantile.html">quantile()</a></code> sont différents selon la configuration de l’argument <code>type</code>. Le choix de la configuration est donc important. Pour comprendre comment R a calculé les valeurs associées aux quantiles 0.25 et 0.75 dans le cadre de la seconde méthode (i.e., avec <code>type</code> = 7), regardons le tableau ci-dessous.</p>
-<template id="20cd8336-5658-44c6-871c-cc8cd67f72dd"><style>
+<template id="a91e7df7-7285-4229-bd66-695d89da7f6c"><style>
 .tabwid table{
   border-spacing:0px !important;
   border-collapse:collapse;
@@ -503,65 +507,68 @@ fantome.appendChild(templateContent);
 .tabwid table tr {
 background-color: transparent;
 }
+.katex-display {
+    margin: 0 0 !important;
+}
 </style>
 <div class="tabwid">
-<style>.cl-741eeae8{}.cl-74171a52{font-family:'Helvetica';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-74171a5c{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-74172ce0{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-7417673c{width:48pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-74176746{width:54.2pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-74176750{width:72.5pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-74176751{width:54.2pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7417675a{width:48pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7417675b{width:72.5pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-74176764{width:54.2pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-74176765{width:72.5pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7417676e{width:48pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7417676f{width:48pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-74176770{width:54.2pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-74176778{width:72.5pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-74176779{width:72.5pt;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-74176782{width:48pt;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-74176783{width:54.2pt;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-74176784{width:72.5pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7417678c{width:48pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7417678d{width:54.2pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<div class="inline-table"><table class="cl-741eeae8">
+<style>.cl-acc1600e{}.cl-acb8e960{font-family:'Helvetica';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-acb8e96a{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-acb8fcc0{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-acb938ac{width:48pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-acb938ad{width:54.2pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-acb938b6{width:72.5pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-acb938b7{width:54.2pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-acb938c0{width:48pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-acb938c1{width:72.5pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-acb938c2{width:54.2pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-acb938ca{width:72.5pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-acb938cb{width:48pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-acb938d4{width:48pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-acb938d5{width:54.2pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-acb938d6{width:72.5pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-acb938de{width:72.5pt;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-acb938df{width:48pt;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-acb938e8{width:54.2pt;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-acb938e9{width:72.5pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-acb938ea{width:48pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-acb938f2{width:54.2pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<div class="inline-table"><table class="cl-acc1600e">
 <caption class="Table Caption">
 <p><span id="tab:quantilesContinuousMethod">Tableau 3.2: </span>Quantiles d’une variable quantitative continue</p>
 </caption>
 <thead><tr style="overflow-wrap:break-word;">
-<td class="cl-7417678c"><p class="cl-74172ce0"><span class="cl-74171a52">Rang</span></p></td>
-<td class="cl-74176784"><p class="cl-74172ce0"><span class="cl-74171a52">Quantile</span></p></td>
-<td class="cl-7417678d"><p class="cl-74172ce0"><span class="cl-74171a52">Valeur</span></p></td>
+<td class="cl-acb938ea"><p class="cl-acb8fcc0"><span class="cl-acb8e960">Rang</span></p></td>
+<td class="cl-acb938e9"><p class="cl-acb8fcc0"><span class="cl-acb8e960">Quantile</span></p></td>
+<td class="cl-acb938f2"><p class="cl-acb8fcc0"><span class="cl-acb8e960">Valeur</span></p></td>
 </tr></thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-7417673c"><p class="cl-74172ce0"><span class="cl-74171a5c">1</span></p></td>
-<td class="cl-74176750"><p class="cl-74172ce0"><span class="cl-74171a5c">0.0000000</span></p></td>
-<td class="cl-74176746"><p class="cl-74172ce0"><span class="cl-74171a5c">4.5</span></p></td>
+<td class="cl-acb938ac"><p class="cl-acb8fcc0"><span class="cl-acb8e96a">1</span></p></td>
+<td class="cl-acb938b6"><p class="cl-acb8fcc0"><span class="cl-acb8e96a">0.0000000</span></p></td>
+<td class="cl-acb938ad"><p class="cl-acb8fcc0"><span class="cl-acb8e96a">4.5</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-7417675a"><p class="cl-74172ce0"><span class="cl-74171a5c">2</span></p></td>
-<td class="cl-7417675b"><p class="cl-74172ce0"><span class="cl-74171a5c">0.1428571</span></p></td>
-<td class="cl-74176751"><p class="cl-74172ce0"><span class="cl-74171a5c">7.8</span></p></td>
+<td class="cl-acb938c0"><p class="cl-acb8fcc0"><span class="cl-acb8e96a">2</span></p></td>
+<td class="cl-acb938c1"><p class="cl-acb8fcc0"><span class="cl-acb8e96a">0.1428571</span></p></td>
+<td class="cl-acb938b7"><p class="cl-acb8fcc0"><span class="cl-acb8e96a">7.8</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-7417676e"><p class="cl-74172ce0"><span class="cl-74171a5c">3</span></p></td>
-<td class="cl-74176765"><p class="cl-74172ce0"><span class="cl-74171a5c">0.2857143</span></p></td>
-<td class="cl-74176764"><p class="cl-74172ce0"><span class="cl-74171a5c">10.8</span></p></td>
+<td class="cl-acb938cb"><p class="cl-acb8fcc0"><span class="cl-acb8e96a">3</span></p></td>
+<td class="cl-acb938ca"><p class="cl-acb8fcc0"><span class="cl-acb8e96a">0.2857143</span></p></td>
+<td class="cl-acb938c2"><p class="cl-acb8fcc0"><span class="cl-acb8e96a">10.8</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-7417675a"><p class="cl-74172ce0"><span class="cl-74171a5c">4</span></p></td>
-<td class="cl-7417675b"><p class="cl-74172ce0"><span class="cl-74171a5c">0.4285714</span></p></td>
-<td class="cl-74176751"><p class="cl-74172ce0"><span class="cl-74171a5c">13.9</span></p></td>
+<td class="cl-acb938c0"><p class="cl-acb8fcc0"><span class="cl-acb8e96a">4</span></p></td>
+<td class="cl-acb938c1"><p class="cl-acb8fcc0"><span class="cl-acb8e96a">0.4285714</span></p></td>
+<td class="cl-acb938b7"><p class="cl-acb8fcc0"><span class="cl-acb8e96a">13.9</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-7417676f"><p class="cl-74172ce0"><span class="cl-74171a5c">5</span></p></td>
-<td class="cl-74176778"><p class="cl-74172ce0"><span class="cl-74171a5c">0.5714286</span></p></td>
-<td class="cl-74176770"><p class="cl-74172ce0"><span class="cl-74171a5c">20.2</span></p></td>
+<td class="cl-acb938d4"><p class="cl-acb8fcc0"><span class="cl-acb8e96a">5</span></p></td>
+<td class="cl-acb938d6"><p class="cl-acb8fcc0"><span class="cl-acb8e96a">0.5714286</span></p></td>
+<td class="cl-acb938d5"><p class="cl-acb8fcc0"><span class="cl-acb8e96a">20.2</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-7417675a"><p class="cl-74172ce0"><span class="cl-74171a5c">6</span></p></td>
-<td class="cl-7417675b"><p class="cl-74172ce0"><span class="cl-74171a5c">0.7142857</span></p></td>
-<td class="cl-74176751"><p class="cl-74172ce0"><span class="cl-74171a5c">25.6</span></p></td>
+<td class="cl-acb938c0"><p class="cl-acb8fcc0"><span class="cl-acb8e96a">6</span></p></td>
+<td class="cl-acb938c1"><p class="cl-acb8fcc0"><span class="cl-acb8e96a">0.7142857</span></p></td>
+<td class="cl-acb938b7"><p class="cl-acb8fcc0"><span class="cl-acb8e96a">25.6</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-7417676e"><p class="cl-74172ce0"><span class="cl-74171a5c">7</span></p></td>
-<td class="cl-74176765"><p class="cl-74172ce0"><span class="cl-74171a5c">0.8571429</span></p></td>
-<td class="cl-74176764"><p class="cl-74172ce0"><span class="cl-74171a5c">37.5</span></p></td>
+<td class="cl-acb938cb"><p class="cl-acb8fcc0"><span class="cl-acb8e96a">7</span></p></td>
+<td class="cl-acb938ca"><p class="cl-acb8fcc0"><span class="cl-acb8e96a">0.8571429</span></p></td>
+<td class="cl-acb938c2"><p class="cl-acb8fcc0"><span class="cl-acb8e96a">37.5</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-74176782"><p class="cl-74172ce0"><span class="cl-74171a5c">8</span></p></td>
-<td class="cl-74176779"><p class="cl-74172ce0"><span class="cl-74171a5c">1.0000000</span></p></td>
-<td class="cl-74176783"><p class="cl-74172ce0"><span class="cl-74171a5c">43.9</span></p></td>
+<td class="cl-acb938df"><p class="cl-acb8fcc0"><span class="cl-acb8e96a">8</span></p></td>
+<td class="cl-acb938de"><p class="cl-acb8fcc0"><span class="cl-acb8e96a">1.0000000</span></p></td>
+<td class="cl-acb938e8"><p class="cl-acb8fcc0"><span class="cl-acb8e96a">43.9</span></p></td>
 </tr>
 </tbody>
 </table></div>
-</div></template><div class="flextable-shadow-host" id="c9a5fd11-9fc8-43b4-9c97-cd3afe9b5fc4"></div>
+</div></template><div class="flextable-shadow-host" id="998c5be1-c2bd-4989-89ee-3a7d5cedc549"></div>
 <script>
-var dest = document.getElementById("c9a5fd11-9fc8-43b4-9c97-cd3afe9b5fc4");
-var template = document.getElementById("20cd8336-5658-44c6-871c-cc8cd67f72dd");
+var dest = document.getElementById("998c5be1-c2bd-4989-89ee-3a7d5cedc549");
+var template = document.getElementById("a91e7df7-7285-4229-bd66-695d89da7f6c");
 var caption = template.content.querySelector("caption");
 if(caption) {
   caption.style.cssText = "display:block;text-align:center;";
@@ -577,7 +584,7 @@ fantome.appendChild(templateContent);
 Dans le calcul ci-dessus, <em>k</em> désigne le rang de la valeur considérée, et <em>N</em> désigne la taille de la variable étudiée (i.e., le nombre total de valeurs). Comme on peut le voir dans le tableau ci-dessus, cette méthode de calcul conduit nécessairement à attribuer le quantile 0 à la valeur de rang 1, et la quantile 1 à la valeur de rang <em>N</em>. Lorsque le nombre de valeurs fait que les quantiles 0.25 et 0.75 n’existent pas, R réalise une interpolation de la valeur correspondant au quantile recherché, cela à partir des quantiles qui existent et qui encadrent le quantile recherché, ainsi qu’à partir des valeurs correspondant à ces quantiles. Dans le cas présent, il s’agit plus précisément d’une interpolation linéaire. Voyons sur la Figure <a href="analyses-descriptives-univari%C3%A9es.html#fig:graphicContinuouQuantiles">3.10</a> en quoi cela consiste.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:graphicContinuouQuantiles"></span>
-<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/graphicContinuouQuantiles-1.png" alt="Détermination des quartiles Q1 et Q3 avec une variable quantitative continue" width="90%"><p class="caption">
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/graphicContinuouQuantiles-1.png" alt="Détermination des quartiles Q1 et Q3 avec une variable quantitative continue" width="90%"><p class="caption">
 Figure 3.10: Détermination des quartiles Q1 et Q3 avec une variable quantitative continue
 </p>
 </div>
@@ -599,7 +606,7 @@ Figure 3.10: Détermination des quartiles Q1 et Q3 avec une variable quantitativ
 Dans ce calcul, <em>s</em> désigne l’écart-type non biaisé de la variable, et <em>N</em> désigne la taille de la variable. Avec cette méthode, on obtient un coefficient négatif lorsque la distribution est asymétrique à gauche (longue queue vers la gauche), un coefficient de 0 lorsque la distribution est parfaitement symétrique, et un coefficient positif lorsque la distribution est asymétrique à droite (longue queue vers la droite). Ceci est illustré sur la Figure <a href="analyses-descriptives-univari%C3%A9es.html#fig:skeweddistri">3.11</a>.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:skeweddistri"></span>
-<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/skeweddistri-1.png" alt="Valeur du Skewness selon la forme de la distribution" width="100%"><p class="caption">
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/skeweddistri-1.png" alt="Valeur du Skewness selon la forme de la distribution" width="100%"><p class="caption">
 Figure 3.11: Valeur du Skewness selon la forme de la distribution
 </p>
 </div>
@@ -618,7 +625,7 @@ Joanes et Gill <span class="citation">(<a href="r%C3%A9f%C3%A9rences.html#ref-jo
 Dans ce calcul, <em>s</em> désigne l’écart-type non biaisé de la variable, et <em>N</em> désigne la taille de la variable. Avec cette méthode, on obtient un coefficient négatif lorsque la distribution est particulièrement aplatie par rapport à une distribution suivant une loi normale (distribution platycurtique), un coefficient de 0 lorsque la distribution suit une loi normale (distribution mésocurtique), et un coefficient positif lorsque la distribution est particulièrement pointue par rapport à une loi normale (distribution leptocurtique). Ceci est illustré sur la Figure <a href="analyses-descriptives-univari%C3%A9es.html#fig:kurtosisdistri">3.12</a>.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:kurtosisdistri"></span>
-<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/kurtosisdistri-1.png" alt="Valeur du Kurtosis selon la forme de la distribution" width="100%"><p class="caption">
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/kurtosisdistri-1.png" alt="Valeur du Kurtosis selon la forme de la distribution" width="100%"><p class="caption">
 Figure 3.12: Valeur du Kurtosis selon la forme de la distribution
 </p>
 </div>
@@ -718,14 +725,14 @@ Comme avec le coefficient d’asymétrie, Joanes et Gill <span class="citation">
 <p>Ceci est illustré sur la Figure <a href="analyses-descriptives-univari%C3%A9es.html#fig:ObservationsWithinSdMutiplesGaussianDistri">3.13</a>.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:ObservationsWithinSdMutiplesGaussianDistri"></span>
-<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/ObservationsWithinSdMutiplesGaussianDistri-1.png" alt="Proportions des observations incluses dans différents intervalles liés à la moyenne et à des multiples de l'écart-type" width="90%"><p class="caption">
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/ObservationsWithinSdMutiplesGaussianDistri-1.png" alt="Proportions des observations incluses dans différents intervalles liés à la moyenne et à des multiples de l'écart-type" width="90%"><p class="caption">
 Figure 3.13: Proportions des observations incluses dans différents intervalles liés à la moyenne et à des multiples de l’écart-type
 </p>
 </div>
 <p>Lorsqu’il s’agit plus précisément de vouloir renseigner sur la tendance centrale relative à l’échantillon étudié, le choix dépend de la forme de la distribution observée. Lorsque la distribution est gaussienne, la moyenne, la médiane, et le mode, sont similaires et donc se valent. Toutefois, lorsque la distribution est asymétrique et unimodale (i.e., avec un seul pic), le mode reflètera mieux la tendance centrale. De plus, lorsque la distribution est asymétrique, la médiane aura tendance à mieux représenter la tendance centrale que la moyenne <span class="citation">(Rousselet &amp; Wilcox, <a href="r%C3%A9f%C3%A9rences.html#ref-rousseletReactionTimesOther2020" role="doc-biblioref">2020</a>)</span>. Notons que dans certains cas où la distribution semble asymétrique, la médiane peut se retrouver malgré tout plus éloignée du mode que la moyenne, comme illustré dans l’exemple emprunté à Gonzales et al. <span class="citation">(<a href="r%C3%A9f%C3%A9rences.html#ref-gonzalesMeasuresCentralTendency2001" role="doc-biblioref">2001</a>)</span> qui est montré sur la Figure <a href="analyses-descriptives-univari%C3%A9es.html#fig:MeanAboveLedianAsym">3.14</a>.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:MeanAboveLedianAsym"></span>
-<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/MeanAboveLedianAsym-1.png" alt="Exemples de positions de la moyenne et de la médiane dans le cadre d'une distribution asymétrique" width="90%"><p class="caption">
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/MeanAboveLedianAsym-1.png" alt="Exemples de positions de la moyenne et de la médiane dans le cadre d'une distribution asymétrique" width="90%"><p class="caption">
 Figure 3.14: Exemples de positions de la moyenne et de la médiane dans le cadre d’une distribution asymétrique
 </p>
 </div>
@@ -765,7 +772,7 @@ Figure 3.14: Exemples de positions de la moyenne et de la médiane dans le cadre
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:geombar"></span>
-<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/geombar-1.png" alt="Exemple de diagramme en barres" width="80%"><p class="caption">
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/geombar-1.png" alt="Exemple de diagramme en barres" width="80%"><p class="caption">
 Figure 3.15: Exemple de diagramme en barres
 </p>
 </div>
@@ -848,7 +855,7 @@ Figure 3.15: Exemple de diagramme en barres
 <span>     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"F"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:geombarEnhancedGraph"></span>
-<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/geombarEnhancedGraph-1.png" alt="Différentes sortes de diagrammes en barres" width="100%"><p class="caption">
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/geombarEnhancedGraph-1.png" alt="Différentes sortes de diagrammes en barres" width="100%"><p class="caption">
 Figure 3.16: Différentes sortes de diagrammes en barres
 </p>
 </div>
@@ -903,7 +910,7 @@ Figure 3.16: Différentes sortes de diagrammes en barres
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"D"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:geombarPropEnhancedGraph"></span>
-<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/geombarPropEnhancedGraph-1.png" alt="Différentes sortes de diagrammes pour représenter des proportions" width="100%"><p class="caption">
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/geombarPropEnhancedGraph-1.png" alt="Différentes sortes de diagrammes pour représenter des proportions" width="100%"><p class="caption">
 Figure 3.17: Différentes sortes de diagrammes pour représenter des proportions
 </p>
 </div>
@@ -1000,7 +1007,7 @@ Figure 3.17: Différentes sortes de diagrammes pour représenter des proportions
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Analyser des données avec R</strong>" was written by Pierre-Yves de Müllenheim. It was last built on 2022-07-26.</p>
+    <p>"<strong>Analyser des données avec R</strong>" was written by Pierre-Yves de Müllenheim. It was last built on 2022-08-16.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
@@ -1013,7 +1020,7 @@ Figure 3.17: Différentes sortes de diagrammes pour représenter des proportions
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');
