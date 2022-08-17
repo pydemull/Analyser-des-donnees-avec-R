@@ -1,71 +1,60 @@
-# Notions de probabilité
+# (PART) Analyses inférentielles {-}
+
+# Prérequis
+
+## Préambule
+
+Réaliser une inférence statistique consiste à estimer, avec plus ou moins d'incertitude, la valeur (ou l'intervalle incluant la valeur) d'un paramètre statistique relatif à une population, cela à partir de données prélevées dans un échantillon de cette population. Une procédure d'inférence statistique peut concerner n'importe quel paramètre statistique : une moyenne, une médiane, une proportion, un coefficient de corrélation, une différence de moyennes, un rapport de cotes, etc. Ce chapitre s'inspire largement du chapitre "Introduction to probability" de l'ouvrage de Danielle Navarro [-@navarroLearningStatistics2018].
 
 ## Lois de probabilité
 
-### Préambule
+### Notion de loi de probabilité
 
-Réaliser une inférence statistique consiste à estimer, avec plus ou moins d'incertitude, la valeur (ou l'intervalle incluant la valeur) d'un paramètre statistique relatif à une population, cela à partir de données prélevées dans un échantillon de cette population. Une procédure d'inférence statistique peut concerner n'importe quel paramètre statistique : une moyenne, une médiane, une proportion, un coefficient de corrélation, une différence de moyennes, un rapport de cotes, etc.
+Il existe plusieurs approches pour réaliser une inférence statistique, notamment l'approche dite "fréquentiste", et celle dite "bayesienne" [@navarroLearningStatistics2018]. Quelle que soit l'approche utilisée, les procédures de calcul pour réaliser une inférence statistique requièrent d'utiliser des modélisations ou lois mathématiques que l'on doit configurer pour déterminer théoriquement les probabilités de rencontrer telle ou telle valeur du paramètre statistique considéré lorsqu'on étudie un échantillon provenant de la population d'intérêt. Cette démarche implique de comprendre que si un phénomène existe (ou pas) à l'échelle d'une population (chose quantifiable à l'aide de la valeur d'un paramètre statistique donné), l'étude d'un échantillon provenant de cette population ne donnera pas forcément la même valeur pour le paramètre statistique considéré. L'enjeu est alors de pouvoir déterminer la probabilité qui était celle d'obtenir telle ou telle valeur du paramètre statistique considéré avec son échantillon dans le cas où le phénomène étudié existerait (ou pas), cela pour envisager une conclusion quant à la réelle existence ou non du phénomène étudié dans la population d'intérêt.
 
-Il existe plusieurs approches pour réaliser une inférence statistique, notamment l'approche dite "fréquentiste", et celle dite "bayesienne" [@navarroLearningStatistics2018]. Quelle que soit l'approche utilisée, les procédures de calcul pour réaliser une inférence statistique requièrent d'utiliser des modélisations ou lois mathématiques que l'on doit configurer pour représenter théoriquement les distributions (testées ou attendues) des variables étudiées dans la population d'intérêt. Ces lois ou modèles, qu'on appelle aussi des lois de probabilité, donnent directement les **distributions des probabilités** (i.e., les chances de rencontrer telle ou telle valeur dans la population) dans les cas de variables qualitatives. Dans les cas de variables quantitatives, les modèles mathématiques ne donnent pas directement les probabilités de rencontrer telle ou telle valeur dans une population. En effet, dans ces situations, les modèles donnent les **densités de probabilité**. Ceci implique que dans ce type de situations, les probabilités concernent le fait d'avoir des valeurs appartenant à des intervalles donnés, et non pas d'avoir une valeur précise. Cela implique également que pour obtenir la probabilité de rencontrer une valeur appartenant à un intervalle donné, il ne faut pas prendre la valeur directement donnée par le modèle, mais l'intégrale (i.e., l'aire sous la courbe de densité de probabilité) correspondant à l'intervalle de valeurs considéré. Ce qui suit vise à décrire et illustrer des lois de probabilité typiquement utilisées dans les procédures de calculs servant à réaliser des inférences statistiques. Ce chapitre s'inspire largement du chapitre "Introduction to probability" de l'ouvrage de Danielle Navarro [-@navarroLearningStatistics2018].
+Ces lois mathématiques utilisées pour faire des inférences statistiques, qu'on appelle aussi des lois de probabilité, donnent directement les valeurs de probabilité d'obtenir telle ou telle valeur du paramètre statistique considéré dans les cas de variables qualitatives. Dans les cas de variables quantitatives, les lois de probabilité ne donnent pas directement les probabilités. En effet, dans ces situations, les lois donnent les **densités de probabilité**. Ceci est lié au fait que dans ce type de situations, les probabilités concernent le fait d'avoir des valeurs appartenant à des intervalles donnés, et non pas d'avoir une valeur précise. Cela implique que pour obtenir la probabilité de rencontrer une valeur appartenant à un intervalle donné, il ne faut pas prendre la valeur directement donnée par la loi de probabilité, mais l'intégrale (i.e., l'aire sous la courbe de densité de probabilité) correspondant à l'intervalle de valeurs considéré. Ce qui suit vise à décrire et illustrer des lois de probabilité typiquement utilisées dans les procédures de calcul servant à réaliser des inférences statistiques.
 
 ### La loi binomiale
 
-Une variable qualitative binomiale ne peut prendre que deux valeurs possibles, comme par exemple "succès" et "échec", "pile" et "face", "0" et "1", etc. Un exemple classique où l'on est en présence d'une variable binomiale est celui où l'on demande à un certain nombre de personnes de lancer $N$ fois une pièce non truquée, avec par conséquent "pile" et "face" comme seuls résultats possibles et autant de chances de tomber sur "pile" que sur "face" à chaque lancer ($\theta$ = 0.5, soit une chance sur deux). Une fois les essais de toutes les personnes terminés, la distribution qui en résulte contient alors les proportions de personnes ayant obtenu $X$ fois "pile" après $N$ lancers de la pièce, $X$ étant forcément compris entre 0 et $N$. Les barres de la Figure \@ref(fig:distriBinom) montrent à quoi pourrait ressembler la distribution obtenue dans le cadre de cet exemple si l'on demandait à 1000 personnes de lancer 100 fois la pièce. On note que 1000 autres personnes différentes auraient pu donner une distribution un peu différente dans sa forme (cf. hauteurs des barres du graphique), mais vu le nombre de personnes testées, la forme aurait sans doute été peu changée (ici, les nombres de fois où "pile" a été obtenu par les 1000 personnes sont en réalité des valeurs obtenues de manière pseudo-aléatoire par ordinateur). Dans cet exemple, on peut voir que les proportions les plus élevées correspondent aux cas où les personnes ont obtenu aux alentours de 50 fois "pile" sur 100 lancers de pièce, ce qui était attendu au regard des conditions de départ (1 chance sur 2 en principe, on encore 50 chances sur 100, d'obtenir "pile").
+La loi binomiale est une loi mathématique qui concerne les situations où seulement deux résultats sont possibles, comme par exemple "succès" et "échec", "pile" et "face", "0" et "1", etc. Un exemple classique où l'on est en présence d'une variable binomiale est celui où l'on demande à $N$ personnes de lancer une fois une pièce non truquée, avec par conséquent "pile" et "face" comme seuls résultats possibles et autant de chances de tomber sur "pile" que sur "face" à chaque lancer ($\theta$ = 0.5, soit une chance sur deux). Une fois les essais de toutes les personnes terminés, la distribution qui en résulte contient alors la proportion de personnes qui ont obtenu "pile" et la proportion de personnes qui n'ont pas obtenu "pile" (donc "face"). Lorsque le nombre $N$ d'essais ou de participants et la probabilité d'avoir tel ou tel résultat ($\theta$) sont connus, la loi binomiale, qu'on note $X \sim B(\theta, N)$, permet de connaître la probabilité $P(X)$ d'avoir $X$ succès (e.g., $X$ fois "pile") sur les $N$ essais ou participants. La formule de cette loi est montrée ci-dessous : 
 
-```{r distriBinom, message=F, out.width='80%', echo = FALSE, fig.cap= "Distribution des probabilités d'une loi binomiale"}
-set.seed(1)
-data <- 
-  data.frame(
-    x = rbinom(1000, 100, 0.5)
-  ) %>%
-  dplyr::count(x) %>%
-  dplyr::mutate(prob = n / 1000)
-
-
-data2 <-
-  data.frame(x = seq(0, 100, 1))
-
-binom <-
-  data2 %>%
-  dplyr::left_join(data, by = "x") %>%
-  dplyr::mutate(prob = ifelse(is.na(prob), 0, prob),
-                density = dbinom(x, 100, 0.5)
-  )
-  
-ggplot(data = binom, aes(x = x)) + 
-  geom_segment(aes(x = x, xend = x, y = 0, yend = prob)) +
-  geom_line(aes(y = ifelse(density > 0, density, 0)), size = 1) +
-  geom_text(aes(x = 60, y = 0.07), label = "Courbe représentant la loi \nde probabilité d'obtenir X fois \"pile\"\n sur 100 lancers de pièce", hjust = 0) +
-  annotate(geom = "curve", 
-         x = 65, 
-         y = 0.063, 
-         xend = 57, 
-         yend = 0.05,
-         curvature = -.3, arrow = arrow(length = unit(2, "mm"))) +
-  labs(x = "Nombre de fois où \"pile\" a été obtenu sur 100 lancers de pièce (x)", y = "Proportion d'individus ayant eu X fois \"pile\" : P(X)") +
-  theme_bw()
-```
-
-Si les barres de la Figure \@ref(fig:distriBinom) représentent la réalité des résultats obtenus, il est aussi possible de modéliser mathématiquement ce qu'on aurait été en droit d'attendre comme résultats dans cette situation (i.e., les probabilités - ente 0 et 1, ou encore entre 0 % et 100 % des individus) d'obtenir $X$ fois "pile", qu'on peut noter $P(X)$) au regard des conditions de départ, à savoir, le nombre d'essais ($N$) qui est ici de 100 lancers de pièce, et la probabilité d'avoir "pile" ou "face" à chaque lancer ($\theta$), qui est ici de 0.5. La fonction mathématique qui permet de modéliser cela, dans ce type de situation, est la loi binomiale, qu'on note $X \sim B(\theta, N)$, $\theta$ étant la probabilité de succès à chaque essai, et $N$ étant le nombre d'essais. Cette fonction mathématique est montrée ci-dessous et la courbe montrée sur la Figure \@ref(fig:distriBinom) est la réprésentation graphique de cette loi déclinée avec les paramètres $N$ = 100 et $\theta$ = 0.5.
 
 $$P(X | \theta, N) = \frac{N!}{X!(N-X)!}\theta^X(1-\theta)^{N-X}$$
 
-La courbe de la Figure \@ref(fig:distriBinom) illustre bien le fait que lorsque l'on étudie l'existence d'un phénomène dans une population (par exemple cela serait ici le fait que la pièce soit non truquée et on regarde si on a autant de chances d'avoir "pile" que d'avoir "face"), il ne faut pas s'attendre à voir la preuve de ce phénomène chez chaque individu, mais à l'échelle de l'ensemble de la population étudiée, en regardant le résultat qui est le plus fréquemment retrouvé.
 
-Plusieurs fonctions peuvent être utilisées pour obtenir des informations liées à la distribution d'une loi binomiale :
+
+La Figure \@ref(fig:distriBinom) illustre la loi binomiale avec $N$ = 100 et $\theta$ = 0.5. Cette figure montre que même si une pièce est non truquée ($\theta$ = 0.5), il est tout à fait possible qu'il y ait plus de personnes à obtenir "pile" plutôt que "face" et inversement sur un échantillon de 100 personnes. Cependant, ce que montre aussi la figure, c'est que si la pièce est non truquée, les chances restent les plus fortes pour l'obtention de 50 % de personnes avec "pile" et avec "face" pour un lancer de pièce.
+
+```{r distriBinom, message=F, out.width='80%', echo = FALSE, fig.cap= "Distribution des probabilités d'une loi binomiale"}
+set.seed(1)
+binom <- 
+  data.frame(
+    x = seq(0, 100, 1)
+  ) %>%
+  dplyr::mutate(
+    prob = dbinom(x, 100, 0.5)
+  )
+
+ggplot(data = binom, aes(x = x, y  = prob)) + 
+  geom_segment(aes(x = x, xend = x, y = 0, yend = prob)) +
+  labs(x = "Nombre de fois où \"pile\" a été obtenu sur 100 lancers de pièce (x)", y = "Proportion d'individus ayant eu \"pile\" : P(X)") +
+  theme_bw()
+```
+
+Plusieurs fonctions R peuvent être utilisées pour obtenir des informations liées aux probabilités données par une loi binomiale. Ces fonctions sont montrées ci-dessous.
 
 ```{r}
 # Fonction pour déterminer la probabilité d'obtenir précisément x succès (ici 50) 
-# à partir de N essais (ici 100) et d'une probabilité de succès donnée (ici 0.5)
+# à partir de N essais/personnes (ici 100) et d'une probabilité de succès donnée (ici 0.5)
 dbinom(x = 50, size = 100, prob = 0.5)
 
 # Fonction pour déterminer la probabilité d'obtenir un nombre de succès inférieur
-# ou égal à q (ici 50) à partir de N essais (ici 100) et d'une probabilité de 
+# ou égal à q (ici 50) à partir de N essais/personnes (ici 100) et d'une probabilité de 
 # succès donnée (ici 0.5)
 pbinom(q = 50, size = 100, prob = 0.5)
 
 # Fonction pour déterminer la valeur pour laquelle il y a une probabilité p 
-# d'obtenir une valeur inférieure ou égale à partir de N essais (ici 100) et 
+# d'obtenir une valeur inférieure ou égale à partir de N essais/personnes (ici 100) et 
 # d'une probabilité de succès donnée (ici 0.5)
 qbinom(p = 0.6, size = 100, prob = 0.5)
 ```
@@ -73,7 +62,7 @@ qbinom(p = 0.6, size = 100, prob = 0.5)
 
 ### La loi normale et lois apparentées
 
-Lorsque l'on travaille avec des variables quantitatives, il est possible de modéliser la distribution théorique des probabilités de rencontrer une valeur dans tel ou tel intervalle à l'aide d'une fonction mathématique appelée **loi normale**, ou encore **loi gaussienne**, qu'on note $X \sim N(\mu, \sigma)$, avec $\mu$ la moyenne de la variable, et $\sigma$ l'écart-type de la variable. La forme générale de cette fonction est montrée ci-dessous : 
+La **loi normale**, ou encore **loi gaussienne**, qu'on note $X \sim N(\mu, \sigma)$, avec $\mu$ la moyenne de la variable, et $\sigma$ l'écart-type de la variable, est une loi qui permet de déterminer les probabilités de rencontrer une valeur dans tel ou tel intervalle selon la formule ci-dessous : 
 
 $$p(X | \mu, \sigma) = \frac{1}{\sqrt{2\pi}\sigma} exp(-\frac{(X-\mu)^2}{2\sigma^2}),$$
 $p(X | \mu, \sigma)$ étant la densité de probabilité correspondant à la valeur $X$. Il s'agit bien ici de la densité de probabilité, et non pas de la valeur de la probabilité d'obtenir une valeur précise, chose impossible ici. Pour mieux comprendre les valeurs que donne cette loi mathématique, regardons la Figure \@ref(fig:distiNorm) (graphique de gauche). Sur cette figure, la courbe noire représente les valeurs données par la fonction définissant la loi normale avec $\mu$ = 1, et $\sigma$ = 1. Ces valeurs en réalité n'ont pas vraiment d'intérêt en soi. Par contre, elle permettent de délimiter une aire (en rouge) entre elles et l'axe horizontal, la valeur de cette aire étant pour le coup la probabilité d'obtenir une valeur incluse dans l'intervalle de valeurs relatif à l'aire sous la courbe considérée. Ainsi, l'aire sous l'ensemble de la courbe représentant la densité de probabilité est associée à une probabilité de 1 (il y a par définition, lors d'un tirage au sort, 100 % de chances de rencontrer une valeur située entre le minimum et le maximum de la variable modélisée à l'aide de cette loi). Dans la même veine, le graphique de droite de la Figure \@ref(fig:distiNorm) montre une aire sous la courbe (en rouge) dont la valeur est la probabilité d'obtenir une valeur comprise en 2 et 3 lorsqu'on tire au sort une observation en provenance de la population représentée par une loi normale de moyenne 1 et d'écart-type 1, la probabilité étant ici de `r round(pnorm(3, 1, 1) - pnorm(2, 1, 1), 2) * 100` %.
@@ -88,24 +77,12 @@ norm <-
   dplyr::mutate(density = dnorm(X, 1, 1))
 
 g1 <- ggplot(data = norm, aes(x = X)) + 
-  geom_histogram(
-    aes(y = ..density..),
-    color = "black", 
-    fill = "black",
-    alpha = 0.1
-    ) +
   geom_line(aes(y = density), color = "black", size = 1) +
   geom_area(aes(x = X, y = density), fill = "red", alpha = 0.2) +
   labs(x = "Valeur observée", y = "Densité de probabilité") +
   theme_bw()
 
 g2 <- ggplot(data = norm, aes(x = X)) + 
-  geom_histogram(
-    aes(y = ..density..),
-    color = "black", 
-    fill = "black",
-    alpha = 0.1
-    ) +
   geom_line(aes(y = density), color = "black", size = 1) +
   geom_area(data = norm %>% dplyr::filter(X >=2 & X <=3), aes(x = X, y = density), fill = "red", alpha = 0.2) +
   labs(x = "Valeur observée", y = "Densité de probabilité") +
@@ -115,7 +92,7 @@ g1 | g2
     
 ```
 
-Plusieurs fonctions peuvent être utilisées pour obtenir des informations liées à la distribution d'une loi normale donnée :
+Plusieurs fonctions peuvent être utilisées pour obtenir des informations liées à la distribution d'une loi normale donnée. Ces fonctions sont montrées ci-dessous.
 
 ```{r}
 # Fonction pour déterminer la densité de probabilité correspondant à la valeur x
