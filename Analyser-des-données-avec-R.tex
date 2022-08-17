@@ -133,7 +133,7 @@
 
 \title{Analyser des données avec R}
 \author{Pierre-Yves de Müllenheim}
-\date{2022-08-16}
+\date{2022-08-17}
 
 \begin{document}
 \maketitle
@@ -166,6 +166,9 @@ Dans ce livre, les exemples de code apparaissent dans des zones grisées, et les
 \textbf{Une version PDF de ce livre est disponible en ligne \href{https://pydemull.github.io/Analyser-des-donnees-avec-R/Analyser-des-données-avec-R.pdf}{ici}.\footnote{\url{https://pydemull.github.io/Analyser-des-donnees-avec-R/Analyser-des-données-avec-R.pdf}}}
 
 Ce livre, qui est en cours d'élaboration, est mis à disposition selon les termes de la Licence Creative Commons Attribution - Pas d'Utilisation Commerciale - Partage dans les Mêmes Conditions 4.0 International.
+
+\hypertarget{part-appropriation-de-r-et-rstudio}{%
+\part{Appropriation de R et RStudio}\label{part-appropriation-de-r-et-rstudio}}
 
 \hypertarget{pruxe9requis}{%
 \chapter{Prérequis}\label{pruxe9requis}}
@@ -1618,8 +1621,11 @@ Nous venons de voir plusieurs fonctions qui peuvent être très utiles pour pouv
   Pour enchaîner l'application de fonctions, utiliser le symbole \texttt{\%\textgreater{}\%} (\emph{pipe}, package \texttt{magrittr}).
 \end{itemize}
 
-\hypertarget{analyses-descriptives-univariuxe9es}{%
-\chapter{Analyses descriptives univariées}\label{analyses-descriptives-univariuxe9es}}
+\hypertarget{part-analyses-descriptives}{%
+\part{Analyses descriptives}\label{part-analyses-descriptives}}
+
+\hypertarget{analyses-univariuxe9es}{%
+\chapter{Analyses univariées}\label{analyses-univariuxe9es}}
 
 Réaliser une analyse descriptive univariée signifie que l'on s'intéresse à une seule variable en particulier. L'enjeu est ici de prendre connaissance de la distribution de la variable, c'est-à-dire de la manière selon laquelle se répartissent les observations en fonction des valeurs que prend la variable. De manière complémentaire, l'analyse descriptive univariée vise à prendre connaissance des indices statistiques qui caractérisent la variable, ainsi qu'à déterminer ceux qui seraient les plus pertinents pour la résumer.
 
@@ -2856,8 +2862,8 @@ Dans le cadre de variables qualitatives, la tendance centrale peut être renseig
   La fonction \texttt{questionr::freq()} permet de récapituler les effectifs et les proportions relatifs aux modalités d'une variable qualitative.
 \end{itemize}
 
-\hypertarget{analyses-descriptives-bivariuxe9es}{%
-\chapter{Analyses descriptives bivariées}\label{analyses-descriptives-bivariuxe9es}}
+\hypertarget{analyses-bivariuxe9es}{%
+\chapter{Analyses bivariées}\label{analyses-bivariuxe9es}}
 
 Réaliser une analyse bivariée désigne le fait d'étudier la relation qui peut exister entre deux variables. Dans ce chapitre, nous allons voir les procédures graphiques et calculatoires qui permettent d'étudier et de quantifier le degré de relation pouvant exister entre deux variables dans les cas suivants : entre deux variables quantitatives, entre deux variables qualitatives, et entre une variable quantitative et une variable qualitative. Comme dans le chapitre précédent, l'objectif est ici d'explorer et de décrire les données et leurs relations à l'échelle d'un échantillon, sans pour autant chercher à déterminer l'incertitude qu'il peut exister dans les statistiques calculées en vue de les utiliser pour réaliser une inférence dans la population représentée.
 
@@ -4611,23 +4617,35 @@ Encore une fois, lorsqu'on étudie un phénomène, ici l'existence d'une relatio
 
 Bien que d'aspects très différents, ces jeux de données montrent pourtant des variables en abscisses qui ont toutes la même moyenne (\(\overline{X} = 9\)) et le même écart-type (\(s_{X} = 3.32\)), des variables en ordonnées qui ont elles aussi la même moyenne (\(\overline{Y} = 7.5\)) et le même écart-type = (\(s_{Y} = 2.03\)), et des modèles de régression linéaire qui présentent tous la même équation (\(Y = 0.5X + 3\)), le même coefficient de détermination (\(R^2 = 0.67\)) et la même erreur typique d'estimation (\(SEE = 1.24\)). Pour autant, on observe que seul le premier jeu de données (cf.~graphique A de la Figure \ref{fig:anscombeQuartetGraph}) est associé à un modèle linéaire vraiment pertinent. En effet, le graphique B montre bien que la relation n'est pas linéaire mais plutôt quadratique, le graphique C montre que la régression est anormalement influencée par une valeur extrême, et le graphique D montre qu'il n'y a en réalité pas de relation linéaire entre les deux variables et que celle-ci ne semble exister numériquement que grâce à une seule valeur très extrême. Autant le graphique C invite à conserver une analyse de régression linéaire avec éventuellement certains ajustements à réaliser, autant les graphiques B et D indiquent qu'un modèle linéaire n'est pas pertinent en l'état pour caractériser la relation entre les deux variables étudiées.
 
-\hypertarget{notions-de-probabilituxe9}{%
-\chapter{Notions de probabilité}\label{notions-de-probabilituxe9}}
+\hypertarget{part-analyses-infuxe9rentielles}{%
+\part{Analyses inférentielles}\label{part-analyses-infuxe9rentielles}}
+
+\hypertarget{pruxe9requis-1}{%
+\chapter{Prérequis}\label{pruxe9requis-1}}
+
+\hypertarget{pruxe9ambule}{%
+\section{Préambule}\label{pruxe9ambule}}
+
+Réaliser une inférence statistique consiste à estimer, avec plus ou moins d'incertitude, la valeur (ou l'intervalle incluant la valeur) d'un paramètre statistique relatif à une population, cela à partir de données prélevées dans un échantillon de cette population. Une procédure d'inférence statistique peut concerner n'importe quel paramètre statistique : une moyenne, une médiane, une proportion, un coefficient de corrélation, une différence de moyennes, un rapport de cotes, etc. Ce chapitre s'inspire largement du chapitre ``Introduction to probability'' de l'ouvrage de Danielle Navarro \autocite*{navarroLearningStatistics2018}.
 
 \hypertarget{lois-de-probabilituxe9}{%
 \section{Lois de probabilité}\label{lois-de-probabilituxe9}}
 
-\hypertarget{pruxe9ambule}{%
-\subsection{Préambule}\label{pruxe9ambule}}
+\hypertarget{notion-de-loi-de-probabilituxe9}{%
+\subsection{Notion de loi de probabilité}\label{notion-de-loi-de-probabilituxe9}}
 
-Réaliser une inférence statistique consiste à estimer, avec plus ou moins d'incertitude, la valeur (ou l'intervalle incluant la valeur) d'un paramètre statistique relatif à une population, cela à partir de données prélevées dans un échantillon de cette population. Une procédure d'inférence statistique peut concerner n'importe quel paramètre statistique : une moyenne, une médiane, une proportion, un coefficient de corrélation, une différence de moyennes, un rapport de cotes, etc.
+Il existe plusieurs approches pour réaliser une inférence statistique, notamment l'approche dite ``fréquentiste'', et celle dite ``bayesienne'' \autocite{navarroLearningStatistics2018}. Quelle que soit l'approche utilisée, les procédures de calcul pour réaliser une inférence statistique requièrent d'utiliser des modélisations ou lois mathématiques que l'on doit configurer pour déterminer théoriquement les probabilités de rencontrer telle ou telle valeur du paramètre statistique considéré lorsqu'on étudie un échantillon provenant de la population d'intérêt. Cette démarche implique de comprendre que si un phénomène existe (ou pas) à l'échelle d'une population (chose quantifiable à l'aide de la valeur d'un paramètre statistique donné), l'étude d'un échantillon provenant de cette population ne donnera pas forcément la même valeur pour le paramètre statistique considéré. L'enjeu est alors de pouvoir déterminer la probabilité qui était celle d'obtenir telle ou telle valeur du paramètre statistique considéré avec son échantillon dans le cas où le phénomène étudié existerait (ou pas), cela pour envisager une conclusion quant à la réelle existence ou non du phénomène étudié dans la population d'intérêt.
 
-Il existe plusieurs approches pour réaliser une inférence statistique, notamment l'approche dite ``fréquentiste'', et celle dite ``bayesienne'' \autocite{navarroLearningStatistics2018}. Quelle que soit l'approche utilisée, les procédures de calcul pour réaliser une inférence statistique requièrent d'utiliser des modélisations ou lois mathématiques que l'on doit configurer pour représenter théoriquement les distributions (testées ou attendues) des variables étudiées dans la population d'intérêt. Ces lois ou modèles, qu'on appelle aussi des lois de probabilité, donnent directement les \textbf{distributions des probabilités} (i.e., les chances de rencontrer telle ou telle valeur dans la population) dans les cas où le paramètre à inférer concerne une variable qualitative. Dans les cas où le paramètre à inférer concerne une variable quantitative, les modèles mathématiques ne donnent pas directement les valeurs de probabilité de rencontrer telle ou telle valeur dans une population. En effet, dans ces situations, les modèles donnent les \textbf{densités de probabilité}. Ceci implique que dans ce type de situations, les probabilités concernent le fait d'avoir des valeurs appartenant à des intervalles donnés, et non pas d'avoir une valeur précise. Cela implique également que pour obtenir la valeur de probabilité relative à un intervalle donné de valeurs, il ne faut pas prendre la valeur directement donnée par le modèle, mais l'intégrale (i.e., l'aire sous la courbe de densité de probabilité) correspondant à l'intervalle de valeurs considéré. Ce qui suit vise à décrire et illustrer des lois de probabilité typiquement utilisées dans les procédures de calculs servant à réaliser des inférences statistiques. Ce chapitre s'inspire largement du chapitre `Introduction to probability' de l'ouvrage de Danielle Navarro \autocite*{navarroLearningStatistics2018}.
+Ces lois mathématiques utilisées pour faire des inférences statistiques, qu'on appelle aussi des lois de probabilité, donnent directement les valeurs de probabilité d'obtenir telle ou telle valeur du paramètre statistique considéré dans les cas de variables qualitatives. Dans les cas de variables quantitatives, les lois de probabilité ne donnent pas directement les probabilités. En effet, dans ces situations, les lois donnent les \textbf{densités de probabilité}. Ceci est lié au fait que dans ce type de situations, les probabilités concernent le fait d'avoir des valeurs appartenant à des intervalles donnés, et non pas d'avoir une valeur précise. Cela implique que pour obtenir la probabilité de rencontrer une valeur appartenant à un intervalle donné, il ne faut pas prendre la valeur directement donnée par la loi de probabilité, mais l'intégrale (i.e., l'aire sous la courbe de densité de probabilité) correspondant à l'intervalle de valeurs considéré. Ce qui suit vise à décrire et illustrer des lois de probabilité typiquement utilisées dans les procédures de calcul servant à réaliser des inférences statistiques.
 
 \hypertarget{la-loi-binomiale}{%
 \subsection{La loi binomiale}\label{la-loi-binomiale}}
 
-Une variable qualitative binomiale ne peut prendre que deux valeurs possibles, comme par exemple ``succès'' et ``échec'', ``pile'' et ``face'', ``0'' et ``1'', etc. Un exemple classique où l'on est en présence d'une variable binomiale est celui où l'on demande à un certain nombre de personnes de lancer \(N\) fois une pièce non truquée, avec par conséquent ``pile'' et ``face'' comme seuls résultats possibles et autant de chances de tomber sur ``pile'' que sur ``face'' à chaque lancer (\(\theta\) = 0.5, soit une chance sur deux). Une fois les essais de toutes les personnes terminés, la distribution qui en résulte contient alors les proportions de personnes ayant obtenu \(X\) fois ``pile'' après \(N\) lancers de la pièce, \(X\) étant forcément compris entre 0 et \(N\). Les barres de la Figure \ref{fig:distriBinom} montrent à quoi pourrait ressembler la distribution obtenue dans le cadre de cet exemple si l'on demandait à 1000 personnes de lancer 100 fois la pièce. On note que 1000 autres personnes différentes auraient pu donner une distribution un peu différente dans sa forme (cf.~hauteurs des barres du graphique), mais vu le nombre de personnes testées, la forme aurait sans doute été peu différente (ici, les nombres de fois où ``pile'' a été obtenu par les 1000 personnes sont en réalité des valeurs obtenues de manière pseudo-aléatoire par ordinateur). Dans cet exemple, on peut voir que les proportions les plus élevées correspondent aux cas où les personnes ont obtenu aux alentours de 50 fois ``pile'' sur 100 lancers de pièce, ce qui était attendu au regard des conditions de départ (1 chance sur 2 en principe, on encore 50 chances sur 100, d'obtenir ``pile'').
+La loi binomiale est une loi mathématique qui concerne les situations où seulement deux résultats sont possibles, comme par exemple ``succès'' et ``échec'', ``pile'' et ``face'', ``0'' et ``1'', etc. Un exemple classique où l'on est en présence d'une variable binomiale est celui où l'on demande à \(N\) personnes de lancer une fois une pièce non truquée, avec par conséquent ``pile'' et ``face'' comme seuls résultats possibles et autant de chances de tomber sur ``pile'' que sur ``face'' à chaque lancer (\(\theta\) = 0.5, soit une chance sur deux). Une fois les essais de toutes les personnes terminés, la distribution qui en résulte contient alors la proportion de personnes qui ont obtenu ``pile'' et la proportion de personnes qui n'ont pas obtenu ``pile'' (donc ``face''). Lorsque le nombre \(N\) d'essais ou de participants et la probabilité d'avoir tel ou tel résultat (\(\theta\)) sont connus, la loi binomiale, qu'on note \(X \sim B(\theta, N)\), permet de connaître la probabilité \(P(X)\) d'avoir \(X\) succès (e.g., \(X\) fois ``pile'') sur les \(N\) essais ou participants. La formule de cette loi est montrée ci-dessous :
+
+\[P(X | \theta, N) = \frac{N!}{X!(N-X)!}\theta^X(1-\theta)^{N-X}\]
+
+La Figure \ref{fig:distriBinom} illustre la loi binomiale avec \(N\) = 100 et \(\theta\) = 0.5. Cette figure montre que même si une pièce est non truquée (\(\theta\) = 0.5), il est tout à fait possible qu'il y ait plus de personnes à obtenir ``pile'' plutôt que ``face'' et inversement sur un échantillon de 100 personnes. Cependant, ce que montre aussi la figure, c'est que si la pièce est non truquée, les chances restent les plus fortes pour l'obtention de 50 \% de personnes avec ``pile'' et avec ``face'' pour un lancer de pièce.
 
 \begin{figure}
 
@@ -4638,19 +4656,53 @@ Une variable qualitative binomiale ne peut prendre que deux valeurs possibles, c
 \caption{Distribution des probabilités d'une loi binomiale}\label{fig:distriBinom}
 \end{figure}
 
-Si les barres de la Figure \ref{fig:distriBinom} représentent la réalité des résultats obtenus, il est aussi possible de modéliser mathématiquement ce qu'on aurait été en droit d'attendre comme résultats dans cette situation (i.e., les probabilités - ente 0 et 1, ou encore entre 0 \% et 100 \% des individus) d'obtenir \(X\) fois ``pile'', qu'on peut noter \(P(X)\)) au regard des conditions de départ, à savoir, le nombre d'essais (\(N\)) qui est ici de 100 lancers de dés, et la probabilité d'avoir ``pile'' ou ``face'' à chaque lancer (\(\theta\)), qui est ici de 0.5. La fonction mathématique qui permet de modéliser cela, dans ce type de situation, est la loi binomiale, qu'on note \(X \sim B(\theta, N)\), \(\theta\) étant la probabilité de succès à chaque essai, et \(N\) étant le nombre d'essais. Cette fonction mathématique est montrée ci-dessous et la courbe montrée sur la Figure \ref{fig:distriBinom} est la réprésentation graphique de cette loi déclinée avec les paramètres \(N\) = 100 et \(\theta\) = 0.5.
+Plusieurs fonctions R peuvent être utilisées pour obtenir des informations liées aux probabilités données par une loi binomiale. Ces fonctions sont montrées ci-dessous.
 
-\[P(X | \theta, N) = \frac{N!}{X!(N-X)!}\theta^X(1-\theta)^{N-X}\]
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Fonction pour déterminer la probabilité d'obtenir précisément x succès (ici 50) }
+\CommentTok{# à partir de N essais/personnes (ici 100) et d'une probabilité de succès donnée (ici 0.5)}
+\KeywordTok{dbinom}\NormalTok{(}\DataTypeTok{x =} \DecValTok{50}\NormalTok{, }\DataTypeTok{size =} \DecValTok{100}\NormalTok{, }\DataTypeTok{prob =} \FloatTok{0.5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
-Notons que ce type de loi mathématique permet certes de déterminer la probabilité d'avoir \(X\) fois ``pile'' sur \(N\) lancers de pièce, mais aussi, par conséquent, la probabilité d'avoir un nombre de fois ``pile'' inférieur ou égal à un nombre de fois donné.
+\begin{verbatim}
+## [1] 0.07958924
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Fonction pour déterminer la probabilité d'obtenir un nombre de succès inférieur}
+\CommentTok{# ou égal à q (ici 50) à partir de N essais/personnes (ici 100) et d'une probabilité de }
+\CommentTok{# succès donnée (ici 0.5)}
+\KeywordTok{pbinom}\NormalTok{(}\DataTypeTok{q =} \DecValTok{50}\NormalTok{, }\DataTypeTok{size =} \DecValTok{100}\NormalTok{, }\DataTypeTok{prob =} \FloatTok{0.5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.5397946
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Fonction pour déterminer la valeur pour laquelle il y a une probabilité p }
+\CommentTok{# d'obtenir une valeur inférieure ou égale à partir de N essais/personnes (ici 100) et }
+\CommentTok{# d'une probabilité de succès donnée (ici 0.5)}
+\KeywordTok{qbinom}\NormalTok{(}\DataTypeTok{p =} \FloatTok{0.6}\NormalTok{, }\DataTypeTok{size =} \DecValTok{100}\NormalTok{, }\DataTypeTok{prob =} \FloatTok{0.5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 51
+\end{verbatim}
 
 \hypertarget{la-loi-normale-et-lois-apparentuxe9es}{%
 \subsection{La loi normale et lois apparentées}\label{la-loi-normale-et-lois-apparentuxe9es}}
 
-Lorsque l'on travaille avec des variables quantitatives, il est possible de modéliser la distribution théorique des probabilités de rencontrer une valeur dans tel ou tel intervalle à l'aide d'une fonction mathématique appelée \textbf{loi normale}, ou encore \textbf{loi gaussienne}, qu'on note \(X \sim N(\mu, \sigma)\), avec \(\mu\) la moyenne de la variable, et \(\sigma\) l'écart-type de la variable. La forme générale de cette fonction est montrée ci-dessous :
+La \textbf{loi normale}, ou encore \textbf{loi gaussienne}, qu'on note \(X \sim N(\mu, \sigma)\), avec \(\mu\) la moyenne de la variable, et \(\sigma\) l'écart-type de la variable, est une loi qui permet de déterminer les probabilités de rencontrer une valeur dans tel ou tel intervalle selon la formule ci-dessous :
 
 \[p(X | \mu, \sigma) = \frac{1}{\sqrt{2\pi}\sigma} exp(-\frac{(X-\mu)^2}{2\sigma^2}),\]
-\(p(X | \mu, \sigma)\) étant la densité de probabilité correspondant à la valeur \(X\). Il s'agit bien ici de la densité de probabilité, et non pas de la valeur de la probabilité d'obtenir une valeur précise, chose impossible ici. Pour mieux comprendre les valeurs que donne cette loi mathématique, regardons la Figure \ref{fig:distiNorm} (graphique de gauche). Sur cette figure, la courbe noire représente les valeurs données par la fonction définissant la loi normale avec \(\mu\) = 1, et \(\sigma\) = 1. Ces valeurs en réalité n'ont pas vraiment d'intérêt en soi. Par contre, elle permettent de délimiter une aire (en rouge) entre elles et l'axe horizontal, la valeur de cette aire étant pour le coup la probabilité d'obtenir une valeur incluse dans l'intervalle de valeurs relatif à l'aire sous la courbe considérée. Ainsi, l'aire sous l'ensemble de la courbe représentant la densité de probabilité est associée à une probabilité de 1 (il y a par définition, lors d'un tirage au sort, 100 \% de chances de rencontrer une valeur située entre le minimum et le maximum de la variable modélisée à l'aide de cette loi). Dans la même veine, le graphique de droite de la Figure \ref{fig:distiNorm} montre une aire sous la courbe (en rouge) dont la valeur est la probabilité d'obtenir une valeur comprise en 2 et 3 lorsqu'on tire au sort une observation en provenance de la population représentée par cette loi, la probabilité étant ici de 14 \%.
+\(p(X | \mu, \sigma)\) étant la densité de probabilité correspondant à la valeur \(X\). Il s'agit bien ici de la densité de probabilité, et non pas de la valeur de la probabilité d'obtenir une valeur précise, chose impossible ici. Pour mieux comprendre les valeurs que donne cette loi mathématique, regardons la Figure \ref{fig:distiNorm} (graphique de gauche). Sur cette figure, la courbe noire représente les valeurs données par la fonction définissant la loi normale avec \(\mu\) = 1, et \(\sigma\) = 1. Ces valeurs en réalité n'ont pas vraiment d'intérêt en soi. Par contre, elle permettent de délimiter une aire (en rouge) entre elles et l'axe horizontal, la valeur de cette aire étant pour le coup la probabilité d'obtenir une valeur incluse dans l'intervalle de valeurs relatif à l'aire sous la courbe considérée. Ainsi, l'aire sous l'ensemble de la courbe représentant la densité de probabilité est associée à une probabilité de 1 (il y a par définition, lors d'un tirage au sort, 100 \% de chances de rencontrer une valeur située entre le minimum et le maximum de la variable modélisée à l'aide de cette loi). Dans la même veine, le graphique de droite de la Figure \ref{fig:distiNorm} montre une aire sous la courbe (en rouge) dont la valeur est la probabilité d'obtenir une valeur comprise en 2 et 3 lorsqu'on tire au sort une observation en provenance de la population représentée par une loi normale de moyenne 1 et d'écart-type 1, la probabilité étant ici de 14 \%.
 
 \begin{figure}
 
@@ -4661,15 +4713,52 @@ Lorsque l'on travaille avec des variables quantitatives, il est possible de mod�
 \caption{Densité de probabilité d'une loi normale}\label{fig:distiNorm}
 \end{figure}
 
+Plusieurs fonctions peuvent être utilisées pour obtenir des informations liées à la distribution d'une loi normale donnée. Ces fonctions sont montrées ci-dessous.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Fonction pour déterminer la densité de probabilité correspondant à la valeur x}
+\KeywordTok{dnorm}\NormalTok{(}\DataTypeTok{x =} \DecValTok{1}\NormalTok{, }\DataTypeTok{mean =} \DecValTok{1}\NormalTok{, }\DataTypeTok{sd =} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.3989423
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Fonction pour déterminer la probabilité d'obtenir une valeur inférieure ou }
+\CommentTok{# égale à q}
+\KeywordTok{pnorm}\NormalTok{(}\DataTypeTok{q =} \DecValTok{2}\NormalTok{, }\DataTypeTok{mean =} \DecValTok{1}\NormalTok{, }\DataTypeTok{sd =} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.8413447
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Fonction pour déterminer la valeur pour laquelle il y a une probabilité p }
+\CommentTok{# d'obtenir une valeur inférieure ou égale}
+\KeywordTok{qnorm}\NormalTok{(}\DataTypeTok{p =} \FloatTok{0.7}\NormalTok{, }\DataTypeTok{mean =} \DecValTok{1}\NormalTok{, }\DataTypeTok{sd =} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.524401
+\end{verbatim}
+
 La loi normale peut être mise en lien avec d'autres grandes lois, telles que :
 
 \begin{itemize}
 \item
-  La loi Chi-carré (\(X^2\)) : Lorsque l'on prend les valeurs de plusieurs distributions normales standards (avec des moyennes de 0 et des écarts-types de 1), qu'on les met au carré, puis qu'on les additionne, on obtient une variable suivant une loi \(X^2\) à \(k\) degrés de liberté (cf.Figure \ref{fig:VariousQuantLaws}, graphique A), \(k\) étant le nombre de variables que l'on a mises au carré. Comme on peut le voir sur la Figure \ref{fig:VariousQuantLaws}, la distribution \(X^2\) est plutôt asymétrique, avec des valeurs toujours supérieures à 0.
+  La loi Chi-carré (\(X^2\)) : lorsque l'on prend les valeurs de plusieurs distributions normales standards (avec des moyennes de 0 et des écarts-types de 1), qu'on les met au carré, puis qu'on les additionne, on obtient une variable suivant une loi \(X^2\) à \(k\) degrés de liberté (cf.Figure \ref{fig:VariousQuantLaws}, graphique A), \(k\) étant le nombre de variables que l'on a mises au carré. Comme on peut le voir sur la Figure \ref{fig:VariousQuantLaws}, la distribution \(X^2\) est plutôt asymétrique, avec des valeurs toujours supérieures à 0.
 \item
-  La loi \emph{t} : Les distributions relatives à des lois \emph{t} ressemblent aux distributions relatives à des lois normales mais avec des plus queues plus épaisses. Un distribution \emph{t} peut être obtenue en divisant les valeurs d'une distribution \(X^2\) par le nombre de degrés de liberté \(k\), puis en prenant leurs racines carrées, et enfin en divisant les valeurs d'une loi normale par la variable obtenue. On obtient alors une distribution \emph{t} à \(k\) degrés de liberté.
+  La loi \emph{t} : les distributions relatives à des lois \emph{t} ressemblent aux distributions relatives à des lois normales mais avec des queues de distribution plus épaisses. Une distribution \emph{t} peut être obtenue en divisant les valeurs d'une distribution \(X^2\) par le nombre de degrés de liberté \(k\), puis en prenant leurs racines carrées, et enfin en divisant les valeurs d'une loi normale par la variable obtenue. On obtient alors une distribution \emph{t} à \(k\) degrés de liberté.
 \item
-  La loi \emph{F} : La distribution d'une loi \emph{F} ressemble à celle d'une loi \(X^2\). Une distribution \emph{F} sert à comparer deux distributions \(X^2\).
+  La loi \emph{F} : la distribution d'une loi \emph{F} ressemble à celle d'une loi \(X^2\). Une distribution \emph{F} sert à comparer deux distributions \(X^2\).
 \end{itemize}
 
 \begin{figure}
