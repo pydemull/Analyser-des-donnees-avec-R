@@ -23,9 +23,9 @@ $$P(X | \theta, N) = \frac{N!}{X!(N-X)!}\theta^X(1-\theta)^{N-X}$$
 
 
 
-La Figure \@ref(fig:distriBinom) illustre la loi binomiale avec $N$ = 100 et $\theta$ = 0.5. Cette figure montre que même si une pièce est non truquée ($\theta$ = 0.5), il est tout à fait possible qu'il y ait plus de personnes à obtenir "pile" plutôt que "face" et inversement sur un échantillon de 100 personnes. Cependant, ce que montre aussi la figure, c'est que si la pièce est non truquée, les chances restent les plus fortes pour l'obtention de 50 % de personnes avec "pile" et avec "face" pour un lancer de pièce.
+La Figure \@ref(fig:distriBinom) illustre une loi binomiale (avec $N$ = 100 et $\theta$ = 0.5) qui pourrait s'appliquer au cas d'un lancer de pièce non truquée. Cette figure montre que même si une pièce est non truquée ($\theta$ = 0.5), il est tout à fait possible qu'il y ait plus de personnes à obtenir "pile" plutôt que "face" et inversement sur un échantillon de 100 personnes. Cependant, ce que montre aussi la figure, c'est que si la pièce est non truquée, les chances restent les plus fortes pour l'obtention de 50 % de personnes avec "pile" et avec "face" pour un lancer de pièce.
 
-```{r distriBinom, message=F, out.width='80%', echo = FALSE, fig.cap= "Distribution des probabilités d'une loi binomiale"}
+```{r distriBinom, message=F, out.width='80%', echo = FALSE, fig.cap= "Illustration d'une loi binomiale avec la situation de 100 personnes lançant une pièce non truquée"}
 set.seed(1)
 binom <- 
   data.frame(
@@ -37,7 +37,7 @@ binom <-
 
 ggplot(data = binom, aes(x = x, y  = prob)) + 
   geom_segment(aes(x = x, xend = x, y = 0, yend = prob)) +
-  labs(x = "Nombre de fois où \"pile\" a été obtenu sur 100 lancers de pièce (x)", y = "Proportion d'individus ayant eu \"pile\" : P(X)") +
+  labs(x = "Nombre de fois où \"pile\" est observé sur 100 personnes : X", y = "Probabilité (% de chances) d'obtenir X fois \"pile\" sur 100 personnes : P(X)") +
   theme_bw()
 ```
 
@@ -223,6 +223,8 @@ AABB
 g1 + g2 + g3 + plot_layout(design = layout)
 ```
 
+## La loi des grands nombres. Le Théorème de la limite centrale
 
+## Distribution d'échantillonnage de la moyenne
 
 
