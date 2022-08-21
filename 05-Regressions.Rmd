@@ -77,10 +77,11 @@ Une fois extraites et associées à des noms, ces informations peuvent ensuite �
 ggplot(data = mtcars, aes(x = hp, y = mpg)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE) +
-  annotate("text", label = bquote(paste("Y = ", .(round(slope, digits = 3)), "X + ", 
-                                        .(round(intercept, digits = 3)), " ; ",
-                                        R^2, " = ", .(round(R2, digits = 3)), 
-                                        " ; SEE = ", .(round(SEE, digits = 3)))), 
+  annotate("text", label = bquote(paste(
+    "Y = ", .(round(slope, digits = 3)), "X + ", 
+     .(round(intercept, digits = 3)), " ; ",
+     R^2, " = ", .(round(R2, digits = 3)), 
+     " ; SEE = ", .(round(SEE, digits = 3)))), 
            x = 50, y = 35, hjust = 0, size = 5)
 ```
 

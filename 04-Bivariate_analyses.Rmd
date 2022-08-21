@@ -112,7 +112,7 @@ flextable(
 
 Ce que ce tableau montre, c'est que plus les deux variables étudiées évolueront de manière consistante dans des sens identiques comme avec $X1$ et $Y1$, ou de manière consistante dans des sens opposés comme avec $X1$ et $Y3$, plus les produits $(X{i} - \overline{X}) (Y{i} - \overline{Y})$ donneront respectivement des grands scores positifs ou des grands scores négatifs, et moins les scores $(X{i} - \overline{X}) (Y{i} - \overline{Y})$ à additionner pour le calcul de la covariance s'annuleront. En effet, avec une relation relativement linéaire et positive les scores seront plus systématiquement positifs, et avec une relation relativement linéaire et négative les scores seront plus systématiquement négatifs. Toutefois, lorsqu'on aura des variables qui n'évolueront pas de manière consistante dans le même sens ou dans un sens opposé comme avec $X1$ et $Y2$, les scores positifs et négatifs liés aux calculs $(X{i} - \overline{X}) (Y{i} - \overline{Y})$ auront tendance à s'annuler et donneront lieu à une somme des scores $(X{i} - \overline{X}) (Y{i} - \overline{Y})$ diminuée, et donc à une covariance et à un coefficient de corrélation de Pearson tirés vers 0. Ces différents cas de figure et les calculs $(X{i} - \overline{X}) (Y{i} - \overline{Y})$ correspondants sont illustrés sur la Figure \@ref(fig:graphCov). Sur cette figure, chaque carré correspond au calcul $(X{i} - \overline{X}) (Y{i} - \overline{Y})$, le carré étant bleu lorsque le résultat du calcul est positif, et rouge lorsque le résultat est négatif. L'aire d'un carré illustre la grandeur du score issu du calcul. Sur les graphiques de gauche et de droite de la figure, on distingue une relation linéaire parfaite, ce qui maximise les scores à additionner pour le calcul de la covariance, dans le positif pour le graphique de gauche et dans le négatif pour le graphique de droite. Sur le graphique du milieu, on remarque que le manque de relation linéaire donne lieu à des carrés à la fois bleus et rouges, indiquant que les scores associés aux calculs $(X{i} - \overline{X}) (Y{i} - \overline{Y})$ de la covariance s'annulent et diminuent ainsi la valeur finale de la covariance.
 
-```{r graphCov, echo = FALSE, out.width = '100%', warning = FALSE, fig.cap="Illustration du calcul de la covariance"}
+```{r graphCov, echo = FALSE, out.width = '95%', warning = FALSE, fig.cap="Illustration du calcul de la covariance"}
 df <- 
   df %>%
   mutate(signX1Y1 = ifelse(X1Y1 > 0, "pos", "neg"),
@@ -240,7 +240,7 @@ g_lin | g_lin_sel
 
 Un cas particulier illustrant l'influence du degré de dispersion sur la relation étudiée est montré sur la Figure \@ref(fig:simpsonquant). Cet exemple a pour but de montrer que l'étude d'une relation entre deux variables quantitatives peut aboutir à des conclusions radicalement différentes selon que l'on conduit les analyses à l'échelle d'un groupe entier ou que l'on sépare les analyses par groupe de caractéristiques, en particulier lorsque la distribution des données par groupe est radicalement différente de celle obtenue à l'échelle du groupe entier. Sur la gauche de la Figure \@ref(fig:simpsonquant), le nuage de points représente la relation entre deux variables à l'échelle de l'ensemble du groupe étudié. La variabilité possible pour les deux variables étudiées (V1 et V2 dans l'exemple) est alors maximale. Toutefois, ces données appartiennent en réalité à des sous-groupes distincts (cf. couleurs sur le graphique de droite de la Figure \@ref(fig:simpsonquant)). L'analyse par sous-groupe diminue la variabilité à la fois pour V1 et V2, donnant même lieu ici à des relations de sens opposé à celui observé à l'échelle de l'ensemble du groupe ! Cette situation correspond à ce qu'on appelle un paradoxe de Simpson, lequel se présente lorsque le phénomène que l'on peut observer avec une vue globale est annulé voir inversé lors d'une analyse par sous-groupe. Ici, la grande variabilité associée aux données du graphique de gauche de la Figure \@ref(fig:simpsonquant) crée une relation artificiellement et donc faussement positive entre V1 et V2. C'est l'analyse par sous-groupe qui permet de révéler la vraie nature de la relation étudiée.
 
-```{r simpsonquant, out.width='90%', echo=FALSE, message = FALSE, fig.cap="Influence du niveau d'analyse (groupe entier vs. sous-groupes) sur la corrélation observée entre deux variables quantitatives (données obtenues grâce à la fonction 'simulate_simpson()' du package 'bayestestR'"}
+```{r simpsonquant, out.width='90%', echo=FALSE, message = FALSE, fig.cap="Influence du niveau d'analyse (groupe entier vs. sous-groupes) sur la corrélation observée entre deux variables quantitatives (données obtenues grâce à la fonction simulate_simpson() du package bayestestR"}
 library(correlation)
 library(ggplot2)
 library(patchwork)
@@ -614,9 +614,9 @@ Lorsque l'on cherche à explorer la relation qu'il peut y avoir entre une variab
 Les Figures \@ref(fig:raindcloudplotsBivUnpaired1) et \@ref(fig:raindcloudplotsBivUnpaired2) et les blocs de code associés montrés ci-dessous permettent d'obtenir des graphiques appropriés pour des données non appariées. 
 
 ```{r}
-# Configuration du jeu de données pour les exemples avec données non appariées
-# (il s'agit ici d'obtenir le jeu de données `iris` avec seulement deux modalités  
-# de la variable `Species`, cela en enlevant la modalité `virginica`).
+# Configuration du jeu de données pour les exemples avec données non appariées.
+# Il s'agit ici d'obtenir le jeu de données `iris` avec seulement deux modalités  
+# de la variable `Species`, cela en enlevant la modalité `virginica`.
 iris_two_species <-
   iris %>% filter(Species != "virginica")
 ```
@@ -687,7 +687,8 @@ B <-
   coord_flip() 
 
 
-# Raincloud plots classiques (avec moyennes et écart-types)
+# Raincloud plots classiques (avec moyennes et 
+# écart-types)
 C <-
   ggplot(data = iris_two_species, 
          aes(x = Species, y = Sepal.Length, colour = Species, fill = Species)) +
@@ -723,7 +724,8 @@ C <-
   theme(legend.position = "none")
 
 
-# Raincloud plots avec les nuages sur une même ligne (avec moyennes et écart-types)
+# Raincloud plots avec les nuages sur une même ligne (avec moyennes et 
+# écart-types)
 D <-
   ggplot(data = iris_two_species, 
          aes(x = 0, y = Sepal.Length, colour = Species, fill = Species)) +
