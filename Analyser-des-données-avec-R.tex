@@ -1917,7 +1917,7 @@ Les indices de position servent à donner un ordre de grandeur de la variable. A
 
 \emph{La moyenne}
 
-Si l'on pose que \(N\) est le nombre de valeurs dans une variable (on parle également de \textbf{taille} de la variable), que \emph{i} est la i-ème observation (i-ème position) dans la variable, et que \(X{i}\) est la valeur associée à la i-ème position, alors le calcul de la moyenne, notée \(\overline{X}\), peut être écrit de la manière suivante :
+Si l'on pose que \(N\) est le nombre de valeurs dans une variable (on parle également de \textbf{taille} de la variable), que \(i\) est la \(i\)-ème observation (\(i\)-ème position) dans la variable, et que \(X{i}\) est la valeur associée à la \(i\)-ème position, alors le calcul de la moyenne, notée \(\overline{X}\), peut être écrit de la manière suivante :
 \[\overline{X} = \frac{1}{N}\sum_{i=1}^{N} X{i}\]
 Cette expression mathématique signifie que la moyenne s'obtient en additionnant (\(\sum\)) les valeurs allant de la position 1 à la position \(N\) de la variable, et en divisant le tout par le nombre total de valeurs \(N\) contenues dans la variable. Pour mieux comprendre, prenons par exemple une variable qui ne contiendrait que les cinq premières valeurs de la variable \texttt{Sepal.Length} du jeu de données \texttt{iris} et qu'on appelle \texttt{sample\_iris}.
 
@@ -4766,7 +4766,7 @@ La loi normale peut être mise en lien avec d'autres grandes lois, telles que :
 \hypertarget{loi-des-grands-nombres-distribution-duxe9chantillonnage-de-la-moyenne-et-thuxe9oruxe8me-de-la-limite-centrale}{%
 \section{Loi des grands nombres, distribution d'échantillonnage de la moyenne, et théorème de la limite centrale}\label{loi-des-grands-nombres-distribution-duxe9chantillonnage-de-la-moyenne-et-thuxe9oruxe8me-de-la-limite-centrale}}
 
-La loi des grands nombres décrit un principe de probabilité permettant de comprendre bon nombre de phénomènes statistiques, notamment lorsque l'on s'intéresse à la moyenne d'un échantillon. Cette loi implique par exemple le fait que la moyenne d'un échantillon pris au hasard dans une population tend à être plus proche de la moyenne réelle d'une population à mesure que la taille de l'échantillon étudié est grande. Cette loi est illustrée sur la Figure \ref{fig:GreatNumLaw}. Sur cette figure, les distributions représentent des échantillons crées de manière aléatoire à partir d'une population ayant pour moyenne 0 et pour écart-type 400. Le trait vertical rouge représente la moyenne de la population d'origine alors que le trait en pointillés noirs montre la moyenne de l'échantillon qui a été obtenue. Lorsqu'on regarde chaque colonne de la figure du haut vers le bas et qu'on compare les colonnes entre elles, on se rend compte effectivement que plus la taille \(N\) de l'échantillon tiré de la population est grande, plus le trait noir se retrouve en général proche du trait rouge, cela traduisant le fait qu'on a de meilleures chances que la moyenne de l'échantillon étudié soit plus proche de la moyenne de la population lorsque l'échantillon est de grande taille. Une question qui pourrait alors se poser est le nombre de personnes ou d'individus que doit contenir l'échantillon pour obtenir un résultat avec une marge d'erreur jugée acceptable.
+La loi des grands nombres décrit un principe de probabilité permettant de comprendre bon nombre de phénomènes statistiques, notamment lorsque l'on s'intéresse à la moyenne d'un échantillon. Cette loi implique par exemple le fait que la moyenne d'un échantillon pris au hasard dans une population tend à être plus proche de la moyenne de la population à mesure que la taille de l'échantillon étudié est grande. Cette loi est illustrée sur la Figure \ref{fig:GreatNumLaw}. Sur cette figure, les distributions représentent des échantillons crées de manière aléatoire à partir d'une population ayant pour moyenne 0 et pour écart-type 400. Le trait vertical rouge représente la moyenne de la population d'origine alors que le trait en pointillés noirs montre la moyenne de l'échantillon qui a été obtenue. Lorsqu'on regarde chaque colonne de la figure du haut vers le bas et qu'on compare les colonnes entre elles, on se rend compte effectivement que plus la taille \(N\) de l'échantillon tiré de la population est grande, plus le trait noir se retrouve en général proche du trait rouge, cela traduisant le fait qu'on a de meilleures chances que la moyenne de l'échantillon étudié soit plus proche de la moyenne de la population lorsque l'échantillon est de grande taille. Une question qui pourrait alors se poser est le nombre de personnes ou d'individus que doit contenir l'échantillon pour obtenir un résultat avec une marge d'erreur jugée acceptable.
 
 \begin{figure}
 
@@ -4788,7 +4788,7 @@ La Figure \ref{fig:GreatNumLaw} montre certes qu'on a plus de chances d'avoir un
 \caption{Illustration du théorème de la limite centrale appliqué à une moyenne d'échantillon. Les distributions des moyennes montrées ici ont été obtenues avec 10 000 échantillons de N observations obtenues aléatoirement à partir d'une population ayant pour moyenne 0 et écart-type 400. Trait rouge = moyenne de la population d'origine}\label{fig:CentralLimTheo}
 \end{figure}
 
-La Figure \ref{fig:CentralLimTheo} illustre plusieurs principes qui relèvent du \textbf{théorème de la limite centrale}, à savoir : la moyenne d'une distribution d'échantillonnage de la moyenne tend à être la même moyenne que celle de la population d'origine ; et l'écart-type de la distribution d'échantillonnage de la moyenne (\emph{SEM}, pour \emph{Standard Error of the Mean} en anglais), devient plus faible à mesure que \(N\) grandit. Un troisième principe est illustré sur la Figure \ref{fig:CentralLimTheo2}. Pour réaliser cette figure, la même démarche que pour la Figure \ref{fig:CentralLimTheo} a été suivie, si ce n'est qu'auparavant, la population d'origine suivait systématiquement une loi normale. Dans le cas de la Figure \ref{fig:CentralLimTheo2}, la population suit à l'origine une loi chi-carré, donc asymétrique. Malgré tout, on voit que dès que \(N\) est suffisamment grand, la distribution d'échantillonnage de la moyenne suit une loi normale.
+La Figure \ref{fig:CentralLimTheo} illustre plusieurs principes qui relèvent du \textbf{théorème de la limite centrale}, à savoir : la moyenne d'une distribution d'échantillonnage de la moyenne tend à être la même moyenne que celle de la population d'origine ; et l'écart-type de la distribution d'échantillonnage de la moyenne (\emph{SEM}, pour \emph{Standard Error of the Mean} en anglais), devient plus faible à mesure que \(N\) grandit. Un troisième principe est illustré sur la Figure \ref{fig:CentralLimTheo2}. Pour réaliser cette figure, la même démarche que pour la Figure \ref{fig:CentralLimTheo} a été suivie, si ce n'est qu'auparavant, la population d'origine suivait systématiquement une loi normale. Dans le cas de la Figure \ref{fig:CentralLimTheo2}, la population suit à l'origine une loi chi-carré, elle est donc asymétrique. Malgré tout, on voit que dès que \(N\) est suffisamment grand, la distribution d'échantillonnage de la moyenne suit une loi normale.
 
 \begin{figure}
 
@@ -4815,7 +4815,11 @@ La formule montre bien que pour une population présentant un écart-type donné
 \item
   Une loi de probabilité renseigne sur les chances, pour une statistique donnée, d'obtenir une valeur précise ou d'obtenir une valeur tombant dans un rang de valeurs donné selon le cas de figure.
 \item
-  Des exemples de lois de probabilité courrement utilisées sont la loi binomiale, la loi normale, la loi \(\chi^2\), la loi \(t\), et la loi \(F\).
+  Des exemples de lois de probabilité couramment utilisées sont la loi binomiale, la loi normale, la loi \(\chi^2\), la loi \(t\), et la loi \(F\).
+\item
+  Selon la loi des grands nombres, plus la taille d'un échantillon est grande, plus il y a de chances que la moyenne de cet échantillon soit relativement proche de la moyenne de la population d'origine.
+\item
+  Selon le théorème de la limite centrale, la moyenne de la distribution d'échantillonnage de la moyenne est la même valeur que la moyenne de la population d'origine, et l'écart-type de cette distribution (\(SEM\)) est tel que : \(SEM = \frac{\sigma}{N}.\) Par conséquent, plus \(N\) est grand, plus \(SEM\) est petite.
 \end{itemize}
 
 \hypertarget{tests-statistiques-pour-des-variables-qualitatives}{%
@@ -4823,6 +4827,9 @@ La formule montre bien que pour une population présentant un écart-type donné
 
 \hypertarget{test-du-chi2-daduxe9quation-ou-encore-dit-de-conformituxe9-ou-dajustement}{%
 \section{\texorpdfstring{Test du \(\chi^2\) d'adéquation (ou encore dit de conformité ou d'ajustement)}{Test du \textbackslash chi\^{}2 d'adéquation (ou encore dit de conformité ou d'ajustement)}}\label{test-du-chi2-daduxe9quation-ou-encore-dit-de-conformituxe9-ou-dajustement}}
+
+\hypertarget{calculs-sous-jacents}{%
+\subsection{Calculs sous-jacents}\label{calculs-sous-jacents}}
 
 Le test du \(\chi^2\) d'adéquation consiste à comparer la distribution d'une variable qualitative observée avec une distribution théorique. Pour mieux voir en quoi cela consiste, prenons un exemple repris de Danielle Navarro \autocite*{navarroLearningStatistics2018} où l'on chercherait à savoir si, lorsqu'on demande à des personnes de choisir ``au hasard'' mentalement une carte parmi un ensemble de cartes étalées devant soi, le choix se fait vraiment de manière entièrement aléatoire. Pour étudier cela, on demande à 200 personnes de réaliser l'expérimentation et on note le type de carte qui a été retenu : coeur, trèfle, carreau, ou pique. Le jeu de données est crée avec le code ci-dessous :
 
@@ -4838,11 +4845,11 @@ Le test du \(\chi^2\) d'adéquation consiste à comparer la distribution d'une v
 \end{Highlighting}
 \end{Shaded}
 
-Dans ce cadre, l'idée que les personnes choisiraient leur carte purement au hasard (idée ou hypothèse qu'on va noter \(H_{0}\)) se traduit par le fait que chaque type de carte aurait la même probabilité d'être tiré à chaque fois, soit une chance sur quatre (0.25). Le vecteur qui résumerait les probabilités \(P\) de voir chaque type de carte à chaque tirage serait alors le suivant :
+Dans ce cadre, l'idée que les personnes choisiraient leur carte purement au hasard (idée ou hypothèse qu'on va noter \(H_{0}\)) se traduit par le fait que chaque type de carte aurait la même probabilité d'être tiré à chaque fois, soit une chance sur quatre (0.25). Le vecteur \(P\) qui résumerait les probabilités, pour les différents types de carte, d'être choisi à chaque choix d'une personne serait alors le suivant :
 
 \[H_{0} : P = (0.25, 0.25, 0.25, 0.25).\]
 
-Étant donné qu'il y a 200 personnes (\(N\)) dans notre exemple, la distribution théorique \(E\) des fréquences de tirage de chaque type de carte qui correspondrait à l'hypothèse \(H_{0}\) serait tel que \(E = N \cdot P\), soit :
+Étant donné qu'il y a 200 personnes (\(N\)) dans notre exemple, la distribution théorique \(E\) des fréquences de tirage de chaque type de carte qui correspondrait à l'hypothèse \(H_{0}\) serait telle que \(E = N \cdot P\), soit :
 
 \[E = (50, 50, 50, 50)\].
 
@@ -4882,7 +4889,7 @@ Cette distribution des observations pourrait s'écrire comme suit :
 
 \[X^2 = \sum_{i=1}^{k} \frac{(O_{i} - E_{i})^2}{E_{i}},\]
 
-\(k\) étant le nombre total de modalités de la variable (ici les types de cartes), \(O_{i}\) désignant la fréquence pour \(i\)-ème modalité de la variable observée, et \(E_{i}\) désignant la fréquence pour la \(i\)-ème modalité de la variable théorique. On peut calculer \(X^2\) manuellement :
+\(k\) étant le nombre total de modalités de la variable (ici les types de cartes), \(O_{i}\) désignant la fréquence pour la \(i\)-ème modalité de la variable observée, et \(E_{i}\) désignant la fréquence pour la \(i\)-ème modalité de la variable théorique. On peut calculer \(X^2\) manuellement :
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4894,9 +4901,9 @@ Cette distribution des observations pourrait s'écrire comme suit :
 ## [1] 8.44
 \end{verbatim}
 
-Nous avons à présent le score qui résume l'écart obtenu entre la distribution observée et la distribution théorique de notre variable qualitative. Il nous reste alors à connaître la distribution d'échantillonnage de la statistique \(X^2\) dans le cas où \(H_{0}\) serait vraie. Cela nous permettra de connaître la probabilité de rencontrer une valeur de \(X^2\) au moins aussi grande que 8.44 dans le cas où \(H_{0}\) serait vraie, et de juger ainsi si cette probabilité supporte ou non \(H_{0}\)\ldots{} Trêve de suspens, la distribution d'échantillonnage de \(X^2\) suit une loi \(\chi^2\) à \(k-1\) degrés de liberté (\(k\) étant le nombre de types d'évènement possibles, ici les types de cartes tirées). Comment peut-on expliquer cela? Tout d'abord, reprenons le calcul de \(X^2\), et plus précisément le terme \(O_{i}\). Admettons qu'il ne concerne qu'un seul type de cartes (e.g., les coeurs). Ce terme a sa propre distribution de probabilité en posant que \(H_{0}\) soit vraie, et cette distribution est celle d'une loi binomiale (avec \(\theta\) = 0.25 et \(N\) = 200 dans notre exemple), puisque pour chaque sujet interrogés, il était possible que ce type de carte soit choisi, ou non. Or, il s'avère que lorsque \(N\) est relativement grand et que \(\theta\) n'est ni trop proche de 0, ni trop proche de 1, la distribution se rapproche d'un loi normale \autocite{navarroLearningStatistics2018}. En allant vite, pour un type de cartes donné, on peut alors considérer que l'expression \(\frac{(O_{i} - E_{i})}{E_{i}}\) a une distribution d'échantillonnage qui s'apparente à une loi normale standard, et c'est le cas à chaque fois que cette expression doit être reprise pour chaque type de carte. Si on met au carré chacune de ces variables, puis qu'on les additionne (comme décrit plus haut pour le calcul de \(X^2\)), on se retrouve dans la situation présentée dans le chapitre précédent où nous obtenons une loi \(\chi^2\). La subtilité ici, par rapport au chapitre précédent, est que le nombre de degrés de liberté n'est pas \(k\) mais \(k-1\). Le nombre de degrés de liberté désigne le nombre de quantités distinctes à décrire (ici 4 quantités car les données sont regroupées en 4 modalités) moins le nombre de contraintes (ici 1 contrainte liée au groupe de sujet qui a un nombre fini). On a donc bien 3 degrés de liberté ici car il nous suffit de connaître 3 scores de chaque modalité pour connaître le 4ème qu'il nous manquerait pour une taille d'échantillon donnée\ldots{}
+Nous avons à présent le score qui résume l'écart obtenu entre la distribution observée et la distribution théorique de notre variable qualitative. Il nous reste alors à connaître la distribution d'échantillonnage de la statistique \(X^2\) dans le cas où \(H_{0}\) serait vraie. Cela nous permettra de connaître la probabilité de rencontrer une valeur de \(X^2\) au moins aussi grande que 8.44 dans le cas où \(H_{0}\) serait vraie, et de juger ainsi si cette probabilité supporte ou non \(H_{0}\)\ldots{} Trêve de suspens, la distribution d'échantillonnage de \(X^2\) suit une loi \(\chi^2\) à \(k-1\) degrés de liberté (\(k\) étant le nombre de types d'évènement possibles, ici les types de cartes tirées). Comment peut-on expliquer cela? Tout d'abord, reprenons le calcul de \(X^2\), et plus précisément le terme \(O_{i}\). Admettons qu'il ne concerne qu'un seul type de cartes (e.g., les coeurs). Ce terme a sa propre distribution de probabilité en posant que \(H_{0}\) soit vraie, et cette distribution est celle d'une loi binomiale (avec \(\theta\) = 0.25 et \(N\) = 200 dans notre exemple), puisque pour chaque sujet interrogés, il était possible que ce type de carte soit choisi, ou non. Or, il s'avère que lorsque \(N\) est relativement grand et que \(\theta\) n'est ni trop proche de 0, ni trop proche de 1, la distribution se rapproche d'une loi normale \autocite{navarroLearningStatistics2018}. En allant vite, pour un type de cartes donné, on peut alors considérer que l'expression \(\frac{(O_{i} - E_{i})}{E_{i}}\) a une distribution d'échantillonnage qui s'apparente à une loi normale standard, et c'est le cas à chaque fois que cette expression doit être reprise pour chaque type de carte. Si on met au carré chacune de ces variables, puis qu'on les additionne (comme décrit plus haut pour le calcul de \(X^2\)), on se retrouve dans la situation présentée dans le chapitre précédent où nous obtenons une loi \(\chi^2\). La subtilité ici, par rapport au chapitre précédent, est que le nombre de degrés de liberté n'est pas \(k\) mais \(k-1\). Le nombre de degrés de liberté désigne le nombre de quantités distinctes à décrire (ici 4 quantités car les données sont regroupées en 4 modalités) moins le nombre de contraintes (ici 1 contrainte liée au groupe de sujets qui a un nombre fini). On a donc bien 3 degrés de liberté ici car il nous suffit de connaître 3 scores de chaque modalité pour connaître le 4ème qu'il nous manquerait pour une taille d'échantillon donnée\ldots{}
 
-La Figure \ref{fig:GOFDistri} montre la loi \(\chi^2\) relative à 3 degrés de liberté et donc les probabilités de rencontrer tel ou tel intervalle de valeurs de \(X^2\) dans le cas où \(H_{0}\) serait vraie. La zone hachurée représente la probabilité qui était d'obtenir une valeur de \(X^2\) au moins aussi grande que 8.44 dans l'hypothèse où \(H_{0}\) serait vraie. Cette probabilité \(P\) est de \texttt{r,\ round(pchisq(q\ =\ 8.44,\ df\ =\ 3,\ lower.tail\ =\ FALSE),\ 2)\ *\ 100} \%. En principe, lors d'un test statistique, il y a aussi ce qu'on appelle une ``région critique'', c'est-à-dire l'intervalle dans lequel la valeur de \(P\) liée à notre valeur de 8.44 devrait se trouver pour qu'on considère que nos résultats ne supportent pas \(H_{0}\) et donc qu'on ne retient pas cette hypothèse. Classiquement (voire par défaut, à tort), cette région critique est définie à l'aide du seuil \(P <= 0.05\). Autrement dit, il faudrait que notre statistique \(X^2\) tombe dans l'intervalle pour lequel il y avait une probabilité inférieure ou égale à 5\% de tomber dans le cas où \(H_{0}\) serait vraie. Dans notre exemple, cela se traduirait par le fait d'obtenir une valeur de \(X^2\) supérieure ou égale à 7.8147279. La région critique correspondant à cette zone est montrée en rouge sur la Figure \ref{fig:GOFDistri}. En suivant cette démarche, \(H_{0}\) serait donc bien rejetée puisque notre valeur \(X^2\) de 8.44 tomberait dans la région critique. Le test serait alors dit ``significatif''.
+La Figure \ref{fig:GOFDistri} montre la loi \(\chi^2\) relative à 3 degrés de liberté et donc les probabilités de rencontrer tel ou tel intervalle de valeurs de \(X^2\) dans le cas où \(H_{0}\) serait vraie. La zone hachurée représente la probabilité qui était d'obtenir une valeur de \(X^2\) au moins aussi grande que 8.44 dans l'hypothèse où \(H_{0}\) serait vraie. Cette probabilité \(P\) est de 4 \%. En principe, lors d'un test statistique, il y a aussi ce qu'on appelle une ``région critique'', c'est-à-dire l'intervalle dans lequel la valeur de \(P\) liée à notre valeur de 8.44 devrait se trouver pour qu'on considère que nos résultats ne supportent pas \(H_{0}\) et donc qu'on ne retient pas cette hypothèse. Classiquement (voire par défaut, à tort), cette région critique est définie à l'aide du seuil \(P <= 0.05\). Autrement dit, il faudrait que notre statistique \(X^2\) tombe dans l'intervalle pour lequel il y avait une probabilité inférieure ou égale à 5 \% de tomber dans le cas où \(H_{0}\) serait vraie. Dans notre exemple, cela se traduirait par le fait d'obtenir une valeur de \(X^2\) supérieure ou égale à 7.8147279. La région critique correspondant à cette zone est montrée en rouge sur la Figure \ref{fig:GOFDistri}. En suivant cette démarche, \(H_{0}\) serait donc bien rejetée puisque notre valeur \(X^2\) de 8.44 tomberait dans la région critique. Le test serait alors dit ``significatif''.
 
 \begin{figure}
 
@@ -4906,6 +4913,9 @@ La Figure \ref{fig:GOFDistri} montre la loi \(\chi^2\) relative à 3 degrés de 
 
 \caption{Distribution d'échantillonnage de la statistique $\chi^2$ sous $H{0}$}\label{fig:GOFDistri}
 \end{figure}
+
+\hypertarget{application-avec-r}{%
+\subsection{Application avec R}\label{application-avec-r}}
 
 Nous venons de voir la mécanique des calculs qu'il y a derrière le test \(\chi^2\) d'adéquation. Heureusement, il existe des fonctions dans R pour faire cela automatiquement, comme la fonction \texttt{chisq.test()} :
 
@@ -4988,6 +4998,21 @@ Il convient de noter que les probabilités espérées (théoriques) peuvent êtr
 ##    degrees of freedom:  3 
 ##    p-value:  <.001
 \end{verbatim}
+
+\hypertarget{ruxe9sumuxe9-4}{%
+\section{Résumé}\label{ruxe9sumuxe9-4}}
+
+\begin{itemize}
+\tightlist
+\item
+  Le test du \(\chi^2\) d'adéquation consiste à comparer une distribution observée à et une distribution théorique qui représenterait l'hypothèse à tester.
+\item
+  La statistique de test du \(\chi^2\) d'adéquation est \(X^2\) et suit une distribution \(\chi^2\).
+\item
+  La fonction R de base pour réaliser le test du \(\chi^2\) d'adéquation est \texttt{chisq.test()}.
+\item
+  Une fonction R très aidante pour réaliser correctement le test du \(\chi^2\) d'adéquation est \texttt{lsr::goodnessOfFitTest()}.
+\end{itemize}
 
 \printbibliography[title=Références, heading=bibintoc]
 

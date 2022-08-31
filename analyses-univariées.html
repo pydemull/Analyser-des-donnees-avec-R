@@ -280,7 +280,7 @@ Figure 3.7: Différents types de distributions
 </h3>
 <p>Les indices de position servent à donner un ordre de grandeur de la variable. Autrement dit, ces indices permettent de positionner la variable sur une échelle de valeurs numériques. De plus, ces statistiques peuvent être utilisées pour donner une idée de ce qu’on appelle la <strong>tendance centrale</strong>, c’est-à dire-la valeur typique d’une distribution qui donne une bonne indication de la localisation de la majorité des observations <span class="citation">(Rousselet &amp; Wilcox, <a href="r%C3%A9f%C3%A9rences.html#ref-rousseletReactionTimesOther2020" role="doc-biblioref">2020</a>)</span>. Différentes statistiques peuvent être étudiées à cette fin : la <strong>moyenne</strong>, la <strong>médiane</strong>, la <strong>moyenne rognée</strong>, et le <strong>mode</strong>.</p>
 <p><em>La moyenne</em></p>
-<p>Si l’on pose que <span class="math inline">\(N\)</span> est le nombre de valeurs dans une variable (on parle également de <strong>taille</strong> de la variable), que <em>i</em> est la i-ème observation (i-ème position) dans la variable, et que <span class="math inline">\(X{i}\)</span> est la valeur associée à la i-ème position, alors le calcul de la moyenne, notée <span class="math inline">\(\overline{X}\)</span>, peut être écrit de la manière suivante :
+<p>Si l’on pose que <span class="math inline">\(N\)</span> est le nombre de valeurs dans une variable (on parle également de <strong>taille</strong> de la variable), que <span class="math inline">\(i\)</span> est la <span class="math inline">\(i\)</span>-ème observation (<span class="math inline">\(i\)</span>-ème position) dans la variable, et que <span class="math inline">\(X{i}\)</span> est la valeur associée à la <span class="math inline">\(i\)</span>-ème position, alors le calcul de la moyenne, notée <span class="math inline">\(\overline{X}\)</span>, peut être écrit de la manière suivante :
 <span class="math display">\[\overline{X} = \frac{1}{N}\sum_{i=1}^{N} X{i}\]</span>
 Cette expression mathématique signifie que la moyenne s’obtient en additionnant (<span class="math inline">\(\sum\)</span>) les valeurs allant de la position 1 à la position <span class="math inline">\(N\)</span> de la variable, et en divisant le tout par le nombre total de valeurs <span class="math inline">\(N\)</span> contenues dans la variable. Pour mieux comprendre, prenons par exemple une variable qui ne contiendrait que les cinq premières valeurs de la variable <code>Sepal.Length</code> du jeu de données <code>iris</code> et qu’on appelle <code>sample_iris</code>.</p>
 <div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
@@ -401,7 +401,7 @@ Figure 3.9: Effet de la forme de la distribution sur la position de la médiane
 <pre><code>##   25%   75% 
 ##  9.30 31.55</code></pre>
 <p>On remarque ici que la fonction <code><a href="https://rdrr.io/r/stats/quantile.html">quantile()</a></code> a plusieurs arguments. L’argument <code>probs</code> désigne les quantiles que l’on souhaite obtenir. Le quantile 0.25 correspond à Q1, et le quantile 0.75 correspond à Q3. L’argument <code>type</code> permet de configurer le type de calcul à effectuer pour obtenir les valeurs des quantiles recherchés. L’indication du chiffre 2 pour l’argument <code>type</code> permet d’obtenir les quantiles selon la méthode de calcul présentée ci-dessus, qui, comme nous l’avons précisé, est dédiée à l’étude d’une variable quantitative discrète. Par défaut, en revanche, la fonction <code><a href="https://rdrr.io/r/stats/quantile.html">quantile()</a></code> utilise le chiffre 7 pour l’argument <code>type</code>, ce qui renvoie à une méthode de calcul des quantiles qui serait davantage pertinente pour étudier des variables quantitatives continues. Comparons les résultats obtenus avec les deux méthodes de calcul :</p>
-<template id="d6028747-be45-4dbb-b5b0-d3d717e57eaf"><style>
+<template id="251bf673-6323-4982-b80c-0b36ac20b9cc"><style>
 .tabwid table{
   border-spacing:0px !important;
   border-collapse:collapse;
@@ -440,33 +440,33 @@ background-color: transparent;
 }
 </style>
 <div class="tabwid">
-<style>.cl-35a42fbc{}.cl-359c12aa{font-family:'Helvetica';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-359c12b4{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-359c27d6{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-359c5f26{width:64.5pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-359c5f27{width:55.4pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-359c5f30{width:64.5pt;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-359c5f3a{width:55.4pt;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-359c5f3b{width:64.5pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-359c5f3c{width:55.4pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<div class="inline-table"><table class="cl-35a42fbc">
+<style>.cl-516ba0fc{}.cl-516380ca{font-family:'Helvetica';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-516380de{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-516397f4{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-5163d304{width:64.5pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5163d30e{width:55.4pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5163d318{width:64.5pt;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5163d322{width:55.4pt;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5163d323{width:64.5pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5163d32c{width:55.4pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<div class="inline-table"><table class="cl-516ba0fc">
 <caption class="Table Caption">
 <p><span id="tab:quantilesCompaMethods">Tableau 3.1: </span>Comparaison des quantiles obtenus selon différentes configurations de la fonction quantile()</p>
 </caption>
 <thead><tr style="overflow-wrap:break-word;">
-<td class="cl-359c5f3b"><p class="cl-359c27d6"><span class="cl-359c12aa">Quantile</span></p></td>
-<td class="cl-359c5f3c"><p class="cl-359c27d6"><span class="cl-359c12aa">Type 2</span></p></td>
-<td class="cl-359c5f3c"><p class="cl-359c27d6"><span class="cl-359c12aa">Type 7</span></p></td>
+<td class="cl-5163d323"><p class="cl-516397f4"><span class="cl-516380ca">Quantile</span></p></td>
+<td class="cl-5163d32c"><p class="cl-516397f4"><span class="cl-516380ca">Type 2</span></p></td>
+<td class="cl-5163d32c"><p class="cl-516397f4"><span class="cl-516380ca">Type 7</span></p></td>
 </tr></thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-359c5f26"><p class="cl-359c27d6"><span class="cl-359c12b4">0.25</span></p></td>
-<td class="cl-359c5f27"><p class="cl-359c27d6"><span class="cl-359c12b4">9.30</span></p></td>
-<td class="cl-359c5f27"><p class="cl-359c27d6"><span class="cl-359c12b4">10.050</span></p></td>
+<td class="cl-5163d304"><p class="cl-516397f4"><span class="cl-516380de">0.25</span></p></td>
+<td class="cl-5163d30e"><p class="cl-516397f4"><span class="cl-516380de">9.30</span></p></td>
+<td class="cl-5163d30e"><p class="cl-516397f4"><span class="cl-516380de">10.050</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-359c5f30"><p class="cl-359c27d6"><span class="cl-359c12b4">0.75</span></p></td>
-<td class="cl-359c5f3a"><p class="cl-359c27d6"><span class="cl-359c12b4">31.55</span></p></td>
-<td class="cl-359c5f3a"><p class="cl-359c27d6"><span class="cl-359c12b4">28.575</span></p></td>
+<td class="cl-5163d318"><p class="cl-516397f4"><span class="cl-516380de">0.75</span></p></td>
+<td class="cl-5163d322"><p class="cl-516397f4"><span class="cl-516380de">31.55</span></p></td>
+<td class="cl-5163d322"><p class="cl-516397f4"><span class="cl-516380de">28.575</span></p></td>
 </tr>
 </tbody>
 </table></div>
-</div></template><div class="flextable-shadow-host" id="3b8b9733-c2d1-41d3-afc0-cddff56684e6"></div>
+</div></template><div class="flextable-shadow-host" id="8eff33cd-852a-4137-add2-ae710ecb802f"></div>
 <script>
-var dest = document.getElementById("3b8b9733-c2d1-41d3-afc0-cddff56684e6");
-var template = document.getElementById("d6028747-be45-4dbb-b5b0-d3d717e57eaf");
+var dest = document.getElementById("8eff33cd-852a-4137-add2-ae710ecb802f");
+var template = document.getElementById("251bf673-6323-4982-b80c-0b36ac20b9cc");
 var caption = template.content.querySelector("caption");
 if(caption) {
   caption.style.cssText = "display:block;text-align:center;";
@@ -478,7 +478,7 @@ var fantome = dest.attachShadow({mode: 'open'});
 var templateContent = template.content;
 fantome.appendChild(templateContent);
 </script><p>On remarque que les résultats de la fonction <code><a href="https://rdrr.io/r/stats/quantile.html">quantile()</a></code> sont différents selon la configuration de l’argument <code>type</code>. Le choix de la configuration est donc important. Pour comprendre comment R a calculé les valeurs associées aux quantiles 0.25 et 0.75 dans le cadre de la seconde méthode (i.e., avec <code>type</code> = 7), regardons le tableau ci-dessous.</p>
-<template id="57ca2792-5e97-48ea-81c9-6227fa6522f4"><style>
+<template id="3caccea8-415d-4e3a-bd10-0ee91feca988"><style>
 .tabwid table{
   border-spacing:0px !important;
   border-collapse:collapse;
@@ -517,63 +517,63 @@ background-color: transparent;
 }
 </style>
 <div class="tabwid">
-<style>.cl-35d957f0{}.cl-35c29be6{font-family:'Helvetica';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-35c29bfa{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-35c2b54a{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-35c3025c{width:48pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-35c30266{width:54.2pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-35c30267{width:72.5pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-35c30270{width:54.2pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-35c30271{width:48pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-35c3027a{width:72.5pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-35c30284{width:54.2pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-35c30285{width:72.5pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-35c30286{width:48pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-35c3028e{width:48pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-35c3028f{width:54.2pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-35c30290{width:72.5pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-35c30298{width:72.5pt;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-35c30299{width:48pt;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-35c302a2{width:54.2pt;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-35c302ac{width:72.5pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-35c302ad{width:48pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-35c302ae{width:54.2pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<div class="inline-table"><table class="cl-35d957f0">
+<style>.cl-518ed702{}.cl-5186332c{font-family:'Helvetica';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-51863336{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-51864f60{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-5186906a{width:48pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-51869074{width:54.2pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5186907e{width:72.5pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5186907f{width:54.2pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-51869088{width:48pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-51869089{width:72.5pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-51869092{width:54.2pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5186909c{width:72.5pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5186909d{width:48pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-518690a6{width:48pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-518690a7{width:54.2pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-518690a8{width:72.5pt;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-518690b0{width:72.5pt;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-518690ba{width:48pt;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-518690c4{width:54.2pt;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-518690c5{width:72.5pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-518690ce{width:48pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-518690cf{width:54.2pt;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<div class="inline-table"><table class="cl-518ed702">
 <caption class="Table Caption">
 <p><span id="tab:quantilesContinuousMethod">Tableau 3.2: </span>Quantiles d’une variable quantitative continue</p>
 </caption>
 <thead><tr style="overflow-wrap:break-word;">
-<td class="cl-35c302ad"><p class="cl-35c2b54a"><span class="cl-35c29be6">Rang</span></p></td>
-<td class="cl-35c302ac"><p class="cl-35c2b54a"><span class="cl-35c29be6">Quantile</span></p></td>
-<td class="cl-35c302ae"><p class="cl-35c2b54a"><span class="cl-35c29be6">Valeur</span></p></td>
+<td class="cl-518690ce"><p class="cl-51864f60"><span class="cl-5186332c">Rang</span></p></td>
+<td class="cl-518690c5"><p class="cl-51864f60"><span class="cl-5186332c">Quantile</span></p></td>
+<td class="cl-518690cf"><p class="cl-51864f60"><span class="cl-5186332c">Valeur</span></p></td>
 </tr></thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-35c3025c"><p class="cl-35c2b54a"><span class="cl-35c29bfa">1</span></p></td>
-<td class="cl-35c30267"><p class="cl-35c2b54a"><span class="cl-35c29bfa">0.0000000</span></p></td>
-<td class="cl-35c30266"><p class="cl-35c2b54a"><span class="cl-35c29bfa">4.5</span></p></td>
+<td class="cl-5186906a"><p class="cl-51864f60"><span class="cl-51863336">1</span></p></td>
+<td class="cl-5186907e"><p class="cl-51864f60"><span class="cl-51863336">0.0000000</span></p></td>
+<td class="cl-51869074"><p class="cl-51864f60"><span class="cl-51863336">4.5</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-35c30271"><p class="cl-35c2b54a"><span class="cl-35c29bfa">2</span></p></td>
-<td class="cl-35c3027a"><p class="cl-35c2b54a"><span class="cl-35c29bfa">0.1428571</span></p></td>
-<td class="cl-35c30270"><p class="cl-35c2b54a"><span class="cl-35c29bfa">7.8</span></p></td>
+<td class="cl-51869088"><p class="cl-51864f60"><span class="cl-51863336">2</span></p></td>
+<td class="cl-51869089"><p class="cl-51864f60"><span class="cl-51863336">0.1428571</span></p></td>
+<td class="cl-5186907f"><p class="cl-51864f60"><span class="cl-51863336">7.8</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-35c30286"><p class="cl-35c2b54a"><span class="cl-35c29bfa">3</span></p></td>
-<td class="cl-35c30285"><p class="cl-35c2b54a"><span class="cl-35c29bfa">0.2857143</span></p></td>
-<td class="cl-35c30284"><p class="cl-35c2b54a"><span class="cl-35c29bfa">10.8</span></p></td>
+<td class="cl-5186909d"><p class="cl-51864f60"><span class="cl-51863336">3</span></p></td>
+<td class="cl-5186909c"><p class="cl-51864f60"><span class="cl-51863336">0.2857143</span></p></td>
+<td class="cl-51869092"><p class="cl-51864f60"><span class="cl-51863336">10.8</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-35c30271"><p class="cl-35c2b54a"><span class="cl-35c29bfa">4</span></p></td>
-<td class="cl-35c3027a"><p class="cl-35c2b54a"><span class="cl-35c29bfa">0.4285714</span></p></td>
-<td class="cl-35c30270"><p class="cl-35c2b54a"><span class="cl-35c29bfa">13.9</span></p></td>
+<td class="cl-51869088"><p class="cl-51864f60"><span class="cl-51863336">4</span></p></td>
+<td class="cl-51869089"><p class="cl-51864f60"><span class="cl-51863336">0.4285714</span></p></td>
+<td class="cl-5186907f"><p class="cl-51864f60"><span class="cl-51863336">13.9</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-35c3028e"><p class="cl-35c2b54a"><span class="cl-35c29bfa">5</span></p></td>
-<td class="cl-35c30290"><p class="cl-35c2b54a"><span class="cl-35c29bfa">0.5714286</span></p></td>
-<td class="cl-35c3028f"><p class="cl-35c2b54a"><span class="cl-35c29bfa">20.2</span></p></td>
+<td class="cl-518690a6"><p class="cl-51864f60"><span class="cl-51863336">5</span></p></td>
+<td class="cl-518690a8"><p class="cl-51864f60"><span class="cl-51863336">0.5714286</span></p></td>
+<td class="cl-518690a7"><p class="cl-51864f60"><span class="cl-51863336">20.2</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-35c30271"><p class="cl-35c2b54a"><span class="cl-35c29bfa">6</span></p></td>
-<td class="cl-35c3027a"><p class="cl-35c2b54a"><span class="cl-35c29bfa">0.7142857</span></p></td>
-<td class="cl-35c30270"><p class="cl-35c2b54a"><span class="cl-35c29bfa">25.6</span></p></td>
+<td class="cl-51869088"><p class="cl-51864f60"><span class="cl-51863336">6</span></p></td>
+<td class="cl-51869089"><p class="cl-51864f60"><span class="cl-51863336">0.7142857</span></p></td>
+<td class="cl-5186907f"><p class="cl-51864f60"><span class="cl-51863336">25.6</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-35c30286"><p class="cl-35c2b54a"><span class="cl-35c29bfa">7</span></p></td>
-<td class="cl-35c30285"><p class="cl-35c2b54a"><span class="cl-35c29bfa">0.8571429</span></p></td>
-<td class="cl-35c30284"><p class="cl-35c2b54a"><span class="cl-35c29bfa">37.5</span></p></td>
+<td class="cl-5186909d"><p class="cl-51864f60"><span class="cl-51863336">7</span></p></td>
+<td class="cl-5186909c"><p class="cl-51864f60"><span class="cl-51863336">0.8571429</span></p></td>
+<td class="cl-51869092"><p class="cl-51864f60"><span class="cl-51863336">37.5</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-35c30299"><p class="cl-35c2b54a"><span class="cl-35c29bfa">8</span></p></td>
-<td class="cl-35c30298"><p class="cl-35c2b54a"><span class="cl-35c29bfa">1.0000000</span></p></td>
-<td class="cl-35c302a2"><p class="cl-35c2b54a"><span class="cl-35c29bfa">43.9</span></p></td>
+<td class="cl-518690ba"><p class="cl-51864f60"><span class="cl-51863336">8</span></p></td>
+<td class="cl-518690b0"><p class="cl-51864f60"><span class="cl-51863336">1.0000000</span></p></td>
+<td class="cl-518690c4"><p class="cl-51864f60"><span class="cl-51863336">43.9</span></p></td>
 </tr>
 </tbody>
 </table></div>
-</div></template><div class="flextable-shadow-host" id="30f532a8-7bbc-464f-8332-7e91c553a0fb"></div>
+</div></template><div class="flextable-shadow-host" id="856b8ff0-10a7-4020-96fb-17331dd876a5"></div>
 <script>
-var dest = document.getElementById("30f532a8-7bbc-464f-8332-7e91c553a0fb");
-var template = document.getElementById("57ca2792-5e97-48ea-81c9-6227fa6522f4");
+var dest = document.getElementById("856b8ff0-10a7-4020-96fb-17331dd876a5");
+var template = document.getElementById("3caccea8-415d-4e3a-bd10-0ee91feca988");
 var caption = template.content.querySelector("caption");
 if(caption) {
   caption.style.cssText = "display:block;text-align:center;";
