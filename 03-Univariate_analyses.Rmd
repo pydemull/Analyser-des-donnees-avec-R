@@ -584,7 +584,7 @@ skewness(x = iris$Sepal.Width, type = 3)
 Comme on peut le voir dans l'aide associée à la fonction `skewness()`, il existe en réalité plusieurs méthodes de calcul du coefficient d'asymétrie (noté $\gamma_{1}$ ci-dessous). La méthode de `type` 3, qui est celle configurée par défaut pour cette fonction, consiste à faire le calcul suivant :
 
 $$\gamma_{1} =  \frac{1}{\hat{\sigma}^3} {\frac{\sum_{i=1}^{N} (X{i} - \overline{X})^3}{N}}$$
-Dans ce calcul, \hat{\sigma} désigne l'écart-type non biaisé de la variable, et $N$ désigne la taille de la variable. Avec cette méthode, on obtient un coefficient négatif lorsque la distribution est asymétrique à gauche (longue queue vers la gauche), un coefficient de 0 lorsque la distribution est parfaitement symétrique, et un coefficient positif lorsque la distribution est asymétrique à droite (longue queue vers la droite). Ceci est illustré sur la Figure \@ref(fig:skeweddistri).
+Dans ce calcul, $\hat{\sigma}$ désigne l'écart-type non biaisé de la variable, et $N$ désigne la taille de la variable. Avec cette méthode, on obtient un coefficient négatif lorsque la distribution est asymétrique à gauche (longue queue vers la gauche), un coefficient de 0 lorsque la distribution est parfaitement symétrique, et un coefficient positif lorsque la distribution est asymétrique à droite (longue queue vers la droite). Ceci est illustré sur la Figure \@ref(fig:skeweddistri).
 
 ```{r skeweddistri, out.width = '100%', echo = FALSE, message = FALSE, warning = FALSE, fig.cap="Valeur du Skewness selon la forme de la distribution"}
 set.seed(123)
@@ -760,7 +760,7 @@ kurtosis(x = iris$Sepal.Width, type = 3)
 Comme on peut le voir dans l'aide associée à la fonction `kurtosis()`, il existe en réalité plusieurs méthodes de calcul du coefficient d'aplatissement (noté $\gamma_{2}$ ci-dessous) . La méthode de `type` 3, qui est celle configurée par défaut pour cette fonction, consiste à faire le calcul suivant :
 
 $$\gamma_{2} =  \frac{1}{\hat{\sigma}^4} {\frac{\sum_{i=1}^{N} (X{i} - \overline{X})^4}{N}} -3$$
-Dans ce calcul, \hat{\sigma} désigne l'écart-type non biaisé de la variable, et $N$ désigne la taille de la variable. Avec cette méthode, on obtient un coefficient négatif lorsque la distribution est particulièrement aplatie par rapport à une distribution suivant une loi normale (distribution platycurtique), un coefficient de 0 lorsque la distribution suit une loi normale (distribution mésocurtique), et un coefficient positif lorsque la distribution est particulièrement pointue par rapport à une loi normale (distribution leptocurtique). Ceci est illustré sur la Figure \@ref(fig:kurtosisdistri).
+Dans ce calcul, $\hat{\sigma}$ désigne l'écart-type non biaisé de la variable, et $N$ désigne la taille de la variable. Avec cette méthode, on obtient un coefficient négatif lorsque la distribution est particulièrement aplatie par rapport à une distribution suivant une loi normale (distribution platycurtique), un coefficient de 0 lorsque la distribution suit une loi normale (distribution mésocurtique), et un coefficient positif lorsque la distribution est particulièrement pointue par rapport à une loi normale (distribution leptocurtique). Ceci est illustré sur la Figure \@ref(fig:kurtosisdistri).
 
 ```{r kurtosisdistri, out.width = '100%', echo = FALSE, message = FALSE, warning = FALSE,  fig.cap="Valeur du Kurtosis selon la forme de la distribution"}
 library(LaplacesDemon)
@@ -903,9 +903,9 @@ Les statistiques les plus couramment utilisées pour résumer une variable quant
 
 Lorsqu'il s'agit de simplement décrire une distribution des données obtenues à titre exploratoire, certains auteurs proposent d'utiliser les trois paramètres de position (moyenne, médiane, mode), en sachant que la médiane, d'un point de vue purement descriptif, peut être le paramètre le plus adapté dans de nombreuses situations [@gonzalesMeasuresCentralTendency2001]. Dans le cas où la distribution s'avèrerait plutôt gaussienne, la moyenne et l'écart-type sont intéressants car dans ce cas, on sait que :
 
-1. Approximativement **68.3 %** des observations sont comprises dans l'intervalle [$\overline{X}$ - 1 *$\hat{\sigma}$* ; $\overline{X}$ + 1 *$\hat{\sigma}$*],
-2. Approximativement **95.5 %** des observations sont comprises dans l'intervalle [$\overline{X}$ - 2 *$\hat{\sigma}$* ; $\overline{X}$ + 2 *$\hat{\sigma}$*],
-3. Approximativement **99.7 %** des observations sont comprises dans l'intervalle [$\overline{X}$ - 3 *$\hat{\sigma}$* ; $\overline{X}$ + 3 *$\hat{\sigma}$*].
+1. Approximativement **68.3 %** des observations sont comprises dans l'intervalle [$\overline{X}$ - 1 $\hat{\sigma}$ ; $\overline{X}$ + 1 $\hat{\sigma}$],
+2. Approximativement **95.5 %** des observations sont comprises dans l'intervalle [$\overline{X}$ - 2 $\hat{\sigma}$ ; $\overline{X}$ + 2 $\hat{\sigma}$],
+3. Approximativement **99.7 %** des observations sont comprises dans l'intervalle [$\overline{X}$ - 3 $\hat{\sigma}$ ; $\overline{X}$ + 3 $\hat{\sigma}$].
 
 Ceci est illustré sur la Figure \@ref(fig:ObservationsWithinSdMutiplesGaussianDistri).
 
