@@ -2,6 +2,8 @@
 
 ## Test du $\chi^2$ d'adéquation (ou encore dit de conformité ou d'ajustement)
 
+### Calculs sous-jacents
+
 Le test du $\chi^2$ d'adéquation consiste à comparer la distribution d'une variable qualitative observée avec une distribution théorique. Pour mieux voir en quoi cela consiste, prenons un exemple repris de Danielle Navarro [-@navarroLearningStatistics2018] où l'on chercherait à savoir si, lorsqu'on demande à des personnes de choisir "au hasard" mentalement une carte parmi un ensemble de cartes étalées devant soi, le choix se fait vraiment de manière entièrement aléatoire. Pour étudier cela, on demande à 200 personnes de réaliser l'expérimentation et on note le type de carte qui a été retenu : coeur, trèfle, carreau, ou pique. Le jeu de données est crée avec le code ci-dessous :
 
 ```{r}
@@ -14,11 +16,11 @@ pique <- rep("pique", 50)
 cartes <- data.frame(id = seq(1, 200, 1), choix = c(trefles, carreau, coeur, pique))
 ```
 
-Dans ce cadre, l'idée que les personnes choisiraient leur carte purement au hasard (idée ou hypothèse qu'on va noter $H_{0}$) se traduit par le fait que chaque type de carte aurait la même probabilité d'être tiré à chaque fois, soit une chance sur quatre (0.25). Le vecteur qui résumerait les probabilités $P$ de voir chaque type de carte à chaque tirage serait alors le suivant :
+Dans ce cadre, l'idée que les personnes choisiraient leur carte purement au hasard (idée ou hypothèse qu'on va noter $H_{0}$) se traduit par le fait que chaque type de carte aurait la même probabilité d'être tiré à chaque fois, soit une chance sur quatre (0.25). Le vecteur $P$ qui résumerait les probabilités, pour les différents types de carte, d'être choisi à chaque choix d'une personne serait alors le suivant :
 
 $$H_{0} : P = (0.25, 0.25, 0.25, 0.25).$$
 
-Étant donné qu'il y a 200 personnes ($N$) dans notre exemple, la distribution théorique $E$ des fréquences de tirage de chaque type de carte qui correspondrait à l'hypothèse $H_{0}$ serait tel que $E = N \cdot P$, soit : 
+Étant donné qu'il y a 200 personnes ($N$) dans notre exemple, la distribution théorique $E$ des fréquences de tirage de chaque type de carte qui correspondrait à l'hypothèse $H_{0}$ serait telle que $E = N \cdot P$, soit : 
 
 $$E = (50, 50, 50, 50)$$.
 
@@ -44,15 +46,15 @@ $$O = (51, 64, 50, 35)$$
 
 $$X^2 = \sum_{i=1}^{k} \frac{(O_{i} - E_{i})^2}{E_{i}},$$
 
-$k$ étant le nombre total de modalités de la variable (ici les types de cartes), $O_{i}$ désignant la fréquence pour $i$-ème modalité de la variable observée, et $E_{i}$ désignant la fréquence pour la $i$-ème modalité de la variable théorique. On peut calculer $X^2$ manuellement : 
+$k$ étant le nombre total de modalités de la variable (ici les types de cartes), $O_{i}$ désignant la fréquence pour la $i$-ème modalité de la variable observée, et $E_{i}$ désignant la fréquence pour la $i$-ème modalité de la variable théorique. On peut calculer $X^2$ manuellement : 
 
 ```{r}
 sum((observed - expected)^2 / expected)
 ```
 
-Nous avons à présent le score qui résume l'écart obtenu entre la distribution observée et la distribution théorique de notre variable qualitative. Il nous reste alors à connaître la distribution d'échantillonnage de la statistique $X^2$ dans le cas où $H_{0}$ serait vraie. Cela nous permettra de connaître la probabilité de rencontrer une valeur de $X^2$ au moins aussi grande que 8.44 dans le cas où $H_{0}$ serait vraie, et de juger ainsi si cette probabilité supporte ou non $H_{0}$... Trêve de suspens, la distribution d'échantillonnage de $X^2$ suit une loi $\chi^2$ à $k-1$ degrés de liberté ($k$ étant le nombre de types d'évènement possibles, ici les types de cartes tirées). Comment peut-on expliquer cela? Tout d'abord, reprenons le calcul de $X^2$, et plus précisément le terme $O_{i}$. Admettons qu'il ne concerne qu'un seul type de cartes (e.g., les coeurs). Ce terme a sa propre distribution de probabilité en posant que $H_{0}$ soit vraie, et cette distribution est celle d'une loi binomiale (avec $\theta$ = 0.25 et $N$ = 200 dans notre exemple), puisque pour chaque sujet interrogés, il était possible que ce type de carte soit choisi, ou non. Or, il s'avère que lorsque $N$ est relativement grand et que $\theta$ n'est ni trop proche de 0, ni trop proche de 1, la distribution se rapproche d'un loi normale [@navarroLearningStatistics2018]. En allant vite, pour un type de cartes donné, on peut alors considérer que l'expression $\frac{(O_{i} - E_{i})}{E_{i}}$ a une distribution d'échantillonnage qui s'apparente à une loi normale standard, et c'est le cas à chaque fois que cette expression doit être reprise pour chaque type de carte. Si on met au carré chacune de ces variables, puis qu'on les additionne (comme décrit plus haut pour le calcul de $X^2$), on se retrouve dans la situation présentée dans le chapitre précédent où nous obtenons une loi $\chi^2$. La subtilité ici, par rapport au chapitre précédent, est que le nombre de degrés de liberté n'est pas $k$ mais $k-1$. Le nombre de degrés de liberté désigne le nombre de quantités distinctes à décrire (ici 4 quantités car les données sont regroupées en 4 modalités) moins le nombre de contraintes (ici 1 contrainte liée au groupe de sujet qui a un nombre fini). On a donc bien 3 degrés de liberté ici car il nous suffit de connaître 3 scores de chaque modalité pour connaître le 4ème qu'il nous manquerait pour une taille d'échantillon donnée... 
+Nous avons à présent le score qui résume l'écart obtenu entre la distribution observée et la distribution théorique de notre variable qualitative. Il nous reste alors à connaître la distribution d'échantillonnage de la statistique $X^2$ dans le cas où $H_{0}$ serait vraie. Cela nous permettra de connaître la probabilité de rencontrer une valeur de $X^2$ au moins aussi grande que 8.44 dans le cas où $H_{0}$ serait vraie, et de juger ainsi si cette probabilité supporte ou non $H_{0}$... Trêve de suspens, la distribution d'échantillonnage de $X^2$ suit une loi $\chi^2$ à $k-1$ degrés de liberté ($k$ étant le nombre de types d'évènement possibles, ici les types de cartes tirées). Comment peut-on expliquer cela? Tout d'abord, reprenons le calcul de $X^2$, et plus précisément le terme $O_{i}$. Admettons qu'il ne concerne qu'un seul type de cartes (e.g., les coeurs). Ce terme a sa propre distribution de probabilité en posant que $H_{0}$ soit vraie, et cette distribution est celle d'une loi binomiale (avec $\theta$ = 0.25 et $N$ = 200 dans notre exemple), puisque pour chaque sujet interrogés, il était possible que ce type de carte soit choisi, ou non. Or, il s'avère que lorsque $N$ est relativement grand et que $\theta$ n'est ni trop proche de 0, ni trop proche de 1, la distribution se rapproche d'une loi normale [@navarroLearningStatistics2018]. En allant vite, pour un type de cartes donné, on peut alors considérer que l'expression $\frac{(O_{i} - E_{i})}{E_{i}}$ a une distribution d'échantillonnage qui s'apparente à une loi normale standard, et c'est le cas à chaque fois que cette expression doit être reprise pour chaque type de carte. Si on met au carré chacune de ces variables, puis qu'on les additionne (comme décrit plus haut pour le calcul de $X^2$), on se retrouve dans la situation présentée dans le chapitre précédent où nous obtenons une loi $\chi^2$. La subtilité ici, par rapport au chapitre précédent, est que le nombre de degrés de liberté n'est pas $k$ mais $k-1$. Le nombre de degrés de liberté désigne le nombre de quantités distinctes à décrire (ici 4 quantités car les données sont regroupées en 4 modalités) moins le nombre de contraintes (ici 1 contrainte liée au groupe de sujets qui a un nombre fini). On a donc bien 3 degrés de liberté ici car il nous suffit de connaître 3 scores de chaque modalité pour connaître le 4ème qu'il nous manquerait pour une taille d'échantillon donnée... 
 
-La Figure \@ref(fig:GOFDistri) montre la loi $\chi^2$ relative à 3 degrés de liberté et donc les probabilités de rencontrer tel ou tel intervalle de valeurs de $X^2$ dans le cas où $H_{0}$ serait vraie. La zone hachurée représente la probabilité qui était d'obtenir une valeur de $X^2$ au moins aussi grande que 8.44 dans l'hypothèse où $H_{0}$ serait vraie. Cette probabilité $P$ est de `r, round(pchisq(q = 8.44, df = 3, lower.tail = FALSE), 2) * 100` %. En principe, lors d'un test statistique, il y a aussi ce qu'on appelle une "région critique", c'est-à-dire l'intervalle dans lequel la valeur de $P$ liée à notre valeur de 8.44 devrait se trouver pour qu'on considère que nos résultats ne supportent pas $H_{0}$ et donc qu'on ne retient pas cette hypothèse. Classiquement (voire par défaut, à tort), cette région critique est définie à l'aide du seuil $P <= 0.05$. Autrement dit, il faudrait que notre statistique $X^2$ tombe dans l'intervalle pour lequel il y avait une probabilité inférieure ou égale à 5% de tomber dans le cas où $H_{0}$ serait vraie. Dans notre exemple, cela se traduirait par le fait d'obtenir une valeur de $X^2$ supérieure ou égale à `r qchisq(0.95, 3)`. La région critique correspondant à cette zone est montrée en rouge sur la Figure \@ref(fig:GOFDistri). En suivant cette démarche, $H_{0}$ serait donc bien rejetée puisque notre valeur $X^2$ de 8.44 tomberait dans la région critique. Le test serait alors dit "significatif".
+La Figure \@ref(fig:GOFDistri) montre la loi $\chi^2$ relative à 3 degrés de liberté et donc les probabilités de rencontrer tel ou tel intervalle de valeurs de $X^2$ dans le cas où $H_{0}$ serait vraie. La zone hachurée représente la probabilité qui était d'obtenir une valeur de $X^2$ au moins aussi grande que 8.44 dans l'hypothèse où $H_{0}$ serait vraie. Cette probabilité $P$ est de `r round(pchisq(q = 8.44, df = 3, lower.tail = FALSE), 2) * 100` %. En principe, lors d'un test statistique, il y a aussi ce qu'on appelle une "région critique", c'est-à-dire l'intervalle dans lequel la valeur de $P$ liée à notre valeur de 8.44 devrait se trouver pour qu'on considère que nos résultats ne supportent pas $H_{0}$ et donc qu'on ne retient pas cette hypothèse. Classiquement (voire par défaut, à tort), cette région critique est définie à l'aide du seuil $P <= 0.05$. Autrement dit, il faudrait que notre statistique $X^2$ tombe dans l'intervalle pour lequel il y avait une probabilité inférieure ou égale à 5 % de tomber dans le cas où $H_{0}$ serait vraie. Dans notre exemple, cela se traduirait par le fait d'obtenir une valeur de $X^2$ supérieure ou égale à `r qchisq(0.95, 3)`. La région critique correspondant à cette zone est montrée en rouge sur la Figure \@ref(fig:GOFDistri). En suivant cette démarche, $H_{0}$ serait donc bien rejetée puisque notre valeur $X^2$ de 8.44 tomberait dans la région critique. Le test serait alors dit "significatif".
 
 ```{r GOFDistri, message=F, echo=FALSE, out.width='80%',  fig.align="center", fig.cap="Distribution d'échantillonnage de la statistique $\\chi^2$ sous $H{0}$"}
 data_chisq <- data.frame(x = seq(0, 10, 0.05), y = dchisq(seq(0, 10, 0.05), 3))
@@ -89,6 +91,8 @@ ggplot(data = data_chisq, aes(x = x, y = y)) +
     )
 ```
 
+### Application avec R
+
 Nous venons de voir la mécanique des calculs qu'il y a derrière le test $\chi^2$ d'adéquation. Heureusement, il existe des fonctions dans R pour faire cela automatiquement, comme la fonction `chisq.test()` : 
 
 ```{r}
@@ -110,3 +114,13 @@ Il convient de noter que les probabilités espérées (théoriques) peuvent êtr
 ```{r}
 lsr::goodnessOfFitTest(as.factor(cartes$choix), p = c(0.05, 0.8, 0.05, 0.1))
 ```
+
+## Résumé
+* Le test du $\chi^2$ d'adéquation consiste à comparer une distribution observée à et une distribution théorique qui représenterait l'hypothèse à tester.
+* La statistique de test du $\chi^2$ d'adéquation est $X^2$ et suit une distribution $\chi^2$.
+* La fonction R de base pour réaliser le test du $\chi^2$ d'adéquation est `chisq.test()`.
+* Une fonction R très aidante pour réaliser correctement le test du $\chi^2$ d'adéquation est `lsr::goodnessOfFitTest()`.
+
+
+
+
