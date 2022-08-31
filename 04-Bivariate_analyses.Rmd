@@ -80,7 +80,7 @@ Dans la fonction `geom_smooth()` qui a été utilisée dans l'exemple ci-dessus,
 
 La valeur du coefficient de corrélation de Pearson peut aller de 1 (suggérant une relation linéaire positive parfaite) à -1 (suggérant une relation linéaire négative parfaite). Des valeurs proches de 0 suggèreraient une abscence de relation linéaire. La formule du coefficient de corrélation de Pearson ($r$) pour un échantillon est la suivante : 
 
-$$r_{X,Y} =  {\frac{COV_{X,Y}}{s_{X} s_{Y}}} =  {\frac{\sum_{i=1}^{N} (X{i} - \overline{X}) (Y{i} - \overline{Y})}{N-1}} {\frac{1}{s_{X} s_{Y}}},$$
+$$r_{X,Y} =  {\frac{COV_{X,Y}}{\hat{\sigma}_{X} \hat{\sigma}_{Y}}} =  {\frac{\sum_{i=1}^{N} (X{i} - \overline{X}) (Y{i} - \overline{Y})}{N-1}} {\frac{1}{\hat{\sigma}_{X} \hat{\sigma}_{Y}}},$$
 
 $COV$ désignant la covariance entre les variables $X$ et $Y$, $X{i}$ et $Y{i}$ les valeurs de $X$ et $Y$ pour une observation $i$, $\overline{X}$ et $\overline{Y}$ les moyennes respectives des variables $X$ et $Y$, $N$ le nombre d'observations, et $s_{X}$ et $s_{Y}$ les écarts-types respectifs des variables $X$ et $Y$. Cette formule indique que le coefficient de corrélation de Pearson s'obtient en divisant la covariance des deux variables étudiées par le produit de leurs écarts-types respectifs. 
 
@@ -1051,7 +1051,7 @@ De prime abord, l'analyse qui pourrait être envisagée pour comparer deux group
 
 Classiquement, l'indice statistique utilisé pour calculer une différence de moyennes de manière standardisée entre deux groupes de données non appariées, à partir d'échantillons de population, est le $d_{s}$ de Cohen. Cette statistique se calcule en faisant la différence entre les moyennes des deux groupes à comparer, et en divisant cette différence par l'écart-type commun des valeurs de chacun des deux groupes. Ce calcul est montré ci-dessous : 
 
-$$d_{s} = \frac{\overline{X}_{1} - \overline{X}_{2}} {\sqrt{\frac{(N_{1} - 1) s_{1}^2 + (N_{2} - 1) s_{2}^2} {N_{1} + N_{2} - 2}}}$$
+$$d_{s} = \frac{\overline{X}_{1} - \overline{X}_{2}} {\sqrt{\frac{(N_{1} - 1) \hat{\sigma}_{1}^2 + (N_{2} - 1) \hat{\sigma}_{2}^2} {N_{1} + N_{2} - 2}}}$$
 
 Dans R, le $d_{s}$ de Cohen peut être calculé à l'aide de la fonction `cohens_d()` du package `effectsize`, qui nécessite d'être installé puis chargé avant d'être utilisé. 
 
@@ -1116,7 +1116,7 @@ Ici, la valeur ne change pas beaucoup par rapport au cas précédent, car l'effe
 
 Dans certains cas où l'on souhaiterait comparer les scores de deux groupes indépendants pour tester l'effet de deux conditions expérimentales différentes, l'expérimentation en tant que telle peut influencer, au-delà de la moyenne, l'écart-type de la variable réponse dans un des deux groupes. On peut se trouver dans ce genre de situation lorsque l'on compare les données post-programme d'un groupe entraîné ou traité à celles d'un groupe contrôle. En effet, le groupe entraîné/traité peut voir son écart-type changé au terme d'un programme en raison d'une réponse individuelle hétérogène à ce programme, ce qui ne sera pas en principe le cas du groupe contrôle. Dans ce genre de situations, des indices statistiques autres que le $g_{s}$ de Hedges mériteraient d'être calculés, tels que le delta ($\Delta$) de Glass [@lakensCalculatingReportingEffect2013] :
 
-$$\Delta = \frac{\overline{X}_{1} - \overline{X}_{2}} {s_{2}}$$
+$$\Delta = \frac{\overline{X}_{1} - \overline{X}_{2}} {\hat{\sigma}_{2}}$$
 
 
 Le calcul du $\Delta$ de Glass est dans l'idée le même que celui du $d_{s}$ de Cohen, sauf que la différence entre les moyennes des deux groupes n'est pas divisée par l'écart-type commun des deux groupes, mais par celui d'un seul des deux groupes, qui serait en principe celui qui représenterait la condition contrôle ou la condition de référence. Une pratique souvent recommandée pour comparer dans ce genre de situation les scores post-programme de deux groupes (un groupe entraîné/traité et un groupe contrôle) serait d'utiliser l'écart-type des scores du groupe contrôle obtenu en pré-programme [@lakensCalculatingReportingEffect2013]. 
@@ -1140,7 +1140,7 @@ Certaines situations peuvent rendre la comparaison de moyennes non pertinente. C
 
 Le calcul classique pour obtenir la taille d'effet désignant l'écart entre deux groupes de données dépendantes est celui du $d_{z}$ [@lakensCalculatingReportingEffect2013], qui est montré ci-dessous :
 
-$$d_{z} = \frac{\overline{X} _{diff}}{s_{diff}},$$
+$$d_{z} = \frac{\overline{X} _{diff}}{\hat{\sigma}_{diff}},$$
 
 $\overline{X} _{diff}$ désignant la moyenne des différences relatives à chaque pair de valeurs obtenues dans les deux conditions comparées, et $s_{diff}$ désignant l'écart-type de ces différences. Dans R, le $d_{z}$ peut être obtenu à nouveau avec la fonction `cohens_d()` du package `effectsize`. Pour illustrer cela, nous allons à nouveau utiliser le jeu de données `Blink2` crée plus haut pour les exemples de *raincloud plots*.
 
@@ -1155,7 +1155,7 @@ cohens_d(
 
 Toutefois, d'après Lakens [-@lakensCalculatingReportingEffect2013], il peut être intéressant de rapporter plutôt un indice de taille d'effet qui ne serait pas influencé par le fait que les données des deux groupes à comparer soient corrélées (car dépendantes), notamment en vue de rendre comparable cette taille d'effet à celles obtenues dans le cadre d'études de type *between-subject design*, pour plus facilement conduire des méta-analyses par la suite par exemple. La recommandation de Lakens [-@lakensCalculatingReportingEffect2013] serait alors d'utiliser l'indice $d_{av}$, dont le calcul serait le suivant : 
 
-$$d_{av} = \frac{\overline{X} _{diff}}{\sqrt{\frac{s_{1}^2 + s_{2}^2} {2}}}$$
+$$d_{av} = \frac{\overline{X} _{diff}}{\sqrt{\frac{\hat{\sigma}_{1}^2 + \hat{\sigma}_{2}^2} {2}}}$$
 
 Ce calcul reviendrait donc à diviser la moyenne des différences par l'écart-type moyen relatif aux deux groupes de données. Pour obtenir $d_{av}$, il est possible de repartir de la fonction `cohens_d()` et de sa configuration pour des groupes indépendants, mais en indiquant `pooled_sd = FALSE` dans la fonction, comme ci-dessous : 
 

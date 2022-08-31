@@ -243,9 +243,9 @@ Les indices de position servent à donner un ordre de grandeur de la variable. A
 
 *La moyenne*
 
-Si l'on pose que *N* est le nombre de valeurs dans une variable (on parle également de **taille** de la variable), que *i* est la i-ème observation (i-ème position) dans la variable, et que $X{i}$ est la valeur associée à la i-ème position, alors le calcul de la moyenne, notée $\overline{X}$, peut être écrit de la manière suivante :
+Si l'on pose que $N$ est le nombre de valeurs dans une variable (on parle également de **taille** de la variable), que *i* est la i-ème observation (i-ème position) dans la variable, et que $X{i}$ est la valeur associée à la i-ème position, alors le calcul de la moyenne, notée $\overline{X}$, peut être écrit de la manière suivante :
 $$\overline{X} = \frac{1}{N}\sum_{i=1}^{N} X{i}$$
-Cette expression mathématique signifie que la moyenne s'obtient en additionnant ($\sum$) les valeurs allant de la position 1 à la position *N* de la variable, et en divisant le tout par le nombre total de valeurs *N* contenues dans la variable. Pour mieux comprendre, prenons par exemple une variable qui ne contiendrait que les cinq premières valeurs de la variable `Sepal.Length` du jeu de données `iris` et qu'on appelle `sample_iris`.
+Cette expression mathématique signifie que la moyenne s'obtient en additionnant ($\sum$) les valeurs allant de la position 1 à la position $N$ de la variable, et en divisant le tout par le nombre total de valeurs $N$ contenues dans la variable. Pour mieux comprendre, prenons par exemple une variable qui ne contiendrait que les cinq premières valeurs de la variable `Sepal.Length` du jeu de données `iris` et qu'on appelle `sample_iris`.
 
 ```{r sample from iris for mean calculation}
 sample_iris <- iris$Sepal.Length[1:5]
@@ -331,7 +331,7 @@ leg + plot_layout(heights = c(2, 0.2))
 
 *La médiane*
 
-La médiane est le deuxième indice de position que l'on considère régulièrement lorsqu'il s'agit de résumer numériquement une variable quantitative. Pour l'obtenir, il faut d'abord classer les valeurs de la variable selon un ordre croissant. La médiane pour une variable de taille *N* est alors la valeur correspondant au rang (*N* + 1) / 2. Ainsi, la médiane désigne la valeur qui sépare les valeurs de la variable en deux groupes d'observations de même taille [@chatellierMoyenneMedianeLeurs2003]. Dans l'exemple ci-dessous, il y a cinq observations, et donc cinq valeurs, qui ont été triées par ordre croissant. La médiane est alors la valeur correspondant au rang (5 + 1) / 2 = 3, soit 4.9.
+La médiane est le deuxième indice de position que l'on considère régulièrement lorsqu'il s'agit de résumer numériquement une variable quantitative. Pour l'obtenir, il faut d'abord classer les valeurs de la variable selon un ordre croissant. La médiane pour une variable de taille $N$ est alors la valeur correspondant au rang ($N$ + 1) / 2. Ainsi, la médiane désigne la valeur qui sépare les valeurs de la variable en deux groupes d'observations de même taille [@chatellierMoyenneMedianeLeurs2003]. Dans l'exemple ci-dessous, il y a cinq observations, et donc cinq valeurs, qui ont été triées par ordre croissant. La médiane est alors la valeur correspondant au rang (5 + 1) / 2 = 3, soit 4.9.
 
 ```{r example median, echo = FALSE}
 iris_sort <- sort(iris$Sepal.Length[1:5])
@@ -440,13 +440,13 @@ range(vec)
 L’écart-type est une statistique qui donne une idée de la mesure selon laquelle les valeurs de la variable sont éloignées de la moyenne. Pour calculer l'écart-type, il faut en réalité d'abord calculer la variance $\sigma^2$, dont le calcul est le suivant : 
 $$\sigma^2 = \frac{1}{N}\sum_{i=1}^{N} (X{i} - \overline{X})^2$$
 
-Cette formule signifie que pour obtenir la variance, il faut d'abord faire la somme des carrés des différences entre chaque valeur et la moyenne  de la variable. Cela fait, la variance s'obtient en divisant cette somme de carrés par le nombre *N* de valeurs de la variable. L'écart-type $\sigma$, c'est alors la racine carrée de la variance : 
+Cette formule signifie que pour obtenir la variance, il faut d'abord faire la somme des carrés des différences entre chaque valeur et la moyenne  de la variable. Cela fait, la variance s'obtient en divisant cette somme de carrés par le nombre $N$ de valeurs de la variable. L'écart-type $\sigma$, c'est alors la racine carrée de la variance : 
 $$\sigma = \sqrt{\frac{1}{N}\sum_{i=1}^{N} (X{i} - \overline{X})^2}$$
 
-Ces calculs sont valides lorsque l'on a en sa possession les données de toute la population que l'on souhaite étudier. Toutefois, lorsque l'on a en sa possession des données issues seulement d'un échantillon de la population, ces calculs biaisent les estimations de la variance et de l'écart-type correspondant à la population étudiée. Cette notion de biais traduit le fait que lorsqu'on répète un grand nombre de fois le calcul de la variance ou de l'écart-type à partir, à chaque fois, d'échantillons de population différents, on a en moyenne un décalage entre la valeur de l'estimation et la réelle valeur de la variance et de l'écart-type de la population. Ce décalage systématique est tel qu'il convient dans ce cas là de diviser la somme des carrés des différences ($X{i} - \overline{X}$) par *N-1* plutôt que par *N* [@grenierQuelleEstBonne2007]. La formule de l'écart-type non biaisé, noté *s*, est alors la suivante : 
-$$s = \sqrt{\frac{1}{N-1}\sum_{i=1}^{N} (X{i} - \overline{X})^2}$$
+Ces calculs sont valides lorsque l'on a en sa possession les données de toute la population que l'on souhaite étudier. Toutefois, lorsque l'on a en sa possession des données issues seulement d'un échantillon de la population, ces calculs biaisent les estimations de variance et de l'écart-type correspondant à la population étudiée. Cette notion de biais traduit le fait que lorsqu'on répète un grand nombre de fois le calcul de la variance et de l'écart-type à partir, à chaque fois, d'échantillons de population différents, on a en moyenne un décalage entre la valeur de l'estimation et la réelle valeur de variance et de l'écart-type de la population. Ce décalage systématique est tel qu'il convient dans ce cas là de diviser la somme des carrés des différences ($X{i} - \overline{X}$) par $N-1$ plutôt que par $N$ [@grenierQuelleEstBonne2007]. La formule de l'écart-type non biaisé, noté *$\hat{\sigma}$*, est alors la suivante : 
+$$\hat{\sigma} = \sqrt{\frac{1}{N-1}\sum_{i=1}^{N} (X{i} - \overline{X})^2}$$
 
-L’écart-type est la mesure de dispersion classiquement associée à la moyenne. Si on note une moyenne $\overline{X}$ et un écart-type *s*, alors le résumé d’une variable à l’aide de ces statistiques s’écrit comme suit : $\overline{X}$ ± *s*. Lorsque l’écart-type est divisé par la moyenne arithmétique de la variable, on obtient une valeur appelée **coefficient de variation**. Avec le logiciel R, les fonctions pour calculer la variance et l'écart-type non biaisés sont respectivement `var()` et `sd()`.
+L’écart-type est la mesure de dispersion classiquement associée à la moyenne. Si, pour un échantillon, on note une moyenne $\overline{X}$ et un écart-type $\hat{\sigma}$, alors le résumé d’une variable à l’aide de ces statistiques s’écrit comme suit : $\overline{X}$ ± $\hat{\sigma}$. Lorsque l’écart-type est divisé par la moyenne arithmétique de la variable, on obtient une valeur appelée **coefficient de variation**. Avec le logiciel R, les fonctions pour calculer la variance et l'écart-type non biaisés sont respectivement `var()` et `sd()`.
 
 ```{r var}
 vec <- c(4.5, 7.8, 10.8, 13.9, 20.2)
@@ -456,14 +456,14 @@ sd(x = vec)
 
 *L'intervalle interquartile*
 
-L’intervalle interquartile désigne l’étendue entre le premier quartile (Q1) et le troisième quartile (Q3) d’une variable. Comme expliqué auparavant dans le cadre de la boîte à moustaches, Q1 et Q3 désignent respectivement les valeurs en-dessous desquelles 25 % et 75 % des observations de la variable se trouvent [@chatellierMoyenneMedianeLeurs2003]. Pour un échantillon de taille *N*, la procédure classique pour calculer les quartiles est différente selon que le rapport *N* / 4 est un nombre entier ou non. Lorsque ce rapport n’est pas un nombre entier, Q1 est la valeur correspondant au rang immédiatement supérieur à *N* / 4. Par exemple, pour la variable ci-dessous, qui a une taille *N* de 5 valeurs, le rapport *N* / 4 est égal à 1.25. Q1 est donc la valeur correspondant au rang directement supérieur, c'est-à-dire au rang 2, qui est ici la valeur 7.8.
+L’intervalle interquartile désigne l’étendue entre le premier quartile (Q1) et le troisième quartile (Q3) d’une variable. Comme expliqué auparavant dans le cadre de la boîte à moustaches, Q1 et Q3 désignent respectivement les valeurs en-dessous desquelles 25 % et 75 % des observations de la variable se trouvent [@chatellierMoyenneMedianeLeurs2003]. Pour un échantillon de taille $N$, la procédure classique pour calculer les quartiles est différente selon que le rapport $N$ / 4 est un nombre entier ou non. Lorsque ce rapport n’est pas un nombre entier, Q1 est la valeur correspondant au rang immédiatement supérieur à $N$ / 4. Par exemple, pour la variable ci-dessous, qui a une taille $N$ de 5 valeurs, le rapport $N$ / 4 est égal à 1.25. Q1 est donc la valeur correspondant au rang directement supérieur, c'est-à-dire au rang 2, qui est ici la valeur 7.8.
 
 ```{r quartile 1 N non entier, echo = FALSE}
 names(vec) <- c(1, 2, 3, 4, 5)
 vec
 ```
 
-Lorsque le rapport *N* / 4 est un nombre entier, Q1 correspond à la moyenne des valeurs associées respectivement aux rangs *N* / 4 et (*N* / 4) + 1. Par exemple, pour la variable ci-dessous, qui a une taille *N* de 8 valeurs, le rapport *N* / 4 est à égal 2. Q1 est donc la moyenne des valeurs correspondant au rang 2 et au rang 3 (i.e., les valeurs 7.8 et 10.8), qui équivaut ici à 9.3.
+Lorsque le rapport $N$ / 4 est un nombre entier, Q1 correspond à la moyenne des valeurs associées respectivement aux rangs $N$ / 4 et ($N$ / 4) + 1. Par exemple, pour la variable ci-dessous, qui a une taille $N$ de 8 valeurs, le rapport $N$ / 4 est à égal 2. Q1 est donc la moyenne des valeurs correspondant au rang 2 et au rang 3 (i.e., les valeurs 7.8 et 10.8), qui équivaut ici à 9.3.
 
 ```{r quartile 1 N entier, echo = FALSE}
 vec <- c(4.5, 7.8, 10.8, 13.9, 20.2, 25.6, 37.5, 43.9)
@@ -471,7 +471,7 @@ names(vec) <- seq(1:8)
 vec
 ```
 
-La démarche demeure la même pour déterminer Q3, à ceci près qu’on utilise le nombre 3*N* et non plus le nombre *N* pour les calculs [@labreucheDifferentsTypesVariables2010]. Cette méthode de calcul est en principe à privilégier en présence d'une variable discrète. Si l'on souhaite obtenir les quartiles selon cette méthode avec le logiciel R, il faut utiliser la fonction `quantile()` de la manière suivante : 
+La démarche demeure la même pour déterminer Q3, à ceci près qu’on utilise le nombre 3$N$ et non plus le nombre $N$ pour les calculs [@labreucheDifferentsTypesVariables2010]. Cette méthode de calcul est en principe à privilégier en présence d'une variable discrète. Si l'on souhaite obtenir les quartiles selon cette méthode avec le logiciel R, il faut utiliser la fonction `quantile()` de la manière suivante : 
 
 ```{r fonction quantile type 2}
 quantile(x = vec, probs = c(0.25, 0.75), type = 2)
@@ -520,7 +520,7 @@ table_quant, cwidth = 2) %>%
 
 Le tableau montre les données sur lesquelles R s'est appuyé pour déterminer les valeurs des quantiles recherchés (i.e., les quantiles 0.25 et 0.75 pour Q1 et Q3, respectivement). Les données du tableau sont bien celles relatives à notre variable `vec`, dont on peut reconnaître les valeurs dans la colonne de droite du tableau.  La colonne "Quantile" montre les fractions (ou portions) de la variable `vec` associées aux valeurs de la variable compte tenu de leurs rangs respectifs. Par exemple, la valeur 25.6, dont le rang est 6, correspond au quantile 0.71 (approximativement). Cela veut dire que 71 % des observations ont une valeur inférieure ou égale à 25.6. Il faut savoir qu'il existe en réalité plusieurs manières de déterminer la valeur du quantile que représente chaque valeur. Dans le cas présent, le quantile représenté, que l'on va noter *q*, a été déterminé selon la formule suivante : 
 $$q = (k - 1 ) / (N - 1)$$
-Dans le calcul ci-dessus, *k* désigne le rang de la valeur considérée, et *N* désigne la taille de la variable étudiée (i.e., le nombre total de valeurs). Comme on peut le voir dans le tableau ci-dessus, cette méthode de calcul conduit nécessairement à attribuer le quantile 0 à la valeur de rang 1, et la quantile 1 à la valeur de rang *N*. Lorsque le nombre de valeurs fait que les quantiles 0.25 et 0.75 n'existent pas, R réalise une interpolation de la valeur correspondant au quantile recherché, cela à partir des quantiles qui existent et qui encadrent le quantile recherché, ainsi qu'à partir des valeurs correspondant à ces quantiles. Dans le cas présent, il s'agit plus précisément d'une interpolation linéaire. Voyons sur la Figure \@ref(fig:graphicContinuouQuantiles) en quoi cela consiste.
+Dans le calcul ci-dessus, *k* désigne le rang de la valeur considérée, et $N$ désigne la taille de la variable étudiée (i.e., le nombre total de valeurs). Comme on peut le voir dans le tableau ci-dessus, cette méthode de calcul conduit nécessairement à attribuer le quantile 0 à la valeur de rang 1, et la quantile 1 à la valeur de rang $N$. Lorsque le nombre de valeurs fait que les quantiles 0.25 et 0.75 n'existent pas, R réalise une interpolation de la valeur correspondant au quantile recherché, cela à partir des quantiles qui existent et qui encadrent le quantile recherché, ainsi qu'à partir des valeurs correspondant à ces quantiles. Dans le cas présent, il s'agit plus précisément d'une interpolation linéaire. Voyons sur la Figure \@ref(fig:graphicContinuouQuantiles) en quoi cela consiste.
 
 ```{r graphicContinuouQuantiles, out.width = '90%', echo = FALSE, fig.cap="Détermination des quartiles Q1 et Q3 avec une variable quantitative continue"}
 model1 <- lm(Valeur ~ Quantile, data = table_quant[c(2, 3), c(2, 3)])
@@ -583,8 +583,8 @@ skewness(x = iris$Sepal.Width, type = 3)
 
 Comme on peut le voir dans l'aide associée à la fonction `skewness()`, il existe en réalité plusieurs méthodes de calcul du coefficient d'asymétrie (noté $\gamma_{1}$ ci-dessous). La méthode de `type` 3, qui est celle configurée par défaut pour cette fonction, consiste à faire le calcul suivant :
 
-$$\gamma_{1} =  \frac{1}{s^3} {\frac{\sum_{i=1}^{N} (X{i} - \overline{X})^3}{N}}$$
-Dans ce calcul, *s* désigne l'écart-type non biaisé de la variable, et *N* désigne la taille de la variable. Avec cette méthode, on obtient un coefficient négatif lorsque la distribution est asymétrique à gauche (longue queue vers la gauche), un coefficient de 0 lorsque la distribution est parfaitement symétrique, et un coefficient positif lorsque la distribution est asymétrique à droite (longue queue vers la droite). Ceci est illustré sur la Figure \@ref(fig:skeweddistri).
+$$\gamma_{1} =  \frac{1}{\hat{\sigma}^3} {\frac{\sum_{i=1}^{N} (X{i} - \overline{X})^3}{N}}$$
+Dans ce calcul, \hat{\sigma} désigne l'écart-type non biaisé de la variable, et $N$ désigne la taille de la variable. Avec cette méthode, on obtient un coefficient négatif lorsque la distribution est asymétrique à gauche (longue queue vers la gauche), un coefficient de 0 lorsque la distribution est parfaitement symétrique, et un coefficient positif lorsque la distribution est asymétrique à droite (longue queue vers la droite). Ceci est illustré sur la Figure \@ref(fig:skeweddistri).
 
 ```{r skeweddistri, out.width = '100%', echo = FALSE, message = FALSE, warning = FALSE, fig.cap="Valeur du Skewness selon la forme de la distribution"}
 set.seed(123)
@@ -744,7 +744,7 @@ g_chis1_neg <-
 *Pour aller plus loin...*
 Joanes et Gill [-@joanesComparingMeasuresSample1998] ont montré que lorsqu'il s'agit d'estimer le degré d'asymétrie de la distribution relative à la population étudiée, et cela à partir de l'échantillon observé, certaines méthodes de calcul du coefficient d'asymétrie peuvent être plus fiables que d'autres. 
 
-Dans le cas où la distribution des valeurs dans la population étudiée suivrait une loi normale, la méthode par défaut présentée ci-dessus serait la plus fiable pour estimer le niveau d'asymétrie lorsque l'échantillon observé est de petite taille (*N* < 50). Cependant, avec des échantillons de grande taille, les méthodes se valeraient.
+Dans le cas où la distribution des valeurs dans la population étudiée suivrait une loi normale, la méthode par défaut présentée ci-dessus serait la plus fiable pour estimer le niveau d'asymétrie lorsque l'échantillon observé est de petite taille ($N$ < 50). Cependant, avec des échantillons de grande taille, les méthodes se valeraient.
 
 Dans le cas où la distribution des valeurs de la population étudiée ne suivrait pas une loi normale, et qu'elle s'avèrerait très asymétrique, la méthode de `type` 2 proposée avec la fonction `skewness()` serait la plus fiable, particulièrement en présence d'échantillons de petite taille.
 
@@ -759,8 +759,8 @@ kurtosis(x = iris$Sepal.Width, type = 3)
 
 Comme on peut le voir dans l'aide associée à la fonction `kurtosis()`, il existe en réalité plusieurs méthodes de calcul du coefficient d'aplatissement (noté $\gamma_{2}$ ci-dessous) . La méthode de `type` 3, qui est celle configurée par défaut pour cette fonction, consiste à faire le calcul suivant :
 
-$$\gamma_{2} =  \frac{1}{s^4} {\frac{\sum_{i=1}^{N} (X{i} - \overline{X})^4}{N}} -3$$
-Dans ce calcul, *s* désigne l'écart-type non biaisé de la variable, et *N* désigne la taille de la variable. Avec cette méthode, on obtient un coefficient négatif lorsque la distribution est particulièrement aplatie par rapport à une distribution suivant une loi normale (distribution platycurtique), un coefficient de 0 lorsque la distribution suit une loi normale (distribution mésocurtique), et un coefficient positif lorsque la distribution est particulièrement pointue par rapport à une loi normale (distribution leptocurtique). Ceci est illustré sur la Figure \@ref(fig:kurtosisdistri).
+$$\gamma_{2} =  \frac{1}{\hat{\sigma}^4} {\frac{\sum_{i=1}^{N} (X{i} - \overline{X})^4}{N}} -3$$
+Dans ce calcul, \hat{\sigma} désigne l'écart-type non biaisé de la variable, et $N$ désigne la taille de la variable. Avec cette méthode, on obtient un coefficient négatif lorsque la distribution est particulièrement aplatie par rapport à une distribution suivant une loi normale (distribution platycurtique), un coefficient de 0 lorsque la distribution suit une loi normale (distribution mésocurtique), et un coefficient positif lorsque la distribution est particulièrement pointue par rapport à une loi normale (distribution leptocurtique). Ceci est illustré sur la Figure \@ref(fig:kurtosisdistri).
 
 ```{r kurtosisdistri, out.width = '100%', echo = FALSE, message = FALSE, warning = FALSE,  fig.cap="Valeur du Kurtosis selon la forme de la distribution"}
 library(LaplacesDemon)
@@ -865,7 +865,7 @@ g_laplace <-
 *Pour aller plus loin...*
 Comme avec le coefficient d'asymétrie, Joanes et Gill [-@joanesComparingMeasuresSample1998] ont montré que lorsqu'il s'agit d'estimer le degré d'aplatissement de la distribution relative à la population étudiée, et cela à partir de l'échantillon observé, certaines méthodes de calcul du coefficient d'aplatissement peuvent être plus fiables que d'autres. 
 
-Dans le cas où la distribution des valeurs dans la population étudiée suivrait une loi normale, la méthode de `type` 1 proposée avec la fonction `kurtosis()` serait la plus fiable pour estimer le niveau d'aplatissement lorsque l'échantillon observé est de petite taille (*N* < 50). Cependant, la méthode par défaut présentée plus haut fournirait des résultats relativement proches de ceux obtenus avec la méthode de `type` 1. De plus, avec des échantillons de grande taille, toutes les méthodes se valeraient.
+Dans le cas où la distribution des valeurs dans la population étudiée suivrait une loi normale, la méthode de `type` 1 proposée avec la fonction `kurtosis()` serait la plus fiable pour estimer le niveau d'aplatissement lorsque l'échantillon observé est de petite taille ($N$ < 50). Cependant, la méthode par défaut présentée plus haut fournirait des résultats relativement proches de ceux obtenus avec la méthode de `type` 1. De plus, avec des échantillons de grande taille, toutes les méthodes se valeraient.
 
 Dans le cas où la distribution des valeurs de la population étudiée ne suivrait pas une loi normale, et s'avèrerait très asymétrique, la méthode de `type` 2 proposée avec la fonction `kurtosis()` serait la plus fiable, particulièrement en présence d'échantillons de petite taille.
 
@@ -903,9 +903,9 @@ Les statistiques les plus couramment utilisées pour résumer une variable quant
 
 Lorsqu'il s'agit de simplement décrire une distribution des données obtenues à titre exploratoire, certains auteurs proposent d'utiliser les trois paramètres de position (moyenne, médiane, mode), en sachant que la médiane, d'un point de vue purement descriptif, peut être le paramètre le plus adapté dans de nombreuses situations [@gonzalesMeasuresCentralTendency2001]. Dans le cas où la distribution s'avèrerait plutôt gaussienne, la moyenne et l'écart-type sont intéressants car dans ce cas, on sait que :
 
-1. Approximativement **68.3 %** des observations sont comprises dans l'intervalle [$\overline{X}$ - 1 *s* ; $\overline{X}$ + 1 *s*],
-2. Approximativement **95.5 %** des observations sont comprises dans l'intervalle [$\overline{X}$ - 2 *s* ; $\overline{X}$ + 2 *s*],
-3. Approximativement **99.7 %** des observations sont comprises dans l'intervalle [$\overline{X}$ - 3 *s* ; $\overline{X}$ + 3 *s*].
+1. Approximativement **68.3 %** des observations sont comprises dans l'intervalle [$\overline{X}$ - 1 *$\hat{\sigma}$* ; $\overline{X}$ + 1 *$\hat{\sigma}$*],
+2. Approximativement **95.5 %** des observations sont comprises dans l'intervalle [$\overline{X}$ - 2 *$\hat{\sigma}$* ; $\overline{X}$ + 2 *$\hat{\sigma}$*],
+3. Approximativement **99.7 %** des observations sont comprises dans l'intervalle [$\overline{X}$ - 3 *$\hat{\sigma}$* ; $\overline{X}$ + 3 *$\hat{\sigma}$*].
 
 Ceci est illustré sur la Figure \@ref(fig:ObservationsWithinSdMutiplesGaussianDistri).
 
@@ -925,7 +925,7 @@ g1 <-
   geom_hline(aes(yintercept = 0), size = 1) +
   theme_classic() +
   labs(fill = "") +
-  annotate(geom = "text", label =  bquote(paste(bar(italic(X)), " ± 1 ", italic(s))), x = 15, y = 0.06, size = 5) +
+  annotate(geom = "text", label =  bquote(paste(bar(italic(X)), " ± 1 ", hat(sigma))), x = 15, y = 0.06, size = 5) +
   theme(axis.text = element_blank(),
         axis.ticks = element_blank(),
         legend.position = "none")
@@ -937,7 +937,7 @@ g2 <-
   geom_hline(aes(yintercept = 0), size = 1) +
   theme_classic() +
   labs(fill = "") +
-  annotate(geom = "text", label =  bquote(paste(bar(italic(X)), " ± 2 ", italic(s))), x = 15, y = 0.06, size = 5) +
+  annotate(geom = "text", label =  bquote(paste(bar(italic(X)), " ± 2 ", hat(sigma))), x = 15, y = 0.06, size = 5) +
   theme(axis.text = element_blank(),
         axis.ticks = element_blank(),
         legend.position = "none")
@@ -949,7 +949,7 @@ g3 <-
   geom_hline(aes(yintercept = 0), size = 1) +
   theme_classic() +
   labs(fill = "") +
-  annotate(geom = "text", label =  bquote(paste(bar(italic(X)), " ± 3 ", italic(s))), x = 15, y = 0.06, size = 5) +
+  annotate(geom = "text", label =  bquote(paste(bar(italic(X)), " ± 3 ", hat(sigma))), x = 15, y = 0.06, size = 5) +
   theme(axis.text = element_blank(),
         axis.ticks = element_blank(),
         legend.position = "none")
@@ -1013,8 +1013,7 @@ A <-
   count(color) %>%
   ggplot(aes(x = color, y = n)) +
      geom_bar(stat = "identity") +
-     geom_text(aes(label = n, x = color, y = n), 
-               size = 2, nudge_y = 700) +
+     geom_text(aes(label = n), size = 2, nudge_y = 700) +
      ggtitle("A")
 
 # Diagramme en barres réorganisées manuellement
