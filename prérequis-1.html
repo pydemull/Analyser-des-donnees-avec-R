@@ -63,6 +63,7 @@
 <li><a class="" href="r%C3%A9gressions.html"><span class="header-section-number">5</span> Régressions</a></li>
 <li class="book-part">Analyses inférentielles</li>
 <li><a class="active" href="pr%C3%A9requis-1.html"><span class="header-section-number">6</span> Prérequis</a></li>
+<li><a class="" href="tests-statistiques-pour-des-variables-qualitatives.html"><span class="header-section-number">7</span> Tests statistiques pour des variables qualitatives</a></li>
 <li><a class="" href="r%C3%A9f%C3%A9rences.html">Références</a></li>
 </ul>
 
@@ -101,7 +102,7 @@
 <p>La Figure <a href="pr%C3%A9requis-1.html#fig:distriBinom">6.1</a> illustre une loi binomiale (avec <span class="math inline">\(N\)</span> = 100 et <span class="math inline">\(\theta\)</span> = 0.5) qui pourrait s’appliquer au cas d’un lancer de pièce non truquée. Cette figure montre que même si une pièce est non truquée (<span class="math inline">\(\theta\)</span> = 0.5), il est tout à fait possible qu’il y ait plus de personnes à obtenir “pile” plutôt que “face” et inversement sur un échantillon de 100 personnes. Cependant, ce que montre aussi la figure, c’est que si la pièce est non truquée, les chances restent les plus fortes pour l’obtention de 50 % de personnes avec “pile” et avec “face” pour un lancer de pièce.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:distriBinom"></span>
-<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/distriBinom-1.png" alt="Illustration d'une loi binomiale avec la situation de 100 personnes lançant une pièce non truquée" width="80%"><p class="caption">
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/distriBinom-1.png" alt="Illustration d'une loi binomiale avec la situation de 100 personnes lançant une pièce non truquée" width="80%"><p class="caption">
 Figure 6.1: Illustration d’une loi binomiale avec la situation de 100 personnes lançant une pièce non truquée
 </p>
 </div>
@@ -134,7 +135,7 @@ Figure 6.1: Illustration d’une loi binomiale avec la situation de 100 personne
 <span class="math inline">\(p(X | \mu, \sigma)\)</span> étant la densité de probabilité correspondant à la valeur <span class="math inline">\(X\)</span>. Il s’agit bien ici de la densité de probabilité, et non pas de la valeur de la probabilité d’obtenir une valeur précise. Pour mieux comprendre les valeurs que donne cette loi mathématique, regardons la Figure <a href="pr%C3%A9requis-1.html#fig:distiNorm">6.2</a> (graphique de gauche). Sur cette figure, la courbe noire représente les valeurs données par la fonction définissant la loi normale avec <span class="math inline">\(\mu\)</span> = 1, et <span class="math inline">\(\sigma\)</span> = 1. Ces valeurs en réalité n’ont pas vraiment d’intérêt en soi. Par contre, elle permettent de délimiter une aire (en rouge) entre elles et l’axe horizontal, la valeur de cette aire étant pour le coup la probabilité d’obtenir une valeur incluse dans l’intervalle de valeurs relatif à l’aire sous la courbe considérée. Ainsi, l’aire sous l’ensemble de la courbe représentant la densité de probabilité est associée à une probabilité de 1 (il y a par définition, lors d’un tirage au sort, 100 % de chances de rencontrer une valeur située entre le minimum et le maximum de la variable modélisée à l’aide de cette loi). Dans la même veine, le graphique de droite de la Figure <a href="pr%C3%A9requis-1.html#fig:distiNorm">6.2</a> montre une aire sous la courbe (en rouge) dont la valeur est la probabilité d’obtenir une valeur comprise en 2 et 3 lorsqu’on tire au sort une observation en provenance de la population représentée par une loi normale de moyenne 1 et d’écart-type 1, la probabilité étant ici de 14 %.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:distiNorm"></span>
-<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/distiNorm-1.png" alt="Densité de probabilité d'une loi normale" width="90%"><p class="caption">
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/distiNorm-1.png" alt="Densité de probabilité d'une loi normale" width="90%"><p class="caption">
 Figure 6.2: Densité de probabilité d’une loi normale
 </p>
 </div>
@@ -156,32 +157,60 @@ Figure 6.2: Densité de probabilité d’une loi normale
 <p>La loi normale peut être mise en lien avec d’autres grandes lois, telles que :</p>
 <ul>
 <li><p>La loi Chi-carré (<span class="math inline">\(\chi^2\)</span>) : lorsque l’on prend les valeurs de plusieurs distributions normales standards (avec des moyennes de 0 et des écarts-types de 1), qu’on les met au carré, puis qu’on les additionne, on obtient une variable suivant une loi <span class="math inline">\(\chi^2\)</span> à <span class="math inline">\(k\)</span> degrés de liberté (cf. Figure <a href="pr%C3%A9requis-1.html#fig:VariousQuantLaws">6.3</a>, graphique A), <span class="math inline">\(k\)</span> étant le nombre de variables que l’on a mises au carré. Comme on peut le voir sur la Figure <a href="pr%C3%A9requis-1.html#fig:VariousQuantLaws">6.3</a>, la distribution <span class="math inline">\(\chi^2\)</span> est plutôt asymétrique, avec des valeurs toujours supérieures à 0.</p></li>
-<li><p>La loi <em>t</em> : les distributions relatives à des lois <em>t</em> ressemblent aux distributions relatives à des lois normales mais avec des queues de distribution plus épaisses. Une distribution <em>t</em> peut être obtenue en divisant les valeurs d’une distribution <span class="math inline">\(\chi^2\)</span> par le nombre de degrés de liberté <span class="math inline">\(k\)</span>, puis en prenant leurs racines carrées, et enfin en divisant les valeurs d’une loi normale par la variable obtenue. On obtient alors une distribution <em>t</em> à <span class="math inline">\(k\)</span> degrés de liberté.</p></li>
-<li><p>La loi <em>F</em> : la distribution d’une loi <em>F</em> ressemble à celle d’une loi <span class="math inline">\(\chi^2\)</span>. Une distribution <em>F</em> sert à comparer deux distributions <span class="math inline">\(\chi^2\)</span>.</p></li>
+<li><p>La loi <span class="math inline">\(t\)</span> : les distributions relatives à des lois <span class="math inline">\(t\)</span> ressemblent aux distributions relatives à des lois normales mais avec des queues de distribution plus épaisses (cf. Figure <a href="pr%C3%A9requis-1.html#fig:VariousQuantLaws">6.3</a>, graphique B). Une distribution <span class="math inline">\(t\)</span> peut être obtenue en divisant les valeurs d’une distribution <span class="math inline">\(\chi^2\)</span> par le nombre de degrés de liberté <span class="math inline">\(k\)</span>, puis en prenant leurs racines carrées, et enfin en divisant les valeurs d’une loi normale par la variable obtenue. On obtient alors une distribution <span class="math inline">\(t\)</span> à <span class="math inline">\(k\)</span> degrés de liberté (cf. Figure <a href="pr%C3%A9requis-1.html#fig:VariousQuantLaws">6.3</a>, graphique C).</p></li>
+<li><p>La loi <span class="math inline">\(F\)</span> : la distribution d’une loi <span class="math inline">\(F\)</span> ressemble à celle d’une loi <span class="math inline">\(\chi^2\)</span>. Une distribution <span class="math inline">\(F\)</span> sert à comparer deux distributions <span class="math inline">\(\chi^2\)</span>.</p></li>
 </ul>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:VariousQuantLaws"></span>
-<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/VariousQuantLaws-1.png" alt="Densité de probabilité de lois chi-carré, t, et F." width="100%"><p class="caption">
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/VariousQuantLaws-1.png" alt="Densité de probabilité de lois chi-carré, t, et F." width="100%"><p class="caption">
 Figure 6.3: Densité de probabilité de lois chi-carré, t, et F.
 </p>
 </div>
 </div>
 </div>
-<div id="la-loi-des-grands-nombres.-le-théorème-de-la-limite-centrale" class="section level2">
+<div id="loi-des-grands-nombres-distribution-déchantillonnage-de-la-moyenne-et-théorème-de-la-limite-centrale" class="section level2">
 <h2>
-<span class="header-section-number">6.3</span> La loi des grands nombres. Le Théorème de la limite centrale<a class="anchor" aria-label="anchor" href="#la-loi-des-grands-nombres.-le-th%C3%A9or%C3%A8me-de-la-limite-centrale"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6.3</span> Loi des grands nombres, distribution d’échantillonnage de la moyenne, et théorème de la limite centrale<a class="anchor" aria-label="anchor" href="#loi-des-grands-nombres-distribution-d%C3%A9chantillonnage-de-la-moyenne-et-th%C3%A9or%C3%A8me-de-la-limite-centrale"><i class="fas fa-link"></i></a>
 </h2>
+<p>La loi des grands nombres décrit un principe de probabilité permettant de comprendre bon nombre de phénomènes statistiques, notamment lorsque l’on s’intéresse à la moyenne d’un échantillon. Cette loi implique par exemple le fait que la moyenne d’un échantillon pris au hasard dans une population tend à être plus proche de la moyenne réelle d’une population à mesure que la taille de l’échantillon étudié est grande. Cette loi est illustrée sur la Figure <a href="pr%C3%A9requis-1.html#fig:GreatNumLaw">6.4</a>. Sur cette figure, les distributions représentent des échantillons crées de manière aléatoire à partir d’une population ayant pour moyenne 0 et pour écart-type 400. Le trait vertical rouge représente la moyenne de la population d’origine alors que le trait en pointillés noirs montre la moyenne de l’échantillon qui a été obtenue. Lorsqu’on regarde chaque colonne de la figure du haut vers le bas et qu’on compare les colonnes entre elles, on se rend compte effectivement que plus la taille <span class="math inline">\(N\)</span> de l’échantillon tiré de la population est grande, plus le trait noir se retrouve en général proche du trait rouge, cela traduisant le fait qu’on a de meilleures chances que la moyenne de l’échantillon étudié soit plus proche de la moyenne de la population lorsque l’échantillon est de grande taille. Une question qui pourrait alors se poser est le nombre de personnes ou d’individus que doit contenir l’échantillon pour obtenir un résultat avec une marge d’erreur jugée acceptable.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:GreatNumLaw"></span>
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/GreatNumLaw-1.png" alt="Illustration de la loi des grands nombres avec la moyenne d'un échantillon. Les distributions ont été obtenues à partir de $N$ valeurs obtenues aléatoirement à partir d'une population de moyenne 0 et d'écart-type 400. Trait rouge = moyenne de la population d'origine ; trait noir = moyenne de l'échantillon" width="100%"><p class="caption">
+Figure 6.4: Illustration de la loi des grands nombres avec la moyenne d’un échantillon. Les distributions ont été obtenues à partir de <span class="math inline">\(N\)</span> valeurs obtenues aléatoirement à partir d’une population de moyenne 0 et d’écart-type 400. Trait rouge = moyenne de la population d’origine ; trait noir = moyenne de l’échantillon
+</p>
 </div>
-<div id="distribution-déchantillonnage-de-la-moyenne" class="section level2">
+<p>La Figure <a href="pr%C3%A9requis-1.html#fig:GreatNumLaw">6.4</a> montre certes qu’on a plus de chances d’avoir une moyenne d’échantillon proche de la moyenne de la population avec un grand <span class="math inline">\(N\)</span>, mais elle esquisse aussi, avec les traits en pointillés noirs, le fait qu’avec un grand <span class="math inline">\(N\)</span>, la variabilité des valeurs que peuvent prendre les moyennes de plusieurs échantillons diminue. Pour s’en assurer, on peut chercher à voir les valeurs de moyennes que l’on obtiendrait si l’on étudait un grand nombre d’échantillons (e.g., 10 000) de même taille, autrement dit la distribution d’échantillonnage de la moyenne pour une valeur de <span class="math inline">\(N\)</span> donnée. La Figure <a href="pr%C3%A9requis-1.html#fig:CentralLimTheo">6.5</a> donne une vision de ce que serait une telle distribution pour différentes valeurs de <span class="math inline">\(N\)</span> dans ce cas là.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:CentralLimTheo"></span>
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/CentralLimTheo-1.png" alt="Illustration du théorème de la limite centrale appliqué à une moyenne d'échantillon. Les distributions des moyennes montrées ici ont été obtenues avec 10 000 échantillons de N observations obtenues aléatoirement à partir d'une population ayant pour moyenne 0 et écart-type 400. Trait rouge = moyenne de la population d'origine" width="80%"><p class="caption">
+Figure 6.5: Illustration du théorème de la limite centrale appliqué à une moyenne d’échantillon. Les distributions des moyennes montrées ici ont été obtenues avec 10 000 échantillons de N observations obtenues aléatoirement à partir d’une population ayant pour moyenne 0 et écart-type 400. Trait rouge = moyenne de la population d’origine
+</p>
+</div>
+<p>La Figure <a href="pr%C3%A9requis-1.html#fig:CentralLimTheo">6.5</a> illustre plusieurs principes qui relèvent du <strong>théorème de la limite centrale</strong>, à savoir : la moyenne d’une distribution d’échantillonnage de la moyenne tend à être la même moyenne que celle de la population d’origine ; et l’écart-type de la distribution d’échantillonnage de la moyenne (<em>SEM</em>, pour <em>Standard Error of the Mean</em> en anglais), devient plus faible à mesure que <span class="math inline">\(N\)</span> grandit. Un troisième principe est illustré sur la Figure <a href="pr%C3%A9requis-1.html#fig:CentralLimTheo2">6.6</a>. Pour réaliser cette figure, la même démarche que pour la Figure <a href="pr%C3%A9requis-1.html#fig:CentralLimTheo">6.5</a> a été suivie, si ce n’est qu’auparavant, la population d’origine suivait systématiquement une loi normale. Dans le cas de la Figure <a href="pr%C3%A9requis-1.html#fig:CentralLimTheo2">6.6</a>, la population suit à l’origine une loi chi-carré, donc asymétrique. Malgré tout, on voit que dès que <span class="math inline">\(N\)</span> est suffisamment grand, la distribution d’échantillonnage de la moyenne suit une loi normale.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:CentralLimTheo2"></span>
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/CentralLimTheo2-1.png" alt="Illustration du théorème de la limite centrale appliqué à une moyenne d'échantillon. Les distributions des moyennes montrées ici ont été obtenues avec 10 000 échantillons de N observations obtenues aléatoirement à partir d'une population suivant une loi chi-carré avec 3 degrés de liberté. Trait rouge = moyenne de la population d'origine" width="80%"><p class="caption">
+Figure 6.6: Illustration du théorème de la limite centrale appliqué à une moyenne d’échantillon. Les distributions des moyennes montrées ici ont été obtenues avec 10 000 échantillons de N observations obtenues aléatoirement à partir d’une population suivant une loi chi-carré avec 3 degrés de liberté. Trait rouge = moyenne de la population d’origine
+</p>
+</div>
+<p>Si l’on formalise les choses d’un point de vue plus mathématique, le théorème de la limite centrale nous dit que si une population a une moyenne <span class="math inline">\(\mu\)</span> et un écart-type <span class="math inline">\(\sigma\)</span>, alors la moyenne de la distribution d’échantillonnage a aussi <span class="math inline">\(\mu\)</span> comme moyenne, et l’écart-type de la distribution d’échantillonnage de la moyenne (i.e., l’erreur standard, <em>SEM</em>) vaut :</p>
+<p><span class="math display">\[SEM = \frac{\sigma}{\sqrt{N}}.\]</span></p>
+<p>La formule montre bien que pour une population présentant un écart-type donné, plus les échantillons étudiés seront de petite taille (<span class="math inline">\(N\)</span>), plus grande sera la variabilité des moyennes provenant des différents échantillons. D’un point de vue plus pratique, cela veut dire notamment que dans une méta-analyse où l’on chercherait à estimer par exemple la moyenne de l’effet d’une intervention dans une population donnée, on aura beau avoir plein d’études conduites sur le sujet, si elles sont de trop petites tailles, il y a de bonnes chances pour que les valeurs des effets trouvés divergent substantiellement et ne permettent donc pas d’avoir une vue précise, fiable, de la valeur de l’effet concernant la population globale.</p>
+</div>
+<div id="résumé-3" class="section level2">
 <h2>
-<span class="header-section-number">6.4</span> Distribution d’échantillonnage de la moyenne<a class="anchor" aria-label="anchor" href="#distribution-d%C3%A9chantillonnage-de-la-moyenne"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6.4</span> Résumé<a class="anchor" aria-label="anchor" href="#r%C3%A9sum%C3%A9-3"><i class="fas fa-link"></i></a>
 </h2>
-
+<ul>
+<li>Les lois de probabilité, la loi des grands nombres, la distribution d’échantillonnage d’une statistique, ou encore le théorème de la limite centrale, sont des outils mathématiques qui permettent de réaliser et de mieux comprendre les inférences statistiques.</li>
+<li>Une loi de probabilité renseigne sur les chances, pour une statistique donnée, d’obtenir une valeur précise ou d’obtenir une valeur tombant dans un rang de valeurs donné selon le cas de figure.</li>
+<li>Des exemples de lois de probabilité courrement utilisées sont la loi binomiale, la loi normale, la loi <span class="math inline">\(\chi^2\)</span>, la loi <span class="math inline">\(t\)</span>, et la loi <span class="math inline">\(F\)</span>.</li>
+</ul>
 </div>
 </div>
   <div class="chapter-nav">
 <div class="prev"><a href="r%C3%A9gressions.html"><span class="header-section-number">5</span> Régressions</a></div>
-<div class="next"><a href="r%C3%A9f%C3%A9rences.html">Références</a></div>
+<div class="next"><a href="tests-statistiques-pour-des-variables-qualitatives.html"><span class="header-section-number">7</span> Tests statistiques pour des variables qualitatives</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
@@ -194,8 +223,8 @@ Figure 6.3: Densité de probabilité de lois chi-carré, t, et F.
 <li><a class="nav-link" href="#la-loi-normale-et-lois-apparent%C3%A9es"><span class="header-section-number">6.2.3</span> La loi normale et lois apparentées</a></li>
 </ul>
 </li>
-<li><a class="nav-link" href="#la-loi-des-grands-nombres.-le-th%C3%A9or%C3%A8me-de-la-limite-centrale"><span class="header-section-number">6.3</span> La loi des grands nombres. Le Théorème de la limite centrale</a></li>
-<li><a class="nav-link" href="#distribution-d%C3%A9chantillonnage-de-la-moyenne"><span class="header-section-number">6.4</span> Distribution d’échantillonnage de la moyenne</a></li>
+<li><a class="nav-link" href="#loi-des-grands-nombres-distribution-d%C3%A9chantillonnage-de-la-moyenne-et-th%C3%A9or%C3%A8me-de-la-limite-centrale"><span class="header-section-number">6.3</span> Loi des grands nombres, distribution d’échantillonnage de la moyenne, et théorème de la limite centrale</a></li>
+<li><a class="nav-link" href="#r%C3%A9sum%C3%A9-3"><span class="header-section-number">6.4</span> Résumé</a></li>
 </ul>
 
       <div class="book-extra">
@@ -213,7 +242,7 @@ Figure 6.3: Densité de probabilité de lois chi-carré, t, et F.
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Analyser des données avec R</strong>" was written by Pierre-Yves de Müllenheim. It was last built on 2022-08-21.</p>
+    <p>"<strong>Analyser des données avec R</strong>" was written by Pierre-Yves de Müllenheim. It was last built on 2022-08-31.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

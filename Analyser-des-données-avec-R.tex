@@ -133,7 +133,7 @@
 
 \title{Analyser des données avec R}
 \author{Pierre-Yves de Müllenheim}
-\date{2022-08-21}
+\date{2022-08-31}
 
 \begin{document}
 \maketitle
@@ -1917,9 +1917,9 @@ Les indices de position servent à donner un ordre de grandeur de la variable. A
 
 \emph{La moyenne}
 
-Si l'on pose que \emph{N} est le nombre de valeurs dans une variable (on parle également de \textbf{taille} de la variable), que \emph{i} est la i-ème observation (i-ème position) dans la variable, et que \(X{i}\) est la valeur associée à la i-ème position, alors le calcul de la moyenne, notée \(\overline{X}\), peut être écrit de la manière suivante :
+Si l'on pose que \(N\) est le nombre de valeurs dans une variable (on parle également de \textbf{taille} de la variable), que \emph{i} est la i-ème observation (i-ème position) dans la variable, et que \(X{i}\) est la valeur associée à la i-ème position, alors le calcul de la moyenne, notée \(\overline{X}\), peut être écrit de la manière suivante :
 \[\overline{X} = \frac{1}{N}\sum_{i=1}^{N} X{i}\]
-Cette expression mathématique signifie que la moyenne s'obtient en additionnant (\(\sum\)) les valeurs allant de la position 1 à la position \emph{N} de la variable, et en divisant le tout par le nombre total de valeurs \emph{N} contenues dans la variable. Pour mieux comprendre, prenons par exemple une variable qui ne contiendrait que les cinq premières valeurs de la variable \texttt{Sepal.Length} du jeu de données \texttt{iris} et qu'on appelle \texttt{sample\_iris}.
+Cette expression mathématique signifie que la moyenne s'obtient en additionnant (\(\sum\)) les valeurs allant de la position 1 à la position \(N\) de la variable, et en divisant le tout par le nombre total de valeurs \(N\) contenues dans la variable. Pour mieux comprendre, prenons par exemple une variable qui ne contiendrait que les cinq premières valeurs de la variable \texttt{Sepal.Length} du jeu de données \texttt{iris} et qu'on appelle \texttt{sample\_iris}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2016,7 +2016,7 @@ La moyenne, c'est en quelque sorte le ``centre de gravité'' de la variable \aut
 
 \emph{La médiane}
 
-La médiane est le deuxième indice de position que l'on considère régulièrement lorsqu'il s'agit de résumer numériquement une variable quantitative. Pour l'obtenir, il faut d'abord classer les valeurs de la variable selon un ordre croissant. La médiane pour une variable de taille \emph{N} est alors la valeur correspondant au rang (\emph{N} + 1) / 2. Ainsi, la médiane désigne la valeur qui sépare les valeurs de la variable en deux groupes d'observations de même taille \autocite{chatellierMoyenneMedianeLeurs2003}. Dans l'exemple ci-dessous, il y a cinq observations, et donc cinq valeurs, qui ont été triées par ordre croissant. La médiane est alors la valeur correspondant au rang (5 + 1) / 2 = 3, soit 4.9.
+La médiane est le deuxième indice de position que l'on considère régulièrement lorsqu'il s'agit de résumer numériquement une variable quantitative. Pour l'obtenir, il faut d'abord classer les valeurs de la variable selon un ordre croissant. La médiane pour une variable de taille \(N\) est alors la valeur correspondant au rang (\(N\) + 1) / 2. Ainsi, la médiane désigne la valeur qui sépare les valeurs de la variable en deux groupes d'observations de même taille \autocite{chatellierMoyenneMedianeLeurs2003}. Dans l'exemple ci-dessous, il y a cinq observations, et donc cinq valeurs, qui ont été triées par ordre croissant. La médiane est alors la valeur correspondant au rang (5 + 1) / 2 = 3, soit 4.9.
 
 \begin{verbatim}
 ##   1   2   3   4   5 
@@ -2141,13 +2141,13 @@ L'étendue est la mesure la plus simple de la dispersion des données contenues 
 L'écart-type est une statistique qui donne une idée de la mesure selon laquelle les valeurs de la variable sont éloignées de la moyenne. Pour calculer l'écart-type, il faut en réalité d'abord calculer la variance \(\sigma^2\), dont le calcul est le suivant :
 \[\sigma^2 = \frac{1}{N}\sum_{i=1}^{N} (X{i} - \overline{X})^2\]
 
-Cette formule signifie que pour obtenir la variance, il faut d'abord faire la somme des carrés des différences entre chaque valeur et la moyenne de la variable. Cela fait, la variance s'obtient en divisant cette somme de carrés par le nombre \emph{N} de valeurs de la variable. L'écart-type \(\sigma\), c'est alors la racine carrée de la variance :
+Cette formule signifie que pour obtenir la variance, il faut d'abord faire la somme des carrés des différences entre chaque valeur et la moyenne de la variable. Cela fait, la variance s'obtient en divisant cette somme de carrés par le nombre \(N\) de valeurs de la variable. L'écart-type \(\sigma\), c'est alors la racine carrée de la variance :
 \[\sigma = \sqrt{\frac{1}{N}\sum_{i=1}^{N} (X{i} - \overline{X})^2}\]
 
-Ces calculs sont valides lorsque l'on a en sa possession les données de toute la population que l'on souhaite étudier. Toutefois, lorsque l'on a en sa possession des données issues seulement d'un échantillon de la population, ces calculs biaisent les estimations de la variance et de l'écart-type correspondant à la population étudiée. Cette notion de biais traduit le fait que lorsqu'on répète un grand nombre de fois le calcul de la variance ou de l'écart-type à partir, à chaque fois, d'échantillons de population différents, on a en moyenne un décalage entre la valeur de l'estimation et la réelle valeur de la variance et de l'écart-type de la population. Ce décalage systématique est tel qu'il convient dans ce cas là de diviser la somme des carrés des différences (\(X{i} - \overline{X}\)) par \emph{N-1} plutôt que par \emph{N} \autocite{grenierQuelleEstBonne2007}. La formule de l'écart-type non biaisé, noté \emph{s}, est alors la suivante :
-\[s = \sqrt{\frac{1}{N-1}\sum_{i=1}^{N} (X{i} - \overline{X})^2}\]
+Ces calculs sont valides lorsque l'on a en sa possession les données de toute la population que l'on souhaite étudier. Toutefois, lorsque l'on a en sa possession des données issues seulement d'un échantillon de la population, ces calculs biaisent les estimations de variance et de l'écart-type correspondant à la population étudiée. Cette notion de biais traduit le fait que lorsqu'on répète un grand nombre de fois le calcul de la variance et de l'écart-type à partir, à chaque fois, d'échantillons de population différents, on a en moyenne un décalage entre la valeur de l'estimation et la réelle valeur de variance et de l'écart-type de la population. Ce décalage systématique est tel qu'il convient dans ce cas là de diviser la somme des carrés des différences (\(X{i} - \overline{X}\)) par \(N-1\) plutôt que par \(N\) \autocite{grenierQuelleEstBonne2007}. La formule de l'écart-type non biaisé, noté \emph{\(\hat{\sigma}\)}, est alors la suivante :
+\[\hat{\sigma} = \sqrt{\frac{1}{N-1}\sum_{i=1}^{N} (X{i} - \overline{X})^2}\]
 
-L'écart-type est la mesure de dispersion classiquement associée à la moyenne. Si on note une moyenne \(\overline{X}\) et un écart-type \emph{s}, alors le résumé d'une variable à l'aide de ces statistiques s'écrit comme suit : \(\overline{X}\) ± \emph{s}. Lorsque l'écart-type est divisé par la moyenne arithmétique de la variable, on obtient une valeur appelée \textbf{coefficient de variation}. Avec le logiciel R, les fonctions pour calculer la variance et l'écart-type non biaisés sont respectivement \texttt{var()} et \texttt{sd()}.
+L'écart-type est la mesure de dispersion classiquement associée à la moyenne. Si, pour un échantillon, on note une moyenne \(\overline{X}\) et un écart-type \(\hat{\sigma}\), alors le résumé d'une variable à l'aide de ces statistiques s'écrit comme suit : \(\overline{X}\) ± \(\hat{\sigma}\). Lorsque l'écart-type est divisé par la moyenne arithmétique de la variable, on obtient une valeur appelée \textbf{coefficient de variation}. Avec le logiciel R, les fonctions pour calculer la variance et l'écart-type non biaisés sont respectivement \texttt{var()} et \texttt{sd()}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2172,21 +2172,21 @@ L'écart-type est la mesure de dispersion classiquement associée à la moyenne.
 
 \emph{L'intervalle interquartile}
 
-L'intervalle interquartile désigne l'étendue entre le premier quartile (Q1) et le troisième quartile (Q3) d'une variable. Comme expliqué auparavant dans le cadre de la boîte à moustaches, Q1 et Q3 désignent respectivement les valeurs en-dessous desquelles 25 \% et 75 \% des observations de la variable se trouvent \autocite{chatellierMoyenneMedianeLeurs2003}. Pour un échantillon de taille \emph{N}, la procédure classique pour calculer les quartiles est différente selon que le rapport \emph{N} / 4 est un nombre entier ou non. Lorsque ce rapport n'est pas un nombre entier, Q1 est la valeur correspondant au rang immédiatement supérieur à \emph{N} / 4. Par exemple, pour la variable ci-dessous, qui a une taille \emph{N} de 5 valeurs, le rapport \emph{N} / 4 est égal à 1.25. Q1 est donc la valeur correspondant au rang directement supérieur, c'est-à-dire au rang 2, qui est ici la valeur 7.8.
+L'intervalle interquartile désigne l'étendue entre le premier quartile (Q1) et le troisième quartile (Q3) d'une variable. Comme expliqué auparavant dans le cadre de la boîte à moustaches, Q1 et Q3 désignent respectivement les valeurs en-dessous desquelles 25 \% et 75 \% des observations de la variable se trouvent \autocite{chatellierMoyenneMedianeLeurs2003}. Pour un échantillon de taille \(N\), la procédure classique pour calculer les quartiles est différente selon que le rapport \(N\) / 4 est un nombre entier ou non. Lorsque ce rapport n'est pas un nombre entier, Q1 est la valeur correspondant au rang immédiatement supérieur à \(N\) / 4. Par exemple, pour la variable ci-dessous, qui a une taille \(N\) de 5 valeurs, le rapport \(N\) / 4 est égal à 1.25. Q1 est donc la valeur correspondant au rang directement supérieur, c'est-à-dire au rang 2, qui est ici la valeur 7.8.
 
 \begin{verbatim}
 ##    1    2    3    4    5 
 ##  4.5  7.8 10.8 13.9 20.2
 \end{verbatim}
 
-Lorsque le rapport \emph{N} / 4 est un nombre entier, Q1 correspond à la moyenne des valeurs associées respectivement aux rangs \emph{N} / 4 et (\emph{N} / 4) + 1. Par exemple, pour la variable ci-dessous, qui a une taille \emph{N} de 8 valeurs, le rapport \emph{N} / 4 est à égal 2. Q1 est donc la moyenne des valeurs correspondant au rang 2 et au rang 3 (i.e., les valeurs 7.8 et 10.8), qui équivaut ici à 9.3.
+Lorsque le rapport \(N\) / 4 est un nombre entier, Q1 correspond à la moyenne des valeurs associées respectivement aux rangs \(N\) / 4 et (\(N\) / 4) + 1. Par exemple, pour la variable ci-dessous, qui a une taille \(N\) de 8 valeurs, le rapport \(N\) / 4 est à égal 2. Q1 est donc la moyenne des valeurs correspondant au rang 2 et au rang 3 (i.e., les valeurs 7.8 et 10.8), qui équivaut ici à 9.3.
 
 \begin{verbatim}
 ##    1    2    3    4    5    6    7    8 
 ##  4.5  7.8 10.8 13.9 20.2 25.6 37.5 43.9
 \end{verbatim}
 
-La démarche demeure la même pour déterminer Q3, à ceci près qu'on utilise le nombre 3\emph{N} et non plus le nombre \emph{N} pour les calculs \autocite{labreucheDifferentsTypesVariables2010}. Cette méthode de calcul est en principe à privilégier en présence d'une variable discrète. Si l'on souhaite obtenir les quartiles selon cette méthode avec le logiciel R, il faut utiliser la fonction \texttt{quantile()} de la manière suivante :
+La démarche demeure la même pour déterminer Q3, à ceci près qu'on utilise le nombre 3\(N\) et non plus le nombre \(N\) pour les calculs \autocite{labreucheDifferentsTypesVariables2010}. Cette méthode de calcul est en principe à privilégier en présence d'une variable discrète. Si l'on souhaite obtenir les quartiles selon cette méthode avec le logiciel R, il faut utiliser la fonction \texttt{quantile()} de la manière suivante :
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2323,7 +2323,7 @@ On remarque que les résultats de la fonction \texttt{quantile()} sont différen
 
 Le tableau montre les données sur lesquelles R s'est appuyé pour déterminer les valeurs des quantiles recherchés (i.e., les quantiles 0.25 et 0.75 pour Q1 et Q3, respectivement). Les données du tableau sont bien celles relatives à notre variable \texttt{vec}, dont on peut reconnaître les valeurs dans la colonne de droite du tableau. La colonne ``Quantile'' montre les fractions (ou portions) de la variable \texttt{vec} associées aux valeurs de la variable compte tenu de leurs rangs respectifs. Par exemple, la valeur 25.6, dont le rang est 6, correspond au quantile 0.71 (approximativement). Cela veut dire que 71 \% des observations ont une valeur inférieure ou égale à 25.6. Il faut savoir qu'il existe en réalité plusieurs manières de déterminer la valeur du quantile que représente chaque valeur. Dans le cas présent, le quantile représenté, que l'on va noter \emph{q}, a été déterminé selon la formule suivante :
 \[q = (k - 1 ) / (N - 1)\]
-Dans le calcul ci-dessus, \emph{k} désigne le rang de la valeur considérée, et \emph{N} désigne la taille de la variable étudiée (i.e., le nombre total de valeurs). Comme on peut le voir dans le tableau ci-dessus, cette méthode de calcul conduit nécessairement à attribuer le quantile 0 à la valeur de rang 1, et la quantile 1 à la valeur de rang \emph{N}. Lorsque le nombre de valeurs fait que les quantiles 0.25 et 0.75 n'existent pas, R réalise une interpolation de la valeur correspondant au quantile recherché, cela à partir des quantiles qui existent et qui encadrent le quantile recherché, ainsi qu'à partir des valeurs correspondant à ces quantiles. Dans le cas présent, il s'agit plus précisément d'une interpolation linéaire. Voyons sur la Figure \ref{fig:graphicContinuouQuantiles} en quoi cela consiste.
+Dans le calcul ci-dessus, \emph{k} désigne le rang de la valeur considérée, et \(N\) désigne la taille de la variable étudiée (i.e., le nombre total de valeurs). Comme on peut le voir dans le tableau ci-dessus, cette méthode de calcul conduit nécessairement à attribuer le quantile 0 à la valeur de rang 1, et la quantile 1 à la valeur de rang \(N\). Lorsque le nombre de valeurs fait que les quantiles 0.25 et 0.75 n'existent pas, R réalise une interpolation de la valeur correspondant au quantile recherché, cela à partir des quantiles qui existent et qui encadrent le quantile recherché, ainsi qu'à partir des valeurs correspondant à ces quantiles. Dans le cas présent, il s'agit plus précisément d'une interpolation linéaire. Voyons sur la Figure \ref{fig:graphicContinuouQuantiles} en quoi cela consiste.
 
 \begin{figure}
 
@@ -2358,8 +2358,8 @@ Le fait qu'une distribution soit asymétrique désigne le fait que les observati
 
 Comme on peut le voir dans l'aide associée à la fonction \texttt{skewness()}, il existe en réalité plusieurs méthodes de calcul du coefficient d'asymétrie (noté \(\gamma_{1}\) ci-dessous). La méthode de \texttt{type} 3, qui est celle configurée par défaut pour cette fonction, consiste à faire le calcul suivant :
 
-\[\gamma_{1} =  \frac{1}{s^3} {\frac{\sum_{i=1}^{N} (X{i} - \overline{X})^3}{N}}\]
-Dans ce calcul, \emph{s} désigne l'écart-type non biaisé de la variable, et \emph{N} désigne la taille de la variable. Avec cette méthode, on obtient un coefficient négatif lorsque la distribution est asymétrique à gauche (longue queue vers la gauche), un coefficient de 0 lorsque la distribution est parfaitement symétrique, et un coefficient positif lorsque la distribution est asymétrique à droite (longue queue vers la droite). Ceci est illustré sur la Figure \ref{fig:skeweddistri}.
+\[\gamma_{1} =  \frac{1}{\hat{\sigma}^3} {\frac{\sum_{i=1}^{N} (X{i} - \overline{X})^3}{N}}\]
+Dans ce calcul, \(\hat{\sigma}\) désigne l'écart-type non biaisé de la variable, et \(N\) désigne la taille de la variable. Avec cette méthode, on obtient un coefficient négatif lorsque la distribution est asymétrique à gauche (longue queue vers la gauche), un coefficient de 0 lorsque la distribution est parfaitement symétrique, et un coefficient positif lorsque la distribution est asymétrique à droite (longue queue vers la droite). Ceci est illustré sur la Figure \ref{fig:skeweddistri}.
 
 \begin{figure}
 
@@ -2373,7 +2373,7 @@ Dans ce calcul, \emph{s} désigne l'écart-type non biaisé de la variable, et \
 \emph{Pour aller plus loin\ldots{}}
 Joanes et Gill \autocite*{joanesComparingMeasuresSample1998} ont montré que lorsqu'il s'agit d'estimer le degré d'asymétrie de la distribution relative à la population étudiée, et cela à partir de l'échantillon observé, certaines méthodes de calcul du coefficient d'asymétrie peuvent être plus fiables que d'autres.
 
-Dans le cas où la distribution des valeurs dans la population étudiée suivrait une loi normale, la méthode par défaut présentée ci-dessus serait la plus fiable pour estimer le niveau d'asymétrie lorsque l'échantillon observé est de petite taille (\emph{N} \textless{} 50). Cependant, avec des échantillons de grande taille, les méthodes se valeraient.
+Dans le cas où la distribution des valeurs dans la population étudiée suivrait une loi normale, la méthode par défaut présentée ci-dessus serait la plus fiable pour estimer le niveau d'asymétrie lorsque l'échantillon observé est de petite taille (\(N\) \textless{} 50). Cependant, avec des échantillons de grande taille, les méthodes se valeraient.
 
 Dans le cas où la distribution des valeurs de la population étudiée ne suivrait pas une loi normale, et qu'elle s'avèrerait très asymétrique, la méthode de \texttt{type} 2 proposée avec la fonction \texttt{skewness()} serait la plus fiable, particulièrement en présence d'échantillons de petite taille.
 
@@ -2394,8 +2394,8 @@ Le fait qu'une distribution soit aplatie désigne le fait que la forme de la dis
 
 Comme on peut le voir dans l'aide associée à la fonction \texttt{kurtosis()}, il existe en réalité plusieurs méthodes de calcul du coefficient d'aplatissement (noté \(\gamma_{2}\) ci-dessous) . La méthode de \texttt{type} 3, qui est celle configurée par défaut pour cette fonction, consiste à faire le calcul suivant :
 
-\[\gamma_{2} =  \frac{1}{s^4} {\frac{\sum_{i=1}^{N} (X{i} - \overline{X})^4}{N}} -3\]
-Dans ce calcul, \emph{s} désigne l'écart-type non biaisé de la variable, et \emph{N} désigne la taille de la variable. Avec cette méthode, on obtient un coefficient négatif lorsque la distribution est particulièrement aplatie par rapport à une distribution suivant une loi normale (distribution platycurtique), un coefficient de 0 lorsque la distribution suit une loi normale (distribution mésocurtique), et un coefficient positif lorsque la distribution est particulièrement pointue par rapport à une loi normale (distribution leptocurtique). Ceci est illustré sur la Figure \ref{fig:kurtosisdistri}.
+\[\gamma_{2} =  \frac{1}{\hat{\sigma}^4} {\frac{\sum_{i=1}^{N} (X{i} - \overline{X})^4}{N}} -3\]
+Dans ce calcul, \(\hat{\sigma}\) désigne l'écart-type non biaisé de la variable, et \(N\) désigne la taille de la variable. Avec cette méthode, on obtient un coefficient négatif lorsque la distribution est particulièrement aplatie par rapport à une distribution suivant une loi normale (distribution platycurtique), un coefficient de 0 lorsque la distribution suit une loi normale (distribution mésocurtique), et un coefficient positif lorsque la distribution est particulièrement pointue par rapport à une loi normale (distribution leptocurtique). Ceci est illustré sur la Figure \ref{fig:kurtosisdistri}.
 
 \begin{figure}
 
@@ -2409,7 +2409,7 @@ Dans ce calcul, \emph{s} désigne l'écart-type non biaisé de la variable, et \
 \emph{Pour aller plus loin\ldots{}}
 Comme avec le coefficient d'asymétrie, Joanes et Gill \autocite*{joanesComparingMeasuresSample1998} ont montré que lorsqu'il s'agit d'estimer le degré d'aplatissement de la distribution relative à la population étudiée, et cela à partir de l'échantillon observé, certaines méthodes de calcul du coefficient d'aplatissement peuvent être plus fiables que d'autres.
 
-Dans le cas où la distribution des valeurs dans la population étudiée suivrait une loi normale, la méthode de \texttt{type} 1 proposée avec la fonction \texttt{kurtosis()} serait la plus fiable pour estimer le niveau d'aplatissement lorsque l'échantillon observé est de petite taille (\emph{N} \textless{} 50). Cependant, la méthode par défaut présentée plus haut fournirait des résultats relativement proches de ceux obtenus avec la méthode de \texttt{type} 1. De plus, avec des échantillons de grande taille, toutes les méthodes se valeraient.
+Dans le cas où la distribution des valeurs dans la population étudiée suivrait une loi normale, la méthode de \texttt{type} 1 proposée avec la fonction \texttt{kurtosis()} serait la plus fiable pour estimer le niveau d'aplatissement lorsque l'échantillon observé est de petite taille (\(N\) \textless{} 50). Cependant, la méthode par défaut présentée plus haut fournirait des résultats relativement proches de ceux obtenus avec la méthode de \texttt{type} 1. De plus, avec des échantillons de grande taille, toutes les méthodes se valeraient.
 
 Dans le cas où la distribution des valeurs de la population étudiée ne suivrait pas une loi normale, et s'avèrerait très asymétrique, la méthode de \texttt{type} 2 proposée avec la fonction \texttt{kurtosis()} serait la plus fiable, particulièrement en présence d'échantillons de petite taille.
 
@@ -2529,11 +2529,11 @@ Lorsqu'il s'agit de simplement décrire une distribution des données obtenues �
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  Approximativement \textbf{68.3 \%} des observations sont comprises dans l'intervalle {[}\(\overline{X}\) - 1 \emph{s} ; \(\overline{X}\) + 1 \emph{s}{]},
+  Approximativement \textbf{68.3 \%} des observations sont comprises dans l'intervalle {[}\(\overline{X}\) - 1 \(\hat{\sigma}\) ; \(\overline{X}\) + 1 \(\hat{\sigma}\){]},
 \item
-  Approximativement \textbf{95.5 \%} des observations sont comprises dans l'intervalle {[}\(\overline{X}\) - 2 \emph{s} ; \(\overline{X}\) + 2 \emph{s}{]},
+  Approximativement \textbf{95.5 \%} des observations sont comprises dans l'intervalle {[}\(\overline{X}\) - 2 \(\hat{\sigma}\) ; \(\overline{X}\) + 2 \(\hat{\sigma}\){]},
 \item
-  Approximativement \textbf{99.7 \%} des observations sont comprises dans l'intervalle {[}\(\overline{X}\) - 3 \emph{s} ; \(\overline{X}\) + 3 \emph{s}{]}.
+  Approximativement \textbf{99.7 \%} des observations sont comprises dans l'intervalle {[}\(\overline{X}\) - 3 \(\hat{\sigma}\) ; \(\overline{X}\) + 3 \(\hat{\sigma}\){]}.
 \end{enumerate}
 
 Ceci est illustré sur la Figure \ref{fig:ObservationsWithinSdMutiplesGaussianDistri}.
@@ -2651,8 +2651,7 @@ Certes, pour le moment, cette seconde procédure n'a fait que rajouter une ligne
 \StringTok{  }\KeywordTok{count}\NormalTok{(color) }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ color, }\DataTypeTok{y =}\NormalTok{ n)) }\OperatorTok{+}
 \StringTok{     }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{stat =} \StringTok{"identity"}\NormalTok{) }\OperatorTok{+}
-\StringTok{     }\KeywordTok{geom_text}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{label =}\NormalTok{ n, }\DataTypeTok{x =}\NormalTok{ color, }\DataTypeTok{y =}\NormalTok{ n), }
-               \DataTypeTok{size =} \DecValTok{2}\NormalTok{, }\DataTypeTok{nudge_y =} \DecValTok{700}\NormalTok{) }\OperatorTok{+}
+\StringTok{     }\KeywordTok{geom_text}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{label =}\NormalTok{ n), }\DataTypeTok{size =} \DecValTok{2}\NormalTok{, }\DataTypeTok{nudge_y =} \DecValTok{700}\NormalTok{) }\OperatorTok{+}
 \StringTok{     }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"A"}\NormalTok{)}
 
 \CommentTok{# Diagramme en barres réorganisées manuellement}
@@ -2920,7 +2919,7 @@ Dans la fonction \texttt{geom\_smooth()} qui a été utilisée dans l'exemple ci
 
 La valeur du coefficient de corrélation de Pearson peut aller de 1 (suggérant une relation linéaire positive parfaite) à -1 (suggérant une relation linéaire négative parfaite). Des valeurs proches de 0 suggèreraient une abscence de relation linéaire. La formule du coefficient de corrélation de Pearson (\(r\)) pour un échantillon est la suivante :
 
-\[r_{X,Y} =  {\frac{COV_{X,Y}}{s_{X} s_{Y}}} =  {\frac{\sum_{i=1}^{N} (X{i} - \overline{X}) (Y{i} - \overline{Y})}{N-1}} {\frac{1}{s_{X} s_{Y}}},\]
+\[r_{X,Y} =  {\frac{COV_{X,Y}}{\hat{\sigma}_{X} \hat{\sigma}_{Y}}} =  {\frac{\sum_{i=1}^{N} (X{i} - \overline{X}) (Y{i} - \overline{Y})}{N-1}} {\frac{1}{\hat{\sigma}_{X} \hat{\sigma}_{Y}}},\]
 
 \(COV\) désignant la covariance entre les variables \(X\) et \(Y\), \(X{i}\) et \(Y{i}\) les valeurs de \(X\) et \(Y\) pour une observation \(i\), \(\overline{X}\) et \(\overline{Y}\) les moyennes respectives des variables \(X\) et \(Y\), \(N\) le nombre d'observations, et \(s_{X}\) et \(s_{Y}\) les écarts-types respectifs des variables \(X\) et \(Y\). Cette formule indique que le coefficient de corrélation de Pearson s'obtient en divisant la covariance des deux variables étudiées par le produit de leurs écarts-types respectifs.
 
@@ -4179,7 +4178,7 @@ De prime abord, l'analyse qui pourrait être envisagée pour comparer deux group
 
 Classiquement, l'indice statistique utilisé pour calculer une différence de moyennes de manière standardisée entre deux groupes de données non appariées, à partir d'échantillons de population, est le \(d_{s}\) de Cohen. Cette statistique se calcule en faisant la différence entre les moyennes des deux groupes à comparer, et en divisant cette différence par l'écart-type commun des valeurs de chacun des deux groupes. Ce calcul est montré ci-dessous :
 
-\[d_{s} = \frac{\overline{X}_{1} - \overline{X}_{2}} {\sqrt{\frac{(N_{1} - 1) s_{1}^2 + (N_{2} - 1) s_{2}^2} {N_{1} + N_{2} - 2}}}\]
+\[d_{s} = \frac{\overline{X}_{1} - \overline{X}_{2}} {\sqrt{\frac{(N_{1} - 1) \hat{\sigma}_{1}^2 + (N_{2} - 1) \hat{\sigma}_{2}^2} {N_{1} + N_{2} - 2}}}\]
 
 Dans R, le \(d_{s}\) de Cohen peut être calculé à l'aide de la fonction \texttt{cohens\_d()} du package \texttt{effectsize}, qui nécessite d'être installé puis chargé avant d'être utilisé.
 
@@ -4291,7 +4290,7 @@ Ici, la valeur ne change pas beaucoup par rapport au cas précédent, car l'effe
 
 Dans certains cas où l'on souhaiterait comparer les scores de deux groupes indépendants pour tester l'effet de deux conditions expérimentales différentes, l'expérimentation en tant que telle peut influencer, au-delà de la moyenne, l'écart-type de la variable réponse dans un des deux groupes. On peut se trouver dans ce genre de situation lorsque l'on compare les données post-programme d'un groupe entraîné ou traité à celles d'un groupe contrôle. En effet, le groupe entraîné/traité peut voir son écart-type changé au terme d'un programme en raison d'une réponse individuelle hétérogène à ce programme, ce qui ne sera pas en principe le cas du groupe contrôle. Dans ce genre de situations, des indices statistiques autres que le \(g_{s}\) de Hedges mériteraient d'être calculés, tels que le delta (\(\Delta\)) de Glass \autocite{lakensCalculatingReportingEffect2013} :
 
-\[\Delta = \frac{\overline{X}_{1} - \overline{X}_{2}} {s_{2}}\]
+\[\Delta = \frac{\overline{X}_{1} - \overline{X}_{2}} {\hat{\sigma}_{2}}\]
 
 Le calcul du \(\Delta\) de Glass est dans l'idée le même que celui du \(d_{s}\) de Cohen, sauf que la différence entre les moyennes des deux groupes n'est pas divisée par l'écart-type commun des deux groupes, mais par celui d'un seul des deux groupes, qui serait en principe celui qui représenterait la condition contrôle ou la condition de référence. Une pratique souvent recommandée pour comparer dans ce genre de situation les scores post-programme de deux groupes (un groupe entraîné/traité et un groupe contrôle) serait d'utiliser l'écart-type des scores du groupe contrôle obtenu en pré-programme \autocite{lakensCalculatingReportingEffect2013}.
 
@@ -4323,7 +4322,7 @@ Certaines situations peuvent rendre la comparaison de moyennes non pertinente. C
 
 Le calcul classique pour obtenir la taille d'effet désignant l'écart entre deux groupes de données dépendantes est celui du \(d_{z}\) \autocite{lakensCalculatingReportingEffect2013}, qui est montré ci-dessous :
 
-\[d_{z} = \frac{\overline{X} _{diff}}{s_{diff}},\]
+\[d_{z} = \frac{\overline{X} _{diff}}{\hat{\sigma}_{diff}},\]
 
 \(\overline{X} _{diff}\) désignant la moyenne des différences relatives à chaque pair de valeurs obtenues dans les deux conditions comparées, et \(s_{diff}\) désignant l'écart-type de ces différences. Dans R, le \(d_{z}\) peut être obtenu à nouveau avec la fonction \texttt{cohens\_d()} du package \texttt{effectsize}. Pour illustrer cela, nous allons à nouveau utiliser le jeu de données \texttt{Blink2} crée plus haut pour les exemples de \emph{raincloud plots}.
 
@@ -4346,7 +4345,7 @@ Le calcul classique pour obtenir la taille d'effet désignant l'écart entre deu
 
 Toutefois, d'après Lakens \autocite*{lakensCalculatingReportingEffect2013}, il peut être intéressant de rapporter plutôt un indice de taille d'effet qui ne serait pas influencé par le fait que les données des deux groupes à comparer soient corrélées (car dépendantes), notamment en vue de rendre comparable cette taille d'effet à celles obtenues dans le cadre d'études de type \emph{between-subject design}, pour plus facilement conduire des méta-analyses par la suite par exemple. La recommandation de Lakens \autocite*{lakensCalculatingReportingEffect2013} serait alors d'utiliser l'indice \(d_{av}\), dont le calcul serait le suivant :
 
-\[d_{av} = \frac{\overline{X} _{diff}}{\sqrt{\frac{s_{1}^2 + s_{2}^2} {2}}}\]
+\[d_{av} = \frac{\overline{X} _{diff}}{\sqrt{\frac{\hat{\sigma}_{1}^2 + \hat{\sigma}_{2}^2} {2}}}\]
 
 Ce calcul reviendrait donc à diviser la moyenne des différences par l'écart-type moyen relatif aux deux groupes de données. Pour obtenir \(d_{av}\), il est possible de repartir de la fonction \texttt{cohens\_d()} et de sa configuration pour des groupes indépendants, mais en indiquant \texttt{pooled\_sd\ =\ FALSE} dans la fonction, comme ci-dessous :
 
@@ -4750,9 +4749,9 @@ La loi normale peut être mise en lien avec d'autres grandes lois, telles que :
 \item
   La loi Chi-carré (\(\chi^2\)) : lorsque l'on prend les valeurs de plusieurs distributions normales standards (avec des moyennes de 0 et des écarts-types de 1), qu'on les met au carré, puis qu'on les additionne, on obtient une variable suivant une loi \(\chi^2\) à \(k\) degrés de liberté (cf.~Figure \ref{fig:VariousQuantLaws}, graphique A), \(k\) étant le nombre de variables que l'on a mises au carré. Comme on peut le voir sur la Figure \ref{fig:VariousQuantLaws}, la distribution \(\chi^2\) est plutôt asymétrique, avec des valeurs toujours supérieures à 0.
 \item
-  La loi \emph{t} : les distributions relatives à des lois \emph{t} ressemblent aux distributions relatives à des lois normales mais avec des queues de distribution plus épaisses. Une distribution \emph{t} peut être obtenue en divisant les valeurs d'une distribution \(\chi^2\) par le nombre de degrés de liberté \(k\), puis en prenant leurs racines carrées, et enfin en divisant les valeurs d'une loi normale par la variable obtenue. On obtient alors une distribution \emph{t} à \(k\) degrés de liberté.
+  La loi \(t\) : les distributions relatives à des lois \(t\) ressemblent aux distributions relatives à des lois normales mais avec des queues de distribution plus épaisses (cf.~Figure \ref{fig:VariousQuantLaws}, graphique B). Une distribution \(t\) peut être obtenue en divisant les valeurs d'une distribution \(\chi^2\) par le nombre de degrés de liberté \(k\), puis en prenant leurs racines carrées, et enfin en divisant les valeurs d'une loi normale par la variable obtenue. On obtient alors une distribution \(t\) à \(k\) degrés de liberté (cf.~Figure \ref{fig:VariousQuantLaws}, graphique C).
 \item
-  La loi \emph{F} : la distribution d'une loi \emph{F} ressemble à celle d'une loi \(\chi^2\). Une distribution \emph{F} sert à comparer deux distributions \(\chi^2\).
+  La loi \(F\) : la distribution d'une loi \(F\) ressemble à celle d'une loi \(\chi^2\). Une distribution \(F\) sert à comparer deux distributions \(\chi^2\).
 \end{itemize}
 
 \begin{figure}
@@ -4764,11 +4763,231 @@ La loi normale peut être mise en lien avec d'autres grandes lois, telles que :
 \caption{Densité de probabilité de lois chi-carré, t, et F.}\label{fig:VariousQuantLaws}
 \end{figure}
 
-\hypertarget{la-loi-des-grands-nombres.-le-thuxe9oruxe8me-de-la-limite-centrale}{%
-\section{La loi des grands nombres. Le Théorème de la limite centrale}\label{la-loi-des-grands-nombres.-le-thuxe9oruxe8me-de-la-limite-centrale}}
+\hypertarget{loi-des-grands-nombres-distribution-duxe9chantillonnage-de-la-moyenne-et-thuxe9oruxe8me-de-la-limite-centrale}{%
+\section{Loi des grands nombres, distribution d'échantillonnage de la moyenne, et théorème de la limite centrale}\label{loi-des-grands-nombres-distribution-duxe9chantillonnage-de-la-moyenne-et-thuxe9oruxe8me-de-la-limite-centrale}}
 
-\hypertarget{distribution-duxe9chantillonnage-de-la-moyenne}{%
-\section{Distribution d'échantillonnage de la moyenne}\label{distribution-duxe9chantillonnage-de-la-moyenne}}
+La loi des grands nombres décrit un principe de probabilité permettant de comprendre bon nombre de phénomènes statistiques, notamment lorsque l'on s'intéresse à la moyenne d'un échantillon. Cette loi implique par exemple le fait que la moyenne d'un échantillon pris au hasard dans une population tend à être plus proche de la moyenne réelle d'une population à mesure que la taille de l'échantillon étudié est grande. Cette loi est illustrée sur la Figure \ref{fig:GreatNumLaw}. Sur cette figure, les distributions représentent des échantillons crées de manière aléatoire à partir d'une population ayant pour moyenne 0 et pour écart-type 400. Le trait vertical rouge représente la moyenne de la population d'origine alors que le trait en pointillés noirs montre la moyenne de l'échantillon qui a été obtenue. Lorsqu'on regarde chaque colonne de la figure du haut vers le bas et qu'on compare les colonnes entre elles, on se rend compte effectivement que plus la taille \(N\) de l'échantillon tiré de la population est grande, plus le trait noir se retrouve en général proche du trait rouge, cela traduisant le fait qu'on a de meilleures chances que la moyenne de l'échantillon étudié soit plus proche de la moyenne de la population lorsque l'échantillon est de grande taille. Une question qui pourrait alors se poser est le nombre de personnes ou d'individus que doit contenir l'échantillon pour obtenir un résultat avec une marge d'erreur jugée acceptable.
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{Analyser-des-données-avec-R_files/figure-latex/GreatNumLaw-1} 
+
+}
+
+\caption{Illustration de la loi des grands nombres avec la moyenne d'un échantillon. Les distributions ont été obtenues à partir de $N$ valeurs obtenues aléatoirement à partir d'une population de moyenne 0 et d'écart-type 400. Trait rouge = moyenne de la population d'origine ; trait noir = moyenne de l'échantillon}\label{fig:GreatNumLaw}
+\end{figure}
+
+La Figure \ref{fig:GreatNumLaw} montre certes qu'on a plus de chances d'avoir une moyenne d'échantillon proche de la moyenne de la population avec un grand \(N\), mais elle esquisse aussi, avec les traits en pointillés noirs, le fait qu'avec un grand \(N\), la variabilité des valeurs que peuvent prendre les moyennes de plusieurs échantillons diminue. Pour s'en assurer, on peut chercher à voir les valeurs de moyennes que l'on obtiendrait si l'on étudait un grand nombre d'échantillons (e.g., 10 000) de même taille, autrement dit la distribution d'échantillonnage de la moyenne pour une valeur de \(N\) donnée. La Figure \ref{fig:CentralLimTheo} donne une vision de ce que serait une telle distribution pour différentes valeurs de \(N\) dans ce cas là.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{Analyser-des-données-avec-R_files/figure-latex/CentralLimTheo-1} 
+
+}
+
+\caption{Illustration du théorème de la limite centrale appliqué à une moyenne d'échantillon. Les distributions des moyennes montrées ici ont été obtenues avec 10 000 échantillons de N observations obtenues aléatoirement à partir d'une population ayant pour moyenne 0 et écart-type 400. Trait rouge = moyenne de la population d'origine}\label{fig:CentralLimTheo}
+\end{figure}
+
+La Figure \ref{fig:CentralLimTheo} illustre plusieurs principes qui relèvent du \textbf{théorème de la limite centrale}, à savoir : la moyenne d'une distribution d'échantillonnage de la moyenne tend à être la même moyenne que celle de la population d'origine ; et l'écart-type de la distribution d'échantillonnage de la moyenne (\emph{SEM}, pour \emph{Standard Error of the Mean} en anglais), devient plus faible à mesure que \(N\) grandit. Un troisième principe est illustré sur la Figure \ref{fig:CentralLimTheo2}. Pour réaliser cette figure, la même démarche que pour la Figure \ref{fig:CentralLimTheo} a été suivie, si ce n'est qu'auparavant, la population d'origine suivait systématiquement une loi normale. Dans le cas de la Figure \ref{fig:CentralLimTheo2}, la population suit à l'origine une loi chi-carré, donc asymétrique. Malgré tout, on voit que dès que \(N\) est suffisamment grand, la distribution d'échantillonnage de la moyenne suit une loi normale.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{Analyser-des-données-avec-R_files/figure-latex/CentralLimTheo2-1} 
+
+}
+
+\caption{Illustration du théorème de la limite centrale appliqué à une moyenne d'échantillon. Les distributions des moyennes montrées ici ont été obtenues avec 10 000 échantillons de N observations obtenues aléatoirement à partir d'une population suivant une loi chi-carré avec 3 degrés de liberté. Trait rouge = moyenne de la population d'origine}\label{fig:CentralLimTheo2}
+\end{figure}
+
+Si l'on formalise les choses d'un point de vue plus mathématique, le théorème de la limite centrale nous dit que si une population a une moyenne \(\mu\) et un écart-type \(\sigma\), alors la moyenne de la distribution d'échantillonnage a aussi \(\mu\) comme moyenne, et l'écart-type de la distribution d'échantillonnage de la moyenne (i.e., l'erreur standard, \emph{SEM}) vaut :
+
+\[SEM = \frac{\sigma}{\sqrt{N}}.\]
+
+La formule montre bien que pour une population présentant un écart-type donné, plus les échantillons étudiés seront de petite taille (\(N\)), plus grande sera la variabilité des moyennes provenant des différents échantillons. D'un point de vue plus pratique, cela veut dire notamment que dans une méta-analyse où l'on chercherait à estimer par exemple la moyenne de l'effet d'une intervention dans une population donnée, on aura beau avoir plein d'études conduites sur le sujet, si elles sont de trop petites tailles, il y a de bonnes chances pour que les valeurs des effets trouvés divergent substantiellement et ne permettent donc pas d'avoir une vue précise, fiable, de la valeur de l'effet concernant la population globale.
+
+\hypertarget{ruxe9sumuxe9-3}{%
+\section{Résumé}\label{ruxe9sumuxe9-3}}
+
+\begin{itemize}
+\tightlist
+\item
+  Les lois de probabilité, la loi des grands nombres, la distribution d'échantillonnage d'une statistique, ou encore le théorème de la limite centrale, sont des outils mathématiques qui permettent de réaliser et de mieux comprendre les inférences statistiques.
+\item
+  Une loi de probabilité renseigne sur les chances, pour une statistique donnée, d'obtenir une valeur précise ou d'obtenir une valeur tombant dans un rang de valeurs donné selon le cas de figure.
+\item
+  Des exemples de lois de probabilité courrement utilisées sont la loi binomiale, la loi normale, la loi \(\chi^2\), la loi \(t\), et la loi \(F\).
+\end{itemize}
+
+\hypertarget{tests-statistiques-pour-des-variables-qualitatives}{%
+\chapter{Tests statistiques pour des variables qualitatives}\label{tests-statistiques-pour-des-variables-qualitatives}}
+
+\hypertarget{test-du-chi2-daduxe9quation-ou-encore-dit-de-conformituxe9-ou-dajustement}{%
+\section{\texorpdfstring{Test du \(\chi^2\) d'adéquation (ou encore dit de conformité ou d'ajustement)}{Test du \textbackslash chi\^{}2 d'adéquation (ou encore dit de conformité ou d'ajustement)}}\label{test-du-chi2-daduxe9quation-ou-encore-dit-de-conformituxe9-ou-dajustement}}
+
+Le test du \(\chi^2\) d'adéquation consiste à comparer la distribution d'une variable qualitative observée avec une distribution théorique. Pour mieux voir en quoi cela consiste, prenons un exemple repris de Danielle Navarro \autocite*{navarroLearningStatistics2018} où l'on chercherait à savoir si, lorsqu'on demande à des personnes de choisir ``au hasard'' mentalement une carte parmi un ensemble de cartes étalées devant soi, le choix se fait vraiment de manière entièrement aléatoire. Pour étudier cela, on demande à 200 personnes de réaliser l'expérimentation et on note le type de carte qui a été retenu : coeur, trèfle, carreau, ou pique. Le jeu de données est crée avec le code ci-dessous :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Creation du jeu de données}
+\NormalTok{trefles <-}\StringTok{ }\KeywordTok{rep}\NormalTok{(}\StringTok{"trèfles"}\NormalTok{, }\DecValTok{35}\NormalTok{)}
+\NormalTok{carreau <-}\StringTok{ }\KeywordTok{rep}\NormalTok{(}\StringTok{"carreau"}\NormalTok{, }\DecValTok{51}\NormalTok{)}
+\NormalTok{coeur <-}\StringTok{ }\KeywordTok{rep}\NormalTok{(}\StringTok{"coeur"}\NormalTok{, }\DecValTok{64}\NormalTok{)}
+\NormalTok{pique <-}\StringTok{ }\KeywordTok{rep}\NormalTok{(}\StringTok{"pique"}\NormalTok{, }\DecValTok{50}\NormalTok{)}
+
+\NormalTok{cartes <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{id =} \KeywordTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{200}\NormalTok{, }\DecValTok{1}\NormalTok{), }\DataTypeTok{choix =} \KeywordTok{c}\NormalTok{(trefles, carreau, coeur, pique))}
+\end{Highlighting}
+\end{Shaded}
+
+Dans ce cadre, l'idée que les personnes choisiraient leur carte purement au hasard (idée ou hypothèse qu'on va noter \(H_{0}\)) se traduit par le fait que chaque type de carte aurait la même probabilité d'être tiré à chaque fois, soit une chance sur quatre (0.25). Le vecteur qui résumerait les probabilités \(P\) de voir chaque type de carte à chaque tirage serait alors le suivant :
+
+\[H_{0} : P = (0.25, 0.25, 0.25, 0.25).\]
+
+Étant donné qu'il y a 200 personnes (\(N\)) dans notre exemple, la distribution théorique \(E\) des fréquences de tirage de chaque type de carte qui correspondrait à l'hypothèse \(H_{0}\) serait tel que \(E = N \cdot P\), soit :
+
+\[E = (50, 50, 50, 50)\].
+
+On peut aussi mettre cela sous forme de vecteur avec R :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{expected <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"carreau"}\NormalTok{ =}\StringTok{ }\DecValTok{50}\NormalTok{, }\StringTok{"coeur"}\NormalTok{ =}\StringTok{ }\DecValTok{50}\NormalTok{, }\StringTok{"pique"}\NormalTok{ =}\StringTok{ }\DecValTok{50}\NormalTok{, }\StringTok{"trefles"}\NormalTok{ =}\StringTok{ }\DecValTok{50}\NormalTok{)}
+\NormalTok{expected}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## carreau   coeur   pique trefles 
+##      50      50      50      50
+\end{verbatim}
+
+Maintenant que l'on connaît la distribution théorique correspondant à notre exemple, voyons qu'elle est la distribution réelle obtenue suite à notre expérimentation. Pour l'obtenir, on peut résumer la variable \texttt{choix} du jeu de données \texttt{cartes} crée juste précédemment, cela grâce à la fonction \texttt{table()} :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{observed <-}\StringTok{ }\KeywordTok{table}\NormalTok{(cartes}\OperatorTok{$}\NormalTok{choix)}
+\NormalTok{observed}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## carreau   coeur   pique trèfles 
+##      51      64      50      35
+\end{verbatim}
+
+Cette distribution des observations pourrait s'écrire comme suit :
+\[O = (51, 64, 50, 35)\]
+
+À présent, il convient de calculer une statistique qui résumerait l'écart qu'il peut y avoir entre la distribution théorique, et celle observée. Cette statistique, c'est \(X^2\) ou \(GOF\) (pour \emph{Goodness Of Fit}), tel que :
+
+\[X^2 = \sum_{i=1}^{k} \frac{(O_{i} - E_{i})^2}{E_{i}},\]
+
+\(k\) étant le nombre total de modalités de la variable (ici les types de cartes), \(O_{i}\) désignant la fréquence pour \(i\)-ème modalité de la variable observée, et \(E_{i}\) désignant la fréquence pour la \(i\)-ème modalité de la variable théorique. On peut calculer \(X^2\) manuellement :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sum}\NormalTok{((observed }\OperatorTok{-}\StringTok{ }\NormalTok{expected)}\OperatorTok{^}\DecValTok{2} \OperatorTok{/}\StringTok{ }\NormalTok{expected)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 8.44
+\end{verbatim}
+
+Nous avons à présent le score qui résume l'écart obtenu entre la distribution observée et la distribution théorique de notre variable qualitative. Il nous reste alors à connaître la distribution d'échantillonnage de la statistique \(X^2\) dans le cas où \(H_{0}\) serait vraie. Cela nous permettra de connaître la probabilité de rencontrer une valeur de \(X^2\) au moins aussi grande que 8.44 dans le cas où \(H_{0}\) serait vraie, et de juger ainsi si cette probabilité supporte ou non \(H_{0}\)\ldots{} Trêve de suspens, la distribution d'échantillonnage de \(X^2\) suit une loi \(\chi^2\) à \(k-1\) degrés de liberté (\(k\) étant le nombre de types d'évènement possibles, ici les types de cartes tirées). Comment peut-on expliquer cela? Tout d'abord, reprenons le calcul de \(X^2\), et plus précisément le terme \(O_{i}\). Admettons qu'il ne concerne qu'un seul type de cartes (e.g., les coeurs). Ce terme a sa propre distribution de probabilité en posant que \(H_{0}\) soit vraie, et cette distribution est celle d'une loi binomiale (avec \(\theta\) = 0.25 et \(N\) = 200 dans notre exemple), puisque pour chaque sujet interrogés, il était possible que ce type de carte soit choisi, ou non. Or, il s'avère que lorsque \(N\) est relativement grand et que \(\theta\) n'est ni trop proche de 0, ni trop proche de 1, la distribution se rapproche d'un loi normale \autocite{navarroLearningStatistics2018}. En allant vite, pour un type de cartes donné, on peut alors considérer que l'expression \(\frac{(O_{i} - E_{i})}{E_{i}}\) a une distribution d'échantillonnage qui s'apparente à une loi normale standard, et c'est le cas à chaque fois que cette expression doit être reprise pour chaque type de carte. Si on met au carré chacune de ces variables, puis qu'on les additionne (comme décrit plus haut pour le calcul de \(X^2\)), on se retrouve dans la situation présentée dans le chapitre précédent où nous obtenons une loi \(\chi^2\). La subtilité ici, par rapport au chapitre précédent, est que le nombre de degrés de liberté n'est pas \(k\) mais \(k-1\). Le nombre de degrés de liberté désigne le nombre de quantités distinctes à décrire (ici 4 quantités car les données sont regroupées en 4 modalités) moins le nombre de contraintes (ici 1 contrainte liée au groupe de sujet qui a un nombre fini). On a donc bien 3 degrés de liberté ici car il nous suffit de connaître 3 scores de chaque modalité pour connaître le 4ème qu'il nous manquerait pour une taille d'échantillon donnée\ldots{}
+
+La Figure \ref{fig:GOFDistri} montre la loi \(\chi^2\) relative à 3 degrés de liberté et donc les probabilités de rencontrer tel ou tel intervalle de valeurs de \(X^2\) dans le cas où \(H_{0}\) serait vraie. La zone hachurée représente la probabilité qui était d'obtenir une valeur de \(X^2\) au moins aussi grande que 8.44 dans l'hypothèse où \(H_{0}\) serait vraie. Cette probabilité \(P\) est de \texttt{r,\ round(pchisq(q\ =\ 8.44,\ df\ =\ 3,\ lower.tail\ =\ FALSE),\ 2)\ *\ 100} \%. En principe, lors d'un test statistique, il y a aussi ce qu'on appelle une ``région critique'', c'est-à-dire l'intervalle dans lequel la valeur de \(P\) liée à notre valeur de 8.44 devrait se trouver pour qu'on considère que nos résultats ne supportent pas \(H_{0}\) et donc qu'on ne retient pas cette hypothèse. Classiquement (voire par défaut, à tort), cette région critique est définie à l'aide du seuil \(P <= 0.05\). Autrement dit, il faudrait que notre statistique \(X^2\) tombe dans l'intervalle pour lequel il y avait une probabilité inférieure ou égale à 5\% de tomber dans le cas où \(H_{0}\) serait vraie. Dans notre exemple, cela se traduirait par le fait d'obtenir une valeur de \(X^2\) supérieure ou égale à 7.8147279. La région critique correspondant à cette zone est montrée en rouge sur la Figure \ref{fig:GOFDistri}. En suivant cette démarche, \(H_{0}\) serait donc bien rejetée puisque notre valeur \(X^2\) de 8.44 tomberait dans la région critique. Le test serait alors dit ``significatif''.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{Analyser-des-données-avec-R_files/figure-latex/GOFDistri-1} 
+
+}
+
+\caption{Distribution d'échantillonnage de la statistique $\chi^2$ sous $H{0}$}\label{fig:GOFDistri}
+\end{figure}
+
+Nous venons de voir la mécanique des calculs qu'il y a derrière le test \(\chi^2\) d'adéquation. Heureusement, il existe des fonctions dans R pour faire cela automatiquement, comme la fonction \texttt{chisq.test()} :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{observed <-}\StringTok{ }\KeywordTok{table}\NormalTok{(cartes}\OperatorTok{$}\NormalTok{choix)}
+\NormalTok{expected <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\FloatTok{0.25}\NormalTok{, }\FloatTok{0.25}\NormalTok{, }\FloatTok{0.25}\NormalTok{, }\FloatTok{0.25}\NormalTok{)}
+\KeywordTok{chisq.test}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ observed, }\DataTypeTok{p =}\NormalTok{ expected)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Chi-squared test for given probabilities
+## 
+## data:  observed
+## X-squared = 8.44, df = 3, p-value = 0.03774
+\end{verbatim}
+
+Une seconde fonction possible est la fonction \texttt{goodnessOfFitTest()} du package \texttt{lsr}. Elle est intéressante en raison du fait qu'elle propose un récapitulatif plus détaillé de la configuration du test qui a été faite. De plus, pas besoin de passer par la fonction \texttt{table()}, mais il faut que la variable étudiée soit en format \texttt{factor} :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lsr}\OperatorTok{::}\KeywordTok{goodnessOfFitTest}\NormalTok{(}\KeywordTok{as.factor}\NormalTok{(cartes}\OperatorTok{$}\NormalTok{choix), }\DataTypeTok{p =} \KeywordTok{c}\NormalTok{(}\FloatTok{0.25}\NormalTok{, }\FloatTok{0.25}\NormalTok{, }\FloatTok{0.25}\NormalTok{, }\FloatTok{0.25}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##      Chi-square test against specified probabilities
+## 
+## Data variable:   as.factor(cartes$choix) 
+## 
+## Hypotheses: 
+##    null:        true probabilities are as specified
+##    alternative: true probabilities differ from those specified
+## 
+## Descriptives: 
+##         observed freq. expected freq. specified prob.
+## carreau             51             50            0.25
+## coeur               64             50            0.25
+## pique               50             50            0.25
+## trèfles             35             50            0.25
+## 
+## Test results: 
+##    X-squared statistic:  8.44 
+##    degrees of freedom:  3 
+##    p-value:  0.038
+\end{verbatim}
+
+Pour reporter les résultats, nous pourrions écrire les choses comme cela \autocite{navarroLearningStatistics2018} : Le résultat du test était significatif (\(\chi^2(3)\) = 8.44, \(P\) = 0.04).
+
+Il convient de noter que les probabilités espérées (théoriques) peuvent être définies à volonté selon la question de recherche. Par exemple, on aurait pu tester l'hypothèse \(H_{0}\) selon laquelle les personnes préfèrent à 80 \% les coeurs, 10 \% les trèfles, 5 \% les piques, et 5 \% les carreaux. Le tout est de bien configurer le test pour que les fréquences observées pour chaque modalité (ici les types de cartes) soient bien mises en correspondance avec les fréquences théoriques (cf.~argument \texttt{p}dans l'exemple de code ci-dessous). La fonction \texttt{lsr::goodnessOfFitTest()} a donc un fort intérêt ici pour bien vérifier, dans les résultats affichés, qu'on a bien attribué les probabilités théoriques aux bonnes modalités) :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lsr}\OperatorTok{::}\KeywordTok{goodnessOfFitTest}\NormalTok{(}\KeywordTok{as.factor}\NormalTok{(cartes}\OperatorTok{$}\NormalTok{choix), }\DataTypeTok{p =} \KeywordTok{c}\NormalTok{(}\FloatTok{0.05}\NormalTok{, }\FloatTok{0.8}\NormalTok{, }\FloatTok{0.05}\NormalTok{, }\FloatTok{0.1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##      Chi-square test against specified probabilities
+## 
+## Data variable:   as.factor(cartes$choix) 
+## 
+## Hypotheses: 
+##    null:        true probabilities are as specified
+##    alternative: true probabilities differ from those specified
+## 
+## Descriptives: 
+##         observed freq. expected freq. specified prob.
+## carreau             51             10            0.05
+## coeur               64            160            0.80
+## pique               50             10            0.05
+## trèfles             35             20            0.10
+## 
+## Test results: 
+##    X-squared statistic:  396.95 
+##    degrees of freedom:  3 
+##    p-value:  <.001
+\end{verbatim}
 
 \printbibliography[title=Références, heading=bibintoc]
 
