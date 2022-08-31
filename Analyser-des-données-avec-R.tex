@@ -2144,7 +2144,7 @@ L'écart-type est une statistique qui donne une idée de la mesure selon laquell
 Cette formule signifie que pour obtenir la variance, il faut d'abord faire la somme des carrés des différences entre chaque valeur et la moyenne de la variable. Cela fait, la variance s'obtient en divisant cette somme de carrés par le nombre \(N\) de valeurs de la variable. L'écart-type \(\sigma\), c'est alors la racine carrée de la variance :
 \[\sigma = \sqrt{\frac{1}{N}\sum_{i=1}^{N} (X{i} - \overline{X})^2}\]
 
-Ces calculs sont valides lorsque l'on a en sa possession les données de toute la population que l'on souhaite étudier. Toutefois, lorsque l'on a en sa possession des données issues seulement d'un échantillon de la population, ces calculs biaisent les estimations de variance et de l'écart-type correspondant à la population étudiée. Cette notion de biais traduit le fait que lorsqu'on répète un grand nombre de fois le calcul de la variance et de l'écart-type à partir, à chaque fois, d'échantillons de population différents, on a en moyenne un décalage entre la valeur de l'estimation et la réelle valeur de variance et de l'écart-type de la population. Ce décalage systématique est tel qu'il convient dans ce cas là de diviser la somme des carrés des différences (\(X{i} - \overline{X}\)) par \(N-1\) plutôt que par \(N\) \autocite{grenierQuelleEstBonne2007}. La formule de l'écart-type non biaisé, noté \emph{\(\hat{\sigma}\)}, est alors la suivante :
+Ces calculs sont valides lorsque l'on a en sa possession les données de toute la population que l'on souhaite étudier. Toutefois, lorsque l'on a en sa possession des données issues seulement d'un échantillon de la population, ces calculs biaisent les estimations de la variance et de l'écart-type correspondant à la population étudiée. Cette notion de biais traduit le fait que lorsqu'on répète un grand nombre de fois le calcul de la variance et de l'écart-type à partir, à chaque fois, d'échantillons de population différents, on a en moyenne un décalage entre la valeur de l'estimation et la réelle valeur de la variance et de l'écart-type de la population. Ce décalage systématique est tel qu'il convient dans ce cas là de diviser la somme des carrés des différences (\(X{i} - \overline{X}\)) par \(N-1\) plutôt que par \(N\) \autocite{grenierQuelleEstBonne2007}. La formule de l'écart-type non biaisé, noté \emph{\(\hat{\sigma}\)}, est alors la suivante :
 \[\hat{\sigma} = \sqrt{\frac{1}{N-1}\sum_{i=1}^{N} (X{i} - \overline{X})^2}\]
 
 L'écart-type est la mesure de dispersion classiquement associée à la moyenne. Si, pour un échantillon, on note une moyenne \(\overline{X}\) et un écart-type \(\hat{\sigma}\), alors le résumé d'une variable à l'aide de ces statistiques s'écrit comme suit : \(\overline{X}\) ± \(\hat{\sigma}\). Lorsque l'écart-type est divisé par la moyenne arithmétique de la variable, on obtient une valeur appelée \textbf{coefficient de variation}. Avec le logiciel R, les fonctions pour calculer la variance et l'écart-type non biaisés sont respectivement \texttt{var()} et \texttt{sd()}.
@@ -2921,7 +2921,7 @@ La valeur du coefficient de corrélation de Pearson peut aller de 1 (suggérant 
 
 \[r_{X,Y} =  {\frac{COV_{X,Y}}{\hat{\sigma}_{X} \hat{\sigma}_{Y}}} =  {\frac{\sum_{i=1}^{N} (X{i} - \overline{X}) (Y{i} - \overline{Y})}{N-1}} {\frac{1}{\hat{\sigma}_{X} \hat{\sigma}_{Y}}},\]
 
-\(COV\) désignant la covariance entre les variables \(X\) et \(Y\), \(X{i}\) et \(Y{i}\) les valeurs de \(X\) et \(Y\) pour une observation \(i\), \(\overline{X}\) et \(\overline{Y}\) les moyennes respectives des variables \(X\) et \(Y\), \(N\) le nombre d'observations, et \(s_{X}\) et \(s_{Y}\) les écarts-types respectifs des variables \(X\) et \(Y\). Cette formule indique que le coefficient de corrélation de Pearson s'obtient en divisant la covariance des deux variables étudiées par le produit de leurs écarts-types respectifs.
+\(COV\) désignant la covariance entre les variables \(X\) et \(Y\), \(X{i}\) et \(Y{i}\) les valeurs de \(X\) et \(Y\) pour une observation \(i\), \(\overline{X}\) et \(\overline{Y}\) les moyennes respectives des variables \(X\) et \(Y\), \(N\) le nombre d'observations, et \(\hat{\sigma}_{X}\) et \(\hat{\sigma}_{Y}\) les écarts-types respectifs des variables \(X\) et \(Y\). Cette formule indique que le coefficient de corrélation de Pearson s'obtient en divisant la covariance des deux variables étudiées par le produit de leurs écarts-types respectifs.
 
 Le Tableau \ref{tab:tablecov} montre les premières étapes du calcul de la covariance pour des couples de variables fictifs \((X1,Y1)\), \((X1,Y2)\), et \((X1,Y3)\). En particulier, la partie droite du tableau (de X1Y1 à X1Y3) montre le calcul du produit \((X{i} - \overline{X}) (Y{i} - \overline{Y})\) pour les différents couples de variables et cela pour chaque ligne du jeu de données.
 
@@ -3000,7 +3000,7 @@ Ce que ce tableau montre, c'est que plus les deux variables étudiées évoluero
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.95\linewidth]{Analyser-des-données-avec-R_files/figure-latex/graphCov-1} 
+{\centering \includegraphics[width=1\linewidth]{Analyser-des-données-avec-R_files/figure-latex/graphCov-1} 
 
 }
 
@@ -4324,7 +4324,7 @@ Le calcul classique pour obtenir la taille d'effet désignant l'écart entre deu
 
 \[d_{z} = \frac{\overline{X} _{diff}}{\hat{\sigma}_{diff}},\]
 
-\(\overline{X} _{diff}\) désignant la moyenne des différences relatives à chaque pair de valeurs obtenues dans les deux conditions comparées, et \(s_{diff}\) désignant l'écart-type de ces différences. Dans R, le \(d_{z}\) peut être obtenu à nouveau avec la fonction \texttt{cohens\_d()} du package \texttt{effectsize}. Pour illustrer cela, nous allons à nouveau utiliser le jeu de données \texttt{Blink2} crée plus haut pour les exemples de \emph{raincloud plots}.
+\(\overline{X}_{diff}\) désignant la moyenne des différences relatives à chaque pair de valeurs obtenues dans les deux conditions comparées, et \(\hat{\sigma}_{diff}\) désignant l'écart-type de ces différences. Dans R, le \(d_{z}\) peut être obtenu à nouveau avec la fonction \texttt{cohens\_d()} du package \texttt{effectsize}. Pour illustrer cela, nous allons à nouveau utiliser le jeu de données \texttt{Blink2} crée plus haut pour les exemples de \emph{raincloud plots}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4587,7 +4587,7 @@ Une fois extraites et associées à des noms, ces informations peuvent ensuite �
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.7\linewidth]{Analyser-des-données-avec-R_files/figure-latex/graphLinStats-1} 
+{\centering \includegraphics[width=0.8\linewidth]{Analyser-des-données-avec-R_files/figure-latex/graphLinStats-1} 
 
 }
 
@@ -4607,7 +4607,7 @@ Encore une fois, lorsqu'on étudie un phénomène, ici l'existence d'une relatio
 \caption{Le quartet d'Anscombe}\label{fig:anscombeQuartetGraph}
 \end{figure}
 
-Bien que d'aspects très différents, ces jeux de données montrent pourtant des variables en abscisses qui ont toutes la même moyenne (\(\overline{X} = 9\)) et le même écart-type (\(s_{X} = 3.32\)), des variables en ordonnées qui ont elles aussi la même moyenne (\(\overline{Y} = 7.5\)) et le même écart-type = (\(s_{Y} = 2.03\)), et des modèles de régression linéaire qui présentent tous la même équation (\(Y = 0.5X + 3\)), le même coefficient de détermination (\(R^2 = 0.67\)) et la même erreur typique d'estimation (\(SEE = 1.24\)). Pour autant, on observe que seul le premier jeu de données (cf.~graphique A de la Figure \ref{fig:anscombeQuartetGraph}) est associé à un modèle linéaire vraiment pertinent. En effet, le graphique B montre bien que la relation n'est pas linéaire mais plutôt quadratique, le graphique C montre que la régression est anormalement influencée par une valeur extrême, et le graphique D montre qu'il n'y a en réalité pas de relation linéaire entre les deux variables et que celle-ci ne semble exister numériquement que grâce à une seule valeur très extrême. Autant le graphique C invite à conserver une analyse de régression linéaire avec éventuellement certains ajustements à réaliser, autant les graphiques B et D indiquent qu'un modèle linéaire n'est pas pertinent en l'état pour caractériser la relation entre les deux variables étudiées.
+Bien que d'aspects très différents, ces jeux de données montrent pourtant des variables en abscisses qui ont toutes la même moyenne (\(\overline{X} = 9\)) et le même écart-type (\(\hat{\sigma}_{X} = 3.32\)), des variables en ordonnées qui ont elles aussi la même moyenne (\(\overline{Y} = 7.5\)) et le même écart-type = (\(\hat{\sigma}_{Y} = 2.03\)), et des modèles de régression linéaire qui présentent tous la même équation (\(Y = 0.5X + 3\)), le même coefficient de détermination (\(R^2 = 0.67\)) et la même erreur typique d'estimation (\(SEE = 1.24\)). Pour autant, on observe que seul le premier jeu de données (cf.~graphique A de la Figure \ref{fig:anscombeQuartetGraph}) est associé à un modèle linéaire vraiment pertinent. En effet, le graphique B montre bien que la relation n'est pas linéaire mais plutôt quadratique, le graphique C montre que la régression est anormalement influencée par une valeur extrême, et le graphique D montre qu'il n'y a en réalité pas de relation linéaire entre les deux variables et que celle-ci ne semble exister numériquement que grâce à une seule valeur très extrême. Autant le graphique C invite à conserver une analyse de régression linéaire avec éventuellement certains ajustements à réaliser, autant les graphiques B et D indiquent qu'un modèle linéaire n'est pas pertinent en l'état pour caractériser la relation entre les deux variables étudiées.
 
 \hypertarget{part-analyses-infuxe9rentielles}{%
 \part{Analyses inférentielles}\label{part-analyses-infuxe9rentielles}}
