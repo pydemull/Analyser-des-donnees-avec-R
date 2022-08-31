@@ -82,7 +82,7 @@ La valeur du coefficient de corrélation de Pearson peut aller de 1 (suggérant 
 
 $$r_{X,Y} =  {\frac{COV_{X,Y}}{\hat{\sigma}_{X} \hat{\sigma}_{Y}}} =  {\frac{\sum_{i=1}^{N} (X{i} - \overline{X}) (Y{i} - \overline{Y})}{N-1}} {\frac{1}{\hat{\sigma}_{X} \hat{\sigma}_{Y}}},$$
 
-$COV$ désignant la covariance entre les variables $X$ et $Y$, $X{i}$ et $Y{i}$ les valeurs de $X$ et $Y$ pour une observation $i$, $\overline{X}$ et $\overline{Y}$ les moyennes respectives des variables $X$ et $Y$, $N$ le nombre d'observations, et $s_{X}$ et $s_{Y}$ les écarts-types respectifs des variables $X$ et $Y$. Cette formule indique que le coefficient de corrélation de Pearson s'obtient en divisant la covariance des deux variables étudiées par le produit de leurs écarts-types respectifs. 
+$COV$ désignant la covariance entre les variables $X$ et $Y$, $X{i}$ et $Y{i}$ les valeurs de $X$ et $Y$ pour une observation $i$, $\overline{X}$ et $\overline{Y}$ les moyennes respectives des variables $X$ et $Y$, $N$ le nombre d'observations, et $\hat{\sigma}_{X}$ et $\hat{\sigma}_{Y}$ les écarts-types respectifs des variables $X$ et $Y$. Cette formule indique que le coefficient de corrélation de Pearson s'obtient en divisant la covariance des deux variables étudiées par le produit de leurs écarts-types respectifs. 
 
 Le Tableau \@ref(tab:tablecov) montre les premières étapes du calcul de la covariance pour des couples de variables fictifs $(X1,Y1)$, $(X1,Y2)$, et $(X1,Y3)$. En particulier, la partie droite du tableau (de X1Y1 à X1Y3) montre le calcul du produit $(X{i} - \overline{X}) (Y{i} - \overline{Y})$ pour les différents couples de variables et cela pour chaque ligne du jeu de données.
 
@@ -112,7 +112,7 @@ flextable(
 
 Ce que ce tableau montre, c'est que plus les deux variables étudiées évolueront de manière consistante dans des sens identiques comme avec $X1$ et $Y1$, ou de manière consistante dans des sens opposés comme avec $X1$ et $Y3$, plus les produits $(X{i} - \overline{X}) (Y{i} - \overline{Y})$ donneront respectivement des grands scores positifs ou des grands scores négatifs, et moins les scores $(X{i} - \overline{X}) (Y{i} - \overline{Y})$ à additionner pour le calcul de la covariance s'annuleront. En effet, avec une relation relativement linéaire et positive les scores seront plus systématiquement positifs, et avec une relation relativement linéaire et négative les scores seront plus systématiquement négatifs. Toutefois, lorsqu'on aura des variables qui n'évolueront pas de manière consistante dans le même sens ou dans un sens opposé comme avec $X1$ et $Y2$, les scores positifs et négatifs liés aux calculs $(X{i} - \overline{X}) (Y{i} - \overline{Y})$ auront tendance à s'annuler et donneront lieu à une somme des scores $(X{i} - \overline{X}) (Y{i} - \overline{Y})$ diminuée, et donc à une covariance et à un coefficient de corrélation de Pearson tirés vers 0. Ces différents cas de figure et les calculs $(X{i} - \overline{X}) (Y{i} - \overline{Y})$ correspondants sont illustrés sur la Figure \@ref(fig:graphCov). Sur cette figure, chaque carré correspond au calcul $(X{i} - \overline{X}) (Y{i} - \overline{Y})$, le carré étant bleu lorsque le résultat du calcul est positif, et rouge lorsque le résultat est négatif. L'aire d'un carré illustre la grandeur du score issu du calcul. Sur les graphiques de gauche et de droite de la figure, on distingue une relation linéaire parfaite, ce qui maximise les scores à additionner pour le calcul de la covariance, dans le positif pour le graphique de gauche et dans le négatif pour le graphique de droite. Sur le graphique du milieu, on remarque que le manque de relation linéaire donne lieu à des carrés à la fois bleus et rouges, indiquant que les scores associés aux calculs $(X{i} - \overline{X}) (Y{i} - \overline{Y})$ de la covariance s'annulent et diminuent ainsi la valeur finale de la covariance.
 
-```{r graphCov, echo = FALSE, out.width = '95%', warning = FALSE, fig.cap="Illustration du calcul de la covariance"}
+```{r graphCov, echo = FALSE, out.width = '100%', fig.width = 12, warning = FALSE, fig.cap="Illustration du calcul de la covariance"}
 df <- 
   df %>%
   mutate(signX1Y1 = ifelse(X1Y1 > 0, "pos", "neg"),
@@ -137,7 +137,7 @@ g1 <-
   scale_fill_manual(values = c("blue", "red"), breaks = c("pos", "neg"), labels = c("Tire la corrélation vers 1", "Tire la corrélation vers -1")) +
   xlab("X1") +
   ylab("Y1") +
-  labs(fill = "", subtitle = bquote(paste("COV"["X1,Y1"]* " = ", .(round(COV1), digits = 1), "; SD"["X1"]*"SD"["Y1"]* " = ", .(round(sd(X1) * sd(Y1)), digits = 1)))) +
+  labs(fill = "", subtitle = bquote(paste("COV"["X1,Y1"]* " = ", .(round(COV1), digits = 1), " ; ", hat(sigma)["X1"]*hat(sigma)["Y1"]* " = ", .(round(sd(X1) * sd(Y1)), digits = 1)))) +
   ggtitle(bquote(paste("r"["X1,Y1"]* " = ", .(cor(X1, Y1), digits = 2)))) +
   geom_segment(aes(x = 2.8, y = 9.5, xend = 5.9, yend = 8.5), arrow = arrow(length = unit(0.5, "cm")), size = 0.8) +
   annotate("text", label = bquote(italic(bar(X)["1"])), x = 1.8, y = 9.7, size = 7) +
@@ -158,7 +158,7 @@ g2 <-
   scale_fill_manual(values = c("blue", "red"), breaks = c("pos", "neg"), labels =  c("Tire la corrélation vers 1", "Tire la corrélation vers -1")) +
   xlab("X1") +
   ylab("Y2") +
-  labs(fill = "", subtitle = bquote(paste("COV"["X1,Y2"]* " = ", .(round(COV2), digits = 1), "; SD"["X1"]*"SD"["Y2"]* " = ", .(round(sd(X1) * sd(Y2)), digits = 1)))) +
+  labs(fill = "", subtitle = bquote(paste("COV"["X1,Y2"]* " = ", .(round(COV2), digits = 1), " ; ", hat(sigma)["X1"]*hat(sigma)["Y2"]* " = ", .(round(sd(X1) * sd(Y2)), digits = 1)))) +
   ggtitle(bquote(paste("r"["X1,Y2"]* " = ", .(round(cor(X1, Y2), digits = 1))))) +
   theme(axis.title = element_text(size = 15))
 
@@ -175,7 +175,7 @@ g3 <-
   scale_fill_manual(values = c("blue", "red"), breaks = c("pos", "neg"), labels =  c("Tire la corrélation vers 1", "Tire la corrélation vers -1")) +
   xlab("X1") +
   ylab("Y3") +
-  labs(fill = "", subtitle = bquote(paste("COV"["X1,Y3"]* " = ", .(round(COV3), digits = 1), "; SD"["X1"]*"SD"["Y3"]* " = ", .(round(sd(X1) * sd(Y3)), digits = 1)))) +
+  labs(fill = "", subtitle = bquote(paste("COV"["X1,Y3"]* " = ", .(round(COV3), digits = 1), " ; ", hat(sigma)["X1"]*hat(sigma)["Y3"]* " = ", .(round(sd(X1) * sd(Y3)), digits = 1)))) +
   ggtitle(bquote(paste("r"["X1,Y3"]* " = ", .(round(cor(X1, Y3), digits = 1))))) +
   theme(axis.title = element_text(size = 15))
 
@@ -1142,7 +1142,7 @@ Le calcul classique pour obtenir la taille d'effet désignant l'écart entre deu
 
 $$d_{z} = \frac{\overline{X} _{diff}}{\hat{\sigma}_{diff}},$$
 
-$\overline{X} _{diff}$ désignant la moyenne des différences relatives à chaque pair de valeurs obtenues dans les deux conditions comparées, et $s_{diff}$ désignant l'écart-type de ces différences. Dans R, le $d_{z}$ peut être obtenu à nouveau avec la fonction `cohens_d()` du package `effectsize`. Pour illustrer cela, nous allons à nouveau utiliser le jeu de données `Blink2` crée plus haut pour les exemples de *raincloud plots*.
+$\overline{X}_{diff}$ désignant la moyenne des différences relatives à chaque pair de valeurs obtenues dans les deux conditions comparées, et $\hat{\sigma}_{diff}$ désignant l'écart-type de ces différences. Dans R, le $d_{z}$ peut être obtenu à nouveau avec la fonction `cohens_d()` du package `effectsize`. Pour illustrer cela, nous allons à nouveau utiliser le jeu de données `Blink2` crée plus haut pour les exemples de *raincloud plots*.
 
 ```{r cohens dz within, warning=FALSE, message=FALSE}
 cohens_d(
