@@ -112,6 +112,8 @@
 \setcounter{secnumdepth}{5}
 \usepackage{booktabs}
 \usepackage[nottoc]{tocbibind}
+\usepackage{fancyhdr}
+\usepackage{csquotes}
 \usepackage{fontspec}
 \usepackage{multirow}
 \usepackage{multicol}
@@ -133,7 +135,7 @@
 
 \title{Analyser des données avec R}
 \author{Pierre-Yves de Müllenheim}
-\date{2022-08-31}
+\date{2022-09-03}
 
 \begin{document}
 \maketitle
@@ -823,7 +825,7 @@ En principe, les données de la base qui ont été obtenues selon la même proc�
 
 \end{longtable}
 
-Les \textbf{variables quantitatives} (aussi dites numériques) comportent des nombres dont les différences entre eux ont un sens. Parmi les variables quantitatives, il est possible de plus précisément distinguer celles qui peuvent être associées seulement à une \textbf{échelle d'intervalles}, et celles qui peuvent être aussi associées à une \textbf{échelle de ratios}. Les variables étant associables seulement à une \textbf{échelle d'intervalles} ont la particularité de ne pas avoir de zéro naturel, de sorte que multiplier ou diviser les valeurs de cette variable n'aurait pas de sens. Un exemple de ce type de variables pourrait être la température exprimée en degrés Celsius. Avec cette variable, il est seulement possible de décrire le fait qu'il fait x degrés plus chaud ou plus froid à un endroit par rapport à un autre, mais cela n'aurait pas de sens de dire qu'il ferait deux fois plus chaud à un endroit où il y aurait 20°C par rapport à un endroit où il y aurait seulement 10°C. Il serait possible de le dire si 0°C correspondrait à ``pas de température du tout'', mais cela n'est évidemment pas le cas (cet exemple est repris de Danielle Navarro \autocite*{navarroLearningStatistics2018}. En revanche, les variables pouvant être associées à une échelle de ratios présentent des valeurs qui, en plus de permettre de calculer des différences numériques qui ont un sens, peuvent être multipliées ou divisées, comme par exemple le temps de réaction à un stimulus donné.
+Les \textbf{variables quantitatives} (aussi dites numériques) comportent des nombres dont les différences entre eux ont un sens. Parmi les variables quantitatives, il est possible de plus précisément distinguer celles qui peuvent être associées seulement à une \textbf{échelle d'intervalles}, et celles qui peuvent être aussi associées à une \textbf{échelle de ratios}. Les variables étant associables seulement à une \textbf{échelle d'intervalles} ont la particularité de ne pas avoir de zéro naturel, de sorte que multiplier ou diviser les valeurs de cette variable n'aurait pas de sens. Un exemple de ce type de variables pourrait être la température exprimée en degrés Celsius. Avec cette variable, il est seulement possible de décrire le fait qu'il fait x degrés plus chaud ou plus froid à un endroit par rapport à un autre, mais cela n'aurait pas de sens de dire qu'il ferait deux fois plus chaud à un endroit où il y aurait 20°C par rapport à un endroit où il y aurait seulement 10°C. Il serait possible de le dire si 0°C correspondrait à \enquote{pas de température du tout}, mais cela n'est évidemment pas le cas (cet exemple est repris de Danielle Navarro \autocite*{navarroLearningStatistics2018}. En revanche, les variables pouvant être associées à une échelle de ratios présentent des valeurs qui, en plus de permettre de calculer des différences numériques qui ont un sens, peuvent être multipliées ou divisées, comme par exemple le temps de réaction à un stimulus donné.
 
 En plus de la distinction échelle d'intervalles / échelle de ratios, les variables quantitatives peuvent être considérées comme étant soit \textbf{continues}, soit \textbf{discrètes}. Les variables quantitatives continues contiennent des nombres pouvant comporter théoriquement un nombre infini de décimales (e.g., la taille, le poids, etc.). Au contraire, les variables quantitatives discrètes ne peuvent contenir théoriquement que des nombres finis (e.g., le nombre de victoires sportives au cours d'une année). Certaines variables en théorie discrètes sont cependant souvent considérées comme continues tant le nombre de valeurs théoriquement possibles pour la variable est grand, tel que pour le nombre de globules blancs mesurés dans le sang \autocite{labreucheDifferentsTypesVariables2010}.
 
@@ -1112,7 +1114,7 @@ Le logiciel R s'appuie donc sur une classification des types de variables plus c
 ## [1] "numeric"
 \end{verbatim}
 
-Lorsque le type d'une variable ne correspond pas à celui attendu après avoir importé la base de données dans RStudio, il peut être utile de se questionner sur les erreurs qui ont pu causer cela. Lorsque l'on obtient une variable de type \emph{Factor} ou de type \emph{chr} alors qu'une variable de type \emph{num} étaient attendue, une cause possible est que l'importation du jeu de données a été réalisée avec une fonction d'importation mal configurée par rapport au contenu du jeu de données. Par exemple, il est possible que la fonction d'importation du jeu de données reconnaissait les nombres décimaux seulement lorsqu'ils avaient des points (e.g., 24.3) alors qu'en réalité les nombres décimaux étaient écrits avec des virgules (e.g., 24,3) dans la base de données. Une autre possibilité est que l'on n'ait pas indiqué, dans la fonction d'importation, sous quelle forme se présentaient les valeurs manquantes de la base de données. Par exemple, avec des valeurs manquantes qui seraient notées ``NA'' dans des variables numériques de la base de données, l'usage de certaines fonctions d'importation sans indiquer à l'intérieur que ``NA'' désigne ``valeur manquante'' conduira R à interpréter les variables concernées comme des variables \emph{chr}. En utilisant la fonction \texttt{read\_csv2()} du package \texttt{readr}, ces écueils sont plus facilement évités car les paramètres par défaut de la fonction nous facilitent le travail. En revanche, d'autres fonctions, plus anciennes, comme \texttt{read.csv2()} qui est une fonction de base de R, nécessitent plus de vigilance.
+Lorsque le type d'une variable ne correspond pas à celui attendu après avoir importé la base de données dans RStudio, il peut être utile de se questionner sur les erreurs qui ont pu causer cela. Lorsque l'on obtient une variable de type \emph{Factor} ou de type \emph{chr} alors qu'une variable de type \emph{num} étaient attendue, une cause possible est que l'importation du jeu de données a été réalisée avec une fonction d'importation mal configurée par rapport au contenu du jeu de données. Par exemple, il est possible que la fonction d'importation du jeu de données reconnaissait les nombres décimaux seulement lorsqu'ils avaient des points (e.g., 24.3) alors qu'en réalité les nombres décimaux étaient écrits avec des virgules (e.g., 24,3) dans la base de données. Une autre possibilité est que l'on n'ait pas indiqué, dans la fonction d'importation, sous quelle forme se présentaient les valeurs manquantes de la base de données. Par exemple, avec des valeurs manquantes qui seraient notées \enquote{NA} dans des variables numériques de la base de données, l'usage de certaines fonctions d'importation sans indiquer à l'intérieur que \enquote{NA} désigne \enquote{valeur manquante} conduira R à interpréter les variables concernées comme des variables \emph{chr}. En utilisant la fonction \texttt{read\_csv2()} du package \texttt{readr}, ces écueils sont plus facilement évités car les paramètres par défaut de la fonction nous facilitent le travail. En revanche, d'autres fonctions, plus anciennes, comme \texttt{read.csv2()} qui est une fonction de base de R, nécessitent plus de vigilance.
 
 Lorsque la modification du type de la variable est nécessaire, une stratégie possible est de créer une variable portant exactement le même nom à partir de la variable initiale et à laquelle on applique une fonction capable d'imposer un certain type de variable. Il existe une fonction pour chaque type de variable à définir, notamment :
 
@@ -1434,7 +1436,7 @@ Au cours des illustrations montrant l'usage des fonctions \texttt{select()} jusq
 \hypertarget{passer-dune-disposition-en-lignes-uxe0-une-disposition-en-colonnes-et-inversement-avec-pivot_wider-et-pivot_longer}{%
 \subsection{\texorpdfstring{Passer d'une disposition en lignes à une disposition en colonnes et inversement avec \texttt{pivot\_wider()} et \texttt{pivot\_longer()}}{Passer d'une disposition en lignes à une disposition en colonnes et inversement avec pivot\_wider() et pivot\_longer()}}\label{passer-dune-disposition-en-lignes-uxe0-une-disposition-en-colonnes-et-inversement-avec-pivot_wider-et-pivot_longer}}
 
-Il convient de respecter certaines règles de base lors de la conception d'une base de données (e.g., mettre les observations en lignes et les variables en colonnes). Toutefois, dans certains cas, même après avoir bien respecté les règles, la manière selon laquelle la base de données a été organisée peut ne pas être encore adéquate pour pouvoir utiliser certaines fonctions. Prenons par exemple le cas où toutes les valeurs numériques d'une variable quantitative auraient été mises dans une même colonne en regard d'une variable qualitative pour que chaque valeur numérique corresponde à une modalité de cette variable qualitative (c'est le cas, par exemple, avec le jeu de données \texttt{iris}), et que la fonction à utiliser nécessiterait que l'on ait une colonne pour chacune des modalités de la variable qualitative, avec des colonnes mises côte à côte. Une fonction qui permet alors de passer d'un format ``long'' (i.e., toutes les valeurs numériques sont dans la même colonne) à un format ``large'' (i.e., les valeurs numériques sont réparties dans différentes colonnes selon la modalité à laquelle elles sont associées), est la fonction \texttt{pivot\_wider()} du package \texttt{tidyr}. Pour pouvoir utiliser cette fonction, il faut qu'il y ait une variable permettant d'identifier à quels individus ou groupes appartiennent les données dont on va changer l'organisation. Dans une base de données classique, il y a toujours une variable présente pour cela. Toutefois, dans le jeu de données \texttt{iris}, il n'y a pas une telle variable. Pour pouvoir illustrer l'utilisation de la fonction \texttt{pivot\_wider()}, nous avons donc ajouté arbitrairement une variable \texttt{id} grâce à la fonction \texttt{mutate()} pour simuler le fait que les données de \texttt{iris} auraient été acquises en référence à des individus bien identifiés, avec à chaque fois une valeur pour les trois modalités de la variable \texttt{Species}.
+Il convient de respecter certaines règles de base lors de la conception d'une base de données (e.g., mettre les observations en lignes et les variables en colonnes). Toutefois, dans certains cas, même après avoir bien respecté les règles, la manière selon laquelle la base de données a été organisée peut ne pas être encore adéquate pour pouvoir utiliser certaines fonctions. Prenons par exemple le cas où toutes les valeurs numériques d'une variable quantitative auraient été mises dans une même colonne en regard d'une variable qualitative pour que chaque valeur numérique corresponde à une modalité de cette variable qualitative (c'est le cas, par exemple, avec le jeu de données \texttt{iris}), et que la fonction à utiliser nécessiterait que l'on ait une colonne pour chacune des modalités de la variable qualitative, avec des colonnes mises côte à côte. Une fonction qui permet alors de passer d'un format \enquote{long} (i.e., toutes les valeurs numériques sont dans la même colonne) à un format \enquote{large} (i.e., les valeurs numériques sont réparties dans différentes colonnes selon la modalité à laquelle elles sont associées), est la fonction \texttt{pivot\_wider()} du package \texttt{tidyr}. Pour pouvoir utiliser cette fonction, il faut qu'il y ait une variable permettant d'identifier à quels individus ou groupes appartiennent les données dont on va changer l'organisation. Dans une base de données classique, il y a toujours une variable présente pour cela. Toutefois, dans le jeu de données \texttt{iris}, il n'y a pas une telle variable. Pour pouvoir illustrer l'utilisation de la fonction \texttt{pivot\_wider()}, nous avons donc ajouté arbitrairement une variable \texttt{id} grâce à la fonction \texttt{mutate()} pour simuler le fait que les données de \texttt{iris} auraient été acquises en référence à des individus bien identifiés, avec à chaque fois une valeur pour les trois modalités de la variable \texttt{Species}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1729,7 +1731,7 @@ La boîte à moustaches (cf.~Figure \ref{fig:geomboxplot}) nous livre plusieurs 
 \caption{Visualisation d'un outlier}\label{fig:geomboxplotModified}
 \end{figure}
 
-Une boîte à moustaches a donc notamment l'intérêt de mettre en évidence des valeurs qui apparaissent comme ``étranges'' par rapport au reste des données. Lorsqu'il semble évident que l'\emph{outlier} est une valeur erronée, ou quand on veut tout simplement vérifier qu'il s'agit d'une erreur ou non, il est intéressant de savoir à quelle observation (i.e., à quel individu dans certains contextes) cette valeur étrange appartient, pour ensuite éventuellement la corriger. Malheureusement, la fonction \texttt{geom\_boxplot()} ne dispose pas d'argument pour permettre d'identifier facilement à quelle observation appartient cette valeur. Cependant, on peut s'appuyer sur des fonctions créées manuellement dans R pour parvenir à cela. Dans ce cas de figure, le site \url{https://stackoverflow.com} est souvent intéressant car riche de solutions. C'est d'ailleurs en provenance de ce site que vient la fonction montrée ci-dessous (voir \href{https://stackoverflow.com/questions/33524669/labeling-outliers-of-boxplots-in-r}{ici}) qui va nous permettre ensuite de savoir, à partir du graphique, à quelle observation correspond cette donnée étrange.
+Une boîte à moustaches a donc notamment l'intérêt de mettre en évidence des valeurs qui apparaissent comme \enquote{étranges} par rapport au reste des données. Lorsqu'il semble évident que l'\emph{outlier} est une valeur erronée, ou quand on veut tout simplement vérifier qu'il s'agit d'une erreur ou non, il est intéressant de savoir à quelle observation (i.e., à quel individu dans certains contextes) cette valeur étrange appartient, pour ensuite éventuellement la corriger. Malheureusement, la fonction \texttt{geom\_boxplot()} ne dispose pas d'argument pour permettre d'identifier facilement à quelle observation appartient cette valeur. Cependant, on peut s'appuyer sur des fonctions créées manuellement dans R pour parvenir à cela. Dans ce cas de figure, le site \url{https://stackoverflow.com} est souvent intéressant car riche de solutions. C'est d'ailleurs en provenance de ce site que vient la fonction montrée ci-dessous (voir \href{https://stackoverflow.com/questions/33524669/labeling-outliers-of-boxplots-in-r}{ici}) qui va nous permettre ensuite de savoir, à partir du graphique, à quelle observation correspond cette donnée étrange.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1849,8 +1851,8 @@ Parce qu'ils montrent les données individuelles, les \emph{raincloud plots} von
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# Code modifié à partir de https://www.cedricscherer.com/2021/06/06/visualizing-}
-\CommentTok{# distributions-with-raincloud-plots-and-how-to-create-them-with-ggplot2/}
+\CommentTok{# Code modifié à partir de https://www.cedricscherer.com/2021/06/06/visualizing}
+\CommentTok{# -distributions-with-raincloud-plots-and-how-to-create-them-with-ggplot2/}
 
 \KeywordTok{library}\NormalTok{(ggdist)}
 \KeywordTok{library}\NormalTok{(gghalves)}
@@ -1891,7 +1893,7 @@ Parce qu'ils montrent les données individuelles, les \emph{raincloud plots} von
 
 Lorsqu'on regarde le code ci-dessus qui a permis de créer le \emph{raincould plot}, on remarque l'arrivée de deux nouveaux packages : \texttt{ggdist} et \texttt{gghalves}. Ces packages doivent être installés et chargés avant de pouvoir être utilisés. Le package \texttt{ggdist} est utilisé avec la fonction \texttt{stat\_halfeye()}, qui sert à montrer sur la figure ci-dessus l'aire grise sous la courbe représentative de la densité de probabilité. Plus cette aire est grande au niveau d'un intervalle de valeurs donné, plus il est probable de rencontrer les valeurs concernées lorsqu'on prend au hasard des observations du jeu de données. Plusieurs arguments peuvent en réalité servir à calculer la courbe représentative de la densité de probabilité et finalement modifier sa forme et celle de l'aire qu'il y a en-dessous. Parmi eux, l'argument \texttt{adjust} de la fonction \texttt{stat\_halfeye()} sert en quelque sorte à ajuster le lissage de la courbe représentative de la densité de probabilité : plus sa valeur sera élevée, plus la courbe sera lissée.
 
-Pour montrer les données individuelles sans risquer qu'elles ne se superposent de trop, on a utilisé la fonction \texttt{geom\_half\_point()} du package \texttt{gghalves}, l'argument \texttt{transformation}, et la fonction \texttt{position\_jitter()}. À l'intérieur de la fonction \texttt{position\_jitter()}, l'argument \texttt{seed} (la graine en français) désigne le nombre sur lequel se base l'ordinateur pour générer un résultat pseudo-aléatoire. Quand on regarde le graphique ci-dessus, les données individuelles apparaissent décalées aléatoirement sur le plan vertical. Cet effet aléatoire est l'intérêt même d'une fonction dite ``jitter'', et cet effet est en réalité prédéfini de telle sorte que si on utilise toujours le même numéro de graine (\texttt{seed}), alors on obtiendra toujours le même effet aléatoire sur le graphique.
+Pour montrer les données individuelles sans risquer qu'elles ne se superposent de trop, on a utilisé la fonction \texttt{geom\_half\_point()} du package \texttt{gghalves}, l'argument \texttt{transformation}, et la fonction \texttt{position\_jitter()}. À l'intérieur de la fonction \texttt{position\_jitter()}, l'argument \texttt{seed} (la graine en français) désigne le nombre sur lequel se base l'ordinateur pour générer un résultat pseudo-aléatoire. Quand on regarde le graphique ci-dessus, les données individuelles apparaissent décalées aléatoirement sur le plan vertical. Cet effet aléatoire est l'intérêt même d'une fonction dite \enquote{jitter}, et cet effet est en réalité prédéfini de telle sorte que si on utilise toujours le même numéro de graine (\texttt{seed}), alors on obtiendra toujours le même effet aléatoire sur le graphique.
 
 Les autres éléments de code sont là pour des considérations esthétiques et ne seront pas décrits ici. Il reste bien sûr possible de lire l'aide associée à ces fonctions pour gagner en maîtrise de ce type de graphique.
 
@@ -2003,7 +2005,7 @@ La gestion des valeurs manquantes telle que nous venons de la voir s'effectue de
 ## [1] 5.843333
 \end{verbatim}
 
-La moyenne, c'est en quelque sorte le ``centre de gravité'' de la variable \autocite{navarroLearningStatistics2018}. L'un de ses intérêts est que son calcul prend en compte toutes les informations contenues dans la variable, ce qui est utile quand on a relativement peu de données \autocite{navarroLearningStatistics2018}. En revanche, un inconvénient est qu'elle est très sensible aux valeurs extrêmes, et en particulier aux valeurs qui seraient particulièrement basses ou particulièrement élevées par rapport à la majorité des valeurs de la variable (il s'agirait ici d'\emph{outliers}), et cela est d'autant plus vrai lorsque la taille de l'échantillon étudié est faible. Dans ce dernier cas, il y a donc un risque assez important que la moyenne ne représente pas bien la tendance centrale, c'est-à-dire la valeur ou la zone de valeurs où sont situées la majorité des observations. Ce risque existe aussi même avec des tailles d'échantillon relativement importantes lorsque la distribution est asymétrique, comme illustré sur la Figure \ref{fig:meansSkewedVariables}. Sur cette figure, on peut voir qu'avec une distribution gaussienne, la moyenne correspond parfaitement à la tendance centrale. En revanche, avec une distribution asymétrique à droite, on voit que la moyenne est ``tirée vers la droite'' par rapport à la tendance centrale sous l'effet des valeurs, certes moins nombreuses, mais d'une grandeur plus importante.
+La moyenne, c'est en quelque sorte le \enquote{centre de gravité} de la variable \autocite{navarroLearningStatistics2018}. L'un de ses intérêts est que son calcul prend en compte toutes les informations contenues dans la variable, ce qui est utile quand on a relativement peu de données \autocite{navarroLearningStatistics2018}. En revanche, un inconvénient est qu'elle est très sensible aux valeurs extrêmes, et en particulier aux valeurs qui seraient particulièrement basses ou particulièrement élevées par rapport à la majorité des valeurs de la variable (il s'agirait ici d'\emph{outliers}), et cela est d'autant plus vrai lorsque la taille de l'échantillon étudié est faible. Dans ce dernier cas, il y a donc un risque assez important que la moyenne ne représente pas bien la tendance centrale, c'est-à-dire la valeur ou la zone de valeurs où sont situées la majorité des observations. Ce risque existe aussi même avec des tailles d'échantillon relativement importantes lorsque la distribution est asymétrique, comme illustré sur la Figure \ref{fig:meansSkewedVariables}. Sur cette figure, on peut voir qu'avec une distribution gaussienne, la moyenne correspond parfaitement à la tendance centrale. En revanche, avec une distribution asymétrique à droite, on voit que la moyenne est \enquote{tirée vers la droite} par rapport à la tendance centrale sous l'effet des valeurs, certes moins nombreuses, mais d'une grandeur plus importante.
 
 \begin{figure}
 
@@ -2043,7 +2045,7 @@ Dans R, la médiane d'une variable s'obtient facilement à l'aide de la fonction
 ## [1] 4.95
 \end{verbatim}
 
-Contrairement à la moyenne, la médiane prend donc en compte moins d'informations relatives aux données. Toutefois, en tant que valeur ``du milieu'', la médiane présente l'intérêt de ne pas être influencée par les valeurs extrêmes. En raison de cela, la médiane est susceptible de mieux refléter la tendance centrale que la moyenne en présence de petits échantillons avec des \emph{outliers}, ou en présence d'une forme de distribution asymétrique. Ce dernier cas est illustré sur la Figure \ref{fig:mediansSkewedVariables}.
+Contrairement à la moyenne, la médiane prend donc en compte moins d'informations relatives aux données. Toutefois, en tant que valeur \enquote{du milieu}, la médiane présente l'intérêt de ne pas être influencée par les valeurs extrêmes. En raison de cela, la médiane est susceptible de mieux refléter la tendance centrale que la moyenne en présence de petits échantillons avec des \emph{outliers}, ou en présence d'une forme de distribution asymétrique. Ce dernier cas est illustré sur la Figure \ref{fig:mediansSkewedVariables}.
 
 \begin{figure}
 
@@ -2321,7 +2323,7 @@ On remarque que les résultats de la fonction \texttt{quantile()} sont différen
 
 \end{longtable}
 
-Le tableau montre les données sur lesquelles R s'est appuyé pour déterminer les valeurs des quantiles recherchés (i.e., les quantiles 0.25 et 0.75 pour Q1 et Q3, respectivement). Les données du tableau sont bien celles relatives à notre variable \texttt{vec}, dont on peut reconnaître les valeurs dans la colonne de droite du tableau. La colonne ``Quantile'' montre les fractions (ou portions) de la variable \texttt{vec} associées aux valeurs de la variable compte tenu de leurs rangs respectifs. Par exemple, la valeur 25.6, dont le rang est 6, correspond au quantile 0.71 (approximativement). Cela veut dire que 71 \% des observations ont une valeur inférieure ou égale à 25.6. Il faut savoir qu'il existe en réalité plusieurs manières de déterminer la valeur du quantile que représente chaque valeur. Dans le cas présent, le quantile représenté, que l'on va noter \emph{q}, a été déterminé selon la formule suivante :
+Le tableau montre les données sur lesquelles R s'est appuyé pour déterminer les valeurs des quantiles recherchés (i.e., les quantiles 0.25 et 0.75 pour Q1 et Q3, respectivement). Les données du tableau sont bien celles relatives à notre variable \texttt{vec}, dont on peut reconnaître les valeurs dans la colonne de droite du tableau. La colonne \enquote{Quantile} montre les fractions (ou portions) de la variable \texttt{vec} associées aux valeurs de la variable compte tenu de leurs rangs respectifs. Par exemple, la valeur 25.6, dont le rang est 6, correspond au quantile 0.71 (approximativement). Cela veut dire que 71 \% des observations ont une valeur inférieure ou égale à 25.6. Il faut savoir qu'il existe en réalité plusieurs manières de déterminer la valeur du quantile que représente chaque valeur. Dans le cas présent, le quantile représenté, que l'on va noter \emph{q}, a été déterminé selon la formule suivante :
 \[q = (k - 1 ) / (N - 1)\]
 Dans le calcul ci-dessus, \emph{k} désigne le rang de la valeur considérée, et \(N\) désigne la taille de la variable étudiée (i.e., le nombre total de valeurs). Comme on peut le voir dans le tableau ci-dessus, cette méthode de calcul conduit nécessairement à attribuer le quantile 0 à la valeur de rang 1, et la quantile 1 à la valeur de rang \(N\). Lorsque le nombre de valeurs fait que les quantiles 0.25 et 0.75 n'existent pas, R réalise une interpolation de la valeur correspondant au quantile recherché, cela à partir des quantiles qui existent et qui encadrent le quantile recherché, ainsi qu'à partir des valeurs correspondant à ces quantiles. Dans le cas présent, il s'agit plus précisément d'une interpolation linéaire. Voyons sur la Figure \ref{fig:graphicContinuouQuantiles} en quoi cela consiste.
 
@@ -3093,14 +3095,14 @@ Pour visualiser le lien que l'on peut faire entre la forme du nuage de points et
 
 Un cas particulier illustrant l'influence du degré de dispersion sur la relation étudiée est montré sur la Figure \ref{fig:simpsonquant}. Cet exemple a pour but de montrer que l'étude d'une relation entre deux variables quantitatives peut aboutir à des conclusions radicalement différentes selon que l'on conduit les analyses à l'échelle d'un groupe entier ou que l'on sépare les analyses par groupe de caractéristiques, en particulier lorsque la distribution des données par groupe est radicalement différente de celle obtenue à l'échelle du groupe entier. Sur la gauche de la Figure \ref{fig:simpsonquant}, le nuage de points représente la relation entre deux variables à l'échelle de l'ensemble du groupe étudié. La variabilité possible pour les deux variables étudiées (V1 et V2 dans l'exemple) est alors maximale. Toutefois, ces données appartiennent en réalité à des sous-groupes distincts (cf.~couleurs sur le graphique de droite de la Figure \ref{fig:simpsonquant}). L'analyse par sous-groupe diminue la variabilité à la fois pour V1 et V2, donnant même lieu ici à des relations de sens opposé à celui observé à l'échelle de l'ensemble du groupe ! Cette situation correspond à ce qu'on appelle un paradoxe de Simpson, lequel se présente lorsque le phénomène que l'on peut observer avec une vue globale est annulé voir inversé lors d'une analyse par sous-groupe. Ici, la grande variabilité associée aux données du graphique de gauche de la Figure \ref{fig:simpsonquant} crée une relation artificiellement et donc faussement positive entre V1 et V2. C'est l'analyse par sous-groupe qui permet de révéler la vraie nature de la relation étudiée.
 
-\textbackslash begin\{figure\}
+\begin{figure}
 
-\{\centering \includegraphics[width=0.9\linewidth]{Analyser-des-données-avec-R_files/figure-latex/simpsonquant-1}
+{\centering \includegraphics[width=0.9\linewidth]{Analyser-des-données-avec-R_files/figure-latex/simpsonquant-1} 
 
-\}
+}
 
-\textbackslash caption\{Influence du niveau d'analyse (groupe entier vs.~sous-groupes) sur la corrélation observée entre deux variables quantitatives (données obtenues grâce à la fonction simulate\_simpson() du package bayestestR\}\label{fig:simpsonquant}
-\textbackslash end\{figure\}
+\caption{Influence du niveau d'analyse (groupe entier vs. sous-groupes) sur la corrélation observée entre deux variables quantitatives}\label{fig:simpsonquant}
+\end{figure}
 
 En outre, la valeur du coefficient de corrélation de Pearson peut être influencée par des valeurs extrêmes, comme montré sur la Figure \ref{fig:spuriousCorrelationBis}. Les deux graphiques de cette figure montrent exactement les mêmes données, à ceci près que sur le graphique de droite, on a remplacé en ordonnées une valeur du graphique de gauche pour lui donner la valeur de 10. L'influence de cette simple action sur la valeur du coefficient de corrélation de Pearson est nette. Ceci montre qu'il faut faire attention aux valeurs extrêmes qui pourraient grandement influencer la variabilité des données d'une variable et au final la valeur de corrélation obtenue, notamment en présence d'échantillons de taille relativement faible. Dans le cas où la valeur du coefficient de corrélation de Pearson serait très influencée par une valeur, il pourrait être une bonne pratique de calculer la valeur du coefficient de corrélation de Pearson avec et sans cette valeur afin de pouvoir quantifier son influence sur la relation étudiée \autocite{halperinSpuriousCorrelationsCauses1986}. Une alternative pourrait être aussi d'étudier la relation à l'aide d'autres types de coefficients que celui de Pearson, tels que celui de Spearman, présenté plus bas. Cet exemple doit faire prendre conscience qu'il n'est pas toujours pertinent de calculer le coefficient de corrélation de Pearson. En ce sens, lorsqu'on cherche à inférer la valeur du coefficient de corrélation de Pearson dans la population étudiée, il convient de vérifier certains prérequis, lesquels sont abordés plus loin dans ce livre.
 
@@ -3489,7 +3491,7 @@ Les graphiques \texttt{A} et \texttt{B} de la Figure \ref{fig:groupedBarsFigure}
 \caption{Diagrammes en barres côte-à-côte séparés selon une variable qualitative}\label{fig:groupedBarsUpgraded}
 \end{figure}
 
-Dans certains cas, on peut vouloir comparer les effectifs relatifs aux modalités d'une première variable qualitative avec des barres mises côte-à-côte, et n'utiliser la seconde variable qualitative que pour avoir un peu d'éléments de contexte ``à l'intérieur'' des effectifs affichés pour la première variable qualitative. La Figure \ref{fig:stackedBarsBiv} illustre ce cas de figure où la hauteur des barres sert prioritairement à comparer les effectifs relatifs à diverses opinions, et la coloration des barres sert à fournir une idée de la répartition (hommes / femmes dans l'exemple) dans les réponses, sans pourtant avoir l'ambition de comparer cette répartition facilement d'un type d'opinion à un autre.
+Dans certains cas, on peut vouloir comparer les effectifs relatifs aux modalités d'une première variable qualitative avec des barres mises côte-à-côte, et n'utiliser la seconde variable qualitative que pour avoir un peu d'éléments de contexte \enquote{à l'intérieur} des effectifs affichés pour la première variable qualitative. La Figure \ref{fig:stackedBarsBiv} illustre ce cas de figure où la hauteur des barres sert prioritairement à comparer les effectifs relatifs à diverses opinions, et la coloration des barres sert à fournir une idée de la répartition (hommes / femmes dans l'exemple) dans les réponses, sans pourtant avoir l'ambition de comparer cette répartition facilement d'un type d'opinion à un autre.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3698,8 +3700,9 @@ Cette situation, qui peut paraître étonnante, illustre à nouveau ce qu'on app
 
 Autrement dit, les hommes se retrouvaient avec un pourcentage de réussite global bien meilleur que celui des femmes seulement parce que, comparativement aux femmes, les hommes s'étaient en proportion davantage engagés dans les départements où les taux de réussite étaient bien meilleurs.
 
-\hypertarget{relation-entre-une-variable-quantitative-et-une-variable-qualitative}{%
-\section{Relation entre une variable quantitative et une variable qualitative}\label{relation-entre-une-variable-quantitative-et-une-variable-qualitative}}
+\section[Relation entre une variable quantitative et une variable qualitative]{Relation entre une variable quantitative et une variable qualitative%
+\sectionmark{Relation entre une variable quantitative et une variable qual... }}
+\sectionmark{Relation entre une variable quantitative et une variable qual... }
 
 Lorsqu'on analyse une variable quantitative en fonction d'une variable qualitative, on peut avoir des données quantitatives qui sont non appariées (étude de type \emph{between-subject design} en anglais) ou appariées (étude de type \emph{within-subject design} en anglais). Avoir des données non appariées signifie que les données quantitatives correspondant aux différentes modalités de la variable qualitative étudiée ne sont pas liées. Un exemple simple, pour ce premier cas, peut être l'analyse de la taille des individus en fonction du sexe. Dans ce cas, les données quantitatives de taille pour les personnes de sexe masculin, de sexe féminin, et de sexe indéterminé, proviendront forcément d'individus différents et ne formeront donc pas des paires. Les cas de données appariées se retrouvent dans les études dans lesquelles plusieurs individus sont évalués plusieurs fois dans des conditions similaires ou différentes et que l'on cherche à comparer. En sciences du sport, un exemple relativement classique est de tester la performance d'endurance (variable quantitative) en ayant pris (condition de test) ou non (condition contrôle) une substance potentiellement ergonénique, la prise de substance ou non étant les modalités d'une même variable qualitative de type condition. Dans ce cas là, tous les individus auront des données dans les deux conditions et ces données seront donc appariées (dépendantes).
 
@@ -3948,7 +3951,8 @@ Les Figures \ref{fig:raindcloudplotsBivUnpaired1} et \ref{fig:raindcloudplotsBiv
         \DataTypeTok{axis.text.x =} \KeywordTok{element_blank}\NormalTok{(),}
         \DataTypeTok{axis.ticks.x =} \KeywordTok{element_blank}\NormalTok{()) }
 
-\CommentTok{# Raincloud plots classiques (avec moyennes et écart-types)}
+\CommentTok{# Raincloud plots classiques (avec moyennes et }
+\CommentTok{# écart-types)}
 \NormalTok{C <-}
 \StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ iris_two_species, }
          \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Species, }\DataTypeTok{y =}\NormalTok{ Sepal.Length, }\DataTypeTok{colour =}\NormalTok{ Species, }\DataTypeTok{fill =}\NormalTok{ Species)) }\OperatorTok{+}
@@ -3983,7 +3987,8 @@ Les Figures \ref{fig:raindcloudplotsBivUnpaired1} et \ref{fig:raindcloudplotsBiv
 \StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position =} \StringTok{"none"}\NormalTok{)}
 
 
-\CommentTok{# Raincloud plots avec les nuages sur une même ligne (avec moyennes et écart-types)}
+\CommentTok{# Raincloud plots avec les nuages sur une même ligne (avec moyennes et }
+\CommentTok{# écart-types)}
 \NormalTok{D <-}
 \StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ iris_two_species, }
          \KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \DecValTok{0}\NormalTok{, }\DataTypeTok{y =}\NormalTok{ Sepal.Length, }\DataTypeTok{colour =}\NormalTok{ Species, }\DataTypeTok{fill =}\NormalTok{ Species)) }\OperatorTok{+}
@@ -4034,7 +4039,7 @@ Les Figures \ref{fig:raindcloudplotsBivUnpaired1} et \ref{fig:raindcloudplotsBiv
 \caption{Exemples de raindcloud plots à la verticale pour des données non appariées}\label{fig:raindcloudplotsBivUnpaired2}
 \end{figure}
 
-Comme vous l'aurez peut-être repéré, il s'agit ici des mêmes techniques de codage qui ont été vues au cours du chapitre précédent lors de la présentation du \emph{raincloud plot}, à ceci près qu'il y a un \emph{mapping} (une mise en lien) des couleurs des éléments graphiques avec les modalités de la variable qualitative étudiée (cf.~arguments \texttt{color} et \texttt{fill} dans la fonction \texttt{aes()} au niveau de la fonction \texttt{ggplot()}). Notons aussi que pour montrer les moyennes et écarts-types sur les figures \ref{fig:raindcloudplotsBivUnpaired1} et \ref{fig:raindcloudplotsBivUnpaired2}, il a fallu utiliser la fonction \texttt{stat\_summary()}. Cette fonction sert à visualiser un résumé statistique identifié. Pour montrer les moyennes, on utilise \texttt{fun\ =\ "mean"}, alors que pour montrer des écarts-types, on utilise \texttt{fun.data\ =\ "mean\_sdl"}. Pour les écarts-types, il faut ajouter \texttt{fun.args\ =\ list(mult\ =\ 1)} pour bien montrer une barre d'erreur ne correspondant qu'à un seul multiple de l'écart-type, car par défaut c'est deux fois l'écart-type qui est montré. On peut choisir la forme avec laquelle présenter le résumé statistique grâce à l'argument \texttt{geom}. On remarque aussi que pour montrer les ``nuages'' sur une même ligne (cf.~graphiques B et D des Figures \ref{fig:raindcloudplotsBivUnpaired1} et \ref{fig:raindcloudplotsBivUnpaired2}), nous avons utilisé \texttt{aes(x\ =\ 0)} dans la fonction \texttt{ggplot()}, et nous avons montré les données individuelles avec la fonction \texttt{geom\_point()} et non plus avec \texttt{gghalves::geom\_half\_point()} comme au chapitre précédent ou même comme avec les graphiques A et C des mêmes figures, cela pour avoir plus de contrôle sur le placement des points sur les graphiques. C'est alors l'argument \texttt{position} et la fonction \texttt{position\_jitterdodge()} qui ont permis de donner un mouvement latéral aléatoire aux points pour qu'ils ne soient pas superposés.
+Comme vous l'aurez peut-être repéré, il s'agit ici des mêmes techniques de codage qui ont été vues au cours du chapitre précédent lors de la présentation du \emph{raincloud plot}, à ceci près qu'il y a un \emph{mapping} (une mise en lien) des couleurs des éléments graphiques avec les modalités de la variable qualitative étudiée (cf.~arguments \texttt{color} et \texttt{fill} dans la fonction \texttt{aes()} au niveau de la fonction \texttt{ggplot()}). Notons aussi que pour montrer les moyennes et écarts-types sur les figures \ref{fig:raindcloudplotsBivUnpaired1} et \ref{fig:raindcloudplotsBivUnpaired2}, il a fallu utiliser la fonction \texttt{stat\_summary()}. Cette fonction sert à visualiser un résumé statistique identifié. Pour montrer les moyennes, on utilise \texttt{fun\ =\ "mean"}, alors que pour montrer des écarts-types, on utilise \texttt{fun.data\ =\ "mean\_sdl"}. Pour les écarts-types, il faut ajouter \texttt{fun.args\ =\ list(mult\ =\ 1)} pour bien montrer une barre d'erreur ne correspondant qu'à un seul multiple de l'écart-type, car par défaut c'est deux fois l'écart-type qui est montré. On peut choisir la forme avec laquelle présenter le résumé statistique grâce à l'argument \texttt{geom}. On remarque aussi que pour montrer les \enquote{nuages} sur une même ligne (cf.~graphiques B et D des Figures \ref{fig:raindcloudplotsBivUnpaired1} et \ref{fig:raindcloudplotsBivUnpaired2}), nous avons utilisé \texttt{aes(x\ =\ 0)} dans la fonction \texttt{ggplot()}, et nous avons montré les données individuelles avec la fonction \texttt{geom\_point()} et non plus avec \texttt{gghalves::geom\_half\_point()} comme au chapitre précédent ou même comme avec les graphiques A et C des mêmes figures, cela pour avoir plus de contrôle sur le placement des points sur les graphiques. C'est alors l'argument \texttt{position} et la fonction \texttt{position\_jitterdodge()} qui ont permis de donner un mouvement latéral aléatoire aux points pour qu'ils ne soient pas superposés.
 
 \emph{Données appariées}
 
@@ -4102,7 +4107,8 @@ La Figure \ref{fig:raindcloudplotsBivPaired1} montre des propositions de graphiq
 \StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"A"}\NormalTok{)}
 
 
-\CommentTok{# Raincloud plots classiques à la verticale avec moyennes et écart-types}
+\CommentTok{# Raincloud plots classiques à la verticale avec moyennes et }
+\CommentTok{# écart-types}
 \NormalTok{B <-}
 \StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ Blink2, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Condition, }\DataTypeTok{y =}\NormalTok{ Blink_rate)) }\OperatorTok{+}
 \StringTok{  }\NormalTok{ggdist}\OperatorTok{::}\KeywordTok{stat_halfeye}\NormalTok{(}
@@ -4618,7 +4624,7 @@ Bien que d'aspects très différents, ces jeux de données montrent pourtant des
 \hypertarget{pruxe9ambule}{%
 \section{Préambule}\label{pruxe9ambule}}
 
-Réaliser une inférence statistique consiste à conclure à propos de quelque chose dans une population d'intérêt (cette chose pouvant se traduire par n'importe quel paramètre statistique : une moyenne, une médiane, une proportion, un coefficient de corrélation, une différence de moyennes, un rapport de cotes, etc.), cela à partir de données prélevées dans un échantillon de cette population. Pour comprendre la mécanique des calculs à mettre en oeuvre pour réaliser une inférence statistique, il est nécessaire d'avoir quelques notions en matière de probabilité. Ce chapitre, qui s'inspire largement du chapitre ``Introduction to probability'' de l'ouvrage de Danielle Navarro \autocite*{navarroLearningStatistics2018}, vise à présenter brièvement ces notions.
+Réaliser une inférence statistique consiste à conclure à propos de quelque chose dans une population d'intérêt (cette chose pouvant se traduire par n'importe quel paramètre statistique : une moyenne, une médiane, une proportion, un coefficient de corrélation, une différence de moyennes, un rapport de cotes, etc.), cela à partir de données prélevées dans un échantillon de cette population. Pour comprendre la mécanique des calculs à mettre en oeuvre pour réaliser une inférence statistique, il est nécessaire d'avoir quelques notions en matière de probabilité. Ce chapitre, qui s'inspire largement du chapitre \enquote{Introduction to probability} de l'ouvrage de Danielle Navarro \autocite*{navarroLearningStatistics2018}, vise à présenter brièvement ces notions.
 
 \hypertarget{lois-de-probabilituxe9}{%
 \section{Lois de probabilité}\label{lois-de-probabilituxe9}}
@@ -4633,11 +4639,11 @@ Ces lois mathématiques utilisées pour faire des inférences statistiques, qu'o
 \hypertarget{la-loi-binomiale}{%
 \subsection{La loi binomiale}\label{la-loi-binomiale}}
 
-La loi binomiale est une loi mathématique qui concerne les situations où seulement deux résultats sont possibles, comme par exemple ``succès'' et ``échec'', ``pile'' et ``face'', ``0'' et ``1'', etc. Un exemple classique où l'on est en présence d'une variable binomiale est celui où l'on demande à \(N\) personnes de lancer une fois une pièce non truquée, avec par conséquent ``pile'' et ``face'' comme seuls résultats possibles et autant de chances de tomber sur ``pile'' que sur ``face'' à chaque lancer (\(\theta\) = 0.5, soit une chance sur deux). Une fois les essais de toutes les personnes terminés, la distribution qui en résulte contient alors la proportion de personnes qui ont obtenu ``pile'' et la proportion de personnes qui n'ont pas obtenu ``pile'' (donc ``face''). Lorsque le nombre \(N\) d'essais ou de participants et la probabilité d'avoir tel ou tel résultat (\(\theta\)) sont connus, la loi binomiale, qu'on note \(X \sim B(\theta, N)\), permet de connaître la probabilité \(P(X)\) d'avoir \(X\) succès (e.g., \(X\) fois ``pile'') sur les \(N\) essais ou participants. La formule de cette loi est montrée ci-dessous :
+La loi binomiale est une loi mathématique qui concerne les situations où seulement deux résultats sont possibles, comme par exemple \enquote{succès} et \enquote{échec}, \enquote{pile} et \enquote{face}, \enquote{0} et \enquote{1}, etc. Un exemple classique où l'on est en présence d'une variable binomiale est celui où l'on demande à \(N\) personnes de lancer une fois une pièce non truquée, avec par conséquent \enquote{pile} et \enquote{face} comme seuls résultats possibles et autant de chances de tomber sur \enquote{pile} que sur \enquote{face} à chaque lancer (\(\theta\) = 0.5, soit une chance sur deux). Une fois les essais de toutes les personnes terminés, la distribution qui en résulte contient alors la proportion de personnes qui ont obtenu \enquote{pile} et la proportion de personnes qui n'ont pas obtenu \enquote{pile} (donc \enquote{face}). Lorsque le nombre \(N\) d'essais ou de participants et la probabilité d'avoir tel ou tel résultat (\(\theta\)) sont connus, la loi binomiale, qu'on note \(X \sim B(\theta, N)\), permet de connaître la probabilité \(P(X)\) d'avoir \(X\) succès (e.g., \(X\) fois \enquote{pile}) sur les \(N\) essais ou participants. La formule de cette loi est montrée ci-dessous :
 
 \[P(X | \theta, N) = \frac{N!}{X!(N-X)!}\theta^X(1-\theta)^{N-X}\]
 
-La Figure \ref{fig:distriBinom} illustre une loi binomiale (avec \(N\) = 100 et \(\theta\) = 0.5) qui pourrait s'appliquer au cas d'un lancer de pièce non truquée. Cette figure montre que même si une pièce est non truquée (\(\theta\) = 0.5), il est tout à fait possible qu'il y ait plus de personnes à obtenir ``pile'' plutôt que ``face'' et inversement sur un échantillon de 100 personnes. Cependant, ce que montre aussi la figure, c'est que si la pièce est non truquée, les chances restent les plus fortes pour l'obtention de 50 \% de personnes avec ``pile'' et avec ``face'' pour un lancer de pièce.
+La Figure \ref{fig:distriBinom} illustre une loi binomiale (avec \(N\) = 100 et \(\theta\) = 0.5) qui pourrait s'appliquer au cas d'un lancer de pièce non truquée. Cette figure montre que même si une pièce est non truquée (\(\theta\) = 0.5), il est tout à fait possible qu'il y ait plus de personnes à obtenir \enquote{pile} plutôt que \enquote{face} et inversement sur un échantillon de 100 personnes. Cependant, ce que montre aussi la figure, c'est que si la pièce est non truquée, les chances restent les plus fortes pour l'obtention de 50 \% de personnes avec \enquote{pile} et avec \enquote{face} pour un lancer de pièce.
 
 \begin{figure}
 
@@ -4763,8 +4769,9 @@ La loi normale peut être mise en lien avec d'autres grandes lois, telles que :
 \caption{Densité de probabilité de lois chi-carré, t, et F.}\label{fig:VariousQuantLaws}
 \end{figure}
 
-\hypertarget{loi-des-grands-nombres-distribution-duxe9chantillonnage-de-la-moyenne-et-thuxe9oruxe8me-de-la-limite-centrale}{%
-\section{Loi des grands nombres, distribution d'échantillonnage de la moyenne, et théorème de la limite centrale}\label{loi-des-grands-nombres-distribution-duxe9chantillonnage-de-la-moyenne-et-thuxe9oruxe8me-de-la-limite-centrale}}
+\section[Loi des grands nombres, distribution d'échantillonnage de la moyenne, et théorème de la limite centrale]{Loi des grands nombres, distribution d'échantillonnage de la moyenne, et théorème de la limite centrale%
+\sectionmark{Loi des grands nombres, distribution d'échantillonnage...}}
+\sectionmark{Loi des grands nombres, distribution d'échantillonnage...}
 
 La loi des grands nombres décrit un principe de probabilité permettant de comprendre bon nombre de phénomènes statistiques, notamment lorsque l'on s'intéresse à la moyenne d'un échantillon. Cette loi implique par exemple le fait que la moyenne d'un échantillon pris au hasard dans une population tend à être plus proche de la moyenne de la population à mesure que la taille de l'échantillon étudié est grande. Cette loi est illustrée sur la Figure \ref{fig:GreatNumLaw}. Sur cette figure, les distributions représentent des échantillons crées de manière aléatoire à partir d'une population ayant pour moyenne 0 et pour écart-type 400. Le trait vertical rouge représente la moyenne de la population d'origine alors que le trait en pointillés noirs montre la moyenne de l'échantillon qui a été obtenue. Lorsqu'on regarde chaque colonne de la figure du haut vers le bas et qu'on compare les colonnes entre elles, on se rend compte effectivement que plus la taille \(N\) de l'échantillon tiré de la population est grande, plus le trait noir se retrouve en général proche du trait rouge, cela traduisant le fait qu'on a de meilleures chances que la moyenne de l'échantillon étudié soit plus proche de la moyenne de la population lorsque l'échantillon est de grande taille. Une question qui pourrait alors se poser est le nombre de personnes ou d'individus que doit contenir l'échantillon pour obtenir un résultat avec une marge d'erreur jugée acceptable.
 
@@ -4825,13 +4832,14 @@ La formule montre bien que pour une population présentant un écart-type donné
 \hypertarget{tests-statistiques-pour-des-variables-qualitatives}{%
 \chapter{Tests statistiques pour des variables qualitatives}\label{tests-statistiques-pour-des-variables-qualitatives}}
 
-\hypertarget{test-du-chi2-daduxe9quation-ou-encore-dit-de-conformituxe9-ou-dajustement}{%
-\section{\texorpdfstring{Test du \(\chi^2\) d'adéquation (ou encore dit de conformité ou d'ajustement)}{Test du \textbackslash chi\^{}2 d'adéquation (ou encore dit de conformité ou d'ajustement)}}\label{test-du-chi2-daduxe9quation-ou-encore-dit-de-conformituxe9-ou-dajustement}}
+\section[Test du \texorpdfstring{$\chi^2$}{[chi-carré]} d'adéquation (ou encore dit de conformité ou d'ajustement)]{Test du \texorpdfstring{$\chi^2$}{[chi-carré]} d'adéquation (ou encore dit de conformité ou d'ajustement)%
+\sectionmark{Test du \texorpdfstring{$\chi^2$}{[chi-carré]} d'adéquation...}}
+\sectionmark{Test du \texorpdfstring{$\chi^2$}{[chi-carré]} d'adéquation...}
 
 \hypertarget{calculs-sous-jacents}{%
 \subsection{Calculs sous-jacents}\label{calculs-sous-jacents}}
 
-Le test du \(\chi^2\) d'adéquation consiste à comparer la distribution d'une variable qualitative observée avec une distribution théorique. Pour mieux voir en quoi cela consiste, prenons un exemple repris de Danielle Navarro \autocite*{navarroLearningStatistics2018} où l'on chercherait à savoir si, lorsqu'on demande à des personnes de choisir ``au hasard'' mentalement une carte parmi un ensemble de cartes étalées devant soi, le choix se fait vraiment de manière entièrement aléatoire. Pour étudier cela, on demande à 200 personnes de réaliser l'expérimentation et on note le type de carte qui a été retenu : coeur, trèfle, carreau, ou pique. Le jeu de données est crée avec le code ci-dessous :
+Le test du \(\chi^2\) d'adéquation consiste à comparer la distribution d'une variable qualitative observée avec une distribution théorique. Pour mieux voir en quoi cela consiste, prenons un exemple repris de Danielle Navarro \autocite*{navarroLearningStatistics2018} où l'on chercherait à savoir si, lorsqu'on demande à des personnes de choisir \enquote{au hasard} mentalement une carte parmi un ensemble de cartes étalées devant soi, le choix se fait vraiment de manière entièrement aléatoire. Pour étudier cela, on demande à 200 personnes de réaliser l'expérimentation et on note le type de carte qui a été retenu : coeur, trèfle, carreau, ou pique. Le jeu de données est crée avec le code ci-dessous :
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4871,6 +4879,7 @@ Maintenant que l'on connaît la distribution théorique correspondant à notre e
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\CommentTok{# Vue numérique de la distribution observée}
 \NormalTok{observed <-}\StringTok{ }\KeywordTok{table}\NormalTok{(cartes}\OperatorTok{$}\NormalTok{choix)}
 \NormalTok{observed}
 \end{Highlighting}
@@ -4882,7 +4891,27 @@ Maintenant que l'on connaît la distribution théorique correspondant à notre e
 ##      51      64      50      35
 \end{verbatim}
 
-Cette distribution des observations pourrait s'écrire comme suit :
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Vue graphique de la distribution observée}
+\NormalTok{cartes }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(choix) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{count}\NormalTok{(choix) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{fct_reorder}\NormalTok{(choix, n), }\DataTypeTok{y =}\NormalTok{ n)) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{stat =} \StringTok{"identity"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{Analyser-des-données-avec-R_files/figure-latex/unnamed-chunk-14-1} 
+
+}
+
+\caption{Visualisation des fréquences dans le jeu de données `cartes`}\label{fig:unnamed-chunk-14}
+\end{figure}
+
+La distribution \(O\) des fréquences observées pourrait s'écrire comme suit :
 \[O = (51, 64, 50, 35)\]
 
 À présent, il convient de calculer une statistique qui résumerait l'écart qu'il peut y avoir entre la distribution théorique, et celle observée. Cette statistique, c'est \(X^2\) ou \(GOF\) (pour \emph{Goodness Of Fit}), tel que :
@@ -4901,9 +4930,9 @@ Cette distribution des observations pourrait s'écrire comme suit :
 ## [1] 8.44
 \end{verbatim}
 
-Nous avons à présent le score qui résume l'écart obtenu entre la distribution observée et la distribution théorique de notre variable qualitative. Il nous reste alors à connaître la distribution d'échantillonnage de la statistique \(X^2\) dans le cas où \(H_{0}\) serait vraie. Cela nous permettra de connaître la probabilité de rencontrer une valeur de \(X^2\) au moins aussi grande que 8.44 dans le cas où \(H_{0}\) serait vraie, et de juger ainsi si cette probabilité supporte ou non \(H_{0}\)\ldots{} Trêve de suspens, la distribution d'échantillonnage de \(X^2\) suit une loi \(\chi^2\) à \(k-1\) degrés de liberté (\(k\) étant le nombre de types d'évènement possibles, ici les types de cartes tirées). Comment peut-on expliquer cela? Tout d'abord, reprenons le calcul de \(X^2\), et plus précisément le terme \(O_{i}\). Admettons qu'il ne concerne qu'un seul type de cartes (e.g., les coeurs). Ce terme a sa propre distribution de probabilité en posant que \(H_{0}\) soit vraie, et cette distribution est celle d'une loi binomiale (avec \(\theta\) = 0.25 et \(N\) = 200 dans notre exemple), puisque pour chaque sujet interrogés, il était possible que ce type de carte soit choisi, ou non. Or, il s'avère que lorsque \(N\) est relativement grand et que \(\theta\) n'est ni trop proche de 0, ni trop proche de 1, la distribution se rapproche d'une loi normale \autocite{navarroLearningStatistics2018}. En allant vite, pour un type de cartes donné, on peut alors considérer que l'expression \(\frac{(O_{i} - E_{i})}{E_{i}}\) a une distribution d'échantillonnage qui s'apparente à une loi normale standard, et c'est le cas à chaque fois que cette expression doit être reprise pour chaque type de carte. Si on met au carré chacune de ces variables, puis qu'on les additionne (comme décrit plus haut pour le calcul de \(X^2\)), on se retrouve dans la situation présentée dans le chapitre précédent où nous obtenons une loi \(\chi^2\). La subtilité ici, par rapport au chapitre précédent, est que le nombre de degrés de liberté n'est pas \(k\) mais \(k-1\). Le nombre de degrés de liberté désigne le nombre de quantités distinctes à décrire (ici 4 quantités car les données sont regroupées en 4 modalités) moins le nombre de contraintes (ici 1 contrainte liée au groupe de sujets qui a un nombre fini). On a donc bien 3 degrés de liberté ici car il nous suffit de connaître 3 scores de chaque modalité pour connaître le 4ème qu'il nous manquerait pour une taille d'échantillon donnée\ldots{}
+Nous avons à présent le score qui résume l'écart obtenu entre la distribution observée et la distribution théorique de notre variable qualitative. Il nous reste alors à connaître la distribution d'échantillonnage de la statistique \(X^2\) dans le cas où \(H_{0}\) serait vraie. Cela nous permettra de connaître la probabilité de rencontrer une valeur de \(X^2\) au moins aussi grande que 8.44 dans le cas où \(H_{0}\) serait vraie, et de juger ainsi si cette probabilité supporte ou non \(H_{0}\)\ldots{} Trêve de suspens, la distribution d'échantillonnage de \(X^2\) suit une loi \(\chi^2\) à \(k-1\) degrés de liberté (\(k\) étant le nombre de types d'évènement possibles, ici les types de cartes tirées). Comment peut-on expliquer cela? Tout d'abord, reprenons le calcul de \(X^2\), et plus précisément le terme \(O_{i}\). Admettons qu'il ne concerne qu'un seul type de cartes (e.g., les cœurs). Ce terme a sa propre distribution de probabilité en posant que \(H_{0}\) soit vraie, et cette distribution est celle d'une loi binomiale (avec \(\theta\) = 0.25 et \(N\) = 200 dans notre exemple), puisque pour chaque sujet interrogé, il était possible que ce type de carte soit choisi, ou non. Or, il s'avère que lorsque \(N\) est relativement grand et que \(\theta\) n'est ni trop proche de 0, ni trop proche de 1, la distribution se rapproche d'une loi normale \autocite{navarroLearningStatistics2018}. En allant vite, pour un type de cartes donné, on peut alors considérer que l'expression \(\frac{(O_{i} - E_{i})}{E_{i}}\) a une distribution d'échantillonnage qui s'apparente à une loi normale standard, et c'est le cas à chaque fois que cette expression doit être reprise pour chaque type de carte. Si on met au carré chacune de ces variables, puis qu'on les additionne (comme décrit plus haut pour le calcul de \(X^2\)), on se retrouve dans la situation présentée dans le chapitre précédent où nous obtenons une loi \(\chi^2\). La subtilité ici, par rapport au chapitre précédent, est que le nombre de degrés de liberté n'est pas \(k\) mais \(k-1\). Le nombre de degrés de liberté désigne le nombre de quantités distinctes à décrire (ici 4 quantités car les données sont regroupées en 4 modalités) moins le nombre de contraintes (ici 1 contrainte liée au groupe de sujets qui a un nombre fini). On a donc bien 3 degrés de liberté ici car il nous suffit de connaître le score de fréquence de 3 modalités pour connaître le score de fréquence de la 4ème modalité qu'il nous manquerait pour une taille d'échantillon donnée.
 
-La Figure \ref{fig:GOFDistri} montre la loi \(\chi^2\) relative à 3 degrés de liberté et donc les probabilités de rencontrer tel ou tel intervalle de valeurs de \(X^2\) dans le cas où \(H_{0}\) serait vraie. La zone hachurée représente la probabilité qui était d'obtenir une valeur de \(X^2\) au moins aussi grande que 8.44 dans l'hypothèse où \(H_{0}\) serait vraie. Cette probabilité \(P\) est de 4 \%. En principe, lors d'un test statistique, il y a aussi ce qu'on appelle une ``région critique'', c'est-à-dire l'intervalle dans lequel la valeur de \(P\) liée à notre valeur de 8.44 devrait se trouver pour qu'on considère que nos résultats ne supportent pas \(H_{0}\) et donc qu'on ne retient pas cette hypothèse. Classiquement (voire par défaut, à tort), cette région critique est définie à l'aide du seuil \(P <= 0.05\). Autrement dit, il faudrait que notre statistique \(X^2\) tombe dans l'intervalle pour lequel il y avait une probabilité inférieure ou égale à 5 \% de tomber dans le cas où \(H_{0}\) serait vraie. Dans notre exemple, cela se traduirait par le fait d'obtenir une valeur de \(X^2\) supérieure ou égale à 7.8147279. La région critique correspondant à cette zone est montrée en rouge sur la Figure \ref{fig:GOFDistri}. En suivant cette démarche, \(H_{0}\) serait donc bien rejetée puisque notre valeur \(X^2\) de 8.44 tomberait dans la région critique. Le test serait alors dit ``significatif''.
+La Figure \ref{fig:GOFDistri} montre la loi \(\chi^2\) relative à 3 degrés de liberté et donc les probabilités de rencontrer tel ou tel intervalle de valeurs de \(X^2\) dans le cas où notre \(H_{0}\) serait vraie. La zone hachurée représente la probabilité qui était d'obtenir une valeur de \(X^2\) au moins aussi grande que 8.44 dans l'hypothèse où \(H_{0}\) serait vraie. Cette probabilité \(P\) est de 3.8 \%. En principe, lors d'un test statistique, il y a aussi ce qu'on appelle une \enquote{région critique}, c'est-à-dire l'intervalle dans lequel la valeur de la statistique de test, ici \(X^2\), devrait se trouver pour qu'on considère que nos résultats ne supportent pas \(H_{0}\) et donc qu'on ne retienne pas cette hypothèse. Classiquement (voire par défaut, à tort), cette région critique est définie à l'aide du seuil \(P <= 0.05\). Dans le cas présent, cela voudrait dire que notre statistique \(X^2\) doive tomber dans l'intervalle pour lequel il y avait une probabilité inférieure ou égale à 5 \% de tomber dans le cas où \(H_{0}\) serait vraie. Dans notre exemple, cela se traduirait par le fait d'obtenir une valeur de \(X^2\) supérieure ou égale à environ 7.81. La région critique correspondant à cette zone est montrée en rouge sur la Figure \ref{fig:GOFDistri}. En suivant cette démarche, dans le cas présent \(H_{0}\) serait donc bien rejetée puisque notre valeur \(X^2\) de 8.44 tomberait dans la région critique. Le test serait alors dit \enquote{significatif}.
 
 \begin{figure}
 
@@ -4966,9 +4995,9 @@ Une seconde fonction possible est la fonction \texttt{goodnessOfFitTest()} du pa
 ##    p-value:  0.038
 \end{verbatim}
 
-Pour reporter les résultats, nous pourrions écrire les choses comme cela \autocite{navarroLearningStatistics2018} : Le résultat du test était significatif (\(\chi^2(3)\) = 8.44, \(P\) = 0.04).
+Pour reporter les résultats, nous pourrions écrire les choses comme cela \autocite{navarroLearningStatistics2018} : Le résultat du test était significatif (\(\chi^2(3)\) = 8.44, \(P\) = 0.04). Ainsi, on considère que nos données ne supportent pas suffisamment l'hypothèse initiale selon laquelle il y aurait une probabilité identique pour chaque type de carte d'être tiré par une personne. Le choix d'une carte par une personne ne serait donc pas réellement aléatoire.
 
-Il convient de noter que les probabilités espérées (théoriques) peuvent être définies à volonté selon la question de recherche. Par exemple, on aurait pu tester l'hypothèse \(H_{0}\) selon laquelle les personnes préfèrent à 80 \% les coeurs, 10 \% les trèfles, 5 \% les piques, et 5 \% les carreaux. Le tout est de bien configurer le test pour que les fréquences observées pour chaque modalité (ici les types de cartes) soient bien mises en correspondance avec les fréquences théoriques (cf.~argument \texttt{p}dans l'exemple de code ci-dessous). La fonction \texttt{lsr::goodnessOfFitTest()} a donc un fort intérêt ici pour bien vérifier, dans les résultats affichés, qu'on a bien attribué les probabilités théoriques aux bonnes modalités) :
+Il convient de noter que les probabilités espérées (théoriques) peuvent être définies à volonté selon la question de recherche. Par exemple, on aurait pu tester l'hypothèse \(H_{0}\) selon laquelle les personnes préfèrent à 80 \% les cœurs, 10 \% les trèfles, 5 \% les piques, et 5 \% les carreaux. Le tout est de bien configurer le test pour que les fréquences observées pour chaque modalité (ici les types de cartes) soient bien mises en correspondance avec les fréquences théoriques (ces dernières étant configurées à l'aide de l'argument \texttt{p} dans l'exemple de code ci-dessous). La fonction \texttt{lsr::goodnessOfFitTest()} a donc un fort intérêt ici pour bien vérifier, dans les résultats affichés, qu'on a bien attribué les probabilités théoriques aux bonnes modalités) :
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4999,13 +5028,56 @@ Il convient de noter que les probabilités espérées (théoriques) peuvent êtr
 ##    p-value:  <.001
 \end{verbatim}
 
+\hypertarget{test-du-chi2-dinduxe9pendance-ou-dassociation}{%
+\section{\texorpdfstring{Test du \(\chi^2\) d'indépendance (ou d'association)}{Test du \textbackslash chi\^{}2 d'indépendance (ou d'association)}}\label{test-du-chi2-dinduxe9pendance-ou-dassociation}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(catdata)}
+\KeywordTok{data}\NormalTok{(}\StringTok{"encephalitis"}\NormalTok{)}
+\NormalTok{encephalitis}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    year country count
+## 1     1       1     1
+## 2     1       2     2
+## 3     2       1     0
+## 4     2       2     1
+## 5     3       1     1
+## 6     3       2     2
+## 7     4       1     2
+## 8     4       2     5
+## 9     5       1     2
+## 10    5       2     4
+## 11    6       1     3
+## 12    7       1     8
+## 13    8       1     5
+## 14    8       2     6
+## 15    9       1    13
+## 16    9       2     7
+## 17   10       1    12
+## 18   10       2     7
+## 19   11       1     6
+## 20   11       2     7
+## 21   12       1    13
+## 22   12       2     3
+## 23   13       1    10
+## 24   13       2     4
+## 25   14       1    12
+## 26   14       2     2
+\end{verbatim}
+
+(en cours\ldots)
+
 \hypertarget{ruxe9sumuxe9-4}{%
 \section{Résumé}\label{ruxe9sumuxe9-4}}
 
 \begin{itemize}
 \tightlist
 \item
-  Le test du \(\chi^2\) d'adéquation consiste à comparer une distribution observée à et une distribution théorique qui représenterait l'hypothèse à tester.
+  Le test du \(\chi^2\) d'adéquation consiste à comparer une distribution observée à une distribution théorique qui représenterait l'hypothèse à tester.
 \item
   La statistique de test du \(\chi^2\) d'adéquation est \(X^2\) et suit une distribution \(\chi^2\).
 \item
