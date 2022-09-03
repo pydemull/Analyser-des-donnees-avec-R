@@ -240,7 +240,7 @@ g_lin | g_lin_sel
 
 Un cas particulier illustrant l'influence du degré de dispersion sur la relation étudiée est montré sur la Figure \@ref(fig:simpsonquant). Cet exemple a pour but de montrer que l'étude d'une relation entre deux variables quantitatives peut aboutir à des conclusions radicalement différentes selon que l'on conduit les analyses à l'échelle d'un groupe entier ou que l'on sépare les analyses par groupe de caractéristiques, en particulier lorsque la distribution des données par groupe est radicalement différente de celle obtenue à l'échelle du groupe entier. Sur la gauche de la Figure \@ref(fig:simpsonquant), le nuage de points représente la relation entre deux variables à l'échelle de l'ensemble du groupe étudié. La variabilité possible pour les deux variables étudiées (V1 et V2 dans l'exemple) est alors maximale. Toutefois, ces données appartiennent en réalité à des sous-groupes distincts (cf. couleurs sur le graphique de droite de la Figure \@ref(fig:simpsonquant)). L'analyse par sous-groupe diminue la variabilité à la fois pour V1 et V2, donnant même lieu ici à des relations de sens opposé à celui observé à l'échelle de l'ensemble du groupe ! Cette situation correspond à ce qu'on appelle un paradoxe de Simpson, lequel se présente lorsque le phénomène que l'on peut observer avec une vue globale est annulé voir inversé lors d'une analyse par sous-groupe. Ici, la grande variabilité associée aux données du graphique de gauche de la Figure \@ref(fig:simpsonquant) crée une relation artificiellement et donc faussement positive entre V1 et V2. C'est l'analyse par sous-groupe qui permet de révéler la vraie nature de la relation étudiée.
 
-```{r simpsonquant, out.width='90%', echo=FALSE, message = FALSE, fig.cap="Influence du niveau d'analyse (groupe entier vs. sous-groupes) sur la corrélation observée entre deux variables quantitatives (données obtenues grâce à la fonction simulate_simpson() du package bayestestR"}
+```{r simpsonquant, out.width='90%', echo=FALSE, message = FALSE, fig.cap="Influence du niveau d'analyse (groupe entier vs. sous-groupes) sur la corrélation observée entre deux variables quantitatives", fig.subcap = "Données obtenues grâce à la fonction simulate_simpson() du package bayestestR"}
 library(correlation)
 library(ggplot2)
 library(patchwork)
@@ -599,7 +599,10 @@ ggplot(data = recap_dep2, aes(x = department, y = prop, fill = gender)) +
 ```
 Autrement dit, les hommes se retrouvaient avec un pourcentage de réussite global bien meilleur que celui des femmes seulement parce que, comparativement aux femmes, les hommes s'étaient en proportion davantage engagés dans les départements où les taux de réussite étaient bien meilleurs.
 
-## Relation entre une variable quantitative et une variable qualitative
+\section[Relation entre une variable quantitative et une variable qualitative]{Relation entre une variable quantitative et une variable qualitative%
+\sectionmark{Relation entre une variable quantitative et une variable qual... }}
+\sectionmark{Relation entre une variable quantitative et une variable qual... }
+
 Lorsqu'on analyse une variable quantitative en fonction d'une variable qualitative, on peut avoir des données quantitatives qui sont non appariées (étude de type *between-subject design* en anglais) ou appariées (étude de type *within-subject design* en anglais). Avoir des données non appariées signifie que les données quantitatives correspondant aux différentes modalités de la variable qualitative étudiée ne sont pas liées. Un exemple simple, pour ce premier cas, peut être l'analyse de la taille des individus en fonction du sexe. Dans ce cas, les données quantitatives de taille pour les personnes de sexe masculin, de sexe féminin, et de sexe indéterminé, proviendront forcément d'individus différents et ne formeront donc pas des paires. Les cas de données appariées se retrouvent dans les études dans lesquelles plusieurs individus sont évalués plusieurs fois dans des conditions similaires ou différentes et que l'on cherche à comparer. En sciences du sport, un exemple relativement classique est de tester la performance d'endurance (variable quantitative) en ayant pris (condition de test) ou non (condition contrôle) une substance potentiellement ergonénique, la prise de substance ou non étant les modalités d'une même variable qualitative de type condition. Dans ce cas là, tous les individus auront des données dans les deux conditions et ces données seront donc appariées (dépendantes).
 
 Étant donné que les contraintes graphiques et les statistiques à calculer diffèrent selon que l'on est en présence de (i) deux groupes (1 variable quantitative x 1 variable qualitative avec 2 modalités) ou (ii) trois groupes et plus (1 variable quantitative x 1 variable qualitative avec 3 modalités ou plus), les procédures graphiques et calculatoires présentées ci-après sont distinguées selon ces deux grands cas de figure.
@@ -836,7 +839,8 @@ B <-
         axis.text.x = element_blank(),
         axis.ticks.x = element_blank()) 
 
-# Raincloud plots classiques (avec moyennes et écart-types)
+# Raincloud plots classiques (avec moyennes et 
+# écart-types)
 C <-
   ggplot(data = iris_two_species, 
          aes(x = Species, y = Sepal.Length, colour = Species, fill = Species)) +
@@ -871,7 +875,8 @@ C <-
   theme(legend.position = "none")
 
 
-# Raincloud plots avec les nuages sur une même ligne (avec moyennes et écart-types)
+# Raincloud plots avec les nuages sur une même ligne (avec moyennes et 
+# écart-types)
 D <-
   ggplot(data = iris_two_species, 
          aes(x = 0, y = Sepal.Length, colour = Species, fill = Species)) +
@@ -983,7 +988,8 @@ A <-
   labs(title = "A")
 
 
-# Raincloud plots classiques à la verticale avec moyennes et écart-types
+# Raincloud plots classiques à la verticale avec moyennes et 
+# écart-types
 B <-
   ggplot(data = Blink2, aes(x = Condition, y = Blink_rate)) +
   ggdist::stat_halfeye(
@@ -1187,7 +1193,6 @@ Toutefois, comme le rappelle Lakens [-@lakensCalculatingReportingEffect2013], le
 
 ```{r detach MASS, echo = FALSE}
 detach(package:PairedData)
-detach(package:MASS)
 ```
 
 **Cas particuliers**
