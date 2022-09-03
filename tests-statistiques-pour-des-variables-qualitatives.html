@@ -6,15 +6,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapitre 7 Tests statistiques pour des variables qualitatives | Analyser des données avec R</title>
 <meta name="author" content="Pierre-Yves de Müllenheim">
-<meta name="description" content="7.0.1 Calculs sous-jacents Le test du \(\chi^2\) d’adéquation consiste à comparer la distribution d’une variable qualitative observée avec une distribution théorique. Pour mieux voir en quoi cela...">
+<meta name="description" content="7.1 Test du \(\chi^2\) d’adéquation (ou encore dit de conformité ou d’ajustement)  7.1.1 Calculs sous-jacents Le test du \(\chi^2\) d’adéquation consiste à comparer la distribution d’une variable...">
 <meta name="generator" content="bookdown 0.28 with bs4_book()">
 <meta property="og:title" content="Chapitre 7 Tests statistiques pour des variables qualitatives | Analyser des données avec R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://github.com/pydemull/Analyser-des-donnees-avec-R/tests-statistiques-pour-des-variables-qualitatives.html">
-<meta property="og:description" content="7.0.1 Calculs sous-jacents Le test du \(\chi^2\) d’adéquation consiste à comparer la distribution d’une variable qualitative observée avec une distribution théorique. Pour mieux voir en quoi cela...">
+<meta property="og:description" content="7.1 Test du \(\chi^2\) d’adéquation (ou encore dit de conformité ou d’ajustement)  7.1.1 Calculs sous-jacents Le test du \(\chi^2\) d’adéquation consiste à comparer la distribution d’une variable...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapitre 7 Tests statistiques pour des variables qualitatives | Analyser des données avec R">
-<meta name="twitter:description" content="7.0.1 Calculs sous-jacents Le test du \(\chi^2\) d’adéquation consiste à comparer la distribution d’une variable qualitative observée avec une distribution théorique. Pour mieux voir en quoi cela...">
+<meta name="twitter:description" content="7.1 Test du \(\chi^2\) d’adéquation (ou encore dit de conformité ou d’ajustement)  7.1.1 Calculs sous-jacents Le test du \(\chi^2\) d’adéquation consiste à comparer la distribution d’une variable...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
@@ -76,10 +76,13 @@
 <h1>
 <span class="header-section-number">Chapitre 7</span> Tests statistiques pour des variables qualitatives<a class="anchor" aria-label="anchor" href="#tests-statistiques-pour-des-variables-qualitatives"><i class="fas fa-link"></i></a>
 </h1>
-
+<div id="test-du-chi2-dadéquation-ou-encore-dit-de-conformité-ou-dajustement" class="section level2">
+<h2>
+<span class="header-section-number">7.1</span> Test du <span class="math inline">\(\chi^2\)</span> d’adéquation (ou encore dit de conformité ou d’ajustement)<a class="anchor" aria-label="anchor" href="#test-du-chi2-dad%C3%A9quation-ou-encore-dit-de-conformit%C3%A9-ou-dajustement"><i class="fas fa-link"></i></a>
+</h2>
 <div id="calculs-sous-jacents" class="section level3">
 <h3>
-<span class="header-section-number">7.0.1</span> Calculs sous-jacents<a class="anchor" aria-label="anchor" href="#calculs-sous-jacents"><i class="fas fa-link"></i></a>
+<span class="header-section-number">7.1.1</span> Calculs sous-jacents<a class="anchor" aria-label="anchor" href="#calculs-sous-jacents"><i class="fas fa-link"></i></a>
 </h3>
 <p>Le test du <span class="math inline">\(\chi^2\)</span> d’adéquation consiste à comparer la distribution d’une variable qualitative observée avec une distribution théorique. Pour mieux voir en quoi cela consiste, prenons un exemple repris de Danielle Navarro <span class="citation">(<a href="r%C3%A9f%C3%A9rences.html#ref-navarroLearningStatistics2018" role="doc-biblioref">2018</a>)</span> où l’on chercherait à savoir si, lorsqu’on demande à des personnes de choisir “au hasard” mentalement une carte parmi un ensemble de cartes étalées devant soi, le choix se fait vraiment de manière entièrement aléatoire. Pour étudier cela, on demande à 200 personnes de réaliser l’expérimentation et on note le type de carte qui a été retenu : coeur, trèfle, carreau, ou pique. Le jeu de données est crée avec le code ci-dessous :</p>
 <div class="sourceCode" id="cb222"><pre class="downlit sourceCode r">
@@ -133,14 +136,14 @@ Figure 7.1: Visualisation des fréquences dans le jeu de données <code>cartes</
 <p>La Figure <a href="tests-statistiques-pour-des-variables-qualitatives.html#fig:GOFDistri">7.2</a> montre la loi <span class="math inline">\(\chi^2\)</span> relative à 3 degrés de liberté et donc les probabilités de rencontrer tel ou tel intervalle de valeurs de <span class="math inline">\(X^2\)</span> dans le cas où notre <span class="math inline">\(H_{0}\)</span> serait vraie. La zone hachurée représente la probabilité qui était d’obtenir une valeur de <span class="math inline">\(X^2\)</span> au moins aussi grande que 8.44 dans l’hypothèse où <span class="math inline">\(H_{0}\)</span> serait vraie. Cette probabilité <span class="math inline">\(P\)</span> est de 3.8 %. En principe, lors d’un test statistique, il y a aussi ce qu’on appelle une “région critique”, c’est-à-dire l’intervalle dans lequel la valeur de la statistique de test, ici <span class="math inline">\(X^2\)</span>, devrait se trouver pour qu’on considère que nos résultats ne supportent pas <span class="math inline">\(H_{0}\)</span> et donc qu’on ne retienne pas cette hypothèse. Classiquement (voire par défaut, à tort), cette région critique est définie à l’aide du seuil <span class="math inline">\(P &lt;= 0.05\)</span>. Dans le cas présent, cela voudrait dire que notre statistique <span class="math inline">\(X^2\)</span> doive tomber dans l’intervalle pour lequel il y avait une probabilité inférieure ou égale à 5 % de tomber dans le cas où <span class="math inline">\(H_{0}\)</span> serait vraie. Dans notre exemple, cela se traduirait par le fait d’obtenir une valeur de <span class="math inline">\(X^2\)</span> supérieure ou égale à environ 7.81. La région critique correspondant à cette zone est montrée en rouge sur la Figure <a href="tests-statistiques-pour-des-variables-qualitatives.html#fig:GOFDistri">7.2</a>. En suivant cette démarche, dans le cas présent <span class="math inline">\(H_{0}\)</span> serait donc bien rejetée puisque notre valeur <span class="math inline">\(X^2\)</span> de 8.44 tomberait dans la région critique. Le test serait alors dit “significatif”.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:GOFDistri"></span>
-<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/GOFDistri-1.png" alt="Distribution d'échantillonnage de la statistique $\chi^2$ sous $H{0}$" width="80%"><p class="caption">
-Figure 7.2: Distribution d’échantillonnage de la statistique <span class="math inline">\(\chi^2\)</span> sous <span class="math inline">\(H{0}\)</span>
+<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/GOFDistri-1.png" alt="Distribution d'échantillonnage de la statistique $X^2$ sous $H{0}$" width="80%"><p class="caption">
+Figure 7.2: Distribution d’échantillonnage de la statistique <span class="math inline">\(X^2\)</span> sous <span class="math inline">\(H{0}\)</span>
 </p>
 </div>
 </div>
 <div id="application-avec-r" class="section level3">
 <h3>
-<span class="header-section-number">7.0.2</span> Application avec R<a class="anchor" aria-label="anchor" href="#application-avec-r"><i class="fas fa-link"></i></a>
+<span class="header-section-number">7.1.2</span> Application avec R<a class="anchor" aria-label="anchor" href="#application-avec-r"><i class="fas fa-link"></i></a>
 </h3>
 <p>Nous venons de voir la mécanique des calculs qu’il y a derrière le test <span class="math inline">\(\chi^2\)</span> d’adéquation. Heureusement, il existe des fonctions dans R pour faire cela automatiquement, comme la fonction <code><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test()</a></code> :</p>
 <div class="sourceCode" id="cb230"><pre class="downlit sourceCode r">
@@ -200,9 +203,10 @@ Figure 7.2: Distribution d’échantillonnage de la statistique <span class="mat
 ##    degrees of freedom:  3 
 ##    p-value:  &lt;.001</code></pre>
 </div>
+</div>
 <div id="test-du-chi2-dindépendance-ou-dassociation" class="section level2">
 <h2>
-<span class="header-section-number">7.1</span> Test du <span class="math inline">\(\chi^2\)</span> d’indépendance (ou d’association)<a class="anchor" aria-label="anchor" href="#test-du-chi2-dind%C3%A9pendance-ou-dassociation"><i class="fas fa-link"></i></a>
+<span class="header-section-number">7.2</span> Test du <span class="math inline">\(\chi^2\)</span> d’indépendance (ou d’association)<a class="anchor" aria-label="anchor" href="#test-du-chi2-dind%C3%A9pendance-ou-dassociation"><i class="fas fa-link"></i></a>
 </h2>
 <div class="sourceCode" id="cb236"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">catdata</span><span class="op">)</span></span>
@@ -239,7 +243,7 @@ Figure 7.2: Distribution d’échantillonnage de la statistique <span class="mat
 </div>
 <div id="résumé-4" class="section level2">
 <h2>
-<span class="header-section-number">7.2</span> Résumé<a class="anchor" aria-label="anchor" href="#r%C3%A9sum%C3%A9-4"><i class="fas fa-link"></i></a>
+<span class="header-section-number">7.3</span> Résumé<a class="anchor" aria-label="anchor" href="#r%C3%A9sum%C3%A9-4"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li>Le test du <span class="math inline">\(\chi^2\)</span> d’adéquation consiste à comparer une distribution observée à une distribution théorique qui représenterait l’hypothèse à tester.</li>
@@ -255,14 +259,15 @@ Figure 7.2: Distribution d’échantillonnage de la statistique <span class="mat
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#tests-statistiques-pour-des-variables-qualitatives"><span class="header-section-number">7</span> Tests statistiques pour des variables qualitatives</a></li>
 <li>
-<a class="nav-link" href="#tests-statistiques-pour-des-variables-qualitatives"><span class="header-section-number">7</span> Tests statistiques pour des variables qualitatives</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#calculs-sous-jacents"><span class="header-section-number">7.0.1</span> Calculs sous-jacents</a></li>
-<li><a class="nav-link" href="#application-avec-r"><span class="header-section-number">7.0.2</span> Application avec R</a></li>
+<a class="nav-link" href="#test-du-chi2-dad%C3%A9quation-ou-encore-dit-de-conformit%C3%A9-ou-dajustement"><span class="header-section-number">7.1</span> Test du \(\chi^2\) d’adéquation (ou encore dit de conformité ou d’ajustement)</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#calculs-sous-jacents"><span class="header-section-number">7.1.1</span> Calculs sous-jacents</a></li>
+<li><a class="nav-link" href="#application-avec-r"><span class="header-section-number">7.1.2</span> Application avec R</a></li>
 </ul>
 </li>
-<li><a class="nav-link" href="#test-du-chi2-dind%C3%A9pendance-ou-dassociation"><span class="header-section-number">7.1</span> Test du \(\chi^2\) d’indépendance (ou d’association)</a></li>
-<li><a class="nav-link" href="#r%C3%A9sum%C3%A9-4"><span class="header-section-number">7.2</span> Résumé</a></li>
+<li><a class="nav-link" href="#test-du-chi2-dind%C3%A9pendance-ou-dassociation"><span class="header-section-number">7.2</span> Test du \(\chi^2\) d’indépendance (ou d’association)</a></li>
+<li><a class="nav-link" href="#r%C3%A9sum%C3%A9-4"><span class="header-section-number">7.3</span> Résumé</a></li>
 </ul>
 
       <div class="book-extra">
