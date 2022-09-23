@@ -1089,11 +1089,11 @@ A <-
 # Diagramme en barres empilées montrant les proportions
 B <- 
   diamonds %>% 
-  group_by(color) %>%
-  summarize(n = n() / length(diamonds$color) * 100) %>%
-  ggplot(aes(x = "", y = n, fill = color)) +
+  count(color) %>%
+  mutate(prop = n / sum(n) * 100) %>%
+  ggplot(aes(x = "", y = prop, fill = color)) +
   geom_bar(stat = "identity") +
-  geom_text(aes(label = paste0(round(n, digits = 2), " %")), size = 2, 
+  geom_text(aes(label = paste0(round(prop, digits = 2), " %")), size = 2, 
             position = position_stack(vjust = 0.5)) +
   ggtitle("B")
 
@@ -1112,12 +1112,12 @@ C <-
 # Diagramme circulaire montrant les proportions
 D <-
   diamonds %>% 
-  group_by(color) %>%
-  summarize(n = n() / length(diamonds$color) * 100) %>%
-  ggplot(aes(x = "", y = n, fill = color)) +
+  count(color) %>%
+  mutate(prop = n / sum(n) * 100) %>%
+  ggplot(aes(x = "", y = prop, fill = color)) +
   geom_bar(stat = "identity", position = "stack") +
   coord_polar(theta = "y", start = 0, direction = -1) +
-  geom_text(aes(label = paste0(round(n, digits = 2), " %")), size = 2, 
+  geom_text(aes(label = paste0(round(prop, digits = 2), " %")), size = 2, 
             position = position_stack(vjust = 0.5)) +
   ggtitle("D")
 ```
