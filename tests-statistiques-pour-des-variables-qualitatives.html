@@ -7,7 +7,7 @@
 <title>Chapitre 7 Tests statistiques pour des variables qualitatives | Analyser des données avec R</title>
 <meta name="author" content="Pierre-Yves de Müllenheim">
 <meta name="description" content="7.1 Test du \(\chi^2\) d’adéquation (ou encore dit de conformité ou d’ajustement)  7.1.1 Calculs sous-jacents Le test du \(\chi^2\) d’adéquation consiste à comparer la distribution d’une variable...">
-<meta name="generator" content="bookdown 0.28 with bs4_book()">
+<meta name="generator" content="bookdown 0.29 with bs4_book()">
 <meta property="og:title" content="Chapitre 7 Tests statistiques pour des variables qualitatives | Analyser des données avec R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://github.com/pydemull/Analyser-des-donnees-avec-R/tests-statistiques-pour-des-variables-qualitatives.html">
@@ -18,8 +18,8 @@
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet">
-<link href="libs/tabwid-1.0.0/scrool.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="libs/tabwid-1.1.0/tabwid.css" rel="stylesheet">
+<link href="libs/tabwid-1.1.0/scrool.css" rel="stylesheet">
 <!-- Code fom Dexter to custom bs4_book template: https://stackoverflow.com/questions/66128954/change-right-sidebar-header-in-bs4-book-bookdown --><script>
       $(function() {
           $("#toc h2").html("Dans ce chapitre");
@@ -96,7 +96,7 @@
 <p>Dans ce cadre, l’idée que les personnes choisiraient leur carte purement au hasard (idée ou hypothèse qu’on va noter <span class="math inline">\(H_{0}\)</span>) se traduit par le fait que chaque type de carte aurait la même probabilité d’être tiré à chaque fois, soit une chance sur quatre (0.25). Le vecteur <span class="math inline">\(P\)</span> qui résumerait les probabilités, pour les différents types de carte, d’être choisi à chaque choix d’une personne serait alors le suivant :</p>
 <p><span class="math display">\[H_{0} : P = (0.25, 0.25, 0.25, 0.25).\]</span></p>
 <p>Étant donné qu’il y a 200 personnes (<span class="math inline">\(N\)</span>) dans notre exemple, la distribution théorique <span class="math inline">\(E\)</span> des fréquences de tirage de chaque type de carte qui correspondrait à l’hypothèse <span class="math inline">\(H_{0}\)</span> serait telle que <span class="math inline">\(E = N \cdot P\)</span>, soit :</p>
-<p><span class="math display">\[E = (50, 50, 50, 50)\]</span>.</p>
+<p><span class="math display">\[E = (50, 50, 50, 50).\]</span></p>
 <p>On peut aussi mettre cela sous forme de vecteur avec R :</p>
 <div class="sourceCode" id="cb223"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">expected</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"carreau"</span> <span class="op">=</span> <span class="fl">50</span>, <span class="st">"coeur"</span> <span class="op">=</span> <span class="fl">50</span>, <span class="st">"pique"</span> <span class="op">=</span> <span class="fl">50</span>, <span class="st">"trefles"</span> <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span>
@@ -120,7 +120,7 @@
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:unnamed-chunk-14"></span>
-<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/unnamed-chunk-14-1.png" alt="Visualisation des fréquences dans le jeu de données `cartes`" width="80%"><p class="caption">
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/unnamed-chunk-14-1.png" alt="Visualisation des fréquences dans le jeu de données `cartes`" width="80%"><p class="caption">
 Figure 7.1: Visualisation des fréquences dans le jeu de données <code>cartes</code>
 </p>
 </div>
@@ -136,7 +136,7 @@ Figure 7.1: Visualisation des fréquences dans le jeu de données <code>cartes</
 <p>La Figure <a href="tests-statistiques-pour-des-variables-qualitatives.html#fig:GOFDistri">7.2</a> montre la loi <span class="math inline">\(\chi^2\)</span> relative à 3 degrés de liberté et donc les probabilités de rencontrer tel ou tel intervalle de valeurs de <span class="math inline">\(X^2\)</span> dans le cas où notre <span class="math inline">\(H_{0}\)</span> serait vraie. La zone hachurée représente la probabilité qui était d’obtenir une valeur de <span class="math inline">\(X^2\)</span> au moins aussi grande que 8.44 dans l’hypothèse où <span class="math inline">\(H_{0}\)</span> serait vraie. Cette probabilité <span class="math inline">\(P\)</span> est de 3.8 %. En principe, lors d’un test statistique, il y a aussi ce qu’on appelle une “région critique”, c’est-à-dire l’intervalle dans lequel la valeur de la statistique de test, ici <span class="math inline">\(X^2\)</span>, devrait se trouver pour qu’on considère que nos résultats ne supportent pas <span class="math inline">\(H_{0}\)</span> et donc qu’on ne retienne pas cette hypothèse. Classiquement (voire par défaut, à tort), cette région critique est définie à l’aide du seuil <span class="math inline">\(P &lt;= 0.05\)</span>. Dans le cas présent, cela voudrait dire que notre statistique <span class="math inline">\(X^2\)</span> doive tomber dans l’intervalle pour lequel il y avait une probabilité inférieure ou égale à 5 % de tomber dans le cas où <span class="math inline">\(H_{0}\)</span> serait vraie. Dans notre exemple, cela se traduirait par le fait d’obtenir une valeur de <span class="math inline">\(X^2\)</span> supérieure ou égale à environ 7.81. La région critique correspondant à cette zone est montrée en rouge sur la Figure <a href="tests-statistiques-pour-des-variables-qualitatives.html#fig:GOFDistri">7.2</a>. En suivant cette démarche, dans le cas présent <span class="math inline">\(H_{0}\)</span> serait donc bien rejetée puisque notre valeur <span class="math inline">\(X^2\)</span> de 8.44 tomberait dans la région critique. Le test serait alors dit “significatif”.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:GOFDistri"></span>
-<img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/GOFDistri-1.png" alt="Distribution d'échantillonnage de la statistique $X^2$ sous $H{0}$" width="80%"><p class="caption">
+<img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/GOFDistri-1.png" alt="Distribution d'échantillonnage de la statistique $X^2$ sous $H{0}$" width="80%"><p class="caption">
 Figure 7.2: Distribution d’échantillonnage de la statistique <span class="math inline">\(X^2\)</span> sous <span class="math inline">\(H{0}\)</span>
 </p>
 </div>
@@ -285,7 +285,7 @@ Figure 7.2: Distribution d’échantillonnage de la statistique <span class="mat
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Analyser des données avec R</strong>" was written by Pierre-Yves de Müllenheim. It was last built on 2022-09-03.</p>
+    <p>"<strong>Analyser des données avec R</strong>" was written by Pierre-Yves de Müllenheim. It was last built on 2022-09-23.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
