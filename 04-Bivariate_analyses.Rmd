@@ -86,6 +86,7 @@ $COV$ désignant la covariance entre les variables $X$ et $Y$, $X{i}$ et $Y{i}$ 
 
 Le Tableau \@ref(tab:tablecov) montre les premières étapes du calcul de la covariance pour des couples de variables fictifs $(X1,Y1)$, $(X1,Y2)$, et $(X1,Y3)$. En particulier, la partie droite du tableau (de X1Y1 à X1Y3) montre le calcul du produit $(X{i} - \overline{X}) (Y{i} - \overline{Y})$ pour les différents couples de variables et cela pour chaque ligne du jeu de données.
 
+<div class = "custom-table"> 
 ```{r tablecov, echo = FALSE}
 library(flextable)
 library(officer)
@@ -109,6 +110,7 @@ flextable(
   set_caption("Étape intermédiaire pour le calcul de la covariance entre des variables X1 et Y1, Y2, et Y3") %>% 
   autofit()
 ```
+</div>
 
 Ce que ce tableau montre, c'est que plus les deux variables étudiées évolueront de manière consistante dans des sens identiques comme avec $X1$ et $Y1$, ou de manière consistante dans des sens opposés comme avec $X1$ et $Y3$, plus les produits $(X{i} - \overline{X}) (Y{i} - \overline{Y})$ donneront respectivement des grands scores positifs ou des grands scores négatifs, et moins les scores $(X{i} - \overline{X}) (Y{i} - \overline{Y})$ à additionner pour le calcul de la covariance s'annuleront. En effet, avec une relation relativement linéaire et positive les scores seront plus systématiquement positifs, et avec une relation relativement linéaire et négative les scores seront plus systématiquement négatifs. Toutefois, lorsqu'on aura des variables qui n'évolueront pas de manière consistante dans le même sens ou dans un sens opposé comme avec $X1$ et $Y2$, les scores positifs et négatifs liés aux calculs $(X{i} - \overline{X}) (Y{i} - \overline{Y})$ auront tendance à s'annuler et donneront lieu à une somme des scores $(X{i} - \overline{X}) (Y{i} - \overline{Y})$ diminuée, et donc à une covariance et à un coefficient de corrélation de Pearson tirés vers 0. Ces différents cas de figure et les calculs $(X{i} - \overline{X}) (Y{i} - \overline{Y})$ correspondants sont illustrés sur la Figure \@ref(fig:graphCov). Sur cette figure, chaque carré correspond au calcul $(X{i} - \overline{X}) (Y{i} - \overline{Y})$, le carré étant bleu lorsque le résultat du calcul est positif, et rouge lorsque le résultat est négatif. L'aire d'un carré illustre la grandeur du score issu du calcul. Sur les graphiques de gauche et de droite de la figure, on distingue une relation linéaire parfaite, ce qui maximise les scores à additionner pour le calcul de la covariance, dans le positif pour le graphique de gauche et dans le négatif pour le graphique de droite. Sur le graphique du milieu, on remarque que le manque de relation linéaire donne lieu à des carrés à la fois bleus et rouges, indiquant que les scores associés aux calculs $(X{i} - \overline{X}) (Y{i} - \overline{Y})$ de la covariance s'annulent et diminuent ainsi la valeur finale de la covariance.
 
@@ -196,6 +198,7 @@ cor.test(x = mtcars$hp, y = mtcars$mpg, method = "pearson")
 
 Sur la base de travaux antérieurs, Hopkins et al. [-@hopkinsProgressiveStatisticsStudies2009] ont fait une proposition de classification pour qualifier la valeur du coefficient de corrélation qui serait obtenue dans le cadre d'une relation linéaire. Cette proposition est montrée dans le Tableau \@ref(tab:correlationtable) :
 
+<div class = "custom-table"> 
 ```{r correlationtable, echo = FALSE}
 flextable(
   tribble(
@@ -209,6 +212,7 @@ flextable(
   set_caption("Termes caractérisant la taille de l'effet en fonction de la valeur de corrélation obtenue") %>% 
   autofit()
 ```
+</div>
 
 Pour visualiser le lien que l'on peut faire entre la forme du nuage de points et la valeur du coefficient de corrélation de Pearson que l'on peut obtenir, la page web proposée par Kristoffer Magnusson (https://rpsychologist.com/correlation) peut être particulièrement intéressante. Cette page web donne la possibilité de faire varier manuellement la valeur du coefficient de corrélation de Pearson pour ensuite voir un nuage de points type correspondant à cette valeur. Faites un essai !
 
@@ -302,6 +306,7 @@ Lorsque la relation étudiée ne semble pas linéaire mais s'apparente assez cla
 
 Lorsque le coefficient de corrélation de Pearson ne permet pas de caractériser fiablement le degré de relation linéaire **entre les valeurs** de deux variables (e.g., en présence de valeurs aberrantes au sein d'un échantillon de petite taille), une alternative peut être d'étudier le degré de relation linéaire **entre les rangs** de ces deux variables. Le rang, c'est le classement (ou la position) d'une observation donnée au sein d'une variable en fonction de sa valeur. Dans une variable, les observations avec les valeurs les plus faibles seront associées aux rangs les plus bas alors que les observations avec les valeurs les plus élevées seront associées aux rangs les plus élevés. Une illustration de la notion de rang est proposée dans le Tableau \@ref(tab:tableranks) pour la variable `hp` du jeu de données `mtcars`. Dans ce tableau, les lignes ont été ordonnées sur la base des rangs de la variable `hp`. On pourra remarquer que dans le tableau, nous avons ce qu'on appelle des ex-aequos, c'est-à-dire que plusieurs observations peuvent présenter les mêmes valeurs, et donc avoir le même rang.
 
+<div class = "custom-table"> 
 ```{r tableranks, echo = FALSE}
 flextable(
  mtcars %>%
@@ -317,6 +322,7 @@ flextable(
   set_caption("Rangs de la variable hp du jeu de données mtcars") %>% 
   autofit()
 ```
+</div>
 
 Le fait d'étudier l'existence d'une relation linéaire entre les rangs et non plus entre les valeurs de deux variables permet de s'affranchir de l'influence possible de valeurs très extrêmes, dans l'une et/ou l'autre variable, sur le calcul final de la corrélation. Pour déterminer alors la valeur de la corrélation, une manière de procéder est d'appliquer la méthode de calcul du coefficient de corrélation de Pearson en utilisant non plus les valeurs des variables, mais les rangs correspondants. Cette methode, c'est celle du calcul du coefficient de corrélation de Spearman (*rho*). Si l'on suit *stricto sensu* cette définition, nous pourrions alors utiliser le code suivant pour avoir le coefficient de corrélation de Spearman :
 
@@ -1031,7 +1037,6 @@ B <-
     geom = "line",
     color = "black"
   ) +
-
   labs(title = "B")
 ```
 
@@ -1079,6 +1084,7 @@ L'ordre des modalités affichées nous indique que `setosa` est la modalité 1, 
 
 Une fois que l'on a calculé une taille d'effet, il est toujours intéressant d'essayer de formuler un jugement sur l'importance, l'ampleur de l'effet. En ce sens, des valeurs seuils ont été proposées dans la littérature (Cohen, 1988; in Lakens [-@lakensCalculatingReportingEffect2013]). Ces valeurs, valables pour interpréter des tailles d'effet dans le cadre d'une étude de type *between-subject design*, sont montrées dans le tableau ci-dessous.
 
+<div class = "custom-table"> 
 ```{r effectsizetable, echo = FALSE}
 flextable(
   tribble(
@@ -1092,6 +1098,7 @@ flextable(
   set_caption( "Termes pour qualifier la taille d'effet dans le cadre d'une comparaison de moyennes associées à des variables indépendantes") %>% 
   autofit()
 ```
+</div>
 
 Ces valeurs sont relativement arbitraires, et l'interprétation de la taille de l'effet et des conséquences que l'effet peut avoir en pratique ne devrait pas être liée de manière trop rigide à ces valeurs [@lakensCalculatingReportingEffect2013].
 

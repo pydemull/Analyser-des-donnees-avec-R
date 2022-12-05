@@ -479,6 +479,7 @@ quantile(x = vec, probs = c(0.25, 0.75), type = 2)
 
 On remarque ici que la fonction `quantile()` a plusieurs arguments. L'argument `probs` désigne les quantiles que l'on souhaite obtenir. Le quantile 0.25 correspond à Q1, et le quantile 0.75 correspond à Q3. L'argument `type` permet de configurer le type de calcul à effectuer pour obtenir les valeurs des quantiles recherchés. L'indication du chiffre 2 pour l'argument `type` permet d'obtenir les quantiles selon la méthode de calcul présentée ci-dessus, qui, comme nous l'avons précisé, est dédiée à l'étude d'une variable quantitative discrète. Par défaut, en revanche, la fonction `quantile()` utilise le chiffre 7 pour l'argument `type`, ce qui renvoie à une méthode de calcul des quantiles qui serait davantage pertinente pour étudier des variables quantitatives continues. Comparons les résultats obtenus avec les deux méthodes de calcul : 
 
+<div class = "custom-table"> 
 ```{r quantilesCompaMethods, echo = FALSE}
 library(flextable)
 library(officer)
@@ -498,9 +499,11 @@ flextable(
   set_caption("Comparaison des quantiles obtenus selon différentes configurations de la fonction quantile()")  %>% 
   autofit()
 ```
+</div>
 
 On remarque que les résultats de la fonction `quantile()` sont différents selon la configuration de l'argument `type`. Le choix de la configuration est donc important. Pour comprendre comment R a calculé les valeurs associées aux quantiles 0.25 et 0.75 dans le cadre de la seconde méthode (i.e., avec `type` = 7), regardons le tableau ci-dessous.
 
+<div class = "custom-table"> 
 ```{r quantilesContinuousMethod, echo = FALSE}
 table_quant <-  
   data.frame(
@@ -517,6 +520,7 @@ table_quant, cwidth = 2) %>%
   set_caption("Quantiles d'une variable quantitative continue") %>% 
   autofit()
 ```
+</div>
 
 Le tableau montre les données sur lesquelles R s'est appuyé pour déterminer les valeurs des quantiles recherchés (i.e., les quantiles 0.25 et 0.75 pour Q1 et Q3, respectivement). Les données du tableau sont bien celles relatives à notre variable `vec`, dont on peut reconnaître les valeurs dans la colonne de droite du tableau.  La colonne "Quantile" montre les fractions (ou portions) de la variable `vec` associées aux valeurs de la variable compte tenu de leurs rangs respectifs. Par exemple, la valeur 25.6, dont le rang est 6, correspond au quantile 0.71 (approximativement). Cela veut dire que 71 % des observations ont une valeur inférieure ou égale à 25.6. Il faut savoir qu'il existe en réalité plusieurs manières de déterminer la valeur du quantile que représente chaque valeur. Dans le cas présent, le quantile représenté, que l'on va noter *q*, a été déterminé selon la formule suivante : 
 $$q = (k - 1 ) / (N - 1)$$

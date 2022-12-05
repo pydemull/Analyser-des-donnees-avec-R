@@ -25,7 +25,7 @@ $$P(X | \theta, N) = \frac{N!}{X!(N-X)!}\theta^X(1-\theta)^{N-X}$$
 
 La Figure \@ref(fig:distriBinom) illustre une loi binomiale (avec $N$ = 100 et $\theta$ = 0.5) qui pourrait s'appliquer au cas d'un lancer de pièce non truquée. Cette figure montre que même si une pièce est non truquée ($\theta$ = 0.5), il est tout à fait possible qu'il y ait plus de personnes à obtenir "pile" plutôt que "face" et inversement sur un échantillon de 100 personnes. Cependant, ce que montre aussi la figure, c'est que si la pièce est non truquée, les chances restent les plus fortes pour l'obtention de 50 % de personnes avec "pile" et avec "face" pour un lancer de pièce.
 
-```{r distriBinom, message=F, fig.height = 8, out.width='80%', echo = FALSE, fig.cap= "Illustration d'une loi binomiale avec la situation de 100 personnes lançant une pièce non truquée"}
+```{r distriBinom, message=F, fig.height = 6, out.width='80%', echo = FALSE, fig.cap= "Illustration d'une loi binomiale avec la situation de 100 personnes lançant une pièce non truquée"}
 set.seed(1)
 binom <- 
   data.frame(
@@ -332,7 +332,7 @@ g11 <-
  (g9 | g10 | g11) 
 ```
 
-La Figure \@ref(fig:GreatNumLaw) montre certes qu'on a plus de chances d'avoir une moyenne d'échantillon proche de la moyenne de la population avec un grand $N$, mais elle esquisse aussi, avec les traits en pointillés noirs, le fait qu'avec un grand $N$, la variabilité des valeurs que peuvent prendre les moyennes de plusieurs échantillons diminue. Pour s'en assurer, on peut chercher à voir les valeurs de moyennes que l'on obtiendrait si l'on étudait un grand nombre d'échantillons (e.g., 10 000) de même taille, autrement dit la distribution d'échantillonnage de la moyenne pour une valeur de $N$ donnée. La Figure \@ref(fig:CentralLimTheo) donne une vision de ce que serait une telle distribution pour différentes valeurs de $N$ dans ce cas là.
+La Figure \@ref(fig:GreatNumLaw) montre certes qu'on a plus de chances d'avoir une moyenne d'échantillon proche de la moyenne de la population avec un grand $N$, mais elle esquisse aussi, avec les traits en pointillés noirs, le fait qu'avec un grand $N$, la variabilité des valeurs que peuvent prendre les moyennes de plusieurs échantillons diminue. Pour s'en assurer, on peut chercher à voir les valeurs de moyennes que l'on obtiendrait si l'on étudiait un grand nombre d'échantillons (e.g., 10 000) de même taille, autrement dit la distribution d'échantillonnage de la moyenne pour une valeur de $N$ donnée. La Figure \@ref(fig:CentralLimTheo) donne une vision de ce que serait une telle distribution pour différentes valeurs de $N$ dans ce cas là.
 
 ```{r CentralLimTheo, message=F, warning=F, echo=FALSE,  out.width='80%', fig.height = 8, fig.align="center", fig.cap="Illustration du théorème de la limite centrale appliqué à une moyenne d'échantillon. Les distributions des moyennes montrées ici ont été obtenues avec 10 000 échantillons de N observations obtenues aléatoirement à partir d'une population ayant pour moyenne 0 et écart-type 400. Trait rouge = moyenne de la population d'origine"}
 
@@ -400,12 +400,12 @@ Si l'on formalise les choses d'un point de vue plus mathématique, le théorème
 
 $$SEM = \frac{\sigma}{\sqrt{N}}.$$
 
-La formule montre bien que pour une population présentant un écart-type donné, plus les échantillons étudiés seront de petite taille ($N$), plus grande sera la variabilité des moyennes provenant des différents échantillons. D'un point de vue plus pratique, cela veut dire notamment que dans une méta-analyse où l'on chercherait à estimer par exemple la moyenne de l'effet d'une intervention dans une population donnée, on aura beau avoir plein d'études conduites sur le sujet, si elles sont de trop petites tailles, il y a de bonnes chances pour que les valeurs des effets trouvés divergent substantiellement et ne permettent donc pas d'avoir une vue précise, fiable, de la valeur de l'effet concernant la population globale.
+La formule montre bien que pour une population présentant un écart-type donné, plus les échantillons étudiés seront de petite taille ($N$), plus grande sera la variabilité des moyennes provenant des différents échantillons. D'un point de vue plus pratique, cela veut dire notamment que dans une méta-analyse où l'on chercherait à estimer par exemple la moyenne de l'effet d'une intervention dans une population donnée, on aura beau avoir plusieurs d'études conduites sur le sujet, si elles sont de trop petites tailles, il y a de bonnes chances pour que les valeurs des effets trouvés divergent substantiellement et ne permettent donc pas d'avoir une vue précise, fiable, de la valeur de l'effet concernant la population globale.
 
 
 ## Résumé
 * Les lois de probabilité, la loi des grands nombres, la distribution d'échantillonnage d'une statistique, ou encore le théorème de la limite centrale, sont des outils mathématiques qui permettent de réaliser et de mieux comprendre les inférences statistiques.
-* Une loi de probabilité renseigne sur les chances, pour une statistique donnée, d'obtenir une valeur précise ou d'obtenir une valeur tombant dans un rang de valeurs donné selon le cas de figure.
+* Une loi de probabilité renseigne sur les chances, pour une statistique donnée, d'obtenir une valeur précise (e.g., un nombre de succès dans le cas d'une binomiale) ou d'obtenir une valeur tombant dans un rang de valeurs donné (e.g., s'agissant d'une moyenne dans le cas d'une loi normale).
 * Des exemples de lois de probabilité couramment utilisées sont la loi binomiale, la loi normale, la loi $\chi^2$, la loi $t$, et la loi $F$.
 * Selon la loi des grands nombres, plus la taille d'un échantillon est grande, plus il y a de chances que la moyenne de cet échantillon soit relativement proche de la moyenne de la population d'origine.
 * Selon le théorème de la limite centrale, la moyenne de la distribution d'échantillonnage de la moyenne est la même valeur que la moyenne de la population d'origine, et l'écart-type de cette distribution ($SEM$) est tel que : $SEM = \frac{\sigma}{N}.$ Par conséquent, plus $N$ est grand, plus $SEM$ est petite.
