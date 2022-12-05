@@ -7,7 +7,7 @@
 <title>Chapitre 6 Prérequis | Analyser des données avec R</title>
 <meta name="author" content="Pierre-Yves de Müllenheim">
 <meta name="description" content="6.1 Préambule Réaliser une inférence statistique consiste à conclure à propos de quelque chose dans une population d’intérêt (cette chose pouvant se traduire par n’importe quel paramètre...">
-<meta name="generator" content="bookdown 0.29 with bs4_book()">
+<meta name="generator" content="bookdown 0.30 with bs4_book()">
 <meta property="og:title" content="Chapitre 6 Prérequis | Analyser des données avec R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://github.com/pydemull/Analyser-des-donnees-avec-R/prérequis-1.html">
@@ -17,9 +17,8 @@
 <meta name="twitter:description" content="6.1 Préambule Réaliser une inférence statistique consiste à conclure à propos de quelque chose dans une population d’intérêt (cette chose pouvant se traduire par n’importe quel paramètre...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="libs/tabwid-1.1.0/tabwid.css" rel="stylesheet">
-<link href="libs/tabwid-1.1.0/scrool.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.1/transition.js"></script><script src="libs/bs3compat-0.4.1/tabs.js"></script><script src="libs/bs3compat-0.4.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="libs/tabwid-1.1.2/tabwid.css" rel="stylesheet">
 <!-- Code fom Dexter to custom bs4_book template: https://stackoverflow.com/questions/66128954/change-right-sidebar-header-in-bs4-book-bookdown --><script>
       $(function() {
           $("#toc h2").html("Dans ce chapitre");
@@ -32,6 +31,7 @@
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body data-spy="scroll" data-target="#toc">
 
@@ -179,7 +179,7 @@ Figure 6.3: Densité de probabilité de lois chi-carré, t, et F.
 Figure 6.4: Illustration de la loi des grands nombres avec la moyenne d’un échantillon. Les distributions ont été obtenues à partir de <span class="math inline">\(N\)</span> valeurs obtenues aléatoirement à partir d’une population de moyenne 0 et d’écart-type 400. Trait rouge = moyenne de la population d’origine ; trait noir = moyenne de l’échantillon
 </p>
 </div>
-<p>La Figure <a href="pr%C3%A9requis-1.html#fig:GreatNumLaw">6.4</a> montre certes qu’on a plus de chances d’avoir une moyenne d’échantillon proche de la moyenne de la population avec un grand <span class="math inline">\(N\)</span>, mais elle esquisse aussi, avec les traits en pointillés noirs, le fait qu’avec un grand <span class="math inline">\(N\)</span>, la variabilité des valeurs que peuvent prendre les moyennes de plusieurs échantillons diminue. Pour s’en assurer, on peut chercher à voir les valeurs de moyennes que l’on obtiendrait si l’on étudait un grand nombre d’échantillons (e.g., 10 000) de même taille, autrement dit la distribution d’échantillonnage de la moyenne pour une valeur de <span class="math inline">\(N\)</span> donnée. La Figure <a href="pr%C3%A9requis-1.html#fig:CentralLimTheo">6.5</a> donne une vision de ce que serait une telle distribution pour différentes valeurs de <span class="math inline">\(N\)</span> dans ce cas là.</p>
+<p>La Figure <a href="pr%C3%A9requis-1.html#fig:GreatNumLaw">6.4</a> montre certes qu’on a plus de chances d’avoir une moyenne d’échantillon proche de la moyenne de la population avec un grand <span class="math inline">\(N\)</span>, mais elle esquisse aussi, avec les traits en pointillés noirs, le fait qu’avec un grand <span class="math inline">\(N\)</span>, la variabilité des valeurs que peuvent prendre les moyennes de plusieurs échantillons diminue. Pour s’en assurer, on peut chercher à voir les valeurs de moyennes que l’on obtiendrait si l’on étudiait un grand nombre d’échantillons (e.g., 10 000) de même taille, autrement dit la distribution d’échantillonnage de la moyenne pour une valeur de <span class="math inline">\(N\)</span> donnée. La Figure <a href="pr%C3%A9requis-1.html#fig:CentralLimTheo">6.5</a> donne une vision de ce que serait une telle distribution pour différentes valeurs de <span class="math inline">\(N\)</span> dans ce cas là.</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:CentralLimTheo"></span>
 <img src="Analyser-des-donn%C3%A9es-avec-R_files/figure-html/CentralLimTheo-1.png" alt="Illustration du théorème de la limite centrale appliqué à une moyenne d'échantillon. Les distributions des moyennes montrées ici ont été obtenues avec 10 000 échantillons de N observations obtenues aléatoirement à partir d'une population ayant pour moyenne 0 et écart-type 400. Trait rouge = moyenne de la population d'origine" width="80%"><p class="caption">
@@ -195,7 +195,7 @@ Figure 6.6: Illustration du théorème de la limite centrale appliqué à une mo
 </div>
 <p>Si l’on formalise les choses d’un point de vue plus mathématique, le théorème de la limite centrale nous dit que si une population a une moyenne <span class="math inline">\(\mu\)</span> et un écart-type <span class="math inline">\(\sigma\)</span>, alors la moyenne de la distribution d’échantillonnage a aussi <span class="math inline">\(\mu\)</span> comme moyenne, et l’écart-type de la distribution d’échantillonnage de la moyenne (i.e., l’erreur standard, <em>SEM</em>) vaut :</p>
 <p><span class="math display">\[SEM = \frac{\sigma}{\sqrt{N}}.\]</span></p>
-<p>La formule montre bien que pour une population présentant un écart-type donné, plus les échantillons étudiés seront de petite taille (<span class="math inline">\(N\)</span>), plus grande sera la variabilité des moyennes provenant des différents échantillons. D’un point de vue plus pratique, cela veut dire notamment que dans une méta-analyse où l’on chercherait à estimer par exemple la moyenne de l’effet d’une intervention dans une population donnée, on aura beau avoir plein d’études conduites sur le sujet, si elles sont de trop petites tailles, il y a de bonnes chances pour que les valeurs des effets trouvés divergent substantiellement et ne permettent donc pas d’avoir une vue précise, fiable, de la valeur de l’effet concernant la population globale.</p>
+<p>La formule montre bien que pour une population présentant un écart-type donné, plus les échantillons étudiés seront de petite taille (<span class="math inline">\(N\)</span>), plus grande sera la variabilité des moyennes provenant des différents échantillons. D’un point de vue plus pratique, cela veut dire notamment que dans une méta-analyse où l’on chercherait à estimer par exemple la moyenne de l’effet d’une intervention dans une population donnée, on aura beau avoir plusieurs d’études conduites sur le sujet, si elles sont de trop petites tailles, il y a de bonnes chances pour que les valeurs des effets trouvés divergent substantiellement et ne permettent donc pas d’avoir une vue précise, fiable, de la valeur de l’effet concernant la population globale.</p>
 </div>
 <div id="résumé-3" class="section level2">
 <h2>
@@ -203,7 +203,7 @@ Figure 6.6: Illustration du théorème de la limite centrale appliqué à une mo
 </h2>
 <ul>
 <li>Les lois de probabilité, la loi des grands nombres, la distribution d’échantillonnage d’une statistique, ou encore le théorème de la limite centrale, sont des outils mathématiques qui permettent de réaliser et de mieux comprendre les inférences statistiques.</li>
-<li>Une loi de probabilité renseigne sur les chances, pour une statistique donnée, d’obtenir une valeur précise ou d’obtenir une valeur tombant dans un rang de valeurs donné selon le cas de figure.</li>
+<li>Une loi de probabilité renseigne sur les chances, pour une statistique donnée, d’obtenir une valeur précise (e.g., un nombre de succès dans le cas d’une binomiale) ou d’obtenir une valeur tombant dans un rang de valeurs donné (e.g., s’agissant d’une moyenne dans le cas d’une loi normale).</li>
 <li>Des exemples de lois de probabilité couramment utilisées sont la loi binomiale, la loi normale, la loi <span class="math inline">\(\chi^2\)</span>, la loi <span class="math inline">\(t\)</span>, et la loi <span class="math inline">\(F\)</span>.</li>
 <li>Selon la loi des grands nombres, plus la taille d’un échantillon est grande, plus il y a de chances que la moyenne de cet échantillon soit relativement proche de la moyenne de la population d’origine.</li>
 <li>Selon le théorème de la limite centrale, la moyenne de la distribution d’échantillonnage de la moyenne est la même valeur que la moyenne de la population d’origine, et l’écart-type de cette distribution (<span class="math inline">\(SEM\)</span>) est tel que : <span class="math inline">\(SEM = \frac{\sigma}{N}.\)</span> Par conséquent, plus <span class="math inline">\(N\)</span> est grand, plus <span class="math inline">\(SEM\)</span> est petite.</li>
@@ -244,7 +244,7 @@ Figure 6.6: Illustration du théorème de la limite centrale appliqué à une mo
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Analyser des données avec R</strong>" was written by Pierre-Yves de Müllenheim. It was last built on 2022-09-23.</p>
+    <p>"<strong>Analyser des données avec R</strong>" was written by Pierre-Yves de Müllenheim. It was last built on 2022-12-05.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
