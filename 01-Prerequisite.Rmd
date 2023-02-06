@@ -30,6 +30,7 @@ R et RStudio sont deux logiciels en libre accès sur internet. Le logiciel R peu
 * **Sur MAC :** Le téléchargement débute lorsque vous cliquez sur le lien. Une fois le téléchargement terminé, sur votre MAC, réaliser l’installation en double-cliquant sur le fichier téléchargé et en suivant la procédure indiquée. Une fois l’installation terminée, aller dans le dossier **Applications** du MAC et double-cliquer sur l’icône de RStudio pour vérifier si le logiciel s’ouvre correctement. 
 
 ## Prise en main de RStudio
+### Fonctionnement général
 Basiquement, RStudio s'utilise de la manière suivante : on écrit une instruction (i.e., une ligne de code) dans une fenêtre, on lance cette instruction, et le logiciel nous donne le résultat, qu'il s'agisse d'un calcul, d'un graphique, d'une modification d'un jeu de données, etc. Quand on ouvre RStudio pour la première fois, la fenêtre principale qui se présente est la **Console**. Cette fenêtre permet d'y écrire des lignes de code et de les lancer en appuyant sur la touche **Entrée**. Lorsque l'on souhaite conserver les lignes de code que l'on a écrites, ou que l'on souhaite écrire des lignes de code sans forcément les lancer, il est possible d'utiliser une fenêtre **Script** (chemin d'accès : **File > New File > R Script**). Pour lancer les lignes de code qui sont écrites dans une fenêtre de script, il suffit  de se placer n'importe où sur la ligne de code et de cliquer sur l'icône **Run** du logiciel (raccourci : **Ctrl + Entrée**). Une fois le code activé, celui-ci est montré dans la Console, et selon la nature de la commande, le résultat peut apparaître lui aussi dans la Console ou dans l'un des encarts disposés par défaut à droite de l'écran, selon qu'il s'agisse notamment d'un nouvel objet (e.g., une variable), d'une demande d'aide, ou de la création d'un graphique.
 
 ### Manipuler des objets (valeurs, vecteurs, et tableaux de données)
@@ -88,7 +89,7 @@ Sexe <- c("M", "M", "F", "F", "M", "F")
 Sexe
 ```
 
-... et même un tableau de données, qui aurait été soit conçu à la main, soit conçu à partir d'objets de type vecteurs qui auraient été crées auparavant, comme ci-dessous. À noter que les vecteurs doivent doivent contenir le même nombre de valeurs pour pouvoir être combinés dans un tableau de données avec la fonction `data.frame()`.
+... et même un tableau de données, qui aurait été soit conçu à la main, soit conçu à partir d'objets de type vecteurs qui auraient été crées auparavant, comme ci-dessous. À noter que les vecteurs doivent contenir le même nombre de valeurs pour pouvoir être combinés dans un tableau de données avec la fonction `data.frame()`.
 
 ```{r data frame object}
 df <- data.frame(Taille, Poids, Sexe)
