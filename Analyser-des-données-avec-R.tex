@@ -164,7 +164,7 @@ Ce livre vise à servir de support à des enseignements auprès d'étudiants qui
 
 Bien que le langage R puisse être utilisé via le logiciel R en tant que tel, les procédures décrites dans ce livre supposent que l'utilisation du logiciel R s'effectue en réalité à l'aide de l'environnement proposé par le logiciel RStudio, qui est plus confortable en matière d'utilisation que l'interface initialement associée au logiciel R. Que cela soit via l'interface de base associée au logiciel R ou via l'environnement proposé par RStudio, l'utilisation du langage R pour obtenir le résultat d'une analyse nécessite d'écrire des lignes de code. Si cela peut s'avérer plus complexe et/ou fastidieux à utiliser au départ qu'un logiciel classique où il suffit de cliquer sur des boutons pour obtenir le résultat de l'analyse, cela vaut la peine de prendre le temps d'apprendre à programmer avec R (et préférentiellement via RStudio), au moins pour les raisons suivantes : les logiciels R et RStudio sont en accès libre sur internet ; il existe de nombreuses aides documentaires, notamment sur internet, qui permettent de programmer n'importe quelle analyse ou manipulation de données, aussi sophistiquée soit elle ; il est possible de conserver les lignes de code pour pouvoir refaire plus tard les analyses, ou pour pouvoir appliquer ces lignes de code à d'autres données, ou encore pour partager ces lignes de code avec d'autres personnes. De par sa gratuité et sa capacité à permettre le partage des analyses réalisées, R et RStudio sont ainsi une très bonne option pour embrasser la tendance actuelle, encore timide, de l'\emph{open science}, consistant à permettre à tout un chacun de savoir ce qui a été fait en matière d'analyses et à pouvoir reproduire ces analyses. Enfin, le langage R, notamment via l'utilisation de RStudio, permet de faire bien plus que des analyses de données (e.g., automatisation d'analyses, développement d'applications web, construction de sites internet et de curriculum vitae, etc.), ce qui en fait un outil de travail polyvalent et donc particulièrement intéressant.
 
-L'appropriation du contenu de ce livre suppose une lecture relativement linéaire des chapitres, du moins en vue de comprendre comment utiliser le langage R. Plusieurs exemples de code, en particulier pour la conception de graphiques, utilisent ce qu'on appelle des \emph{packages} qui sont à télécharger et à installer sur l'ordinateur, puis à charger lorsque le logiciel est ouvert. Une fois que les consignes d'installation et de chargement de ces packages ont été explicitement données au cours d'un chapitre, leur utilisation dans le chapitre en cours et dans les chapitres suivants suppose implicitement que ces packages ont été chargés et sont donc prêts à être utilisés.
+L'appropriation du contenu de ce livre suppose une lecture relativement linéaire des chapitres, du moins en vue de comprendre comment utiliser le langage R. Plusieurs exemples de code, en particulier pour la conception de graphiques, utilisent ce qu'on appelle des \emph{packages} qui sont à télécharger et à installer sur l'ordinateur, puis à charger lorsque le logiciel est ouvert. Une fois que les consignes d'installation et de chargement de ces packages ont été explicitement données au cours d'un chapitre, leur utilisation dans le chapitre en cours suppose implicitement que ces packages ont été chargés et sont donc prêts à être utilisés.
 
 Dans ce livre, les exemples de code apparaissent dans des zones grisées, et les résultats qui pourraient apparaître à l'écran dans RStudio une fois le code activé sont précédés d'un double dièse (\#\#). Par moment, les noms des fonctions sont écrits à la suite des noms des packages dont elles dépendent, comme ceci : \texttt{package::fonction()}.
 
@@ -852,7 +852,7 @@ En principe, les données de la base qui ont été obtenues selon la même proc�
 
 \renewcommand*{\arraystretch}{1}
 
-Les \textbf{variables quantitatives} (aussi dites numériques) comportent des nombres dont les différences entre eux ont un sens. Parmi les variables quantitatives, il est possible de plus précisément distinguer celles qui peuvent être associées seulement à une \textbf{échelle d'intervalles}, et celles qui peuvent être aussi associées à une \textbf{échelle de ratios}. Les variables étant associables seulement à une \textbf{échelle d'intervalles} ont la particularité de ne pas avoir de zéro naturel, de sorte que multiplier ou diviser les valeurs de cette variable n'aurait pas de sens. Un exemple de ce type de variables pourrait être la température exprimée en degrés Celsius. Avec cette variable, il est seulement possible de décrire le fait qu'il fait x degrés plus chaud ou plus froid à un endroit par rapport à un autre, mais cela n'aurait pas de sens de dire qu'il ferait deux fois plus chaud à un endroit où il y aurait 20°C par rapport à un endroit où il y aurait seulement 10°C. Il serait possible de le dire si 0°C correspondrait à \enquote{pas de température du tout}, mais cela n'est évidemment pas le cas (cet exemple est repris de Danielle Navarro \autocite*{navarroLearningStatistics2018}. En revanche, les variables pouvant être associées à une échelle de ratios présentent des valeurs qui, en plus de permettre de calculer des différences numériques qui ont un sens, peuvent être multipliées ou divisées, comme par exemple le temps de réaction à un stimulus donné.
+Les \textbf{variables quantitatives} (aussi dites numériques) comportent des nombres dont les différences entre eux ont un sens. Parmi les variables quantitatives, il est possible de plus précisément distinguer celles qui peuvent être associées seulement à une \textbf{échelle d'intervalles}, et celles qui peuvent être aussi associées à une \textbf{échelle de ratios}. Les variables étant associables seulement à une \textbf{échelle d'intervalles} ont la particularité de ne pas avoir de zéro naturel, de sorte que multiplier ou diviser les valeurs de cette variable n'aurait pas de sens. Un exemple de ce type de variables pourrait être la température exprimée en degrés Celsius. Avec cette variable, il est seulement possible de décrire le fait qu'il fait x degrés plus chaud ou plus froid à un endroit par rapport à un autre, mais cela n'aurait pas de sens de dire qu'il ferait deux fois plus chaud à un endroit où il y aurait 20°C par rapport à un endroit où il y aurait seulement 10°C. Il serait possible de le dire si 0°C correspondrait à \enquote{pas de température du tout}, mais cela n'est évidemment pas le cas (cet exemple est repris de Danielle Navarro \autocite*{navarroLearningStatistics2018}). En revanche, les variables pouvant être associées à une échelle de ratios présentent des valeurs qui, en plus de permettre de calculer des différences numériques qui ont un sens, peuvent être multipliées ou divisées, comme par exemple le temps de réaction à un stimulus donné.
 
 En plus de la distinction échelle d'intervalles / échelle de ratios, les variables quantitatives peuvent être considérées comme étant soit \textbf{continues}, soit \textbf{discrètes}. Les variables quantitatives continues contiennent des nombres pouvant comporter théoriquement un nombre infini de décimales (e.g., la taille, le poids, etc.). Au contraire, les variables quantitatives discrètes ne peuvent contenir théoriquement que des nombres finis (e.g., le nombre de victoires sportives au cours d'une année). Certaines variables en théorie discrètes sont cependant souvent considérées comme continues tant le nombre de valeurs théoriquement possibles pour la variable est grand, tel que pour le nombre de globules blancs mesurés dans le sang \autocite{labreucheDifferentsTypesVariables2010}.
 
@@ -861,12 +861,11 @@ Les \textbf{variables qualitatives} (aussi dites catégorielles), elles, contien
 \hypertarget{fixer-le-ruxe9pertoire-de-travail}{%
 \section{Fixer le répertoire de travail}\label{fixer-le-ruxe9pertoire-de-travail}}
 
-Lorsque l'on souhaite réaliser l'analyse d'une base de données avec RStudio, il peut être utile et plus fonctionnel pour la suite de créer un dossier spécifique, sur l'ordinateur, où se trouveraient à la fois la base de données ainsi que toutes les créations (e.g., tableaux, figures, etc.) qui seraient produites au fur et à mesure des analyses. Une fois le dossier crée, il faut ensuite, dans RStudio, ouvrir un fichier \textbf{Script} où toutes les commandes seront écrites et enregistrables (chemin d'accès : \textbf{File \textgreater{} New File \textgreater{} R Script}). Une fois ouvert, il est possible d'enregistrer le script en appuyant sur \textbf{Ctrl+S}, en privilégiant comme emplacement le dossier où se trouve la base de données.
-La prochaine manipulation à faire est alors de \textbf{Fixer le répertoire}. L'enjeu est ici d'indiquer à RStudio un dossier à privilégier pour réaliser des importations de fichiers dans RStudio ou des exports de fichiers à partir de RStudio. Le dossier à considérer pour cela pourrait donc être celui où se trouve déjà la base de données. Plus concrètement, après avoir fait cela, dès lors que l'on voudra importer un tableau de données dans RStudio, au lieu de préciser dans la fonction d'importation tout le chemin d'accès définissant l'emplacement du fichier sur l'ordinateur, il suffira dans la fonction de mettre seulement le nom du fichier à importer. De plus, dès lors que l'on voudra exporter un tableau ou une figure crée(e) avec RStudio, l'export se fera automatiquement vers le dossier de travail en cours si rien n'est spécifié dans la fonction d'export quant à l'emplacement du document.
+Lorsque l'on souhaite réaliser l'analyse d'une base de données avec RStudio, il peut être utile et plus fonctionnel pour la suite de créer un dossier spécifique, sur l'ordinateur, relatif à son projet de travail. Ce dossier pourrait alors contenir au moins trois sous-dossiers appelés : \enquote{data} ; \enquote{out} ; et \enquote{R}. L'idée ici est d'organiser tous les fichiers qui vont être utilisés et produits au cours du travail d'analyse. Le dossier \enquote{data} devrait ne contenir que les fichiers à analyser. Le dossier \enquote{out} ne devrait contenir que les fichiers qui sont exportés au cours des analyses réalisées. Et le dossier \enquote{R} ne devrait contenir que les fichiers .R qui servent à écrire et activer le code nécessaire aux analyses.
 
-Pour fixer le répertoire de travail, il existe plusieurs manières de faire. Une manière relativement simple de procéder est la suivante. Suivre le chemin d'accès suivant à partir de RStudio : \textbf{Session \textgreater{} Set Working Directory \textgreater{} Choose Directory\ldots{}}. (Ou appuyer sur \textbf{Ctr+Shift+H}.). Puis, sélectionner le dossier où se trouve la base de données. Enfin, cliquer sur \textbf{Open}. Une commmande apparaît alors dans la Console. Le répertoire vient donc d'être fixé. Pour ne pas devoir faire la même manipulation à chaque nouvelle ouverture de RStudio, il est possible de copier cette commande qui est apparue dans la Console (ne pas copier le symbole \texttt{\textgreater{}}) et de la coller au début du script. On pourra noter que cette commande contient la fonction \texttt{setwd()}, et qu'à l'intérieur se trouve le chemin d'accès au répertoire de travail qui est écrit entre des guillemets.
+Une fois la structure de travail créée, il est préférable de faire en sorte que l'emplacement sur le PC du dossier du projet en cours soit le point de départ des chemins d'accès qui serviront à importer des données dans RStudio ou à exporter des fichiers à partir de RStudio. Pour faire cela, il faut créer un fichier .Rproj dans le dossier général du projet. Pour créer ce fichier, il suffit de suivre, dans RStudio, le chemin suivant : \textbf{Fichier \textgreater{} New Project\ldots{} \textgreater{} Existing Directory \textgreater{} Sélectionner le chemin d'accès au dossier souhaité \textgreater{} Cliquer sur Create Project}. Un grand avantage de cette procédure est que cela permet de ne pas écrire, dans le script, le chemin d'accès complet d'un fichier sur son PC (de la racine au fichier lui-même) et ainsi de ne pas révéler dans le script des informations qui sont relativement privées. Cette solution est donc celle à préférer, surtout lorsqu'on envisage de partager son script avec d'autres collaborateurs qui risqueraient qui plus est d'être gênés par cette ligne de code d'accès au fichier qui ne leur servirait à rien, car le chemin d'accès au dossier de travail d'un collègue sera très probablement différent de celui des autres collaborateurs.
 
-Une seconde manière de procéder est de créer un fichier .Rproj dans le dossier crée au préalable pour faire ses analyses et qui contient donc la base de données. Pour créer ce fichier, il suffit de suivre, dans RStudio, le chemin suivant : \textbf{Fichier \textgreater{} New Project\ldots{} \textgreater{} Existing Directory \textgreater{} Sélectionner le chemin d'accès au dossier souhaité \textgreater{} Cliquer sur Create Project}. Ainsi, à chaque fois que l'on souhaitera travailler avec les fichiers du dossier dans lequel le fichier .Rproj se trouve, il suffira de double-cliquer sur ce fichier pour ouvrir une session R qui prendra automatiquement pour répertoire de travail le dossier dans lequel le fichier .Rproj se trouve. Le grand avantage de cette procédure est que cela permet de ne pas écrire le chemin d'accès complet au dossier de travail et ainsi de ne pas révéler dans le script des informations qui sont relativement privées. Cette deuxième solution est donc celle à préférer, surtout lorsqu'on envisage de partager son script avec d'autres collaborateurs qui risqueraient qui plus est d'être gênés par cette ligne de code d'accès au dossier qui ne leur servirait à rien, car le chemin d'accès au dossier de travail d'un collègue sera très probablement différent de celui des autres collaborateurs.
+Une fois le projet bien configuré, il faut ensuite, dans RStudio, ouvrir un fichier \textbf{Script} où toutes les commandes seront écrites et enregistrables (chemin d'accès : \textbf{File \textgreater{} New File \textgreater{} R Script}). Une fois ouvert, il est possible d'enregistrer le script en appuyant sur \textbf{Ctrl+S}.
 
 \hypertarget{importer-la-base-de-donnuxe9es}{%
 \section{Importer la base de données}\label{importer-la-base-de-donnuxe9es}}
@@ -875,15 +874,16 @@ Il existe plusieurs fonctions pour importer une base de données dans RStudio. L
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{write_csv2}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ iris, }\DataTypeTok{file =} \StringTok{"iris.csv"}\NormalTok{)}
+\KeywordTok{library}\NormalTok{(readr)}
+\KeywordTok{write_csv2}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ iris, }\DataTypeTok{file =} \StringTok{"out/iris.csv"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-Si la commande ci-dessus est activée dans RStudio et que l'on jette ensuite un oeil dans le répertoire de travail, il est alors possible d'y voir un nouveau fichier .csv du nom de \texttt{iris}. Maintenant qu'il existe une base de données dans le répertoire de travail actif, il est possible de concrétiser la procédure de son importation dans RStudio. Comme évoqué plus tôt dans ce document, il est intéressant, et en réalité nécessaire, d'assigner cette base de données à un nom pour pouvoir plus facilement manipuler le jeu de données par la suite. Ici, nous allons tout simplement associer ce nouvel objet au nom \texttt{iris}, tel que montré ci-dessous.
+Si la commande ci-dessus est activée dans RStudio et que l'on jette ensuite un oeil dans le répertoire de travail (dossier \enquote{out}), il est alors possible d'y voir un nouveau fichier .csv du nom de \texttt{iris}. Maintenant qu'il existe une base de données dans le répertoire de travail actif, il est possible de concrétiser la procédure de son importation dans RStudio. Comme évoqué plus tôt dans ce document, il est intéressant, et en réalité nécessaire, d'assigner cette base de données à un nom pour pouvoir plus facilement manipuler le jeu de données par la suite. Ici, nous allons tout simplement associer ce nouvel objet au nom \texttt{iris}, tel que montré ci-dessous.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{iris <-}\StringTok{ }\KeywordTok{read_csv2}\NormalTok{(}\DataTypeTok{file =} \StringTok{"iris.csv"}\NormalTok{)}
+\NormalTok{iris <-}\StringTok{ }\KeywordTok{read_csv2}\NormalTok{(}\DataTypeTok{file =} \StringTok{"out/iris.csv"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1061,6 +1061,7 @@ RStudio nous montre tout le jeu de données dans la Console, ce qui n'est pas tr
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(tibble)}
 \NormalTok{iris <-}\StringTok{ }\KeywordTok{as_tibble}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ iris)}
 \NormalTok{iris}
 \end{Highlighting}
@@ -1190,6 +1191,7 @@ Cette stratégie de modification du type de la variable peut convenir lorsqu'il 
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(dplyr)}
 \NormalTok{iris <-}\StringTok{ }
 \StringTok{  }\NormalTok{iris }\OperatorTok{%>%}\StringTok{ }
 \StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{Sepal.Length =} \KeywordTok{as.numeric}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Sepal.Length),}
@@ -1505,10 +1507,13 @@ La fonction \texttt{pivot\_wider()} permet alors de mettre en colonnes les valeu
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(tidyr)}
 \NormalTok{iris3 <-}\StringTok{ }
 \StringTok{  }\NormalTok{iris2 }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{pivot_wider}\NormalTok{(}\DataTypeTok{names_from =}\NormalTok{ Species, }
-              \DataTypeTok{values_from =}\NormalTok{ Sepal.Length }\OperatorTok{:}\StringTok{ }\NormalTok{Petal.Width)}
+\StringTok{  }\KeywordTok{pivot_wider}\NormalTok{(}
+    \DataTypeTok{names_from =}\NormalTok{ Species,}
+    \DataTypeTok{values_from =}\NormalTok{ Sepal.Length }\OperatorTok{:}\StringTok{ }\NormalTok{Petal.Width}
+\NormalTok{    )}
 \NormalTok{iris3}
 \end{Highlighting}
 \end{Shaded}
@@ -1543,13 +1548,16 @@ Dans une situation inverse à celle que nous venons de voir, nous pourrions avoi
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{  iris3 }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(id, }
-\NormalTok{         Sepal.Length_setosa, }
-\NormalTok{         Sepal.Length_versicolor, }
-\NormalTok{         Sepal.Length_virginica) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{pivot_longer}\NormalTok{(}\DataTypeTok{cols =} \KeywordTok{c}\NormalTok{(}\OperatorTok{-}\NormalTok{id), }
-               \DataTypeTok{names_to =} \StringTok{"Species"}\NormalTok{, }
-               \DataTypeTok{values_to =} \StringTok{"Sepal_len"}\NormalTok{)}
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(}
+\NormalTok{    id, }
+\NormalTok{    Sepal.Length_setosa, }
+\NormalTok{    Sepal.Length_versicolor, }
+\NormalTok{    Sepal.Length_virginica) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{pivot_longer}\NormalTok{(}
+    \DataTypeTok{cols =} \KeywordTok{c}\NormalTok{(}\OperatorTok{-}\NormalTok{id), }
+    \DataTypeTok{names_to =} \StringTok{"Species"}\NormalTok{,}
+    \DataTypeTok{values_to =} \StringTok{"Sepal_len"}
+\NormalTok{    )}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1577,9 +1585,11 @@ Lorsque l'on veut utiliser la fonction \texttt{pivot\_longer()} sur plusieurs co
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{  iris3 }\OperatorTok{%>%}\StringTok{ }
-\StringTok{  }\KeywordTok{pivot_longer}\NormalTok{(}\DataTypeTok{cols =} \KeywordTok{c}\NormalTok{(Sepal.Length_setosa }\OperatorTok{:}\StringTok{ }\NormalTok{Petal.Width_virginica), }
-               \DataTypeTok{names_to =} \KeywordTok{c}\NormalTok{(}\StringTok{".value"}\NormalTok{, }\StringTok{"Species"}\NormalTok{),}
-               \DataTypeTok{names_sep =} \StringTok{"_"}\NormalTok{)}
+\StringTok{  }\KeywordTok{pivot_longer}\NormalTok{(}
+    \DataTypeTok{cols =} \KeywordTok{c}\NormalTok{(Sepal.Length_setosa }\OperatorTok{:}\StringTok{ }\NormalTok{Petal.Width_virginica), }
+    \DataTypeTok{names_to =} \KeywordTok{c}\NormalTok{(}\StringTok{".value"}\NormalTok{, }\StringTok{"Species"}\NormalTok{),}
+    \DataTypeTok{names_sep =} \StringTok{"_"}
+\NormalTok{    )}
 \end{Highlighting}
 \end{Shaded}
 
