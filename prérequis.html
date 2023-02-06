@@ -7,7 +7,7 @@
 <title>Chapitre 1 Prérequis | Analyser des données avec R</title>
 <meta name="author" content="Pierre-Yves de Müllenheim">
 <meta name="description" content="1.1 Installation de R et RStudio R et RStudio sont deux logiciels en libre accès sur internet. Le logiciel R peut être utilisé indépendamment du logiciel RStudio. En revanche, l’utilisation du...">
-<meta name="generator" content="bookdown 0.30 with bs4_book()">
+<meta name="generator" content="bookdown 0.32 with bs4_book()">
 <meta property="og:title" content="Chapitre 1 Prérequis | Analyser des données avec R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://github.com/pydemull/Analyser-des-donnees-avec-R/prérequis.html">
@@ -17,7 +17,7 @@
 <meta name="twitter:description" content="1.1 Installation de R et RStudio R et RStudio sont deux logiciels en libre accès sur internet. Le logiciel R peut être utilisé indépendamment du logiciel RStudio. En revanche, l’utilisation du...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.1/transition.js"></script><script src="libs/bs3compat-0.4.1/tabs.js"></script><script src="libs/bs3compat-0.4.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="libs/tabwid-1.1.2/tabwid.css" rel="stylesheet">
 <!-- Code fom Dexter to custom bs4_book template: https://stackoverflow.com/questions/66128954/change-right-sidebar-header-in-bs4-book-bookdown --><script>
       $(function() {
@@ -128,16 +128,21 @@
 <h2>
 <span class="header-section-number">1.2</span> Prise en main de RStudio<a class="anchor" aria-label="anchor" href="#prise-en-main-de-rstudio"><i class="fas fa-link"></i></a>
 </h2>
+<div id="fonctionnement-général" class="section level3">
+<h3>
+<span class="header-section-number">1.2.1</span> Fonctionnement général<a class="anchor" aria-label="anchor" href="#fonctionnement-g%C3%A9n%C3%A9ral"><i class="fas fa-link"></i></a>
+</h3>
 <p>Basiquement, RStudio s’utilise de la manière suivante : on écrit une instruction (i.e., une ligne de code) dans une fenêtre, on lance cette instruction, et le logiciel nous donne le résultat, qu’il s’agisse d’un calcul, d’un graphique, d’une modification d’un jeu de données, etc. Quand on ouvre RStudio pour la première fois, la fenêtre principale qui se présente est la <strong>Console</strong>. Cette fenêtre permet d’y écrire des lignes de code et de les lancer en appuyant sur la touche <strong>Entrée</strong>. Lorsque l’on souhaite conserver les lignes de code que l’on a écrites, ou que l’on souhaite écrire des lignes de code sans forcément les lancer, il est possible d’utiliser une fenêtre <strong>Script</strong> (chemin d’accès : <strong>File &gt; New File &gt; R Script</strong>). Pour lancer les lignes de code qui sont écrites dans une fenêtre de script, il suffit de se placer n’importe où sur la ligne de code et de cliquer sur l’icône <strong>Run</strong> du logiciel (raccourci : <strong>Ctrl + Entrée</strong>). Une fois le code activé, celui-ci est montré dans la Console, et selon la nature de la commande, le résultat peut apparaître lui aussi dans la Console ou dans l’un des encarts disposés par défaut à droite de l’écran, selon qu’il s’agisse notamment d’un nouvel objet (e.g., une variable), d’une demande d’aide, ou de la création d’un graphique.</p>
+</div>
 <div id="manipuler-des-objets-valeurs-vecteurs-et-tableaux-de-données" class="section level3">
 <h3>
-<span class="header-section-number">1.2.1</span> Manipuler des objets (valeurs, vecteurs, et tableaux de données)<a class="anchor" aria-label="anchor" href="#manipuler-des-objets-valeurs-vecteurs-et-tableaux-de-donn%C3%A9es"><i class="fas fa-link"></i></a>
+<span class="header-section-number">1.2.2</span> Manipuler des objets (valeurs, vecteurs, et tableaux de données)<a class="anchor" aria-label="anchor" href="#manipuler-des-objets-valeurs-vecteurs-et-tableaux-de-donn%C3%A9es"><i class="fas fa-link"></i></a>
 </h3>
 <p>R permet tout d’abord d’effectuer des opérations simples avec des nombres, telles que des additions avec le symbole <code>+</code>, des soustractions avec le symbole <code>-</code>, des multiplications avec le symbole <code>*</code>, des divisions avec le symbole <code>/</code>, des racines carrées avec la fonction <code><a href="https://rdrr.io/r/base/MathFun.html">sqrt()</a></code>, ou encore des élévations à la puissance avec le symbole <code>^</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="fl">9</span> <span class="op">+</span> <span class="fl">3</span> <span class="op">-</span> <span class="fl">5</span><span class="op">)</span> <span class="op">*</span> <span class="fl">5</span> <span class="op">/</span> <span class="fl">2</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fl">9</span><span class="op">)</span> <span class="op">^</span> <span class="fl">2</span></span></code></pre></div>
 <pre><code>## [1] 26.5</code></pre>
-<p>De manière plus élaborée, R permet aussi de créer des vecteurs (i.e., des suites de nombres), notamment grâce à la fonction <code><a href="https://rdrr.io/r/base/c.html">c()</a></code>, et de les manipuler avec différentes sortes d’opérations. Lorsqu’une opération ou une série d’opérations est appliquée à un vecteur, chaque valeur du vecteur subit les opérations spécifiées. Dans l’exemple ci-dessous, on voit par exemple que chaque valeur du vecteur a été multipliée par 2 et s’est vue ajouter la valeur 3.</p>
+<p>De manière plus élaborée, R permet aussi de créer des vecteurs (i.e., des suites de valeurs), notamment grâce à la fonction <code><a href="https://rdrr.io/r/base/c.html">c()</a></code>, et de les manipuler avec différentes sortes d’opérations. Lorsqu’une opération ou une série d’opérations est appliquée à un vecteur, chaque valeur du vecteur subit les opérations spécifiées. Dans l’exemple ci-dessous, on voit par exemple que chaque valeur du vecteur a été multipliée par 2 et s’est vue ajouter la valeur 3.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">5</span><span class="op">)</span> <span class="op">*</span> <span class="fl">2</span> <span class="op">+</span> <span class="fl">3</span></span></code></pre></div>
 <pre><code>## [1]  3  5  7  9 11 13</code></pre>
@@ -161,7 +166,7 @@
 </div>
 <div id="manipuler-des-objets-via-des-noms" class="section level3">
 <h3>
-<span class="header-section-number">1.2.2</span> Manipuler des objets via des noms<a class="anchor" aria-label="anchor" href="#manipuler-des-objets-via-des-noms"><i class="fas fa-link"></i></a>
+<span class="header-section-number">1.2.3</span> Manipuler des objets via des noms<a class="anchor" aria-label="anchor" href="#manipuler-des-objets-via-des-noms"><i class="fas fa-link"></i></a>
 </h3>
 <p>L’une des particularités de R, c’est de permettre d’associer des objets (e.g., des valeurs, des vecteurs, ou encore des tableaux de données) à des noms. Pour ce faire, R utilise la fonction d’assignation <code>&lt;-</code>. Cette fonction s’utilise en écrivant à droite de la flèche l’objet à créer (ou qui est déjà crée), et en écrivant à gauche de la flèche le nom auquel on veut que l’objet soit associé (Attention : Toujours utiliser seulement des caractères alphanumériques et des points <code>.</code> ou des tirets du bas <code>_</code> pour écrire un nom ; ne pas commencer par un chiffre ; avoir à l’esprit que R est sensible à la casse, ce qui veut dire qu’un nom commençant par une majuscule sera un nom différent de celui qui a les mêmes lettres mais qui commence par une minuscule.) L’utilisation de noms associés à des objets permet de grandement faciliter les analyses par la suite. Lorsqu’on réalise une assignation, il est possible de voir le nouveau nom et l’objet associé dans la fenêtre <strong>Environnement</strong> de RStudio. Lorsqu’on lance le code permettant d’assigner un objet à un nom, R ne montre pas le contenu de l’objet. Pour le voir, il faut écrire le nom associé à l’objet dans une ligne de code et lancer la commande.</p>
 <p>Il est donc possible d’associer à un nom un objet qui serait une valeur numérique…</p>
@@ -187,7 +192,7 @@
 <code class="sourceCode R"><span><span class="va">Sexe</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"M"</span>, <span class="st">"M"</span>, <span class="st">"F"</span>, <span class="st">"F"</span>, <span class="st">"M"</span>, <span class="st">"F"</span><span class="op">)</span></span>
 <span><span class="va">Sexe</span></span></code></pre></div>
 <pre><code>## [1] "M" "M" "F" "F" "M" "F"</code></pre>
-<p>… et même un tableau de données, qui aurait été soit conçu à la main, soit conçu à partir d’objets de type vecteurs qui auraient été crées auparavant, comme ci-dessous. À noter que les vecteurs doivent doivent contenir le même nombre de valeurs pour pouvoir être combinés dans un tableau de données avec la fonction <code><a href="https://rdrr.io/r/base/data.frame.html">data.frame()</a></code>.</p>
+<p>… et même un tableau de données, qui aurait été soit conçu à la main, soit conçu à partir d’objets de type vecteurs qui auraient été crées auparavant, comme ci-dessous. À noter que les vecteurs doivent contenir le même nombre de valeurs pour pouvoir être combinés dans un tableau de données avec la fonction <code><a href="https://rdrr.io/r/base/data.frame.html">data.frame()</a></code>.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">Taille</span>, <span class="va">Poids</span>, <span class="va">Sexe</span><span class="op">)</span></span>
 <span><span class="va">df</span></span></code></pre></div>
@@ -236,7 +241,7 @@
 </div>
 <div id="utiliser-des-fonctions" class="section level3">
 <h3>
-<span class="header-section-number">1.2.3</span> Utiliser des fonctions<a class="anchor" aria-label="anchor" href="#utiliser-des-fonctions"><i class="fas fa-link"></i></a>
+<span class="header-section-number">1.2.4</span> Utiliser des fonctions<a class="anchor" aria-label="anchor" href="#utiliser-des-fonctions"><i class="fas fa-link"></i></a>
 </h3>
 <p>Dans les exemples de code précédents, nous avons utilisé plusieurs fonctions : la fonction <code><a href="https://rdrr.io/r/base/MathFun.html">sqrt()</a></code>, la fonction <code><a href="https://rdrr.io/r/base/c.html">c()</a></code>, la fonction <code><a href="https://rdrr.io/r/base/data.frame.html">data.frame()</a></code>, et la fonction <code><a href="https://rdrr.io/r/base/rm.html">rm()</a></code>. Par la suite, nous serons amenés à voir comment l’on crée une fonction et comment l’on arrive finalement à n’avoir qu’une expression suivie de parenthèses à utiliser pour faire un ensemble d’actions automatiquement. Mais avant cela, il est important de savoir globalement comment une fonction s’utilise. Cela est important car il est rapidement possible de se rendre compte qu’utiliser R, c’est utiliser des fonctions. De plus, lorsque l’on souhaite réaliser une nouvelle analyse avec une fonction que l’on n’a jamais utilisée auparavant, il est nécessaire de pouvoir en comprendre la structure et d’être en mesure d’en comprendre le fonctionnement pour pouvoir l’utiliser.</p>
 <p>Pour expliquer comment s’utilise une fonction, commençons directement par un exemple, cette fois avec la fonction <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> :</p>
@@ -275,7 +280,7 @@ Figure 1.2: Graphique obtenu avec un paramétrage implicite de la fonction plot(
 </div>
 <div id="installer-et-charger-des-packages" class="section level3">
 <h3>
-<span class="header-section-number">1.2.4</span> Installer et charger des <em>packages</em><a class="anchor" aria-label="anchor" href="#installer-et-charger-des-packages"><i class="fas fa-link"></i></a>
+<span class="header-section-number">1.2.5</span> Installer et charger des <em>packages</em><a class="anchor" aria-label="anchor" href="#installer-et-charger-des-packages"><i class="fas fa-link"></i></a>
 </h3>
 <p>R fonctionne en bonne partie sur la base de fonctions qui permettent de réaliser automatiquement différents types de calculs. Ces fonctions sont regroupées dans des ensembles qu’on appelle des <em>packages</em>. La version d’installation initialle du logiciel R dispose d’un ensemble de <em>packages</em> de base qui permettent de réaliser un très grand nombre d’analyses. Toutefois, la version de base de R impose parfois des manières d’écrire certaines instructions qui sont peu intuitives ou qui parfois ne permettent tout simplement pas de faire les analyses souhaitées. Pour palier ces problèmes, des <em>packages</em> sont régulièrement crées et actualisés par la communauté R. Pour pouvoir les utiliser, il est nécessaire de d’abord installer le <em>package</em> additionnel grâce à la fonction <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages()</a></code>. L’une des collections de <em>packages</em> les plus utiles pour manipuler des tableaux de données et effectuer des analyses statistiques et graphiques est celle du <code>tidyverse</code>, qui a été pensée notamment pour faciliter l’écriture des lignes de code.</p>
 <div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
@@ -287,7 +292,7 @@ Figure 1.2: Graphique obtenu avec un paramétrage implicite de la fonction plot(
 </div>
 <div id="divers" class="section level3">
 <h3>
-<span class="header-section-number">1.2.5</span> Divers<a class="anchor" aria-label="anchor" href="#divers"><i class="fas fa-link"></i></a>
+<span class="header-section-number">1.2.6</span> Divers<a class="anchor" aria-label="anchor" href="#divers"><i class="fas fa-link"></i></a>
 </h3>
 <p>Au fur et à mesure que l’on écrit un script, une bonne pratique consiste à régulièrement créer des sections avec des titres et d’ajouter des commentaires pour certaines analyses. Afin de ne pas rendre activable les lignes de code qui ne serviraient qu’à écrire des titres ou des commentaires, il convient d’utiliser le symbole <code>#</code> devant l’écriture du code.</p>
 <div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
@@ -335,11 +340,12 @@ Figure 1.2: Graphique obtenu avec un paramétrage implicite de la fonction plot(
 </li>
 <li>
 <a class="nav-link" href="#prise-en-main-de-rstudio"><span class="header-section-number">1.2</span> Prise en main de RStudio</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#manipuler-des-objets-valeurs-vecteurs-et-tableaux-de-donn%C3%A9es"><span class="header-section-number">1.2.1</span> Manipuler des objets (valeurs, vecteurs, et tableaux de données)</a></li>
-<li><a class="nav-link" href="#manipuler-des-objets-via-des-noms"><span class="header-section-number">1.2.2</span> Manipuler des objets via des noms</a></li>
-<li><a class="nav-link" href="#utiliser-des-fonctions"><span class="header-section-number">1.2.3</span> Utiliser des fonctions</a></li>
-<li><a class="nav-link" href="#installer-et-charger-des-packages"><span class="header-section-number">1.2.4</span> Installer et charger des packages</a></li>
-<li><a class="nav-link" href="#divers"><span class="header-section-number">1.2.5</span> Divers</a></li>
+<li><a class="nav-link" href="#fonctionnement-g%C3%A9n%C3%A9ral"><span class="header-section-number">1.2.1</span> Fonctionnement général</a></li>
+<li><a class="nav-link" href="#manipuler-des-objets-valeurs-vecteurs-et-tableaux-de-donn%C3%A9es"><span class="header-section-number">1.2.2</span> Manipuler des objets (valeurs, vecteurs, et tableaux de données)</a></li>
+<li><a class="nav-link" href="#manipuler-des-objets-via-des-noms"><span class="header-section-number">1.2.3</span> Manipuler des objets via des noms</a></li>
+<li><a class="nav-link" href="#utiliser-des-fonctions"><span class="header-section-number">1.2.4</span> Utiliser des fonctions</a></li>
+<li><a class="nav-link" href="#installer-et-charger-des-packages"><span class="header-section-number">1.2.5</span> Installer et charger des packages</a></li>
+<li><a class="nav-link" href="#divers"><span class="header-section-number">1.2.6</span> Divers</a></li>
 </ul>
 </li>
 <li><a class="nav-link" href="#r%C3%A9sum%C3%A9"><span class="header-section-number">1.3</span> Résumé</a></li>
@@ -360,7 +366,7 @@ Figure 1.2: Graphique obtenu avec un paramétrage implicite de la fonction plot(
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Analyser des données avec R</strong>" was written by Pierre-Yves de Müllenheim. It was last built on 2022-12-05.</p>
+    <p>"<strong>Analyser des données avec R</strong>" was written by Pierre-Yves de Müllenheim. It was last built on 2023-02-06.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
