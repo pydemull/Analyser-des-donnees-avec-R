@@ -79,31 +79,31 @@ flextable(
 ```
 </div>
 
-Les **variables quantitatives** (aussi dites numériques) comportent des nombres dont les différences entre eux ont un sens. Parmi les variables quantitatives, il est possible de plus précisément distinguer celles qui peuvent être associées seulement à une **échelle d'intervalles**, et celles qui peuvent être aussi associées à une **échelle de ratios**. Les variables étant associables seulement à une  **échelle d'intervalles** ont la particularité de ne pas avoir de zéro naturel, de sorte que multiplier ou diviser les valeurs de cette variable n'aurait pas de sens. Un exemple de ce type de variables pourrait être la température exprimée en degrés Celsius. Avec cette variable, il est seulement possible de décrire le fait qu'il fait x degrés plus chaud ou plus froid à un endroit par rapport à un autre, mais cela n'aurait pas de sens de dire qu'il ferait deux fois plus chaud à un endroit où il y aurait 20°C par rapport à un endroit où il y aurait seulement 10°C. Il serait possible de le dire si 0°C correspondrait à "pas de température du tout", mais cela n'est évidemment pas le cas (cet exemple est repris de Danielle Navarro [-@navarroLearningStatistics2018]. En revanche, les variables pouvant être associées à une échelle de ratios présentent des valeurs qui, en plus de permettre de calculer des différences numériques qui ont un sens, peuvent être multipliées ou divisées, comme par exemple le temps de réaction à un stimulus donné.
+Les **variables quantitatives** (aussi dites numériques) comportent des nombres dont les différences entre eux ont un sens. Parmi les variables quantitatives, il est possible de plus précisément distinguer celles qui peuvent être associées seulement à une **échelle d'intervalles**, et celles qui peuvent être aussi associées à une **échelle de ratios**. Les variables étant associables seulement à une  **échelle d'intervalles** ont la particularité de ne pas avoir de zéro naturel, de sorte que multiplier ou diviser les valeurs de cette variable n'aurait pas de sens. Un exemple de ce type de variables pourrait être la température exprimée en degrés Celsius. Avec cette variable, il est seulement possible de décrire le fait qu'il fait x degrés plus chaud ou plus froid à un endroit par rapport à un autre, mais cela n'aurait pas de sens de dire qu'il ferait deux fois plus chaud à un endroit où il y aurait 20°C par rapport à un endroit où il y aurait seulement 10°C. Il serait possible de le dire si 0°C correspondrait à "pas de température du tout", mais cela n'est évidemment pas le cas (cet exemple est repris de Danielle Navarro [-@navarroLearningStatistics2018]). En revanche, les variables pouvant être associées à une échelle de ratios présentent des valeurs qui, en plus de permettre de calculer des différences numériques qui ont un sens, peuvent être multipliées ou divisées, comme par exemple le temps de réaction à un stimulus donné.
 
 En plus de la distinction échelle d'intervalles / échelle de ratios, les variables quantitatives peuvent être considérées comme étant soit **continues**, soit **discrètes**. Les variables quantitatives continues contiennent des nombres pouvant comporter théoriquement un nombre infini de décimales (e.g., la taille, le poids, etc.). Au contraire, les variables quantitatives discrètes ne peuvent contenir théoriquement que des nombres finis (e.g., le nombre de victoires sportives au cours d’une année). Certaines variables en théorie discrètes sont cependant souvent considérées comme continues tant le nombre de valeurs théoriquement possibles pour la variable est grand, tel que pour le nombre de globules blancs mesurés dans le sang [@labreucheDifferentsTypesVariables2010]. 
 
 Les **variables  qualitatives** (aussi dites catégorielles), elles, contiennent des valeurs désignant non pas des quantités mais des modalités. Ces variables sont donc forcément discrètes. Les modalités peuvent être exprimées sous forme littérale ou numérique. Parmi les variables qualitatives, on distingue celles qui sont **nominales** et celles qui sont **ordinales**. Les variables qualitatives nominales contiennent des modalités qui ne peuvent pas être ordonnées (e.g., les couleurs, les genres, etc.). Au contraire, les variables qualitatives ordinales contiennent des modalités qui peuvent être ordonnées (e.g., les niveaux de compétition sportive : départemental ; régional ; interrégional ; national ; international). Les variables qualitatives ordinales qui prendraient des valeurs numériques pour indiquer par exemple un niveau d'expertise (e.g., 1, 2, 3, et 4) se différencient des variables quantitatives discrètes par l’absence d’information sur la distance qui sépare les nombres de cette variable [@labreucheDifferentsTypesVariables2010].
 
 ## Fixer le répertoire de travail
-Lorsque l'on souhaite réaliser l'analyse d'une base de données avec RStudio, il peut être utile et plus fonctionnel pour la suite de créer un dossier spécifique, sur l'ordinateur, où se trouveraient à la fois la base de données ainsi que toutes les créations (e.g., tableaux, figures, etc.) qui seraient produites au fur et à mesure des analyses. Une fois le dossier crée, il faut ensuite, dans RStudio, ouvrir un fichier **Script** où toutes les commandes seront écrites et enregistrables (chemin d'accès : **File > New File > R Script**). Une fois ouvert, il est possible d'enregistrer le script en appuyant sur **Ctrl+S**, en privilégiant comme emplacement le dossier où se trouve la base de données.
-La prochaine manipulation à faire est alors de **Fixer le répertoire**. L'enjeu est ici d'indiquer à RStudio un dossier à privilégier pour réaliser des importations de fichiers dans RStudio ou des exports de fichiers à partir de RStudio. Le dossier à considérer pour cela pourrait donc être celui où se trouve déjà la base de données. Plus concrètement, après avoir fait cela, dès lors que l'on voudra importer un tableau de données dans RStudio, au lieu de préciser dans la fonction d'importation tout le chemin d'accès définissant l'emplacement du fichier sur l'ordinateur, il suffira dans la fonction de mettre seulement le nom du fichier à importer. De plus, dès lors que l'on voudra exporter un tableau ou une figure crée(e) avec RStudio, l'export se fera automatiquement vers le dossier de travail en cours si rien n'est spécifié dans la fonction d'export quant à l'emplacement du document.
+Lorsque l'on souhaite réaliser l'analyse d'une base de données avec RStudio, il peut être utile et plus fonctionnel pour la suite de créer un dossier spécifique, sur l'ordinateur, relatif à son projet de travail. Ce dossier pourrait alors contenir au moins trois sous-dossiers appelés : "data" ; "out" ; et "R". L'idée ici est d'organiser tous les fichiers qui vont être utilisés et produits au cours du travail d'analyse. Le dossier "data" devrait ne contenir que les fichiers à analyser. Le dossier "out" ne devrait contenir que les fichiers qui sont exportés au cours des analyses réalisées. Et le dossier "R" ne devrait contenir que les fichiers .R qui servent à écrire et activer le code nécessaire aux analyses.
 
-Pour fixer le répertoire de travail, il existe plusieurs manières de faire. Une manière relativement simple de procéder est la suivante. Suivre le chemin d'accès suivant à partir de RStudio : **Session > Set Working Directory > Choose Directory...**. (Ou appuyer sur **Ctr+Shift+H**.). Puis, sélectionner le dossier où se trouve la base de données. Enfin, cliquer sur **Open**. Une commmande apparaît alors dans la Console. Le répertoire vient donc d'être fixé. Pour ne pas devoir faire la même manipulation à chaque nouvelle ouverture de RStudio, il est possible de copier cette commande qui est apparue dans la Console (ne pas copier le symbole `>`) et de la coller au début du script. On pourra noter que cette commande contient la fonction `setwd()`, et qu'à l'intérieur se trouve le chemin d'accès au répertoire de travail qui est écrit entre des guillemets.
+Une fois la structure de travail créée, il est préférable de faire en sorte que l'emplacement sur le PC du dossier du projet en cours soit le point de départ des chemins d'accès qui serviront à importer des données dans RStudio ou à exporter des fichiers à partir de RStudio. Pour faire cela, il faut créer un fichier .Rproj dans le dossier général du projet. Pour créer ce fichier, il suffit de suivre, dans RStudio, le chemin suivant : **Fichier > New Project... > Existing Directory > Sélectionner le chemin d'accès au dossier souhaité > Cliquer sur Create Project**. Un grand avantage de cette procédure est que cela permet de ne pas écrire, dans le script, le chemin d'accès complet d'un fichier sur son PC (de la racine au fichier lui-même) et ainsi de ne pas révéler dans le script des informations qui sont relativement privées. Cette solution est donc celle à préférer, surtout lorsqu'on envisage de partager son script avec d'autres collaborateurs qui risqueraient qui plus est d'être gênés par cette ligne de code d'accès au fichier qui ne leur servirait à rien, car le chemin d'accès au dossier de travail d'un collègue sera très probablement différent de celui des autres collaborateurs.
 
-Une seconde manière de procéder est de créer un fichier .Rproj dans le dossier crée au préalable pour faire ses analyses et qui contient donc la base de données. Pour créer ce fichier, il suffit de suivre, dans RStudio, le chemin suivant : **Fichier > New Project... > Existing Directory > Sélectionner le chemin d'accès au dossier souhaité > Cliquer sur Create Project**. Ainsi, à chaque fois que l'on souhaitera travailler avec les fichiers du dossier dans lequel le fichier .Rproj se trouve, il suffira de double-cliquer sur ce fichier pour ouvrir une session R qui  prendra automatiquement pour répertoire de travail le dossier dans lequel le fichier .Rproj se trouve. Le grand avantage de cette procédure est que cela permet de ne pas écrire le chemin d'accès complet au dossier de travail et ainsi de ne pas révéler dans le script des informations qui sont relativement privées. Cette deuxième solution est donc celle à préférer, surtout lorsqu'on envisage de partager son script avec d'autres collaborateurs qui risqueraient qui plus est d'être gênés par cette ligne de code d'accès au dossier qui ne leur servirait à rien, car le chemin d'accès au dossier de travail d'un collègue sera très probablement différent de celui des autres collaborateurs.
+Une fois le projet bien configuré, il faut ensuite, dans RStudio, ouvrir un fichier **Script** où toutes les commandes seront écrites et enregistrables (chemin d'accès : **File > New File > R Script**). Une fois ouvert, il est possible d'enregistrer le script en appuyant sur **Ctrl+S**. 
 
 ## Importer la base de données
 Il existe plusieurs fonctions pour importer une base de données dans RStudio. La fonction `read_csv2()` du package `readr` permet d'importer par exemple des fichiers .csv qui, structurellement, séparent les données avec des points-virgules. C'est généralement le type de structure de fichier .csv que l'on obtient après avoir réalisé un export .csv à partir du logiciel Excel. Pour illustrer ici l'importation d'une base de données, il est d'abord possible d'en créer une dans le répertoire de travail actif, cela en exportant un tableau de données qui existe déjà avec le logiciel R. Le logiciel R dispose en effet d'un grand nombre de jeux de données différents que tout utilisateur peut consulter et manipuler. L'ensemble des jeux de données disponibles suite à l'installation par défaut de R est visible en lançant dans la Console la commande `data()`. Au fur et à mesure de la découverte des analyses montrées dans ce document, différents jeux de données seront utilisés en fonction des besoins. Pour le moment, il est possible d'utiliser le jeu de données qui s'appelle `iris`. Même si on ne le voit pas dans la fenêtre Environnement de RStudio, il est bel et bien là, disponible, prêt à être utilisé. Afin d'exporter ce jeu de données dans le répertoire de travail fixé au préalable, il est possible d'utiliser la fonction `write_csv2()` du package `readr`. Pour cela, il suffit d'utiliser le nom du jeu de données, puis d'indiquer entre guillemets le nom que l'on veut que le fichier exporté ait, tout en n'oubliant pas de mettre l'extension .csv à la fin du nom pour indiquer le format d'export, comme ci-dessous. 
 
 ```{r write_csv2, eval = FALSE}
-write_csv2(x = iris, file = "iris.csv")
+library(readr)
+write_csv2(x = iris, file = "out/iris.csv")
 ```
 
-Si la commande ci-dessus est activée dans RStudio et que l'on jette ensuite un oeil dans le répertoire de travail, il est alors possible d'y voir un nouveau fichier .csv du nom de `iris`. Maintenant qu'il existe une base de données dans le répertoire de travail actif, il est possible de concrétiser la procédure de son importation dans RStudio. Comme évoqué plus tôt dans ce document, il est intéressant, et en réalité nécessaire, d'assigner cette base de données à un nom pour pouvoir plus facilement manipuler le jeu de données par la suite. Ici, nous allons tout simplement associer ce nouvel objet au nom `iris`, tel que montré ci-dessous.
+Si la commande ci-dessus est activée dans RStudio et que l'on jette ensuite un oeil dans le répertoire de travail (dossier "out"), il est alors possible d'y voir un nouveau fichier .csv du nom de `iris`. Maintenant qu'il existe une base de données dans le répertoire de travail actif, il est possible de concrétiser la procédure de son importation dans RStudio. Comme évoqué plus tôt dans ce document, il est intéressant, et en réalité nécessaire, d'assigner cette base de données à un nom pour pouvoir plus facilement manipuler le jeu de données par la suite. Ici, nous allons tout simplement associer ce nouvel objet au nom `iris`, tel que montré ci-dessous.
 
 ```{r read_csv2}
-iris <- read_csv2(file = "iris.csv")
+iris <- read_csv2(file = "out/iris.csv")
 ```
 
 Suite à l'activation de la commande,  RStudio nous montre un message d'information sur la manière dont la fonction `read_csv2()` a configuré le jeu de données importé. Ce message apparaît car la fonction importe le jeu de données non pas sous la forme d'un *data frame* comme nous avons pu en créer auparavant, mais sous la forme d'un *tibble*, qui désigne un format de tableau que l'on ne peut obtenir qu'en passant par le biais de fonctions associées à l'ensemble de packages `tidyverse`. Pour comprendre l'intérêt d'un *tibble*, revenons au format classique d'un *data frame* à l'aide de la fonction `as.data.frame()`.
@@ -121,6 +121,7 @@ iris
 RStudio nous montre tout le jeu de données dans la Console, ce qui n'est pas très utile, d'autant plus que l'on peut perdre de vue la première ligne de titre lorsque le jeu de données contient beaucoup de lignes. Retournons donc au format *tibble* grâce à la fonction `as_tibble()` du package `tibble`, et voyons ce qu'il se passe lorsqu'on lance à nouveau le nom `iris` dans la Console.
 
 ```{r as_tibble}
+library(tibble)
 iris <- as_tibble(x = iris)
 iris
 ```
@@ -180,6 +181,7 @@ str(iris)
 Cette stratégie de modification du type de la variable peut convenir lorsqu'il y a peu de variables à modifier. Cependant, lorsque la liste s'allonge, il peut être plus lisible, en matière de code, de fonctionner avec le symbole `%>%` (qu'on appelle *pipe*), et la fonction `mutate()` du package `dplyr`.
 
 ```{r trans type var iris}
+library(dplyr)
 iris <- 
   iris %>% 
   mutate(Sepal.Length = as.numeric(x = Sepal.Length),
@@ -294,10 +296,13 @@ iris2
 La fonction `pivot_wider()` permet alors de mettre en colonnes les valeurs des variables sélectionnées pour chacune des trois modalités de la variable `Species`.
 
 ```{r pivot_wider}
+library(tidyr)
 iris3 <- 
   iris2 %>% 
-  pivot_wider(names_from = Species, 
-              values_from = Sepal.Length : Petal.Width)
+  pivot_wider(
+    names_from = Species,
+    values_from = Sepal.Length : Petal.Width
+    )
 iris3
 ```
 
@@ -307,13 +312,16 @@ Dans une situation inverse à celle que nous venons de voir, nous pourrions avoi
 
 ```{r pivot_longer}
   iris3 %>% 
-  dplyr::select(id, 
-         Sepal.Length_setosa, 
-         Sepal.Length_versicolor, 
-         Sepal.Length_virginica) %>%
-  pivot_longer(cols = c(-id), 
-               names_to = "Species", 
-               values_to = "Sepal_len")
+  dplyr::select(
+    id, 
+    Sepal.Length_setosa, 
+    Sepal.Length_versicolor, 
+    Sepal.Length_virginica) %>%
+  pivot_longer(
+    cols = c(-id), 
+    names_to = "Species",
+    values_to = "Sepal_len"
+    )
 ```
 
 Dans la fonction `pivot_longer()` ci-dessus, nous avons indiqué à l'aide de l'argument `cols` et de la fonction `c()` avec le signe `-` la colonne que nous ne voulions pas utiliser avec la fonction (c'était plus rapide que d'indiquer dans la fonction `c()` les trois colonnes à utiliser). L'argument `names_to` nous a permis de donner un nom à la variable qualitative qui comporte à présent les modalités associées aux valeurs numériques, et l'argument `values_to` nous a permis de donner un nom à la colonne où se trouvent maintenant les valeurs numériques.
@@ -322,9 +330,11 @@ Lorsque l'on veut utiliser la fonction `pivot_longer()` sur plusieurs colonnes q
 
 ```{r pivot_longer 2}
   iris3 %>% 
-  pivot_longer(cols = c(Sepal.Length_setosa : Petal.Width_virginica), 
-               names_to = c(".value", "Species"),
-               names_sep = "_")
+  pivot_longer(
+    cols = c(Sepal.Length_setosa : Petal.Width_virginica), 
+    names_to = c(".value", "Species"),
+    names_sep = "_"
+    )
 ```
 
 Dans le code montré ci-dessus, l'argument `cols` a permis de sélectionner toutes les colonnes situées à droite de la colonne `id`, l'argument `names_to` a permis d'indiquer qu'il faut garder des colonnes spécifiques  nommées avec le premier morceau du nom des variables antérieures (le mot `".value"` permet cela), et le mot `"Species"` a permis de nommer la colonne avec les espèces d'iris qui étaient les seconds morceaux des noms des variables antérieures.
