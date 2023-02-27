@@ -131,7 +131,7 @@ iris$Sepal.Length[3] <- 4.7
 
 On remarque ainsi qu'au-delà de prendre connaissance de la forme de la distribution, passer par ces étapes graphiques permet aussi de s'assurer qu'il n'y a pas eu d'erreur lors de la saisie des données dans la base (du moins, pas d'erreur visible et qui risquerait d'impacter grandement les calculs futurs). **Passer par l'analyse graphique est donc recommandé avant de pouvoir se fier aux résultats numériques que l'on pourrait calculer par la suite, tels que les indices statistiques qui permettent de résumer numériquement une variable.** 
 
-À noter que si l'histogramme et la boîte à moustaches sont des graphiques classiques pour étudier la distribution d'une variable quantitative, il est aussi possible avec R de créer ce qu'on appelle un *raincloud plot*, tel qu'illustré sur la Figure \@ref(fig:raincloudUnivar). Un [post du blog de Cédric Scherer](https://www.cedricscherer.com/2021/06/06/visualizing-distributions-with-raincloud-plots-and-how-to-create-them-with-ggplot2/) fournit une description très intéressante et riche de l'intérêt de ce type de graphique. Le *raincloud plot* se compose de trois éléments (cf. figure ci-après) : 
+À noter que si l'histogramme et la boîte à moustaches sont des graphiques classiques pour étudier la distribution d'une variable quantitative, il est aussi possible avec R de créer ce qu'on appelle un *raincloud plot*, tel qu'illustré sur la Figure \@ref(fig:raincloudUnivar) grâce aux package `ggrain` et à la fonction `geom_rain()`. Un [post du blog de Cédric Scherer](https://www.cedricscherer.com/2021/06/06/visualizing-distributions-with-raincloud-plots-and-how-to-create-them-with-ggplot2/) fournit une description très intéressante et riche de l'intérêt de ce type de graphique. Le *raincloud plot* se compose de trois éléments (cf. figure ci-après) : 
 
 * Une aire sous la courbe représentative de la densité de probabilité (*the cloud*), qui représente une estimation de la fréquence d'apparition d'une valeur donnée dans l'échantillon étudié. Cet élément est intéressant pour prendre pleinement conscience de la forme de la distribution. Attention cependant, car les formes des aires et les idées qu’elles donnent des distributions dans la population d’intérêt dépendent beaucoup du nombre d’observations disponibles, et leur utilisation pourrait donc se discuter en présence de peu d’observations.
 * Une boîte à moustaches, qui permet de se faire une idée résumée relativement robuste des distributions dans la population d'intérêt (i.e., insensible aux *outliers* et davantage comparable avec d'autres études) ; selon les cas, d'autres statistiques, comme les moyennes et les écarts-types, peuvent être utilisées à la place ou en plus des boîtes à moustaches [@allenRaincloudPlotsMultiplatform2019].
@@ -140,77 +140,13 @@ On remarque ainsi qu'au-delà de prendre connaissance de la forme de la distribu
 Parce qu'ils montrent les données individuelles, les *raincloud plots* vont dans le sens du propos de Weissgerber et al. [-@weissgerberBarLineGraphs2015] qui militent pour la disparition des graphiques en forme de simples bâtons de dynamite, lesquels ayant été souvent utilisés par le passé pour montrer des moyennes et écart-types dans les études. Le problème de ces graphiques en forme de bâtons de dynamite est qu'ils peuvent induire en erreur quant à la réelle forme de la distribution et ils limitent les possibilités du lecteur de juger de la pertinence des choix d'analyses inférentielles qui seraient faits par la suite. 
 
 ```{r, raincloudUnivar, fig.cap="Exemple de raincloud plot", out.width='90%'}
+library(ggrain)
 
-# Code modifié à partir de https://www.cedricscherer.com/2021/06/06/visualizing
-# -distributions-with-raincloud-plots-and-how-to-create-them-with-ggplot2/
-
-library(ggdist)
-library(gghalves)
-
-ggplot(data = iris, aes(x = "", y = Sepal.Length)) + 
-  ggdist::stat_halfeye(
-    ## Ajuste le lissage de la courbe représentative de la densité de 
-    ## probabilité
-    adjust = .5, 
-    ## Ajuste la hauteur de l'aire située sous la courbe représentative 
-    ## de la densité de probabilité
-    width = .6, 
-    .width = 0, 
-    point_colour = NA
-    ) + 
-  geom_boxplot(
-    width = .15, 
-    outlier.shape = NA
-  ) +
-  gghalves::geom_half_point(
-    side = "l", 
-    range_scale = .4, 
-    alpha = .3,
-    transformation = position_jitter(seed = 123)
-  ) +
-  coord_flip(xlim = c(1.2, NA)) 
+ggplot(data = iris, aes(1, Sepal.Length)) +
+  geom_rain(alpha = .3, fill = "grey") +
+  coord_flip(xlim = c(0.9, 1.5)) 
 
 ```
-
-```{r, echo = FALSE, results = FALSE}
-# Buidling function for future plots
-
-rain_cloud <- function(data, x, y){
-require(ggdist)
-require(gghalves)
-
- ggplot(data = data, aes(x = {{x}}, y = {{y}})) + 
-  ggdist::stat_halfeye(
-    ## Ajuste le lissage de la courbe représentative de la densité de probabilité
-    adjust = .5, 
-    ## Ajuste l'aire située sous la courbe représentative de la densité de probabilité
-    width = .6, 
-    .width = 0, 
-    point_colour = NA
-    ) + 
-  geom_boxplot(
-    width = .1, 
-    outlier.shape = NA
-  ) +
-  gghalves::geom_half_point(
-    side = "l", 
-    range_scale = .4, 
-    alpha = .2,
-    transformation = position_jitter(seed = 123)
-  ) +
-  coord_flip(xlim = c(1.2, NA)) +
-  theme(axis.text = element_blank(),
-         axis.title = element_blank(),
-         axis.ticks = element_blank()
-         )
-}
-```
-
-Lorsqu'on regarde le code ci-dessus qui a permis de créer le *raincould plot*, on remarque l'arrivée de deux nouveaux packages : `ggdist` et `gghalves`. Ces packages doivent être installés et chargés avant de pouvoir être utilisés. Le package `ggdist` est utilisé avec la fonction `stat_halfeye()`, qui sert à montrer sur la figure ci-dessus l'aire grise sous la courbe représentative de la densité de probabilité. Plus cette aire est grande au niveau d'un intervalle de valeurs donné, plus il est probable de rencontrer les valeurs concernées lorsqu'on prend au hasard des observations du jeu de données. Plusieurs arguments peuvent en réalité servir à calculer la courbe représentative de la densité de probabilité et finalement modifier sa forme et celle de l'aire qu'il y a en-dessous. Parmi eux, l'argument `adjust` de la fonction `stat_halfeye()` sert en quelque sorte à ajuster le lissage de la courbe représentative de la densité de probabilité : plus sa valeur sera élevée, plus la courbe sera lissée. 
-
-Pour montrer les données individuelles sans risquer qu’elles ne se superposent de trop, on a utilisé la fonction `geom_half_point()` du package `gghalves`, l’argument `transformation`, et la fonction `position_jitter()`. À l’intérieur de la fonction `position_jitter()`, l’argument `seed` (la graine en français) désigne le nombre sur lequel se base l’ordinateur pour générer un résultat pseudo-aléatoire. Quand on regarde le graphique ci-dessus, les données individuelles apparaissent décalées aléatoirement sur le plan vertical. Cet effet aléatoire est l’intérêt même d’une fonction dite "jitter", et cet effet est en réalité prédéfini de telle sorte que si on utilise toujours le même numéro de graine (`seed`), alors on obtiendra toujours le même effet aléatoire sur le graphique.
-
-Les autres éléments de code sont là pour des considérations esthétiques et ne seront pas décrits ici. Il reste bien sûr possible de lire l'aide associée à ces fonctions pour gagner en maîtrise de ce type de graphique.
 
 Lors de l'analyse de données, différentes formes typiques de distribution peuvent être rencontrées, notamment des formes **gaussiennes**, **asymétriques**, **leptocurtiques**, et **platycurtiques** [@dartCommentDecrireDistribution2003]. Ces formes sont illustrées sur la Figure \@ref(fig:variousDistributions). Les formes gaussiennes sont observées en présence de variables suivant ce qu'on appelle une **loi normale**. Très souvent, on associe une distribution gaussienne, et donc une loi normale, à une distribution en forme de cloche, bien que  l'analogie à la cloche pourrait se discuter. Les formes asymétriques traduisent le fait que la majorité des observations sont concentrées sur une extrémité de l'intervalle des valeurs possibles, et qu'il existe des observations, non majoritaires, avec des valeurs pouvant être très éloignées de la majorité des données, mais seulement d'un seul côté de la distribution. Enfin, les formes leptocurtiques et platycurtiques sont appelées ainsi par comparaison à la forme gaussienne. En présence d'une forme leptocurtique, la distribution s'avère plus pointue, avec des queues (qui sont les extrémités de la distribution) plus longues qu'avec une forme gaussienne. Dans le cadre d'une distribution platycurtique, la distribution est plus aplatie, avec des queues plus courtes qu'avec une forme gaussienne [@dartCommentDecrireDistribution2003]. La distribution uniforme est un cas particulier de distribution platycurtique, et c'est cette distribution qui est en réalité montrée sur la Figure \@ref(fig:variousDistributions).
 
