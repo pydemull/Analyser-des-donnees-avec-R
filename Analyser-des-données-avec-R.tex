@@ -138,7 +138,7 @@
 
 \title{Analyser des données avec R}
 \author{Pierre-Yves de Müllenheim}
-\date{2023-03-12}
+\date{2023-09-10}
 
 \begin{document}
 \maketitle
@@ -210,9 +210,9 @@ R et RStudio sont deux logiciels en libre accès sur internet. Le logiciel R peu
 \item
   Aller sur le site \url{https://cran.rstudio.com}.
 \item
-  Sur la page web qui s'affiche, l'encart du haut \textbf{Download and Install R} montre les différents liens de téléchargement possibles selon le système d'exploitation utilisé. Cliquer sur le lien \textbf{Download R for (Mac) OS X}.
+  Sur la page web qui s'affiche, l'encart du haut \textbf{Download and Install R} montre les différents liens de téléchargement possibles selon le système d'exploitation utilisé. Cliquer sur le lien \textbf{Download R for macOS}.
 \item
-  Dans la nouvelle fenêtre qui s'ouvre, cliquer sur le lien qui correspond à votre version OS X (le clic entraînera le début du téléchargement du fichier).
+  Dans la nouvelle fenêtre qui s'ouvre, cliquer sur le lien qui correspond à votre version OS (le clic entraînera le début du téléchargement du fichier).
 \item
   Sur le Mac, chercher dans le dossier \textbf{Téléchargements} le fichier téléchargé.
 \item
@@ -229,13 +229,13 @@ R et RStudio sont deux logiciels en libre accès sur internet. Le logiciel R peu
 \begin{itemize}
 \tightlist
 \item
-  Aller sur le site \url{https://www.rstudio.com}.
+  Aller sur le site \url{https://posit.co/}.
 \item
-  En haut de la page d'accueil, mettre le curseur de la souris sur \textbf{Products}, puis, dans le menu déroulant qui apparaît, cliquer sur \textbf{RStudio}.
+  En haut à droite de la page d'accueil, cliquer sur le bouton \textbf{DOWNLOAD RSTUDIO}.
 \item
-  Dans la nouvelle fenêtre qui vient de s'ouvrir, faire défiler la page vers le bas jusqu'à voir apparaître l'option de téléchargement \textbf{DOWNLOAD RSTUDIO DESKTOP}, puis cliquer dessus.
+  Dans la nouvelle fenêtre qui vient de s'ouvrir, faire défiler la page vers le bas jusqu'à aller dans la section RStudio Desktop puis cliquer sur le bouton \textbf{DOWNLOAD RSTUDIO}.
 \item
-  Dans la nouvelle fenêtre qui vient de s'ouvrir, faire défiler la page vers le bas puis cliquer sur l'option \textbf{DOWNLOAD} dans la colonne dédiée au téléchargement de RStudio Desktop. Cliquer alors sur le lien associé au système d'exploitation utilisé.
+  Dans la nouvelle fenêtre qui vient de s'ouvrir, cliquer sur le bouton \textbf{DOWNLOAD RSTUDIO DESKTOP FOR WINDOWS} si vous avez une machine Windows. Si vous avez un MAC et que le bouton n'est pas mis à jour automatiquement pour votre MAC, alors il faut faire défiler un peu la page vers le bas pour ensuite cliquer sur le lien de téléchargement de RStudio adapté à votre version de système d'exploitation.
 \item
   \textbf{Sur WINDOWS :} Exécuter le fichier s'il est proposé de le faire. Si le clic entraîne automatiquement le téléchargement du fichier, retrouver alors ce fichier sur le PC (une fois son enregistrement terminé), puis exécuter le fichier et suivre la procédure d'installation par défaut. Une fois le logiciel installé, retrouver le fichier d'exécution du logiciel sur le PC (chemin d'accès possible : \textbf{Ordinateur \textgreater{} Windows (C:) \textgreater{} Programmes \textgreater{} RStudio \textgreater{} bin \textgreater{} rstudio.exe}). Créer un raccourci pour le fichier \textbf{rstudio.exe} (clic droit sur le fichier \textgreater{} Créer un raccourci) et mettre le raccourci sur le bureau du PC. Double-cliquer sur l'icône RStudio afin de vérifier si l'ouverture s'effectue correctement.
 \item
@@ -303,9 +303,11 @@ De manière encore plus élaborée, R permet de créer des tableaux de données 
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{), }
-           \DataTypeTok{y =} \KeywordTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{9}\NormalTok{), }
-           \DataTypeTok{z =} \KeywordTok{c}\NormalTok{(}\StringTok{"a"}\NormalTok{, }\StringTok{"b"}\NormalTok{, }\StringTok{"c"}\NormalTok{, }\StringTok{"d"}\NormalTok{))}
+\KeywordTok{data.frame}\NormalTok{(}
+  \DataTypeTok{x =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{),}
+  \DataTypeTok{y =} \KeywordTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{9}\NormalTok{),}
+  \DataTypeTok{z =} \KeywordTok{c}\NormalTok{(}\StringTok{"a"}\NormalTok{, }\StringTok{"b"}\NormalTok{, }\StringTok{"c"}\NormalTok{, }\StringTok{"d"}\NormalTok{)}
+\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -457,7 +459,7 @@ ou encore des objets contenant un tableau de données, en créant par exemple un
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{df}\OperatorTok{$}\NormalTok{IMC <-}\StringTok{ }\NormalTok{df}\OperatorTok{$}\NormalTok{Poids }\OperatorTok{/}\StringTok{ }\NormalTok{(df}\OperatorTok{$}\NormalTok{Taille}\OperatorTok{/}\DecValTok{100}\NormalTok{) }\OperatorTok{^}\StringTok{ }\DecValTok{2}
+\NormalTok{df}\OperatorTok{$}\NormalTok{IMC <-}\StringTok{ }\NormalTok{df}\OperatorTok{$}\NormalTok{Poids }\OperatorTok{/}\StringTok{ }\NormalTok{(df}\OperatorTok{$}\NormalTok{Taille }\OperatorTok{/}\StringTok{ }\DecValTok{100}\NormalTok{) }\OperatorTok{^}\StringTok{ }\DecValTok{2}
 \NormalTok{df}
 \end{Highlighting}
 \end{Shaded}
@@ -588,7 +590,7 @@ Au fur et à mesure que l'on écrit un script, une bonne pratique consiste à r�
 \begin{Highlighting}[]
 \CommentTok{# Titre de section 1 -------------------------------------------}
 \CommentTok{## Sous-titre 1}
-  \CommentTok{# Commentaire 1}
+\CommentTok{## Sous-titre 2}
 \end{Highlighting}
 \end{Shaded}
 
@@ -624,7 +626,7 @@ Au fur et à mesure que l'on écrit un script, une bonne pratique consiste à r�
 \item
   Les noms et les objets associés apparaissent dans la fenêtre \textbf{Environnement}.
 \item
-  Pour écrire des titres et des commentaires dans un script, utiliser un \texttt{\#} avant l'écriture du code.
+  Pour écrire des titres et des commentaires dans un script, utiliser un ou plusieurs \texttt{\#} avant l'écriture du code.
 \item
   Dans la Console, le symbole \texttt{\textgreater{}} signifie que le logiciel est prêt à lancer une nouvelle instruction. Le symbole \texttt{+} indique que l'instruction initialement lancée est incomplète. Mieux vaut alors faire \textbf{Echap}, modifier le code, et recommencer.
 \end{itemize}
@@ -653,6 +655,14 @@ Très souvent, pour répondre à une question, il est nécessaire d'acquérir pl
 \begin{longtable}[c]{|p{0.42in}|p{0.70in}|p{0.63in}|p{1.19in}|p{0.77in}}
 
 \caption{\textcolor[HTML]{000000}{\fontsize{11}{13}\selectfont{Exemple\ de\ base\ de\ données}}}\label{tab:database}\\
+
+\hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}-}
+
+\multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 0.42in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{id}}}} & \multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 0.7in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{genre}}}} & \multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 0.63in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{taille}}}} & \multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 1.19in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{nb\_victoires}}}} & \multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 0.77in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{niveau}}}} \\
+
+\noalign{\global\arrayrulewidth 0pt}\arrayrulecolor[HTML]{000000}
+
+\hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}-}\endfirsthead \caption[]{\textcolor[HTML]{000000}{\fontsize{11}{13}\selectfont{Exemple\ de\ base\ de\ données}}}\label{tab:database}\\
 
 \hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}-}
 
@@ -756,6 +766,14 @@ La base de données prend donc la forme d'un tableau. Plusieurs principes sont �
 
 \noalign{\global\arrayrulewidth 0pt}\arrayrulecolor[HTML]{000000}
 
+\hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}-}\endfirsthead \caption[]{Organisation\ d'une\ base\ de\ données\ avec\ des\ mesures\ répétées}\label{tab:databasePlusObs}\\
+
+\hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}-}
+
+\multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 0.42in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{id}}}} & \multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 0.63in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{taille}}}} & \multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 1.12in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{temps\_eval}}}} & \multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 0.69in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{poids}}}} \\
+
+\noalign{\global\arrayrulewidth 0pt}\arrayrulecolor[HTML]{000000}
+
 \hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}-}\endhead
 
 
@@ -821,6 +839,14 @@ En principe, les données de la base qui ont été obtenues selon la même proc�
 \begin{longtable}[c]{|p{1.17in}|p{0.95in}|p{0.89in}}
 
 \caption{Les\ différents\ types\ de\ variables}\label{tab:typesVariables}\\
+
+\hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}-}
+
+\multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\raggedright}m{\dimexpr 1.17in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Type}}}} & \multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 0.95in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Continue}}}} & \multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 0.89in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Discrète}}}} \\
+
+\noalign{\global\arrayrulewidth 0pt}\arrayrulecolor[HTML]{000000}
+
+\hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}-}\endfirsthead \caption[]{Les\ différents\ types\ de\ variables}\label{tab:typesVariables}\\
 
 \hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}-}
 
@@ -1121,7 +1147,7 @@ RStudio nous montre tout le jeu de données dans la Console, ce qui n'est pas tr
 ##  8          5           3.4          1.5         0.2 setosa 
 ##  9          4.4         2.9          1.4         0.2 setosa 
 ## 10          4.9         3.1          1.5         0.1 setosa 
-## # ... with 140 more rows
+## # i 140 more rows
 \end{verbatim}
 
 Cette fois, RStudio n'affiche que les premières lignes du jeu de données, et il fournit en plus de cela des informations quant aux types de variables présentes dans le jeu de données, en-dessous de la ligne de titres. Maintenant que la base de données a été importée, il ne reste plus qu'à voir différentes fonctions pour pouvoir configurer la base de données telle qu'on la voudrait pour réaliser confortablement les analyses.
@@ -1270,7 +1296,7 @@ Certains jeux de données peuvent être très larges, c'est-à-dire qu'ils peuve
 ##  8          1.5         0.2 setosa 
 ##  9          1.4         0.2 setosa 
 ## 10          1.5         0.1 setosa 
-## # ... with 140 more rows
+## # i 140 more rows
 \end{verbatim}
 
 \hypertarget{renommer-des-variables-avec-rename}{%
@@ -1303,7 +1329,7 @@ Il est possible que certains titres de variables ne soient pas clairs ou trop lo
 ##  8        5         3.4        1.5       0.2 setosa 
 ##  9        4.4       2.9        1.4       0.2 setosa 
 ## 10        4.9       3.1        1.5       0.1 setosa 
-## # ... with 140 more rows
+## # i 140 more rows
 \end{verbatim}
 
 \hypertarget{cruxe9er-des-variables-avec-mutate}{%
@@ -1321,20 +1347,20 @@ Certaines analyses peuvent nécessiter d'ajouter des variables à partir de calc
 
 \begin{verbatim}
 ## # A tibble: 150 x 7
-##    Sepal.Length Sepal.Width Petal.Le~1 Petal~2 Species ratio~3 ratio~4
-##           <dbl>       <dbl>      <dbl>   <dbl> <fct>     <dbl>   <dbl>
-##  1          5.1         3.5        1.4     0.2 setosa     1.46    7   
-##  2          4.9         3          1.4     0.2 setosa     1.63    7   
-##  3          4.7         3.2        1.3     0.2 setosa     1.47    6.5 
-##  4          4.6         3.1        1.5     0.2 setosa     1.48    7.5 
-##  5          5           3.6        1.4     0.2 setosa     1.39    7   
-##  6          5.4         3.9        1.7     0.4 setosa     1.38    4.25
-##  7          4.6         3.4        1.4     0.3 setosa     1.35    4.67
-##  8          5           3.4        1.5     0.2 setosa     1.47    7.5 
-##  9          4.4         2.9        1.4     0.2 setosa     1.52    7   
-## 10          4.9         3.1        1.5     0.1 setosa     1.58   15   
-## # ... with 140 more rows, and abbreviated variable names
-## #   1: Petal.Length, 2: Petal.Width, 3: ratio_sepal, 4: ratio_petal
+##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+##           <dbl>       <dbl>        <dbl>       <dbl> <fct>  
+##  1          5.1         3.5          1.4         0.2 setosa 
+##  2          4.9         3            1.4         0.2 setosa 
+##  3          4.7         3.2          1.3         0.2 setosa 
+##  4          4.6         3.1          1.5         0.2 setosa 
+##  5          5           3.6          1.4         0.2 setosa 
+##  6          5.4         3.9          1.7         0.4 setosa 
+##  7          4.6         3.4          1.4         0.3 setosa 
+##  8          5           3.4          1.5         0.2 setosa 
+##  9          4.4         2.9          1.4         0.2 setosa 
+## 10          4.9         3.1          1.5         0.1 setosa 
+## # i 140 more rows
+## # i 2 more variables: ratio_sepal <dbl>, ratio_petal <dbl>
 \end{verbatim}
 
 \hypertarget{suxe9lectionner-des-lignes-avec-filter}{%
@@ -1357,6 +1383,14 @@ En fonction des besoins de l'analyse, on peut vouloir ne retenir que certaines l
 \begin{longtable}[c]{|p{1.49in}|p{1.02in}}
 
 \caption{Les\ opérateurs\ utilisables\ avec\ la\ fonction\ filter()}\label{tab:SymbolsFilter}\\
+
+\hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}-}
+
+\multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\raggedright}m{\dimexpr 1.49in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Opération}}}} & \multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 1.02in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Opérateur}}}} \\
+
+\noalign{\global\arrayrulewidth 0pt}\arrayrulecolor[HTML]{000000}
+
+\hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}-}\endfirsthead \caption[]{Les\ opérateurs\ utilisables\ avec\ la\ fonction\ filter()}\label{tab:SymbolsFilter}\\
 
 \hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}-}
 
@@ -1436,7 +1470,7 @@ De plus, dans la configuration du code, ces opérateurs peuvent être couplés �
 ##  8          4.9         3.1          1.5         0.1 setosa 
 ##  9          4.8         3.4          1.6         0.2 setosa 
 ## 10          4.8         3            1.4         0.1 setosa 
-## # ... with 19 more rows
+## # i 19 more rows
 \end{verbatim}
 
 \hypertarget{ruxe9ordonner-les-lignes-avec-arrange}{%
@@ -1465,7 +1499,7 @@ On peut vouloir trier les lignes du jeu de données selon un certain ordre, en f
 ##  8          4.6         3.6          1           0.2 setosa 
 ##  9          4.6         3.2          1.4         0.2 setosa 
 ## 10          4.7         3.2          1.3         0.2 setosa 
-## # ... with 140 more rows
+## # i 140 more rows
 \end{verbatim}
 
 \hypertarget{ruxe9sumer-des-variables-avec-group_by-et-summarize}{%
@@ -1550,7 +1584,7 @@ Il convient de respecter certaines règles de base lors de la conception d'une b
 ##  8     3 versicolor          6.9         3.1          4.9         1.5
 ##  9     3 virginica           7.1         3            5.9         2.1
 ## 10     4 setosa              4.6         3.1          1.5         0.2
-## # ... with 140 more rows
+## # i 140 more rows
 \end{verbatim}
 
 La fonction \texttt{pivot\_wider()} permet alors de mettre en colonnes les valeurs des variables sélectionnées pour chacune des trois modalités de la variable \texttt{Species}.
@@ -1570,25 +1604,25 @@ La fonction \texttt{pivot\_wider()} permet alors de mettre en colonnes les valeu
 
 \begin{verbatim}
 ## # A tibble: 50 x 13
-##       id Sepal.Lengt~1 Sepal~2 Sepal~3 Sepal~4 Sepal~5 Sepal~6 Petal~7
-##    <int>         <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
-##  1     1           5.1     7       6.3     3.5     3.2     3.3     1.4
-##  2     2           4.9     6.4     5.8     3       3.2     2.7     1.4
-##  3     3           4.7     6.9     7.1     3.2     3.1     3       1.3
-##  4     4           4.6     5.5     6.3     3.1     2.3     2.9     1.5
-##  5     5           5       6.5     6.5     3.6     2.8     3       1.4
-##  6     6           5.4     5.7     7.6     3.9     2.8     3       1.7
-##  7     7           4.6     6.3     4.9     3.4     3.3     2.5     1.4
-##  8     8           5       4.9     7.3     3.4     2.4     2.9     1.5
-##  9     9           4.4     6.6     6.7     2.9     2.9     2.5     1.4
-## 10    10           4.9     5.2     7.2     3.1     2.7     3.6     1.5
-## # ... with 40 more rows, 5 more variables:
+##       id Sepal.Length_setosa Sepal.Length_versicolor
+##    <int>               <dbl>                   <dbl>
+##  1     1                 5.1                     7  
+##  2     2                 4.9                     6.4
+##  3     3                 4.7                     6.9
+##  4     4                 4.6                     5.5
+##  5     5                 5                       6.5
+##  6     6                 5.4                     5.7
+##  7     7                 4.6                     6.3
+##  8     8                 5                       4.9
+##  9     9                 4.4                     6.6
+## 10    10                 4.9                     5.2
+## # i 40 more rows
+## # i 10 more variables: Sepal.Length_virginica <dbl>,
+## #   Sepal.Width_setosa <dbl>, Sepal.Width_versicolor <dbl>,
+## #   Sepal.Width_virginica <dbl>, Petal.Length_setosa <dbl>,
 ## #   Petal.Length_versicolor <dbl>, Petal.Length_virginica <dbl>,
 ## #   Petal.Width_setosa <dbl>, Petal.Width_versicolor <dbl>,
-## #   Petal.Width_virginica <dbl>, and abbreviated variable names
-## #   1: Sepal.Length_setosa, 2: Sepal.Length_versicolor,
-## #   3: Sepal.Length_virginica, 4: Sepal.Width_setosa,
-## #   5: Sepal.Width_versicolor, 6: Sepal.Width_virginica, ...
+## #   Petal.Width_virginica <dbl>
 \end{verbatim}
 
 L'argument \texttt{names\_from} a permis d'indiquer la variable à partir de laquelle on a dispatché les valeurs en colonnes, et l'argument \texttt{values\_from} a permis de préciser les variables pour lesquelles on voulait que les valeurs numériques soient dispatchées. L'utilisation des deux-points (\texttt{:}) nous a permis de sélectionner toutes les variables allant de \texttt{Sepal.Length} à \texttt{Petal.Width} dans le jeu de données.
@@ -1625,7 +1659,7 @@ Dans une situation inverse à celle que nous venons de voir, nous pourrions avoi
 ##  8     3 Sepal.Length_versicolor       6.9
 ##  9     3 Sepal.Length_virginica        7.1
 ## 10     4 Sepal.Length_setosa           4.6
-## # ... with 140 more rows
+## # i 140 more rows
 \end{verbatim}
 
 Dans la fonction \texttt{pivot\_longer()} ci-dessus, nous avons indiqué à l'aide de l'argument \texttt{cols} et de la fonction \texttt{c()} avec le signe \texttt{-} la colonne que nous ne voulions pas utiliser avec la fonction (c'était plus rapide que d'indiquer dans la fonction \texttt{c()} les trois colonnes à utiliser). L'argument \texttt{names\_to} nous a permis de donner un nom à la variable qualitative qui comporte à présent les modalités associées aux valeurs numériques, et l'argument \texttt{values\_to} nous a permis de donner un nom à la colonne où se trouvent maintenant les valeurs numériques.
@@ -1657,7 +1691,7 @@ Lorsque l'on veut utiliser la fonction \texttt{pivot\_longer()} sur plusieurs co
 ##  8     3 versicolor          6.9         3.1          4.9         1.5
 ##  9     3 virginica           7.1         3            5.9         2.1
 ## 10     4 setosa              4.6         3.1          1.5         0.2
-## # ... with 140 more rows
+## # i 140 more rows
 \end{verbatim}
 
 Dans le code montré ci-dessus, l'argument \texttt{cols} a permis de sélectionner toutes les colonnes situées à droite de la colonne \texttt{id}, l'argument \texttt{names\_to} a permis d'indiquer qu'il faut garder des colonnes spécifiques nommées avec le premier morceau du nom des variables antérieures (le mot \texttt{".value"} permet cela), et le mot \texttt{"Species"} a permis de nommer la colonne avec les espèces d'iris qui étaient les seconds morceaux des noms des variables antérieures.
@@ -1914,7 +1948,7 @@ Il y a plusieurs choses à expliquer par rapport au graphique de la Figure \ref{
 ##  8 8              5   ""        
 ##  9 9              4.4 ""        
 ## 10 10             4.9 ""        
-## # ... with 140 more rows
+## # i 140 more rows
 \end{verbatim}
 
 Une fois cette procédure réalisée, le reste du code, et notamment la fonction \texttt{geom\_text()}, a permis d'ajouter des éléments textuels au graphique, en l'occurrence en s'appuyant sur la variable \texttt{id\_outlier}, tel que configuré avec la fonction \texttt{aes()} à l'intérieur de la fonction \texttt{geom\_text()}. Lorsque la valeur anormale identifiée est effectivement une erreur de saisie dans la base de données, il convient de corriger la valeur avec la fonction d'assignation comme nous l'avons fait précédemment :
@@ -2291,6 +2325,14 @@ On remarque ici que la fonction \texttt{quantile()} a plusieurs arguments. L'arg
 
 \noalign{\global\arrayrulewidth 0pt}\arrayrulecolor[HTML]{000000}
 
+\hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}-}\endfirsthead \caption[]{Comparaison\ des\ quantiles\ obtenus\ selon\ différentes\ configurations\ de\ la\ fonction\ quantile()}\label{tab:quantilesCompaMethods}\\
+
+\hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}-}
+
+\multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 0.9in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Quantile}}}} & \multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 0.77in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Type\ 2}}}} & \multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 0.77in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Type\ 7}}}} \\
+
+\noalign{\global\arrayrulewidth 0pt}\arrayrulecolor[HTML]{000000}
+
 \hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}-}\endhead
 
 
@@ -2340,6 +2382,14 @@ On remarque que les résultats de la fonction \texttt{quantile()} sont différen
 \begin{longtable}[c]{|p{0.67in}|p{1.01in}|p{0.75in}}
 
 \caption{Quantiles\ d'une\ variable\ quantitative\ continue}\label{tab:quantilesContinuousMethod}\\
+
+\hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}-}
+
+\multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 0.67in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Rang}}}} & \multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 1.01in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Quantile}}}} & \multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 0.75in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Valeur}}}} \\
+
+\noalign{\global\arrayrulewidth 0pt}\arrayrulecolor[HTML]{000000}
+
+\hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}-}\endfirsthead \caption[]{Quantiles\ d'une\ variable\ quantitative\ continue}\label{tab:quantilesContinuousMethod}\\
 
 \hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}-}
 
@@ -2693,7 +2743,7 @@ Comme dans le cadre de variables quantitatives, une bonne pratique est de visual
 ##  8  0.26 Very Good H     SI1      61.9    55   337  4.07  4.11  2.53
 ##  9  0.22 Fair      E     VS2      65.1    61   337  3.87  3.78  2.49
 ## 10  0.23 Very Good H     VS1      59.4    61   338  4     4.05  2.39
-## # ... with 53,930 more rows
+## # i 53,930 more rows
 \end{verbatim}
 
 \begin{Shaded}
@@ -3053,6 +3103,14 @@ Le Tableau \ref{tab:tablecov} montre les premières étapes du calcul de la cova
 
 \noalign{\global\arrayrulewidth 0pt}\arrayrulecolor[HTML]{000000}
 
+\hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}-}\endfirsthead \caption[]{Étape\ intermédiaire\ pour\ le\ calcul\ de\ la\ covariance\ entre\ des\ variables\ X1\ et\ Y1,\ Y2,\ et\ Y3}\label{tab:tablecov}\\
+
+\hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}-}
+
+\multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 0.47in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{X1}}}} & \multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 0.47in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Y1}}}} & \multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 0.47in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Y2}}}} & \multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 0.51in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Y3}}}} & \multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 0.66in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{X1Y1}}}} & \multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 1.06in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{X1Y2}}}} & \multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 0.66in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{X1Y3}}}} \\
+
+\noalign{\global\arrayrulewidth 0pt}\arrayrulecolor[HTML]{000000}
+
 \hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}-}\endhead
 
 
@@ -3194,6 +3252,14 @@ Sur la base de travaux antérieurs, Hopkins et al.~\autocite*{hopkinsProgressive
 
 \noalign{\global\arrayrulewidth 0pt}\arrayrulecolor[HTML]{000000}
 
+\hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}-}\endfirsthead \caption[]{Termes\ caractérisant\ la\ taille\ de\ l'effet\ en\ fonction\ de\ la\ valeur\ de\ corrélation\ obtenue}\label{tab:correlationtable}\\
+
+\hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}-}
+
+\multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 0.7in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Petite}}}} & \multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 0.95in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Moyenne}}}} & \multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 0.82in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Grande}}}} & \multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 1.16in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Très\ grande}}}} & \multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 1.8in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Extrêmement\ grande}}}} \\
+
+\noalign{\global\arrayrulewidth 0pt}\arrayrulecolor[HTML]{000000}
+
 \hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}-}\endhead
 
 
@@ -3274,6 +3340,14 @@ Lorsque le coefficient de corrélation de Pearson ne permet pas de caractériser
 \begin{longtable}[c]{|p{1.07in}|p{0.95in}}
 
 \caption{Rangs\ de\ la\ variable\ hp\ du\ jeu\ de\ données\ mtcars}\label{tab:tableranks}\\
+
+\hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}-}
+
+\multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 1.07in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{hp\ (valeur)}}}} & \multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 0.95in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{hp\ (rang)}}}} \\
+
+\noalign{\global\arrayrulewidth 0pt}\arrayrulecolor[HTML]{000000}
+
+\hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}-}\endfirsthead \caption[]{Rangs\ de\ la\ variable\ hp\ du\ jeu\ de\ données\ mtcars}\label{tab:tableranks}\\
 
 \hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}-}
 
@@ -4448,6 +4522,14 @@ Une fois que l'on a calculé une taille d'effet, il est toujours intéressant d'
 \begin{longtable}[c]{|p{0.62in}|p{0.77in}|p{0.74in}}
 
 \caption{Termes\ pour\ qualifier\ la\ taille\ d'effet\ dans\ le\ cadre\ d'une\ comparaison\ de\ moyennes\ associées\ à\ des\ variables\ indépendantes}\label{tab:effectsizetable}\\
+
+\hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}-}
+
+\multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 0.62in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Petit}}}} & \multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 0.77in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Moyen}}}} & \multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 0.74in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Grand}}}} \\
+
+\noalign{\global\arrayrulewidth 0pt}\arrayrulecolor[HTML]{000000}
+
+\hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}-}\endfirsthead \caption[]{Termes\ pour\ qualifier\ la\ taille\ d'effet\ dans\ le\ cadre\ d'une\ comparaison\ de\ moyennes\ associées\ à\ des\ variables\ indépendantes}\label{tab:effectsizetable}\\
 
 \hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}-}
 
