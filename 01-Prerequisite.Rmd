@@ -14,18 +14,18 @@ R et RStudio sont deux logiciels en libre accès sur internet. Le logiciel R peu
 
 ### Installer R sur MAC
 * Aller sur le site https://cran.rstudio.com.
-* Sur la page web qui s’affiche, l’encart du haut **Download and Install R** montre les différents liens de téléchargement possibles selon le système d’exploitation utilisé. Cliquer sur le lien **Download R for (Mac) OS X**.
-* Dans la nouvelle fenêtre qui s’ouvre, cliquer sur le lien qui correspond à votre version OS X (le clic entraînera le début du téléchargement du fichier).
+* Sur la page web qui s’affiche, l’encart du haut **Download and Install R** montre les différents liens de téléchargement possibles selon le système d’exploitation utilisé. Cliquer sur le lien **Download R for macOS**.
+* Dans la nouvelle fenêtre qui s’ouvre, cliquer sur le lien qui correspond à votre version OS (le clic entraînera le début du téléchargement du fichier).
 * Sur le Mac, chercher dans le dossier **Téléchargements** le fichier  téléchargé.
 * Double-cliquer sur le fichier téléchargé pour lancer l’installation du logiciel R.
 * Suivre la procédure par défaut et terminer l’installation.
 * Lorsque l'installation est terminée, aller dans le dossier **Applications** du Mac pour rechercher le logiciel R. Double-cliquer sur l’icône pour ouvrir le logiciel et vérifier que l’ouverture se déroule correctement.
 
 ### Installer RStudio sur WINDOWS ou MAC
-* Aller sur le site https://www.rstudio.com.
-* En haut de la page d’accueil, mettre le curseur de la souris sur **Products**, puis, dans le menu déroulant qui apparaît, cliquer sur **RStudio**.
-* Dans la nouvelle fenêtre qui vient de s’ouvrir, faire défiler la page vers le bas jusqu’à voir apparaître l'option de téléchargement **DOWNLOAD RSTUDIO DESKTOP**, puis cliquer dessus.
-* Dans la nouvelle fenêtre qui vient de s’ouvrir, faire défiler la page vers le bas puis cliquer sur l'option **DOWNLOAD** dans la colonne dédiée au téléchargement de RStudio Desktop. Cliquer alors sur le lien associé au système d'exploitation utilisé.
+* Aller sur le site https://posit.co/.
+* En haut à droite de la page d’accueil, cliquer sur le bouton **DOWNLOAD RSTUDIO**.
+* Dans la nouvelle fenêtre qui vient de s’ouvrir, faire défiler la page vers le bas jusqu’à aller dans la section RStudio Desktop puis cliquer sur le bouton **DOWNLOAD RSTUDIO**.
+* Dans la nouvelle fenêtre qui vient de s’ouvrir, cliquer sur le bouton **DOWNLOAD RSTUDIO DESKTOP FOR WINDOWS** si vous avez une machine Windows. Si vous avez un MAC et que le bouton n'est pas mis à jour automatiquement pour votre MAC, alors il faut faire défiler un peu la page vers le bas pour ensuite cliquer sur le lien de téléchargement de RStudio adapté à votre version de système d'exploitation.
 * **Sur WINDOWS :** Exécuter le fichier s'il est proposé de le faire. Si le clic entraîne automatiquement le téléchargement du fichier, retrouver alors ce fichier sur le PC (une fois son enregistrement terminé), puis exécuter le fichier et suivre la procédure d’installation par défaut. Une fois le logiciel installé, retrouver le fichier d’exécution du logiciel sur le PC (chemin d'accès possible : **Ordinateur > Windows (C:) > Programmes > RStudio > bin > rstudio.exe**). Créer un raccourci pour le fichier **rstudio.exe** (clic droit sur le fichier > Créer un raccourci) et mettre le raccourci sur le bureau du PC. Double-cliquer sur l’icône RStudio afin de vérifier si l’ouverture s’effectue correctement. 
 * **Sur MAC :** Le téléchargement débute lorsque vous cliquez sur le lien. Une fois le téléchargement terminé, sur votre MAC, réaliser l’installation en double-cliquant sur le fichier téléchargé et en suivant la procédure indiquée. Une fois l’installation terminée, aller dans le dossier **Applications** du MAC et double-cliquer sur l’icône de RStudio pour vérifier si le logiciel s’ouvre correctement. 
 
@@ -56,9 +56,11 @@ c("Pierre", "Marie", "Jean")
 De manière encore plus élaborée, R permet de créer des tableaux de données à partir de vecteurs à l'aide de la fonction `data.frame()`. Dans l'exemple ci-dessous, les noms x, y, et z, marqués à gauche du signe `=`, sont les noms des vecteurs que contiendra le tableau de données. À droite du signe `=`, on retrouve la fonction `c()` qui permet de créer un vecteur avec des valeurs à l'intérieur.
 
 ```{r data frame}
-data.frame(x = c(0, 1, 2, 3), 
-           y = c(3, 5, 7, 9), 
-           z = c("a", "b", "c", "d"))
+data.frame(
+  x = c(0, 1, 2, 3),
+  y = c(3, 5, 7, 9),
+  z = c("a", "b", "c", "d")
+)
 ```
 
 ### Manipuler des objets via des noms
@@ -123,7 +125,7 @@ vec1 * vec2
 ou encore des objets contenant un tableau de données, en créant par exemple une variable à partir d'autres variables du tableau.
 
 ```{r calculations with data frame objects}
-df$IMC <- df$Poids / (df$Taille/100) ^ 2
+df$IMC <- df$Poids / (df$Taille / 100) ^ 2
 df
 ```
 
@@ -200,7 +202,7 @@ Au fur et à mesure que l'on écrit un script, une bonne pratique consiste à r�
 ```{r comments}
 # Titre de section 1 -------------------------------------------
 ## Sous-titre 1
-  # Commentaire 1
+## Sous-titre 2
 ```
 
 Étant donné que l'erreur est difficile à éviter à un moment donné ou à un autre lorsqu'on commence à écrire son propre code ou à utiliser un code qui vient de quelqu'un d'autre, il est utile de reconnaître les situations dans lesquelles une erreur est survenue. La situation la plus évidente est l'apparition d'un texte en rouge dans la Console. Lorsqu'il s'agit bel et bien d'une erreur (car il peut ne s'agir parfois que d'un message d'alerte ou d'information), le texte en rouge décrit l'erreur qui a été détectée et qui empêche le code d'être entièrement activé. De manière moins visible, il est possible parfois d'observer un `+` tout en bas de la Console. Cela survient lorsque le code lancé à l'instant est incomplet (e.g., une parenthèse a été oubliée). Si cela arrive, il vaut mieux  appuyer sur **Echap**, trouver l'erreur dans le code, et relancer la commande. Avant de relancer la commande, il faut s'assurer que R  donne effectivement la main pour lancer une nouvelle instruction. C'est le cas lorsque le symbole `>` est observé dans la Console. Enfin, RStudio permet d'utiliser un certain nombre de raccourcis clavier. Pour en avoir une vue d'ensemble, appuyez sur **Alt+Shift+K**.
@@ -218,5 +220,5 @@ Au fur et à mesure que l'on écrit un script, une bonne pratique consiste à r�
 * Pour installer un *package*, utiliser la fonction `install.packages()`.
 * Un code peut être écrit directement dans la **Console**, ou dans une fenêtre **Script**. Pour activer le code à partir d'un script, utiliser le bouton **Run** ou **Ctrl + Entrée**. 
 * Les noms et les objets associés apparaissent dans la fenêtre **Environnement**.
-* Pour écrire des titres et des commentaires dans un script, utiliser un `#` avant l'écriture du code.
+* Pour écrire des titres et des commentaires dans un script, utiliser un ou plusieurs `#` avant l'écriture du code.
 * Dans la Console, le symbole `>` signifie que le logiciel est prêt à lancer une nouvelle instruction. Le symbole `+` indique que l'instruction initialement lancée est incomplète. Mieux vaut alors faire **Echap**, modifier le code, et recommencer.
