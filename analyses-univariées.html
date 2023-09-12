@@ -99,7 +99,7 @@
 <span class="header-section-number">Chapitre 3</span> Analyses univariées<a class="anchor" aria-label="anchor" href="#analyses-univari%C3%A9es"><i class="fas fa-link"></i></a>
 </h1>
 <p>Réaliser une analyse descriptive univariée signifie que l’on s’intéresse à une seule variable en particulier. L’enjeu est ici de prendre connaissance de la distribution de la variable, c’est-à-dire de la manière selon laquelle se répartissent les observations en fonction des valeurs que prend la variable. De manière complémentaire, l’analyse descriptive univariée vise à prendre connaissance des indices statistiques qui caractérisent la variable, ainsi qu’à déterminer ceux qui seraient les plus pertinents pour la résumer.</p>
-<p>Dans cette partie, les notions de <strong>population</strong> et d’<strong>échantillon</strong> vont revenir à plusieurs reprises. La notion de population désigne tous les individus existant qui satisfont à un ou plusieurs critères particuliers (e.g., les adultes de moins de 30 ans). En général, lorsque l’on souhaite étudier un phénomène dans une population cible, il est impossible de prendre en compte tous les individus de la population en question. L’alternative est alors de conduire l’étude sur un échantillon, c’est-à-dire une fraction de la population composée d’individus qui représentent la population étudiée. La distinction entre population et échantillon est importante à faire à plusieurs égards. Si une étude n’a pu être conduite que sur un échantillon, cela implique de mettre en oeuvre des procédures statistiques pour estimer avec plus ou moins d’incertitude le résultat réel concernant la population étudiée, cela à partir du résultat trouvé dans l’échantillon observé. La seule analyse descriptive de l’échantillon ne suffit donc pas en soit à décrire une population. En revanche, lorsque l’étude a pu être conduite sur l’ensemble de la population à étudier (e.g., l’équipe de France dans un sport donné), il n’y a par définition pas lieu de chercher à conduire des procédures statistiques particulières pour estimer le résultat réel pour la population en question. Dans ce chapitre, les procédures d’analyse proposées servent en général à seulement décrire la variable telle qu’elle est donnée à voir à partir des données que l’on a en sa possession. L’objectif n’est donc pas ici de discuter particulièrement des statistiques les plus pertinentes à utiliser lorsqu’il s’agit de chercher à résumer la distribution d’une variable à l’échelle d’une population à partir d’un échantillon initial. Pour le moment, il s’agit d’être en mesure de décrire l’échantillon (ou la population si les données obtenues concernent toute la population) que l’on a sous les yeux.</p>
+<p>Dans cette partie, les notions de <strong>population</strong> et d’<strong>échantillon</strong> vont revenir à plusieurs reprises. La notion de population désigne tous les individus existant qui satisfont à un ou plusieurs critères particuliers (e.g., les adultes de moins de 30 ans). En général, lorsque l’on souhaite étudier un phénomène dans une population cible, il est impossible de prendre en compte tous les individus de la population en question. L’alternative est alors de conduire l’étude sur un échantillon, c’est-à-dire une fraction de la population composée d’individus qui représentent la population étudiée. La distinction entre population et échantillon est importante à faire à plusieurs égards. Si une étude n’a pu être conduite que sur un échantillon, cela implique de mettre en oeuvre des procédures statistiques pour estimer avec plus ou moins d’incertitude le résultat réel concernant la population étudiée, cela à partir du résultat trouvé dans l’échantillon observé. La seule analyse descriptive de l’échantillon ne suffit donc pas en soi à décrire une population. En revanche, lorsque l’étude a pu être conduite sur l’ensemble de la population à étudier (e.g., l’équipe de France dans un sport donné), il n’y a par définition pas lieu de chercher à conduire des procédures statistiques particulières pour estimer le résultat réel pour la population en question. Dans ce chapitre, les procédures d’analyse proposées servent en général à seulement décrire la variable telle qu’elle est donnée à voir à partir des données que l’on a en sa possession. L’objectif n’est donc pas ici de discuter particulièrement des statistiques les plus pertinentes à utiliser lorsqu’il s’agit de chercher à résumer la distribution d’une variable à l’échelle d’une population à partir d’un échantillon initial. Pour le moment, il s’agit d’être en mesure de décrire l’échantillon (ou la population si les données obtenues concernent toute la population) que l’on a sous les yeux.</p>
 <p>Dans le cadre de cette partie, nous allons commencer à voir comment produire des graphiques dans RStudio, et par là-même, découvrir progressivement le package <code>ggplot2</code>. Le package <code>ggplot2</code> n’est pas le plus simple à utiliser lorsque l’on découvre le logiciel R. D’ailleurs, de nombreux manuels portant sur R privilégient les packages et fonctions de base de R lorsqu’il s’agit de montrer comment obtenir des graphiques relativement simples pour analyser ses données. Cependant, les packages et fonctions de base de R sont rapidement limités lorsqu’il s’agit de réaliser des graphiques relativement complexes. Le parti pris ici est donc d’initier dès à présent à l’utilisation du package <code>ggplot2</code> pour réaliser des graphiques, même simples, afin de pouvoir être plus rapidement à l’aise dès lors qu’il s’agira par la suite de produire des graphiques relativement élaborés à l’aide de ce package. Cependant, l’ambition n’est pas ici de permettre la maîtrise complète du package <code>ggplot2</code>. Pour cela, il vaut mieux se référer à des documentations spécialisées telles que la seconde édition de l’ouvrage <em>ggplot2</em> d’Hadley Wickham <span class="citation">(<a href="r%C3%A9f%C3%A9rences.html#ref-wickhamGgplot22016" role="doc-biblioref">2016</a>)</span>, en sachant qu’une troisième édition est en cours de développement et est accessible en ligne ici : <a href="https://ggplot2-book.org" class="uri">https://ggplot2-book.org</a>.</p>
 <div id="variables-quantitatives" class="section level2" number="3.1">
 <h2>
@@ -109,7 +109,7 @@
 <h3>
 <span class="header-section-number">3.1.1</span> Visualiser la distribution de la variable<a class="anchor" aria-label="anchor" href="#visualiser-la-distribution-de-la-variable"><i class="fas fa-link"></i></a>
 </h3>
-<p>Dans le cadre de l’analyse de variables quantitatives, il est toujours utile de d’abord visualiser graphiquement la distribution des données à l’aide d’un <strong>histogramme</strong>. Un histogramme, c’est un graphique avec des barres dont la largeur représente un intervalle donné de valeurs numériques, et dont la hauteur représente le nombre d’observations associées à une valeur qui est située dans l’intervalle en question. Plus une barre est longue, plus il y a d’observations concernées par l’intervalle de valeurs. Un exemple d’histogramme est montré sur la Figure <a href="analyses-univari%C3%A9es.html#fig:geomhistogram">3.1</a>.</p>
+<p>Dans le cadre de l’analyse de variables quantitatives, il est toujours utile de d’abord visualiser graphiquement la distribution des données à l’aide d’un <strong>histogramme</strong>. Un histogramme, c’est un graphique avec des barres dont la largeur représente un intervalle donné de valeurs numériques, et dont la hauteur représente le nombre d’observations associées à une valeur qui est située dans l’intervalle en question. Plus une barre est haute, plus il y a d’observations concernées par l’intervalle de valeurs. Un exemple d’histogramme est montré sur la Figure <a href="analyses-univari%C3%A9es.html#fig:geomhistogram">3.1</a>.</p>
 <div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">iris</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Sepal.Length</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"white"</span>, color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span></span></code></pre></div>
@@ -119,23 +119,27 @@
 Figure 3.1: Exemple d’histogramme
 </p>
 </div>
-<p>Pour générer cet histogramme, nous avons utilisé les fonctions <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> et <code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram()</a></code> du package <code>ggplot2</code>. La fonction <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> est nécessaire pour initier le graphique. Si on lance la commande <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> dans la Console, on peut voir qu’un écran grisé apparaît à droite de l’écran du PC dans la fenêtre <strong>Plots</strong> de RStudio. Cet écran grisé est tel un tableau vierge qui ne demande qu’à être complété grâce à des commandes supplémentaires que l’on doit préciser dans le code. Dans le code montré ci-dessus, on remarque que la fonction <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> a été configurée à l’aide de deux éléments : l’argument <code>data</code>, et la fonction <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code>. L’argument <code>data</code> permet de désigner le jeu de données à partir duquel n’importe quelle autre fonctionnalité du package <code>ggplot2</code> sera utilisée si rien d’autre n’est précisé dans le reste du code. Comme on peut le voir, le jeu de données utilisé ici est <code>iris</code>, que nous avons déjà rencontré dans la partie précédente. La fonction <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code>, elle, permet de désigner les données à partir desquelles les éléments graphiques indiqués par la suite devront être réalisés. Dans le cadre d’une analyse univariée, nous n’avons besoin que d’une seule variable. Celle-ci peut être renseignée à droite de <code>x =</code>, et on aura reconnu dans le code ci-dessus le nom d’une variable effectivement présente dans le jeu de données <code>iris</code>. Une fois que ces informations sont renseignées, nous ne sommes pas encore en mesure de voir un quelconque graphique. Pour cela, il faut que la fonction <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> soit accompagnée d’une fonction qui permette d’indiquer quel type de graphique on veut. C’est à cela que sert ici la fonction <code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram()</a></code>. On peut noter que l’ajout de cette fonction a été réalisé grâce au signe <code>+</code>, en écrivant la fonction <em>après</em> ce signe. La fonction <code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram()</a></code> aurait pu être écrite directement après le symbole <code>+</code>, mais pour des raisons de lisibilité, nous sommes allés à la ligne. (Attention : Aller à la ligne <em>avant</em> le signe <code>+</code> n’est en revanche pas possible.) De manière intéressante et importante pour la suite, on pourra noter que dans ce cas de figure, nous aurions pu aussi utiliser le symbole <em>pipe</em> (<code>%&gt;%</code>) pour enchaîner la création d’un graphique à la suite de l’écriture du jeu de données comme cela :</p>
+<p>Pour générer cet histogramme, nous avons utilisé les fonctions <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> et <code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram()</a></code> du package <code>ggplot2</code>. La fonction <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> est nécessaire pour initier le graphique. Si on lance la commande <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> dans la Console, on peut voir qu’un écran grisé apparaît à droite de l’écran du PC dans la fenêtre <strong>Plots</strong> de RStudio. Cet écran grisé est tel un tableau vierge qui ne demande qu’à être complété grâce à des commandes supplémentaires que l’on doit préciser dans le code. Dans le code montré ci-dessus, on remarque que la fonction <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> a été configurée à l’aide de deux éléments : l’argument <code>data</code>, et la fonction <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code>. L’argument <code>data</code> permet de désigner le jeu de données à partir duquel n’importe quelle autre fonctionnalité du package <code>ggplot2</code> sera utilisée si rien d’autre n’est précisé dans le reste du code. Comme on peut le voir, le jeu de données utilisé ici est <code>iris</code>, que nous avons déjà rencontré dans la partie précédente. La fonction <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code>, elle, permet de désigner les données à partir desquelles les éléments graphiques indiqués par la suite devront être réalisés. Dans le cadre d’une analyse univariée, nous n’avons besoin que d’une seule variable. Celle-ci peut être renseignée à droite de <code>x =</code>, et on aura reconnu dans le code ci-dessus le nom d’une variable effectivement présente dans le jeu de données <code>iris</code>. Une fois que ces informations sont renseignées, nous ne sommes pas encore en mesure de voir un quelconque graphique. Pour cela, il faut que la fonction <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> soit accompagnée d’une fonction qui permette d’indiquer quel type de graphique on veut. C’est à cela que sert ici la fonction <code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram()</a></code>. On peut noter que l’ajout de cette fonction a été réalisé grâce au signe <code>+</code>, en écrivant la fonction <em>après</em> ce signe. La fonction <code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram()</a></code> aurait pu être écrite directement après le symbole <code>+</code>, mais pour des raisons de lisibilité, nous sommes allés à la ligne. (Attention : Aller à la ligne <em>avant</em> le signe <code>+</code> n’est en revanche pas possible.) De manière intéressante et importante pour la suite, on pourra noter que dans ce cas de figure, nous aurions pu aussi utiliser le symbole <em>pipe</em> (<code>|&gt;</code>) pour enchaîner la création d’un graphique à la suite de l’écriture du jeu de données comme cela :</p>
 <div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Sepal.Length</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>                  </span>
+<code class="sourceCode R"><span><span class="va">iris</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Sepal.Length</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"white"</span>, color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># On remarque ici que l'argument `data = ` dans `ggplot()` a dû être enlevé.</span></span></code></pre></div>
 <p>Comme l’indique le message qui accompagne le graphique, l’histogramme a été réalisé sur la base de 30 <em>bins</em>. Cela signifie que pour faire ce graphique, R a découpé en 30 intervalles égaux l’intervalle allant de la valeur la plus faible de la variable (i.e., le minimum) à la valeur la plus élevée de la variable (i.e., le maximum). Il s’agit de la méthode par défaut utilisée par la fonction <code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram()</a></code>. Toutefois, cette méthode par défaut n’est pas vraiment adaptée, comme cela l’est indiqué d’ailleurs dans la documentation d’aide associée à cette fonction. Et puis, lorsqu’il s’agit d’appréhender au mieux la distribution d’une variable avec un histogramme, une bonne pratique est d’observer ce qu’il se passe avec différentes largeurs de <em>bins</em>. La largeur d’une <em>bin</em> peut être modifiée à l’aide de l’argument <code>binwidth</code>. L’unité de la valeur associée à cet argument correspond à l’unité de la variable étudiée (cf. code ci-dessous et Figure <a href="analyses-univari%C3%A9es.html#fig:geomhistogramVariedBinwidth2">3.2</a>).</p>
 <div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Graphique avec binwidth = 0.3</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">iris</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Sepal.Length</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth  <span class="op">=</span> <span class="fl">0.3</span>, fill <span class="op">=</span> <span class="st">"white"</span>, color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">iris</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Sepal.Length</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth  <span class="op">=</span> <span class="fl">0.3</span>,</span>
+<span>                 fill <span class="op">=</span> <span class="st">"white"</span>,</span>
+<span>                 color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"binwidth = 0.3"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Graphique avec binwidth = 0.7</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">iris</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Sepal.Length</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth  <span class="op">=</span> <span class="fl">0.7</span>, fill <span class="op">=</span> <span class="st">"white"</span>, color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">iris</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Sepal.Length</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth  <span class="op">=</span> <span class="fl">0.7</span>,</span>
+<span>                 fill <span class="op">=</span> <span class="st">"white"</span>,</span>
+<span>                 color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"binwidth = 0.7"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:geomhistogramVariedBinwidth2"></span>
@@ -145,27 +149,27 @@ Figure 3.2: Différentes largeurs d’intervalles pour un histogramme
 </div>
 <p>En plus de l’histogramme, une autre manière de prendre connaissance graphiquement de la distribution des données d’une variable quantitative est d’utiliser une <strong>boîte à moustaches</strong>. Pour ce faire, il convient d’utiliser la fonction <code><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot()</a></code>, comme montré dans le code ci-dessous. Le résultat de ce code est montré sur la Figure <a href="analyses-univari%C3%A9es.html#fig:geomboxplot">3.3</a>. On pourra noter ci-dessous l’ajout d’une ligne de code avec une fonction <code><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme()</a></code> dont on ne présentera pas les détails ici ; cette fonction nous sert juste ici à ne pas montrer des chiffres qui auraient été ajoutés par défaut sur l’axe Y de gauche du graphique et qui n’auraient eu aucun intérêt.</p>
 <div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">iris</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Sepal.Length</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">iris</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Sepal.Length</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>, </span>
-<span>          axis.ticks.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>        axis.ticks.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:geomboxplot"></span>
 <img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/geomboxplot-1.png" alt="Exemple de boîte à moustaches" width="90%"><p class="caption">
 Figure 3.3: Exemple de boîte à moustaches
 </p>
 </div>
-<p>La boîte à moustaches (cf. Figure <a href="analyses-univari%C3%A9es.html#fig:geomboxplot">3.3</a>) nous livre plusieurs informations. Tout d’abord, ses extrémités nous indiquent ce qu’on appelle le premier quartile (ici représenté par le bord gauche de la boîte) et le troisième quartile (ici représenté par le bord droit de la boîte). Le premier quartile (Q1) désigne la valeur en-dessous de laquelle on retrouve 25 % des observations de la variable (i.e., 25 % des observations sont associées à une valeur plus faible que Q1), alors que le troisième quartile (Q3) représente la valeur en-dessous de laquelle on retrouve 75 % des observations (i.e., 75 % des observations sont associées à une valeur plus faible que Q3). Cela indique alors que sur la Figure <a href="analyses-univari%C3%A9es.html#fig:geomboxplot">3.3</a>, l’intervalle qui sépare le bord gauche du bord droit de la boîte contient 50 % des observations. La ligne noire à l’intérieur de la boîte blanche désigne la médiane, qui est la valeur pour laquelle on a 50 % des observations qui ont une valeur inférieure à cette valeur repère, et pour laquelle on a 50 % des observations qui ont une valeur supérieure à cette valeur repère. Les lignes noires en-dehors de la boîte sont les moustaches. Dans le cas présent, la moustache de gauche s’étend jusqu’à la valeur minimale de la variable, et la moustache de droite s’étend jusqu’à la valeur maximale de la variable. Si le minimum (ou le maximum) avait été éloigné de la médiane de plus de 1.5 fois la différence entre Q3 et Q1 (qu’on appelle <strong>intervalle interquartile</strong>), l’extrémité de la moustache se serait arrêtée à la dernière valeur avant cette limite, et toute valeur ayant dépassé cette limite aurait été représentée par un point. Pour illustrer ce dernier cas de figure, on peut modifier manuellement une valeur de la variable <code>Sepal.Length</code> du jeu de données <code>iris</code> de telle sorte à ce qu’il y ait une nouvelle valeur qui soit particulièrement éloignée de la boîte. Une telle valeur s’appelle un <em>outlier</em> (cf. Figure <a href="analyses-univari%C3%A9es.html#fig:geomboxplotModified">3.4</a>).</p>
+<p>La boîte à moustaches (cf. Figure <a href="analyses-univari%C3%A9es.html#fig:geomboxplot">3.3</a>) nous livre plusieurs informations. Tout d’abord, ses extrémités nous indiquent ce qu’on appelle le premier quartile (ici représenté par le bord gauche de la boîte) et le troisième quartile (ici représenté par le bord droit de la boîte). Le premier quartile (Q1) désigne la valeur en-dessous de laquelle on retrouve 25 % des observations de la variable (i.e., 25 % des observations sont associées à une valeur plus faible que Q1), alors que le troisième quartile (Q3) représente la valeur en-dessous de laquelle on retrouve 75 % des observations (i.e., 75 % des observations sont associées à une valeur plus faible que Q3). Cela indique alors que sur la Figure <a href="analyses-univari%C3%A9es.html#fig:geomboxplot">3.3</a>, l’intervalle qui sépare le bord gauche du bord droit de la boîte contient 50 % des observations. La ligne noire à l’intérieur de la boîte blanche désigne la médiane, qui est la valeur pour laquelle on a 50 % des observations qui ont une valeur inférieure à cette valeur repère, et pour laquelle on a 50 % des observations qui ont une valeur supérieure à cette valeur repère. Les lignes noires en-dehors de la boîte sont les moustaches. Dans le cas présent, la moustache de gauche s’étend jusqu’à la valeur minimale de la variable, et la moustache de droite s’étend jusqu’à la valeur maximale de la variable. Si le minimum (ou le maximum) avait été éloigné de la médiane de plus de 1.5 fois la différence entre Q3 et Q1 (qu’on appelle l’<strong>intervalle interquartile</strong>), l’extrémité de la moustache se serait arrêtée à la dernière valeur avant cette limite, et toute valeur ayant dépassé cette limite aurait été représentée par un point. Pour illustrer ce dernier cas de figure, on peut modifier manuellement une valeur de la variable <code>Sepal.Length</code> du jeu de données <code>iris</code> de telle sorte à ce qu’il y ait une nouvelle valeur qui soit particulièrement éloignée de la boîte. Une telle valeur s’appelle un <em>outlier</em> (cf. Figure <a href="analyses-univari%C3%A9es.html#fig:geomboxplotModified">3.4</a>).</p>
 <div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># On modifie ici, pour l'exemple, la valeur de la 3ème observation</span></span>
 <span><span class="co"># en lui assignant la valeur 12.</span></span>
-<span><span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Length</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">12</span>     </span>
+<span><span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Length</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">12</span></span>
 <span></span>
 <span><span class="co"># Obtention du graphique</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">iris</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Sepal.Length</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>   </span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">iris</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Sepal.Length</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>, </span>
-<span>          axis.ticks.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>        axis.ticks.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:geomboxplotModified"></span>
 <img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/geomboxplotModified-1.png" alt="Visualisation d'un outlier" width="90%"><p class="caption">
@@ -175,7 +179,8 @@ Figure 3.4: Visualisation d’un outlier
 <p>Une boîte à moustaches a donc notamment l’intérêt de mettre en évidence des valeurs qui apparaissent comme “étranges” par rapport au reste des données. Lorsqu’il semble évident que l’<em>outlier</em> est une valeur erronée, ou quand on veut tout simplement vérifier qu’il s’agit d’une erreur ou non, il est intéressant de savoir à quelle observation (i.e., à quel individu dans certains contextes) cette valeur étrange appartient, pour ensuite éventuellement la corriger. Malheureusement, la fonction <code><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot()</a></code> ne dispose pas d’argument pour permettre d’identifier facilement à quelle observation appartient cette valeur. Cependant, on peut s’appuyer sur des fonctions créées manuellement dans R pour parvenir à cela. Dans ce cas de figure, le site <a href="https://stackoverflow.com" class="uri">https://stackoverflow.com</a> est souvent intéressant car riche de solutions. C’est d’ailleurs en provenance de ce site que vient la fonction montrée ci-dessous (voir <a href="https://stackoverflow.com/questions/33524669/labeling-outliers-of-boxplots-in-r">ici</a>) qui va nous permettre ensuite de savoir, à partir du graphique, à quelle observation correspond cette donnée étrange.</p>
 <div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">is_outlier</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">x</span> <span class="op">&lt;</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">0.25</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1.5</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/stats/IQR.html">IQR</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">|</span> <span class="va">x</span> <span class="op">&gt;</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">0.75</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1.5</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/stats/IQR.html">IQR</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span>  <span class="va">x</span> <span class="op">&lt;</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">0.25</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1.5</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/stats/IQR.html">IQR</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">|</span></span>
+<span>    <span class="va">x</span> <span class="op">&gt;</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">0.75</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1.5</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/stats/IQR.html">IQR</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p>Voici donc, ci-dessus, à quoi ressemble une fonction à son état brut, avec : le nom de la fonction à gauche de la flèche d’assignation (<code>&lt;-</code>), la commande <code>function()</code> qui permet d’amorcer la création de la fonction, et les lignes de code entre les accolades <code><a href="https://rdrr.io/r/base/Paren.html">{ }</a></code> qui indiquent les actions que la fonction réalise. La seule chose qu’il faut comprendre à ce stade, c’est que cette fonction, qui va donc s’appeler par la suite <code>is_outlier()</code>, a besoin pour fonctionner qu’on lui indique un nom de variable (représenté par la lettre <code>x</code> dans le code ci-dessus), et que le résultat de cette fonction sera une nouvelle variable qui contiendra seulement des <code>TRUE</code> ou des <code>FALSE</code>, en sachant que <code>TRUE</code> correspondra au fait que la valeur de la variable étudiée était un <em>outlier</em>, et que <code>FALSE</code> correspondra au fait que la valeur de la variable étudiée n’était pas un <em>outlier</em>. (Notons ici que la définition d’un <em>outlier</em> est la même que celle décrite plus haut, à savoir une valeur qui serait éloignée de Q1 ou de Q3 de plus de 1.5 fois l’intervalle interquartile.) Mais regardons concrètement ce que donne cette fonction lorsqu’elle est appliquée à la variable <code>Sepal.Length</code> du jeu de données <code>iris</code> (NB : La fonction ne marchera que si elle a été activée/créée auparavant) :</p>
 <div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
@@ -197,18 +202,20 @@ Figure 3.4: Visualisation d’un outlier
 ## [141] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE</code></pre>
 <p>Quand on regarde bien, on voit que la troisième observation de cette nouvelle variable que l’on vient de créer (seulement de manière temporaire ici car on ne l’a pas assignée à un nom) contient la valeur <code>TRUE</code>, ce qui est en accord avec la valeur que nous avons introduite auparavant dans la variable <code>Sepal.Length</code>. Le fait d’observer ces valeurs <code>TRUE</code> et <code>FALSE</code> n’est évidemment pas une stratégie très pratique pour déterminer à quelle observation correspondrait l’<em>outlier</em>, et c’est pourquoi l’étape suivante consiste à montrer comment on peut se servir de cette fonction <code>is_outlier()</code> pour faire apparaître sur un graphique de boîte à moustaches les observations à qui appartiendraient les valeurs étranges (cf. Figure <a href="analyses-univari%C3%A9es.html#fig:geomboxplotOutlierId">3.5</a>).</p>
 <div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="va">iris</span> <span class="op">|&gt;</span></span>
 <span>  <span class="co"># Ajout d'un numéro id pour les observations</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">50</span>, times <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span>, </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">50</span>, times <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>         <span class="co"># Création d'une nouvelle variable appelée id_outlier</span></span>
-<span>         id_outlier <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="fu">is_outlier</span><span class="op">(</span>x <span class="op">=</span> <span class="va">Sepal.Length</span><span class="op">)</span>, <span class="va">id</span>, <span class="st">""</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Sepal.Length</span>, y <span class="op">=</span> <span class="st">""</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>         id_outlier <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="fu">is_outlier</span><span class="op">(</span>x <span class="op">=</span> <span class="va">Sepal.Length</span><span class="op">)</span>, <span class="va">id</span>, <span class="st">""</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Sepal.Length</span>, y <span class="op">=</span> <span class="st">""</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="co"># Ajout des numéros id des outliers</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">id_outlier</span><span class="op">)</span>,  hjust <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span> <span class="op">+</span>     </span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>, </span>
-<span>          axis.ticks.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>          axis.title.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">id_outlier</span><span class="op">)</span>,  hjust <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
+<span>    axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    axis.ticks.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    axis.title.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:geomboxplotOutlierId"></span>
 <img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/geomboxplotOutlierId-1.png" alt="Identification d'un outlier" width="90%"><p class="caption">
@@ -217,9 +224,9 @@ Figure 3.5: Identification d’un outlier
 </div>
 <p>Il y a plusieurs choses à expliquer par rapport au graphique de la Figure <a href="analyses-univari%C3%A9es.html#fig:geomboxplotOutlierId">3.5</a> qui comporte à présent le numéro <code>id</code> associé à l’observation pour laquelle nous avions modifié la valeur. Tout d’abord, il faut noter qu’avant de créer le graphique, nous avons ajouté temporairement au jeu de données, avec la fonction <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>, la variable <code>id_outlier</code>. Cette variable a été créée à l’aide de deux fonctions en réalité : la fonction <code><a href="https://rdrr.io/r/base/ifelse.html">ifelse()</a></code>, et la fonction <code>is_outlier()</code> qu’on a présentée succinctement plus haut. Ici, la fonction <code><a href="https://rdrr.io/r/base/ifelse.html">ifelse()</a></code> a fonctionné comme cela : si la fonction <code>id_outlier()</code> renvoyait la valeur <code>TRUE</code>, alors on conservait le numéro <code>id</code> de la variable <code>Sepal.Length</code>, sinon, on ne mettait rien. Cela veut dire que la variable <code>id_outlier</code> ne contenait que les numéros <code>id</code> pour lesquels la fonction <code>is_outlier()</code> avait renvoyé la valeur <code>TRUE</code>. Pour visualiser ce qu’il s’est passé, on peut revoir la conséquence du début du code qui a permis de faire le graphique (cf. colonne de droite dans le résultat ci-dessous) :</p>
 <div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">50</span>, times <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span>,                           </span>
-<span>         id_outlier <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="fu">is_outlier</span><span class="op">(</span>x <span class="op">=</span> <span class="va">Sepal.Length</span><span class="op">)</span>, <span class="va">id</span>, <span class="st">""</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="va">iris</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">50</span>, times <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>         id_outlier <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="fu">is_outlier</span><span class="op">(</span>x <span class="op">=</span> <span class="va">Sepal.Length</span><span class="op">)</span>, <span class="va">id</span>, <span class="st">""</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">Sepal.Length</span>, <span class="va">id_outlier</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## # A tibble: 150 × 3
 ##    id    Sepal.Length id_outlier
@@ -252,9 +259,17 @@ Figure 3.5: Identification d’un outlier
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/njudd/ggrain">ggrain</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">iris</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">Sepal.Length</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/ggrain/man/geom_rain.html">geom_rain</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"grey"</span>, boxplot.args <span class="op">=</span>  <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/list2.html">list2</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span>, point.args <span class="op">=</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/list2.html">list2</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.3</span>, size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/ggrain/man/geom_rain.html">geom_rain</a></span><span class="op">(</span></span>
+<span>    fill <span class="op">=</span> <span class="st">"grey"</span>,</span>
+<span>    boxplot.args <span class="op">=</span>  <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/list2.html">list2</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span>,</span>
+<span>    point.args <span class="op">=</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/list2.html">list2</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.3</span>, size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span>xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.9</span>, <span class="fl">1.5</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>, axis.ticks.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>, axis.title.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
+<span>    axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    axis.ticks.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    axis.title.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:raincloudUnivar"></span>
 <img src="Analyser-des-donne%CC%81es-avec-R_files/figure-html/raincloudUnivar-1.png" alt="Exemple de raincloud plot" width="90%"><p class="caption">
@@ -268,7 +283,7 @@ Figure 3.6: Exemple de raincloud plot
 Figure 3.7: Différents types de distributions
 </p>
 </div>
-<p>Comme il le sera vu plus tard, de nombreuses analyses statistiques reposent sur l’hypothèse que la variable étudiée est gaussienne dans la population d’intérêt. Il est donc important de chercher à savoir, graphiquement dans un premier temps, si la distribution de la variable est effectivement gaussienne dans la population d’intérêt, cela à partir de l’échantillon que l’on a sous les yeux. Le fait d’être capable d’identifier les autres formes de distribution peut être aussi important afin de mener des analyses appropriées. Dans les exemples montrés ci-dessus, les distributions ont été créées à partir de 1000 valeurs générées de manière aléatoire de telle sorte à suivre des lois prédéfinies et ainsi illustrer différentes distributions possibles. C’est pour cette raison que les formes de distribution montrées sur la figure ci-dessus sont si nettes. Lorsque l’on travaille dans certains domaines ou contextes, tel qu’avec l’être humain, il peut être compliqué d’obtenir autant de données, et les formes de distribution seront alors plus dures à identifier.</p>
+<p>La confiance que l’on peut avoir dans des résultats issus d’analyses inférentielles dépend de l’adéquation entre, d’une part, la forme de la distribution de la population d’où vient l’échantillon, et d’autre part, l’indice statistique choisi pour résumer la distribution de l’échantillon, en particulier sa position, pour conduire les analyses inférentielles. Il est donc important de chercher à savoir, graphiquement dans un premier temps, si la distribution de la variable est effectivement gaussienne ou non dans la population d’intérêt, cela à partir de l’échantillon que l’on a sous les yeux. Le fait d’être capable d’identifier les autres formes de distribution peut être aussi important afin de mener des analyses appropriées. Dans les exemples montrés ci-dessus, les distributions ont été créées à partir de 1000 valeurs générées de manière aléatoire de telle sorte à suivre des lois prédéfinies et ainsi illustrer différentes distributions possibles. C’est pour cette raison que les formes de distribution montrées sur la figure ci-dessus sont si nettes. Lorsque l’on travaille dans certains domaines ou contextes, tel qu’avec l’être humain, il peut être compliqué d’obtenir autant de données, et les formes de distribution seront alors plus dures à identifier.</p>
 <p>Une fois qu’une première analyse graphique des données a été réalisée, il peut être utile de chercher à résumer de manière numérique la variable. Plusieurs types de statistiques peuvent être utilisés à cet effet : les <strong>indices de position</strong>, les <strong>indices de dispersion</strong>, les <strong>indices d’asymétrie</strong>, et les <strong>indices d’aplatissement</strong>.</p>
 </div>
 <div id="les-indices-de-position" class="section level3" number="3.1.2">
@@ -359,7 +374,7 @@ Figure 3.9: Effet de la forme de la distribution sur la position de la médiane
 </h3>
 <p>Les indices de dispersion permettent de rendre compte de la manière selon laquelle les observations sont étalées, ou réparties, autour des indices de position. Plusieurs statistiques sont disponibles pour caractériser la dispersion, à savoir : l’<strong>étendue</strong>, l’<strong>écart-type</strong>, et l’<strong>intervalle interquartile</strong>.</p>
 <p><em>L’étendue</em></p>
-<p>L’étendue est la mesure la plus simple de la dispersion des données contenues dans une variable. Elle est exprimée avec la plus petite valeur (minimum) et la plus grande valeur (maximum) observée, ou alors parfois avec la différence de ces deux valeurs. Par exemple, dans la variable ci-dessous dont les données ont été classées en ordre croissant, le minimum est 4.5, le maximum est 20.2, et l’étendue peut être donnée par l’intervalle [4.5 – 20.2]. Pour obtenir ces différents résultats dans R, il est possible d’utiliser les fonctions <code><a href="https://rdrr.io/r/base/Extremes.html">min()</a></code>, <code><a href="https://rdrr.io/r/base/Extremes.html">max()</a></code>, et <code><a href="https://rdrr.io/r/base/range.html">range()</a></code>. L’amplitude de l’intervalle serait ici de : 20.2-4.5 = 15.7.</p>
+<p>L’étendue est la mesure la plus simple de la dispersion des données contenues dans une variable. Elle est exprimée avec la plus petite valeur (minimum) et la plus grande valeur (maximum) observée, ou alors parfois avec la différence entre ces deux valeurs. Par exemple, dans la variable ci-dessous dont les données ont été classées en ordre croissant, le minimum est 4.5, le maximum est 20.2, et l’étendue peut être donnée par l’intervalle [4.5 – 20.2]. Pour obtenir ces différents résultats dans R, il est possible d’utiliser les fonctions <code><a href="https://rdrr.io/r/base/Extremes.html">min()</a></code>, <code><a href="https://rdrr.io/r/base/Extremes.html">max()</a></code>, et <code><a href="https://rdrr.io/r/base/range.html">range()</a></code>. L’amplitude de l’intervalle serait ici de : 20.2-4.5 = 15.7.</p>
 <div class="sourceCode" id="cb120"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">vec</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4.5</span>, <span class="fl">7.8</span>, <span class="fl">10.8</span>, <span class="fl">13.9</span>, <span class="fl">20.2</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">vec</span><span class="op">)</span></span></code></pre></div>
@@ -400,27 +415,27 @@ Figure 3.9: Effet de la forme de la distribution sur la position de la médiane
 <p>On remarque ici que la fonction <code><a href="https://rdrr.io/r/stats/quantile.html">quantile()</a></code> a plusieurs arguments. L’argument <code>probs</code> désigne les quantiles que l’on souhaite obtenir. Le quantile 0.25 correspond à Q1, et le quantile 0.75 correspond à Q3. L’argument <code>type</code> permet de configurer le type de calcul à effectuer pour obtenir les valeurs des quantiles recherchés. L’indication du chiffre 2 pour l’argument <code>type</code> permet d’obtenir les quantiles selon la méthode de calcul présentée ci-dessus, qui, comme nous l’avons précisé, est dédiée à l’étude d’une variable quantitative discrète. Par défaut, en revanche, la fonction <code><a href="https://rdrr.io/r/stats/quantile.html">quantile()</a></code> utilise le chiffre 7 pour l’argument <code>type</code>, ce qui renvoie à une méthode de calcul des quantiles qui serait davantage pertinente pour étudier des variables quantitatives continues. Comparons les résultats obtenus avec les deux méthodes de calcul :</p>
 <div class="custom-table">
 <div class="tabwid">
-<style>.cl-64443c88{}.cl-643a22f2{font-family:'Helvetica';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-643a22fc{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-643e8086{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-643e9d0a{width:0.896in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-643e9d14{width:0.769in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-643e9d1e{width:0.896in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-643e9d28{width:0.769in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-643e9d29{width:0.896in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-643e9d2a{width:0.769in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<div class="inline-table"><table data-quarto-disable-processing="true" class="cl-64443c88">
+<style>.cl-323de18e{}.cl-32252f90{font-family:'Helvetica';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-32252fa4{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-3230e07e{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-3230fe1a{width:0.896in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3230fe24{width:0.769in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3230fe2e{width:0.896in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3230fe38{width:0.769in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3230fe39{width:0.896in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3230fe42{width:0.769in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<div class="inline-table"><table data-quarto-disable-processing="true" class="cl-323de18e">
 <caption style="display:table-caption;margin:0pt;text-align:center;border-bottom: 0.00pt solid transparent;border-top: 0.00pt solid transparent;border-left: 0.00pt solid transparent;border-right: 0.00pt solid transparent;padding-top:3pt;padding-bottom:3pt;padding-left:3pt;padding-right:3pt;line-height: 1;background-color:transparent;">
 <span id="tab:quantilesCompaMethods">Tableau 3.1: </span><span>Comparaison des quantiles obtenus selon différentes configurations de la fonction quantile()</span>
 </caption>
 
 <thead><tr style="overflow-wrap:break-word;">
-<th class="cl-643e9d0a"><p class="cl-643e8086"><span class="cl-643a22f2">Quantile</span></p></th>
-<th class="cl-643e9d14"><p class="cl-643e8086"><span class="cl-643a22f2">Type 2</span></p></th>
-<th class="cl-643e9d14"><p class="cl-643e8086"><span class="cl-643a22f2">Type 7</span></p></th>
+<th class="cl-3230fe1a"><p class="cl-3230e07e"><span class="cl-32252f90">Quantile</span></p></th>
+<th class="cl-3230fe24"><p class="cl-3230e07e"><span class="cl-32252f90">Type 2</span></p></th>
+<th class="cl-3230fe24"><p class="cl-3230e07e"><span class="cl-32252f90">Type 7</span></p></th>
 </tr></thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-643e9d1e"><p class="cl-643e8086"><span class="cl-643a22fc">0.25</span></p></td>
-<td class="cl-643e9d28"><p class="cl-643e8086"><span class="cl-643a22fc">9.30</span></p></td>
-<td class="cl-643e9d28"><p class="cl-643e8086"><span class="cl-643a22fc">10.050</span></p></td>
+<td class="cl-3230fe2e"><p class="cl-3230e07e"><span class="cl-32252fa4">0.25</span></p></td>
+<td class="cl-3230fe38"><p class="cl-3230e07e"><span class="cl-32252fa4">9.30</span></p></td>
+<td class="cl-3230fe38"><p class="cl-3230e07e"><span class="cl-32252fa4">10.050</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-643e9d29"><p class="cl-643e8086"><span class="cl-643a22fc">0.75</span></p></td>
-<td class="cl-643e9d2a"><p class="cl-643e8086"><span class="cl-643a22fc">31.55</span></p></td>
-<td class="cl-643e9d2a"><p class="cl-643e8086"><span class="cl-643a22fc">28.575</span></p></td>
+<td class="cl-3230fe39"><p class="cl-3230e07e"><span class="cl-32252fa4">0.75</span></p></td>
+<td class="cl-3230fe42"><p class="cl-3230e07e"><span class="cl-32252fa4">31.55</span></p></td>
+<td class="cl-3230fe42"><p class="cl-3230e07e"><span class="cl-32252fa4">28.575</span></p></td>
 </tr>
 </tbody>
 </table></div>
@@ -429,57 +444,57 @@ Figure 3.9: Effet de la forme de la distribution sur la position de la médiane
 <p>On remarque que les résultats de la fonction <code><a href="https://rdrr.io/r/stats/quantile.html">quantile()</a></code> sont différents selon la configuration de l’argument <code>type</code>. Le choix de la configuration est donc important. Pour comprendre comment R a calculé les valeurs associées aux quantiles 0.25 et 0.75 dans le cadre de la seconde méthode (i.e., avec <code>type</code> = 7), regardons le tableau ci-dessous.</p>
 <div class="custom-table">
 <div class="tabwid">
-<style>.cl-646ae1da{}.cl-645fe3ca{font-family:'Helvetica';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-645fe3de{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-64646878{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-6464856a{width:0.667in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-64648574{width:1.007in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-64648575{width:0.752in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6464857e{width:0.667in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-64648588{width:1.007in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-64648592{width:0.752in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6464859c{width:0.667in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6464859d{width:1.007in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-646485a6{width:0.752in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-646485a7{width:0.667in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-646485a8{width:1.007in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-646485b0{width:0.752in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-646485b1{width:0.667in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-646485b2{width:1.007in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-646485ba{width:0.752in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-646485bb{width:0.667in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-646485c4{width:1.007in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-646485c5{width:0.752in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<div class="inline-table"><table data-quarto-disable-processing="true" class="cl-646ae1da">
+<style>.cl-3271c8be{}.cl-32632304{font-family:'Helvetica';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-32632318{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-32692c90{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-32694a04{width:0.667in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-32694a0e{width:1.007in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-32694a18{width:0.752in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-32694a19{width:0.667in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-32694a22{width:1.007in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-32694a2c{width:0.752in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-32694a2d{width:0.667in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-32694a2e{width:1.007in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-32694a36{width:0.752in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-32694a37{width:0.667in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-32694a40{width:1.007in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-32694a41{width:0.752in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-32694a42{width:0.667in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-32694a4a{width:1.007in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-32694a4b{width:0.752in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-32694a4c{width:0.667in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-32694a54{width:1.007in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-32694a55{width:0.752in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<div class="inline-table"><table data-quarto-disable-processing="true" class="cl-3271c8be">
 <caption style="display:table-caption;margin:0pt;text-align:center;border-bottom: 0.00pt solid transparent;border-top: 0.00pt solid transparent;border-left: 0.00pt solid transparent;border-right: 0.00pt solid transparent;padding-top:3pt;padding-bottom:3pt;padding-left:3pt;padding-right:3pt;line-height: 1;background-color:transparent;">
 <span id="tab:quantilesContinuousMethod">Tableau 3.2: </span><span>Quantiles d’une variable quantitative continue</span>
 </caption>
 
 <thead><tr style="overflow-wrap:break-word;">
-<th class="cl-6464856a"><p class="cl-64646878"><span class="cl-645fe3ca">Rang</span></p></th>
-<th class="cl-64648574"><p class="cl-64646878"><span class="cl-645fe3ca">Quantile</span></p></th>
-<th class="cl-64648575"><p class="cl-64646878"><span class="cl-645fe3ca">Valeur</span></p></th>
+<th class="cl-32694a04"><p class="cl-32692c90"><span class="cl-32632304">Rang</span></p></th>
+<th class="cl-32694a0e"><p class="cl-32692c90"><span class="cl-32632304">Quantile</span></p></th>
+<th class="cl-32694a18"><p class="cl-32692c90"><span class="cl-32632304">Valeur</span></p></th>
 </tr></thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-6464857e"><p class="cl-64646878"><span class="cl-645fe3de">1</span></p></td>
-<td class="cl-64648588"><p class="cl-64646878"><span class="cl-645fe3de">0.0000000</span></p></td>
-<td class="cl-64648592"><p class="cl-64646878"><span class="cl-645fe3de">4.5</span></p></td>
+<td class="cl-32694a19"><p class="cl-32692c90"><span class="cl-32632318">1</span></p></td>
+<td class="cl-32694a22"><p class="cl-32692c90"><span class="cl-32632318">0.0000000</span></p></td>
+<td class="cl-32694a2c"><p class="cl-32692c90"><span class="cl-32632318">4.5</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-6464859c"><p class="cl-64646878"><span class="cl-645fe3de">2</span></p></td>
-<td class="cl-6464859d"><p class="cl-64646878"><span class="cl-645fe3de">0.1428571</span></p></td>
-<td class="cl-646485a6"><p class="cl-64646878"><span class="cl-645fe3de">7.8</span></p></td>
+<td class="cl-32694a2d"><p class="cl-32692c90"><span class="cl-32632318">2</span></p></td>
+<td class="cl-32694a2e"><p class="cl-32692c90"><span class="cl-32632318">0.1428571</span></p></td>
+<td class="cl-32694a36"><p class="cl-32692c90"><span class="cl-32632318">7.8</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-646485a7"><p class="cl-64646878"><span class="cl-645fe3de">3</span></p></td>
-<td class="cl-646485a8"><p class="cl-64646878"><span class="cl-645fe3de">0.2857143</span></p></td>
-<td class="cl-646485b0"><p class="cl-64646878"><span class="cl-645fe3de">10.8</span></p></td>
+<td class="cl-32694a37"><p class="cl-32692c90"><span class="cl-32632318">3</span></p></td>
+<td class="cl-32694a40"><p class="cl-32692c90"><span class="cl-32632318">0.2857143</span></p></td>
+<td class="cl-32694a41"><p class="cl-32692c90"><span class="cl-32632318">10.8</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-6464859c"><p class="cl-64646878"><span class="cl-645fe3de">4</span></p></td>
-<td class="cl-6464859d"><p class="cl-64646878"><span class="cl-645fe3de">0.4285714</span></p></td>
-<td class="cl-646485a6"><p class="cl-64646878"><span class="cl-645fe3de">13.9</span></p></td>
+<td class="cl-32694a2d"><p class="cl-32692c90"><span class="cl-32632318">4</span></p></td>
+<td class="cl-32694a2e"><p class="cl-32692c90"><span class="cl-32632318">0.4285714</span></p></td>
+<td class="cl-32694a36"><p class="cl-32692c90"><span class="cl-32632318">13.9</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-646485b1"><p class="cl-64646878"><span class="cl-645fe3de">5</span></p></td>
-<td class="cl-646485b2"><p class="cl-64646878"><span class="cl-645fe3de">0.5714286</span></p></td>
-<td class="cl-646485ba"><p class="cl-64646878"><span class="cl-645fe3de">20.2</span></p></td>
+<td class="cl-32694a42"><p class="cl-32692c90"><span class="cl-32632318">5</span></p></td>
+<td class="cl-32694a4a"><p class="cl-32692c90"><span class="cl-32632318">0.5714286</span></p></td>
+<td class="cl-32694a4b"><p class="cl-32692c90"><span class="cl-32632318">20.2</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-6464859c"><p class="cl-64646878"><span class="cl-645fe3de">6</span></p></td>
-<td class="cl-6464859d"><p class="cl-64646878"><span class="cl-645fe3de">0.7142857</span></p></td>
-<td class="cl-646485a6"><p class="cl-64646878"><span class="cl-645fe3de">25.6</span></p></td>
+<td class="cl-32694a2d"><p class="cl-32692c90"><span class="cl-32632318">6</span></p></td>
+<td class="cl-32694a2e"><p class="cl-32692c90"><span class="cl-32632318">0.7142857</span></p></td>
+<td class="cl-32694a36"><p class="cl-32692c90"><span class="cl-32632318">25.6</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-646485a7"><p class="cl-64646878"><span class="cl-645fe3de">7</span></p></td>
-<td class="cl-646485a8"><p class="cl-64646878"><span class="cl-645fe3de">0.8571429</span></p></td>
-<td class="cl-646485b0"><p class="cl-64646878"><span class="cl-645fe3de">37.5</span></p></td>
+<td class="cl-32694a37"><p class="cl-32692c90"><span class="cl-32632318">7</span></p></td>
+<td class="cl-32694a40"><p class="cl-32692c90"><span class="cl-32632318">0.8571429</span></p></td>
+<td class="cl-32694a41"><p class="cl-32692c90"><span class="cl-32632318">37.5</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-646485bb"><p class="cl-64646878"><span class="cl-645fe3de">8</span></p></td>
-<td class="cl-646485c4"><p class="cl-64646878"><span class="cl-645fe3de">1.0000000</span></p></td>
-<td class="cl-646485c5"><p class="cl-64646878"><span class="cl-645fe3de">43.9</span></p></td>
+<td class="cl-32694a4c"><p class="cl-32692c90"><span class="cl-32632318">8</span></p></td>
+<td class="cl-32694a54"><p class="cl-32692c90"><span class="cl-32632318">1.0000000</span></p></td>
+<td class="cl-32694a55"><p class="cl-32692c90"><span class="cl-32632318">43.9</span></p></td>
 </tr>
 </tbody>
 </table></div>
@@ -526,7 +541,7 @@ Joanes et Gill <span class="citation">(<a href="r%C3%A9f%C3%A9rences.html#ref-jo
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">e1071</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/e1071/man/kurtosis.html">kurtosis</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Width</span>, type <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.1387047</code></pre>
-<p>Comme on peut le voir dans l’aide associée à la fonction <code><a href="https://rdrr.io/pkg/e1071/man/kurtosis.html">kurtosis()</a></code>, il existe en réalité plusieurs méthodes de calcul du coefficient d’aplatissement (noté <span class="math inline">\(\gamma_{2}\)</span> ci-dessous) . La méthode de <code>type</code> 3, qui est celle configurée par défaut pour cette fonction, consiste à faire le calcul suivant :</p>
+<p>Comme on peut le voir dans l’aide associée à la fonction <code><a href="https://rdrr.io/pkg/e1071/man/kurtosis.html">kurtosis()</a></code>, il existe en réalité plusieurs méthodes de calcul du coefficient d’aplatissement (noté <span class="math inline">\(\gamma_{2}\)</span> ci-dessous). La méthode de <code>type</code> 3, qui est celle configurée par défaut pour cette fonction, consiste à faire le calcul suivant :</p>
 <p><span class="math display">\[\gamma_{2} =  \frac{1}{\hat{\sigma}^4} {\frac{\sum_{i=1}^{N} (X{i} - \overline{X})^4}{N}} -3\]</span>
 Dans ce calcul, <span class="math inline">\(\hat{\sigma}\)</span> désigne l’écart-type non biaisé de la variable, et <span class="math inline">\(N\)</span> désigne la taille de la variable. Avec cette méthode, on obtient un coefficient négatif lorsque la distribution est particulièrement aplatie par rapport à une distribution suivant une loi normale (distribution platycurtique), un coefficient de 0 lorsque la distribution suit une loi normale (distribution mésocurtique), et un coefficient positif lorsque la distribution est particulièrement pointue par rapport à une loi normale (distribution leptocurtique). Ceci est illustré sur la Figure <a href="analyses-univari%C3%A9es.html#fig:kurtosisdistri">3.12</a>.</p>
 <div class="figure" style="text-align: center">
@@ -616,6 +631,283 @@ Comme avec le coefficient d’asymétrie, Joanes et Gill <span class="citation">
 ## Petal.Length  0.52    -0.37 0.08  5.10  5.88
 ## Petal.Width  -0.12    -0.75 0.04  1.80  2.30
 ## Species*       NaN      NaN 0.00  3.00  3.00</code></pre>
+<p>Notons aussi l’existence de la fonction <code><a href="https://docs.ropensci.org/skimr/reference/skim.html">skim()</a></code> du package <code>skimr</code> pour obtenir un résumé clair des types de variables et des statistiques principales, ainsi que des valeurs manquantes :</p>
+<div class="sourceCode" id="cb145"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/skimr/">skimr</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Analyse de l'ensemble des variables</span></span>
+<span><span class="fu"><a href="https://docs.ropensci.org/skimr/reference/skim.html">skim</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-table"><table class="table table-sm">
+<caption>
+<span id="tab:unnamed-chunk-6">Tableau 3.3: </span>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">iris</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">150</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">5</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">factor</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">numeric</td>
+<td align="left">4</td>
+</tr>
+<tr class="even">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Variable type: factor</strong></p>
+<div class="inline-table"><table style="width:100%;" class="table table-sm">
+<colgroup>
+<col width="17%">
+<col width="12%">
+<col width="17%">
+<col width="9%">
+<col width="11%">
+<col width="32%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="left">ordered</th>
+<th align="right">n_unique</th>
+<th align="left">top_counts</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td align="left">Species</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">3</td>
+<td align="left">set: 50, ver: 50, vir: 50</td>
+</tr></tbody>
+</table></div>
+<p><strong>Variable type: numeric</strong></p>
+<div class="inline-table"><table style="width:100%;" class="table table-sm">
+<colgroup>
+<col width="18%">
+<col width="13%">
+<col width="18%">
+<col width="6%">
+<col width="6%">
+<col width="5%">
+<col width="5%">
+<col width="6%">
+<col width="5%">
+<col width="6%">
+<col width="7%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+<th align="left">hist</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Sepal.Length</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">5.84</td>
+<td align="right">0.83</td>
+<td align="right">4.3</td>
+<td align="right">5.1</td>
+<td align="right">5.80</td>
+<td align="right">6.4</td>
+<td align="right">7.9</td>
+<td align="left">▆▇▇▅▂</td>
+</tr>
+<tr class="even">
+<td align="left">Sepal.Width</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">3.06</td>
+<td align="right">0.44</td>
+<td align="right">2.0</td>
+<td align="right">2.8</td>
+<td align="right">3.00</td>
+<td align="right">3.3</td>
+<td align="right">4.4</td>
+<td align="left">▁▆▇▂▁</td>
+</tr>
+<tr class="odd">
+<td align="left">Petal.Length</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">3.76</td>
+<td align="right">1.77</td>
+<td align="right">1.0</td>
+<td align="right">1.6</td>
+<td align="right">4.35</td>
+<td align="right">5.1</td>
+<td align="right">6.9</td>
+<td align="left">▇▁▆▇▂</td>
+</tr>
+<tr class="even">
+<td align="left">Petal.Width</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1.20</td>
+<td align="right">0.76</td>
+<td align="right">0.1</td>
+<td align="right">0.3</td>
+<td align="right">1.30</td>
+<td align="right">1.8</td>
+<td align="right">2.5</td>
+<td align="left">▇▁▇▅▃</td>
+</tr>
+</tbody>
+</table></div>
+<div class="sourceCode" id="cb146"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Analyse d'une variable (Sepal.Length) par groupe (Species)</span></span>
+<span><span class="va">iris</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Species</span>, <span class="va">Sepal.Length</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">Species</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://docs.ropensci.org/skimr/reference/skim.html">skim</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-table"><table class="table table-sm">
+<caption>
+<span id="tab:unnamed-chunk-6">Tableau 3.3: </span>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">dplyr::group_by(dplyr::se…</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">150</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">2</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">numeric</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">Group variables</td>
+<td align="left">Species</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Variable type: numeric</strong></p>
+<div class="inline-table"><table class="table table-sm">
+<colgroup>
+<col width="16%">
+<col width="12%">
+<col width="11%">
+<col width="16%">
+<col width="5%">
+<col width="5%">
+<col width="4%">
+<col width="5%">
+<col width="4%">
+<col width="4%">
+<col width="5%">
+<col width="6%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">skim_variable</th>
+<th align="left">Species</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+<th align="left">hist</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Sepal.Length</td>
+<td align="left">setosa</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">5.01</td>
+<td align="right">0.35</td>
+<td align="right">4.3</td>
+<td align="right">4.80</td>
+<td align="right">5.0</td>
+<td align="right">5.2</td>
+<td align="right">5.8</td>
+<td align="left">▃▃▇▅▁</td>
+</tr>
+<tr class="even">
+<td align="left">Sepal.Length</td>
+<td align="left">versicolor</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">5.94</td>
+<td align="right">0.52</td>
+<td align="right">4.9</td>
+<td align="right">5.60</td>
+<td align="right">5.9</td>
+<td align="right">6.3</td>
+<td align="right">7.0</td>
+<td align="left">▂▇▆▃▃</td>
+</tr>
+<tr class="odd">
+<td align="left">Sepal.Length</td>
+<td align="left">virginica</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">6.59</td>
+<td align="right">0.64</td>
+<td align="right">4.9</td>
+<td align="right">6.23</td>
+<td align="right">6.5</td>
+<td align="right">6.9</td>
+<td align="right">7.9</td>
+<td align="left">▁▃▇▃▂</td>
+</tr>
+</tbody>
+</table></div>
 </div>
 <div id="quelles-statistiques-choisir-pour-résumer-une-variable-quantitative-dans-un-rapport" class="section level3" number="3.1.6">
 <h3>
@@ -653,7 +945,7 @@ Figure 3.14: Exemples de positions de la moyenne et de la médiane dans le cadre
 <span class="header-section-number">3.2.1</span> Visualiser la distribution de la variable<a class="anchor" aria-label="anchor" href="#visualiser-la-distribution-de-la-variable-1"><i class="fas fa-link"></i></a>
 </h3>
 <p>Comme dans le cadre de variables quantitatives, une bonne pratique est de visualiser graphiquement la distribution d’une variable qualitative avant de l’analyser. Ici, il s’agit plus précisément de prendre connaissance des effectifs correspondant aux différentes modalités de la variable. Une manière rapide de procéder pour cela est d’utiliser la fonction <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> et la fonction <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar()</a></code>. Illustrons cela avec le jeu de données <code>diamonds</code>, qui contient notamment la variable qualitative <code>color</code>.</p>
-<div class="sourceCode" id="cb145"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb147"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Aperçu du jeu de données</span></span>
 <span><span class="va">diamonds</span></span></code></pre></div>
 <pre><code>## # A tibble: 53,940 × 10
@@ -670,9 +962,9 @@ Figure 3.14: Exemples de positions de la moyenne et de la médiane dans le cadre
 ##  9  0.22 Fair      E     VS2      65.1    61   337  3.87  3.78  2.49
 ## 10  0.23 Very Good H     VS1      59.4    61   338  4     4.05  2.39
 ## # ℹ 53,930 more rows</code></pre>
-<div class="sourceCode" id="cb147"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb149"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Visualisation de la distribution de la variable color</span></span>
-<span><span class="va">diamonds</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span><span class="va">diamonds</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">color</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
@@ -682,8 +974,8 @@ Figure 3.15: Exemple de diagramme en barres
 </p>
 </div>
 <p>Bien que rapide, la manière de procéder avec le code montré ci-avant devient vite limitée lorsque l’on veut enrichir le graphique, tel qu’en ajoutant les valeurs des effectifs au-dessus des barres ou encore en changeant l’ordre de disposition des barres. Pour gagner en capacité de modification du graphique, on peut d’abord passer par une étape intermédiaire consistant à créer un mini-jeu de données où la variable <code>color</code> serait déjà résumée à l’aide de la fonction <code>count</code> du package <code>dplyr</code>, de telle sorte à n’avoir que la valeur de l’effectif en regard de chaque modalité. Ceci est montré dans le code ci-dessous.</p>
-<div class="sourceCode" id="cb148"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">diamonds</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<div class="sourceCode" id="cb150"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">diamonds</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">color</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## # A tibble: 7 × 2
 ##   color     n
@@ -696,17 +988,17 @@ Figure 3.15: Exemple de diagramme en barres
 ## 6 I      5422
 ## 7 J      2808</code></pre>
 <p>Si l’on poursuit le code avec les fonctions <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> et <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar()</a></code> (cf. code ci-dessous), on arrive alors au même résultat que précédemment (cf Figure <a href="analyses-univari%C3%A9es.html#fig:geombar">3.15</a>). On note qu’il a fallu adapter l’argument <code>stat</code> de la fonction <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar()</a></code> pour que le graphique montre bien en ordonnées la valeur de la variable nouvellement appelée <code>n</code>, qui comprend les effectifs de chaque modalité.</p>
-<div class="sourceCode" id="cb150"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">diamonds</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">color</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<div class="sourceCode" id="cb152"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">diamonds</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">color</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">color</span>, y <span class="op">=</span> <span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span><span class="op">)</span></span></code></pre></div>
 <p>Certes, pour le moment, cette seconde procédure n’a fait que rajouter une ligne de code par rapport à la première procédure. Toutefois, en reprenant la logique de la seconde procédure, on peut à présent créer des graphiques en barres plus élaborés relativement facilement, comme montré ci-dessous.</p>
-<div class="sourceCode" id="cb151"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb153"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Diagramme en barres avec les effectifs affichés à proximité des barres</span></span>
 <span><span class="va">A</span> <span class="op">&lt;-</span> </span>
-<span>  <span class="va">diamonds</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">color</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="va">diamonds</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">color</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">color</span>, y <span class="op">=</span> <span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">n</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">2</span>, nudge_y <span class="op">=</span> <span class="fl">700</span><span class="op">)</span> <span class="op">+</span></span>
@@ -714,8 +1006,8 @@ Figure 3.15: Exemple de diagramme en barres
 <span></span>
 <span><span class="co"># Diagramme en barres réorganisées manuellement</span></span>
 <span><span class="va">B</span> <span class="op">&lt;-</span> </span>
-<span>  <span class="va">diamonds</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">color</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="va">diamonds</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">color</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_relevel.html">fct_relevel</a></span><span class="op">(</span><span class="va">color</span>, <span class="st">"J"</span>, <span class="st">"I"</span>, <span class="st">"H"</span>, <span class="st">"G"</span>, <span class="st">"F"</span>, <span class="st">"E"</span>, <span class="st">"D"</span><span class="op">)</span>, </span>
 <span>             y <span class="op">=</span> <span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span><span class="op">)</span> <span class="op">+</span></span>
@@ -724,8 +1016,8 @@ Figure 3.15: Exemple de diagramme en barres
 <span></span>
 <span><span class="co"># Diagramme en barres réorganisées en ordre croissant</span></span>
 <span><span class="va">C</span> <span class="op">&lt;-</span> </span>
-<span>  <span class="va">diamonds</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">color</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="va">diamonds</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">color</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_reorder.html">fct_reorder</a></span><span class="op">(</span><span class="va">color</span>, <span class="va">n</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"color"</span><span class="op">)</span> <span class="op">+</span></span>
@@ -733,8 +1025,8 @@ Figure 3.15: Exemple de diagramme en barres
 <span></span>
 <span><span class="co"># Diagramme en barres réorganisées en ordre décroissant</span></span>
 <span><span class="va">D</span> <span class="op">&lt;-</span> </span>
-<span>  <span class="va">diamonds</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">color</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="va">diamonds</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">color</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_reorder.html">fct_reorder</a></span><span class="op">(</span><span class="va">color</span>, <span class="op">-</span><span class="va">n</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"color"</span><span class="op">)</span> <span class="op">+</span></span>
@@ -742,8 +1034,8 @@ Figure 3.15: Exemple de diagramme en barres
 <span></span>
 <span><span class="co"># Diagramme en barres pivoté</span></span>
 <span><span class="va">E</span> <span class="op">&lt;-</span> </span>
-<span>  <span class="va">diamonds</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">color</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="va">diamonds</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">color</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_reorder.html">fct_reorder</a></span><span class="op">(</span><span class="va">color</span>, <span class="op">-</span><span class="va">n</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -751,8 +1043,8 @@ Figure 3.15: Exemple de diagramme en barres
 <span></span>
 <span><span class="co"># Dotplot pivoté</span></span>
 <span><span class="cn">F</span> <span class="op">&lt;-</span> </span>
-<span>  <span class="va">diamonds</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">color</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="va">diamonds</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">color</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_reorder.html">fct_reorder</a></span><span class="op">(</span><span class="va">color</span>, <span class="op">-</span><span class="va">n</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -764,52 +1056,60 @@ Figure 3.16: Différentes sortes de diagrammes en barres
 </p>
 </div>
 <p>Dans le code montré ci-dessus, on remarque que le réagencement manuel des barres (cf. graphique B) a pu être réalisé grâce à la fonction <code><a href="https://forcats.tidyverse.org/reference/fct_relevel.html">fct_relevel()</a></code> du package <code>forcats</code>. Pour les autres diagrammes, la réorganisation des barres en ordre croissant ou décroissant sur la base de la valeur de l’effectif (<code>n</code>) a pu se faire grâce à la fonction <code><a href="https://forcats.tidyverse.org/reference/fct_reorder.html">fct_reorder()</a></code> du package <code>forcats</code>. Les noms des arguments de ces fonctions n’ont pas été indiqués pour alléger le code. Le plus important, c’est d’indiquer en premier dans la fonction la variable dont l’ordre d’apparition des modalités doit être réorganisé (il s’agissait de la variable <code>color</code> dans cet exemple). En second, il convient d’indiquer la logique de réorganisation de l’apparition des modalités (ce qui a été fait sur la base des valeurs de la variable <code>n</code> dans les exemples ci-dessus utilisant la fonction <code><a href="https://forcats.tidyverse.org/reference/fct_reorder.html">fct_reorder()</a></code>).</p>
-<p>Toujours dans le code montré ci-dessus, on peut voir aussi, dans la fonction <code><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text()</a></code> du graphique A, la présence de l’argument <code>nudge_y</code>. Cet argument permet de régler le décalage entre le haut de la barre et le texte. L’ordre de grandeur du chiffre indiqué est celui de la variable indiquée en ordonnées.</p>
+<p>Toujours dans le code montré ci-dessus, on peut voir aussi, dans la fonction <code><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text()</a></code> du graphique A, la présence de l’argument <code>nudge_y</code>. Cet argument permet de régler le décalage entre le haut de la barre et le texte. L’unité du chiffre indiqué est celle de la variable montrée en ordonnées.</p>
 <p>On observe que la réorganisation des barres selon un ordre croissant ou décroissant clarifie l’information délivrée par le graphique. Toutefois, cette réorganisation est en principe surtout recommandée pour des variables qualitative nominales, c’est-à-dire des variables pour lesquelles il n’existe pas un ordre naturel des modalités. Lorsqu’il existe un ordre naturel des modalités, comme c’est le cas pour des variables qualitatives ordinales, les modalités devraient préférentiellement suivre leur ordre naturel.</p>
 <p>En plus des effectifs, il est aussi possible de prendre connaissance de la distribution à l’aide des proportions, c’est-à-dire des ratios entre les effectifs liés aux différentes modalités et l’effectif total. Les proportions peuvent être visualisées avec un diagramme circulaire (i.e., un camembert), avec un diagramme en barres empilées, ou avec des barres disposées côte-à-côte. Les diagrammes circulaires et avec barres empilées mettent en avant le fait que les parties individuelles étudiées font partie d’un même ensemble. Les diagrammes circulaires peuvent être utilisés efficacement à cet effet lorsqu’ils montrent des fractions simples telles qu’un quart, un tiers, ou une moitié. Toutefois, les parties individuelles sont plus facilement comparables lorsqu’on utilise des barres mises côte-à-côte, comme montré ci-avant. Les diagrammes avec barres empilées sont quant à eux difficiles à comprendre lorsqu’il s’agit de n’étudier qu’une seule variable qualitative <span class="citation">(<a href="r%C3%A9f%C3%A9rences.html#ref-wilkeFundamentalsDataVisualization2018" role="doc-biblioref">Wilke, 2018</a>)</span>.</p>
-<div class="sourceCode" id="cb152"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb154"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Diagramme en barres empilées montrant les effectifs</span></span>
-<span><span class="va">A</span> <span class="op">&lt;-</span> </span>
-<span>  <span class="va">diamonds</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">color</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span><span class="va">A</span> <span class="op">&lt;-</span></span>
+<span>  <span class="va">diamonds</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">color</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">""</span>, y <span class="op">=</span> <span class="va">n</span>, fill <span class="op">=</span> <span class="va">color</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">n</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">2</span>, </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">n</span><span class="op">)</span>,</span>
+<span>            size <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>            position <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/position_stack.html">position_stack</a></span><span class="op">(</span>vjust <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"A"</span><span class="op">)</span></span>
-<span>  </span>
+<span></span>
 <span><span class="co"># Diagramme en barres empilées montrant les proportions</span></span>
-<span><span class="va">B</span> <span class="op">&lt;-</span> </span>
-<span>  <span class="va">diamonds</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">color</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>prop <span class="op">=</span> <span class="va">n</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">*</span> <span class="fl">100</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span><span class="va">B</span> <span class="op">&lt;-</span></span>
+<span>  <span class="va">diamonds</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">color</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>prop <span class="op">=</span> <span class="va">n</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">*</span> <span class="fl">100</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">""</span>, y <span class="op">=</span> <span class="va">prop</span>, fill <span class="op">=</span> <span class="va">color</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">prop</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>, <span class="st">" %"</span><span class="op">)</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">2</span>, </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">prop</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>, <span class="st">" %"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>            size <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>            position <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/position_stack.html">position_stack</a></span><span class="op">(</span>vjust <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"B"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Diagramme circulaire montrant les effectifs</span></span>
-<span><span class="va">C</span> <span class="op">&lt;-</span> </span>
-<span>  <span class="va">diamonds</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">color</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span><span class="va">C</span> <span class="op">&lt;-</span></span>
+<span>  <span class="va">diamonds</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">color</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">""</span>, y <span class="op">=</span> <span class="va">n</span>, fill <span class="op">=</span> <span class="va">color</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span>, position <span class="op">=</span> <span class="st">"stack"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_polar.html">coord_polar</a></span><span class="op">(</span>theta <span class="op">=</span> <span class="st">"y"</span>, start <span class="op">=</span> <span class="fl">0</span>, direction <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">n</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">2</span>, </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_polar.html">coord_polar</a></span><span class="op">(</span>theta <span class="op">=</span> <span class="st">"y"</span>,</span>
+<span>              start <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>              direction <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">n</span><span class="op">)</span>,</span>
+<span>            size <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>            position <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/position_stack.html">position_stack</a></span><span class="op">(</span>vjust <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"C"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Diagramme circulaire montrant les proportions</span></span>
 <span><span class="va">D</span> <span class="op">&lt;-</span></span>
-<span>  <span class="va">diamonds</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">color</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>prop <span class="op">=</span> <span class="va">n</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">*</span> <span class="fl">100</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="va">diamonds</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">color</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>prop <span class="op">=</span> <span class="va">n</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">*</span> <span class="fl">100</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">""</span>, y <span class="op">=</span> <span class="va">prop</span>, fill <span class="op">=</span> <span class="va">color</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span>, position <span class="op">=</span> <span class="st">"stack"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_polar.html">coord_polar</a></span><span class="op">(</span>theta <span class="op">=</span> <span class="st">"y"</span>, start <span class="op">=</span> <span class="fl">0</span>, direction <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">prop</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>, <span class="st">" %"</span><span class="op">)</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">2</span>, </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_polar.html">coord_polar</a></span><span class="op">(</span>theta <span class="op">=</span> <span class="st">"y"</span>,</span>
+<span>              start <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>              direction <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">prop</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>, <span class="st">" %"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>            size <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>            position <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/position_stack.html">position_stack</a></span><span class="op">(</span>vjust <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"D"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
@@ -824,7 +1124,7 @@ Figure 3.17: Différentes sortes de diagrammes pour représenter des proportions
 <span class="header-section-number">3.2.2</span> Déterminer la tendance centrale<a class="anchor" aria-label="anchor" href="#d%C3%A9terminer-la-tendance-centrale"><i class="fas fa-link"></i></a>
 </h3>
 <p>Dans le cadre de variables qualitatives, la tendance centrale peut être renseignée à l’aide du mode en présence d’une variable nominale, et à l’aide de la médiane ou du mode en présence d’une variable ordinale <span class="citation">(<a href="r%C3%A9f%C3%A9rences.html#ref-gonzalesMeasuresCentralTendency2001" role="doc-biblioref">Gonzales &amp; Ottenbacher, 2001</a>)</span>. Avec des variables qualitatives, il est possible de prendre connaissance du mode facilement à l’aide d’un tableau de résultats qui récapitule, par ordre décroissant, les effectifs et les proportions associées aux différentes modalités de la variable étudiée. Ce type de tableau peut être obtenu à l’aide de la fonction <code><a href="https://juba.github.io/questionr/reference/freq.html">freq()</a></code> du package <code>questionr</code>, qu’il convient d’installer et charger au préalable afin de pouvoir l’utiliser. Dans l’exemple ci-dessous, le mode de la variable <code>color</code> dans le jeu de données <code>diamonds</code> est la modalité présente sur la première ligne du tableau.</p>
-<div class="sourceCode" id="cb153"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb155"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://juba.github.io/questionr/">questionr</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://juba.github.io/questionr/reference/freq.html">freq</a></span><span class="op">(</span><span class="va">diamonds</span><span class="op">$</span><span class="va">color</span>, valid <span class="op">=</span> <span class="cn">TRUE</span>, total <span class="op">=</span> <span class="cn">TRUE</span>, sort <span class="op">=</span> <span class="st">"dec"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##           n     %  val%
@@ -850,7 +1150,7 @@ Figure 3.17: Différentes sortes de diagrammes pour représenter des proportions
 <ul>
 <li>d’un histogramme avec la fonction <code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">ggplot2::geom_histogram()</a></code> ;</li>
 <li>d’une boîte à moustaches avec la fonction <code><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">ggplot2::geom_boxplot()</a></code> ;</li>
-<li>ou encore d’un <em>raincloud plot</em> avec les fonctions <code><a href="http://mjskay.github.io/ggdist/reference/stat_halfeye.html">ggdist::stat_halfeye()</a></code>, <code><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">ggplot2::geom_boxplot()</a></code>, et <code><a href="https://rdrr.io/pkg/gghalves/man/geom_half_point.html">gghalves::geom_half_point()</a></code>.</li>
+<li>ou encore d’un <em>raincloud plot</em> avec la fonction <code><a href="https://rdrr.io/pkg/ggrain/man/geom_rain.html">ggrain::geom_rain()</a></code>.</li>
 </ul>
 </li>
 <li><p>La distribution d’une variable quantitative peut être notamment de forme gaussienne, asymétrique, leptocurtique, ou encore platycurtique.</p></li>
@@ -858,7 +1158,7 @@ Figure 3.17: Différentes sortes de diagrammes pour représenter des proportions
 <li><p>Les indices de dispersion disponibles pour résumer une variable quantitative sont l’étendue (<code><a href="https://rdrr.io/r/base/Extremes.html">min()</a></code>, <code><a href="https://rdrr.io/r/base/Extremes.html">max()</a></code>, <code><a href="https://rdrr.io/r/base/range.html">range()</a></code>), l’écart-type (<code><a href="https://rdrr.io/r/stats/sd.html">sd()</a></code>), et les quartiles (<code>quantile(probs = c(0.25, 0.75))</code>).</p></li>
 <li><p>L’indice statistique permettant de décrire le niveau d’asymétrie d’une variable quantitative est le coefficient d’asymétrie (<code><a href="https://rdrr.io/pkg/e1071/man/skewness.html">e1071::skewness()</a></code>).</p></li>
 <li><p>L’indice statistique permettant de décrire le niveau d’aplatissement d’une variable quantitative est le coefficient d’aplatissement (<code><a href="https://rdrr.io/pkg/e1071/man/kurtosis.html">e1071::kurtosis()</a></code>).</p></li>
-<li><p>Les fonctions <code><a href="https://rdrr.io/pkg/psych/man/describe.html">psych::describe()</a></code> et <code><a href="https://rdrr.io/pkg/psych/man/describe.by.html">psych::describeBy()</a></code> permettent de récapituler les indices statistiques généralement étudiés dans le cadre de variables quantitatives.</p></li>
+<li><p>Les fonctions <code><a href="https://rdrr.io/pkg/psych/man/describe.html">psych::describe()</a></code>, <code><a href="https://rdrr.io/pkg/psych/man/describe.by.html">psych::describeBy()</a></code> ou encore <code><a href="https://docs.ropensci.org/skimr/reference/skim.html">skimr::skim()</a></code> permettent de récapituler les indices statistiques généralement étudiés dans le cadre de variables quantitatives.</p></li>
 <li><p>Lorsque la distribution d’une variable quantitative est gaussienne, approximativement 68.3 %, 95.5 %, et 99.7 % des observations sont situées dans ± 1 <em>s</em>, ± 2 <em>s</em>, et ± 3 <em>s</em> autour de la moyenne, respectivement (<em>s</em> étant l’écart-type de la variable).</p></li>
 <li><p>Lorsque la distribution d’une variable quantitative est asymétrique, la médiane peut être l’indicateur le plus adapté pour décrire la tendance centrale, en particulier en présence de petits échantillons.</p></li>
 <li><p>Lors de l’analyse d’une variable qualitative, une première étape doit être de visualiser graphiquement la distribution des effectifs. Cela peut se faire à l’aide d’un diagramme en barres (<code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">ggplot2::geom_bar()</a></code>).</p></li>
@@ -911,7 +1211,7 @@ Figure 3.17: Différentes sortes de diagrammes pour représenter des proportions
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Analyser des données avec R</strong>" was written by Pierre-Yves de Müllenheim. It was last built on 2023-09-11.</p>
+    <p>"<strong>Analyser des données avec R</strong>" was written by Pierre-Yves de Müllenheim. It was last built on 2023-09-12.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

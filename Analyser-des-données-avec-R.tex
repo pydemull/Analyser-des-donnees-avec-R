@@ -143,7 +143,7 @@
 
 \title{Analyser des données avec R}
 \author{Pierre-Yves de Müllenheim}
-\date{2023-09-11}
+\date{2023-09-12}
 
 \begin{document}
 \maketitle
@@ -1858,7 +1858,7 @@ Nous venons de voir plusieurs fonctions qui peuvent être très utiles pour pouv
 
 Réaliser une analyse descriptive univariée signifie que l'on s'intéresse à une seule variable en particulier. L'enjeu est ici de prendre connaissance de la distribution de la variable, c'est-à-dire de la manière selon laquelle se répartissent les observations en fonction des valeurs que prend la variable. De manière complémentaire, l'analyse descriptive univariée vise à prendre connaissance des indices statistiques qui caractérisent la variable, ainsi qu'à déterminer ceux qui seraient les plus pertinents pour la résumer.
 
-Dans cette partie, les notions de \textbf{population} et d'\textbf{échantillon} vont revenir à plusieurs reprises. La notion de population désigne tous les individus existant qui satisfont à un ou plusieurs critères particuliers (e.g., les adultes de moins de 30 ans). En général, lorsque l'on souhaite étudier un phénomène dans une population cible, il est impossible de prendre en compte tous les individus de la population en question. L'alternative est alors de conduire l'étude sur un échantillon, c'est-à-dire une fraction de la population composée d'individus qui représentent la population étudiée. La distinction entre population et échantillon est importante à faire à plusieurs égards. Si une étude n'a pu être conduite que sur un échantillon, cela implique de mettre en oeuvre des procédures statistiques pour estimer avec plus ou moins d'incertitude le résultat réel concernant la population étudiée, cela à partir du résultat trouvé dans l'échantillon observé. La seule analyse descriptive de l'échantillon ne suffit donc pas en soit à décrire une population. En revanche, lorsque l'étude a pu être conduite sur l'ensemble de la population à étudier (e.g., l'équipe de France dans un sport donné), il n'y a par définition pas lieu de chercher à conduire des procédures statistiques particulières pour estimer le résultat réel pour la population en question. Dans ce chapitre, les procédures d'analyse proposées servent en général à seulement décrire la variable telle qu'elle est donnée à voir à partir des données que l'on a en sa possession. L'objectif n'est donc pas ici de discuter particulièrement des statistiques les plus pertinentes à utiliser lorsqu'il s'agit de chercher à résumer la distribution d'une variable à l'échelle d'une population à partir d'un échantillon initial. Pour le moment, il s'agit d'être en mesure de décrire l'échantillon (ou la population si les données obtenues concernent toute la population) que l'on a sous les yeux.
+Dans cette partie, les notions de \textbf{population} et d'\textbf{échantillon} vont revenir à plusieurs reprises. La notion de population désigne tous les individus existant qui satisfont à un ou plusieurs critères particuliers (e.g., les adultes de moins de 30 ans). En général, lorsque l'on souhaite étudier un phénomène dans une population cible, il est impossible de prendre en compte tous les individus de la population en question. L'alternative est alors de conduire l'étude sur un échantillon, c'est-à-dire une fraction de la population composée d'individus qui représentent la population étudiée. La distinction entre population et échantillon est importante à faire à plusieurs égards. Si une étude n'a pu être conduite que sur un échantillon, cela implique de mettre en oeuvre des procédures statistiques pour estimer avec plus ou moins d'incertitude le résultat réel concernant la population étudiée, cela à partir du résultat trouvé dans l'échantillon observé. La seule analyse descriptive de l'échantillon ne suffit donc pas en soi à décrire une population. En revanche, lorsque l'étude a pu être conduite sur l'ensemble de la population à étudier (e.g., l'équipe de France dans un sport donné), il n'y a par définition pas lieu de chercher à conduire des procédures statistiques particulières pour estimer le résultat réel pour la population en question. Dans ce chapitre, les procédures d'analyse proposées servent en général à seulement décrire la variable telle qu'elle est donnée à voir à partir des données que l'on a en sa possession. L'objectif n'est donc pas ici de discuter particulièrement des statistiques les plus pertinentes à utiliser lorsqu'il s'agit de chercher à résumer la distribution d'une variable à l'échelle d'une population à partir d'un échantillon initial. Pour le moment, il s'agit d'être en mesure de décrire l'échantillon (ou la population si les données obtenues concernent toute la population) que l'on a sous les yeux.
 
 Dans le cadre de cette partie, nous allons commencer à voir comment produire des graphiques dans RStudio, et par là-même, découvrir progressivement le package \texttt{ggplot2}. Le package \texttt{ggplot2} n'est pas le plus simple à utiliser lorsque l'on découvre le logiciel R. D'ailleurs, de nombreux manuels portant sur R privilégient les packages et fonctions de base de R lorsqu'il s'agit de montrer comment obtenir des graphiques relativement simples pour analyser ses données. Cependant, les packages et fonctions de base de R sont rapidement limités lorsqu'il s'agit de réaliser des graphiques relativement complexes. Le parti pris ici est donc d'initier dès à présent à l'utilisation du package \texttt{ggplot2} pour réaliser des graphiques, même simples, afin de pouvoir être plus rapidement à l'aise dès lors qu'il s'agira par la suite de produire des graphiques relativement élaborés à l'aide de ce package. Cependant, l'ambition n'est pas ici de permettre la maîtrise complète du package \texttt{ggplot2}. Pour cela, il vaut mieux se référer à des documentations spécialisées telles que la seconde édition de l'ouvrage \emph{ggplot2} d'Hadley Wickham \autocite*{wickhamGgplot22016}, en sachant qu'une troisième édition est en cours de développement et est accessible en ligne ici : \url{https://ggplot2-book.org}.
 
@@ -1868,7 +1868,7 @@ Dans le cadre de cette partie, nous allons commencer à voir comment produire de
 \hypertarget{visualiser-la-distribution-de-la-variable}{%
 \subsection{Visualiser la distribution de la variable}\label{visualiser-la-distribution-de-la-variable}}
 
-Dans le cadre de l'analyse de variables quantitatives, il est toujours utile de d'abord visualiser graphiquement la distribution des données à l'aide d'un \textbf{histogramme}. Un histogramme, c'est un graphique avec des barres dont la largeur représente un intervalle donné de valeurs numériques, et dont la hauteur représente le nombre d'observations associées à une valeur qui est située dans l'intervalle en question. Plus une barre est longue, plus il y a d'observations concernées par l'intervalle de valeurs. Un exemple d'histogramme est montré sur la Figure \ref{fig:geomhistogram}.
+Dans le cadre de l'analyse de variables quantitatives, il est toujours utile de d'abord visualiser graphiquement la distribution des données à l'aide d'un \textbf{histogramme}. Un histogramme, c'est un graphique avec des barres dont la largeur représente un intervalle donné de valeurs numériques, et dont la hauteur représente le nombre d'observations associées à une valeur qui est située dans l'intervalle en question. Plus une barre est haute, plus il y a d'observations concernées par l'intervalle de valeurs. Un exemple d'histogramme est montré sur la Figure \ref{fig:geomhistogram}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1886,12 +1886,12 @@ Dans le cadre de l'analyse de variables quantitatives, il est toujours utile de 
 \caption{Exemple d'histogramme}\label{fig:geomhistogram}
 \end{figure}
 
-Pour générer cet histogramme, nous avons utilisé les fonctions \texttt{ggplot()} et \texttt{geom\_histogram()} du package \texttt{ggplot2}. La fonction \texttt{ggplot()} est nécessaire pour initier le graphique. Si on lance la commande \texttt{ggplot()} dans la Console, on peut voir qu'un écran grisé apparaît à droite de l'écran du PC dans la fenêtre \textbf{Plots} de RStudio. Cet écran grisé est tel un tableau vierge qui ne demande qu'à être complété grâce à des commandes supplémentaires que l'on doit préciser dans le code. Dans le code montré ci-dessus, on remarque que la fonction \texttt{ggplot()} a été configurée à l'aide de deux éléments : l'argument \texttt{data}, et la fonction \texttt{aes()}. L'argument \texttt{data} permet de désigner le jeu de données à partir duquel n'importe quelle autre fonctionnalité du package \texttt{ggplot2} sera utilisée si rien d'autre n'est précisé dans le reste du code. Comme on peut le voir, le jeu de données utilisé ici est \texttt{iris}, que nous avons déjà rencontré dans la partie précédente. La fonction \texttt{aes()}, elle, permet de désigner les données à partir desquelles les éléments graphiques indiqués par la suite devront être réalisés. Dans le cadre d'une analyse univariée, nous n'avons besoin que d'une seule variable. Celle-ci peut être renseignée à droite de \texttt{x\ =}, et on aura reconnu dans le code ci-dessus le nom d'une variable effectivement présente dans le jeu de données \texttt{iris}. Une fois que ces informations sont renseignées, nous ne sommes pas encore en mesure de voir un quelconque graphique. Pour cela, il faut que la fonction \texttt{ggplot()} soit accompagnée d'une fonction qui permette d'indiquer quel type de graphique on veut. C'est à cela que sert ici la fonction \texttt{geom\_histogram()}. On peut noter que l'ajout de cette fonction a été réalisé grâce au signe \texttt{+}, en écrivant la fonction \emph{après} ce signe. La fonction \texttt{geom\_histogram()} aurait pu être écrite directement après le symbole \texttt{+}, mais pour des raisons de lisibilité, nous sommes allés à la ligne. (Attention : Aller à la ligne \emph{avant} le signe \texttt{+} n'est en revanche pas possible.) De manière intéressante et importante pour la suite, on pourra noter que dans ce cas de figure, nous aurions pu aussi utiliser le symbole \emph{pipe} (\texttt{\%\textgreater{}\%}) pour enchaîner la création d'un graphique à la suite de l'écriture du jeu de données comme cela :
+Pour générer cet histogramme, nous avons utilisé les fonctions \texttt{ggplot()} et \texttt{geom\_histogram()} du package \texttt{ggplot2}. La fonction \texttt{ggplot()} est nécessaire pour initier le graphique. Si on lance la commande \texttt{ggplot()} dans la Console, on peut voir qu'un écran grisé apparaît à droite de l'écran du PC dans la fenêtre \textbf{Plots} de RStudio. Cet écran grisé est tel un tableau vierge qui ne demande qu'à être complété grâce à des commandes supplémentaires que l'on doit préciser dans le code. Dans le code montré ci-dessus, on remarque que la fonction \texttt{ggplot()} a été configurée à l'aide de deux éléments : l'argument \texttt{data}, et la fonction \texttt{aes()}. L'argument \texttt{data} permet de désigner le jeu de données à partir duquel n'importe quelle autre fonctionnalité du package \texttt{ggplot2} sera utilisée si rien d'autre n'est précisé dans le reste du code. Comme on peut le voir, le jeu de données utilisé ici est \texttt{iris}, que nous avons déjà rencontré dans la partie précédente. La fonction \texttt{aes()}, elle, permet de désigner les données à partir desquelles les éléments graphiques indiqués par la suite devront être réalisés. Dans le cadre d'une analyse univariée, nous n'avons besoin que d'une seule variable. Celle-ci peut être renseignée à droite de \texttt{x\ =}, et on aura reconnu dans le code ci-dessus le nom d'une variable effectivement présente dans le jeu de données \texttt{iris}. Une fois que ces informations sont renseignées, nous ne sommes pas encore en mesure de voir un quelconque graphique. Pour cela, il faut que la fonction \texttt{ggplot()} soit accompagnée d'une fonction qui permette d'indiquer quel type de graphique on veut. C'est à cela que sert ici la fonction \texttt{geom\_histogram()}. On peut noter que l'ajout de cette fonction a été réalisé grâce au signe \texttt{+}, en écrivant la fonction \emph{après} ce signe. La fonction \texttt{geom\_histogram()} aurait pu être écrite directement après le symbole \texttt{+}, mais pour des raisons de lisibilité, nous sommes allés à la ligne. (Attention : Aller à la ligne \emph{avant} le signe \texttt{+} n'est en revanche pas possible.) De manière intéressante et importante pour la suite, on pourra noter que dans ce cas de figure, nous aurions pu aussi utiliser le symbole \emph{pipe} (\texttt{\textbar{}\textgreater{}}) pour enchaîner la création d'un graphique à la suite de l'écriture du jeu de données comme cela :
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{iris }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Sepal.Length)) }\SpecialCharTok{+}                  
+\NormalTok{iris }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Sepal.Length)) }\SpecialCharTok{+}
   \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{fill =} \StringTok{"white"}\NormalTok{, }\AttributeTok{color =} \StringTok{"black"}\NormalTok{)}
 
 \CommentTok{\# On remarque ici que l\textquotesingle{}argument \textasciigrave{}data = \textasciigrave{} dans \textasciigrave{}ggplot()\textasciigrave{} a dû être enlevé.}
@@ -1903,13 +1903,17 @@ Comme l'indique le message qui accompagne le graphique, l'histogramme a été r�
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# Graphique avec binwidth = 0.3}
-\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Sepal.Length)) }\SpecialCharTok{+} 
-  \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{binwidth  =} \FloatTok{0.3}\NormalTok{, }\AttributeTok{fill =} \StringTok{"white"}\NormalTok{, }\AttributeTok{color =} \StringTok{"black"}\NormalTok{) }\SpecialCharTok{+}
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Sepal.Length)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{binwidth  =} \FloatTok{0.3}\NormalTok{,}
+                 \AttributeTok{fill =} \StringTok{"white"}\NormalTok{,}
+                 \AttributeTok{color =} \StringTok{"black"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"binwidth = 0.3"}\NormalTok{)}
 
 \CommentTok{\# Graphique avec binwidth = 0.7}
-\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Sepal.Length)) }\SpecialCharTok{+} 
-  \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{binwidth  =} \FloatTok{0.7}\NormalTok{, }\AttributeTok{fill =} \StringTok{"white"}\NormalTok{, }\AttributeTok{color =} \StringTok{"black"}\NormalTok{) }\SpecialCharTok{+}
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Sepal.Length)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{binwidth  =} \FloatTok{0.7}\NormalTok{,}
+                 \AttributeTok{fill =} \StringTok{"white"}\NormalTok{,}
+                 \AttributeTok{color =} \StringTok{"black"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"binwidth = 0.7"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -1927,10 +1931,10 @@ En plus de l'histogramme, une autre manière de prendre connaissance graphiqueme
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Sepal.Length)) }\SpecialCharTok{+} 
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Sepal.Length)) }\SpecialCharTok{+}
   \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+}
-    \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.y =} \FunctionTok{element\_blank}\NormalTok{(), }
-          \AttributeTok{axis.ticks.y =} \FunctionTok{element\_blank}\NormalTok{())}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.y =} \FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{axis.ticks.y =} \FunctionTok{element\_blank}\NormalTok{())}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1943,19 +1947,19 @@ En plus de l'histogramme, une autre manière de prendre connaissance graphiqueme
 \caption{Exemple de boîte à moustaches}\label{fig:geomboxplot}
 \end{figure}
 
-La boîte à moustaches (cf.~Figure \ref{fig:geomboxplot}) nous livre plusieurs informations. Tout d'abord, ses extrémités nous indiquent ce qu'on appelle le premier quartile (ici représenté par le bord gauche de la boîte) et le troisième quartile (ici représenté par le bord droit de la boîte). Le premier quartile (Q1) désigne la valeur en-dessous de laquelle on retrouve 25 \% des observations de la variable (i.e., 25 \% des observations sont associées à une valeur plus faible que Q1), alors que le troisième quartile (Q3) représente la valeur en-dessous de laquelle on retrouve 75 \% des observations (i.e., 75 \% des observations sont associées à une valeur plus faible que Q3). Cela indique alors que sur la Figure \ref{fig:geomboxplot}, l'intervalle qui sépare le bord gauche du bord droit de la boîte contient 50 \% des observations. La ligne noire à l'intérieur de la boîte blanche désigne la médiane, qui est la valeur pour laquelle on a 50 \% des observations qui ont une valeur inférieure à cette valeur repère, et pour laquelle on a 50 \% des observations qui ont une valeur supérieure à cette valeur repère. Les lignes noires en-dehors de la boîte sont les moustaches. Dans le cas présent, la moustache de gauche s'étend jusqu'à la valeur minimale de la variable, et la moustache de droite s'étend jusqu'à la valeur maximale de la variable. Si le minimum (ou le maximum) avait été éloigné de la médiane de plus de 1.5 fois la différence entre Q3 et Q1 (qu'on appelle \textbf{intervalle interquartile}), l'extrémité de la moustache se serait arrêtée à la dernière valeur avant cette limite, et toute valeur ayant dépassé cette limite aurait été représentée par un point. Pour illustrer ce dernier cas de figure, on peut modifier manuellement une valeur de la variable \texttt{Sepal.Length} du jeu de données \texttt{iris} de telle sorte à ce qu'il y ait une nouvelle valeur qui soit particulièrement éloignée de la boîte. Une telle valeur s'appelle un \emph{outlier} (cf.~Figure \ref{fig:geomboxplotModified}).
+La boîte à moustaches (cf.~Figure \ref{fig:geomboxplot}) nous livre plusieurs informations. Tout d'abord, ses extrémités nous indiquent ce qu'on appelle le premier quartile (ici représenté par le bord gauche de la boîte) et le troisième quartile (ici représenté par le bord droit de la boîte). Le premier quartile (Q1) désigne la valeur en-dessous de laquelle on retrouve 25 \% des observations de la variable (i.e., 25 \% des observations sont associées à une valeur plus faible que Q1), alors que le troisième quartile (Q3) représente la valeur en-dessous de laquelle on retrouve 75 \% des observations (i.e., 75 \% des observations sont associées à une valeur plus faible que Q3). Cela indique alors que sur la Figure \ref{fig:geomboxplot}, l'intervalle qui sépare le bord gauche du bord droit de la boîte contient 50 \% des observations. La ligne noire à l'intérieur de la boîte blanche désigne la médiane, qui est la valeur pour laquelle on a 50 \% des observations qui ont une valeur inférieure à cette valeur repère, et pour laquelle on a 50 \% des observations qui ont une valeur supérieure à cette valeur repère. Les lignes noires en-dehors de la boîte sont les moustaches. Dans le cas présent, la moustache de gauche s'étend jusqu'à la valeur minimale de la variable, et la moustache de droite s'étend jusqu'à la valeur maximale de la variable. Si le minimum (ou le maximum) avait été éloigné de la médiane de plus de 1.5 fois la différence entre Q3 et Q1 (qu'on appelle l'\textbf{intervalle interquartile}), l'extrémité de la moustache se serait arrêtée à la dernière valeur avant cette limite, et toute valeur ayant dépassé cette limite aurait été représentée par un point. Pour illustrer ce dernier cas de figure, on peut modifier manuellement une valeur de la variable \texttt{Sepal.Length} du jeu de données \texttt{iris} de telle sorte à ce qu'il y ait une nouvelle valeur qui soit particulièrement éloignée de la boîte. Une telle valeur s'appelle un \emph{outlier} (cf.~Figure \ref{fig:geomboxplotModified}).
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# On modifie ici, pour l\textquotesingle{}exemple, la valeur de la 3ème observation}
 \CommentTok{\# en lui assignant la valeur 12.}
-\NormalTok{iris}\SpecialCharTok{$}\NormalTok{Sepal.Length[}\DecValTok{3}\NormalTok{] }\OtherTok{\textless{}{-}} \DecValTok{12}     
+\NormalTok{iris}\SpecialCharTok{$}\NormalTok{Sepal.Length[}\DecValTok{3}\NormalTok{] }\OtherTok{\textless{}{-}} \DecValTok{12}
 
 \CommentTok{\# Obtention du graphique}
-\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Sepal.Length)) }\SpecialCharTok{+}   
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Sepal.Length)) }\SpecialCharTok{+}
   \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+}
-    \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.y =} \FunctionTok{element\_blank}\NormalTok{(), }
-          \AttributeTok{axis.ticks.y =} \FunctionTok{element\_blank}\NormalTok{())}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.y =} \FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{axis.ticks.y =} \FunctionTok{element\_blank}\NormalTok{())}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1973,7 +1977,8 @@ Une boîte à moustaches a donc notamment l'intérêt de mettre en évidence des
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{is\_outlier }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x) \{}
-\NormalTok{  x }\SpecialCharTok{\textless{}} \FunctionTok{quantile}\NormalTok{(x, }\FloatTok{0.25}\NormalTok{) }\SpecialCharTok{{-}} \FloatTok{1.5} \SpecialCharTok{*} \FunctionTok{IQR}\NormalTok{(x) }\SpecialCharTok{|}\NormalTok{ x }\SpecialCharTok{\textgreater{}} \FunctionTok{quantile}\NormalTok{(x, }\FloatTok{0.75}\NormalTok{) }\SpecialCharTok{+} \FloatTok{1.5} \SpecialCharTok{*} \FunctionTok{IQR}\NormalTok{(x)}
+\NormalTok{  x }\SpecialCharTok{\textless{}} \FunctionTok{quantile}\NormalTok{(x, }\FloatTok{0.25}\NormalTok{) }\SpecialCharTok{{-}} \FloatTok{1.5} \SpecialCharTok{*} \FunctionTok{IQR}\NormalTok{(x) }\SpecialCharTok{|}
+\NormalTok{    x }\SpecialCharTok{\textgreater{}} \FunctionTok{quantile}\NormalTok{(x, }\FloatTok{0.75}\NormalTok{) }\SpecialCharTok{+} \FloatTok{1.5} \SpecialCharTok{*} \FunctionTok{IQR}\NormalTok{(x)}
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
@@ -2008,18 +2013,20 @@ Quand on regarde bien, on voit que la troisième observation de cette nouvelle v
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{iris }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{iris }\SpecialCharTok{|\textgreater{}}
   \CommentTok{\# Ajout d\textquotesingle{}un numéro id pour les observations}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{id =} \FunctionTok{as.factor}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{50}\NormalTok{, }\AttributeTok{times =} \DecValTok{3}\NormalTok{)), }
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{id =} \FunctionTok{as.factor}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{50}\NormalTok{, }\AttributeTok{times =} \DecValTok{3}\NormalTok{)),}
          \CommentTok{\# Création d\textquotesingle{}une nouvelle variable appelée id\_outlier}
-         \AttributeTok{id\_outlier =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{is\_outlier}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Sepal.Length), id, }\StringTok{""}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Sepal.Length, }\AttributeTok{y =} \StringTok{""}\NormalTok{)) }\SpecialCharTok{+} 
+         \AttributeTok{id\_outlier =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{is\_outlier}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Sepal.Length), id, }\StringTok{""}\NormalTok{)) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Sepal.Length, }\AttributeTok{y =} \StringTok{""}\NormalTok{)) }\SpecialCharTok{+}
   \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+}
   \CommentTok{\# Ajout des numéros id des outliers}
-  \FunctionTok{geom\_text}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{label =}\NormalTok{ id\_outlier),  }\AttributeTok{hjust =} \SpecialCharTok{{-}}\DecValTok{1}\NormalTok{) }\SpecialCharTok{+}     
-    \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.y =} \FunctionTok{element\_blank}\NormalTok{(), }
-          \AttributeTok{axis.ticks.y =} \FunctionTok{element\_blank}\NormalTok{(),}
-          \AttributeTok{axis.title.y =} \FunctionTok{element\_blank}\NormalTok{())}
+  \FunctionTok{geom\_text}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{label =}\NormalTok{ id\_outlier),  }\AttributeTok{hjust =} \SpecialCharTok{{-}}\DecValTok{1}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}
+    \AttributeTok{axis.text.y =} \FunctionTok{element\_blank}\NormalTok{(),}
+    \AttributeTok{axis.ticks.y =} \FunctionTok{element\_blank}\NormalTok{(),}
+    \AttributeTok{axis.title.y =} \FunctionTok{element\_blank}\NormalTok{()}
+\NormalTok{  )}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2036,9 +2043,9 @@ Il y a plusieurs choses à expliquer par rapport au graphique de la Figure \ref{
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{iris }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{id =} \FunctionTok{as.factor}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{50}\NormalTok{, }\AttributeTok{times =} \DecValTok{3}\NormalTok{)),                           }
-         \AttributeTok{id\_outlier =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{is\_outlier}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Sepal.Length), id, }\StringTok{""}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{iris }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{id =} \FunctionTok{as.factor}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{50}\NormalTok{, }\AttributeTok{times =} \DecValTok{3}\NormalTok{)),}
+         \AttributeTok{id\_outlier =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{is\_outlier}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Sepal.Length), id, }\StringTok{""}\NormalTok{)) }\SpecialCharTok{|\textgreater{}}
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(id, Sepal.Length, id\_outlier)}
 \end{Highlighting}
 \end{Shaded}
@@ -2091,9 +2098,17 @@ Parce qu'ils montrent les données individuelles, les \emph{raincloud plots} von
 \FunctionTok{library}\NormalTok{(ggrain)}
 
 \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ iris, }\FunctionTok{aes}\NormalTok{(}\DecValTok{1}\NormalTok{, Sepal.Length)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_rain}\NormalTok{(}\AttributeTok{fill =} \StringTok{"grey"}\NormalTok{, }\AttributeTok{boxplot.args =}\NormalTok{  rlang}\SpecialCharTok{::}\FunctionTok{list2}\NormalTok{(}\AttributeTok{fill =} \StringTok{"white"}\NormalTok{), }\AttributeTok{point.args =}\NormalTok{ rlang}\SpecialCharTok{::}\FunctionTok{list2}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.3}\NormalTok{, }\AttributeTok{size =} \DecValTok{3}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_rain}\NormalTok{(}
+    \AttributeTok{fill =} \StringTok{"grey"}\NormalTok{,}
+    \AttributeTok{boxplot.args =}\NormalTok{  rlang}\SpecialCharTok{::}\FunctionTok{list2}\NormalTok{(}\AttributeTok{fill =} \StringTok{"white"}\NormalTok{),}
+    \AttributeTok{point.args =}\NormalTok{ rlang}\SpecialCharTok{::}\FunctionTok{list2}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.3}\NormalTok{, }\AttributeTok{size =} \DecValTok{3}\NormalTok{)}
+\NormalTok{  ) }\SpecialCharTok{+}
   \FunctionTok{coord\_flip}\NormalTok{(}\AttributeTok{xlim =} \FunctionTok{c}\NormalTok{(}\FloatTok{0.9}\NormalTok{, }\FloatTok{1.5}\NormalTok{)) }\SpecialCharTok{+}
-  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.y =} \FunctionTok{element\_blank}\NormalTok{(), }\AttributeTok{axis.ticks.y =} \FunctionTok{element\_blank}\NormalTok{(), }\AttributeTok{axis.title.y =} \FunctionTok{element\_blank}\NormalTok{())}
+  \FunctionTok{theme}\NormalTok{(}
+    \AttributeTok{axis.text.y =} \FunctionTok{element\_blank}\NormalTok{(),}
+    \AttributeTok{axis.ticks.y =} \FunctionTok{element\_blank}\NormalTok{(),}
+    \AttributeTok{axis.title.y =} \FunctionTok{element\_blank}\NormalTok{()}
+\NormalTok{  )}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2117,7 +2132,7 @@ Lors de l'analyse de données, différentes formes typiques de distribution peuv
 \caption{Différents types de distributions}\label{fig:variousDistributions}
 \end{figure}
 
-Comme il le sera vu plus tard, de nombreuses analyses statistiques reposent sur l'hypothèse que la variable étudiée est gaussienne dans la population d'intérêt. Il est donc important de chercher à savoir, graphiquement dans un premier temps, si la distribution de la variable est effectivement gaussienne dans la population d'intérêt, cela à partir de l'échantillon que l'on a sous les yeux. Le fait d'être capable d'identifier les autres formes de distribution peut être aussi important afin de mener des analyses appropriées. Dans les exemples montrés ci-dessus, les distributions ont été créées à partir de 1000 valeurs générées de manière aléatoire de telle sorte à suivre des lois prédéfinies et ainsi illustrer différentes distributions possibles. C'est pour cette raison que les formes de distribution montrées sur la figure ci-dessus sont si nettes. Lorsque l'on travaille dans certains domaines ou contextes, tel qu'avec l'être humain, il peut être compliqué d'obtenir autant de données, et les formes de distribution seront alors plus dures à identifier.
+La confiance que l'on peut avoir dans des résultats issus d'analyses inférentielles dépend de l'adéquation entre, d'une part, la forme de la distribution de la population d'où vient l'échantillon, et d'autre part, l'indice statistique choisi pour résumer la distribution de l'échantillon, en particulier sa position, pour conduire les analyses inférentielles. Il est donc important de chercher à savoir, graphiquement dans un premier temps, si la distribution de la variable est effectivement gaussienne ou non dans la population d'intérêt, cela à partir de l'échantillon que l'on a sous les yeux. Le fait d'être capable d'identifier les autres formes de distribution peut être aussi important afin de mener des analyses appropriées. Dans les exemples montrés ci-dessus, les distributions ont été créées à partir de 1000 valeurs générées de manière aléatoire de telle sorte à suivre des lois prédéfinies et ainsi illustrer différentes distributions possibles. C'est pour cette raison que les formes de distribution montrées sur la figure ci-dessus sont si nettes. Lorsque l'on travaille dans certains domaines ou contextes, tel qu'avec l'être humain, il peut être compliqué d'obtenir autant de données, et les formes de distribution seront alors plus dures à identifier.
 
 Une fois qu'une première analyse graphique des données a été réalisée, il peut être utile de chercher à résumer de manière numérique la variable. Plusieurs types de statistiques peuvent être utilisés à cet effet : les \textbf{indices de position}, les \textbf{indices de dispersion}, les \textbf{indices d'asymétrie}, et les \textbf{indices d'aplatissement}.
 
@@ -2314,7 +2329,7 @@ Les indices de dispersion permettent de rendre compte de la manière selon laque
 
 \emph{L'étendue}
 
-L'étendue est la mesure la plus simple de la dispersion des données contenues dans une variable. Elle est exprimée avec la plus petite valeur (minimum) et la plus grande valeur (maximum) observée, ou alors parfois avec la différence de ces deux valeurs. Par exemple, dans la variable ci-dessous dont les données ont été classées en ordre croissant, le minimum est 4.5, le maximum est 20.2, et l'étendue peut être donnée par l'intervalle {[}4.5 -- 20.2{]}. Pour obtenir ces différents résultats dans R, il est possible d'utiliser les fonctions \texttt{min()}, \texttt{max()}, et \texttt{range()}. L'amplitude de l'intervalle serait ici de : 20.2-4.5 = 15.7.
+L'étendue est la mesure la plus simple de la dispersion des données contenues dans une variable. Elle est exprimée avec la plus petite valeur (minimum) et la plus grande valeur (maximum) observée, ou alors parfois avec la différence entre ces deux valeurs. Par exemple, dans la variable ci-dessous dont les données ont été classées en ordre croissant, le minimum est 4.5, le maximum est 20.2, et l'étendue peut être donnée par l'intervalle {[}4.5 -- 20.2{]}. Pour obtenir ces différents résultats dans R, il est possible d'utiliser les fonctions \texttt{min()}, \texttt{max()}, et \texttt{range()}. L'amplitude de l'intervalle serait ici de : 20.2-4.5 = 15.7.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2657,7 +2672,7 @@ Le fait qu'une distribution soit aplatie désigne le fait que la forme de la dis
 ## [1] 0.1387047
 \end{verbatim}
 
-Comme on peut le voir dans l'aide associée à la fonction \texttt{kurtosis()}, il existe en réalité plusieurs méthodes de calcul du coefficient d'aplatissement (noté \(\gamma_{2}\) ci-dessous) . La méthode de \texttt{type} 3, qui est celle configurée par défaut pour cette fonction, consiste à faire le calcul suivant :
+Comme on peut le voir dans l'aide associée à la fonction \texttt{kurtosis()}, il existe en réalité plusieurs méthodes de calcul du coefficient d'aplatissement (noté \(\gamma_{2}\) ci-dessous). La méthode de \texttt{type} 3, qui est celle configurée par défaut pour cette fonction, consiste à faire le calcul suivant :
 
 \[\gamma_{2} =  \frac{1}{\hat{\sigma}^4} {\frac{\sum_{i=1}^{N} (X{i} - \overline{X})^4}{N}} -3\]
 Dans ce calcul, \(\hat{\sigma}\) désigne l'écart-type non biaisé de la variable, et \(N\) désigne la taille de la variable. Avec cette méthode, on obtient un coefficient négatif lorsque la distribution est particulièrement aplatie par rapport à une distribution suivant une loi normale (distribution platycurtique), un coefficient de 0 lorsque la distribution suit une loi normale (distribution mésocurtique), et un coefficient positif lorsque la distribution est particulièrement pointue par rapport à une loi normale (distribution leptocurtique). Ceci est illustré sur la Figure \ref{fig:kurtosisdistri}.
@@ -2783,6 +2798,119 @@ Enfin, il est aussi possible d'obtenir ces récapitulatifs numériques en foncti
 ## Species*       NaN      NaN 0.00  3.00  3.00
 \end{verbatim}
 
+Notons aussi l'existence de la fonction \texttt{skim()} du package \texttt{skimr} pour obtenir un résumé clair des types de variables et des statistiques principales, ainsi que des valeurs manquantes :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(skimr)}
+
+\CommentTok{\# Analyse de l\textquotesingle{}ensemble des variables}
+\FunctionTok{skim}\NormalTok{(iris)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
+
+\caption{\label{tab:unnamed-chunk-6}Data summary}
+\centering
+\begin{tabular}[t]{l|l}
+\hline
+Name & iris\\
+\hline
+Number of rows & 150\\
+\hline
+Number of columns & 5\\
+\hline
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+\hline
+Column type frequency: & \\
+\hline
+factor & 1\\
+\hline
+numeric & 4\\
+\hline
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+\hline
+Group variables & None\\
+\hline
+\end{tabular}
+\end{table}
+
+\textbf{Variable type: factor}
+
+\begin{tabular}{l|r|r|l|r|l}
+\hline
+skim\_variable & n\_missing & complete\_rate & ordered & n\_unique & top\_counts\\
+\hline
+Species & 0 & 1 & FALSE & 3 & set: 50, ver: 50, vir: 50\\
+\hline
+\end{tabular}
+
+\textbf{Variable type: numeric}
+
+\begin{tabular}{l|r|r|r|r|r|r|r|r|r|l}
+\hline
+skim\_variable & n\_missing & complete\_rate & mean & sd & p0 & p25 & p50 & p75 & p100 & hist\\
+\hline
+Sepal.Length & 0 & 1 & 5.84 & 0.83 & 4.3 & 5.1 & 5.80 & 6.4 & 7.9 & ▆▇▇▅▂\\
+\hline
+Sepal.Width & 0 & 1 & 3.06 & 0.44 & 2.0 & 2.8 & 3.00 & 3.3 & 4.4 & ▁▆▇▂▁\\
+\hline
+Petal.Length & 0 & 1 & 3.76 & 1.77 & 1.0 & 1.6 & 4.35 & 5.1 & 6.9 & ▇▁▆▇▂\\
+\hline
+Petal.Width & 0 & 1 & 1.20 & 0.76 & 0.1 & 0.3 & 1.30 & 1.8 & 2.5 & ▇▁▇▅▃\\
+\hline
+\end{tabular}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Analyse d\textquotesingle{}une variable (Sepal.Length) par groupe (Species)}
+\NormalTok{iris }\SpecialCharTok{|\textgreater{}}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(Species, Sepal.Length) }\SpecialCharTok{|\textgreater{}} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{group\_by}\NormalTok{(Species) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{skim}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
+
+\caption{\label{tab:unnamed-chunk-6}Data summary}
+\centering
+\begin{tabular}[t]{l|l}
+\hline
+Name & dplyr::group\_by(dplyr::se...\\
+\hline
+Number of rows & 150\\
+\hline
+Number of columns & 2\\
+\hline
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+\hline
+Column type frequency: & \\
+\hline
+numeric & 1\\
+\hline
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+\hline
+Group variables & Species\\
+\hline
+\end{tabular}
+\end{table}
+
+\textbf{Variable type: numeric}
+
+\begin{tabular}{l|l|r|r|r|r|r|r|r|r|r|l}
+\hline
+skim\_variable & Species & n\_missing & complete\_rate & mean & sd & p0 & p25 & p50 & p75 & p100 & hist\\
+\hline
+Sepal.Length & setosa & 0 & 1 & 5.01 & 0.35 & 4.3 & 4.80 & 5.0 & 5.2 & 5.8 & ▃▃▇▅▁\\
+\hline
+Sepal.Length & versicolor & 0 & 1 & 5.94 & 0.52 & 4.9 & 5.60 & 5.9 & 6.3 & 7.0 & ▂▇▆▃▃\\
+\hline
+Sepal.Length & virginica & 0 & 1 & 6.59 & 0.64 & 4.9 & 6.23 & 6.5 & 6.9 & 7.9 & ▁▃▇▃▂\\
+\hline
+\end{tabular}
+
 \hypertarget{quelles-statistiques-choisir-pour-ruxe9sumer-une-variable-quantitative-dans-un-rapport}{%
 \subsection{Quelles statistiques choisir pour résumer une variable quantitative dans un rapport ?}\label{quelles-statistiques-choisir-pour-ruxe9sumer-une-variable-quantitative-dans-un-rapport}}
 
@@ -2858,7 +2986,7 @@ Comme dans le cadre de variables quantitatives, une bonne pratique est de visual
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# Visualisation de la distribution de la variable color}
-\NormalTok{diamonds }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{diamonds }\SpecialCharTok{|\textgreater{}} 
   \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ color)) }\SpecialCharTok{+} 
     \FunctionTok{geom\_bar}\NormalTok{()}
 \end{Highlighting}
@@ -2877,7 +3005,7 @@ Bien que rapide, la manière de procéder avec le code montré ci-avant devient 
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{diamonds }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{diamonds }\SpecialCharTok{|\textgreater{}} 
   \FunctionTok{count}\NormalTok{(color)}
 \end{Highlighting}
 \end{Shaded}
@@ -2899,8 +3027,8 @@ Si l'on poursuit le code avec les fonctions \texttt{ggplot()} et \texttt{geom\_b
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{diamonds }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{count}\NormalTok{(color) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{diamonds }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{count}\NormalTok{(color) }\SpecialCharTok{|\textgreater{}}
   \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ color, }\AttributeTok{y =}\NormalTok{ n)) }\SpecialCharTok{+}
      \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{)}
 \end{Highlighting}
@@ -2912,8 +3040,8 @@ Certes, pour le moment, cette seconde procédure n'a fait que rajouter une ligne
 \begin{Highlighting}[]
 \CommentTok{\# Diagramme en barres avec les effectifs affichés à proximité des barres}
 \NormalTok{A }\OtherTok{\textless{}{-}} 
-\NormalTok{  diamonds }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{count}\NormalTok{(color) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  diamonds }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{count}\NormalTok{(color) }\SpecialCharTok{|\textgreater{}}
   \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ color, }\AttributeTok{y =}\NormalTok{ n)) }\SpecialCharTok{+}
      \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+}
      \FunctionTok{geom\_text}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{label =}\NormalTok{ n), }\AttributeTok{size =} \DecValTok{2}\NormalTok{, }\AttributeTok{nudge\_y =} \DecValTok{700}\NormalTok{) }\SpecialCharTok{+}
@@ -2921,8 +3049,8 @@ Certes, pour le moment, cette seconde procédure n'a fait que rajouter une ligne
 
 \CommentTok{\# Diagramme en barres réorganisées manuellement}
 \NormalTok{B }\OtherTok{\textless{}{-}} 
-\NormalTok{  diamonds }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{count}\NormalTok{(color) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  diamonds }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{count}\NormalTok{(color) }\SpecialCharTok{|\textgreater{}}
   \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{fct\_relevel}\NormalTok{(color, }\StringTok{"J"}\NormalTok{, }\StringTok{"I"}\NormalTok{, }\StringTok{"H"}\NormalTok{, }\StringTok{"G"}\NormalTok{, }\StringTok{"F"}\NormalTok{, }\StringTok{"E"}\NormalTok{, }\StringTok{"D"}\NormalTok{), }
              \AttributeTok{y =}\NormalTok{ n)) }\SpecialCharTok{+}
      \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+}
@@ -2931,8 +3059,8 @@ Certes, pour le moment, cette seconde procédure n'a fait que rajouter une ligne
 
 \CommentTok{\# Diagramme en barres réorganisées en ordre croissant}
 \NormalTok{C }\OtherTok{\textless{}{-}} 
-\NormalTok{  diamonds }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{count}\NormalTok{(color) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  diamonds }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{count}\NormalTok{(color) }\SpecialCharTok{|\textgreater{}}
   \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{fct\_reorder}\NormalTok{(color, n), }\AttributeTok{y =}\NormalTok{ n)) }\SpecialCharTok{+}
      \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+}
      \FunctionTok{xlab}\NormalTok{(}\StringTok{"color"}\NormalTok{) }\SpecialCharTok{+}
@@ -2940,8 +3068,8 @@ Certes, pour le moment, cette seconde procédure n'a fait que rajouter une ligne
 
 \CommentTok{\# Diagramme en barres réorganisées en ordre décroissant}
 \NormalTok{D }\OtherTok{\textless{}{-}} 
-\NormalTok{  diamonds }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{count}\NormalTok{(color) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  diamonds }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{count}\NormalTok{(color) }\SpecialCharTok{|\textgreater{}}
   \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{fct\_reorder}\NormalTok{(color, }\SpecialCharTok{{-}}\NormalTok{n), }\AttributeTok{y =}\NormalTok{ n)) }\SpecialCharTok{+}
      \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+}
      \FunctionTok{xlab}\NormalTok{(}\StringTok{"color"}\NormalTok{) }\SpecialCharTok{+}
@@ -2949,8 +3077,8 @@ Certes, pour le moment, cette seconde procédure n'a fait que rajouter une ligne
 
 \CommentTok{\# Diagramme en barres pivoté}
 \NormalTok{E }\OtherTok{\textless{}{-}} 
-\NormalTok{  diamonds }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{count}\NormalTok{(color) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  diamonds }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{count}\NormalTok{(color) }\SpecialCharTok{|\textgreater{}}
   \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{fct\_reorder}\NormalTok{(color, }\SpecialCharTok{{-}}\NormalTok{n), }\AttributeTok{y =}\NormalTok{ n)) }\SpecialCharTok{+}
   \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+}
      \FunctionTok{coord\_flip}\NormalTok{() }\SpecialCharTok{+}
@@ -2958,8 +3086,8 @@ Certes, pour le moment, cette seconde procédure n'a fait que rajouter une ligne
 
 \CommentTok{\# Dotplot pivoté}
 \NormalTok{F }\OtherTok{\textless{}{-}} 
-\NormalTok{  diamonds }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{count}\NormalTok{(color) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  diamonds }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{count}\NormalTok{(color) }\SpecialCharTok{|\textgreater{}}
   \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{fct\_reorder}\NormalTok{(color, }\SpecialCharTok{{-}}\NormalTok{n), }\AttributeTok{y =}\NormalTok{ n)) }\SpecialCharTok{+}
      \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
      \FunctionTok{coord\_flip}\NormalTok{() }\SpecialCharTok{+}
@@ -2978,7 +3106,7 @@ Certes, pour le moment, cette seconde procédure n'a fait que rajouter une ligne
 
 Dans le code montré ci-dessus, on remarque que le réagencement manuel des barres (cf.~graphique B) a pu être réalisé grâce à la fonction \texttt{fct\_relevel()} du package \texttt{forcats}. Pour les autres diagrammes, la réorganisation des barres en ordre croissant ou décroissant sur la base de la valeur de l'effectif (\texttt{n}) a pu se faire grâce à la fonction \texttt{fct\_reorder()} du package \texttt{forcats}. Les noms des arguments de ces fonctions n'ont pas été indiqués pour alléger le code. Le plus important, c'est d'indiquer en premier dans la fonction la variable dont l'ordre d'apparition des modalités doit être réorganisé (il s'agissait de la variable \texttt{color} dans cet exemple). En second, il convient d'indiquer la logique de réorganisation de l'apparition des modalités (ce qui a été fait sur la base des valeurs de la variable \texttt{n} dans les exemples ci-dessus utilisant la fonction \texttt{fct\_reorder()}).
 
-Toujours dans le code montré ci-dessus, on peut voir aussi, dans la fonction \texttt{geom\_text()} du graphique A, la présence de l'argument \texttt{nudge\_y}. Cet argument permet de régler le décalage entre le haut de la barre et le texte. L'ordre de grandeur du chiffre indiqué est celui de la variable indiquée en ordonnées.
+Toujours dans le code montré ci-dessus, on peut voir aussi, dans la fonction \texttt{geom\_text()} du graphique A, la présence de l'argument \texttt{nudge\_y}. Cet argument permet de régler le décalage entre le haut de la barre et le texte. L'unité du chiffre indiqué est celle de la variable montrée en ordonnées.
 
 On observe que la réorganisation des barres selon un ordre croissant ou décroissant clarifie l'information délivrée par le graphique. Toutefois, cette réorganisation est en principe surtout recommandée pour des variables qualitative nominales, c'est-à-dire des variables pour lesquelles il n'existe pas un ordre naturel des modalités. Lorsqu'il existe un ordre naturel des modalités, comme c'est le cas pour des variables qualitatives ordinales, les modalités devraient préférentiellement suivre leur ordre naturel.
 
@@ -2987,47 +3115,55 @@ En plus des effectifs, il est aussi possible de prendre connaissance de la distr
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# Diagramme en barres empilées montrant les effectifs}
-\NormalTok{A }\OtherTok{\textless{}{-}} 
-\NormalTok{  diamonds }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{count}\NormalTok{(color) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{A }\OtherTok{\textless{}{-}}
+\NormalTok{  diamonds }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{count}\NormalTok{(color) }\SpecialCharTok{|\textgreater{}}
   \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \StringTok{""}\NormalTok{, }\AttributeTok{y =}\NormalTok{ n, }\AttributeTok{fill =}\NormalTok{ color)) }\SpecialCharTok{+}
   \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_text}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{label =}\NormalTok{ n), }\AttributeTok{size =} \DecValTok{2}\NormalTok{, }
+  \FunctionTok{geom\_text}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{label =}\NormalTok{ n),}
+            \AttributeTok{size =} \DecValTok{2}\NormalTok{,}
             \AttributeTok{position =} \FunctionTok{position\_stack}\NormalTok{(}\AttributeTok{vjust =} \FloatTok{0.5}\NormalTok{)) }\SpecialCharTok{+}
   \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"A"}\NormalTok{)}
-  
+
 \CommentTok{\# Diagramme en barres empilées montrant les proportions}
-\NormalTok{B }\OtherTok{\textless{}{-}} 
-\NormalTok{  diamonds }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{count}\NormalTok{(color) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{prop =}\NormalTok{ n }\SpecialCharTok{/} \FunctionTok{sum}\NormalTok{(n) }\SpecialCharTok{*} \DecValTok{100}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{B }\OtherTok{\textless{}{-}}
+\NormalTok{  diamonds }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{count}\NormalTok{(color) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{prop =}\NormalTok{ n }\SpecialCharTok{/} \FunctionTok{sum}\NormalTok{(n) }\SpecialCharTok{*} \DecValTok{100}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
   \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \StringTok{""}\NormalTok{, }\AttributeTok{y =}\NormalTok{ prop, }\AttributeTok{fill =}\NormalTok{ color)) }\SpecialCharTok{+}
   \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_text}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{label =} \FunctionTok{paste0}\NormalTok{(}\FunctionTok{round}\NormalTok{(prop, }\AttributeTok{digits =} \DecValTok{2}\NormalTok{), }\StringTok{" \%"}\NormalTok{)), }\AttributeTok{size =} \DecValTok{2}\NormalTok{, }
+  \FunctionTok{geom\_text}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{label =} \FunctionTok{paste0}\NormalTok{(}\FunctionTok{round}\NormalTok{(prop, }\AttributeTok{digits =} \DecValTok{2}\NormalTok{), }\StringTok{" \%"}\NormalTok{)),}
+            \AttributeTok{size =} \DecValTok{2}\NormalTok{,}
             \AttributeTok{position =} \FunctionTok{position\_stack}\NormalTok{(}\AttributeTok{vjust =} \FloatTok{0.5}\NormalTok{)) }\SpecialCharTok{+}
   \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"B"}\NormalTok{)}
 
 \CommentTok{\# Diagramme circulaire montrant les effectifs}
-\NormalTok{C }\OtherTok{\textless{}{-}} 
-\NormalTok{  diamonds }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{group\_by}\NormalTok{(color) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{n =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{C }\OtherTok{\textless{}{-}}
+\NormalTok{  diamonds }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{group\_by}\NormalTok{(color) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{n =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{|\textgreater{}}
   \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \StringTok{""}\NormalTok{, }\AttributeTok{y =}\NormalTok{ n, }\AttributeTok{fill =}\NormalTok{ color)) }\SpecialCharTok{+}
   \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{position =} \StringTok{"stack"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{coord\_polar}\NormalTok{(}\AttributeTok{theta =} \StringTok{"y"}\NormalTok{, }\AttributeTok{start =} \DecValTok{0}\NormalTok{, }\AttributeTok{direction =} \SpecialCharTok{{-}}\DecValTok{1}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_text}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{label =}\NormalTok{ n), }\AttributeTok{size =} \DecValTok{2}\NormalTok{, }
+  \FunctionTok{coord\_polar}\NormalTok{(}\AttributeTok{theta =} \StringTok{"y"}\NormalTok{,}
+              \AttributeTok{start =} \DecValTok{0}\NormalTok{,}
+              \AttributeTok{direction =} \SpecialCharTok{{-}}\DecValTok{1}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_text}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{label =}\NormalTok{ n),}
+            \AttributeTok{size =} \DecValTok{2}\NormalTok{,}
             \AttributeTok{position =} \FunctionTok{position\_stack}\NormalTok{(}\AttributeTok{vjust =} \FloatTok{0.5}\NormalTok{)) }\SpecialCharTok{+}
   \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"C"}\NormalTok{)}
 
 \CommentTok{\# Diagramme circulaire montrant les proportions}
 \NormalTok{D }\OtherTok{\textless{}{-}}
-\NormalTok{  diamonds }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{count}\NormalTok{(color) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{prop =}\NormalTok{ n }\SpecialCharTok{/} \FunctionTok{sum}\NormalTok{(n) }\SpecialCharTok{*} \DecValTok{100}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  diamonds }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{count}\NormalTok{(color) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{prop =}\NormalTok{ n }\SpecialCharTok{/} \FunctionTok{sum}\NormalTok{(n) }\SpecialCharTok{*} \DecValTok{100}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
   \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \StringTok{""}\NormalTok{, }\AttributeTok{y =}\NormalTok{ prop, }\AttributeTok{fill =}\NormalTok{ color)) }\SpecialCharTok{+}
   \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{position =} \StringTok{"stack"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{coord\_polar}\NormalTok{(}\AttributeTok{theta =} \StringTok{"y"}\NormalTok{, }\AttributeTok{start =} \DecValTok{0}\NormalTok{, }\AttributeTok{direction =} \SpecialCharTok{{-}}\DecValTok{1}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_text}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{label =} \FunctionTok{paste0}\NormalTok{(}\FunctionTok{round}\NormalTok{(prop, }\AttributeTok{digits =} \DecValTok{2}\NormalTok{), }\StringTok{" \%"}\NormalTok{)), }\AttributeTok{size =} \DecValTok{2}\NormalTok{, }
+  \FunctionTok{coord\_polar}\NormalTok{(}\AttributeTok{theta =} \StringTok{"y"}\NormalTok{,}
+              \AttributeTok{start =} \DecValTok{0}\NormalTok{,}
+              \AttributeTok{direction =} \SpecialCharTok{{-}}\DecValTok{1}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_text}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{label =} \FunctionTok{paste0}\NormalTok{(}\FunctionTok{round}\NormalTok{(prop, }\AttributeTok{digits =} \DecValTok{2}\NormalTok{), }\StringTok{" \%"}\NormalTok{)),}
+            \AttributeTok{size =} \DecValTok{2}\NormalTok{,}
             \AttributeTok{position =} \FunctionTok{position\_stack}\NormalTok{(}\AttributeTok{vjust =} \FloatTok{0.5}\NormalTok{)) }\SpecialCharTok{+}
   \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"D"}\NormalTok{)}
 \end{Highlighting}
@@ -3084,7 +3220,7 @@ Dans le cadre de variables qualitatives, la tendance centrale peut être renseig
   \item
     d'une boîte à moustaches avec la fonction \texttt{ggplot2::geom\_boxplot()} ;
   \item
-    ou encore d'un \emph{raincloud plot} avec les fonctions \texttt{ggdist::stat\_halfeye()}, \texttt{ggplot2::geom\_boxplot()}, et \texttt{gghalves::geom\_half\_point()}.
+    ou encore d'un \emph{raincloud plot} avec la fonction \texttt{ggrain::geom\_rain()}.
   \end{itemize}
 \item
   La distribution d'une variable quantitative peut être notamment de forme gaussienne, asymétrique, leptocurtique, ou encore platycurtique.
@@ -3097,7 +3233,7 @@ Dans le cadre de variables qualitatives, la tendance centrale peut être renseig
 \item
   L'indice statistique permettant de décrire le niveau d'aplatissement d'une variable quantitative est le coefficient d'aplatissement (\texttt{e1071::kurtosis()}).
 \item
-  Les fonctions \texttt{psych::describe()} et \texttt{psych::describeBy()} permettent de récapituler les indices statistiques généralement étudiés dans le cadre de variables quantitatives.
+  Les fonctions \texttt{psych::describe()}, \texttt{psych::describeBy()} ou encore \texttt{skimr::skim()} permettent de récapituler les indices statistiques généralement étudiés dans le cadre de variables quantitatives.
 \item
   Lorsque la distribution d'une variable quantitative est gaussienne, approximativement 68.3 \%, 95.5 \%, et 99.7 \% des observations sont situées dans ± 1 \emph{s}, ± 2 \emph{s}, et ± 3 \emph{s} autour de la moyenne, respectivement (\emph{s} étant l'écart-type de la variable).
 \item
@@ -5316,11 +5452,11 @@ Maintenant que l'on connaît la distribution théorique correspondant à notre e
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.8\linewidth]{Analyser-des-données-avec-R_files/figure-latex/unnamed-chunk-17-1} 
+{\centering \includegraphics[width=0.8\linewidth]{Analyser-des-données-avec-R_files/figure-latex/unnamed-chunk-18-1} 
 
 }
 
-\caption{Visualisation des fréquences dans le jeu de données `cartes`}\label{fig:unnamed-chunk-17}
+\caption{Visualisation des fréquences dans le jeu de données `cartes`}\label{fig:unnamed-chunk-18}
 \end{figure}
 
 La distribution \(O\) des fréquences observées pourrait s'écrire comme suit :
