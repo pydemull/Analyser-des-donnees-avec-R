@@ -143,7 +143,7 @@
 
 \title{Analyser des données avec R}
 \author{Pierre-Yves de Müllenheim}
-\date{2023-09-12}
+\date{2023-09-30}
 
 \begin{document}
 \maketitle
@@ -2713,10 +2713,10 @@ La fonction \texttt{describe()} peut être utilisée sur une variable donnée :
 \end{Shaded}
 
 \begin{verbatim}
-##   vars   n mean   sd median trimmed  mad min max range skew kurtosis
-## 1    1 150 3.06 0.44      3    3.04 0.44   2 4.4   2.4 0.31     0.14
-##     se Q0.25 Q0.75
-## 1 0.04   2.8   3.3
+##    vars   n mean   sd median trimmed  mad min max range skew kurtosis
+## X1    1 150 3.06 0.44      3    3.04 0.44   2 4.4   2.4 0.31     0.14
+##      se Q0.25 Q0.75
+## X1 0.04   2.8   3.3
 \end{verbatim}
 
 La fonction \texttt{describe()} peut être aussi utilisée sur un jeu de données entier. (Attention, les résumés numériques fournis pour les variables qualitatives n'auront pas de sens ; les variables qualitatives détectées sont indiquées avec un astérisque dans le tableau de résultats.)
@@ -3542,7 +3542,7 @@ Pour visualiser le lien que l'on peut faire entre la forme du nuage de points et
 \caption{Influence de la diminution de l'étendue des variables sur la valeur du coefficient de corrélation de Pearson}\label{fig:spuriousCorrelations}
 \end{figure}
 
-Un cas particulier illustrant l'influence du degré de dispersion sur la relation étudiée est montré sur la Figure \ref{fig:simpsonquant}. Cet exemple a pour but de montrer que l'étude d'une relation entre deux variables quantitatives peut aboutir à des conclusions radicalement différentes selon que l'on conduit les analyses à l'échelle d'un groupe entier ou que l'on sépare les analyses par groupe de caractéristiques, en particulier lorsque la distribution des données par groupe est radicalement différente de celle obtenue à l'échelle du groupe entier. Sur la gauche de la Figure \ref{fig:simpsonquant}, le nuage de points représente la relation entre deux variables à l'échelle de l'ensemble du groupe étudié. La variabilité possible pour les deux variables étudiées (V1 et V2 dans l'exemple) est alors maximale. Toutefois, ces données appartiennent en réalité à des sous-groupes distincts (cf.~couleurs sur le graphique de droite de la Figure \ref{fig:simpsonquant}). L'analyse par sous-groupe diminue la variabilité à la fois pour V1 et V2, donnant même lieu ici à des relations de sens opposé à celui observé à l'échelle de l'ensemble du groupe ! Cette situation correspond à ce qu'on appelle un paradoxe de Simpson, lequel se présente lorsque le phénomène que l'on peut observer avec une vue globale est annulé voir inversé lors d'une analyse par sous-groupe. Ici, la grande variabilité associée aux données du graphique de gauche de la Figure \ref{fig:simpsonquant} crée une relation artificiellement et donc faussement positive entre V1 et V2. C'est l'analyse par sous-groupe qui permet de révéler la vraie nature de la relation étudiée.
+Un cas particulier illustrant l'influence du degré de dispersion sur la relation étudiée est montré sur la Figure \ref{fig:simpsonquant}. Cet exemple a pour but de montrer que l'étude d'une relation entre deux variables quantitatives peut aboutir à des conclusions radicalement différentes selon que l'on conduit les analyses à l'échelle d'un groupe entier ou que l'on sépare les analyses par groupe de caractéristiques, en particulier lorsque la distribution des données par groupe est radicalement différente de celle obtenue à l'échelle du groupe entier. Sur la gauche de la Figure \ref{fig:simpsonquant}, le nuage de points représente la relation entre deux variables à l'échelle de l'ensemble du groupe étudié. La variabilité possible pour les deux variables étudiées (V1 et V2 dans l'exemple) est alors maximale. Toutefois, ces données appartiennent en réalité à des sous-groupes distincts (cf.~couleurs sur le graphique de droite de la Figure \ref{fig:simpsonquant}). L'analyse par sous-groupe diminue la variabilité à la fois pour V1 et V2, donnant même lieu ici à des relations de sens opposé à celui observé à l'échelle de l'ensemble du groupe ! Cette situation correspond à ce qu'on appelle un paradoxe de Simpson, lequel se présente lorsque le phénomène que l'on peut observer avec une vue globale est annulé voire inversé lors d'une analyse par sous-groupe. Ici, la grande variabilité associée aux données du graphique de gauche de la Figure \ref{fig:simpsonquant} crée une relation artificiellement et donc faussement positive entre V1 et V2. C'est l'analyse par sous-groupe qui permet de révéler la vraie nature de la relation étudiée.
 
 \begin{figure}
 
@@ -4882,9 +4882,8 @@ Le calcul classique pour obtenir la taille d'effet désignant l'écart entre deu
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{cohens\_d}\NormalTok{(}
-\NormalTok{  Blink\_rate }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Condition, }
-  \AttributeTok{data =}\NormalTok{ Blink2, }
-  \AttributeTok{paired =} \ConstantTok{TRUE}\NormalTok{, }
+  \FunctionTok{Pair}\NormalTok{(Blink\_rate[Condition }\SpecialCharTok{==} \StringTok{"Straight"}\NormalTok{], Blink\_rate[Condition }\SpecialCharTok{==} \StringTok{"Oscillating"}\NormalTok{]) }\SpecialCharTok{\textasciitilde{}} \DecValTok{1}\NormalTok{, }
+  \AttributeTok{data =}\NormalTok{ Blink2,}
   \AttributeTok{pooled\_sd =} \ConstantTok{TRUE}
 \NormalTok{  )}
 \end{Highlighting}
@@ -4906,7 +4905,7 @@ Ce calcul reviendrait donc à diviser la moyenne des différences par l'écart-t
 \begin{Highlighting}[]
 \FunctionTok{cohens\_d}\NormalTok{(}
 \NormalTok{  Blink\_rate }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Condition,}
-  \AttributeTok{data =}\NormalTok{ Blink2, }
+  \AttributeTok{data =}\NormalTok{ Blink2,}
   \AttributeTok{paired =} \ConstantTok{FALSE}\NormalTok{, }
   \AttributeTok{pooled\_sd =} \ConstantTok{FALSE}
 \NormalTok{  )}
