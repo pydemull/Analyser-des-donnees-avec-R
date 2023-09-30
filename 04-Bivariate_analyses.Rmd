@@ -1157,9 +1157,8 @@ $\overline{X}_{diff}$ désignant la moyenne des différences relatives à chaque
 
 ```{r cohens dz within, warning=FALSE, message=FALSE}
 cohens_d(
-  Blink_rate ~ Condition, 
-  data = Blink2, 
-  paired = TRUE, 
+  Pair(Blink_rate[Condition == "Straight"], Blink_rate[Condition == "Oscillating"]) ~ 1, 
+  data = Blink2,
   pooled_sd = TRUE
   )
 ```
@@ -1173,7 +1172,7 @@ Ce calcul reviendrait donc à diviser la moyenne des différences par l'écart-t
 ```{r cohens dav within, warning=FALSE, message=FALSE}
 cohens_d(
   Blink_rate ~ Condition,
-  data = Blink2, 
+  data = Blink2,
   paired = FALSE, 
   pooled_sd = FALSE
   )
