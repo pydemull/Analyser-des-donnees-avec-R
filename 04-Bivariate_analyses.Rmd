@@ -833,11 +833,10 @@ iris_two_species <-
 ```
 
 ```{r raindcloudplotsBivUnpaired1, out.width = '90%', fig.cap = "Exemple de graphique pour une comparaison de deux groupes de valeurs non-appariés (indépendants)"}
-ggplot(data = iris_two_species, aes(x = Species,y = Sepal.Length)) +
+ggplot(data = iris_two_species, aes(x = Species, y = Sepal.Length)) +
   geom_rain(point.args = rlang::list2(alpha = 0.3)) +
   stat_summary(
     geom = "errorbar",
-    color = "red",
     fun.data = "mean_sdl",
     fun.args = list(mult = 1),
     size = 1.1, 
@@ -846,7 +845,6 @@ ggplot(data = iris_two_species, aes(x = Species,y = Sepal.Length)) +
   stat_summary(
     geom = "point",
     fun = "mean", 
-    color = "red",
     size = 3
     )
 ```
@@ -885,12 +883,10 @@ ggplot(data = Blink2, aes(x = Condition, y = Blink_rate)) +
     aes(group = 1),
     fun = "mean",
     geom = "line",
-    color = "red",
     linewidth = 1
   ) +
   stat_summary(
     geom = "errorbar",
-    color = "red",
     fun.data = "mean_sdl",
     fun.args = list(mult = 1),
     size = 1.1, 
@@ -899,7 +895,6 @@ ggplot(data = Blink2, aes(x = Condition, y = Blink_rate)) +
   stat_summary(
     geom = "point",
     fun = "mean", 
-    color = "red",
     size = 3
     )
 ```
