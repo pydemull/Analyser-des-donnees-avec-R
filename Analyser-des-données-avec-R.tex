@@ -143,7 +143,7 @@
 
 \title{Analyser des données avec R}
 \author{Pierre-Yves de Müllenheim}
-\date{2023-09-30}
+\date{2023-11-02}
 
 \begin{document}
 \maketitle
@@ -4230,10 +4230,248 @@ Cette situation, qui peut paraître étonnante, illustre à nouveau ce qu'on app
 
 Autrement dit, les hommes se retrouvaient avec un pourcentage de réussite global bien meilleur que celui des femmes seulement parce que, comparativement aux femmes, les hommes s'étaient en proportion davantage engagés dans les départements où les taux de réussite étaient bien meilleurs.
 
+Au-delà du tableau de contingence, plusieurs outils statistiques sont disponibles pour quantifier le lien entre les modalités de deux variables qualitatives \autocite{janeEffectSizesConfidence2023}. On s'intéresse ici plus spécifiquement au coefficient Phi (\(\Phi\)), au \(V\) de Cramer, à la différence de risque, au risque relatif, et au rapport des cotes. À noter que tous ces indices statistiques, excepté le \(V\) de Cramer, sont essentiellement faits pour analyser le lien entre deux variables qualitatives dont l'une ne présenterait que deux modalités (on parle alors de variable binaire).
+
+\emph{Coefficient Phi}
+
+Le coefficient \(\Phi\) est une valeur qui peut être comprise entre -1 et 1 (ou entre 0 et 1 selon les manières de l'obtenir) et indique la force de la relation entre deux variables qualitatives binaires. Toutefois, seule la valeur absolue (entre 0 et 1 donc) est à interpréter. Le signe (si jamais différents signes peuvent apparaître selon le calcul utilisé) ne fait que renseigner sur la diagonale du tableau de contingence où les individus sont davantage polarisés. Pour comprendre comment \(\Phi\) peut être calculé, prenons les tableaux de contingence montrés ci-dessous (Figure \ref{fig:PhiContTables}) :
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.9\linewidth]{Analyser-des-données-avec-R_files/figure-latex/PhiContTables-1} 
+
+}
+
+\caption{Tableaux de contingence schématiques pour comprendre le calcul de Phi}\label{fig:PhiContTables}
+\end{figure}
+
+On note sur ces tableaux qu'une valeur absolue de \(\Phi\) élevée sera attendue dans le cas où il y aura relativement beaucoup d'individus dans une diagonale et relativement peu d'individus dans l'autre diagonale (cf.~tableaux du milieu et de droite ci-dessus). Si l'on prend comme base l'un des tableaux de contingence montrés ci-dessus, la formule du coefficient \(\Phi\) est la suivante \autocite{janeEffectSizesConfidence2023} :
+
+\[\Phi = \frac{(n_{11} \cdot n_{22}) - (n_{21} \cdot n_{12})}{\sqrt{(n_{11} + n_{21}) \cdot (n_{12} + n_{22}) \cdot (n_{11} + n_{12}) \cdot (n_{21} + n_{22})}}\]
+Une autre formule pour calculer \(\Phi\) (donnant systématiquement la valeur absolue du coefficient) pourrait être aussi la suivante \autocite{janeEffectSizesConfidence2023} :
+
+\[\Phi = \sqrt{\frac{\chi^2}{n}},\]
+
+avec \(\chi^2\) la statistique ``chi-carré'' et \(n\) le nombre total d'individus. Pour calculer \(\Phi\) dans R, on peut utiliser la fonction \texttt{phi()} du package \texttt{effectsize} :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tab }\OtherTok{\textless{}{-}} \FunctionTok{table}\NormalTok{(mtcars}\SpecialCharTok{$}\NormalTok{am, mtcars}\SpecialCharTok{$}\NormalTok{vs)}
+\NormalTok{effectsize}\SpecialCharTok{::}\FunctionTok{phi}\NormalTok{(tab)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Phi (adj.) |       95% CI
+## -------------------------
+## 0.00       | [0.00, 1.00]
+## 
+## - One-sided CIs: upper bound fixed at [1.00].
+\end{verbatim}
+
+\emph{\(V\) de Cramer}
+
+Le \(V\) de Cramer est la forme généralisée de la force d'association entre deux variables qualitatives. Il peut donc être calculé à partir d'un tableau de contingence de n'importe quelle taille, prendre des valeurs absolues entre 0 et 1, et est ainsi l'équivalent du coefficient \(\Phi\) dans le cas d'un tableau de contingence 2 x 2 (2 variables qualitatives x 2 modalités chacune). La formule du \(V\) de Cramer est la suivante \autocite{janeEffectSizesConfidence2023} :
+
+\[V = \sqrt{\frac{\chi^2}{n \cdot (k-1)}},\]
+avec \(\chi^2\) la statistique « chi-carré », \(n\) le nombre total d'individus, et \(k\) le nombre de modalités de la variable qui a le moins de modalités. Pour calculer le \(V\) de Cramer dans R, on peut utiliser la fonction \texttt{cramers\_v()} du package \texttt{effectsize} :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tab }\OtherTok{\textless{}{-}} \FunctionTok{table}\NormalTok{(JointSports\_full}\SpecialCharTok{$}\NormalTok{gender, JointSports\_full}\SpecialCharTok{$}\NormalTok{opinion)}
+\NormalTok{effectsize}\SpecialCharTok{::}\FunctionTok{cramers\_v}\NormalTok{(tab)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Cramer's V (adj.) |       95% CI
+## --------------------------------
+## 0.17              | [0.11, 1.00]
+## 
+## - One-sided CIs: upper bound fixed at [1.00].
+\end{verbatim}
+
+\emph{Différence de risque}
+
+La différence de risque est une différence de proportions. La notion de risque peut ne pas être très pertinente pour certains contextes, mais elle l'est particulièrement dans un contexte de santé. Pour comprendre le calcul du risque puis de la différence de risque, regardons le tableau ci-dessous (Figure \ref{fig:RiskContTables}).
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth]{Analyser-des-données-avec-R_files/figure-latex/RiskContTables-1} 
+
+}
+
+\caption{Tableau de contingence schématique pour comprendre le calcul des risques et des cotes}\label{fig:RiskContTables}
+\end{figure}
+
+Dans le tableau ci-dessus, chaque case contenant un « n » est un effectif. Si l'on désire connaître le risque d'être malade dans le groupe contrôle (\(p_C\)) et dans le groupe traité (\(p_T\)), on fait les calculs suivants :
+
+\[p_C = \frac{n_{C1}}{n_{C0} + n_{C1}}\]
+
+\[p_T = \frac{n_{T1}}{n_{T0} + n_{T1}}\]
+
+La différence de risque d'être malade pour le groupe contrôle par rapport au groupe traité de l'exemple, notée \(DR\), est alors :
+
+\[p_C - p_T \]
+Avec R, la différence de risque peut être obtenue avec le package \texttt{riskCommunicator}. Il s'agit d'un package qui n'existe pas sur CRAN, mais seulement sur Github. Pour pouvoir l'installer à partir de Github, il faut d'abord installer un package qui permet ce type d'installation, tel que le package \texttt{devtools} :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{install.packages}\NormalTok{(}\StringTok{"devtools"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Le package \texttt{riskCommunicator} peut alors être installé en suivant la procédure ci-dessous :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{devtools}\SpecialCharTok{::}\FunctionTok{install\_github}\NormalTok{(}\StringTok{"jgrembi/riskCommunicator"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Pour utiliser le package \texttt{riskCommunicator}, il faut bien sûr ensuite le charger :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(riskCommunicator)}
+\end{Highlighting}
+\end{Shaded}
+
+Pour l'exemple, chargeons le jeu de données \texttt{cvdd} associé au package \texttt{riskCommunicator}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{data}\NormalTok{(cvdd)}
+\end{Highlighting}
+\end{Shaded}
+
+Il s'agit d'un jeu de données avec plusieurs variables qualitatives, dont plusieurs sont plus précisément binaires (i.e., qui ne contiennent que deux modalités). Admettons que l'on souhaiterait connaître la différence de risque de mortalité cardiovasculaire (\texttt{cvd\_dh}) sur une période de suivi donnée, cela en fonction de si l'on a développé une hypertension ou non (\texttt{HYPERTEN}). Pour cela, on peut utiliser la fonction \texttt{gComp()} du package \texttt{riskCommunicator} comme suit :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{gComp}\NormalTok{(}\AttributeTok{data =}\NormalTok{ cvdd, }\AttributeTok{X =} \StringTok{"HYPERTEN"}\NormalTok{, }\AttributeTok{Y =} \StringTok{"cvd\_dth"}\NormalTok{, }\AttributeTok{outcome.type =} \StringTok{"binary"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Formula: 
+## cvd_dth ~ HYPERTEN 
+## 
+## Parameter estimates: 
+##                             HYPERTEN1_v._HYPERTEN0 Estimate (95% CI)
+## Risk Difference                                 0.132 (0.098, 0.159)
+## Risk Ratio                                      1.411 (1.275, 1.527)
+## Odds Ratio                                      1.753 (1.505, 1.977)
+## Number needed to treat/harm                                    7.559
+\end{verbatim}
+
+Dans le résultat obtenu, la différence de risque est de 0.132, soit 13.2 \%. À ce stade, il est fondamental de comprendre que le résultat obtenu dépend de la manière dont les modalités sont ordonnées dans les variables de type facteur utilisées pour faire les calculs. Regardons comment les modalités sont organisées pour les variables qui nous concernent :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{levels}\NormalTok{(cvdd}\SpecialCharTok{$}\NormalTok{HYPERTEN)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "0" "1"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{levels}\NormalTok{(cvdd}\SpecialCharTok{$}\NormalTok{cvd\_dth)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "0" "1"
+\end{verbatim}
+
+On remarque qu'à chaque fois, ``0'' est la première modalité, et ``1'' est la seconde modalité. C'est important de le savoir pour interpréter le résultat ensuite car la fonction \texttt{gComp()} calcule par défaut la différence de risque en faisant le risque de présenter la modalité 2 de la variable Y quand on a la modalité 2 de la variable X (ici le risque de mourir quand on est hypertendu) moins le risque de présenter la modalité 2 de la variable Y quand on a la modalité 1 de la variable X (ici le risque de mourir quand on n'est pas hypertendu). On peut d'ailleurs vérifier le calcul manuellement :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Obtention d\textquotesingle{}un tableau de contingence avec proportions}
+\NormalTok{tab }\OtherTok{\textless{}{-}} \FunctionTok{table}\NormalTok{(cvdd}\SpecialCharTok{$}\NormalTok{HYPERTEN, cvdd}\SpecialCharTok{$}\NormalTok{cvd\_dth)}
+\NormalTok{risks }\OtherTok{\textless{}{-}}\NormalTok{ questionr}\SpecialCharTok{::}\FunctionTok{lprop}\NormalTok{(tab)}
+\FunctionTok{colnames}\NormalTok{(risks) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"vivant"}\NormalTok{, }\StringTok{"mort"}\NormalTok{, }\StringTok{"total"}\NormalTok{)}
+\FunctionTok{rownames}\NormalTok{(risks) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"non{-}hypertendu"}\NormalTok{, }\StringTok{"hypertendu"}\NormalTok{, }\StringTok{"total"}\NormalTok{)}
+\NormalTok{risks}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                 
+##                  vivant mort  total
+##   non-hypertendu  67.8   32.2 100.0
+##   hypertendu      54.6   45.4 100.0
+##   total           58.2   41.8 100.0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Calcul de la différence de risque de mortalité }
+\CommentTok{\# chez les hypertendus vs non{-}hypertendus (en \%)}
+\FloatTok{45.4{-}32.2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 13.2
+\end{verbatim}
+
+\emph{Risque relatif}
+
+Le risque relatif, noté \(RR\), reprend les mêmes informations que celles utilisées pour la différence de risque (\({p_T}\) et \({p_C}\)). La différence est qu'il ne s'agit plus d'une différence, mais d'un rapport entre les risques présentés par les groupes comparés. Sa formule pour comparer le groupe contrôle au groupe traité dans notre exemple débuté plus haut est la suivante :
+
+\[RR = \frac{{p_C}}{{p_T}}\]
+Avec R, le risque relatif peut être obtenu avec le package \texttt{riskCommunicator} tel que montré pour le calcul de la différence de risque, en faisant toujours bien attention à quel risque est divisé par quel risque selon l'analyse qui est réellement souhaitée. Dans notre exemple débuté plus haut, il s'agit du même calcul que pour la différence de risque sauf qu'il ne s'agit plus d'un signe moins mais d'une division. Les résultats obtenus plus haut avec l'exemple de la différence de risque montrent aussi le risque relatif, qui est tel que le risque de mourir chez les hypertendus est 1.41 fois plus élevé que chez les non-hypertendus.
+
+\emph{Rapports des cotes}
+
+Le rapport des cotes, noté \(OR\) pour \emph{Odds ratio} en anglais, est une statistique dont le calcul peut à nouveau se comprendre à l'aide d'un tableau de contingence. Si l'on reprend le tableau de la Figure \ref{fig:RiskContTables}, on peut dire que la cote pour le fait d'être en bonne santé versus être malade dans le groupe contrôle est \(n_{C0}\)/\(n_{C1}\) et la cote pour le fait d'être en bonne santé versus malade dans le groupe traité est \(n_{T0}\)/\(n_{T1}\). Le rapport des cotes pour le groupe contrôle versus le groupe traité dans ce cas-là peut se calculer comme ceci :
+
+\[ OR=  \frac{n_{C0} / n{_{C1}}}{n_{T0} / n{_{T1}}}\]
+
+Le rapport des cotes est toujours ≥0. Une valeur en-dessous de 1 signifie « moins de chances/risques », une valeur de 1 signifie « chances/risques équivalent(e)s », et une valeur au-dessus de 1 signifie « plus de chances ou de risques ». Le chiffre obtenu renseigne toujours sur un niveau de chances pour le groupe au numérateur par rapport au niveau de chances concernant le groupe au dénominateur (cf.~formule ci-dessus). Avec R, le rapport des cotes peut être obtenu avec le package \texttt{riskCommunicator} tel que montré pour le calcul de la différence de risque, en faisant cette fois attention à quelle cote est divisée par quelle cote selon l'analyse qui est réellement souhaitée. Dans notre exemple débuté plus haut, le rapport des cotes est de 1.75. Cela signifie ici que la cote pour le fait de mourir (versus le fait de vivre) est 1.75 fois plus élevée quand on est hypertendu que lorsqu'on ne l'est pas. Pour comprendre le calcul, on peut le refaire manuellement :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Obtention d\textquotesingle{}un tableau de contingence avec effectifs}
+\NormalTok{tab }\OtherTok{\textless{}{-}} \FunctionTok{table}\NormalTok{(cvdd}\SpecialCharTok{$}\NormalTok{HYPERTEN, cvdd}\SpecialCharTok{$}\NormalTok{cvd\_dth)}
+\FunctionTok{colnames}\NormalTok{(tab) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"vivant"}\NormalTok{, }\StringTok{"mort"}\NormalTok{)}
+\FunctionTok{rownames}\NormalTok{(tab) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"non{-}hypertendu"}\NormalTok{, }\StringTok{"hypertendu"}\NormalTok{)}
+\NormalTok{tab}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                 
+##                  vivant mort
+##   non-hypertendu    781  371
+##   hypertendu       1685 1403
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Calcul des cotes pour les "chances" de mourir selon le groupe d\textquotesingle{}appartenance}
+\NormalTok{cote\_hypertendus }\OtherTok{\textless{}{-}} \DecValTok{1403}\SpecialCharTok{/}\DecValTok{1685}
+\NormalTok{cote\_non\_hypertendus }\OtherTok{\textless{}{-}} \DecValTok{371}\SpecialCharTok{/}\DecValTok{781}
+
+\CommentTok{\# Calcul du rapport des cotes}
+\NormalTok{OR }\OtherTok{\textless{}{-}}\NormalTok{ cote\_hypertendus }\SpecialCharTok{/}\NormalTok{ cote\_non\_hypertendus}
+\NormalTok{OR}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.75281
+\end{verbatim}
+
 \hypertarget{relation-entre-une-variable-quantitative-et-une-variable-qualitative}{%
 \section{Relation entre une variable quantitative et une variable qualitative}\label{relation-entre-une-variable-quantitative-et-une-variable-qualitative}}
 
-Lorsqu'on analyse une variable quantitative en fonction d'une variable qualitative, on peut avoir des données quantitatives qui sont non appariées (étude de type \emph{between-subject design} en anglais) ou appariées (étude de type \emph{within-subject design} en anglais). Avoir des données non appariées signifie que les données quantitatives correspondant aux différentes modalités de la variable qualitative étudiée ne sont pas liées. Un exemple simple, pour ce premier cas, peut être l'analyse de la taille des individus en fonction du sexe. Dans ce cas, les données quantitatives de taille pour les personnes de sexe masculin, de sexe féminin, et de sexe indéterminé, proviendront forcément d'individus différents et ne formeront donc pas des paires. Les cas de données appariées se retrouvent dans les études dans lesquelles plusieurs individus sont évalués plusieurs fois dans des conditions similaires ou différentes et que l'on cherche à comparer. En sciences du sport, un exemple relativement classique est de tester la performance d'endurance (variable quantitative) en ayant pris (condition de test) ou non (condition contrôle) une substance potentiellement ergonénique, la prise de substance ou non étant les modalités d'une même variable qualitative de type condition. Dans ce cas là, tous les individus auront des données dans les deux conditions et ces données seront donc appariées (dépendantes).
+Lorsqu'on analyse une variable quantitative en fonction d'une variable qualitative, on peut avoir des données quantitatives qui sont non appariées (étude de type \emph{between-subject design} en anglais) ou appariées (étude de type \emph{within-subject design} en anglais). Avoir des données non appariées signifie que les données quantitatives correspondant aux différentes modalités de la variable qualitative étudiée ne sont pas liées. Un exemple simple, pour ce premier cas, peut être l'analyse de la taille des individus en fonction du sexe. Dans ce cas, les données quantitatives de taille pour les personnes de sexe masculin, de sexe féminin, et de sexe indéterminé, proviendront forcément d'individus différents et ne formeront donc pas des paires. S'agissant des cas de données appariées, ils se retrouvent dans les études où plusieurs individus sont évalués plusieurs fois dans des conditions similaires ou différentes et que l'on cherche à comparer. En sciences du sport, un exemple relativement classique est de tester la performance d'endurance (variable quantitative) en ayant pris (condition de test) ou non (condition contrôle) une substance potentiellement ergonénique, la prise de substance ou non étant les modalités d'une même variable qualitative de type condition. Dans ce cas là, tous les individus auront des données dans les deux conditions et ces données seront donc appariées (dépendantes).
 
 Étant donné que les contraintes graphiques et les statistiques à calculer diffèrent selon que l'on est en présence de (i) deux groupes (1 variable quantitative x 1 variable qualitative avec 2 modalités) ou (ii) trois groupes et plus (1 variable quantitative x 1 variable qualitative avec 3 modalités ou plus), les procédures graphiques et calculatoires présentées ci-après sont distinguées selon ces deux grands cas de figure.
 
@@ -4243,15 +4481,15 @@ Lorsqu'on analyse une variable quantitative en fonction d'une variable qualitati
 \hypertarget{uxe9tudier-graphiquement-la-relation-2}{%
 \subsubsection{Étudier graphiquement la relation}\label{uxe9tudier-graphiquement-la-relation-2}}
 
-Lorsque l'on cherche à explorer la relation qu'il peut y avoir entre une variable quantitative et une variable qualitative, il peut être intéressant de visualiser la distribution de la variable quantitative en fonction de chaque modalité de la variable qualitative. Pour faire cela, il a été proposé dans la littérature d'user de graphiques appelés \emph{raincloud plots} qui combinent les avantages de plusieurs techniques graphiques et statistiques et par là même pallient les manques ou défauts inhérents à chacune de ces techniques \autocite{allenRaincloudPlotsMultiplatform2019}. Les blocs de code ci-dessous, et les Figures \ref{fig:raindcloudplotsBivUnpaired1}, \ref{fig:raindcloudplotsBivUnpaired2} et \ref{fig:raindcloudplotsBivPaired1}, proposent plusieurs options de mise en oeuvre de ce type de graphiques selon la situation d'étude (avec données non appariées et appariées). On remarquera que ces blocs de code n'utilisent pas la fonction \texttt{geom\_rain()} du \emph{package} \texttt{ggrain} vu au chapitre précédent, cela pour montrer une autre façon de créer des \emph{raincloud plots}, en particulier lorsqu'il s'agit de non pas utiliser une boîte à moustaches mais à la place une moyenne et un écart-type (cette méthode s'avère malheureusement moins efficiente en matière de nombre de lignes de code, mais elle offre un certain nombre d'options intéressantes pour ajuster les éléments graphiques). Ces blocs de code requièrent notamment les \emph{packages} \texttt{ggdist} et \texttt{gghalves} qui doivent être installés au préalable. Le code a été adapté à partir des propositions de Cédric Scherer (\url{https://www.cedricscherer.com/2021/06/06/visualizing-distributions-with-raincloud-plots-and-how-to-create-them-with-ggplot2/}).
+Lorsque l'on cherche à explorer la relation qu'il peut y avoir entre une variable quantitative et une variable qualitative, il peut être intéressant de visualiser la distribution de la variable quantitative en fonction de chaque modalité de la variable qualitative. Pour faire cela, il a été proposé dans la littérature d'user de graphiques appelés \emph{raincloud plots} qui combinent les avantages de plusieurs techniques graphiques et statistiques et par là même pallient les manques ou défauts inhérents à chacune de ces techniques \autocite{allenRaincloudPlotsMultiplatform2019}. Les blocs de code ci-dessous, et les Figures \ref{fig:raindcloudplotsBivUnpaired1} et \ref{fig:raindcloudplotsBivPaired1}, proposent plusieurs options de mise en oeuvre de ce type de graphiques selon la situation d'étude (avec données non appariées et appariées).
 
 \emph{Données non appariées}
 
-Les Figures \ref{fig:raindcloudplotsBivUnpaired1} et \ref{fig:raindcloudplotsBivUnpaired2} et les blocs de code associés montrés ci-dessous permettent d'obtenir des graphiques appropriés pour des données non appariées.
+La Figure \ref{fig:raindcloudplotsBivUnpaired1}, qui est associée au bloc de code ci-dessous, montre un graphique approprié pour des données non appariées.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# Configuration du jeu de données pour les exemples avec données non appariées.}
+\CommentTok{\# Configuration du jeu de données pour l\textquotesingle{}exemple avec données non appariées.}
 \CommentTok{\# Il s\textquotesingle{}agit ici d\textquotesingle{}obtenir le jeu de données \textasciigrave{}iris\textasciigrave{} avec seulement deux modalités  }
 \CommentTok{\# de la variable \textasciigrave{}Species\textasciigrave{}, cela en enlevant la modalité \textasciigrave{}virginica\textasciigrave{}.}
 \NormalTok{iris\_two\_species }\OtherTok{\textless{}{-}}
@@ -4261,239 +4499,11 @@ Les Figures \ref{fig:raindcloudplotsBivUnpaired1} et \ref{fig:raindcloudplotsBiv
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\DocumentationTok{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}
-\CommentTok{\# Raincloud plots à l\textquotesingle{}horizontale pour données non appariées}
-\DocumentationTok{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}
-
-\CommentTok{\# Raincloud plots classiques (avec boîtes à moustaches)}
-\NormalTok{A }\OtherTok{\textless{}{-}}
-  \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ iris\_two\_species, }
-         \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Species, }\AttributeTok{y =}\NormalTok{ Sepal.Length, }\AttributeTok{colour =}\NormalTok{ Species, }\AttributeTok{fill =}\NormalTok{ Species)) }\SpecialCharTok{+}
-\NormalTok{  ggdist}\SpecialCharTok{::}\FunctionTok{stat\_halfeye}\NormalTok{(}
-    \AttributeTok{adjust =}\NormalTok{ .}\DecValTok{5}\NormalTok{, }
-    \AttributeTok{width =}\NormalTok{ .}\DecValTok{6}\NormalTok{, }
-    \AttributeTok{.width =} \DecValTok{0}\NormalTok{, }
-    \AttributeTok{point\_colour =} \ConstantTok{NA}
-\NormalTok{    ) }\SpecialCharTok{+}
-  \FunctionTok{geom\_boxplot}\NormalTok{(}
-    \AttributeTok{colour =} \StringTok{"black"}\NormalTok{,}
-    \AttributeTok{width =}\NormalTok{ .}\DecValTok{1}\NormalTok{, }
-    \AttributeTok{outlier.shape =} \ConstantTok{NA}
-\NormalTok{  ) }\SpecialCharTok{+}
-\NormalTok{  gghalves}\SpecialCharTok{::}\FunctionTok{geom\_half\_point}\NormalTok{(}
-    \AttributeTok{size =} \DecValTok{2}\NormalTok{, }
-    \AttributeTok{side =} \StringTok{"l"}\NormalTok{, }
-    \AttributeTok{range\_scale =}\NormalTok{ .}\DecValTok{4}\NormalTok{, }
-    \AttributeTok{alpha =}\NormalTok{ .}\DecValTok{3}\NormalTok{,}
-    \AttributeTok{transformation =} \FunctionTok{position\_jitter}\NormalTok{(}\AttributeTok{seed =} \DecValTok{123}\NormalTok{)}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"A"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{coord\_flip}\NormalTok{(}\AttributeTok{xlim =} \FunctionTok{c}\NormalTok{(}\FloatTok{1.2}\NormalTok{, }\ConstantTok{NA}\NormalTok{)) }\SpecialCharTok{+}
-  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"none"}\NormalTok{)}
-
-
-\CommentTok{\# Raincloud plots avec les nuages sur une même ligne (avec boîtes à moustaches)}
-\NormalTok{B }\OtherTok{\textless{}{-}}
-  \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ iris\_two\_species, }
-         \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \DecValTok{0}\NormalTok{, }\AttributeTok{y =}\NormalTok{ Sepal.Length, }\AttributeTok{colour =}\NormalTok{ Species, }\AttributeTok{fill =}\NormalTok{ Species)) }\SpecialCharTok{+}
-\NormalTok{  ggdist}\SpecialCharTok{::}\FunctionTok{stat\_halfeye}\NormalTok{(}
-    \AttributeTok{adjust =}\NormalTok{ .}\DecValTok{5}\NormalTok{, }
-    \AttributeTok{width =}\NormalTok{ .}\DecValTok{6}\NormalTok{, }
-    \AttributeTok{.width =} \DecValTok{0}\NormalTok{, }
-    \AttributeTok{point\_colour =} \ConstantTok{NA}\NormalTok{,}
-    \AttributeTok{alpha =} \FloatTok{0.5}
-\NormalTok{    ) }\SpecialCharTok{+}
-  \FunctionTok{geom\_boxplot}\NormalTok{(}
-    \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \SpecialCharTok{{-}}\FloatTok{0.07}\NormalTok{),}
-    \AttributeTok{colour =} \StringTok{"black"}\NormalTok{,}
-    \AttributeTok{width =}\NormalTok{ .}\DecValTok{1}\NormalTok{, }
-    \AttributeTok{outlier.shape =} \ConstantTok{NA}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{geom\_point}\NormalTok{(}
-    \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \SpecialCharTok{{-}}\FloatTok{0.25}\NormalTok{),}
-    \AttributeTok{size =} \DecValTok{2}\NormalTok{, }
-    \AttributeTok{alpha =}\NormalTok{ .}\DecValTok{5}\NormalTok{,}
-    \AttributeTok{position =} \FunctionTok{position\_jitterdodge}\NormalTok{(}
-                          \AttributeTok{dodge.width =} \FloatTok{0.1}\NormalTok{,}
-                          \AttributeTok{seed =} \DecValTok{123}
-\NormalTok{                    )}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"B"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"right"}\NormalTok{,}
-        \AttributeTok{axis.title.y =} \FunctionTok{element\_blank}\NormalTok{(),}
-        \AttributeTok{axis.text.y =} \FunctionTok{element\_blank}\NormalTok{(),}
-        \AttributeTok{axis.ticks.y =} \FunctionTok{element\_blank}\NormalTok{()) }\SpecialCharTok{+}
-  \FunctionTok{coord\_flip}\NormalTok{() }
-
-
-\CommentTok{\# Raincloud plots classiques (avec moyennes et }
-\CommentTok{\# écart{-}types)}
-\NormalTok{C }\OtherTok{\textless{}{-}}
-  \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ iris\_two\_species, }
-         \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Species, }\AttributeTok{y =}\NormalTok{ Sepal.Length, }\AttributeTok{colour =}\NormalTok{ Species, }\AttributeTok{fill =}\NormalTok{ Species)) }\SpecialCharTok{+}
-\NormalTok{  ggdist}\SpecialCharTok{::}\FunctionTok{stat\_halfeye}\NormalTok{(}
-    \AttributeTok{adjust =}\NormalTok{ .}\DecValTok{5}\NormalTok{, }
-    \AttributeTok{width =}\NormalTok{ .}\DecValTok{6}\NormalTok{, }
-    \AttributeTok{.width =} \DecValTok{0}\NormalTok{, }
-    \AttributeTok{point\_colour =} \ConstantTok{NA}
-\NormalTok{    ) }\SpecialCharTok{+}
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ iris\_two\_species, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Species,}\AttributeTok{y =}\NormalTok{ Sepal.Length)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_rain}\NormalTok{(}\AttributeTok{point.args =}\NormalTok{ rlang}\SpecialCharTok{::}\FunctionTok{list2}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.3}\NormalTok{)) }\SpecialCharTok{+}
   \FunctionTok{stat\_summary}\NormalTok{(}
     \AttributeTok{geom =} \StringTok{"errorbar"}\NormalTok{,}
-    \AttributeTok{color =} \StringTok{"black"}\NormalTok{,}
-    \AttributeTok{fun.data =} \StringTok{"mean\_sdl"}\NormalTok{,}
-    \AttributeTok{fun.args =} \FunctionTok{list}\NormalTok{(}\AttributeTok{mult =} \DecValTok{1}\NormalTok{),}
-    \AttributeTok{size =} \FloatTok{1.1}\NormalTok{, }
-    \AttributeTok{width =} \FloatTok{0.08}
-\NormalTok{    ) }\SpecialCharTok{+} 
-  \FunctionTok{stat\_summary}\NormalTok{(}
-    \AttributeTok{geom =} \StringTok{"point"}\NormalTok{,}
-    \AttributeTok{fun =} \StringTok{"mean"}\NormalTok{, }
-    \AttributeTok{color =} \StringTok{"black"}\NormalTok{,}
-    \AttributeTok{size =} \DecValTok{3}
-\NormalTok{    ) }\SpecialCharTok{+}
-\NormalTok{  gghalves}\SpecialCharTok{::}\FunctionTok{geom\_half\_point}\NormalTok{(}
-    \AttributeTok{size =} \DecValTok{2}\NormalTok{, }
-    \AttributeTok{side =} \StringTok{"l"}\NormalTok{, }
-    \AttributeTok{range\_scale =}\NormalTok{ .}\DecValTok{4}\NormalTok{, }
-    \AttributeTok{alpha =}\NormalTok{ .}\DecValTok{3}\NormalTok{,}
-    \AttributeTok{transformation =} \FunctionTok{position\_jitter}\NormalTok{(}\AttributeTok{seed =} \DecValTok{123}\NormalTok{)}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"C"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{coord\_flip}\NormalTok{(}\AttributeTok{xlim =} \FunctionTok{c}\NormalTok{(}\FloatTok{1.2}\NormalTok{, }\ConstantTok{NA}\NormalTok{)) }\SpecialCharTok{+}
-  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"none"}\NormalTok{)}
-
-
-\CommentTok{\# Raincloud plots avec les nuages sur une même ligne (avec moyennes et }
-\CommentTok{\# écart{-}types)}
-\NormalTok{D }\OtherTok{\textless{}{-}}
-  \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ iris\_two\_species, }
-         \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \DecValTok{0}\NormalTok{, }\AttributeTok{y =}\NormalTok{ Sepal.Length, }\AttributeTok{colour =}\NormalTok{ Species, }\AttributeTok{fill =}\NormalTok{ Species)) }\SpecialCharTok{+}
-\NormalTok{  ggdist}\SpecialCharTok{::}\FunctionTok{stat\_halfeye}\NormalTok{(}
-    \AttributeTok{adjust =}\NormalTok{ .}\DecValTok{5}\NormalTok{, }
-    \AttributeTok{width =}\NormalTok{ .}\DecValTok{6}\NormalTok{, }
-    \AttributeTok{.width =} \DecValTok{0}\NormalTok{, }
-    \AttributeTok{point\_colour =} \ConstantTok{NA}\NormalTok{,}
-    \AttributeTok{alpha =} \FloatTok{0.5}
-\NormalTok{    ) }\SpecialCharTok{+}
-  \FunctionTok{stat\_summary}\NormalTok{(}
-    \AttributeTok{geom =} \StringTok{"errorbar"}\NormalTok{,}
-    \AttributeTok{color =} \StringTok{"black"}\NormalTok{,}
-    \AttributeTok{fun.data =} \StringTok{"mean\_sdl"}\NormalTok{,}
-    \AttributeTok{fun.args =} \FunctionTok{list}\NormalTok{(}\AttributeTok{mult =} \DecValTok{1}\NormalTok{),}
-    \AttributeTok{size =} \FloatTok{1.1}\NormalTok{, }
-    \AttributeTok{width =} \FloatTok{0.07}
-\NormalTok{    ) }\SpecialCharTok{+} 
-  \FunctionTok{stat\_summary}\NormalTok{(}
-    \AttributeTok{geom =} \StringTok{"point"}\NormalTok{,}
-    \AttributeTok{fun =} \StringTok{"mean"}\NormalTok{, }
-    \AttributeTok{color =} \StringTok{"black"}\NormalTok{,}
-    \AttributeTok{size =} \DecValTok{3}
-\NormalTok{    ) }\SpecialCharTok{+}
-  \FunctionTok{geom\_point}\NormalTok{(}
-    \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \SpecialCharTok{{-}}\FloatTok{0.15}\NormalTok{),}
-    \AttributeTok{size =} \DecValTok{2}\NormalTok{, }
-    \AttributeTok{alpha =}\NormalTok{ .}\DecValTok{5}\NormalTok{,}
-    \AttributeTok{position =} \FunctionTok{position\_jitterdodge}\NormalTok{(}
-                          \AttributeTok{dodge.width =} \FloatTok{0.1}\NormalTok{,}
-                          \AttributeTok{seed =} \DecValTok{123}
-\NormalTok{                    )}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"D"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"right"}\NormalTok{,}
-        \AttributeTok{axis.title.y =} \FunctionTok{element\_blank}\NormalTok{(),}
-        \AttributeTok{axis.text.y =} \FunctionTok{element\_blank}\NormalTok{(),}
-        \AttributeTok{axis.ticks.y =} \FunctionTok{element\_blank}\NormalTok{()) }\SpecialCharTok{+}
-  \FunctionTok{coord\_flip}\NormalTok{() }
-\end{Highlighting}
-\end{Shaded}
-
-\begin{figure}
-
-{\centering \includegraphics[width=1\linewidth]{Analyser-des-données-avec-R_files/figure-latex/raindcloudplotsBivUnpaired1-1} 
-
-}
-
-\caption{Exemples de raindcloud plots à l'horizontale pour des données non appariées}\label{fig:raindcloudplotsBivUnpaired1}
-\end{figure}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\DocumentationTok{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}
-\CommentTok{\# Raincloud plots à la verticale pour données non appariées}
-\DocumentationTok{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}
-
-\CommentTok{\# Raincloud plots classiques (avec boîtes à moustaches)}
-\NormalTok{A }\OtherTok{\textless{}{-}}
-  \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ iris\_two\_species, }
-         \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Species, }\AttributeTok{y =}\NormalTok{ Sepal.Length, }\AttributeTok{colour =}\NormalTok{ Species, }\AttributeTok{fill =}\NormalTok{ Species)) }\SpecialCharTok{+}
-\NormalTok{  ggdist}\SpecialCharTok{::}\FunctionTok{stat\_halfeye}\NormalTok{(}
-    \AttributeTok{adjust =}\NormalTok{ .}\DecValTok{5}\NormalTok{, }
-    \AttributeTok{width =}\NormalTok{ .}\DecValTok{6}\NormalTok{, }
-    \AttributeTok{.width =} \DecValTok{0}\NormalTok{, }
-    \AttributeTok{point\_colour =} \ConstantTok{NA}
-\NormalTok{    ) }\SpecialCharTok{+}
-  \FunctionTok{geom\_boxplot}\NormalTok{(}
-    \AttributeTok{colour =} \StringTok{"black"}\NormalTok{,}
-    \AttributeTok{width =}\NormalTok{ .}\DecValTok{1}\NormalTok{, }
-    \AttributeTok{outlier.shape =} \ConstantTok{NA}
-\NormalTok{  ) }\SpecialCharTok{+}
-\NormalTok{  gghalves}\SpecialCharTok{::}\FunctionTok{geom\_half\_point}\NormalTok{(}
-    \AttributeTok{size =} \DecValTok{2}\NormalTok{, }
-    \AttributeTok{side =} \StringTok{"l"}\NormalTok{, }
-    \AttributeTok{range\_scale =}\NormalTok{ .}\DecValTok{4}\NormalTok{, }
-    \AttributeTok{alpha =}\NormalTok{ .}\DecValTok{3}\NormalTok{,}
-    \AttributeTok{transformation =} \FunctionTok{position\_jitter}\NormalTok{(}\AttributeTok{seed =} \DecValTok{123}\NormalTok{)}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"A"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"none"}\NormalTok{)}
-
-
-\CommentTok{\# Raincloud plots avec les nuages sur une même ligne (avec boîtes à moustaches)}
-\NormalTok{B }\OtherTok{\textless{}{-}}
-  \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ iris\_two\_species, }
-         \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \DecValTok{0}\NormalTok{, }\AttributeTok{y =}\NormalTok{ Sepal.Length, }\AttributeTok{colour =}\NormalTok{ Species, }\AttributeTok{fill =}\NormalTok{ Species)) }\SpecialCharTok{+}
-\NormalTok{  ggdist}\SpecialCharTok{::}\FunctionTok{stat\_halfeye}\NormalTok{(}
-    \AttributeTok{adjust =}\NormalTok{ .}\DecValTok{5}\NormalTok{, }
-    \AttributeTok{width =}\NormalTok{ .}\DecValTok{6}\NormalTok{, }
-    \AttributeTok{.width =} \DecValTok{0}\NormalTok{, }
-    \AttributeTok{point\_colour =} \ConstantTok{NA}\NormalTok{,}
-    \AttributeTok{alpha =} \FloatTok{0.5}
-\NormalTok{    ) }\SpecialCharTok{+}
-  \FunctionTok{geom\_boxplot}\NormalTok{(}
-    \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \SpecialCharTok{{-}}\FloatTok{0.07}\NormalTok{),}
-    \AttributeTok{colour =} \StringTok{"black"}\NormalTok{,}
-    \AttributeTok{width =}\NormalTok{ .}\DecValTok{1}\NormalTok{, }
-    \AttributeTok{outlier.shape =} \ConstantTok{NA}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{geom\_point}\NormalTok{(}
-    \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \SpecialCharTok{{-}}\FloatTok{0.25}\NormalTok{),}
-    \AttributeTok{size =} \DecValTok{2}\NormalTok{, }
-    \AttributeTok{alpha =}\NormalTok{ .}\DecValTok{5}\NormalTok{,}
-    \AttributeTok{position =} \FunctionTok{position\_jitterdodge}\NormalTok{(}
-                          \AttributeTok{dodge.width =} \FloatTok{0.1}\NormalTok{,}
-                          \AttributeTok{seed =} \DecValTok{123}
-\NormalTok{                    )}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"B"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"right"}\NormalTok{,}
-        \AttributeTok{axis.title.x =} \FunctionTok{element\_blank}\NormalTok{(),}
-        \AttributeTok{axis.text.x =} \FunctionTok{element\_blank}\NormalTok{(),}
-        \AttributeTok{axis.ticks.x =} \FunctionTok{element\_blank}\NormalTok{()) }
-
-\CommentTok{\# Raincloud plots classiques (avec moyennes et }
-\CommentTok{\# écart{-}types)}
-\NormalTok{C }\OtherTok{\textless{}{-}}
-  \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ iris\_two\_species, }
-         \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Species, }\AttributeTok{y =}\NormalTok{ Sepal.Length, }\AttributeTok{colour =}\NormalTok{ Species, }\AttributeTok{fill =}\NormalTok{ Species)) }\SpecialCharTok{+}
-\NormalTok{  ggdist}\SpecialCharTok{::}\FunctionTok{stat\_halfeye}\NormalTok{(}
-    \AttributeTok{adjust =}\NormalTok{ .}\DecValTok{5}\NormalTok{, }
-    \AttributeTok{width =}\NormalTok{ .}\DecValTok{6}\NormalTok{, }
-    \AttributeTok{.width =} \DecValTok{0}\NormalTok{, }
-    \AttributeTok{point\_colour =} \ConstantTok{NA}
-\NormalTok{    ) }\SpecialCharTok{+}
-  \FunctionTok{stat\_summary}\NormalTok{(}
-    \AttributeTok{geom =} \StringTok{"errorbar"}\NormalTok{,}
-    \AttributeTok{color =} \StringTok{"black"}\NormalTok{,}
+    \AttributeTok{color =} \StringTok{"red"}\NormalTok{,}
     \AttributeTok{fun.data =} \StringTok{"mean\_sdl"}\NormalTok{,}
     \AttributeTok{fun.args =} \FunctionTok{list}\NormalTok{(}\AttributeTok{mult =} \DecValTok{1}\NormalTok{),}
     \AttributeTok{size =} \FloatTok{1.1}\NormalTok{, }
@@ -4502,84 +4512,36 @@ Les Figures \ref{fig:raindcloudplotsBivUnpaired1} et \ref{fig:raindcloudplotsBiv
   \FunctionTok{stat\_summary}\NormalTok{(}
     \AttributeTok{geom =} \StringTok{"point"}\NormalTok{,}
     \AttributeTok{fun =} \StringTok{"mean"}\NormalTok{, }
-    \AttributeTok{color =} \StringTok{"black"}\NormalTok{,}
+    \AttributeTok{color =} \StringTok{"red"}\NormalTok{,}
     \AttributeTok{size =} \DecValTok{3}
-\NormalTok{    ) }\SpecialCharTok{+}
-\NormalTok{  gghalves}\SpecialCharTok{::}\FunctionTok{geom\_half\_point}\NormalTok{(}
-    \AttributeTok{size =} \DecValTok{2}\NormalTok{, }
-    \AttributeTok{side =} \StringTok{"l"}\NormalTok{, }
-    \AttributeTok{range\_scale =}\NormalTok{ .}\DecValTok{4}\NormalTok{, }
-    \AttributeTok{alpha =}\NormalTok{ .}\DecValTok{3}\NormalTok{,}
-    \AttributeTok{transformation =} \FunctionTok{position\_jitter}\NormalTok{(}\AttributeTok{seed =} \DecValTok{123}\NormalTok{)}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"C"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"none"}\NormalTok{)}
-
-
-\CommentTok{\# Raincloud plots avec les nuages sur une même ligne (avec moyennes et }
-\CommentTok{\# écart{-}types)}
-\NormalTok{D }\OtherTok{\textless{}{-}}
-  \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ iris\_two\_species, }
-         \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \DecValTok{0}\NormalTok{, }\AttributeTok{y =}\NormalTok{ Sepal.Length, }\AttributeTok{colour =}\NormalTok{ Species, }\AttributeTok{fill =}\NormalTok{ Species)) }\SpecialCharTok{+}
-\NormalTok{  ggdist}\SpecialCharTok{::}\FunctionTok{stat\_halfeye}\NormalTok{(}
-    \AttributeTok{adjust =}\NormalTok{ .}\DecValTok{5}\NormalTok{, }
-    \AttributeTok{width =}\NormalTok{ .}\DecValTok{6}\NormalTok{, }
-    \AttributeTok{.width =} \DecValTok{0}\NormalTok{, }
-    \AttributeTok{point\_colour =} \ConstantTok{NA}\NormalTok{,}
-    \AttributeTok{alpha =} \FloatTok{0.5}
-\NormalTok{    ) }\SpecialCharTok{+}
-  \FunctionTok{stat\_summary}\NormalTok{(}
-    \AttributeTok{geom =} \StringTok{"errorbar"}\NormalTok{,}
-    \AttributeTok{color =} \StringTok{"black"}\NormalTok{,}
-    \AttributeTok{fun.data =} \StringTok{"mean\_sdl"}\NormalTok{,}
-    \AttributeTok{fun.args =} \FunctionTok{list}\NormalTok{(}\AttributeTok{mult =} \DecValTok{1}\NormalTok{),}
-    \AttributeTok{size =} \FloatTok{1.1}\NormalTok{, }
-    \AttributeTok{width =} \FloatTok{0.03}
-\NormalTok{    ) }\SpecialCharTok{+} 
-  \FunctionTok{stat\_summary}\NormalTok{(}
-    \AttributeTok{geom =} \StringTok{"point"}\NormalTok{,}
-    \AttributeTok{fun =} \StringTok{"mean"}\NormalTok{, }
-    \AttributeTok{color =} \StringTok{"black"}\NormalTok{,}
-    \AttributeTok{size =} \DecValTok{3}
-\NormalTok{    ) }\SpecialCharTok{+}
-  \FunctionTok{geom\_point}\NormalTok{(}
-    \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \SpecialCharTok{{-}}\FloatTok{0.15}\NormalTok{),}
-    \AttributeTok{size =} \DecValTok{2}\NormalTok{, }
-    \AttributeTok{alpha =}\NormalTok{ .}\DecValTok{5}\NormalTok{,}
-    \AttributeTok{position =} \FunctionTok{position\_jitterdodge}\NormalTok{(}
-                          \AttributeTok{dodge.width =} \FloatTok{0.1}\NormalTok{,}
-                          \AttributeTok{seed =} \DecValTok{123}
-\NormalTok{                    )}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"D"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"right"}\NormalTok{,}
-        \AttributeTok{axis.title.x =} \FunctionTok{element\_blank}\NormalTok{(),}
-        \AttributeTok{axis.text.x =} \FunctionTok{element\_blank}\NormalTok{(),}
-        \AttributeTok{axis.ticks.x =} \FunctionTok{element\_blank}\NormalTok{())}
+\NormalTok{    )}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{figure}
 
-{\centering \includegraphics[width=1\linewidth]{Analyser-des-données-avec-R_files/figure-latex/raindcloudplotsBivUnpaired2-1} 
+{\centering \includegraphics[width=0.9\linewidth]{Analyser-des-données-avec-R_files/figure-latex/raindcloudplotsBivUnpaired1-1} 
 
 }
 
-\caption{Exemples de raindcloud plots à la verticale pour des données non appariées}\label{fig:raindcloudplotsBivUnpaired2}
+\caption{Exemple de graphique pour une comparaison de deux groupes de valeurs non-appariés (indépendants)}\label{fig:raindcloudplotsBivUnpaired1}
 \end{figure}
 
-Pour réaliser les graphiques, nous avons fait un \emph{mapping} (une mise en lien) des couleurs des éléments graphiques avec les modalités de la variable qualitative étudiée (cf.~arguments \texttt{color} et \texttt{fill} dans la fonction \texttt{aes()} au niveau de la fonction \texttt{ggplot()}). Notons aussi que pour montrer les moyennes et écarts-types sur les figures \ref{fig:raindcloudplotsBivUnpaired1} et \ref{fig:raindcloudplotsBivUnpaired2}, il a fallu utiliser la fonction \texttt{stat\_summary()}. Cette fonction sert à visualiser un résumé statistique identifié. Pour montrer les moyennes, on utilise \texttt{fun\ =\ "mean"}, alors que pour montrer des écarts-types, on utilise \texttt{fun.data\ =\ "mean\_sdl"}. Pour les écarts-types, il faut ajouter \texttt{fun.args\ =\ list(mult\ =\ 1)} pour bien montrer une barre d'erreur ne correspondant qu'à un seul multiple de l'écart-type, car par défaut c'est deux fois l'écart-type qui est montré. On peut choisir la forme avec laquelle présenter le résumé statistique grâce à l'argument \texttt{geom}. On remarque aussi que pour montrer les ``nuages'' sur une même ligne (cf.~graphiques B et D des Figures \ref{fig:raindcloudplotsBivUnpaired1} et \ref{fig:raindcloudplotsBivUnpaired2}), nous avons utilisé \texttt{aes(x\ =\ 0)} dans la fonction \texttt{ggplot()}, et nous avons montré les données individuelles avec la fonction \texttt{geom\_point()}, cela pour avoir plus de contrôle sur le placement des points sur les graphiques. C'est alors l'argument \texttt{position} et la fonction \texttt{position\_jitterdodge()} qui ont permis de donner un mouvement latéral aléatoire aux points pour qu'ils ne soient pas superposés.
+On note que pour montrer les moyennes et écarts-types sur la Figure \ref{fig:raindcloudplotsBivUnpaired1}, il a fallu utiliser la fonction \texttt{stat\_summary()} du package \texttt{Hmisc} (qui est chargé automatiquement lors du chargement de \texttt{ggplot2} après que \texttt{Hmisc} ait été installé). Cette fonction sert à visualiser un résumé statistique. Pour montrer les moyennes, on utilise \texttt{fun\ =\ "mean"}, alors que pour montrer des écarts-types, on utilise \texttt{fun.data\ =\ "mean\_sdl"}. Pour les écarts-types, il faut ajouter \texttt{fun.args\ =\ list(mult\ =\ 1)} pour bien montrer une barre d'erreur ne correspondant qu'à un seul multiple de l'écart-type, car par défaut c'est deux fois l'écart-type qui est montré. On peut choisir la forme avec laquelle présenter le résumé statistique grâce à l'argument \texttt{geom}.
 
 \emph{Données appariées}
 
-La Figure \ref{fig:raindcloudplotsBivPaired1} montre des propositions de graphiques dans le cas de l'étude d'une comparaison de deux groupes de données appariées. Pour ces exemples, nous avons installé le package \texttt{PairedData} et chargé le jeu de données associé, appelé \texttt{Blink}. Pour information, \texttt{Blink} contient des données de taux de clignotement des yeux obtenues chez 12 sujets et dans deux conditions différentes : une tâche où il fallait diriger un stylo selon une trajectoire rectiligne (modalité \texttt{Straight}), et une tâche où il fallait diriger un stylo selon une trajectoire présentant des oscillations (\texttt{Oscillating}). Ce jeu de données a été un peu transformé pour pouvoir passer à l'étape de la conception graphique, comme montré ci-dessous.
+La Figure \ref{fig:raindcloudplotsBivPaired1} montre une proposition de graphique dans le cas de l'étude d'une comparaison de deux groupes de données appariées. Pour cela, nous avons installé le package \texttt{PairedData} et chargé le jeu de données associé, appelé \texttt{Blink}. Pour information, \texttt{Blink} contient des données de taux de clignotement des yeux obtenues chez 12 sujets et dans deux conditions différentes : une tâche où il fallait diriger un stylo selon une trajectoire rectiligne (modalité \texttt{Straight}), et une tâche où il fallait diriger un stylo selon une trajectoire présentant des oscillations (\texttt{Oscillating}). Ce jeu de données a été un peu transformé pour pouvoir passer à l'étape de la conception graphique, comme montré ci-dessous.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# Configuration du jeu de données pour les exemples avec données appariées}
+\CommentTok{\# Charger le package}
 \FunctionTok{library}\NormalTok{(PairedData)}
+
+\CommentTok{\# Charger le jeu de données}
 \FunctionTok{data}\NormalTok{(Blink)}
 
+\CommentTok{\# Configurer le jeu de données pour l\textquotesingle{}exemple avec données appariées}
 \NormalTok{Blink2 }\OtherTok{\textless{}{-}}
 \NormalTok{  Blink }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{cols =} \FunctionTok{c}\NormalTok{(Straight, Oscillating), }
@@ -4591,112 +4553,48 @@ La Figure \ref{fig:raindcloudplotsBivPaired1} montre des propositions de graphiq
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\DocumentationTok{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}
-\CommentTok{\# Raincloud plots à la verticale pour données appariées}
-\DocumentationTok{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}
-
-\CommentTok{\# Raincloud plots classiques à la verticale avec boîtes à moustaches}
-\NormalTok{A }\OtherTok{\textless{}{-}}
-  \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ Blink2, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Condition, }\AttributeTok{y =}\NormalTok{ Blink\_rate)) }\SpecialCharTok{+}
-\NormalTok{  ggdist}\SpecialCharTok{::}\FunctionTok{stat\_halfeye}\NormalTok{(}
-    \FunctionTok{aes}\NormalTok{(}\AttributeTok{side =} \FunctionTok{ifelse}\NormalTok{(Condition }\SpecialCharTok{==} \StringTok{"Straight"}\NormalTok{, }\StringTok{"left"}\NormalTok{, }\StringTok{"right"}\NormalTok{)),}
-    \AttributeTok{adjust =}\NormalTok{ .}\DecValTok{5}\NormalTok{, }
-    \AttributeTok{width =}\NormalTok{ .}\DecValTok{6}\NormalTok{, }
-    \AttributeTok{.width =} \DecValTok{0}\NormalTok{, }
-    \AttributeTok{point\_colour =} \ConstantTok{NA}
-\NormalTok{    ) }\SpecialCharTok{+}
-  \FunctionTok{geom\_boxplot}\NormalTok{(}\AttributeTok{colour =} \StringTok{"black"}\NormalTok{, }\AttributeTok{width =}\NormalTok{ .}\DecValTok{1}\NormalTok{, }\AttributeTok{outlier.shape =} \ConstantTok{NA}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_point}\NormalTok{(}
-    \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{ifelse}\NormalTok{(Condition }\SpecialCharTok{==} \StringTok{"Straight"}\NormalTok{, }\FloatTok{1.1}\NormalTok{, }\FloatTok{1.9}\NormalTok{)),}
-    \AttributeTok{position =} \FunctionTok{position\_jitter}\NormalTok{(}\AttributeTok{seed =} \DecValTok{123}\NormalTok{, }\AttributeTok{width =} \FloatTok{0.03}\NormalTok{),}
-    \AttributeTok{size =} \DecValTok{2}\NormalTok{,}
-    \AttributeTok{color =} \StringTok{"grey50"}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{(}
-    \FunctionTok{aes}\NormalTok{(}
-      \AttributeTok{x =} \FunctionTok{ifelse}\NormalTok{(Condition }\SpecialCharTok{==} \StringTok{"Straight"}\NormalTok{, }\FloatTok{1.1}\NormalTok{, }\FloatTok{1.9}\NormalTok{),}
-      \AttributeTok{group =}\NormalTok{ Subject}
-\NormalTok{      ),}
-    \AttributeTok{position =} \FunctionTok{position\_jitter}\NormalTok{(}\AttributeTok{seed =} \DecValTok{123}\NormalTok{, }\AttributeTok{width =} \FloatTok{0.03}\NormalTok{),}
-    \AttributeTok{color =} \StringTok{"grey50"}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{stat\_summary}\NormalTok{(}
-    \AttributeTok{fun =} \StringTok{"median"}\NormalTok{,}
-    \AttributeTok{geom =} \StringTok{"point"}\NormalTok{,}
-    \AttributeTok{color =} \StringTok{"black"}\NormalTok{,}
-    \AttributeTok{size =} \DecValTok{2}
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ Blink2, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Condition, }\AttributeTok{y =}\NormalTok{ Blink\_rate)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_rain}\NormalTok{(}
+    \AttributeTok{rain.side =} \StringTok{"f1x1"}\NormalTok{,}
+    \AttributeTok{id.long.var =} \StringTok{"Subject"}\NormalTok{,}
+    \AttributeTok{point.args =}\NormalTok{ rlang}\SpecialCharTok{::}\FunctionTok{list2}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.3}\NormalTok{)}
 \NormalTok{  ) }\SpecialCharTok{+}
   \FunctionTok{stat\_summary}\NormalTok{(}
     \FunctionTok{aes}\NormalTok{(}\AttributeTok{group =} \DecValTok{1}\NormalTok{),}
-    \AttributeTok{fun =} \StringTok{"median"}\NormalTok{,}
-    \AttributeTok{geom =} \StringTok{"line"}\NormalTok{,}
-    \AttributeTok{color =} \StringTok{"black"}\NormalTok{,}
-    \AttributeTok{size =} \FloatTok{0.7}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"A"}\NormalTok{)}
-
-
-\CommentTok{\# Raincloud plots classiques à la verticale avec moyennes et }
-\CommentTok{\# écart{-}types}
-\NormalTok{B }\OtherTok{\textless{}{-}}
-  \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ Blink2, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Condition, }\AttributeTok{y =}\NormalTok{ Blink\_rate)) }\SpecialCharTok{+}
-\NormalTok{  ggdist}\SpecialCharTok{::}\FunctionTok{stat\_halfeye}\NormalTok{(}
-    \FunctionTok{aes}\NormalTok{(}\AttributeTok{side =} \FunctionTok{ifelse}\NormalTok{(Condition }\SpecialCharTok{==} \StringTok{"Straight"}\NormalTok{, }\StringTok{"left"}\NormalTok{, }\StringTok{"right"}\NormalTok{)),}
-    \AttributeTok{adjust =}\NormalTok{ .}\DecValTok{5}\NormalTok{, }
-    \AttributeTok{width =}\NormalTok{ .}\DecValTok{6}\NormalTok{, }
-    \AttributeTok{.width =} \DecValTok{0}\NormalTok{, }
-    \AttributeTok{point\_colour =} \ConstantTok{NA}
-\NormalTok{    ) }\SpecialCharTok{+}
-  \FunctionTok{stat\_summary}\NormalTok{(}
     \AttributeTok{fun =} \StringTok{"mean"}\NormalTok{,}
-    \AttributeTok{geom =} \StringTok{"point"}\NormalTok{,}
-    \AttributeTok{color =} \StringTok{"black"}\NormalTok{,}
-    \AttributeTok{size =} \DecValTok{2}
+    \AttributeTok{geom =} \StringTok{"line"}\NormalTok{,}
+    \AttributeTok{color =} \StringTok{"red"}\NormalTok{,}
+    \AttributeTok{linewidth =} \DecValTok{1}
 \NormalTok{  ) }\SpecialCharTok{+}
   \FunctionTok{stat\_summary}\NormalTok{(}
-    \AttributeTok{fun.data  =} \StringTok{"mean\_sdl"}\NormalTok{,}
     \AttributeTok{geom =} \StringTok{"errorbar"}\NormalTok{,}
-    \AttributeTok{width =} \FloatTok{0.03}\NormalTok{,}
-    \AttributeTok{fun.args =} \FunctionTok{list}\NormalTok{(}\AttributeTok{mul =} \DecValTok{1}\NormalTok{),}
-    \AttributeTok{color =} \StringTok{"black"}\NormalTok{, }
-    \AttributeTok{size =} \FloatTok{0.7}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{geom\_point}\NormalTok{(}
-    \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{ifelse}\NormalTok{(Condition }\SpecialCharTok{==} \StringTok{"Straight"}\NormalTok{, }\FloatTok{1.1}\NormalTok{, }\FloatTok{1.9}\NormalTok{)),}
-    \AttributeTok{position =} \FunctionTok{position\_jitter}\NormalTok{(}\AttributeTok{seed =} \DecValTok{123}\NormalTok{, }\AttributeTok{width =} \FloatTok{0.03}\NormalTok{),}
-    \AttributeTok{size =} \DecValTok{2}\NormalTok{,}
-    \AttributeTok{color =} \StringTok{"grey50"}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{(}
-    \FunctionTok{aes}\NormalTok{(}
-      \AttributeTok{x =} \FunctionTok{ifelse}\NormalTok{(Condition }\SpecialCharTok{==} \StringTok{"Straight"}\NormalTok{, }\FloatTok{1.1}\NormalTok{, }\FloatTok{1.9}\NormalTok{),}
-      \AttributeTok{group =}\NormalTok{ Subject}
-\NormalTok{      ),}
-    \AttributeTok{position =} \FunctionTok{position\_jitter}\NormalTok{(}\AttributeTok{seed =} \DecValTok{123}\NormalTok{, }\AttributeTok{width =} \FloatTok{0.03}\NormalTok{),}
-    \AttributeTok{color =} \StringTok{"grey50"}
-\NormalTok{  ) }\SpecialCharTok{+}
+    \AttributeTok{color =} \StringTok{"red"}\NormalTok{,}
+    \AttributeTok{fun.data =} \StringTok{"mean\_sdl"}\NormalTok{,}
+    \AttributeTok{fun.args =} \FunctionTok{list}\NormalTok{(}\AttributeTok{mult =} \DecValTok{1}\NormalTok{),}
+    \AttributeTok{size =} \FloatTok{1.1}\NormalTok{, }
+    \AttributeTok{width =} \FloatTok{0.06}
+\NormalTok{    ) }\SpecialCharTok{+} 
   \FunctionTok{stat\_summary}\NormalTok{(}
-    \FunctionTok{aes}\NormalTok{(}\AttributeTok{group =} \DecValTok{1}\NormalTok{),}
-    \AttributeTok{fun =} \StringTok{"mean"}\NormalTok{,}
-    \AttributeTok{geom =} \StringTok{"line"}\NormalTok{,}
-    \AttributeTok{color =} \StringTok{"black"}
-\NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"B"}\NormalTok{)}
+    \AttributeTok{geom =} \StringTok{"point"}\NormalTok{,}
+    \AttributeTok{fun =} \StringTok{"mean"}\NormalTok{, }
+    \AttributeTok{color =} \StringTok{"red"}\NormalTok{,}
+    \AttributeTok{size =} \DecValTok{3}
+\NormalTok{    )}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{figure}
 
-{\centering \includegraphics[width=1\linewidth]{Analyser-des-données-avec-R_files/figure-latex/raindcloudplotsBivPaired1-1} 
+{\centering \includegraphics{Analyser-des-données-avec-R_files/figure-latex/raindcloudplotsBivPaired1-1} 
 
 }
 
-\caption{Exemples de raindcloud plots à la verticale pour des données appariées}\label{fig:raindcloudplotsBivPaired1}
+\caption{Exemple de graphique pour une comparaison de deux groupes de valeurs appariés (dépendants)}\label{fig:raindcloudplotsBivPaired1}
 \end{figure}
 
-Les graphiques montrés ci-dessus pour données appariées contiennent des éléments graphiques supplémentaires par rapport à ceux proposés pour les données non appariées : des lignes reliant les données individuelles, et une ligne reliant les statistiques qui représentent les tendances centrales (i.e., les médianes ou les moyennes). Ces deux types d'éléments graphiques sont importants pour explicitement montrer qu'il y a un lien entre les deux conditions de mesure (il s'agit des mêmes individus et donc du même groupe), et cela permet de mettre en évidence à la fois les trajectoires individuelles et celle du groupe entre les deux conditions de mesure.
+Le graphiques montré ci-dessus pour données appariées contient des éléments graphiques supplémentaires par rapport à celui proposé pour les données non appariées : des lignes reliant les données individuelles, et une ligne reliant les statistiques qui représentent les tendances centrales (ici les moyennes). Ces deux types d'éléments graphiques sont importants pour explicitement montrer qu'il y a un lien entre les deux conditions de mesure (il s'agit des mêmes individus et donc du même groupe), et cela permet de mettre en évidence à la fois les trajectoires individuelles et celle du groupe entre les deux conditions de mesure.
 
-Pour parvenir à réaliser les graphiques ci-dessus, il a fallu user de quelques techniques supplémentaires par rapport à ce qui avait déjà été vu auparavant. Tout d'abord, on retrouve la fonction \texttt{ggdist::stat\_halfeye()} qui sert toujours à montrer les formes des distributions. Toutefois, on peut noter que l'argument \texttt{side} dans la fonction \texttt{aes()} a été configuré avec une fonction conditionnelle de telle sorte à orienter sur la gauche ou la droite la forme du nuage de la distribution selon la modalité considérée (\texttt{Straight} ou \texttt{Oscillating} ici). Par ailleurs, s'agissant des données individuelles, elles ont été ajoutées ici avec la fonction \texttt{geom\_point()}, avec à nouveau une définition du placement sur l'axe des abscisses (\texttt{x}) ajustée selon la modalité concernée. Pour comprendre l'origine des valeurs \texttt{1.1} et \texttt{1.9} utilisées pour placer les données individuelles le long de l'axe \texttt{x} (cf.~code ci-dessus), il faut savoir qu'un graphique qui a une variable qualitative sur l'axe de abscisses, cela dans le cadre d'une fonction \texttt{ggplot()}, attribue les valeurs de 1 et 2 aux deux modalités du jeu de données, ce qui laisse possible l'ajustement \emph{a posteriori} de la position des données individuelles avec des valeurs numériques. Les lignes individuelles ont été rajoutées à l'aide de la fonction \texttt{geom\_line()} avec la même configuration que pour la fonction \texttt{geom\_point()} afin de bien faire correspondre les points et les lignes. L'élément important supplémentaire à indiquer dans la fonction \texttt{aes()} associée à \texttt{geom\_line()} est l'argument \texttt{group\ =\ Subject} pour bien indiquer que chaque ligne appartient respectivement à un couple d'observations de la variable \texttt{Subject}. Enfin, sur chacun des deux graphiques, les lignes reliant les médianes ou les moyennes ont été ajoutées grâce à la fonction \texttt{stat\_summary()}, avec la particularité de configurer le terme \texttt{group}avec la valeur de \texttt{1}. Il est possible que quelques ajustements manuels doivent être faits pour reproduire ce type de graphiques en présence d'un autre jeu de données, mais la structure globale du code devrait pouvoir constituer une bonne base de départ.
+Pour obtenir ces éléments supplémentaires, il a fallu configurer l'argument \texttt{id.long.var} de la fonction \texttt{geom\_rain()} pour indiquer le nom de la variable sur laquelle se baser pour garder l'appariement des données individuelles entre les deux conditions et ainsi permettre un bon tracé des lignes individuelles. La ligne reliant les moyennes a été ajoutée grâce à la fonction\texttt{stat\_summary()} avec la particularité d'indiquer \texttt{1} pour l'argument \texttt{group} de la fonction \texttt{aes()} associée à la fonction \texttt{stat\_summary()}. Enfin, l'argument \texttt{rain.side} de la fonction \texttt{geom\_rain()} a été configuré de telle sorte à avoir les données des deux groupes en vis-à-vis, mais un autre choix aurait pu être fait.
 
 \hypertarget{uxe9tudier-numuxe9riquement-la-relation-2}{%
 \subsubsection{Étudier numériquement la relation}\label{uxe9tudier-numuxe9riquement-la-relation-2}}
@@ -4708,13 +4606,35 @@ De prime abord, l'analyse qui pourrait être envisagée pour comparer deux group
 \hypertarget{cas-de-deux-groupes-de-donnuxe9es-induxe9pendants-donnuxe9es-non-appariuxe9es}{%
 \subsection{Cas de deux groupes de données indépendants (données non appariées)}\label{cas-de-deux-groupes-de-donnuxe9es-induxe9pendants-donnuxe9es-non-appariuxe9es}}
 
-\textbf{\(d_{s}\) de Cohen}
+\emph{\(d_{s}\) et \(d_{av}\) de Cohen}
 
-Classiquement, l'indice statistique utilisé pour calculer une différence de moyennes de manière standardisée entre deux groupes de données non appariées, à partir d'échantillons de population, est le \(d_{s}\) de Cohen. Cette statistique se calcule en faisant la différence entre les moyennes des deux groupes à comparer, et en divisant cette différence par l'écart-type commun des valeurs de chacun des deux groupes. Ce calcul est montré ci-dessous :
+Classiquement, l'indice statistique utilisé pour calculer une différence de moyennes de manière standardisée entre deux groupes de données non appariées, à partir d'échantillons de population, est le \(d_{s}\) de Cohen. Cette statistique se calcule en faisant la différence entre les moyennes des deux groupes à comparer, et en divisant cette différence par l'écart-type combiné des deux groupes. Ce calcul est montré ci-dessous :
 
-\[d_{s} = \frac{\overline{X}_{1} - \overline{X}_{2}} {\sqrt{\frac{(N_{1} - 1) \hat{\sigma}_{1}^2 + (N_{2} - 1) \hat{\sigma}_{2}^2} {N_{1} + N_{2} - 2}}}\]
+\[d_{s} = \frac{\overline{X}_{1} - \overline{X}_{2}} {\sqrt{\frac{(N_{1} - 1) \hat{\sigma}_{1}^2 + (N_{2} - 1) \hat{\sigma}_{2}^2} {N_{1} + N_{2} - 2}}},\]
 
-Dans R, le \(d_{s}\) de Cohen peut être calculé à l'aide de la fonction \texttt{cohens\_d()} du package \texttt{effectsize}, qui nécessite d'être installé puis chargé avant d'être utilisé.
+avec \(\overline{X}_{1}\) et \(\overline{X}_{2}\) les moyennes des deux groupes comparés, \(N_{1}\) et \(N_{2 }\) les effectifs respectifs des deux groupes comparés, et \(\hat{\sigma}_{1}^2\) et \(\hat{\sigma}_{1}^2\) les variances respectives des deux groupes comparés. On peut remarquer qu'au dénominateur, la variance d'un groupe donné est multipliée par un coefficient calculé à partir de l'effectif du groupe, cela pour que le poids de la variance d'un groupe dans le calcul final soit ajusté par rapport à la taille du groupe représenté. Dans R, si l'on voulait calculer \(d_s\) manuellement, cela donnerait ceci (à partir du jeu de données \texttt{iris\_two\_species}) :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Calcul des paramètres}
+\NormalTok{X1 }\OtherTok{\textless{}{-}}\NormalTok{ iris\_two\_species }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(Species }\SpecialCharTok{==} \StringTok{"setosa"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pull}\NormalTok{(Sepal.Length) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mean}\NormalTok{()}
+\NormalTok{X2 }\OtherTok{\textless{}{-}}\NormalTok{ iris\_two\_species }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(Species }\SpecialCharTok{==} \StringTok{"versicolor"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pull}\NormalTok{(Sepal.Length) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mean}\NormalTok{()}
+\NormalTok{SD1 }\OtherTok{\textless{}{-}}\NormalTok{ iris\_two\_species }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(Species }\SpecialCharTok{==} \StringTok{"setosa"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pull}\NormalTok{(Sepal.Length) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{sd}\NormalTok{()}
+\NormalTok{SD2 }\OtherTok{\textless{}{-}}\NormalTok{ iris\_two\_species }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(Species }\SpecialCharTok{==} \StringTok{"versicolor"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pull}\NormalTok{(Sepal.Length) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{sd}\NormalTok{()}
+\NormalTok{N1 }\OtherTok{\textless{}{-}}\NormalTok{ iris\_two\_species }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(Species }\SpecialCharTok{==} \StringTok{"setosa"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pull}\NormalTok{(Sepal.Length) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{length}\NormalTok{()}
+\NormalTok{N2 }\OtherTok{\textless{}{-}}\NormalTok{ iris\_two\_species }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(Species }\SpecialCharTok{==} \StringTok{"versicolor"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pull}\NormalTok{(Sepal.Length) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{length}\NormalTok{()}
+
+\CommentTok{\# Calcul de ds}
+\NormalTok{ds }\OtherTok{\textless{}{-}}\NormalTok{ (X1 }\SpecialCharTok{{-}}\NormalTok{ X2) }\SpecialCharTok{/} \FunctionTok{sqrt}\NormalTok{(((N1}\DecValTok{{-}1}\NormalTok{) }\SpecialCharTok{*}\NormalTok{ SD1}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{+}\NormalTok{ (N2}\DecValTok{{-}1}\NormalTok{) }\SpecialCharTok{*}\NormalTok{ SD2}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{) }\SpecialCharTok{/}\NormalTok{ (N1}\SpecialCharTok{+}\NormalTok{N2}\DecValTok{{-}2}\NormalTok{))}
+\NormalTok{ds}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -2.104197
+\end{verbatim}
+
+Heureusement, le \(d_{s}\) de Cohen peut être facilement calculé à l'aide de la fonction \texttt{cohens\_d()} du package \texttt{effectsize}, qui nécessite d'être installé puis chargé avant d'être utilisé.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4748,73 +4668,62 @@ Dans cet exemple, on remarque qu'on a bien cherché à savoir comment les donné
 ## [1] "setosa"     "versicolor" "virginica"
 \end{verbatim}
 
-L'ordre des modalités affichées nous indique que \texttt{setosa} est la modalité 1, et que \texttt{versicolor} est la modalité 2. (On remarque par ailleurs que le jeu de données \texttt{iris\_two\_species} contient toujours trois modalités à la suite du filtrage précédent du jeu de données \texttt{iris} à l'aide de la fonction \texttt{filter()}). Par conséquent, le \(d_{s}\) de Cohen de -2.10 obtenu plus haut indique que la longueur des sépales (\texttt{Sepal.Length}) pour l'espèce \texttt{setosa} est inférieure à celles des sépales de l'espèce \texttt{versicolor}. Cette interprétation est en cohérence avec les graphiques réalisés au préalable (cf.~Figures \ref{fig:raindcloudplotsBivUnpaired1} et \ref{fig:raindcloudplotsBivUnpaired2}). Si l'on avait voulu avoir le calcul inverse (\texttt{versicolor} - \texttt{setosa}), il aurait fallu reconfigurer l'ordre des modalités, par exemple à l'aide de la fonction \texttt{fct\_relevel()} du package \texttt{forcats} comme montré à la fin du chapitre 3.
+L'ordre des modalités affichées nous indique que \texttt{setosa} est la modalité 1, et que \texttt{versicolor} est la modalité 2. (On remarque par ailleurs que le jeu de données \texttt{iris\_two\_species} contient toujours trois modalités à la suite du filtrage précédent du jeu de données \texttt{iris} à l'aide de la fonction \texttt{filter()}). Par conséquent, le \(d_{s}\) de Cohen de -2.10 obtenu plus haut indique que la longueur des sépales (\texttt{Sepal.Length}) pour l'espèce \texttt{setosa} est inférieure à celles des sépales de l'espèce \texttt{versicolor}. Cette interprétation est en cohérence avec le graphique réalisé au préalable (cf.~Figure \ref{fig:raindcloudplotsBivUnpaired1}). Si l'on avait voulu avoir le calcul inverse (\texttt{versicolor} - \texttt{setosa}), il aurait fallu reconfigurer l'ordre des modalités, par exemple à l'aide de la fonction \texttt{fct\_relevel()} du package \texttt{forcats} comme montré à la fin du chapitre 3.
 
-Une fois que l'on a calculé une taille d'effet, il est toujours intéressant d'essayer de formuler un jugement sur l'importance, l'ampleur de l'effet. En ce sens, des valeurs seuils ont été proposées dans la littérature (Cohen, 1988; in Lakens \autocite*{lakensCalculatingReportingEffect2013}). Ces valeurs, valables pour interpréter des tailles d'effet dans le cadre d'une étude de type \emph{between-subject design}, sont montrées dans le tableau ci-dessous.
+De manière importante, le calcul de \(d_s\) à partir d'un échantillon en vue d'avoir une estimation dans la population suppose que les variances des deux groupes dans la population d'intérêt soient similaires. Si cette supposition n'est pas valide ou est non désirée, alors il peut être préconisé de calculer un autre indicateur appelé \(d_{av}\) (cf.~\url{https://aaroncaldwell.us/TOSTERpkg/articles/SMD_calcs.html}), lequel consiste à diviser la différence de moyennes par un écart-type moyen :
 
-\global\setlength{\Oldarrayrulewidth}{\arrayrulewidth}
+\[d_{av} = \frac{\overline{X}_{1} - \overline{X}_{2}} {\sqrt{\frac{\hat{\sigma}_{1}^2 + \hat{\sigma}_{2}^2} {2}}}\]
 
-\global\setlength{\Oldtabcolsep}{\tabcolsep}
+En repartant des paramètres calculés précédemment, on peut manuellement obtenir cet indice comme ceci :
 
-\setlength{\tabcolsep}{0pt}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Calcul de dav}
+\NormalTok{dav }\OtherTok{\textless{}{-}}\NormalTok{ (X1 }\SpecialCharTok{{-}}\NormalTok{ X2) }\SpecialCharTok{/} \FunctionTok{sqrt}\NormalTok{((SD1}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{+}\NormalTok{ SD2}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{) }\SpecialCharTok{/} \DecValTok{2}\NormalTok{)}
+\NormalTok{dav}
+\end{Highlighting}
+\end{Shaded}
 
-\renewcommand*{\arraystretch}{1.5}
+\begin{verbatim}
+## [1] -2.104197
+\end{verbatim}
 
+On peut obtenir le \(d_{av}\) avec le package \texttt{effectsize} comme ceci (avec \texttt{pooled\ =\ FALSE}) :
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cohens\_d}\NormalTok{(}
+\NormalTok{  Sepal.Length }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Species, }
+  \AttributeTok{data =}\NormalTok{ iris\_two\_species, }
+  \AttributeTok{paired =} \ConstantTok{FALSE}\NormalTok{, }
+  \AttributeTok{pooled\_sd =} \ConstantTok{FALSE}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
 
-\providecommand{\ascline}[3]{\noalign{\global\arrayrulewidth #1}\arrayrulecolor[HTML]{#2}\cline{#3}}
+\begin{verbatim}
+## Cohen's d |         95% CI
+## --------------------------
+## -2.10     | [-2.60, -1.60]
+## 
+## - Estimated using un-pooled SD.
+\end{verbatim}
 
-\begin{longtable}[c]{|p{0.62in}|p{0.77in}|p{0.74in}}
+On note que les valeurs de \(d_s\) et de \(d_{av}\) ne changent pas dans nos exemples car chaque modalité de la variable \texttt{Species} est associée au même nombre d'individus, ce qui revient à faire des calculs similaires pour les deux indices statistiques obtenus jusqu'à présent.
 
-\caption{Termes\ pour\ qualifier\ la\ taille\ d'effet\ dans\ le\ cadre\ d'une\ comparaison\ de\ moyennes\ associées\ à\ des\ variables\ indépendantes}\label{tab:effectsizetable}\\
+Malheureusement, il se trouve que \(d\) (\(d_s\) ou \(d_{av}\)) est indicateur qui est biaisé positivement lorsqu'il s'agit d'estimer la différence de moyennes standardisée à l'échelle de la population d'intérêt. Par « biaisé positivement », il faut comprendre que si une multitude d'études s'intéressait à calculer \(d\) et qu'on faisait la moyenne des résultats trouvés, alors on aurait une surestimation de la magnitude de la valeur de \(d\) dans la population (il s'agit d'un fait qui peut être démontré avec des simulations sur un ordinateur), cela notamment dans le cas de petits échantillons (N \textless{} 20), selon Hedges et Okins (1985) cités par Lakens \autocite*{lakensCalculatingReportingEffect2013}.
 
-\hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}-}
+\emph{\(g_{s}\) et \(g_{av}\) de Hedges}
 
-\multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 0.62in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Petit}}}} & \multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 0.77in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Moyen}}}} & \multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 0.74in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Grand}}}} \\
+Pour régler le problème de biais que pose le \(d\) de Cohen, un autre indicateur statistique a été proposé : le \(g\) de Hedges. Il s'agit en réalité du \(d\) de Cohen, mais qu'on transforme grâce à l'utilisation d'un facteur de correction. Une approximation de \(g\) est montrée ci-dessous \autocite*{lakensCalculatingReportingEffect2013} :
 
-\noalign{\global\arrayrulewidth 0pt}\arrayrulecolor[HTML]{000000}
+\[g = d (1 - \frac{3}{4(N_{1} + N_{2}) - 9}),\]
 
-\hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}-}\endfirsthead \caption[]{Termes\ pour\ qualifier\ la\ taille\ d'effet\ dans\ le\ cadre\ d'une\ comparaison\ de\ moyennes\ associées\ à\ des\ variables\ indépendantes}\label{tab:effectsizetable}\\
+avec \(d\) le \(d_s\) ou le \(d_{av}\) de Cohen, et \(N_{1}\) et \(N_{2}\) les effectifs respectifs des deux groupes comparés. En réalité, le calcul exact du facteur de correction est relativement complexe, et est montré avec l'équation ci-dessous (Kelley, 2005) :
 
-\hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}-}
+\[g =  d \frac{\Gamma(\frac{df}{2})}{\sqrt{\frac{df}{2}\Gamma(\frac{df-1}{2})}} \]
 
-\multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 0.62in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Petit}}}} & \multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 0.77in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Moyen}}}} & \multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 0.74in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Grand}}}} \\
-
-\noalign{\global\arrayrulewidth 0pt}\arrayrulecolor[HTML]{000000}
-
-\hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}-}\endhead
-
-
-
-\multicolumn{1}{>{\cellcolor[HTML]{EFEFEF}\centering}m{\dimexpr 0.62in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.2}}} & \multicolumn{1}{>{\cellcolor[HTML]{EFEFEF}\centering}m{\dimexpr 0.77in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.5}}} & \multicolumn{1}{>{\cellcolor[HTML]{EFEFEF}\centering}m{\dimexpr 0.74in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{0.8}}} \\
-
-\noalign{\global\arrayrulewidth 0pt}\arrayrulecolor[HTML]{000000}
-
-\hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}-}
-
-
-
-\end{longtable}
-
-
-
-\arrayrulecolor[HTML]{000000}
-
-\global\setlength{\arrayrulewidth}{\Oldarrayrulewidth}
-
-\global\setlength{\tabcolsep}{\Oldtabcolsep}
-
-\renewcommand*{\arraystretch}{1}
-
-Ces valeurs sont relativement arbitraires, et l'interprétation de la taille de l'effet et des conséquences que l'effet peut avoir en pratique ne devrait pas être liée de manière trop rigide à ces valeurs \autocite{lakensCalculatingReportingEffect2013}.
-
-Il existe également une autre approche pour interpréter une valeur de taille d'effet : l'approche \emph{Common Language explanation} \autocite{lakensCalculatingReportingEffect2013}. Cette approche consiste à faire le lien entre la valeur de la taille d'effet et les probabilités de rencontrer des valeurs similaires ou supérieures dans un groupe en comparaison à un autre. Par exemple, lorsqu'on obtient un \(d_{s}\) de Cohen de 0.80, cela peut se traduire par le fait qu'il y a 71.4 \% de chances qu'une personne prise au hasard dans le groupe avec la meilleure moyenne ait un score plus élevé qu'une personne qui serait prise au hasard dans le groupe avec la moyenne la plus basse des deux groupes. Kristoffer Magnusson a réalisé une page web qui permet d'utiliser l'approche \emph{Common Language explanation} pour n'importe quelle valeur de taille d'effet dans le cadre d'une étude de type \emph{between-subject design}. Jetez donc un oeil au lien suivant pour plus de détails : \url{https://rpsychologist.com/cohend}.
-
-\textbf{\(g_{s}\) de Hedges}
-
-Il a été rapporté, dans la littérature, qu'en réalité le \(d_{s}\) de Cohen est relativement biaisé lorsqu'il s'agit d'estimer la taille d'un effet dans la population d'intérêt à partir d'échantillons de population. Autrement dit, à l'échelle de nombreux échantillons, on sait qu'avec le \(d_{s}\) de Cohen on aura en moyenne un écart entre l'effet qu'on a trouvé et l'effet réel qui existe dans la population. Cela sera d'autant plus vrai lorsque les calculs seront réalisés à partir de petits échantillons (\(N\) \textless{} 20), selon Hedges et Okins (1985) cités par Lakens \autocite*{lakensCalculatingReportingEffect2013}. En raison de cela, un autre indice statistique a été proposé pour corriger cette erreur systématique qui sera d'autant plus grande que l'échantillon étudié est petit, à savoir le \(g_{s}\) de Hedges :
-
-\[g_{s} = d_{s} (1 - \frac{3}{4(N_{1} + N_{2}) - 9})\]
+avec \(\Gamma\) la loi Gamma, et \(df\) ce qu'on appelle le nombre de degrés de liberté (qui est ici égal au nombre total d'individus moins 2). Dans les faits, les différences entre \(d\) et \(g\) sont minimes, surtout avec \(N\) \textgreater{} 20 dans les groupes.
 
 Dans R, le \(g_{s}\) de Hedges lié à un échantillon de population peut être calculé à l'aide de la fonction \texttt{hedges\_g()} du package \texttt{effectsize} :
 
@@ -4837,15 +4746,100 @@ Dans R, le \(g_{s}\) de Hedges lié à un échantillon de population peut être 
 ## - Estimated using pooled SD.
 \end{verbatim}
 
-Ici, la valeur ne change pas beaucoup par rapport au cas précédent, car l'effectif n'est pas si petit que cela (\(N_{1}\) + \(N_{2}\) = 100 ici, ce qui fait que la correction appliquée au \(d_{s}\) de Cohen est minime).
+Ici, la valeur ne change pas beaucoup par rapport à \(d_s\) car l'effectif n'est pas si petit que cela (\(N_{1}\) + \(N_{2}\) = 100 ici, ce qui fait que la correction appliquée au \(d_{s}\) de Cohen est minime).
 
-\textbf{Delta de Glass}
+Le \(g_{av}\) de Hedges lié à un échantillon de population peut aussi être calculé à l'aide de la fonction \texttt{hedges\_g()} du package \texttt{effectsize} (avec \texttt{pooled\ =\ FALSE}) :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{hedges\_g}\NormalTok{(}
+\NormalTok{  Sepal.Length }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Species,}
+  \AttributeTok{data =}\NormalTok{ iris\_two\_species, }
+  \AttributeTok{paired =} \ConstantTok{FALSE}\NormalTok{, }
+  \AttributeTok{pooled\_sd =} \ConstantTok{FALSE}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Hedges' g |         95% CI
+## --------------------------
+## -2.09     | [-2.58, -1.58]
+## 
+## - Estimated using un-pooled SD.
+\end{verbatim}
+
+Par principe, \textbf{il pourrait être recommandé de toujours utiliser le \(g\) (\(g_s\) ou \(g_{av}\)) de Hedges} \autocite*{lakensCalculatingReportingEffect2013}.
+
+\emph{Qualification de l'importance de la différence standardisée}
+
+Une fois que l'on a calculé une taille d'effet, il est toujours intéressant d'essayer de formuler un jugement sur l'importance, l'ampleur de l'effet. En ce sens, des valeurs seuils ont été proposées dans la littérature (Cohen, 1988; in Lakens \autocite*{lakensCalculatingReportingEffect2013}). Ces valeurs, valables pour interpréter des tailles d'effet dans le cadre d'une étude de type \emph{between-subject design}, sont montrées dans le tableau ci-dessous.
+
+\global\setlength{\Oldarrayrulewidth}{\arrayrulewidth}
+
+\global\setlength{\Oldtabcolsep}{\tabcolsep}
+
+\setlength{\tabcolsep}{0pt}
+
+\renewcommand*{\arraystretch}{1.5}
+
+
+
+\providecommand{\ascline}[3]{\noalign{\global\arrayrulewidth #1}\arrayrulecolor[HTML]{#2}\cline{#3}}
+
+\begin{longtable}[c]{|p{0.68in}|p{0.77in}|p{0.74in}}
+
+\caption{Termes\ pour\ qualifier\ la\ taille\ d'effet\ dans\ le\ cadre\ d'une\ comparaison\ de\ moyennes\ associées\ à\ des\ variables\ indépendantes}\label{tab:effectsizetable}\\
+
+\hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}-}
+
+\multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 0.68in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Petit}}}} & \multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 0.77in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Moyen}}}} & \multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 0.74in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Grand}}}} \\
+
+\noalign{\global\arrayrulewidth 0pt}\arrayrulecolor[HTML]{000000}
+
+\hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}-}\endfirsthead \caption[]{Termes\ pour\ qualifier\ la\ taille\ d'effet\ dans\ le\ cadre\ d'une\ comparaison\ de\ moyennes\ associées\ à\ des\ variables\ indépendantes}\label{tab:effectsizetable}\\
+
+\hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}-}
+
+\multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 0.68in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Petit}}}} & \multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 0.77in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Moyen}}}} & \multicolumn{1}{>{\cellcolor[HTML]{CFCFCF}\centering}m{\dimexpr 0.74in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{\textbf{Grand}}}} \\
+
+\noalign{\global\arrayrulewidth 0pt}\arrayrulecolor[HTML]{000000}
+
+\hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}-}\endhead
+
+
+
+\multicolumn{1}{>{\cellcolor[HTML]{EFEFEF}\centering}m{\dimexpr 0.68in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{>=0.2}}} & \multicolumn{1}{>{\cellcolor[HTML]{EFEFEF}\centering}m{\dimexpr 0.77in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{>=0.5}}} & \multicolumn{1}{>{\cellcolor[HTML]{EFEFEF}\centering}m{\dimexpr 0.74in+0\tabcolsep}}{\textcolor[HTML]{000000}{\fontsize{11}{11}\selectfont{>=0.8}}} \\
+
+\noalign{\global\arrayrulewidth 0pt}\arrayrulecolor[HTML]{000000}
+
+\hhline{>{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}->{\arrayrulecolor[HTML]{000000}\global\arrayrulewidth=1.5pt}-}
+
+
+
+\end{longtable}
+
+
+
+\arrayrulecolor[HTML]{000000}
+
+\global\setlength{\arrayrulewidth}{\Oldarrayrulewidth}
+
+\global\setlength{\tabcolsep}{\Oldtabcolsep}
+
+\renewcommand*{\arraystretch}{1}
+
+La classification montrée dans ce tableau doit être utilisée avec précaution car en réalité, l'importance d'un effet s'apprécie aussi au regard du contexte dans lequel il s'applique. Les valeurs du tableau donnent donc des repères généraux mais ne peuvent pas au final servir d'étalon universel \autocite{lakensCalculatingReportingEffect2013}.
+
+Il existe également une autre approche pour interpréter une valeur de taille d'effet : l'approche \emph{Common Language explanation} \autocite{lakensCalculatingReportingEffect2013}. Cette approche consiste à faire le lien entre la valeur de la taille d'effet et les probabilités de rencontrer des valeurs similaires ou supérieures dans un groupe en comparaison à un autre. Par exemple, lorsqu'on obtient un \(d_{s}\) de Cohen de 0.80, cela peut se traduire par le fait qu'il y a 71.4 \% de chances qu'une personne prise au hasard dans le groupe avec la meilleure moyenne ait un score plus élevé qu'une personne qui serait prise au hasard dans le groupe avec la moyenne la plus basse des deux groupes. Kristoffer Magnusson a réalisé une page web qui permet d'utiliser l'approche \emph{Common Language explanation} pour n'importe quelle valeur de taille d'effet dans le cadre d'une étude de type \emph{between-subject design}. Jetez donc un oeil au lien suivant pour plus de détails : \url{https://rpsychologist.com/cohend}.
+
+\emph{Delta de Glass}
 
 Dans certains cas où l'on souhaiterait comparer les scores de deux groupes indépendants pour tester l'effet de deux conditions expérimentales différentes, l'expérimentation en tant que telle peut influencer, au-delà de la moyenne, l'écart-type de la variable réponse dans un des deux groupes. On peut se trouver dans ce genre de situation lorsque l'on compare les données post-programme d'un groupe entraîné ou traité à celles d'un groupe contrôle. En effet, le groupe entraîné/traité peut voir son écart-type changé au terme d'un programme en raison d'une réponse individuelle hétérogène à ce programme, ce qui ne sera pas en principe le cas du groupe contrôle. Dans ce genre de situations, des indices statistiques autres que le \(g_{s}\) de Hedges mériteraient d'être calculés, tels que le delta (\(\Delta\)) de Glass \autocite{lakensCalculatingReportingEffect2013} :
 
 \[\Delta = \frac{\overline{X}_{1} - \overline{X}_{2}} {\hat{\sigma}_{2}}\]
 
-Le calcul du \(\Delta\) de Glass est dans l'idée le même que celui du \(d_{s}\) de Cohen, sauf que la différence entre les moyennes des deux groupes n'est pas divisée par l'écart-type commun des deux groupes, mais par celui d'un seul des deux groupes, qui serait en principe celui qui représenterait la condition contrôle ou la condition de référence. Une pratique souvent recommandée pour comparer dans ce genre de situation les scores post-programme de deux groupes (un groupe entraîné/traité et un groupe contrôle) serait d'utiliser l'écart-type des scores du groupe contrôle obtenu en pré-programme \autocite{lakensCalculatingReportingEffect2013}.
+Le calcul du \(\Delta\) de Glass est dans l'idée le même que celui du \(d\) de Cohen, sauf que la différence entre les moyennes des deux groupes n'est pas divisée par un écart-type lié aux deux groupes, mais par celui d'un seul des deux groupes, qui serait en principe celui qui représenterait la condition contrôle ou la condition de référence. Une pratique souvent recommandée pour comparer dans ce genre de situation les scores post-programme de deux groupes (un groupe entraîné/traité et un groupe contrôle) serait d'utiliser l'écart-type des scores du groupe contrôle obtenu en pré-programme \autocite{lakensCalculatingReportingEffect2013}.
 
 Dans R, le \(\Delta\) de Glass lié à un échantillon de population peut être calculé à l'aide de la fonction \texttt{glass\_delta()} du package \texttt{effectsize}. Attention, l'écart-type utilisé dans le code suivant est celui de la variable quantitative associée à la modalité 2 de la variable qualitative, qui est toujours \texttt{versicolor} dans cet exemple (exemple dont le contexte n'est certes pas celui d'un programme dont on cherche l'effet, mais le principe d'utilisation du code reste le même).
 
@@ -4864,27 +4858,47 @@ Dans R, le \(\Delta\) de Glass lié à un échantillon de population peut être 
 
 Notons quand même que l'utilisation du \(\Delta\) de Glass semble peu courante dans les études cherchant à tester l'effet d'un programme. L'une des difficultés liées à son utilisation est que cela suggère que les groupes à comparer soient identiques en pré-programme pour la variable étudiée. En général, des procédures un peu plus sophistiquées sont utilisées pour déterminer l'effet d'un programme, en particulier des procédures qui permettent de prendre en compte justement les différences qui peuvent exister entre les groupes en pré-programme.
 
-\textbf{Cas particuliers}
+\emph{Cas particuliers}
 
 Certaines situations peuvent rendre la comparaison de moyennes non pertinente. C'est par exemple le cas lorsque l'un des deux groupes (voire les deux) présentent des données aberrantes ou très extrêmes, en particulier en présence de petits échantillons. L'utilisation des moyennes dans ce cas pourrait ne pas être pertinente car ces moyennes ne refléteraient alors pas correctement les tendances centrales (et donc les groupes associés). Dans ces cas là, mieux vaut observer les médianes de chaque groupe et chercher à voir si les distributions sont en décalage ou non.
 
 \hypertarget{cas-de-deux-groupes-de-donnuxe9es-duxe9pendants-donnuxe9es-appariuxe9es}{%
 \subsubsection{Cas de deux groupes de données dépendants (données appariées)}\label{cas-de-deux-groupes-de-donnuxe9es-duxe9pendants-donnuxe9es-appariuxe9es}}
 
-\textbf{\(d_{z}\) et \(d_{av}\) de Cohen}
+\emph{\(d_{z}\) et \(d_{av}\) de Cohen}
 
 Le calcul classique pour obtenir la taille d'effet désignant l'écart entre deux groupes de données dépendantes est celui du \(d_{z}\) \autocite{lakensCalculatingReportingEffect2013}, qui est montré ci-dessous :
 
 \[d_{z} = \frac{\overline{X} _{diff}}{\hat{\sigma}_{diff}},\]
 
-\(\overline{X}_{diff}\) désignant la moyenne des différences relatives à chaque pair de valeurs obtenues dans les deux conditions comparées, et \(\hat{\sigma}_{diff}\) désignant l'écart-type de ces différences. Dans R, le \(d_{z}\) peut être obtenu à nouveau avec la fonction \texttt{cohens\_d()} du package \texttt{effectsize}. Pour illustrer cela, nous allons à nouveau utiliser le jeu de données \texttt{Blink2} crée plus haut pour les exemples de \emph{raincloud plots}.
+\(\overline{X}_{diff}\) désignant la moyenne des différences relatives à chaque pair de valeurs obtenues dans les deux conditions comparées, et \(\hat{\sigma}_{diff}\) désignant l'écart-type de ces différences.
+
+Dans R, on peut calculer manuellement \(d_z\) comme ceci (avec le jeu de données \texttt{Blink}) :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Calcul des paramètres}
+\NormalTok{diff }\OtherTok{\textless{}{-}}\NormalTok{ Blink}\SpecialCharTok{$}\NormalTok{Straight }\SpecialCharTok{{-}}\NormalTok{ Blink}\SpecialCharTok{$}\NormalTok{Oscillating}
+\NormalTok{mean\_diff }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(diff)}
+\NormalTok{sd\_diff }\OtherTok{\textless{}{-}} \FunctionTok{sd}\NormalTok{(diff)}
+
+\CommentTok{\# Calcul de dz}
+\NormalTok{dz }\OtherTok{\textless{}{-}}\NormalTok{ mean\_diff }\SpecialCharTok{/}\NormalTok{ sd\_diff}
+\NormalTok{dz}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2.811462
+\end{verbatim}
+
+Le \(d_{z}\) peut heureusement être obtenu à nouveau avec la fonction \texttt{cohens\_d()} du package \texttt{effectsize}. Pour illustrer cela, nous allons utiliser le jeu de données \texttt{Blink2} crée plus haut pour l'exemple de graphique :
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{cohens\_d}\NormalTok{(}
   \FunctionTok{Pair}\NormalTok{(Blink\_rate[Condition }\SpecialCharTok{==} \StringTok{"Straight"}\NormalTok{], Blink\_rate[Condition }\SpecialCharTok{==} \StringTok{"Oscillating"}\NormalTok{]) }\SpecialCharTok{\textasciitilde{}} \DecValTok{1}\NormalTok{, }
-  \AttributeTok{data =}\NormalTok{ Blink2,}
-  \AttributeTok{pooled\_sd =} \ConstantTok{TRUE}
+  \AttributeTok{data =}\NormalTok{ Blink2}
 \NormalTok{  )}
 \end{Highlighting}
 \end{Shaded}
@@ -4895,11 +4909,33 @@ Le calcul classique pour obtenir la taille d'effet désignant l'écart entre deu
 ## 2.81      | [1.51, 4.09]
 \end{verbatim}
 
-Toutefois, d'après Lakens \autocite*{lakensCalculatingReportingEffect2013}, il peut être intéressant de rapporter plutôt un indice de taille d'effet qui ne serait pas influencé par le fait que les données des deux groupes à comparer soient corrélées (car dépendantes), notamment en vue de rendre comparable cette taille d'effet à celles obtenues dans le cadre d'études de type \emph{between-subject design}, pour plus facilement conduire des méta-analyses par la suite par exemple. La recommandation de Lakens \autocite*{lakensCalculatingReportingEffect2013} serait alors d'utiliser l'indice \(d_{av}\), dont le calcul serait le suivant :
+Parce que la valeur de \(d_z\) dépend de la corrélation entre les deux groupes de valeurs comparés, certains auteurs préfèrent rapporter un autre indice statistique qui n'a pas cette propriété et qui en ce sens pourrait être davantage comparable au \(d\) de Cohen obtenu dans les études avec groupes indépendants. Parmi les candidats possibles, il y a notamment le \(d_{av}\) de Cohen \autocite{lakensCalculatingReportingEffect2013}, dont la formule est montrée ci-dessous :
 
 \[d_{av} = \frac{\overline{X} _{diff}}{\sqrt{\frac{\hat{\sigma}_{1}^2 + \hat{\sigma}_{2}^2} {2}}}\]
 
-Ce calcul reviendrait donc à diviser la moyenne des différences par l'écart-type moyen relatif aux deux groupes de données. Pour obtenir \(d_{av}\), il est possible de repartir de la fonction \texttt{cohens\_d()} et de sa configuration pour des groupes indépendants, mais en indiquant \texttt{pooled\_sd\ =\ FALSE} dans la fonction, comme ci-dessous :
+Ce calcul reviendrait donc à diviser la moyenne des différences (qui est égale à la différence de moyennes) par l'écart-type moyen relatif aux deux groupes de données. Manuellement cela donnerait (avec \texttt{Blink2}) :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Calcul des paramètres}
+\NormalTok{X1 }\OtherTok{\textless{}{-}}\NormalTok{ Blink2 }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(Condition }\SpecialCharTok{==} \StringTok{"Straight"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pull}\NormalTok{(Blink\_rate) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mean}\NormalTok{()}
+\NormalTok{X2 }\OtherTok{\textless{}{-}}\NormalTok{ Blink2 }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(Condition }\SpecialCharTok{==} \StringTok{"Oscillating"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pull}\NormalTok{(Blink\_rate) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mean}\NormalTok{()}
+\NormalTok{SD1 }\OtherTok{\textless{}{-}}\NormalTok{ Blink2 }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(Condition }\SpecialCharTok{==} \StringTok{"Straight"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pull}\NormalTok{(Blink\_rate) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{sd}\NormalTok{()}
+\NormalTok{SD2 }\OtherTok{\textless{}{-}}\NormalTok{ Blink2 }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(Condition }\SpecialCharTok{==} \StringTok{"Oscillating"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pull}\NormalTok{(Blink\_rate) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{sd}\NormalTok{()}
+\NormalTok{N1 }\OtherTok{\textless{}{-}}\NormalTok{ Blink2 }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(Condition }\SpecialCharTok{==} \StringTok{"Straight"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pull}\NormalTok{(Blink\_rate) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{length}\NormalTok{()}
+\NormalTok{N2 }\OtherTok{\textless{}{-}}\NormalTok{ Blink2 }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(Condition }\SpecialCharTok{==} \StringTok{"Oscillating"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pull}\NormalTok{(Blink\_rate) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{length}\NormalTok{()}
+
+\CommentTok{\# Calcul de dav}
+\NormalTok{dav }\OtherTok{\textless{}{-}}\NormalTok{ (X1 }\SpecialCharTok{{-}}\NormalTok{ X2) }\SpecialCharTok{/} \FunctionTok{sqrt}\NormalTok{((SD1}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{+}\NormalTok{ SD2}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{) }\SpecialCharTok{/} \DecValTok{2}\NormalTok{)}
+\NormalTok{dav}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.525146
+\end{verbatim}
+
+Pour obtenir \(d_{av}\) avec des données appariées et la fonction \texttt{cohens\_d()}, il faut procéder comme s'il s'agissait de données non appariées :
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4920,11 +4956,28 @@ Ce calcul reviendrait donc à diviser la moyenne des différences par l'écart-t
 ## - Estimated using un-pooled SD.
 \end{verbatim}
 
-En effet, que l'on fasse la moyenne des différences (ce qui serait attendu pour le présent calcul) ou la différence entre deux moyennes (ce qui est finalement fait par la fonction telle que configurée ci-dessus), cela ne change rien avec des données appariées. Le numérateur \(\overline{X} _{diff}\) reste donc correctement calculé même avec cette configuration de fonction qui est faite initialement pour des groupes indépendants. Le fait d'indiquer \texttt{pooled\_sd\ =\ FALSE} change le calcul du dénominateur que nous avions rencontré initialement pour le calcul de \(d_{s}\), cela pour obtenir le calcul attendu pour le \(d_{av}\).
+\textbf{\(g_{z}\) et \(g_{av}\) de Hedges}
 
-\textbf{\(g_{av}\) de Hedges}
+Comme pour les \(d\) de Cohen calculés dans le cadre de groupes indépendants, les \(d\) de Cohen obtenus avec groupes dépendants sont positivement biaisés. À nouveau, ces indices statistiques peuvent être corrigés avec le même facteur de correction montré pour le \(g\) de Hedges dans la partie sur les groupes dépendants. Toutefois, \(g_{av}\) ne serait malgré tout pas complètement non biaisé \autocite{lakensCalculatingReportingEffect2013}.
 
-Comme dans le cas de l'étude de groupes indépendants, \(d_{av}\) et ses dérivés sont biaisés. Il peut donc être à nouveau préférable de calculer le \(g_{av}\) de Hedges avec la fonction \texttt{hedges\_g()} configurée comme ceci :
+Pour obtenir \(g_z\) :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{hedges\_g}\NormalTok{(}
+  \FunctionTok{Pair}\NormalTok{(Blink\_rate[Condition }\SpecialCharTok{==} \StringTok{"Straight"}\NormalTok{], Blink\_rate[Condition }\SpecialCharTok{==} \StringTok{"Oscillating"}\NormalTok{]) }\SpecialCharTok{\textasciitilde{}} \DecValTok{1}\NormalTok{, }
+  \AttributeTok{data =}\NormalTok{ Blink2}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Hedges' g |       95% CI
+## ------------------------
+## 2.61      | [1.41, 3.80]
+\end{verbatim}
+
+Pour obtenir \(g_{av}\) :
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4953,18 +5006,6 @@ Lorsque la présence de valeurs aberrantes peut fausser le calcul de la taille d
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# Configuration du jeu de données}
-\NormalTok{Blink2 }\OtherTok{\textless{}{-}}
-\NormalTok{  Blink }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Difference =}\NormalTok{ Straight }\SpecialCharTok{{-}}\NormalTok{ Oscillating) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{cols =} \FunctionTok{c}\NormalTok{(Straight, Oscillating, Difference), }
-               \AttributeTok{names\_to =} \StringTok{"Condition"}\NormalTok{, }
-               \AttributeTok{values\_to =} \StringTok{"Blink\_rate"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Condition =} \FunctionTok{fct\_relevel}\NormalTok{(Condition, }
-                                 \StringTok{"Straight"}\NormalTok{, }
-                                 \StringTok{"Oscillating"}\NormalTok{, }
-                                 \StringTok{"Difference"}\NormalTok{))}
-
 \CommentTok{\# Calcul de la médiane des différences}
 \NormalTok{ Blink }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Difference =}\NormalTok{ Straight }\SpecialCharTok{{-}}\NormalTok{ Oscillating) }\SpecialCharTok{\%\textgreater{}\%}
@@ -5451,11 +5492,11 @@ Maintenant que l'on connaît la distribution théorique correspondant à notre e
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.8\linewidth]{Analyser-des-données-avec-R_files/figure-latex/unnamed-chunk-18-1} 
+{\centering \includegraphics[width=0.8\linewidth]{Analyser-des-données-avec-R_files/figure-latex/unnamed-chunk-32-1} 
 
 }
 
-\caption{Visualisation des fréquences dans le jeu de données `cartes`}\label{fig:unnamed-chunk-18}
+\caption{Visualisation des fréquences dans le jeu de données `cartes`}\label{fig:unnamed-chunk-32}
 \end{figure}
 
 La distribution \(O\) des fréquences observées pourrait s'écrire comme suit :

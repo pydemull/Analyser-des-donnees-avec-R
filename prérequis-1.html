@@ -7,7 +7,7 @@
 <title>Chapitre 6 Prérequis | Analyser des données avec R</title>
 <meta name="author" content="Pierre-Yves de Müllenheim">
 <meta name="description" content="6.1 Préambule Réaliser une inférence statistique consiste à conclure à propos de quelque chose dans une population d’intérêt (cette chose pouvant se traduire par n’importe quel paramètre...">
-<meta name="generator" content="bookdown 0.35 with bs4_book()">
+<meta name="generator" content="bookdown 0.36 with bs4_book()">
 <meta property="og:title" content="Chapitre 6 Prérequis | Analyser des données avec R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://github.com/pydemull/Analyser-des-donnees-avec-R/prérequis-1.html">
@@ -129,19 +129,19 @@ Figure 6.1: Illustration d’une loi binomiale avec la situation de 100 personne
 </p>
 </div>
 <p>Plusieurs fonctions R peuvent être utilisées pour obtenir des informations liées aux probabilités données par une loi binomiale. Ces fonctions sont montrées ci-dessous.</p>
-<div class="sourceCode" id="cb216"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb251"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Fonction pour déterminer la probabilité d'obtenir précisément x succès </span></span>
 <span><span class="co"># (ici 50) à partir de N essais/personnes (ici 100) et d'une probabilité </span></span>
 <span><span class="co"># de succès donnée (ici 0.5)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">dbinom</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">50</span>, size <span class="op">=</span> <span class="fl">100</span>, prob <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.07958924</code></pre>
-<div class="sourceCode" id="cb218"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb253"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Fonction pour déterminer la probabilité d'obtenir un nombre de succès</span></span>
 <span><span class="co"># inférieur ou égal à q (ici 50) à partir de N essais/personnes (ici 100) </span></span>
 <span><span class="co"># et d'une probabilité de succès donnée (ici 0.5)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">pbinom</a></span><span class="op">(</span>q <span class="op">=</span> <span class="fl">50</span>, size <span class="op">=</span> <span class="fl">100</span>, prob <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.5397946</code></pre>
-<div class="sourceCode" id="cb220"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb255"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Fonction pour déterminer la valeur pour laquelle il y a une probabilité p </span></span>
 <span><span class="co"># d'obtenir une valeur inférieure ou égale à la valeur définie à partir de N </span></span>
 <span><span class="co"># essais/personnes (ici 100) et d'une probabilité de succès donnée (ici 0.5)</span></span>
@@ -162,16 +162,16 @@ Figure 6.2: Densité de probabilité d’une loi normale
 </p>
 </div>
 <p>Plusieurs fonctions R peuvent être utilisées pour obtenir des informations liées à la distribution d’une loi normale donnée. Ces fonctions sont montrées ci-dessous.</p>
-<div class="sourceCode" id="cb222"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb257"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Fonction pour déterminer la densité de probabilité correspondant à la valeur x</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, mean <span class="op">=</span> <span class="fl">1</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.3989423</code></pre>
-<div class="sourceCode" id="cb224"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb259"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Fonction pour déterminer la probabilité d'obtenir une valeur inférieure ou </span></span>
 <span><span class="co"># égale à q</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span>q <span class="op">=</span> <span class="fl">2</span>, mean <span class="op">=</span> <span class="fl">1</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.8413447</code></pre>
-<div class="sourceCode" id="cb226"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb261"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Fonction pour déterminer la valeur pour laquelle il y a une probabilité p </span></span>
 <span><span class="co"># d'obtenir une valeur inférieure ou égale à la valeur définie</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">qnorm</a></span><span class="op">(</span>p <span class="op">=</span> <span class="fl">0.7</span>, mean <span class="op">=</span> <span class="fl">1</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
@@ -266,7 +266,7 @@ Figure 6.6: Illustration du théorème de la limite centrale appliqué à une mo
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Analyser des données avec R</strong>" was written by Pierre-Yves de Müllenheim. It was last built on 2023-09-30.</p>
+    <p>"<strong>Analyser des données avec R</strong>" was written by Pierre-Yves de Müllenheim. It was last built on 2023-11-02.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
