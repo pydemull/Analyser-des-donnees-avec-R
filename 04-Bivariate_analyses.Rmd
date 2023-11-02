@@ -605,258 +605,239 @@ ggplot(data = recap_dep2, aes(x = department, y = prop, fill = gender)) +
 ```
 Autrement dit, les hommes se retrouvaient avec un pourcentage de réussite global bien meilleur que celui des femmes seulement parce que, comparativement aux femmes, les hommes s'étaient en proportion davantage engagés dans les départements où les taux de réussite étaient bien meilleurs.
 
+Au-delà du tableau de contingence, plusieurs outils statistiques sont disponibles pour quantifier le lien entre les modalités de deux variables qualitatives [@janeEffectSizesConfidence2023]. On s’intéresse ici plus spécifiquement au coefficient Phi ($\Phi$), au $V$ de Cramer, à la différence de risque, au risque relatif, et au rapport des cotes. À noter que tous ces indices statistiques, excepté le $V$ de Cramer, sont essentiellement faits pour analyser le lien entre deux variables qualitatives dont l’une ne présenterait que deux modalités (on parle alors de variable binaire).
+
+*Coefficient Phi*
+
+Le coefficient $\Phi$ est une valeur qui peut être comprise entre -1 et 1 (ou entre 0 et 1 selon les manières de l'obtenir) et indique la force de la relation entre deux variables qualitatives binaires. Toutefois, seule la valeur absolue (entre 0 et 1 donc) est à interpréter. Le signe (si jamais différents signes peuvent apparaître selon le calcul utilisé) ne fait que renseigner sur la diagonale du tableau de contingence où les individus sont davantage polarisés. Pour comprendre comment $\Phi$ peut être calculé, prenons les tableaux de contingence montrés ci-dessous (Figure \@ref(fig:PhiContTables)) : 
+
+```{r PhiContTables, fig.height=1.5, out.width='90%', fig.align="center", echo = FALSE, fig.cap = "Tableaux de contingence schématiques pour comprendre le calcul de Phi"}
+p1 <- 
+  ggplot(data = data.frame(x = c(0, 1, 2), y = c(0, 1, 2)), aes(x = x, y = y)) +
+  geom_rect(aes(xmin = 0, xmax = 1, ymin = 1, ymax = 2), fill = "white", color = "black") +
+  geom_rect(aes(xmin = 1, xmax = 2, ymin = 1, ymax = 2), fill = "white", color = "black") +
+  geom_rect(aes(xmin = 0, xmax = 1, ymin = 0, ymax = 1), fill = "white", color = "black") +
+  geom_rect(aes(xmin = 1, xmax = 2, ymin = 0, ymax = 1), fill = "white", color = "black") +
+  geom_rect(aes(xmin = -1, xmax = 0, ymin = 0, ymax = 2), fill = "white", color = "black") +
+  geom_rect(aes(xmin = 0, xmax = 2, ymin = 2, ymax = 3), fill = "white", color = "black") +
+  annotate("text", x = 0.5, y = 1.5, label = "n11", size = 4) +
+  annotate("text", x = 1.5, y = 1.5, label = "n12", size = 4) +
+  annotate("text", x = 0.5, y = 0.5, label = "n21", size = 4) +
+  annotate("text", x = 1.5, y = 0.5, label = "n22", size = 4) +
+  annotate("text", x = 0.5, y = 2.5, label = "X=1", size = 5) +
+  annotate("text", x = 1.5, y = 2.5, label = "X=2", size = 5) +
+  annotate("text", x = -0.5, y = 1.5, label = "Y=1", size = 5) +
+  annotate("text", x = -0.5, y = 0.5, label = "Y=2", size = 5) +
+  annotate("text", x = 1, y = 3.5, label = "Phi = 0", size = 5) +
+theme_void()
+
+p2 <- 
+  ggplot(data = data.frame(x = c(0, 1, 2), y = c(0, 1, 2)), aes(x = x, y = y)) +
+  geom_rect(aes(xmin = 0, xmax = 1, ymin = 1, ymax = 2), fill = "white", color = "black") +
+  geom_rect(aes(xmin = 1, xmax = 2, ymin = 1, ymax = 2), fill = "white", color = "black") +
+  geom_rect(aes(xmin = 0, xmax = 1, ymin = 0, ymax = 1), fill = "white", color = "black") +
+  geom_rect(aes(xmin = 1, xmax = 2, ymin = 0, ymax = 1), fill = "white", color = "black") +
+  geom_rect(aes(xmin = -1, xmax = 0, ymin = 0, ymax = 2), fill = "white", color = "black") +
+  geom_rect(aes(xmin = 0, xmax = 2, ymin = 2, ymax = 3), fill = "white", color = "black") +
+  annotate("text", x = 0.5, y = 1.5, label = "n11", size = 5) +
+  annotate("text", x = 1.5, y = 1.5, label = "n12", size = 3) +
+  annotate("text", x = 0.5, y = 0.5, label = "n21", size = 3) +
+  annotate("text", x = 1.5, y = 0.5, label = "n22", size = 5) +
+  annotate("text", x = 0.5, y = 2.5, label = "X=1", size = 5) +
+  annotate("text", x = 1.5, y = 2.5, label = "X=2", size = 5) +
+  annotate("text", x = -0.5, y = 1.5, label = "Y=1", size = 5) +
+  annotate("text", x = -0.5, y = 0.5, label = "Y=2", size = 5) +
+  annotate("text", x = 1, y = 3.5, label = "Phi = 1", size = 5) +
+theme_void()
+
+p3 <- 
+  ggplot(data = data.frame(x = c(0, 1, 2), y = c(0, 1, 2)), aes(x = x, y = y)) +
+  geom_rect(aes(xmin = 0, xmax = 1, ymin = 1, ymax = 2), fill = "white", color = "black") +
+  geom_rect(aes(xmin = 1, xmax = 2, ymin = 1, ymax = 2), fill = "white", color = "black") +
+  geom_rect(aes(xmin = 0, xmax = 1, ymin = 0, ymax = 1), fill = "white", color = "black") +
+  geom_rect(aes(xmin = 1, xmax = 2, ymin = 0, ymax = 1), fill = "white", color = "black") +
+  geom_rect(aes(xmin = -1, xmax = 0, ymin = 0, ymax = 2), fill = "white", color = "black") +
+  geom_rect(aes(xmin = 0, xmax = 2, ymin = 2, ymax = 3), fill = "white", color = "black") +
+  annotate("text", x = 0.5, y = 1.5, label = "n11", size = 3) +
+  annotate("text", x = 1.5, y = 1.5, label = "n12", size = 5) +
+  annotate("text", x = 0.5, y = 0.5, label = "n21", size = 5) +
+  annotate("text", x = 1.5, y = 0.5, label = "n22", size = 3) +
+  annotate("text", x = 0.5, y = 2.5, label = "X=1", size = 5) +
+  annotate("text", x = 1.5, y = 2.5, label = "X=2", size = 5) +
+  annotate("text", x = -0.5, y = 1.5, label = "Y=1", size = 5) +
+  annotate("text", x = -0.5, y = 0.5, label = "Y=2", size = 5) +
+  annotate("text", x = 1, y = 3.5, label = "Phi = -1", size = 5) +
+theme_void()
+
+
+p1 + p2 + p3
+```
+On note sur ces tableaux qu’une valeur absolue de $\Phi$ élevée sera attendue dans le cas où il y aura relativement beaucoup d’individus dans une diagonale et relativement peu d’individus dans l’autre diagonale (cf. tableaux du milieu et de droite ci-dessus). Si l'on prend comme base l'un des tableaux de contingence montrés ci-dessus, la formule du coefficient $\Phi$ est la suivante [@janeEffectSizesConfidence2023] : 
+
+$$\Phi = \frac{(n_{11} \cdot n_{22}) - (n_{21} \cdot n_{12})}{\sqrt{(n_{11} + n_{21}) \cdot (n_{12} + n_{22}) \cdot (n_{11} + n_{12}) \cdot (n_{21} + n_{22})}}$$
+Une autre formule pour calculer $\Phi$ (donnant systématiquement la valeur absolue du coefficient) pourrait être aussi la suivante [@janeEffectSizesConfidence2023] : 
+
+$$\Phi = \sqrt{\frac{\chi^2}{n}},$$ 
+
+avec $\chi^2$ la statistique "chi-carré" et $n$ le nombre total d'individus. Pour calculer $\Phi$ dans R, on peut utiliser la fonction `phi()` du package `effectsize` :
+```{r}
+tab <- table(mtcars$am, mtcars$vs)
+effectsize::phi(tab)
+```
+
+
+*$V$ de Cramer*
+
+Le $V$ de Cramer est la forme généralisée de la force d’association entre deux variables qualitatives. Il peut donc être calculé à partir d’un tableau de contingence de n’importe quelle taille, prendre des valeurs absolues entre 0 et 1, et est ainsi l’équivalent du coefficient $\Phi$ dans le cas d’un tableau de contingence 2 x 2 (2 variables qualitatives x 2 modalités chacune). La formule du $V$ de Cramer est la suivante [@janeEffectSizesConfidence2023] : 
+
+$$V = \sqrt{\frac{\chi^2}{n \cdot (k-1)}},$$ 
+avec $\chi^2$ la statistique « chi-carré », $n$ le nombre total d’individus, et $k$ le nombre de modalités de la variable qui a le moins de modalités. Pour calculer le $V$ de Cramer dans R, on peut utiliser la fonction `cramers_v()` du package `effectsize` :
+
+```{r}
+tab <- table(JointSports_full$gender, JointSports_full$opinion)
+effectsize::cramers_v(tab)
+```
+
+*Différence de risque*
+
+La différence de risque est une différence de proportions. La notion de risque peut ne pas être très pertinente pour certains contextes, mais elle l’est particulièrement dans un contexte de santé. Pour comprendre le calcul du risque puis de la différence de risque, regardons le tableau ci-dessous (Figure \@ref(fig:RiskContTables)).
+
+```{r RiskContTables,  fig.height=2, out.width='70%', fig.align="center", echo = FALSE, fig.cap = "Tableau de contingence schématique pour comprendre le calcul des risques et des cotes"}
+ggplot(data = data.frame(x = c(0, 1, 2), y = c(0, 1, 2)), aes(x = x, y = y)) +
+  geom_rect(aes(xmin = 0, xmax = 1, ymin = 1, ymax = 2), fill = "white", color = "black") +
+  geom_rect(aes(xmin = 1, xmax = 2, ymin = 1, ymax = 2), fill = "white", color = "black") +
+  geom_rect(aes(xmin = 0, xmax = 1, ymin = 0, ymax = 1), fill = "white", color = "black") +
+  geom_rect(aes(xmin = 1, xmax = 2, ymin = 0, ymax = 1), fill = "white", color = "black") +
+  geom_rect(aes(xmin = -1, xmax = 0, ymin = 0, ymax = 2), fill = "white", color = "black") +
+  geom_rect(aes(xmin = 0, xmax = 2, ymin = 2, ymax = 3), fill = "white", color = "black") +
+  annotate("text", x = 0.5, y = 1.5, label = "nC0", size = 4) +
+  annotate("text", x = 1.5, y = 1.5, label = "nC1", size = 4) +
+  annotate("text", x = 0.5, y = 0.5, label = "nT0", size = 4) +
+  annotate("text", x = 1.5, y = 0.5, label = "nT1", size = 4) +
+  annotate("text", x = 0.5, y = 2.5, label = "En bonne santé", size = 5) +
+  annotate("text", x = 1.5, y = 2.5, label = "Malade", size = 5) +
+  annotate("text", x = -0.5, y = 1.5, label = "Groupe contrôle", size = 5) +
+  annotate("text", x = -0.5, y = 0.5, label = "Groupe traité", size = 5) +
+theme_void()
+```
+
+Dans le tableau ci-dessus, chaque case contenant un « n » est un effectif. Si l’on désire connaître le risque d’être malade dans le groupe contrôle ($p_C$) et dans le groupe traité ($p_T$), on fait les calculs suivants : 
+
+$$p_C = \frac{n_{C1}}{n_{C0} + n_{C1}}$$
+
+$$p_T = \frac{n_{T1}}{n_{T0} + n_{T1}}$$
+
+La différence de risque d'être malade pour le groupe contrôle par rapport au groupe traité de l'exemple, notée $DR$, est alors :
+
+$$p_C - p_T $$
+Avec R, la différence de risque peut être obtenue avec le package `riskCommunicator`. Il s'agit d'un package qui n'existe pas sur CRAN, mais seulement sur Github. Pour pouvoir l'installer à partir de Github, il faut d'abord installer un package qui permet ce type d'installation, tel que le package `devtools` :
+```{r, eval = FALSE}
+install.packages("devtools")
+```
+
+Le package `riskCommunicator` peut alors être installé en suivant la procédure ci-dessous : 
+```{r, eval = FALSE}
+devtools::install_github("jgrembi/riskCommunicator")
+```
+
+Pour utiliser le package `riskCommunicator`, il faut bien sûr ensuite le charger :
+```{r}
+library(riskCommunicator)
+```
+
+Pour l'exemple, chargeons le jeu de données `cvdd` associé au package `riskCommunicator`:
+```{r}
+data(cvdd)
+```
+
+Il s'agit d'un jeu de données avec plusieurs variables qualitatives, dont plusieurs sont plus précisément binaires (i.e., qui ne contiennent que deux modalités). Admettons que l'on souhaiterait connaître la différence de risque de mortalité cardiovasculaire (`cvd_dh`) sur une période de suivi donnée, cela en fonction de si l'on a développé une hypertension ou non (`HYPERTEN`). Pour cela, on peut utiliser la fonction `gComp()` du package `riskCommunicator` comme suit :
+
+```{r}
+gComp(data = cvdd, X = "HYPERTEN", Y = "cvd_dth", outcome.type = "binary")
+```
+
+Dans le résultat obtenu, la différence de risque est de 0.132, soit 13.2 %. À ce stade, il est fondamental de comprendre que le résultat obtenu dépend de la manière dont les modalités sont ordonnées dans les variables de type facteur utilisées pour faire les calculs. Regardons comment les modalités sont organisées pour les variables qui nous concernent : 
+```{r}
+levels(cvdd$HYPERTEN)
+levels(cvdd$cvd_dth)
+```
+
+On remarque qu'à chaque fois, "0" est la première modalité, et "1" est la seconde modalité. C'est important de le savoir pour interpréter le résultat ensuite car la fonction `gComp()` calcule par défaut la différence de risque en faisant le risque de présenter la modalité 2 de la variable Y quand on a la modalité 2 de la variable X (ici le risque de mourir quand on est hypertendu) moins le risque de présenter la modalité 2 de la variable Y quand on a la modalité 1 de la variable X (ici le risque de mourir quand on n'est pas hypertendu). On peut d'ailleurs vérifier le calcul manuellement :
+
+```{r}
+# Obtention d'un tableau de contingence avec proportions
+tab <- table(cvdd$HYPERTEN, cvdd$cvd_dth)
+risks <- questionr::lprop(tab)
+colnames(risks) <- c("vivant", "mort", "total")
+rownames(risks) <- c("non-hypertendu", "hypertendu", "total")
+risks
+
+# Calcul de la différence de risque de mortalité 
+# chez les hypertendus vs non-hypertendus (en %)
+45.4-32.2
+
+```
+
+*Risque relatif*
+
+Le risque relatif, noté $RR$, reprend les mêmes informations que celles utilisées pour la différence de risque (${p_T}$ et ${p_C}$). La différence est qu’il ne s’agit plus d’une différence, mais d’un rapport entre les risques présentés par les groupes comparés. Sa formule pour comparer le groupe contrôle au groupe traité dans notre exemple débuté plus haut est la suivante :
+
+$$RR = \frac{{p_C}}{{p_T}}$$
+Avec R, le risque relatif peut  être obtenu avec le package `riskCommunicator` tel que montré pour le calcul de la différence de risque, en faisant toujours bien attention à quel risque est divisé par quel risque selon l'analyse qui est réellement souhaitée. Dans notre exemple débuté plus haut, il s'agit du même calcul que pour la différence de risque sauf qu'il ne s'agit plus d'un signe moins mais d'une division. Les résultats obtenus plus haut avec l'exemple de la différence de risque montrent aussi le risque relatif, qui est tel que le risque de mourir chez les hypertendus est 1.41 fois plus élevé que chez les non-hypertendus.
+
+*Rapports des cotes*
+
+Le rapport des cotes, noté $OR$ pour *Odds ratio* en anglais, est une statistique dont le calcul peut à nouveau se comprendre à l’aide d’un tableau de contingence. Si l’on reprend le tableau de la Figure \@ref(fig:RiskContTables), on peut dire que la cote pour le fait d’être en bonne santé versus être malade dans le groupe contrôle est $n_{C0}$/$n_{C1}$ et la cote pour le fait d’être en bonne santé versus malade dans le groupe traité est $n_{T0}$/$n_{T1}$. Le rapport des cotes pour le groupe contrôle versus le groupe traité dans ce cas-là peut se calculer comme ceci : 
+
+$$ OR=  \frac{n_{C0} / n{_{C1}}}{n_{T0} / n{_{T1}}}$$
+
+Le rapport des cotes est toujours ≥0. Une valeur en-dessous de 1 signifie « moins de chances/risques », une valeur de 1 signifie « chances/risques équivalent(e)s », et une valeur au-dessus de 1 signifie « plus de chances ou de risques ». Le chiffre obtenu renseigne toujours sur un niveau de chances pour le groupe au numérateur par rapport au niveau de chances concernant le groupe au dénominateur (cf. formule ci-dessus). Avec R, le rapport des cotes peut  être obtenu avec le package `riskCommunicator` tel que montré pour le calcul de la différence de risque, en faisant cette fois attention à quelle cote est divisée par quelle cote selon l'analyse qui est réellement souhaitée. Dans notre exemple débuté plus haut, le rapport des cotes est de 1.75. Cela signifie ici que la cote pour le fait de mourir (versus le fait de vivre) est 1.75 fois plus élevée quand on est hypertendu que lorsqu'on ne l'est pas. Pour comprendre le calcul, on peut le refaire manuellement : 
+
+```{r}
+# Obtention d'un tableau de contingence avec effectifs
+tab <- table(cvdd$HYPERTEN, cvdd$cvd_dth)
+colnames(tab) <- c("vivant", "mort")
+rownames(tab) <- c("non-hypertendu", "hypertendu")
+tab
+
+# Calcul des cotes pour les "chances" de mourir selon le groupe d'appartenance
+cote_hypertendus <- 1403/1685
+cote_non_hypertendus <- 371/781
+
+# Calcul du rapport des cotes
+OR <- cote_hypertendus / cote_non_hypertendus
+OR
+```
+
 ## Relation entre une variable quantitative et une variable qualitative
 
-Lorsqu'on analyse une variable quantitative en fonction d'une variable qualitative, on peut avoir des données quantitatives qui sont non appariées (étude de type *between-subject design* en anglais) ou appariées (étude de type *within-subject design* en anglais). Avoir des données non appariées signifie que les données quantitatives correspondant aux différentes modalités de la variable qualitative étudiée ne sont pas liées. Un exemple simple, pour ce premier cas, peut être l'analyse de la taille des individus en fonction du sexe. Dans ce cas, les données quantitatives de taille pour les personnes de sexe masculin, de sexe féminin, et de sexe indéterminé, proviendront forcément d'individus différents et ne formeront donc pas des paires. Les cas de données appariées se retrouvent dans les études dans lesquelles plusieurs individus sont évalués plusieurs fois dans des conditions similaires ou différentes et que l'on cherche à comparer. En sciences du sport, un exemple relativement classique est de tester la performance d'endurance (variable quantitative) en ayant pris (condition de test) ou non (condition contrôle) une substance potentiellement ergonénique, la prise de substance ou non étant les modalités d'une même variable qualitative de type condition. Dans ce cas là, tous les individus auront des données dans les deux conditions et ces données seront donc appariées (dépendantes).
+Lorsqu'on analyse une variable quantitative en fonction d'une variable qualitative, on peut avoir des données quantitatives qui sont non appariées (étude de type *between-subject design* en anglais) ou appariées (étude de type *within-subject design* en anglais). Avoir des données non appariées signifie que les données quantitatives correspondant aux différentes modalités de la variable qualitative étudiée ne sont pas liées. Un exemple simple, pour ce premier cas, peut être l'analyse de la taille des individus en fonction du sexe. Dans ce cas, les données quantitatives de taille pour les personnes de sexe masculin, de sexe féminin, et de sexe indéterminé, proviendront forcément d'individus différents et ne formeront donc pas des paires. S'agissant des cas de données appariées, ils se retrouvent dans les études où plusieurs individus sont évalués plusieurs fois dans des conditions similaires ou différentes et que l'on cherche à comparer. En sciences du sport, un exemple relativement classique est de tester la performance d'endurance (variable quantitative) en ayant pris (condition de test) ou non (condition contrôle) une substance potentiellement ergonénique, la prise de substance ou non étant les modalités d'une même variable qualitative de type condition. Dans ce cas là, tous les individus auront des données dans les deux conditions et ces données seront donc appariées (dépendantes).
 
 Étant donné que les contraintes graphiques et les statistiques à calculer diffèrent selon que l'on est en présence de (i) deux groupes (1 variable quantitative x 1 variable qualitative avec 2 modalités) ou (ii) trois groupes et plus (1 variable quantitative x 1 variable qualitative avec 3 modalités ou plus), les procédures graphiques et calculatoires présentées ci-après sont distinguées selon ces deux grands cas de figure.
 
 ### Comparaison de deux groupes de données
 
 #### Étudier graphiquement la relation
-Lorsque l'on cherche à explorer la relation qu'il peut y avoir entre une variable quantitative et une variable qualitative, il peut être intéressant de visualiser la distribution de la variable quantitative en fonction de chaque modalité de la variable qualitative. Pour faire cela, il a été proposé dans la littérature d'user de graphiques appelés *raincloud plots* qui combinent les avantages de plusieurs techniques graphiques et statistiques et par là même pallient les manques ou défauts inhérents à chacune de ces techniques  [@allenRaincloudPlotsMultiplatform2019]. Les blocs de code ci-dessous, et les Figures \@ref(fig:raindcloudplotsBivUnpaired1), \@ref(fig:raindcloudplotsBivUnpaired2) et \@ref(fig:raindcloudplotsBivPaired1), proposent plusieurs options de mise en oeuvre de ce type de graphiques selon la situation d'étude (avec données non appariées et appariées). On remarquera que ces blocs de code n'utilisent pas la fonction `geom_rain()` du *package* `ggrain` vu au chapitre précédent, cela pour montrer une autre façon de créer des *raincloud plots*, en particulier lorsqu'il s'agit de non pas utiliser une boîte à moustaches mais à la place une moyenne et un écart-type (cette méthode s'avère malheureusement moins efficiente en matière de nombre de lignes de code, mais elle offre un certain nombre d'options intéressantes pour ajuster les éléments graphiques). Ces blocs de code requièrent notamment les *packages* `ggdist` et `gghalves` qui doivent être installés au préalable. Le code a été adapté à partir des propositions de Cédric Scherer (https://www.cedricscherer.com/2021/06/06/visualizing-distributions-with-raincloud-plots-and-how-to-create-them-with-ggplot2/).
+Lorsque l'on cherche à explorer la relation qu'il peut y avoir entre une variable quantitative et une variable qualitative, il peut être intéressant de visualiser la distribution de la variable quantitative en fonction de chaque modalité de la variable qualitative. Pour faire cela, il a été proposé dans la littérature d'user de graphiques appelés *raincloud plots* qui combinent les avantages de plusieurs techniques graphiques et statistiques et par là même pallient les manques ou défauts inhérents à chacune de ces techniques  [@allenRaincloudPlotsMultiplatform2019]. Les blocs de code ci-dessous, et les Figures \@ref(fig:raindcloudplotsBivUnpaired1) et \@ref(fig:raindcloudplotsBivPaired1), proposent plusieurs options de mise en oeuvre de ce type de graphiques selon la situation d'étude (avec données non appariées et appariées).
 
 *Données non appariées*
 
-Les Figures \@ref(fig:raindcloudplotsBivUnpaired1) et \@ref(fig:raindcloudplotsBivUnpaired2) et les blocs de code associés montrés ci-dessous permettent d'obtenir des graphiques appropriés pour des données non appariées. 
+La Figure \@ref(fig:raindcloudplotsBivUnpaired1), qui est associée au bloc de code ci-dessous, montre un graphique approprié pour des données non appariées. 
 
 ```{r}
-# Configuration du jeu de données pour les exemples avec données non appariées.
+# Configuration du jeu de données pour l'exemple avec données non appariées.
 # Il s'agit ici d'obtenir le jeu de données `iris` avec seulement deux modalités  
 # de la variable `Species`, cela en enlevant la modalité `virginica`.
 iris_two_species <-
   iris %>% filter(Species != "virginica")
 ```
 
-```{r }
-############################################################
-# Raincloud plots à l'horizontale pour données non appariées
-############################################################
-
-# Raincloud plots classiques (avec boîtes à moustaches)
-A <-
-  ggplot(data = iris_two_species, 
-         aes(x = Species, y = Sepal.Length, colour = Species, fill = Species)) +
-  ggdist::stat_halfeye(
-    adjust = .5, 
-    width = .6, 
-    .width = 0, 
-    point_colour = NA
-    ) +
-  geom_boxplot(
-    colour = "black",
-    width = .1, 
-    outlier.shape = NA
-  ) +
-  gghalves::geom_half_point(
-    size = 2, 
-    side = "l", 
-    range_scale = .4, 
-    alpha = .3,
-    transformation = position_jitter(seed = 123)
-  ) +
-  labs(title = "A") +
-  coord_flip(xlim = c(1.2, NA)) +
-  theme(legend.position = "none")
-
-
-# Raincloud plots avec les nuages sur une même ligne (avec boîtes à moustaches)
-B <-
-  ggplot(data = iris_two_species, 
-         aes(x = 0, y = Sepal.Length, colour = Species, fill = Species)) +
-  ggdist::stat_halfeye(
-    adjust = .5, 
-    width = .6, 
-    .width = 0, 
-    point_colour = NA,
-    alpha = 0.5
-    ) +
-  geom_boxplot(
-    aes(x = -0.07),
-    colour = "black",
-    width = .1, 
-    outlier.shape = NA
-  ) +
-  geom_point(
-    aes(x = -0.25),
-    size = 2, 
-    alpha = .5,
-    position = position_jitterdodge(
-                          dodge.width = 0.1,
-                          seed = 123
-                    )
-  ) +
-  labs(title = "B") +
-  theme(legend.position = "right",
-        axis.title.y = element_blank(),
-        axis.text.y = element_blank(),
-        axis.ticks.y = element_blank()) +
-  coord_flip() 
-
-
-# Raincloud plots classiques (avec moyennes et 
-# écart-types)
-C <-
-  ggplot(data = iris_two_species, 
-         aes(x = Species, y = Sepal.Length, colour = Species, fill = Species)) +
-  ggdist::stat_halfeye(
-    adjust = .5, 
-    width = .6, 
-    .width = 0, 
-    point_colour = NA
-    ) +
+```{r raindcloudplotsBivUnpaired1, out.width = '90%', fig.cap = "Exemple de graphique pour une comparaison de deux groupes de valeurs non-appariés (indépendants)"}
+ggplot(data = iris_two_species, aes(x = Species,y = Sepal.Length)) +
+  geom_rain(point.args = rlang::list2(alpha = 0.3)) +
   stat_summary(
     geom = "errorbar",
-    color = "black",
-    fun.data = "mean_sdl",
-    fun.args = list(mult = 1),
-    size = 1.1, 
-    width = 0.08
-    ) + 
-  stat_summary(
-    geom = "point",
-    fun = "mean", 
-    color = "black",
-    size = 3
-    ) +
-  gghalves::geom_half_point(
-    size = 2, 
-    side = "l", 
-    range_scale = .4, 
-    alpha = .3,
-    transformation = position_jitter(seed = 123)
-  ) +
-  labs(title = "C") +
-  coord_flip(xlim = c(1.2, NA)) +
-  theme(legend.position = "none")
-
-
-# Raincloud plots avec les nuages sur une même ligne (avec moyennes et 
-# écart-types)
-D <-
-  ggplot(data = iris_two_species, 
-         aes(x = 0, y = Sepal.Length, colour = Species, fill = Species)) +
-  ggdist::stat_halfeye(
-    adjust = .5, 
-    width = .6, 
-    .width = 0, 
-    point_colour = NA,
-    alpha = 0.5
-    ) +
-  stat_summary(
-    geom = "errorbar",
-    color = "black",
-    fun.data = "mean_sdl",
-    fun.args = list(mult = 1),
-    size = 1.1, 
-    width = 0.07
-    ) + 
-  stat_summary(
-    geom = "point",
-    fun = "mean", 
-    color = "black",
-    size = 3
-    ) +
-  geom_point(
-    aes(x = -0.15),
-    size = 2, 
-    alpha = .5,
-    position = position_jitterdodge(
-                          dodge.width = 0.1,
-                          seed = 123
-                    )
-  ) +
-  labs(title = "D") +
-  theme(legend.position = "right",
-        axis.title.y = element_blank(),
-        axis.text.y = element_blank(),
-        axis.ticks.y = element_blank()) +
-  coord_flip() 
-```
-
-```{r raindcloudplotsBivUnpaired1, fig.height = 13, out.width= '100%', echo = FALSE, fig.cap="Exemples de raindcloud plots à l'horizontale pour des données non appariées"}
-library(patchwork)
-(A / B / C / D)
-```
-
-
-```{r }
-###########################################################
-# Raincloud plots à la verticale pour données non appariées
-###########################################################
-
-# Raincloud plots classiques (avec boîtes à moustaches)
-A <-
-  ggplot(data = iris_two_species, 
-         aes(x = Species, y = Sepal.Length, colour = Species, fill = Species)) +
-  ggdist::stat_halfeye(
-    adjust = .5, 
-    width = .6, 
-    .width = 0, 
-    point_colour = NA
-    ) +
-  geom_boxplot(
-    colour = "black",
-    width = .1, 
-    outlier.shape = NA
-  ) +
-  gghalves::geom_half_point(
-    size = 2, 
-    side = "l", 
-    range_scale = .4, 
-    alpha = .3,
-    transformation = position_jitter(seed = 123)
-  ) +
-  labs(title = "A") +
-  theme(legend.position = "none")
-
-
-# Raincloud plots avec les nuages sur une même ligne (avec boîtes à moustaches)
-B <-
-  ggplot(data = iris_two_species, 
-         aes(x = 0, y = Sepal.Length, colour = Species, fill = Species)) +
-  ggdist::stat_halfeye(
-    adjust = .5, 
-    width = .6, 
-    .width = 0, 
-    point_colour = NA,
-    alpha = 0.5
-    ) +
-  geom_boxplot(
-    aes(x = -0.07),
-    colour = "black",
-    width = .1, 
-    outlier.shape = NA
-  ) +
-  geom_point(
-    aes(x = -0.25),
-    size = 2, 
-    alpha = .5,
-    position = position_jitterdodge(
-                          dodge.width = 0.1,
-                          seed = 123
-                    )
-  ) +
-  labs(title = "B") +
-  theme(legend.position = "right",
-        axis.title.x = element_blank(),
-        axis.text.x = element_blank(),
-        axis.ticks.x = element_blank()) 
-
-# Raincloud plots classiques (avec moyennes et 
-# écart-types)
-C <-
-  ggplot(data = iris_two_species, 
-         aes(x = Species, y = Sepal.Length, colour = Species, fill = Species)) +
-  ggdist::stat_halfeye(
-    adjust = .5, 
-    width = .6, 
-    .width = 0, 
-    point_colour = NA
-    ) +
-  stat_summary(
-    geom = "errorbar",
-    color = "black",
+    color = "red",
     fun.data = "mean_sdl",
     fun.args = list(mult = 1),
     size = 1.1, 
@@ -865,79 +846,26 @@ C <-
   stat_summary(
     geom = "point",
     fun = "mean", 
-    color = "black",
+    color = "red",
     size = 3
-    ) +
-  gghalves::geom_half_point(
-    size = 2, 
-    side = "l", 
-    range_scale = .4, 
-    alpha = .3,
-    transformation = position_jitter(seed = 123)
-  ) +
-  labs(title = "C") +
-  theme(legend.position = "none")
-
-
-# Raincloud plots avec les nuages sur une même ligne (avec moyennes et 
-# écart-types)
-D <-
-  ggplot(data = iris_two_species, 
-         aes(x = 0, y = Sepal.Length, colour = Species, fill = Species)) +
-  ggdist::stat_halfeye(
-    adjust = .5, 
-    width = .6, 
-    .width = 0, 
-    point_colour = NA,
-    alpha = 0.5
-    ) +
-  stat_summary(
-    geom = "errorbar",
-    color = "black",
-    fun.data = "mean_sdl",
-    fun.args = list(mult = 1),
-    size = 1.1, 
-    width = 0.03
-    ) + 
-  stat_summary(
-    geom = "point",
-    fun = "mean", 
-    color = "black",
-    size = 3
-    ) +
-  geom_point(
-    aes(x = -0.15),
-    size = 2, 
-    alpha = .5,
-    position = position_jitterdodge(
-                          dodge.width = 0.1,
-                          seed = 123
-                    )
-  ) +
-  labs(title = "D") +
-  theme(legend.position = "right",
-        axis.title.x = element_blank(),
-        axis.text.x = element_blank(),
-        axis.ticks.x = element_blank())
+    )
 ```
 
-```{r raindcloudplotsBivUnpaired2, fig.height = 10, out.width= '100%',  echo = FALSE, fig.cap="Exemples de raindcloud plots à la verticale pour des données non appariées"}
-library(patchwork)
-(A | B) / (C | D)
-```
-
-Pour réaliser les graphiques, nous avons fait un *mapping* (une mise en lien) des couleurs des éléments graphiques avec les modalités de la variable qualitative étudiée (cf. arguments `color` et `fill` dans la fonction `aes()` au niveau de la fonction `ggplot()`). Notons aussi que pour montrer les moyennes et écarts-types sur les figures \@ref(fig:raindcloudplotsBivUnpaired1) et \@ref(fig:raindcloudplotsBivUnpaired2),  il a fallu utiliser la fonction `stat_summary()`. Cette fonction sert à visualiser un résumé statistique identifié. Pour montrer les moyennes, on utilise `fun = "mean"`, alors que pour montrer des écarts-types, on utilise `fun.data = "mean_sdl"`. Pour les écarts-types, il faut ajouter `fun.args = list(mult = 1)` pour bien montrer une barre d'erreur ne correspondant qu'à un seul multiple de l'écart-type, car par défaut c'est deux fois l'écart-type qui est montré. On peut choisir la forme avec laquelle présenter le résumé statistique grâce à l'argument `geom`. On remarque aussi que pour montrer les "nuages" sur une même ligne (cf. graphiques B et D des Figures \@ref(fig:raindcloudplotsBivUnpaired1) et \@ref(fig:raindcloudplotsBivUnpaired2)), nous avons utilisé `aes(x = 0)` dans la fonction `ggplot()`, et nous avons montré les données individuelles avec la fonction `geom_point()`, cela pour avoir plus de contrôle sur le placement des points sur les graphiques. C'est alors l'argument `position` et la fonction `position_jitterdodge()` qui ont permis de donner un mouvement latéral aléatoire aux points pour qu'ils ne soient pas superposés.
+On note que pour montrer les moyennes et écarts-types sur la Figure \@ref(fig:raindcloudplotsBivUnpaired1), il a fallu utiliser la fonction `stat_summary()` du package `Hmisc` (qui est chargé automatiquement lors du chargement de `ggplot2` après que `Hmisc` ait été installé). Cette fonction sert à visualiser un résumé statistique. Pour montrer les moyennes, on utilise `fun = "mean"`, alors que pour montrer des écarts-types, on utilise `fun.data = "mean_sdl"`. Pour les écarts-types, il faut ajouter `fun.args = list(mult = 1)` pour bien montrer une barre d'erreur ne correspondant qu'à un seul multiple de l'écart-type, car par défaut c'est deux fois l'écart-type qui est montré. On peut choisir la forme avec laquelle présenter le résumé statistique grâce à l'argument `geom`. 
 
 
 *Données appariées*
 
-La Figure \@ref(fig:raindcloudplotsBivPaired1) montre des propositions de graphiques dans le cas de l'étude d'une comparaison de deux groupes de données appariées. Pour ces exemples, nous avons installé le package `PairedData` et chargé le jeu de données associé, appelé `Blink`. Pour information, `Blink` contient des données de taux de clignotement des yeux obtenues chez 12 sujets et dans deux conditions différentes : une tâche où il fallait diriger un stylo selon une trajectoire rectiligne (modalité `Straight`), et une tâche où il fallait diriger un stylo selon une trajectoire présentant des oscillations (`Oscillating`). Ce jeu de données a été un peu transformé pour pouvoir passer à l'étape de la conception graphique, comme montré ci-dessous.
+La Figure \@ref(fig:raindcloudplotsBivPaired1) montre une proposition de graphique dans le cas de l'étude d'une comparaison de deux groupes de données appariées. Pour cela, nous avons installé le package `PairedData` et chargé le jeu de données associé, appelé `Blink`. Pour information, `Blink` contient des données de taux de clignotement des yeux obtenues chez 12 sujets et dans deux conditions différentes : une tâche où il fallait diriger un stylo selon une trajectoire rectiligne (modalité `Straight`), et une tâche où il fallait diriger un stylo selon une trajectoire présentant des oscillations (`Oscillating`). Ce jeu de données a été un peu transformé pour pouvoir passer à l'étape de la conception graphique, comme montré ci-dessous.
 
 ```{r, message=FALSE, warning=FALSE}
-# Configuration du jeu de données pour les exemples avec données appariées
+# Charger le package
 library(PairedData)
+
+# Charger le jeu de données
 data(Blink)
 
+# Configurer le jeu de données pour l'exemple avec données appariées
 Blink2 <-
   Blink %>%
   pivot_longer(cols = c(Straight, Oscillating), 
@@ -946,108 +874,40 @@ Blink2 <-
   mutate(Condition = fct_relevel(Condition, "Straight", "Oscillating"))
 ```
 
-```{r}
-#######################################################
-# Raincloud plots à la verticale pour données appariées
-#######################################################
-
-# Raincloud plots classiques à la verticale avec boîtes à moustaches
-A <-
-  ggplot(data = Blink2, aes(x = Condition, y = Blink_rate)) +
-  ggdist::stat_halfeye(
-    aes(side = ifelse(Condition == "Straight", "left", "right")),
-    adjust = .5, 
-    width = .6, 
-    .width = 0, 
-    point_colour = NA
-    ) +
-  geom_boxplot(colour = "black", width = .1, outlier.shape = NA) +
-  geom_point(
-    aes(x = ifelse(Condition == "Straight", 1.1, 1.9)),
-    position = position_jitter(seed = 123, width = 0.03),
-    size = 2,
-    color = "grey50"
-  ) +
-  geom_line(
-    aes(
-      x = ifelse(Condition == "Straight", 1.1, 1.9),
-      group = Subject
-      ),
-    position = position_jitter(seed = 123, width = 0.03),
-    color = "grey50"
-  ) +
-  stat_summary(
-    fun = "median",
-    geom = "point",
-    color = "black",
-    size = 2
+```{r raindcloudplotsBivPaired1, fig.cap = "Exemple de graphique pour une comparaison de deux groupes de valeurs appariés (dépendants)", warning=FALSE}
+ggplot(data = Blink2, aes(x = Condition, y = Blink_rate)) +
+  geom_rain(
+    rain.side = "f1x1",
+    id.long.var = "Subject",
+    point.args = rlang::list2(alpha = 0.3)
   ) +
   stat_summary(
     aes(group = 1),
-    fun = "median",
-    geom = "line",
-    color = "black",
-    size = 0.7
-  ) +
-  labs(title = "A")
-
-
-# Raincloud plots classiques à la verticale avec moyennes et 
-# écart-types
-B <-
-  ggplot(data = Blink2, aes(x = Condition, y = Blink_rate)) +
-  ggdist::stat_halfeye(
-    aes(side = ifelse(Condition == "Straight", "left", "right")),
-    adjust = .5, 
-    width = .6, 
-    .width = 0, 
-    point_colour = NA
-    ) +
-  stat_summary(
     fun = "mean",
-    geom = "point",
-    color = "black",
-    size = 2
+    geom = "line",
+    color = "red",
+    linewidth = 1
   ) +
   stat_summary(
-    fun.data  = "mean_sdl",
     geom = "errorbar",
-    width = 0.03,
-    fun.args = list(mul = 1),
-    color = "black", 
-    size = 0.7
-  ) +
-  geom_point(
-    aes(x = ifelse(Condition == "Straight", 1.1, 1.9)),
-    position = position_jitter(seed = 123, width = 0.03),
-    size = 2,
-    color = "grey50"
-  ) +
-  geom_line(
-    aes(
-      x = ifelse(Condition == "Straight", 1.1, 1.9),
-      group = Subject
-      ),
-    position = position_jitter(seed = 123, width = 0.03),
-    color = "grey50"
-  ) +
+    color = "red",
+    fun.data = "mean_sdl",
+    fun.args = list(mult = 1),
+    size = 1.1, 
+    width = 0.06
+    ) + 
   stat_summary(
-    aes(group = 1),
-    fun = "mean",
-    geom = "line",
-    color = "black"
-  ) +
-  labs(title = "B")
+    geom = "point",
+    fun = "mean", 
+    color = "red",
+    size = 3
+    )
 ```
 
-```{r raindcloudplotsBivPaired1,  out.width= '100%',  echo = FALSE, fig.cap="Exemples de raindcloud plots à la verticale pour des données appariées"}
-A | B
-```
+Le graphiques montré ci-dessus pour données appariées contient des éléments graphiques supplémentaires par rapport à celui proposé pour les données non appariées : des lignes reliant les données individuelles, et une ligne reliant les statistiques qui représentent les tendances centrales (ici les moyennes). Ces deux types d'éléments graphiques sont importants pour explicitement montrer qu'il y a un lien entre les deux conditions de mesure (il s'agit des mêmes individus et donc du même groupe), et cela permet de mettre en évidence à la fois les trajectoires individuelles et celle du groupe entre les deux conditions de mesure.
 
+Pour obtenir ces éléments supplémentaires, il a fallu configurer l'argument `id.long.var` de la fonction `geom_rain()` pour indiquer le nom de la variable sur laquelle se baser pour garder l'appariement des données individuelles entre les deux conditions et ainsi permettre un bon tracé des lignes individuelles. La ligne reliant les moyennes a été ajoutée grâce à la fonction`stat_summary()` avec la particularité d'indiquer `1` pour l'argument `group` de la fonction `aes()` associée à la fonction `stat_summary()`. Enfin, l'argument `rain.side` de la fonction `geom_rain()` a été configuré de telle sorte à avoir les données des deux groupes en vis-à-vis, mais un autre choix aurait pu être fait.
 
-Les graphiques montrés ci-dessus pour données appariées contiennent des éléments graphiques supplémentaires par rapport à ceux proposés pour les données non appariées : des lignes reliant les données individuelles, et une ligne reliant les statistiques qui représentent les tendances centrales (i.e., les médianes ou les moyennes). Ces deux types d'éléments graphiques sont importants pour explicitement montrer qu'il y a un lien entre les deux conditions de mesure (il s'agit des mêmes individus et donc du même groupe), et cela permet de mettre en évidence à la fois les trajectoires individuelles et celle du groupe entre les deux conditions de mesure.
-
-Pour parvenir à réaliser les graphiques ci-dessus, il a fallu user de quelques techniques supplémentaires par rapport à ce qui avait déjà été vu auparavant. Tout d'abord, on retrouve la fonction `ggdist::stat_halfeye()` qui sert toujours à montrer les formes des distributions. Toutefois, on peut noter que l'argument `side` dans la fonction `aes()` a été configuré avec une fonction conditionnelle de telle sorte à orienter sur la gauche ou la droite la forme du nuage de la distribution selon la modalité considérée (`Straight` ou `Oscillating` ici). Par ailleurs, s'agissant des données individuelles, elles ont été ajoutées ici avec la fonction `geom_point()`, avec à nouveau une définition du placement sur l'axe des abscisses (`x`) ajustée selon la modalité concernée. Pour comprendre l'origine des valeurs `1.1` et `1.9` utilisées pour placer les données individuelles le long de l'axe `x` (cf. code ci-dessus), il faut savoir qu'un graphique qui a une variable qualitative sur l'axe de abscisses, cela dans le cadre d'une fonction `ggplot()`, attribue les valeurs de 1 et 2 aux deux modalités du jeu de données, ce qui laisse possible l'ajustement *a posteriori* de la position des données individuelles avec des valeurs numériques. Les lignes individuelles ont été rajoutées à l'aide de la fonction `geom_line()` avec la même configuration que pour la fonction `geom_point()` afin de bien faire correspondre les points et les lignes. L'élément important supplémentaire à indiquer dans la fonction `aes()` associée à `geom_line()` est l'argument `group = Subject` pour bien indiquer que chaque ligne appartient respectivement à un couple d'observations de la variable `Subject`. Enfin, sur chacun des deux graphiques, les lignes reliant les médianes ou les moyennes ont été ajoutées grâce à la fonction `stat_summary()`, avec la particularité de configurer le terme `group`avec la valeur de `1`. Il est possible que quelques ajustements manuels doivent être faits pour reproduire ce type de graphiques en présence d'un autre jeu de données, mais la structure globale du code devrait pouvoir constituer une bonne base de départ.
 
 #### Étudier numériquement la relation
 De manière générale, étudier la relation entre une variable quantitative et une variable qualitative revient souvent à comparer les valeurs que prend la variable quantitative en fonction des modalités de la variable qualitative. L'observation de différences de scores entre les modalités pourrait alors indiquer qu'il y a un lien entre la variable qualitative (qu'on pourrait appeler **variable facteur**) et la variable quantitative (qu'on pourrait appeler **variable réponse**). À noter que la démonstration d'un lien de cause à effet entre la variable quantitative et la variable qualitative ne pourra être effective que si l'on a sciemment fait varier les modalités de la variable qualitative pour en observer la conséquence sur les valeurs de la variable quantitative.
@@ -1056,13 +916,29 @@ De prime abord, l'analyse qui pourrait être envisagée pour comparer deux group
 
 ### Cas de deux groupes de données indépendants (données non appariées)
 
-**$d_{s}$ de Cohen**
+*$d_{s}$ et $d_{av}$ de Cohen*
 
-Classiquement, l'indice statistique utilisé pour calculer une différence de moyennes de manière standardisée entre deux groupes de données non appariées, à partir d'échantillons de population, est le $d_{s}$ de Cohen. Cette statistique se calcule en faisant la différence entre les moyennes des deux groupes à comparer, et en divisant cette différence par l'écart-type commun des valeurs de chacun des deux groupes. Ce calcul est montré ci-dessous : 
+Classiquement, l'indice statistique utilisé pour calculer une différence de moyennes de manière standardisée entre deux groupes de données non appariées, à partir d'échantillons de population, est le $d_{s}$ de Cohen. Cette statistique se calcule en faisant la différence entre les moyennes des deux groupes à comparer, et en divisant cette différence par l'écart-type combiné des deux groupes. Ce calcul est montré ci-dessous : 
 
-$$d_{s} = \frac{\overline{X}_{1} - \overline{X}_{2}} {\sqrt{\frac{(N_{1} - 1) \hat{\sigma}_{1}^2 + (N_{2} - 1) \hat{\sigma}_{2}^2} {N_{1} + N_{2} - 2}}}$$
+$$d_{s} = \frac{\overline{X}_{1} - \overline{X}_{2}} {\sqrt{\frac{(N_{1} - 1) \hat{\sigma}_{1}^2 + (N_{2} - 1) \hat{\sigma}_{2}^2} {N_{1} + N_{2} - 2}}},$$
 
-Dans R, le $d_{s}$ de Cohen peut être calculé à l'aide de la fonction `cohens_d()` du package `effectsize`, qui nécessite d'être installé puis chargé avant d'être utilisé. 
+avec $\overline{X}_{1}$ et $\overline{X}_{2}$ les moyennes des deux groupes comparés, $N_{1}$ et $N_{2 }$ les effectifs respectifs des deux groupes comparés, et $\hat{\sigma}_{1}^2$ et $\hat{\sigma}_{1}^2$ les variances respectives des deux groupes comparés. On peut remarquer qu’au dénominateur, la variance d’un groupe donné est multipliée par un coefficient calculé à partir de l’effectif du groupe, cela pour que le poids de la variance d’un groupe dans le calcul final soit ajusté par rapport à la taille du groupe représenté. Dans R, si l'on voulait calculer $d_s$ manuellement, cela donnerait ceci (à partir du jeu de données `iris_two_species`) :
+
+```{r}
+# Calcul des paramètres
+X1 <- iris_two_species %>% filter(Species == "setosa") %>% pull(Sepal.Length) %>% mean()
+X2 <- iris_two_species %>% filter(Species == "versicolor") %>% pull(Sepal.Length) %>% mean()
+SD1 <- iris_two_species %>% filter(Species == "setosa") %>% pull(Sepal.Length) %>% sd()
+SD2 <- iris_two_species %>% filter(Species == "versicolor") %>% pull(Sepal.Length) %>% sd()
+N1 <- iris_two_species %>% filter(Species == "setosa") %>% pull(Sepal.Length) %>% length()
+N2 <- iris_two_species %>% filter(Species == "versicolor") %>% pull(Sepal.Length) %>% length()
+
+# Calcul de ds
+ds <- (X1 - X2) / sqrt(((N1-1) * SD1^2 + (N2-1) * SD2^2) / (N1+N2-2))
+ds
+```
+
+Heureusement, le $d_{s}$ de Cohen peut être facilement calculé à l'aide de la fonction `cohens_d()` du package `effectsize`, qui nécessite d'être installé puis chargé avant d'être utilisé. 
 
 ```{r cohens d between, warning=FALSE, message=FALSE}
 library(effectsize)
@@ -1080,35 +956,47 @@ Dans cet exemple, on remarque qu'on a bien cherché à savoir comment les donné
 levels(iris_two_species$Species)
 ```
 
-L'ordre des modalités affichées nous indique que `setosa` est la modalité 1, et que `versicolor` est la modalité 2. (On remarque par ailleurs que le jeu de données `iris_two_species` contient toujours trois modalités à la suite du filtrage précédent du jeu de données `iris` à l'aide de la fonction `filter()`). Par conséquent, le $d_{s}$ de Cohen de -2.10 obtenu plus haut indique que la longueur des sépales (`Sepal.Length`) pour l'espèce `setosa` est inférieure à celles des sépales de l'espèce `versicolor`. Cette interprétation est en cohérence avec les graphiques réalisés au préalable (cf. Figures \@ref(fig:raindcloudplotsBivUnpaired1) et \@ref(fig:raindcloudplotsBivUnpaired2)). Si l'on avait voulu avoir le calcul inverse (`versicolor` - `setosa`), il aurait  fallu reconfigurer l'ordre des modalités, par exemple à l'aide de la fonction `fct_relevel()` du package `forcats` comme montré à la fin du chapitre 3.
+L'ordre des modalités affichées nous indique que `setosa` est la modalité 1, et que `versicolor` est la modalité 2. (On remarque par ailleurs que le jeu de données `iris_two_species` contient toujours trois modalités à la suite du filtrage précédent du jeu de données `iris` à l'aide de la fonction `filter()`). Par conséquent, le $d_{s}$ de Cohen de -2.10 obtenu plus haut indique que la longueur des sépales (`Sepal.Length`) pour l'espèce `setosa` est inférieure à celles des sépales de l'espèce `versicolor`. Cette interprétation est en cohérence avec le graphique réalisé au préalable (cf. Figure \@ref(fig:raindcloudplotsBivUnpaired1)). Si l'on avait voulu avoir le calcul inverse (`versicolor` - `setosa`), il aurait  fallu reconfigurer l'ordre des modalités, par exemple à l'aide de la fonction `fct_relevel()` du package `forcats` comme montré à la fin du chapitre 3.
 
-Une fois que l'on a calculé une taille d'effet, il est toujours intéressant d'essayer de formuler un jugement sur l'importance, l'ampleur de l'effet. En ce sens, des valeurs seuils ont été proposées dans la littérature (Cohen, 1988; in Lakens [-@lakensCalculatingReportingEffect2013]). Ces valeurs, valables pour interpréter des tailles d'effet dans le cadre d'une étude de type *between-subject design*, sont montrées dans le tableau ci-dessous.
+De manière importante, le calcul de $d_s$ à partir d’un échantillon en vue d'avoir une estimation dans la population suppose que les variances des deux groupes dans la population d’intérêt soient similaires. Si cette supposition n’est pas valide ou est non désirée, alors il peut être préconisé de calculer un autre indicateur appelé $d_{av}$ (cf. https://aaroncaldwell.us/TOSTERpkg/articles/SMD_calcs.html), lequel consiste à diviser la différence de moyennes par un écart-type moyen :
 
-<div class = "custom-table"> 
-```{r effectsizetable, echo = FALSE}
-flextable(
-  tribble(
-    ~Petit, ~Moyen, ~Grand,
-    0.2,     0.5,      0.8
-  ), cwidth = 2) %>%
-  theme_zebra() %>%
-  align(align = "center", part = "all" ) %>%
-  hline_top(part = "all", border = fp_border(width = 1.5)) %>%
-  hline_bottom(part = "all", border = fp_border(width = 1.5)) %>%
-  set_caption( "Termes pour qualifier la taille d'effet dans le cadre d'une comparaison de moyennes associées à des variables indépendantes") %>% 
-  autofit()
+$$d_{av} = \frac{\overline{X}_{1} - \overline{X}_{2}} {\sqrt{\frac{\hat{\sigma}_{1}^2 + \hat{\sigma}_{2}^2} {2}}}$$
+
+En repartant des paramètres calculés précédemment, on peut manuellement obtenir cet indice comme ceci : 
+```{r}
+# Calcul de dav
+dav <- (X1 - X2) / sqrt((SD1^2 + SD2^2) / 2)
+dav
 ```
-</div>
 
-Ces valeurs sont relativement arbitraires, et l'interprétation de la taille de l'effet et des conséquences que l'effet peut avoir en pratique ne devrait pas être liée de manière trop rigide à ces valeurs [@lakensCalculatingReportingEffect2013].
+On peut obtenir le $d_{av}$ avec le package `effectsize` comme ceci (avec `pooled = FALSE`) : 
 
-Il existe également une autre approche pour interpréter une valeur de taille d'effet : l'approche *Common Language explanation* [@lakensCalculatingReportingEffect2013]. Cette approche consiste à faire le lien entre la valeur de la taille d'effet et les probabilités de rencontrer des valeurs similaires ou supérieures dans un groupe en comparaison à un autre. Par exemple, lorsqu'on obtient un $d_{s}$ de Cohen de 0.80, cela peut se traduire par le fait qu'il y a 71.4 % de chances qu'une personne prise au hasard dans le groupe avec la meilleure moyenne ait un score plus élevé qu'une personne qui serait prise au hasard dans le groupe avec la moyenne la plus basse des deux groupes. Kristoffer Magnusson a réalisé une page web qui permet d'utiliser l'approche *Common Language explanation* pour n'importe quelle valeur de taille d'effet dans le cadre d'une étude de type *between-subject design*. Jetez donc un oeil au lien suivant pour plus de détails : https://rpsychologist.com/cohend.
+```{r}
+cohens_d(
+  Sepal.Length ~ Species, 
+  data = iris_two_species, 
+  paired = FALSE, 
+  pooled_sd = FALSE
+  )
+```
 
-**$g_{s}$ de Hedges**
+On note que les valeurs de $d_s$ et de $d_{av}$ ne changent pas dans nos exemples car chaque modalité de la variable `Species` est associée au même nombre d'individus, ce qui revient à faire des calculs similaires pour les deux indices statistiques obtenus jusqu'à présent.
 
-Il a été rapporté, dans la littérature, qu'en réalité le $d_{s}$ de Cohen est relativement biaisé lorsqu'il s'agit d'estimer la taille d'un effet dans la population d'intérêt à partir d'échantillons de population. Autrement dit, à l'échelle de nombreux échantillons, on sait qu'avec le $d_{s}$ de Cohen on aura en moyenne un écart entre l'effet qu'on a trouvé et l'effet réel qui existe dans la population. Cela sera d'autant plus vrai lorsque les calculs seront réalisés à partir de petits échantillons ($N$ < 20), selon Hedges et Okins (1985) cités par Lakens [-@lakensCalculatingReportingEffect2013]. En raison de cela, un autre indice statistique a été proposé pour corriger cette erreur systématique qui sera d'autant plus grande que l'échantillon étudié est petit, à savoir le $g_{s}$ de Hedges :
+Malheureusement, il se trouve que $d$ ($d_s$ ou $d_{av}$) est indicateur qui est biaisé positivement lorsqu’il s’agit d’estimer la différence de moyennes standardisée à l’échelle de la population d’intérêt. Par « biaisé positivement », il faut comprendre que si une multitude d’études s’intéressait à calculer $d$ et qu’on faisait la moyenne des résultats trouvés, alors on aurait une surestimation de la magnitude de la valeur de $d$ dans la population (il s’agit d’un fait qui peut être démontré avec des simulations sur un ordinateur), cela notamment dans le cas de petits échantillons (N < 20), selon Hedges et Okins (1985) cités par Lakens [-@lakensCalculatingReportingEffect2013].
 
-$$g_{s} = d_{s} (1 - \frac{3}{4(N_{1} + N_{2}) - 9})$$
+
+*$g_{s}$ et $g_{av}$ de Hedges*
+
+Pour régler le problème de biais que pose le $d$ de Cohen, un autre indicateur statistique a été proposé : le $g$ de Hedges. Il s’agit en réalité du $d$ de Cohen, mais qu’on transforme grâce à l’utilisation d’un facteur de correction. Une approximation de $g$ est montrée ci-dessous [-@lakensCalculatingReportingEffect2013] :
+
+
+$$g = d (1 - \frac{3}{4(N_{1} + N_{2}) - 9}),$$
+
+avec $d$ le $d_s$ ou le $d_{av}$ de Cohen, et $N_{1}$ et $N_{2}$ les effectifs respectifs des deux groupes comparés. En réalité, le calcul exact du facteur de correction est relativement complexe, et est montré avec l’équation ci-dessous (Kelley, 2005) :
+
+$$g =  d \frac{\Gamma(\frac{df}{2})}{\sqrt{\frac{df}{2}\Gamma(\frac{df-1}{2})}} $$
+
+avec $\Gamma$ la loi Gamma, et $df$ ce qu’on appelle le nombre de degrés de liberté (qui est ici égal au nombre total d’individus moins 2). Dans les faits, les différences entre $d$ et $g$ sont minimes, surtout avec $N$ > 20 dans les groupes.
 
 Dans R, le $g_{s}$ de Hedges lié à un échantillon de population peut être calculé à l'aide de la fonction `hedges_g()` du package `effectsize` :
 
@@ -1121,16 +1009,53 @@ hedges_g(
   )
 ```
 
-Ici, la valeur ne change pas beaucoup par rapport au cas précédent, car l'effectif n'est pas si petit que cela ($N_{1}$ + $N_{2}$ = 100 ici, ce qui fait que la correction appliquée au $d_{s}$ de Cohen est minime).
+Ici, la valeur ne change pas beaucoup par rapport à $d_s$ car l'effectif n'est pas si petit que cela ($N_{1}$ + $N_{2}$ = 100 ici, ce qui fait que la correction appliquée au $d_{s}$ de Cohen est minime).
 
-**Delta de Glass**
+Le $g_{av}$ de Hedges lié à un échantillon de population peut aussi être calculé à l'aide de la fonction `hedges_g()` du package `effectsize` (avec `pooled = FALSE`) :
+```{r}
+hedges_g(
+  Sepal.Length ~ Species,
+  data = iris_two_species, 
+  paired = FALSE, 
+  pooled_sd = FALSE
+  )
+```
+
+Par principe, **il pourrait être recommandé de toujours utiliser le $g$ ($g_s$ ou $g_{av}$) de Hedges** [-@lakensCalculatingReportingEffect2013].
+
+*Qualification de l’importance de la différence standardisée*
+
+Une fois que l'on a calculé une taille d'effet, il est toujours intéressant d'essayer de formuler un jugement sur l'importance, l'ampleur de l'effet. En ce sens, des valeurs seuils ont été proposées dans la littérature (Cohen, 1988; in Lakens [-@lakensCalculatingReportingEffect2013]). Ces valeurs, valables pour interpréter des tailles d'effet dans le cadre d'une étude de type *between-subject design*, sont montrées dans le tableau ci-dessous.
+
+
+<div class = "custom-table"> 
+```{r effectsizetable, echo = FALSE}
+flextable(
+  tribble(
+    ~Petit,      ~Moyen,        ~Grand,
+    ">=0.2",     ">=0.5",      ">=0.8"
+  ), cwidth = 2.5) %>%
+  theme_zebra() %>%
+  align(align = "center", part = "all" ) %>%
+  hline_top(part = "all", border = fp_border(width = 1.5)) %>%
+  hline_bottom(part = "all", border = fp_border(width = 1.5)) %>%
+  set_caption( "Termes pour qualifier la taille d'effet dans le cadre d'une comparaison de moyennes associées à des variables indépendantes") %>% 
+  autofit()
+```
+</div>
+
+ La classification montrée dans ce tableau doit être utilisée avec précaution car en réalité, l’importance d’un effet s’apprécie aussi au regard du contexte dans lequel il s’applique. Les valeurs du tableau donnent donc des repères généraux mais ne peuvent pas au final servir d’étalon universel [@lakensCalculatingReportingEffect2013].
+
+Il existe également une autre approche pour interpréter une valeur de taille d'effet : l'approche *Common Language explanation* [@lakensCalculatingReportingEffect2013]. Cette approche consiste à faire le lien entre la valeur de la taille d'effet et les probabilités de rencontrer des valeurs similaires ou supérieures dans un groupe en comparaison à un autre. Par exemple, lorsqu'on obtient un $d_{s}$ de Cohen de 0.80, cela peut se traduire par le fait qu'il y a 71.4 % de chances qu'une personne prise au hasard dans le groupe avec la meilleure moyenne ait un score plus élevé qu'une personne qui serait prise au hasard dans le groupe avec la moyenne la plus basse des deux groupes. Kristoffer Magnusson a réalisé une page web qui permet d'utiliser l'approche *Common Language explanation* pour n'importe quelle valeur de taille d'effet dans le cadre d'une étude de type *between-subject design*. Jetez donc un oeil au lien suivant pour plus de détails : https://rpsychologist.com/cohend.
+
+*Delta de Glass*
 
 Dans certains cas où l'on souhaiterait comparer les scores de deux groupes indépendants pour tester l'effet de deux conditions expérimentales différentes, l'expérimentation en tant que telle peut influencer, au-delà de la moyenne, l'écart-type de la variable réponse dans un des deux groupes. On peut se trouver dans ce genre de situation lorsque l'on compare les données post-programme d'un groupe entraîné ou traité à celles d'un groupe contrôle. En effet, le groupe entraîné/traité peut voir son écart-type changé au terme d'un programme en raison d'une réponse individuelle hétérogène à ce programme, ce qui ne sera pas en principe le cas du groupe contrôle. Dans ce genre de situations, des indices statistiques autres que le $g_{s}$ de Hedges mériteraient d'être calculés, tels que le delta ($\Delta$) de Glass [@lakensCalculatingReportingEffect2013] :
 
 $$\Delta = \frac{\overline{X}_{1} - \overline{X}_{2}} {\hat{\sigma}_{2}}$$
 
 
-Le calcul du $\Delta$ de Glass est dans l'idée le même que celui du $d_{s}$ de Cohen, sauf que la différence entre les moyennes des deux groupes n'est pas divisée par l'écart-type commun des deux groupes, mais par celui d'un seul des deux groupes, qui serait en principe celui qui représenterait la condition contrôle ou la condition de référence. Une pratique souvent recommandée pour comparer dans ce genre de situation les scores post-programme de deux groupes (un groupe entraîné/traité et un groupe contrôle) serait d'utiliser l'écart-type des scores du groupe contrôle obtenu en pré-programme [@lakensCalculatingReportingEffect2013]. 
+Le calcul du $\Delta$ de Glass est dans l'idée le même que celui du $d$ de Cohen, sauf que la différence entre les moyennes des deux groupes n'est pas divisée par un écart-type lié aux deux groupes, mais par celui d'un seul des deux groupes, qui serait en principe celui qui représenterait la condition contrôle ou la condition de référence. Une pratique souvent recommandée pour comparer dans ce genre de situation les scores post-programme de deux groupes (un groupe entraîné/traité et un groupe contrôle) serait d'utiliser l'écart-type des scores du groupe contrôle obtenu en pré-programme [@lakensCalculatingReportingEffect2013]. 
 
 Dans R, le $\Delta$ de Glass lié à un échantillon de population peut être calculé à l'aide de la fonction `glass_delta()` du package `effectsize`. Attention, l'écart-type utilisé dans le code suivant est celui de la variable quantitative associée à la modalité 2 de la variable qualitative, qui est toujours `versicolor` dans cet exemple (exemple dont le contexte n'est certes pas celui d'un programme dont on cherche l'effet, mais le principe d'utilisation du code reste le même).
 
@@ -1141,33 +1066,63 @@ glass_delta(Sepal.Length ~ Species,
 
 Notons quand même que l'utilisation du $\Delta$ de Glass semble peu courante dans les études cherchant à tester l'effet d'un programme. L'une des difficultés liées à son utilisation est que cela suggère que les groupes à comparer soient identiques en pré-programme pour la variable étudiée. En général, des procédures un peu plus sophistiquées sont utilisées pour déterminer l'effet d'un programme, en particulier des procédures qui permettent de prendre en compte justement les différences qui peuvent exister entre les groupes en pré-programme.
 
-**Cas particuliers**
+*Cas particuliers*
 
 Certaines situations peuvent rendre la comparaison de moyennes non pertinente. C'est par exemple le cas lorsque l'un des deux groupes (voire les deux) présentent des données aberrantes ou très extrêmes, en particulier en présence de petits échantillons. L'utilisation des moyennes dans ce cas pourrait ne pas être pertinente car ces moyennes ne refléteraient alors pas correctement les tendances centrales (et donc les groupes associés). Dans ces cas là, mieux vaut observer les médianes de chaque groupe et chercher à voir si les distributions sont en décalage ou non. 
 
 #### Cas de deux groupes de données dépendants (données appariées)
 
-**$d_{z}$ et $d_{av}$ de Cohen**
+*$d_{z}$ et $d_{av}$ de Cohen*
 
 Le calcul classique pour obtenir la taille d'effet désignant l'écart entre deux groupes de données dépendantes est celui du $d_{z}$ [@lakensCalculatingReportingEffect2013], qui est montré ci-dessous :
 
 $$d_{z} = \frac{\overline{X} _{diff}}{\hat{\sigma}_{diff}},$$
 
-$\overline{X}_{diff}$ désignant la moyenne des différences relatives à chaque pair de valeurs obtenues dans les deux conditions comparées, et $\hat{\sigma}_{diff}$ désignant l'écart-type de ces différences. Dans R, le $d_{z}$ peut être obtenu à nouveau avec la fonction `cohens_d()` du package `effectsize`. Pour illustrer cela, nous allons à nouveau utiliser le jeu de données `Blink2` crée plus haut pour les exemples de *raincloud plots*.
+$\overline{X}_{diff}$ désignant la moyenne des différences relatives à chaque pair de valeurs obtenues dans les deux conditions comparées, et $\hat{\sigma}_{diff}$ désignant l'écart-type de ces différences. 
+
+Dans R, on peut calculer manuellement $d_z$ comme ceci (avec le jeu de données `Blink`) :
+
+```{r}
+# Calcul des paramètres
+diff <- Blink$Straight - Blink$Oscillating
+mean_diff <- mean(diff)
+sd_diff <- sd(diff)
+
+# Calcul de dz
+dz <- mean_diff / sd_diff
+dz
+```
+
+Le $d_{z}$ peut heureusement être obtenu à nouveau avec la fonction `cohens_d()` du package `effectsize`. Pour illustrer cela, nous allons utiliser le jeu de données `Blink2` crée plus haut pour l'exemple de graphique :
 
 ```{r cohens dz within, warning=FALSE, message=FALSE}
 cohens_d(
   Pair(Blink_rate[Condition == "Straight"], Blink_rate[Condition == "Oscillating"]) ~ 1, 
-  data = Blink2,
-  pooled_sd = TRUE
+  data = Blink2
   )
 ```
 
-Toutefois, d'après Lakens [-@lakensCalculatingReportingEffect2013], il peut être intéressant de rapporter plutôt un indice de taille d'effet qui ne serait pas influencé par le fait que les données des deux groupes à comparer soient corrélées (car dépendantes), notamment en vue de rendre comparable cette taille d'effet à celles obtenues dans le cadre d'études de type *between-subject design*, pour plus facilement conduire des méta-analyses par la suite par exemple. La recommandation de Lakens [-@lakensCalculatingReportingEffect2013] serait alors d'utiliser l'indice $d_{av}$, dont le calcul serait le suivant : 
+Parce que la valeur de $d_z$ dépend de la corrélation entre les deux groupes de valeurs comparés, certains auteurs préfèrent rapporter un autre indice statistique qui n’a pas cette propriété et qui en ce sens pourrait être davantage comparable au $d$ de Cohen obtenu dans les études avec groupes indépendants. Parmi les candidats possibles, il y a notamment le $d_{av}$ de Cohen [@lakensCalculatingReportingEffect2013], dont la formule est montrée ci-dessous :
 
 $$d_{av} = \frac{\overline{X} _{diff}}{\sqrt{\frac{\hat{\sigma}_{1}^2 + \hat{\sigma}_{2}^2} {2}}}$$
 
-Ce calcul reviendrait donc à diviser la moyenne des différences par l'écart-type moyen relatif aux deux groupes de données. Pour obtenir $d_{av}$, il est possible de repartir de la fonction `cohens_d()` et de sa configuration pour des groupes indépendants, mais en indiquant `pooled_sd = FALSE` dans la fonction, comme ci-dessous : 
+Ce calcul reviendrait donc à diviser la moyenne des différences (qui est égale à la différence de moyennes) par l'écart-type moyen relatif aux deux groupes de données. Manuellement cela donnerait (avec `Blink2`) : 
+
+```{r}
+# Calcul des paramètres
+X1 <- Blink2 %>% filter(Condition == "Straight") %>% pull(Blink_rate) %>% mean()
+X2 <- Blink2 %>% filter(Condition == "Oscillating") %>% pull(Blink_rate) %>% mean()
+SD1 <- Blink2 %>% filter(Condition == "Straight") %>% pull(Blink_rate) %>% sd()
+SD2 <- Blink2 %>% filter(Condition == "Oscillating") %>% pull(Blink_rate) %>% sd()
+N1 <- Blink2 %>% filter(Condition == "Straight") %>% pull(Blink_rate) %>% length()
+N2 <- Blink2 %>% filter(Condition == "Oscillating") %>% pull(Blink_rate) %>% length()
+
+# Calcul de dav
+dav <- (X1 - X2) / sqrt((SD1^2 + SD2^2) / 2)
+dav
+```
+
+Pour obtenir $d_{av}$ avec des données appariées et la fonction `cohens_d()`, il faut procéder comme s'il s'agissait de données non appariées : 
 
 ```{r cohens dav within, warning=FALSE, message=FALSE}
 cohens_d(
@@ -1178,11 +1133,21 @@ cohens_d(
   )
 ```
 
-En effet, que l'on fasse la moyenne des différences (ce qui serait attendu pour le présent calcul) ou la différence entre deux moyennes (ce qui est finalement fait par la fonction telle que configurée ci-dessus), cela ne change rien avec des données appariées. Le numérateur $\overline{X} _{diff}$ reste donc correctement calculé même avec cette configuration de fonction qui est faite initialement pour des groupes indépendants. Le fait d'indiquer `pooled_sd = FALSE` change le calcul du dénominateur que nous avions rencontré initialement pour le calcul de $d_{s}$, cela pour obtenir le calcul attendu pour le $d_{av}$.
 
-**$g_{av}$ de Hedges**
+**$g_{z}$ et $g_{av}$ de Hedges**
 
-Comme dans le cas de l'étude de groupes indépendants, $d_{av}$ et ses dérivés sont biaisés. Il peut donc être à nouveau préférable de calculer le $g_{av}$ de Hedges avec la fonction `hedges_g()` configurée comme ceci : 
+Comme pour les $d$ de Cohen calculés dans le cadre de groupes indépendants, les $d$ de Cohen obtenus avec groupes dépendants sont positivement biaisés. À nouveau, ces indices statistiques peuvent être corrigés avec le même facteur de correction montré pour le $g$ de Hedges dans la partie sur les groupes dépendants. Toutefois, $g_{av}$ ne serait malgré tout pas complètement non biaisé [@lakensCalculatingReportingEffect2013].
+
+Pour obtenir $g_z$ :
+
+```{r}
+hedges_g(
+  Pair(Blink_rate[Condition == "Straight"], Blink_rate[Condition == "Oscillating"]) ~ 1, 
+  data = Blink2
+  )
+```
+
+Pour obtenir $g_{av}$ : 
 
 ```{r hedges gav within, warning=FALSE, message=FALSE}
 hedges_g(
@@ -1204,18 +1169,6 @@ detach(package:PairedData)
 Lorsque la présence de valeurs aberrantes peut fausser le calcul de la taille d'effet que l'on cherche à caractériser dans la population étudiée, une première idée pourrait être ici de faire la différence des médianes des deux groupes. Toutefois, comme le rappellent Weissegerber et al. [-@weissgerberBarLineGraphs2015], cette approche n'est mathématiquement pas correcte dans le cas présent. La bonne méthode est de calculer la médiane des différences. Le code ci-dessous présente donc le calcul de la médiane des différences, ici à partir du jeu de données `Blink`. La visualisation graphique correspondante pourrait être alors un *raincloud plot* pour une seule variable, celle des différences entre les deux conditions. Le code pour ce type de graphiques a été vu au chapitre précédent.
 
 ```{r}
-# Configuration du jeu de données
-Blink2 <-
-  Blink %>%
-  mutate(Difference = Straight - Oscillating) %>%
-  pivot_longer(cols = c(Straight, Oscillating, Difference), 
-               names_to = "Condition", 
-               values_to = "Blink_rate") %>%
-  mutate(Condition = fct_relevel(Condition, 
-                                 "Straight", 
-                                 "Oscillating", 
-                                 "Difference"))
-
 # Calcul de la médiane des différences
  Blink %>%
   mutate(Difference = Straight - Oscillating) %>%
