@@ -4580,7 +4580,7 @@ La Figure \ref{fig:raindcloudplotsBivPaired1} montre une proposition de graphiqu
 
 \begin{figure}
 
-{\centering \includegraphics{Analyser-des-données-avec-R_files/figure-latex/raindcloudplotsBivPaired1-1} 
+{\centering \includegraphics[width=0.9\linewidth]{Analyser-des-données-avec-R_files/figure-latex/raindcloudplotsBivPaired1-1} 
 
 }
 
@@ -4607,7 +4607,7 @@ Classiquement, l'indice statistique utilisé pour calculer une différence de mo
 
 \[d_{s} = \frac{\overline{X}_{1} - \overline{X}_{2}} {\sqrt{\frac{(N_{1} - 1) \hat{\sigma}_{1}^2 + (N_{2} - 1) \hat{\sigma}_{2}^2} {N_{1} + N_{2} - 2}}},\]
 
-avec \(\overline{X}_{1}\) et \(\overline{X}_{2}\) les moyennes des deux groupes comparés, \(N_{1}\) et \(N_{2 }\) les effectifs respectifs des deux groupes comparés, et \(\hat{\sigma}_{1}^2\) et \(\hat{\sigma}_{1}^2\) les variances respectives des deux groupes comparés. On peut remarquer qu'au dénominateur, la variance d'un groupe donné est multipliée par un coefficient calculé à partir de l'effectif du groupe, cela pour que le poids de la variance d'un groupe dans le calcul final soit ajusté par rapport à la taille du groupe représenté. Dans R, si l'on voulait calculer \(d_s\) manuellement, cela donnerait ceci (à partir du jeu de données \texttt{iris\_two\_species}) :
+avec \(\overline{X}_{1}\) et \(\overline{X}_{2}\) les moyennes des deux groupes comparés, \(N_{1}\) et \(N_{2 }\) les effectifs respectifs des deux groupes comparés, et \(\hat{\sigma}_{1}^2\) et \(\hat{\sigma}_{2}^2\) les variances respectives des deux groupes comparés. On peut remarquer qu'au dénominateur, la variance d'un groupe donné est multipliée par un coefficient calculé à partir de l'effectif du groupe, cela pour que le poids de la variance d'un groupe dans le calcul final soit ajusté par rapport à la taille du groupe représenté. Dans R, si l'on voulait calculer \(d_s\) manuellement, cela donnerait ceci (à partir du jeu de données \texttt{iris\_two\_species}) :
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4629,7 +4629,7 @@ avec \(\overline{X}_{1}\) et \(\overline{X}_{2}\) les moyennes des deux groupes 
 ## [1] -2.104197
 \end{verbatim}
 
-Heureusement, le \(d_{s}\) de Cohen peut être facilement calculé à l'aide de la fonction \texttt{cohens\_d()} du package \texttt{effectsize}, qui nécessite d'être installé puis chargé avant d'être utilisé.
+Heureusement, le \(d_{s}\) de Cohen peut être facilement calculé à l'aide de la fonction \texttt{cohens\_d()} du package \texttt{effectsize}, qui nécessite d'être installé puis chargé avant d'être utilisé :
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4710,11 +4710,11 @@ Malheureusement, il se trouve que \(d\) (\(d_s\) ou \(d_{av}\)) est indicateur q
 
 \emph{\(g_{s}\) et \(g_{av}\) de Hedges}
 
-Pour régler le problème de biais que pose le \(d\) de Cohen, un autre indicateur statistique a été proposé : le \(g\) de Hedges. Il s'agit en réalité du \(d\) de Cohen, mais qu'on transforme grâce à l'utilisation d'un facteur de correction. Une approximation de \(g\) est montrée ci-dessous \autocite*{lakensCalculatingReportingEffect2013} :
+Pour régler le problème de biais que pose le \(d\) de Cohen, un autre indicateur statistique a été proposé : le \(g\) de Hedges. Il s'agit en réalité du \(d\) de Cohen, mais qu'on modifie grâce à l'utilisation d'un facteur de correction. Une approximation de \(g\) est montrée ci-dessous \autocite*{lakensCalculatingReportingEffect2013} :
 
 \[g = d (1 - \frac{3}{4(N_{1} + N_{2}) - 9}),\]
 
-avec \(d\) le \(d_s\) ou le \(d_{av}\) de Cohen, et \(N_{1}\) et \(N_{2}\) les effectifs respectifs des deux groupes comparés. En réalité, le calcul exact du facteur de correction est relativement complexe, et est montré avec l'équation ci-dessous (Kelley, 2005) :
+avec \(d\) le \(d_s\) ou le \(d_{av}\) de Cohen, et \(N_{1}\) et \(N_{2}\) les effectifs respectifs des deux groupes comparés. En réalité, le calcul exact du facteur de correction est relativement complexe, et est montré avec l'équation ci-dessous \autocite{kelleyEffectsNonnormalDistributions2005} :
 
 \[g =  d \frac{\Gamma(\frac{df}{2})}{\sqrt{\frac{df}{2}\Gamma(\frac{df-1}{2})}} \]
 
@@ -4764,9 +4764,9 @@ Le \(g_{av}\) de Hedges lié à un échantillon de population peut aussi être c
 ## - Estimated using un-pooled SD.
 \end{verbatim}
 
-Par principe, \textbf{il pourrait être recommandé de toujours utiliser le \(g\) (\(g_s\) ou \(g_{av}\)) de Hedges} \autocite*{lakensCalculatingReportingEffect2013}.
+Par principe, \textbf{il pourrait être recommandé de toujours utiliser le \(g\) (\(g_s\) ou \(g_{av}\)) de Hedges} \autocite{lakensCalculatingReportingEffect2013}.
 
-\emph{Qualification de l'importance de la différence standardisée}
+\emph{Qualification de l'importance de la différence de moyennes standardisée}
 
 Une fois que l'on a calculé une taille d'effet, il est toujours intéressant d'essayer de formuler un jugement sur l'importance, l'ampleur de l'effet. En ce sens, des valeurs seuils ont été proposées dans la littérature (Cohen, 1988; in Lakens \autocite*{lakensCalculatingReportingEffect2013}). Ces valeurs, valables pour interpréter des tailles d'effet dans le cadre d'une étude de type \emph{between-subject design}, sont montrées dans le tableau ci-dessous.
 
@@ -4830,11 +4830,11 @@ Il existe également une autre approche pour interpréter une valeur de taille d
 
 \emph{Delta de Glass}
 
-Dans certains cas où l'on souhaiterait comparer les scores de deux groupes indépendants pour tester l'effet de deux conditions expérimentales différentes, l'expérimentation en tant que telle peut influencer, au-delà de la moyenne, l'écart-type de la variable réponse dans un des deux groupes. On peut se trouver dans ce genre de situation lorsque l'on compare les données post-programme d'un groupe entraîné ou traité à celles d'un groupe contrôle. En effet, le groupe entraîné/traité peut voir son écart-type changé au terme d'un programme en raison d'une réponse individuelle hétérogène à ce programme, ce qui ne sera pas en principe le cas du groupe contrôle. Dans ce genre de situations, des indices statistiques autres que le \(g_{s}\) de Hedges mériteraient d'être calculés, tels que le delta (\(\Delta\)) de Glass \autocite{lakensCalculatingReportingEffect2013} :
+Dans certains cas où l'on souhaiterait comparer les scores de deux groupes indépendants pour tester l'effet de deux conditions expérimentales différentes, l'expérimentation en tant que telle peut influencer, au-delà de la moyenne, l'écart-type de la variable réponse dans un des deux groupes. On peut se trouver dans ce genre de situation lorsque l'on compare les données post-programme d'un groupe entraîné ou traité à celles d'un groupe contrôle. En effet, le groupe entraîné/traité peut voir son écart-type changé au terme d'un programme en raison d'une réponse individuelle hétérogène à ce programme, ce qui ne sera pas en principe le cas du groupe contrôle. Dans ce genre de situations, des indices statistiques autres que le \(d\) de Cohen ou le \(g\) de Hedges mériteraient d'être calculés, tels que le delta (\(\Delta\)) de Glass \autocite{lakensCalculatingReportingEffect2013} :
 
 \[\Delta = \frac{\overline{X}_{1} - \overline{X}_{2}} {\hat{\sigma}_{2}}\]
 
-Le calcul du \(\Delta\) de Glass est dans l'idée le même que celui du \(d\) de Cohen, sauf que la différence entre les moyennes des deux groupes n'est pas divisée par un écart-type lié aux deux groupes, mais par celui d'un seul des deux groupes, qui serait en principe celui qui représenterait la condition contrôle ou la condition de référence. Une pratique souvent recommandée pour comparer dans ce genre de situation les scores post-programme de deux groupes (un groupe entraîné/traité et un groupe contrôle) serait d'utiliser l'écart-type des scores du groupe contrôle obtenu en pré-programme \autocite{lakensCalculatingReportingEffect2013}.
+Le calcul du \(\Delta\) de Glass est dans l'idée le même que celui du \(d\) de Cohen, sauf que la différence entre les moyennes des deux groupes n'est pas divisée par un écart-type lié aux deux groupes, mais par l'écart-type d'un seul des deux groupes, qui serait en principe celui qui représenterait la condition contrôle ou la condition de référence. Une pratique souvent recommandée pour comparer dans ce genre de situation les scores post-programme de deux groupes (un groupe entraîné/traité et un groupe contrôle) serait d'utiliser l'écart-type des scores du groupe contrôle obtenu en pré-programme \autocite{lakensCalculatingReportingEffect2013}.
 
 Dans R, le \(\Delta\) de Glass lié à un échantillon de population peut être calculé à l'aide de la fonction \texttt{glass\_delta()} du package \texttt{effectsize}. Attention, l'écart-type utilisé dans le code suivant est celui de la variable quantitative associée à la modalité 2 de la variable qualitative, qui est toujours \texttt{versicolor} dans cet exemple (exemple dont le contexte n'est certes pas celui d'un programme dont on cherche l'effet, mais le principe d'utilisation du code reste le même).
 
@@ -4862,7 +4862,7 @@ Certaines situations peuvent rendre la comparaison de moyennes non pertinente. C
 
 \emph{\(d_{z}\) et \(d_{av}\) de Cohen}
 
-Le calcul classique pour obtenir la taille d'effet désignant l'écart entre deux groupes de données dépendantes est celui du \(d_{z}\) \autocite{lakensCalculatingReportingEffect2013}, qui est montré ci-dessous :
+Le calcul classique pour obtenir la taille d'effet désignant l'écart de moyennes entre deux groupes de données dépendants est celui du \(d_{z}\) \autocite{lakensCalculatingReportingEffect2013}, qui est montré ci-dessous :
 
 \[d_{z} = \frac{\overline{X} _{diff}}{\hat{\sigma}_{diff}},\]
 
@@ -4951,7 +4951,7 @@ Pour obtenir \(d_{av}\) avec des données appariées et la fonction \texttt{cohe
 ## - Estimated using un-pooled SD.
 \end{verbatim}
 
-\textbf{\(g_{z}\) et \(g_{av}\) de Hedges}
+\emph{\(g_{z}\) et \(g_{av}\) de Hedges}
 
 Comme pour les \(d\) de Cohen calculés dans le cadre de groupes indépendants, les \(d\) de Cohen obtenus avec groupes dépendants sont positivement biaisés. À nouveau, ces indices statistiques peuvent être corrigés avec le même facteur de correction montré pour le \(g\) de Hedges dans la partie sur les groupes dépendants. Toutefois, \(g_{av}\) ne serait malgré tout pas complètement non biaisé \autocite{lakensCalculatingReportingEffect2013}.
 
@@ -4993,11 +4993,9 @@ Pour obtenir \(g_{av}\) :
 ## - Estimated using un-pooled SD.
 \end{verbatim}
 
-Toutefois, comme le rappelle Lakens \autocite*{lakensCalculatingReportingEffect2013}, le \(g_{av}\) de Hedges ne serait pas complètement non biaisé.
-
 \textbf{Cas particuliers}
 
-Lorsque la présence de valeurs aberrantes peut fausser le calcul de la taille d'effet que l'on cherche à caractériser dans la population étudiée, une première idée pourrait être ici de faire la différence des médianes des deux groupes. Toutefois, comme le rappellent Weissegerber et al. \autocite*{weissgerberBarLineGraphs2015}, cette approche n'est mathématiquement pas correcte dans le cas présent. La bonne méthode est de calculer la médiane des différences. Le code ci-dessous présente donc le calcul de la médiane des différences, ici à partir du jeu de données \texttt{Blink}. La visualisation graphique correspondante pourrait être alors un \emph{raincloud plot} pour une seule variable, celle des différences entre les deux conditions. Le code pour ce type de graphiques a été vu au chapitre précédent.
+Lorsque la présence de valeurs aberrantes peut fausser le calcul de la taille d'effet que l'on cherche à caractériser dans la population étudiée, une première idée pourrait être ici de faire la différence des médianes des deux groupes. Toutefois, comme le rappellent Weissegerber et al. \autocite*{weissgerberBarLineGraphs2015}, cette approche n'est mathématiquement pas correcte pour caractériser l'évolution typique des scores étudiés. La bonne méthode est de calculer la médiane des différences. Le code ci-dessous présente donc le calcul de la médiane des différences, ici à partir du jeu de données \texttt{Blink}. La visualisation graphique correspondante pourrait être alors un \emph{raincloud plot} pour une seule variable, celle des différences entre les deux conditions. Le code pour ce type de graphiques a été vu au chapitre précédent.
 
 \begin{Shaded}
 \begin{Highlighting}[]
