@@ -585,23 +585,38 @@ ggplot(data = recap_dep, aes(x = result, y = prop, fill = gender)) +
   facet_grid(department ~ gender)
 ```
 
-Cette situation, qui peut paraître étonnante, illustre à nouveau ce qu'on appelle un paradoxe de Simpson. Dans le cas présent, l'apparent paradoxe s'explique par le fait que, contrairement aux hommes, la majorité des femmes avaient candidaté dans des départements qui étaient très sélectifs, c'est-à-dire où le taux de réussite était faible (il l'était aussi pour les hommes). Très peu de femmes avaient candidaté là où les taux de réussite étaient très élevés (pour les femmes comme pour les hommes). Ceci est illustré sur la Figure \@ref(fig:distriUCBA). On voit bien que la majorité des femmes étaient inscrites dans les départements ici montrés avec les lettres allant de C à F, or ces départements étaient associés à des taux de réussite inférieurs à 40 % seulement, que cela soit pour les hommes ou pour les femmes (cf. Figure \@ref(fig:tabdepUCBA)).
+Cette situation, qui peut paraître étonnante, illustre à nouveau ce qu'on appelle un paradoxe de Simpson. Dans le cas présent, l'apparent paradoxe s'explique par le fait que les femmes avaient en proportion davantage candidaté que les hommes dans des départements où le taux de réussite global était moins bon. Ceci est illustré sur la Figure \@ref(fig:distriUCBA).
 
-```{r distriUCBA, out.width='90%', echo = FALSE, message=FALSE, fig.cap= "Distribution des étudiants femmes et hommes par département à l'Université de Berkeley en 1973 (Bickel et al., 1975)"}
+```{r distriUCBA, fig.height = 8, out.width='100%', echo = FALSE, message=FALSE, fig.cap= "Distribution des étudiants femmes et hommes par département à l'Université de Berkeley en 1973 (Bickel et al., 1975)"}
 recap_dep2 <- 
   results_univ %>%
   dplyr::select(-result) %>%
-  group_by(gender, department) %>%
+  group_by(department, gender) %>%
   summarise(effectif = sum(effectif)) %>%
-  ungroup(department) %>%
   mutate(prop = effectif / sum(effectif) * 100)
 
-ggplot(data = recap_dep2, aes(x = department, y = prop, fill = gender)) +
+g1 <- ggplot(data = recap_dep2, aes(x = gender, y = prop, fill = gender)) +
   geom_bar(stat = "identity", position = "dodge") +
   geom_text(aes(label = paste0(round(prop, digits = 2), " %")), size = 3, position = position_stack(vjust = 0.5)) +
-  labs(x = "", y = "Proportion (%)", fill = "") +
+  labs(title = "Répartition des femmes et des hommes en fonction du département", x = "", y = "Proportion (%)", fill = "") +
   theme(legend.position = "none") +
-  facet_wrap(. ~ gender)
+  facet_wrap(. ~ department)
+
+recap_dep3 <- 
+  results_univ %>%
+  dplyr::select(-gender) %>%
+  group_by(department, result) %>%
+  summarise(effectif = sum(effectif)) %>%
+  mutate(prop = effectif / sum(effectif) * 100)
+
+g2 <- ggplot(data = recap_dep3, aes(x = result, y = prop, fill = result)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  geom_text(aes(label = paste0(round(prop, digits = 2), " %")), size = 3, position = position_stack(vjust = 0.5)) +
+  labs(title = "Taux de réussite en fonction du département", x = "", y = "Proportion (%)", fill = "") +
+  theme(legend.position = "none") +
+  facet_wrap(. ~ department)
+
+g1 / g2
 ```
 Autrement dit, les hommes se retrouvaient avec un pourcentage de réussite global bien meilleur que celui des femmes seulement parce que, comparativement aux femmes, les hommes s'étaient en proportion davantage engagés dans les départements où les taux de réussite étaient bien meilleurs.
 
