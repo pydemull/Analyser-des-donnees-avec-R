@@ -591,16 +591,17 @@ Cette situation, qui peut paraître étonnante, illustre à nouveau ce qu'on app
 recap_dep2 <- 
   results_univ %>%
   dplyr::select(-result) %>%
-  group_by(department, gender) %>%
+  group_by(gender, department) %>%
   summarise(effectif = sum(effectif)) %>%
+  ungroup(department) %>%
   mutate(prop = effectif / sum(effectif) * 100)
 
-g1 <- ggplot(data = recap_dep2, aes(x = gender, y = prop, fill = gender)) +
+g1 <- ggplot(data = recap_dep2, aes(x = department, y = prop, fill = gender)) +
   geom_bar(stat = "identity", position = "dodge") +
   geom_text(aes(label = paste0(round(prop, digits = 2), " %")), size = 3, position = position_stack(vjust = 0.5)) +
-  labs(title = "Répartition des femmes et des hommes en fonction du département", x = "", y = "Proportion (%)", fill = "") +
+  labs(title = "Répartition dans les différents départements selon le sexe", x = "", y = "Proportion (%)", fill = "") +
   theme(legend.position = "none") +
-  facet_wrap(. ~ department)
+  facet_wrap(. ~ gender)
 
 recap_dep3 <- 
   results_univ %>%
