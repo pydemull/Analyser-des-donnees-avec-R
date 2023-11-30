@@ -925,11 +925,11 @@ De manière générale, étudier la relation entre une variable quantitative et 
 
 De prime abord, l'analyse qui pourrait être envisagée pour comparer deux groupes serait d'utiliser simplement la différence entre les moyennes des deux groupes. Toutefois, en se restreignant à cela, il pourrait être difficile de porter un jugement sur la grandeur relative de la différence entre les groupes comparés, qu'on pourrait appeler **taille d'effet**. Il serait également difficile de comparer cette taille d'effet avec celles observées dans d'autres études, en particulier celles traitant de thématiques différentes, car en étant calculée de la sorte, la taille d'effet serait inhérente à la nature des variables investiguées et à la grandeur des valeurs mesurées dans l'étude. Il est donc intéressant, dans ce genre de situations, de standardiser la différence de scores obtenue entre les deux groupes. Dans la littérature, la procédure de standardisation a été très développée pour la comparaison de moyennes. Pour cette raison, les sous-parties suivantes qui traitent de la comparaison de deux groupes présentent essentiellement les calculs  pour obtenir une taille d'effet en vue de comparer des moyennes. Ces calculs sont repris de l'article de Lakens [-@lakensCalculatingReportingEffect2013]. Quelques mots seront toutefois donnés pour les situations pour lesquelles ces calculs risqueraient de ne pas être appropriés.
 
-### Cas de deux groupes de données indépendants (données non appariées)
+##### Cas de deux groupes de données indépendants (données non appariées)
 
 *$d_{s}$ et $d_{av}$ de Cohen*
 
-Classiquement, l'indice statistique utilisé pour calculer une différence de moyennes de manière standardisée entre deux groupes de données non appariées, à partir d'échantillons de population, est le $d_{s}$ de Cohen. Cette statistique se calcule en faisant la différence entre les moyennes des deux groupes à comparer, et en divisant cette différence par l'écart-type combiné des deux groupes. Ce calcul est montré ci-dessous : 
+Classiquement, l'indice statistique utilisé pour calculer une différence de moyennes de manière standardisée entre deux groupes de données non appariées, à partir d'échantillons de population, est le $d_{s}$ de Cohen. Cette statistique se calcule en faisant la différence entre les moyennes des deux groupes à comparer, et en divisant cette différence par l'écart-type combiné (ou commun) des deux groupes. Ce calcul est montré ci-dessous : 
 
 $$d_{s} = \frac{\overline{X}_{1} - \overline{X}_{2}} {\sqrt{\frac{(N_{1} - 1) \hat{\sigma}_{1}^2 + (N_{2} - 1) \hat{\sigma}_{2}^2} {N_{1} + N_{2} - 2}}},$$
 
@@ -993,7 +993,7 @@ cohens_d(
 
 On note que les valeurs de $d_s$ et de $d_{av}$ ne changent pas dans nos exemples car chaque modalité de la variable `Species` est associée au même nombre d'individus, ce qui revient à faire des calculs similaires pour les deux indices statistiques obtenus jusqu'à présent.
 
-Malheureusement, il se trouve que $d$ ($d_s$ ou $d_{av}$) est indicateur qui est biaisé positivement lorsqu’il s’agit d’estimer la différence de moyennes standardisée à l’échelle de la population d’intérêt. Par « biaisé positivement », il faut comprendre que si une multitude d’études s’intéressait à calculer $d$ et qu’on faisait la moyenne des résultats trouvés, alors on aurait une surestimation de la magnitude de la valeur de $d$ dans la population (il s’agit d’un fait qui peut être démontré avec des simulations sur un ordinateur), cela notamment dans le cas de petits échantillons (N < 20), selon Hedges et Okins (1985) cités par Lakens [-@lakensCalculatingReportingEffect2013].
+Malheureusement, il se trouve que $d$ ($d_s$ ou $d_{av}$) est indicateur qui est biaisé positivement lorsqu’il s’agit d’estimer la différence de moyennes standardisée à l’échelle de la population d’intérêt. Par « biaisé positivement », il faut comprendre que si une multitude d’études s’intéressait à calculer $d$ et qu’on faisait la moyenne des résultats trouvés, alors on aurait une surestimation de la magnitude de la valeur de $d$ dans la population (il s’agit d’un fait qui peut être démontré avec des simulations sur un ordinateur), cela notamment dans le cas ou les études utiliseraient de petits échantillons (N < 20), selon Hedges et Okins (1985) cités par Lakens [-@lakensCalculatingReportingEffect2013].
 
 
 *$g_{s}$ et $g_{av}$ de Hedges*
@@ -1081,7 +1081,7 @@ Notons quand même que l'utilisation du $\Delta$ de Glass semble peu courante da
 
 Certaines situations peuvent rendre la comparaison de moyennes non pertinente. C'est par exemple le cas lorsque l'un des deux groupes (voire les deux) présentent des données aberrantes ou très extrêmes, en particulier en présence de petits échantillons. L'utilisation des moyennes dans ce cas pourrait ne pas être pertinente car ces moyennes ne refléteraient alors pas correctement les tendances centrales (et donc les groupes associés). Dans ces cas là, mieux vaut observer les médianes de chaque groupe et chercher à voir si les distributions sont en décalage ou non. 
 
-#### Cas de deux groupes de données dépendants (données appariées)
+##### Cas de deux groupes de données dépendants (données appariées)
 
 *$d_{z}$ et $d_{av}$ de Cohen*
 
