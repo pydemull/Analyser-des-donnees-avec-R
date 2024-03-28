@@ -5,16 +5,19 @@
 \documentclass[
 ]{book}
 \usepackage{amsmath,amssymb}
-\usepackage{lmodern}
 \usepackage{iftex}
 \ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
 \else % if luatex or xetex
-  \usepackage{unicode-math}
+  \usepackage{unicode-math} % this also loads fontspec
   \defaultfontfeatures{Scale=MatchLowercase}
   \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
 \fi
 % Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -45,13 +48,13 @@
 \newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
 \newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
 \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
 \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
 \newcommand{\BuiltInTok}[1]{#1}
 \newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
 \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
 \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
 \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
 \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
@@ -59,7 +62,7 @@
 \newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
 \newcommand{\ExtensionTok}[1]{#1}
 \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
 \newcommand{\ImportTok}[1]{#1}
 \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
@@ -68,7 +71,7 @@
 \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
 \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
 \newcommand{\RegionMarkerTok}[1]{#1}
-\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
 \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
@@ -131,9 +134,9 @@
 \usepackage[style=apa,]{biblatex}
 \addbibresource{bibliography.bib}
 \addbibresource{packages.bib}
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\usepackage{bookmark}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\urlstyle{same} % disable monospaced font for URLs
+\urlstyle{same}
 \hypersetup{
   pdftitle={Analyser des données avec R},
   pdfauthor={Pierre-Yves de Müllenheim},
@@ -143,7 +146,7 @@
 
 \title{Analyser des données avec R}
 \author{Pierre-Yves de Müllenheim}
-\date{2023-11-30}
+\date{2024-03-28}
 
 \begin{document}
 \maketitle
@@ -161,8 +164,7 @@
 
 \listoffigures
 
-\hypertarget{introduction}{%
-\chapter*{Introduction}\label{introduction}}
+\chapter*{Introduction}\label{introduction}
 \addcontentsline{toc}{chapter}{Introduction}
 
 Ce livre vise à servir de support à des enseignements auprès d'étudiants qui découvrent les analyses statistiques en même temps que le langage de programmation R. Ce livre n'est donc pas dédié exclusivement aux statistiques, ni exclusivement dédié à R. D'autres ouvrages proposent des contenus plus spécialisés, et donc plus poussés, et c'est vers ces ouvrages qu'il convient d'aller pour davantage maîtriser les fondamentaux des statistiques ou toutes les subtilités du langage R.
@@ -177,19 +179,15 @@ Dans ce livre, les exemples de code apparaissent dans des zones grisées, et les
 
 Ce livre, qui est en cours d'élaboration, est mis à disposition selon les termes de la Licence Creative Commons Attribution - Pas d'Utilisation Commerciale - Partage dans les Mêmes Conditions 4.0 International.
 
-\hypertarget{part-appropriation-de-r-et-rstudio}{%
-\part{Appropriation de R et RStudio}\label{part-appropriation-de-r-et-rstudio}}
+\part{Appropriation de R et RStudio}\label{part-appropriation-de-r-et-rstudio}
 
-\hypertarget{pruxe9requis}{%
-\chapter{Prérequis}\label{pruxe9requis}}
+\chapter{Prérequis}\label{pruxe9requis}
 
-\hypertarget{installation-de-r-et-rstudio}{%
-\section{Installation de R et RStudio}\label{installation-de-r-et-rstudio}}
+\section{Installation de R et RStudio}\label{installation-de-r-et-rstudio}
 
 R et RStudio sont deux logiciels en libre accès sur internet. Le logiciel R peut être utilisé indépendamment du logiciel RStudio. En revanche, l'utilisation du logiciel RStudio requiert au préalable l'installation du logiciel R. En effet, RStudio est un logiciel qui permet d'utiliser les fonctionnalités de R tout en proposant une interface d'utilisation plus agréable et fonctionnelle que l'interface à l'origine proposée pour le logiciel R, qui est très basique. Les explications présentées au cours de ce document considèrent que l'utilisateur fonctionne avec RStudio.
 
-\hypertarget{installer-r-sur-windows}{%
-\subsection{Installer R sur WINDOWS}\label{installer-r-sur-windows}}
+\subsection{Installer R sur WINDOWS}\label{installer-r-sur-windows}
 
 \begin{itemize}
 \tightlist
@@ -207,8 +205,7 @@ R et RStudio sont deux logiciels en libre accès sur internet. Le logiciel R peu
   Une fois l'installation terminée, double-cliquer sur l'icône du bureau (\textbf{R x64 X.X.X}) pour vérifier que l'ouverture du logiciel R s'effectue correctement.
 \end{itemize}
 
-\hypertarget{installer-r-sur-mac}{%
-\subsection{Installer R sur MAC}\label{installer-r-sur-mac}}
+\subsection{Installer R sur MAC}\label{installer-r-sur-mac}
 
 \begin{itemize}
 \tightlist
@@ -228,8 +225,7 @@ R et RStudio sont deux logiciels en libre accès sur internet. Le logiciel R peu
   Lorsque l'installation est terminée, aller dans le dossier \textbf{Applications} du Mac pour rechercher le logiciel R. Double-cliquer sur l'icône pour ouvrir le logiciel et vérifier que l'ouverture se déroule correctement.
 \end{itemize}
 
-\hypertarget{installer-rstudio-sur-windows-ou-mac}{%
-\subsection{Installer RStudio sur WINDOWS ou MAC}\label{installer-rstudio-sur-windows-ou-mac}}
+\subsection{Installer RStudio sur WINDOWS ou MAC}\label{installer-rstudio-sur-windows-ou-mac}
 
 \begin{itemize}
 \tightlist
@@ -247,16 +243,13 @@ R et RStudio sont deux logiciels en libre accès sur internet. Le logiciel R peu
   \textbf{Sur MAC :} Le téléchargement débute lorsque vous cliquez sur le lien. Une fois le téléchargement terminé, sur votre MAC, réaliser l'installation en double-cliquant sur le fichier téléchargé et en suivant la procédure indiquée. Une fois l'installation terminée, aller dans le dossier \textbf{Applications} du MAC et double-cliquer sur l'icône de RStudio pour vérifier si le logiciel s'ouvre correctement.
 \end{itemize}
 
-\hypertarget{prise-en-main-de-rstudio}{%
-\section{Prise en main de RStudio}\label{prise-en-main-de-rstudio}}
+\section{Prise en main de RStudio}\label{prise-en-main-de-rstudio}
 
-\hypertarget{fonctionnement-guxe9nuxe9ral}{%
-\subsection{Fonctionnement général}\label{fonctionnement-guxe9nuxe9ral}}
+\subsection{Fonctionnement général}\label{fonctionnement-guxe9nuxe9ral}
 
 Basiquement, RStudio s'utilise de la manière suivante : on écrit une instruction (i.e., une ligne de code) dans une fenêtre, on lance cette instruction, et le logiciel nous donne le résultat, qu'il s'agisse d'un calcul, d'un graphique, d'une modification d'un jeu de données, etc. Quand on ouvre RStudio pour la première fois, la fenêtre principale qui se présente est la \textbf{Console}. Cette fenêtre permet d'y écrire des lignes de code et de les lancer en appuyant sur la touche \textbf{Entrée}. Lorsque l'on souhaite conserver les lignes de code que l'on a écrites, ou que l'on souhaite écrire des lignes de code sans forcément les lancer, il est possible d'utiliser une fenêtre \textbf{Script} (chemin d'accès : \textbf{File \textgreater{} New File \textgreater{} R Script}). Pour lancer les lignes de code qui sont écrites dans une fenêtre de script, il suffit de se placer n'importe où sur la ligne de code et de cliquer sur l'icône \textbf{Run} du logiciel (raccourci : \textbf{Ctrl + Entrée}). Une fois le code activé, celui-ci est montré dans la Console, et selon la nature de la commande, le résultat peut apparaître lui aussi dans la Console ou dans l'un des encarts disposés par défaut à droite de l'écran, selon qu'il s'agisse notamment d'un nouvel objet (e.g., une variable), d'une demande d'aide, ou de la création d'un graphique.
 
-\hypertarget{manipuler-des-objets-valeurs-vecteurs-et-tableaux-de-donnuxe9es}{%
-\subsection{Manipuler des objets (valeurs, vecteurs, et tableaux de données)}\label{manipuler-des-objets-valeurs-vecteurs-et-tableaux-de-donnuxe9es}}
+\subsection{Manipuler des objets (valeurs, vecteurs, et tableaux de données)}\label{manipuler-des-objets-valeurs-vecteurs-et-tableaux-de-donnuxe9es}
 
 R permet tout d'abord d'effectuer des opérations simples avec des nombres, telles que des additions avec le symbole \texttt{+}, des soustractions avec le symbole \texttt{-}, des multiplications avec le symbole \texttt{*}, des divisions avec le symbole \texttt{/}, des racines carrées avec la fonction \texttt{sqrt()}, ou encore des élévations à la puissance avec le symbole \texttt{\^{}}.
 
@@ -324,8 +317,7 @@ De manière encore plus élaborée, R permet de créer des tableaux de données 
 ## 4 3 9 d
 \end{verbatim}
 
-\hypertarget{manipuler-des-objets-via-des-noms}{%
-\subsection{Manipuler des objets via des noms}\label{manipuler-des-objets-via-des-noms}}
+\subsection{Manipuler des objets via des noms}\label{manipuler-des-objets-via-des-noms}
 
 L'une des particularités de R, c'est de permettre d'associer des objets (e.g., des valeurs, des vecteurs, ou encore des tableaux de données) à des noms. Pour ce faire, R utilise la fonction d'assignation \texttt{\textless{}-}. Cette fonction s'utilise en écrivant à droite de la flèche l'objet à créer (ou qui est déjà crée), et en écrivant à gauche de la flèche le nom auquel on veut que l'objet soit associé (Attention : Toujours utiliser seulement des caractères alphanumériques et des points \texttt{.} ou des tirets du bas \texttt{\_} pour écrire un nom ; ne pas commencer par un chiffre ; avoir à l'esprit que R est sensible à la casse, ce qui veut dire qu'un nom commençant par une majuscule sera un nom différent de celui qui a les mêmes lettres mais qui commence par une minuscule.) L'utilisation de noms associés à des objets permet de grandement faciliter les analyses par la suite. Lorsqu'on réalise une assignation, il est possible de voir le nouveau nom et l'objet associé dans la fenêtre \textbf{Environnement} de RStudio. Lorsqu'on lance le code permettant d'assigner un objet à un nom, R ne montre pas le contenu de l'objet. Pour le voir, il faut écrire le nom associé à l'objet dans une ligne de code et lancer la commande.
 
@@ -489,8 +481,7 @@ Lorsque plusieurs objets ont été assignés à des noms, il est possible de vou
 
 L'instruction \texttt{rm(list\ =\ ls())} supprime toutes les assignations qui ont été réalisées auparavant.
 
-\hypertarget{utiliser-des-fonctions}{%
-\subsection{Utiliser des fonctions}\label{utiliser-des-fonctions}}
+\subsection{Utiliser des fonctions}\label{utiliser-des-fonctions}
 
 Dans les exemples de code précédents, nous avons utilisé plusieurs fonctions : la fonction \texttt{sqrt()}, la fonction \texttt{c()}, la fonction \texttt{data.frame()}, et la fonction \texttt{rm()}. Par la suite, nous serons amenés à voir comment l'on crée une fonction et comment l'on arrive finalement à n'avoir qu'une expression suivie de parenthèses à utiliser pour faire un ensemble d'actions automatiquement. Mais avant cela, il est important de savoir globalement comment une fonction s'utilise. Cela est important car il est rapidement possible de se rendre compte qu'utiliser R, c'est utiliser des fonctions. De plus, lorsque l'on souhaite réaliser une nouvelle analyse avec une fonction que l'on n'a jamais utilisée auparavant, il est nécessaire de pouvoir en comprendre la structure et d'être en mesure d'en comprendre le fonctionnement pour pouvoir l'utiliser.
 
@@ -565,8 +556,7 @@ Au regard de ce qu'il vient d'être expliqué, il est donc une bonne pratique, a
 
 Toutefois, paradoxalement, l'aide n'est pas toujours facile à comprendre pour ceux qui n'ont pas un niveau d'expertise avancé avec R. Pour bien comprendre comment on peut utiliser une fonction, internet peut être une excellente ressource car il regorge de sites et d'exemples crées par la communauté R. L'un des sites sur lesquels on tombe souvent lors d'une recherche internet est le site \url{https://stackoverflow.com}. Une bonne partie des problèmes de compréhension et d'utilisation des fonctions de R que l'on rencontre peuvent être résolus en consultant des exemples venant de ce site.
 
-\hypertarget{installer-et-charger-des-packages}{%
-\subsection{\texorpdfstring{Installer et charger des \emph{packages}}{Installer et charger des packages}}\label{installer-et-charger-des-packages}}
+\subsection{\texorpdfstring{Installer et charger des \emph{packages}}{Installer et charger des packages}}\label{installer-et-charger-des-packages}
 
 R fonctionne en bonne partie sur la base de fonctions qui permettent de réaliser automatiquement différents types de calculs. Ces fonctions sont regroupées dans des ensembles qu'on appelle des \emph{packages}. La version d'installation initialle du logiciel R dispose d'un ensemble de \emph{packages} de base qui permettent de réaliser un très grand nombre d'analyses. Toutefois, la version de base de R impose parfois des manières d'écrire certaines instructions qui sont peu intuitives ou qui parfois ne permettent tout simplement pas de faire les analyses souhaitées. Pour palier ces problèmes, des \emph{packages} sont régulièrement crées et actualisés par la communauté R. Pour pouvoir les utiliser, il est nécessaire de d'abord installer le \emph{package} additionnel grâce à la fonction \texttt{install.packages()}. L'une des collections de \emph{packages} les plus utiles pour manipuler des tableaux de données et effectuer des analyses statistiques et graphiques est celle du \texttt{tidyverse}, qui a été pensée notamment pour faciliter l'écriture des lignes de code.
 
@@ -586,8 +576,7 @@ Une fois que le \emph{package} a été installé (ou l'ensemble de \emph{package
 
 Lorsque l'on charge la collection de \emph{packages} \texttt{tidyverse}, on peut observer dans la Console que plusieurs \emph{packages} sont chargés en même temps : \texttt{ggplot2}, pour la visualisation de données ; \texttt{dplyr}, pour la manipulation de données ; \texttt{tidyr}, pour l'organiation des tableaux de données ; \texttt{readr}, pour l'importation de jeux de données ; \texttt{purrr}, pour la programmation ; \texttt{tibble}, pour le formatage de tableaux de données ; \texttt{stringr}, pour la gestion des chaînes de caractères ; \texttt{forcats}, pour la gestion de variables qualitatives. Si nous avons téléchargé et chargé l'ensemble des \emph{packages} du \texttt{tidyverse}, nous aurions pu aussi installé et chargé un seul de ces \emph{packages} à la fois, comme pour la plupart des \emph{packages} qui existent.
 
-\hypertarget{divers}{%
-\subsection{Divers}\label{divers}}
+\subsection{Divers}\label{divers}
 
 Au fur et à mesure que l'on écrit un script, une bonne pratique consiste à régulièrement créer des sections avec des titres et d'ajouter des commentaires pour certaines analyses. Afin de ne pas rendre activable les lignes de code qui ne serviraient qu'à écrire des titres ou des commentaires, il convient d'utiliser le symbole \texttt{\#} devant l'écriture du code.
 
@@ -601,8 +590,7 @@ Au fur et à mesure que l'on écrit un script, une bonne pratique consiste à r�
 
 Étant donné que l'erreur est difficile à éviter à un moment donné ou à un autre lorsqu'on commence à écrire son propre code ou à utiliser un code qui vient de quelqu'un d'autre, il est utile de reconnaître les situations dans lesquelles une erreur est survenue. La situation la plus évidente est l'apparition d'un texte en rouge dans la Console. Lorsqu'il s'agit bel et bien d'une erreur (car il peut ne s'agir parfois que d'un message d'alerte ou d'information), le texte en rouge décrit l'erreur qui a été détectée et qui empêche le code d'être entièrement activé. De manière moins visible, il est possible parfois d'observer un \texttt{+} tout en bas de la Console. Cela survient lorsque le code lancé à l'instant est incomplet (e.g., une parenthèse a été oubliée). Si cela arrive, il vaut mieux appuyer sur \textbf{Echap}, trouver l'erreur dans le code, et relancer la commande. Avant de relancer la commande, il faut s'assurer que R donne effectivement la main pour lancer une nouvelle instruction. C'est le cas lorsque le symbole \texttt{\textgreater{}} est observé dans la Console. Enfin, RStudio permet d'utiliser un certain nombre de raccourcis clavier. Pour en avoir une vue d'ensemble, appuyez sur \textbf{Alt+Shift+K}.
 
-\hypertarget{ruxe9sumuxe9}{%
-\section{Résumé}\label{ruxe9sumuxe9}}
+\section{Résumé}\label{ruxe9sumuxe9}
 
 \begin{itemize}
 \tightlist
@@ -636,11 +624,9 @@ Au fur et à mesure que l'on écrit un script, une bonne pratique consiste à r�
   Dans la Console, le symbole \texttt{\textgreater{}} signifie que le logiciel est prêt à lancer une nouvelle instruction. Le symbole \texttt{+} indique que l'instruction initialement lancée est incomplète. Mieux vaut alors faire \textbf{Echap}, modifier le code, et recommencer.
 \end{itemize}
 
-\hypertarget{importation-et-manipulation-dune-base-de-donnuxe9es}{%
-\chapter{Importation et manipulation d'une base de données}\label{importation-et-manipulation-dune-base-de-donnuxe9es}}
+\chapter{Importation et manipulation d'une base de données}\label{importation-et-manipulation-dune-base-de-donnuxe9es}
 
-\hypertarget{comprendre-ce-quest-une-base-de-donnuxe9es}{%
-\section{Comprendre ce qu'est une base de données}\label{comprendre-ce-quest-une-base-de-donnuxe9es}}
+\section{Comprendre ce qu'est une base de données}\label{comprendre-ce-quest-une-base-de-donnuxe9es}
 
 Lorsqu'on souhaite répondre à une question, la démarche scientifique classique consiste à effectuer une série de mesures ou d'observations selon un protocole qui a été conçu en cohérence avec la question posée. En principe, ces mesures ou observations donnent lieu à l'obtention de valeurs. Ces valeurs peuvent être de forme numérique (e.g., les valeurs de taille de différents individus) ou de forme littérale (e.g., les valeurs de sexe de différents individus). Quelle que soit leur forme, les valeurs que l'on obtient dans un contexte qui est connu, comme dans le cas d'un protocole de mesures, ont un sens bien défini car elles sont associées à des choses que l'on a cherché à caractériser. Lorsqu'une valeur est porteuse d'un sens bien défini, on peut alors considérer qu'il s'agit d'une \textbf{donnée}.
 Très souvent, pour répondre à une question, il est nécessaire d'acquérir plusieurs données qui seraient relatives à différentes choses que l'on a cherché à caractériser (e.g., la taille, la couleur, le poids, etc.), et qui seraient relatives également à différents individus chez qui l'on aurait souhaité caractériser ces choses. Afin de conduire les analyses qui permettraient de répondre à la question posée, il convient alors de répertorier toutes les données acquises dans un même document, et plus exactement dans un même fichier, qui serait la base de données, telle que présentée dans le Tableau \ref{tab:database}.
@@ -649,7 +635,7 @@ Très souvent, pour répondre à une question, il est nécessaire d'acquérir pl
 
 \global\setlength{\Oldtabcolsep}{\tabcolsep}
 
-\setlength{\tabcolsep}{0pt}
+\setlength{\tabcolsep}{2pt}
 
 \renewcommand*{\arraystretch}{1.5}
 
@@ -753,7 +739,7 @@ La base de données prend donc la forme d'un tableau. Plusieurs principes sont �
 
 \global\setlength{\Oldtabcolsep}{\tabcolsep}
 
-\setlength{\tabcolsep}{0pt}
+\setlength{\tabcolsep}{2pt}
 
 \renewcommand*{\arraystretch}{1.5}
 
@@ -833,7 +819,7 @@ En principe, les données de la base qui ont été obtenues selon la même proc�
 
 \global\setlength{\Oldtabcolsep}{\tabcolsep}
 
-\setlength{\tabcolsep}{0pt}
+\setlength{\tabcolsep}{2pt}
 
 \renewcommand*{\arraystretch}{1.5}
 
@@ -929,8 +915,7 @@ En plus de la distinction échelle d'intervalles / échelle de ratios, les varia
 
 Les \textbf{variables qualitatives} (aussi dites catégorielles), elles, contiennent des valeurs désignant non pas des quantités mais des modalités. Ces variables sont donc forcément discrètes. Les modalités peuvent être exprimées sous forme littérale ou numérique. Parmi les variables qualitatives, on distingue celles qui sont \textbf{nominales} et celles qui sont \textbf{ordinales}. Les variables qualitatives nominales contiennent des modalités qui ne peuvent pas être ordonnées (e.g., les couleurs, les genres, etc.). Au contraire, les variables qualitatives ordinales contiennent des modalités qui peuvent être ordonnées (e.g., les niveaux de compétition sportive : départemental ; régional ; interrégional ; national ; international). Les variables qualitatives ordinales qui prendraient des valeurs numériques pour indiquer par exemple un niveau d'expertise (e.g., 1, 2, 3, et 4) se différencient des variables quantitatives discrètes par l'absence d'information sur la distance qui sépare les nombres de cette variable \autocite{labreucheDifferentsTypesVariables2010}.
 
-\hypertarget{fixer-le-ruxe9pertoire-de-travail}{%
-\section{Fixer le répertoire de travail}\label{fixer-le-ruxe9pertoire-de-travail}}
+\section{Fixer le répertoire de travail}\label{fixer-le-ruxe9pertoire-de-travail}
 
 Lorsque l'on souhaite réaliser l'analyse d'une base de données avec RStudio, il peut être utile et plus fonctionnel pour la suite de créer un dossier spécifique, sur l'ordinateur, relatif à son projet de travail. Ce dossier pourrait alors contenir au moins trois sous-dossiers appelés : ``data'' ; ``out'' ; et ``R''. L'idée ici est d'organiser tous les fichiers qui vont être utilisés et produits au cours du travail d'analyse. Le dossier ``data'' devrait ne contenir que les fichiers à analyser. Le dossier ``out'' ne devrait contenir que les fichiers qui sont exportés au cours des analyses réalisées. Et le dossier ``R'' ne devrait contenir que les fichiers .R qui servent à écrire et activer le code nécessaire aux analyses.
 
@@ -938,8 +923,7 @@ Une fois la structure de travail créée, il est préférable de faire en sorte 
 
 Une fois le projet bien configuré, il faut ensuite, dans RStudio, ouvrir un fichier \textbf{Script} où toutes les commandes seront écrites et enregistrables (chemin d'accès : \textbf{File \textgreater{} New File \textgreater{} R Script}). Une fois ouvert, il est possible d'enregistrer le script en appuyant sur \textbf{Ctrl+S}.
 
-\hypertarget{importer-la-base-de-donnuxe9es}{%
-\section{Importer la base de données}\label{importer-la-base-de-donnuxe9es}}
+\section{Importer la base de données}\label{importer-la-base-de-donnuxe9es}
 
 Il existe plusieurs fonctions pour importer une base de données dans RStudio. La fonction \texttt{read\_csv2()} du package \texttt{readr} permet d'importer par exemple des fichiers .csv qui, structurellement, séparent les données avec des points-virgules. C'est généralement le type de structure de fichier .csv que l'on obtient après avoir réalisé un export .csv à partir du logiciel Excel. Pour illustrer ici l'importation d'une base de données, il est d'abord possible d'en créer une dans le répertoire de travail actif, cela en exportant un tableau de données qui existe déjà avec le logiciel R. Le logiciel R dispose en effet d'un grand nombre de jeux de données différents que tout utilisateur peut consulter et manipuler. L'ensemble des jeux de données disponibles suite à l'installation par défaut de R est visible en lançant dans la Console la commande \texttt{data()}. Au fur et à mesure de la découverte des analyses montrées dans ce document, différents jeux de données seront utilisés en fonction des besoins. Pour le moment, il est possible d'utiliser le jeu de données qui s'appelle \texttt{iris}. Même si on ne le voit pas dans la fenêtre Environnement de RStudio, il est bel et bien là, disponible, prêt à être utilisé. Afin d'exporter ce jeu de données dans le répertoire de travail fixé au préalable, il est possible d'utiliser la fonction \texttt{write\_csv2()} du package \texttt{readr}. Pour cela, il suffit d'utiliser le nom du jeu de données, puis d'indiquer entre guillemets le nom que l'on veut que le fichier exporté ait, tout en n'oubliant pas de mettre l'extension .csv à la fin du nom pour indiquer le format d'export, comme ci-dessous.
 
@@ -1157,16 +1141,13 @@ RStudio nous montre tout le jeu de données dans la Console, ce qui n'est pas tr
 
 Cette fois, RStudio n'affiche que les premières lignes du jeu de données, et il fournit en plus de cela des informations quant aux types de variables présentes dans le jeu de données, en-dessous de la ligne de titres. Maintenant que la base de données a été importée, il ne reste plus qu'à voir différentes fonctions pour pouvoir configurer la base de données telle qu'on la voudrait pour réaliser confortablement les analyses.
 
-\hypertarget{manipuler-la-base-de-donnuxe9es}{%
-\section{Manipuler la base de données}\label{manipuler-la-base-de-donnuxe9es}}
+\section{Manipuler la base de données}\label{manipuler-la-base-de-donnuxe9es}
 
-\hypertarget{vuxe9rifier-le-succuxe8s-de-limportation-de-la-base}{%
-\subsection{Vérifier le succès de l'importation de la base}\label{vuxe9rifier-le-succuxe8s-de-limportation-de-la-base}}
+\subsection{Vérifier le succès de l'importation de la base}\label{vuxe9rifier-le-succuxe8s-de-limportation-de-la-base}
 
 Avant de débuter les analyses de la base de données, une bonne pratique est de vérifier si la base de données a été correctement importée avec RStudio. Une manière rapide de faire cela est de regarder les nombres d'observations (i.e., de lignes) et de variables (i.e., de colonnes) associés à l'objet crée lors de l'importation et visibles dans la fenêtre Environnement de RStudio, puis de cliquer sur le nom associé à l'objet. Lors de l'étape précédente, nous avons importé le jeu de données \texttt{iris} en l'appelant ainsi. Lorsque l'on cherche le nom \texttt{iris} dans la fenêtre Environnement, on peut voir que l'objet associé contient 150 observations et 5 variables, signes que la structure du jeu de données a été bien interprétée par R si l'on sait que ce sont effectivement les dimensions du jeu de données en question. Puis, lorsque l'on clique sur le nom \texttt{iris} dans la liste des noms montrés dans la fenêtre Environnement, RStudio ouvre un onglet qui contient les données. Il est alors possible de voir d'un simple coup d'oeil si les données sont bien présentes et organisées en lignes et en colonnes comme attendu.
 
-\hypertarget{vuxe9rifier-et-reconfigurer-les-types-des-variables-de-la-base}{%
-\subsection{Vérifier et reconfigurer les types des variables de la base}\label{vuxe9rifier-et-reconfigurer-les-types-des-variables-de-la-base}}
+\subsection{Vérifier et reconfigurer les types des variables de la base}\label{vuxe9rifier-et-reconfigurer-les-types-des-variables-de-la-base}
 
 Il convient de vérifier que les types des variables que RStudio a associés aux variables du jeu de données importé soient bien en accord avec ce qui était attendu. Pour vérifier les types des variables, il est possible d'utiliser la fonction \texttt{str()} avec le nom auquel on a associé la base de données.
 
@@ -1350,8 +1331,7 @@ Petal.Width & 0 & 1 & 1.20 & 0.76 & 0.1 & 0.3 & 1.30 & 1.8 & 2.5 & ▇▁▇▅�
 \hline
 \end{tabular}
 
-\hypertarget{suxe9lectionner-des-variables-avec-select}{%
-\subsection{\texorpdfstring{Sélectionner des variables avec \texttt{select()}}{Sélectionner des variables avec select()}}\label{suxe9lectionner-des-variables-avec-select}}
+\subsection{\texorpdfstring{Sélectionner des variables avec \texttt{select()}}{Sélectionner des variables avec select()}}\label{suxe9lectionner-des-variables-avec-select}
 
 Certains jeux de données peuvent être très larges, c'est-à-dire qu'ils peuvent contenir beaucoup de colonnes, parfois inutiles, et qui peuvent être gênantes lorsque l'on veut avoir une vue claire du contenu du jeu de données. La fonction \texttt{select()} du package \texttt{dplyr} permet de sélectionner des colonnes facilement.
 
@@ -1379,8 +1359,7 @@ Certains jeux de données peuvent être très larges, c'est-à-dire qu'ils peuve
 ## # i 140 more rows
 \end{verbatim}
 
-\hypertarget{renommer-des-variables-avec-rename}{%
-\subsection{\texorpdfstring{Renommer des variables avec \texttt{rename()}}{Renommer des variables avec rename()}}\label{renommer-des-variables-avec-rename}}
+\subsection{\texorpdfstring{Renommer des variables avec \texttt{rename()}}{Renommer des variables avec rename()}}\label{renommer-des-variables-avec-rename}
 
 Il est possible que certains noms de variables ne soient pas clairs ou trop longs, voire mal écrits, ce qui peut être gênant pour écrire un code le plus lisible possible. La fonction \texttt{rename()} du package \texttt{dplyr} permet de gérer cela. Dans l'exemple ci-dessous, on observe que le nouveau nom doit être écrit à gauche du signe \texttt{=}, alors que l'ancien nom doit être écrit à droite du signe \texttt{=}. Si le nom d'origine contient au moins une espace entre deux mots, ou encore s'il contient des caractères spéciaux, il convient d'encadrer le nom à remplacer par des guillemets ('' ``).
 
@@ -1439,8 +1418,7 @@ Cette méthode visant à renommer les variables pour modifier un caractère ou p
 ## # i 140 more rows
 \end{verbatim}
 
-\hypertarget{cruxe9er-des-variables-avec-mutate}{%
-\subsection{\texorpdfstring{Créer des variables avec \texttt{mutate()}}{Créer des variables avec mutate()}}\label{cruxe9er-des-variables-avec-mutate}}
+\subsection{\texorpdfstring{Créer des variables avec \texttt{mutate()}}{Créer des variables avec mutate()}}\label{cruxe9er-des-variables-avec-mutate}
 
 Certaines analyses peuvent nécessiter d'ajouter des variables à partir de calculs réalisés sur des variables qui existent déjà dans le jeu de données. La fonction \texttt{mutate()}, du package \texttt{dplyr}, et que nous avons déjà rencontrée précédemment, permet cela. Dans l'exemple ci-dessous, on observe que le nom de la nouvelle variable à créer est à gauche du signe \texttt{=} et que le calcul créant les nouvelles valeurs est décrit à droite du signe \texttt{=}.
 
@@ -1470,8 +1448,7 @@ Certaines analyses peuvent nécessiter d'ajouter des variables à partir de calc
 ## # i 2 more variables: ratio_sepal <dbl>, ratio_petal <dbl>
 \end{verbatim}
 
-\hypertarget{suxe9lectionner-des-lignes-avec-filter}{%
-\subsection{\texorpdfstring{Sélectionner des lignes avec \texttt{filter()}}{Sélectionner des lignes avec filter()}}\label{suxe9lectionner-des-lignes-avec-filter}}
+\subsection{\texorpdfstring{Sélectionner des lignes avec \texttt{filter()}}{Sélectionner des lignes avec filter()}}\label{suxe9lectionner-des-lignes-avec-filter}
 
 En fonction des besoins de l'analyse, on peut vouloir ne retenir que certaines lignes du fichier de données. La fonction \texttt{filter()} du package \texttt{dplyr} est faite pour réaliser ce filtrage. Plusieurs opérateurs sont disponibles pour ne retenir que les lignes que l'on veut (cf.~Tableau \ref{tab:SymbolsFilter}).
 
@@ -1479,7 +1456,7 @@ En fonction des besoins de l'analyse, on peut vouloir ne retenir que certaines l
 
 \global\setlength{\Oldtabcolsep}{\tabcolsep}
 
-\setlength{\tabcolsep}{0pt}
+\setlength{\tabcolsep}{2pt}
 
 \renewcommand*{\arraystretch}{1.5}
 
@@ -1580,8 +1557,7 @@ De plus, dans la configuration du code, ces opérateurs peuvent être couplés �
 ## # i 19 more rows
 \end{verbatim}
 
-\hypertarget{ruxe9ordonner-les-lignes-avec-arrange}{%
-\subsection{\texorpdfstring{Réordonner les lignes avec \texttt{arrange()}}{Réordonner les lignes avec arrange()}}\label{ruxe9ordonner-les-lignes-avec-arrange}}
+\subsection{\texorpdfstring{Réordonner les lignes avec \texttt{arrange()}}{Réordonner les lignes avec arrange()}}\label{ruxe9ordonner-les-lignes-avec-arrange}
 
 On peut vouloir trier les lignes du jeu de données selon un certain ordre, en fonction des valeurs d'une variable donnée. La fonction \texttt{arrange()} du package \texttt{dplyr} est très utile pour gérer ce genre de réalisation. L'exemple ci-dessous conduit à trier les données selon un ordre croissant en fonction des valeurs de la variable \texttt{Sepal.Length}. Le fait de mettre le symbole \texttt{-} devant le nom de la variable aurait conduit à un tri décroissant.
 
@@ -1609,8 +1585,7 @@ On peut vouloir trier les lignes du jeu de données selon un certain ordre, en f
 ## # i 140 more rows
 \end{verbatim}
 
-\hypertarget{ruxe9sumer-des-variables-avec-group_by-et-summarize}{%
-\subsection{\texorpdfstring{Résumer des variables avec \texttt{group\_by()} et \texttt{summarize()}}{Résumer des variables avec group\_by() et summarize()}}\label{ruxe9sumer-des-variables-avec-group_by-et-summarize}}
+\subsection{\texorpdfstring{Résumer des variables avec \texttt{group\_by()} et \texttt{summarize()}}{Résumer des variables avec group\_by() et summarize()}}\label{ruxe9sumer-des-variables-avec-group_by-et-summarize}
 
 Bien qu'une base de données puisse contenir énormément de lignes, on peut n'en vouloir que la version résumée. Les fonctions \texttt{group\_by()} et \texttt{summarize()} du package \texttt{dplyr} permettent de faire cela aisément. Dans l'exemple ci-dessous, la fonction \texttt{group\_by()} permet d'indiquer que les calculs réalisés par la suite avec la fonction \texttt{summarize()} doivent être exécutés pour les modalités de la variable \texttt{Species} prises séparément. La fonction \texttt{summarize()}, quant à elle, permet d'exéctuer différents calculs. Dans l'exemple ci-dessous, il s'agit de moyennes, obtenues à l'aide de la fonction \texttt{mean()}. De plus, la fonction \texttt{summarize()} permet, comme montré ci-dessous, d'indiquer à gauche du \texttt{=} le nom du titre du calcul alors effectué .
 
@@ -1665,8 +1640,7 @@ Au cours des illustrations montrant l'usage des fonctions \texttt{select()} jusq
 ## # i 55 more rows
 \end{verbatim}
 
-\hypertarget{passer-dune-disposition-en-lignes-uxe0-une-disposition-en-colonnes-et-inversement-avec-pivot_wider-et-pivot_longer}{%
-\subsection{\texorpdfstring{Passer d'une disposition en lignes à une disposition en colonnes et inversement avec \texttt{pivot\_wider()} et \texttt{pivot\_longer()}}{Passer d'une disposition en lignes à une disposition en colonnes et inversement avec pivot\_wider() et pivot\_longer()}}\label{passer-dune-disposition-en-lignes-uxe0-une-disposition-en-colonnes-et-inversement-avec-pivot_wider-et-pivot_longer}}
+\subsection{\texorpdfstring{Passer d'une disposition en lignes à une disposition en colonnes et inversement avec \texttt{pivot\_wider()} et \texttt{pivot\_longer()}}{Passer d'une disposition en lignes à une disposition en colonnes et inversement avec pivot\_wider() et pivot\_longer()}}\label{passer-dune-disposition-en-lignes-uxe0-une-disposition-en-colonnes-et-inversement-avec-pivot_wider-et-pivot_longer}
 
 Il convient de respecter certaines règles de base lors de la conception d'une base de données (e.g., mettre les observations en lignes et les variables en colonnes). Toutefois, dans certains cas, même après avoir bien respecté les règles, la manière selon laquelle la base de données a été organisée peut ne pas être encore adéquate pour pouvoir utiliser certaines fonctions. Prenons par exemple le cas où toutes les valeurs numériques d'une variable quantitative auraient été mises dans une même colonne en regard d'une variable qualitative pour que chaque valeur numérique corresponde à une modalité de cette variable qualitative (c'est le cas, par exemple, avec le jeu de données \texttt{iris}), et que la fonction à utiliser nécessiterait que l'on ait une colonne pour chacune des modalités de la variable qualitative, avec des colonnes mises côte à côte. Une fonction qui permet alors de passer d'un format ``long'' (i.e., toutes les valeurs numériques sont dans la même colonne) à un format ``large'' (i.e., les valeurs numériques sont réparties dans différentes colonnes selon la modalité à laquelle elles sont associées), est la fonction \texttt{pivot\_wider()} du package \texttt{tidyr}. Pour pouvoir utiliser cette fonction, il faut qu'il y ait une variable permettant d'identifier à quels individus ou groupes appartiennent les données dont on va changer l'organisation. Dans une base de données classique, il y a toujours une variable présente pour cela. Toutefois, dans le jeu de données \texttt{iris}, il n'y a pas une telle variable. Pour pouvoir illustrer l'utilisation de la fonction \texttt{pivot\_wider()}, nous avons donc ajouté arbitrairement une variable \texttt{id} grâce à la fonction \texttt{mutate()} pour simuler le fait que les données de \texttt{iris} auraient été acquises en référence à des individus bien identifiés, avec à chaque fois une valeur pour les trois modalités de la variable \texttt{Species} :
 
@@ -1807,8 +1781,7 @@ Dans le code montré ci-dessus, l'argument \texttt{cols} a permis de sélectionn
 
 Nous venons de voir plusieurs fonctions qui peuvent être très utiles pour pouvoir facilement préparer sa base de données en vue des futures analyses. Il ne s'agit que d'une vue très superficielle de tout le potentiel de manipulation des données qu'ont ces fonctions. Pour une vue plus approndie des possibilités qu'offrent ces fonctions, la lecture de l'ouvrage \emph{R for Data Science} d'Hadley Wickham et de Garrett Grolemund \autocite*{wickhamDataScience2017} sera particulièrement enrichissante. Cet ouvrage est en libre accès ici : \url{https://r4ds.had.co.nz}.
 
-\hypertarget{ruxe9sumuxe9-1}{%
-\section{Résumé}\label{ruxe9sumuxe9-1}}
+\section{Résumé}\label{ruxe9sumuxe9-1}
 
 \begin{itemize}
 \tightlist
@@ -1850,11 +1823,9 @@ Nous venons de voir plusieurs fonctions qui peuvent être très utiles pour pouv
   Pour enchaîner l'application de fonctions, utiliser le symbole \texttt{\textbar{}\textgreater{}} (\emph{pipe}) avec une version de R \textgreater= 4.1.0, ou à défaut le symbole \texttt{\%\textgreater{}\%} du package \texttt{magrittr}.
 \end{itemize}
 
-\hypertarget{part-analyses-descriptives}{%
-\part{Analyses descriptives}\label{part-analyses-descriptives}}
+\part{Analyses descriptives}\label{part-analyses-descriptives}
 
-\hypertarget{analyses-univariuxe9es}{%
-\chapter{Analyses univariées}\label{analyses-univariuxe9es}}
+\chapter{Analyses univariées}\label{analyses-univariuxe9es}
 
 Réaliser une analyse descriptive univariée signifie que l'on s'intéresse à une seule variable en particulier. L'enjeu est ici de prendre connaissance de la distribution de la variable, c'est-à-dire de la manière selon laquelle se répartissent les observations en fonction des valeurs que prend la variable. De manière complémentaire, l'analyse descriptive univariée vise à prendre connaissance des indices statistiques qui caractérisent la variable, ainsi qu'à déterminer ceux qui seraient les plus pertinents pour la résumer.
 
@@ -1862,11 +1833,9 @@ Dans cette partie, les notions de \textbf{population} et d'\textbf{échantillon}
 
 Dans le cadre de cette partie, nous allons commencer à voir comment produire des graphiques dans RStudio, et par là-même, découvrir progressivement le package \texttt{ggplot2}. Le package \texttt{ggplot2} n'est pas le plus simple à utiliser lorsque l'on découvre le logiciel R. D'ailleurs, de nombreux manuels portant sur R privilégient les packages et fonctions de base de R lorsqu'il s'agit de montrer comment obtenir des graphiques relativement simples pour analyser ses données. Cependant, les packages et fonctions de base de R sont rapidement limités lorsqu'il s'agit de réaliser des graphiques relativement complexes. Le parti pris ici est donc d'initier dès à présent à l'utilisation du package \texttt{ggplot2} pour réaliser des graphiques, même simples, afin de pouvoir être plus rapidement à l'aise dès lors qu'il s'agira par la suite de produire des graphiques relativement élaborés à l'aide de ce package. Cependant, l'ambition n'est pas ici de permettre la maîtrise complète du package \texttt{ggplot2}. Pour cela, il vaut mieux se référer à des documentations spécialisées telles que la seconde édition de l'ouvrage \emph{ggplot2} d'Hadley Wickham \autocite*{wickhamGgplot22016}, en sachant qu'une troisième édition est en cours de développement et est accessible en ligne ici : \url{https://ggplot2-book.org}.
 
-\hypertarget{variables-quantitatives}{%
-\section{Variables quantitatives}\label{variables-quantitatives}}
+\section{Variables quantitatives}\label{variables-quantitatives}
 
-\hypertarget{visualiser-la-distribution-de-la-variable}{%
-\subsection{Visualiser la distribution de la variable}\label{visualiser-la-distribution-de-la-variable}}
+\subsection{Visualiser la distribution de la variable}\label{visualiser-la-distribution-de-la-variable}
 
 Dans le cadre de l'analyse de variables quantitatives, il est toujours utile de d'abord visualiser graphiquement la distribution des données à l'aide d'un \textbf{histogramme}. Un histogramme, c'est un graphique avec des barres dont la largeur représente un intervalle donné de valeurs numériques, et dont la hauteur représente le nombre d'observations associées à une valeur qui est située dans l'intervalle en question. Plus une barre est haute, plus il y a d'observations concernées par l'intervalle de valeurs. Un exemple d'histogramme est montré sur la Figure \ref{fig:geomhistogram}.
 
@@ -2136,8 +2105,7 @@ La confiance que l'on peut avoir dans des résultats issus d'analyses inférenti
 
 Une fois qu'une première analyse graphique des données a été réalisée, il peut être utile de chercher à résumer de manière numérique la variable. Plusieurs types de statistiques peuvent être utilisés à cet effet : les \textbf{indices de position}, les \textbf{indices de dispersion}, les \textbf{indices d'asymétrie}, et les \textbf{indices d'aplatissement}.
 
-\hypertarget{les-indices-de-position}{%
-\subsection{Les indices de position}\label{les-indices-de-position}}
+\subsection{Les indices de position}\label{les-indices-de-position}
 
 Les indices de position servent à donner un ordre de grandeur de la variable. Autrement dit, ces indices permettent de positionner la variable sur une échelle de valeurs numériques. De plus, ces statistiques peuvent être utilisées pour donner une idée de ce qu'on appelle la \textbf{tendance centrale}, c'est-à dire-la valeur typique d'une distribution qui donne une bonne indication de la localisation de la majorité des observations \autocite{rousseletReactionTimesOther2020}. Différentes statistiques peuvent être étudiées à cette fin : la \textbf{moyenne}, la \textbf{médiane}, la \textbf{moyenne rognée}, et le \textbf{mode}.
 
@@ -2322,8 +2290,7 @@ Le mode désigne la valeur qui est la plus fréquemment retrouvée dans une vari
 
 Bien que cela ne soit pas le cas dans l'exemple ci-dessus, il faut comprendre qu'il est à tout à fait possible d'avoir plusieurs modes si plusieurs valeurs reviennent à des fréquences similaires dans la variable. Dans ce cas, la fonction \texttt{modeOf()} affichera les différentes valeurs de mode, et la fonction \texttt{maxFreq()} continuera de n'afficher qu'une seule valeur de fréquence puisque par définition, le mode désigne la valeur associée à la fréquence d'apparition maximale dans la variable, or il ne peut n'y avoir qu'une seule fréquence maximale\ldots{} Cela signifie qu'une variable peut contenenir autant de modes que de valeurs si chaque valeur n'est représentée qu'une seule fois dans la variable. Cet inconvénient est probablement l'une des raisons pour lesquelles le mode n'est que très peu utilisé, si ce n'est jamais utilisé, pour décrire la tendance centrale d'une variable quantitative.
 
-\hypertarget{les-indices-de-dispersion}{%
-\subsection{Les indices de dispersion}\label{les-indices-de-dispersion}}
+\subsection{Les indices de dispersion}\label{les-indices-de-dispersion}
 
 Les indices de dispersion permettent de rendre compte de la manière selon laquelle les observations sont étalées, ou réparties, autour des indices de position. Plusieurs statistiques sont disponibles pour caractériser la dispersion, à savoir : l'\textbf{étendue}, l'\textbf{écart-type}, et l'\textbf{intervalle interquartile}.
 
@@ -2431,7 +2398,7 @@ On remarque ici que la fonction \texttt{quantile()} a plusieurs arguments. L'arg
 
 \global\setlength{\Oldtabcolsep}{\tabcolsep}
 
-\setlength{\tabcolsep}{0pt}
+\setlength{\tabcolsep}{2pt}
 
 \renewcommand*{\arraystretch}{1.5}
 
@@ -2495,7 +2462,7 @@ On remarque que les résultats de la fonction \texttt{quantile()} sont différen
 
 \global\setlength{\Oldtabcolsep}{\tabcolsep}
 
-\setlength{\tabcolsep}{0pt}
+\setlength{\tabcolsep}{2pt}
 
 \renewcommand*{\arraystretch}{1.5}
 
@@ -2618,8 +2585,7 @@ La figure représente les valeurs de la variable en fonction des quantiles qui l
 
 Les quartiles Q1 et Q3 sont les mesures de dispersion classiquement associées à la médiane. Si on note une médiane \emph{m} et l'intervalle interquartile (Q1 - Q3), alors le résumé d'une variable à l'aide de ces statistiques s'écrit comme suit : \emph{m} (Q1 - Q3).
 
-\hypertarget{les-indices-dasymuxe9trie-et-daplatissement}{%
-\subsection{Les indices d'asymétrie et d'aplatissement}\label{les-indices-dasymuxe9trie-et-daplatissement}}
+\subsection{Les indices d'asymétrie et d'aplatissement}\label{les-indices-dasymuxe9trie-et-daplatissement}
 
 \emph{Le coefficient d'asymétrie (skewness)}
 
@@ -2693,8 +2659,7 @@ Dans le cas où la distribution des valeurs dans la population étudiée suivrai
 
 Dans le cas où la distribution des valeurs de la population étudiée ne suivrait pas une loi normale, et s'avèrerait très asymétrique, la méthode de \texttt{type} 2 proposée avec la fonction \texttt{kurtosis()} serait la plus fiable, particulièrement en présence d'échantillons de petite taille.
 
-\hypertarget{fonctions-pour-obtenir-un-ruxe9capitulatif-des-statistiques-descriptives}{%
-\subsection{Fonctions pour obtenir un récapitulatif des statistiques descriptives}\label{fonctions-pour-obtenir-un-ruxe9capitulatif-des-statistiques-descriptives}}
+\subsection{Fonctions pour obtenir un récapitulatif des statistiques descriptives}\label{fonctions-pour-obtenir-un-ruxe9capitulatif-des-statistiques-descriptives}
 
 Il existe plusieurs fonctions pour avoir une vue d'ensemble des statistiques généralement utilisées pour explorer et résumer une variable quantitative. Une fonction particulièrement intéressante est la fonction \texttt{describe()} du package \texttt{psych}.
 
@@ -2761,13 +2726,13 @@ Enfin, il est aussi possible d'obtenir ces récapitulatifs numériques en foncti
 ## Sepal.Width     2 50 3.43 0.38    3.4    3.42 0.37 2.3 4.4   2.1 0.04
 ## Petal.Length    3 50 1.46 0.17    1.5    1.46 0.15 1.0 1.9   0.9 0.10
 ## Petal.Width     4 50 0.25 0.11    0.2    0.24 0.00 0.1 0.6   0.5 1.18
-## Species*        5 50 1.00 0.00    1.0    1.00 0.00 1.0 1.0   0.0  NaN
+## Species         5 50 1.00 0.00    1.0    1.00 0.00 1.0 1.0   0.0  NaN
 ##              kurtosis   se Q0.25 Q0.75
 ## Sepal.Length    -0.45 0.05   4.8  5.20
 ## Sepal.Width      0.60 0.05   3.2  3.68
 ## Petal.Length     0.65 0.02   1.4  1.58
 ## Petal.Width      1.26 0.01   0.2  0.30
-## Species*          NaN 0.00   1.0  1.00
+## Species           NaN 0.00   1.0  1.00
 ## ---------------------------------------------------- 
 ## group: versicolor
 ##              vars  n mean   sd median trimmed  mad min max range
@@ -2775,13 +2740,13 @@ Enfin, il est aussi possible d'obtenir ces récapitulatifs numériques en foncti
 ## Sepal.Width     2 50 2.77 0.31   2.80    2.78 0.30 2.0 3.4   1.4
 ## Petal.Length    3 50 4.26 0.47   4.35    4.29 0.52 3.0 5.1   2.1
 ## Petal.Width     4 50 1.33 0.20   1.30    1.32 0.22 1.0 1.8   0.8
-## Species*        5 50 2.00 0.00   2.00    2.00 0.00 2.0 2.0   0.0
+## Species         5 50 2.00 0.00   2.00    2.00 0.00 2.0 2.0   0.0
 ##               skew kurtosis   se Q0.25 Q0.75
 ## Sepal.Length  0.10    -0.69 0.07  5.60   6.3
 ## Sepal.Width  -0.34    -0.55 0.04  2.52   3.0
 ## Petal.Length -0.57    -0.19 0.07  4.00   4.6
 ## Petal.Width  -0.03    -0.59 0.03  1.20   1.5
-## Species*       NaN      NaN 0.00  2.00   2.0
+## Species        NaN      NaN 0.00  2.00   2.0
 ## ---------------------------------------------------- 
 ## group: virginica
 ##              vars  n mean   sd median trimmed  mad min max range
@@ -2789,13 +2754,13 @@ Enfin, il est aussi possible d'obtenir ces récapitulatifs numériques en foncti
 ## Sepal.Width     2 50 2.97 0.32   3.00    2.96 0.30 2.2 3.8   1.6
 ## Petal.Length    3 50 5.55 0.55   5.55    5.51 0.67 4.5 6.9   2.4
 ## Petal.Width     4 50 2.03 0.27   2.00    2.03 0.30 1.4 2.5   1.1
-## Species*        5 50 3.00 0.00   3.00    3.00 0.00 3.0 3.0   0.0
+## Species         5 50 3.00 0.00   3.00    3.00 0.00 3.0 3.0   0.0
 ##               skew kurtosis   se Q0.25 Q0.75
 ## Sepal.Length  0.11    -0.20 0.09  6.23  6.90
 ## Sepal.Width   0.34     0.38 0.05  2.80  3.18
 ## Petal.Length  0.52    -0.37 0.08  5.10  5.88
 ## Petal.Width  -0.12    -0.75 0.04  1.80  2.30
-## Species*       NaN      NaN 0.00  3.00  3.00
+## Species        NaN      NaN 0.00  3.00  3.00
 \end{verbatim}
 
 Notons aussi l'existence de la fonction \texttt{skim()} du package \texttt{skimr} pour obtenir un résumé clair des types de variables et des statistiques principales, ainsi que des valeurs manquantes :
@@ -2911,8 +2876,7 @@ Sepal.Length & virginica & 0 & 1 & 6.59 & 0.64 & 4.9 & 6.23 & 6.5 & 6.9 & 7.9 & 
 \hline
 \end{tabular}
 
-\hypertarget{quelles-statistiques-choisir-pour-ruxe9sumer-une-variable-quantitative-dans-un-rapport}{%
-\subsection{Quelles statistiques choisir pour résumer une variable quantitative dans un rapport ?}\label{quelles-statistiques-choisir-pour-ruxe9sumer-une-variable-quantitative-dans-un-rapport}}
+\subsection{Quelles statistiques choisir pour résumer une variable quantitative dans un rapport ?}\label{quelles-statistiques-choisir-pour-ruxe9sumer-une-variable-quantitative-dans-un-rapport}
 
 Les statistiques les plus couramment utilisées pour résumer une variable quantitative sont les paramètres de position (moyenne et médiane principalement) en lien avec les paramètres de dispersion correspondants. Aucun paramètre de position ne surpasse les autres dans toutes les situations. Le choix du paramètre de position, en lien avec le paramètre de dispersion associé, dépend de l'objectif de l'analyse.
 
@@ -2951,11 +2915,9 @@ Lorsqu'il s'agit plus précisément de vouloir renseigner sur la tendance centra
 \caption{Exemples de positions de la moyenne et de la médiane dans le cadre d'une distribution asymétrique}\label{fig:MeanAboveLedianAsym}
 \end{figure}
 
-\hypertarget{variables-qualitatives}{%
-\section{Variables qualitatives}\label{variables-qualitatives}}
+\section{Variables qualitatives}\label{variables-qualitatives}
 
-\hypertarget{visualiser-la-distribution-de-la-variable-1}{%
-\subsection{Visualiser la distribution de la variable}\label{visualiser-la-distribution-de-la-variable-1}}
+\subsection{Visualiser la distribution de la variable}\label{visualiser-la-distribution-de-la-variable-1}
 
 Comme dans le cadre de variables quantitatives, une bonne pratique est de visualiser graphiquement la distribution d'une variable qualitative avant de l'analyser. Ici, il s'agit plus précisément de prendre connaissance des effectifs correspondant aux différentes modalités de la variable. Une manière rapide de procéder pour cela est d'utiliser la fonction \texttt{ggplot()} et la fonction \texttt{geom\_bar()}. Illustrons cela avec le jeu de données \texttt{diamonds}, qui contient notamment la variable qualitative \texttt{color}.
 
@@ -3178,8 +3140,7 @@ En plus des effectifs, il est aussi possible de prendre connaissance de la distr
 \caption{Différentes sortes de diagrammes pour représenter des proportions}\label{fig:geombarPropEnhancedGraph}
 \end{figure}
 
-\hypertarget{duxe9terminer-la-tendance-centrale}{%
-\subsection{Déterminer la tendance centrale}\label{duxe9terminer-la-tendance-centrale}}
+\subsection{Déterminer la tendance centrale}\label{duxe9terminer-la-tendance-centrale}
 
 Dans le cadre de variables qualitatives, la tendance centrale peut être renseignée à l'aide du mode en présence d'une variable nominale, et à l'aide de la médiane ou du mode en présence d'une variable ordinale \autocite{gonzalesMeasuresCentralTendency2001}. Avec des variables qualitatives, il est possible de prendre connaissance du mode facilement à l'aide d'un tableau de résultats qui récapitule, par ordre décroissant, les effectifs et les proportions associées aux différentes modalités de la variable étudiée. Ce type de tableau peut être obtenu à l'aide de la fonction \texttt{freq()} du package \texttt{questionr}, qu'il convient d'installer et charger au préalable afin de pouvoir l'utiliser. Dans l'exemple ci-dessous, le mode de la variable \texttt{color} dans le jeu de données \texttt{diamonds} est la modalité présente sur la première ligne du tableau.
 
@@ -3202,8 +3163,7 @@ Dans le cadre de variables qualitatives, la tendance centrale peut être renseig
 ## Total 53940 100.0 100.0
 \end{verbatim}
 
-\hypertarget{ruxe9sumuxe9-2}{%
-\section{Résumé}\label{ruxe9sumuxe9-2}}
+\section{Résumé}\label{ruxe9sumuxe9-2}
 
 \begin{itemize}
 \item
@@ -3252,16 +3212,13 @@ Dans le cadre de variables qualitatives, la tendance centrale peut être renseig
   La fonction \texttt{questionr::freq()} permet de récapituler les effectifs et les proportions relatifs aux modalités d'une variable qualitative.
 \end{itemize}
 
-\hypertarget{analyses-bivariuxe9es}{%
-\chapter{Analyses bivariées}\label{analyses-bivariuxe9es}}
+\chapter{Analyses bivariées}\label{analyses-bivariuxe9es}
 
 Réaliser une analyse bivariée désigne le fait d'étudier la relation qui peut exister entre deux variables. Dans ce chapitre, nous allons voir les procédures graphiques et calculatoires qui permettent d'étudier et de quantifier le degré de relation pouvant exister entre deux variables dans les cas suivants : entre deux variables quantitatives, entre deux variables qualitatives, et entre une variable quantitative et une variable qualitative. Comme dans le chapitre précédent, l'objectif est ici d'explorer et de décrire les données et leurs relations à l'échelle d'un échantillon, sans pour autant chercher à déterminer l'incertitude qu'il peut exister dans les statistiques calculées en vue de les utiliser pour réaliser une inférence dans la population représentée.
 
-\hypertarget{relation-entre-deux-variables-quantitatives}{%
-\section{Relation entre deux variables quantitatives}\label{relation-entre-deux-variables-quantitatives}}
+\section{Relation entre deux variables quantitatives}\label{relation-entre-deux-variables-quantitatives}
 
-\hypertarget{uxe9tudier-graphiquement-la-relation}{%
-\subsection{Étudier graphiquement la relation}\label{uxe9tudier-graphiquement-la-relation}}
+\subsection{Étudier graphiquement la relation}\label{uxe9tudier-graphiquement-la-relation}
 
 Comme dans le cadre d'analyses univariées, une bonne pratique, lorsqu'on étudie une relation bivariée, est de faire un graphique. Avec des variables quantitatives, il s'agit de montrer les valeurs d'une variable en fonction des valeurs de l'autre variable, chose que permet un simple nuage de points. Plusieurs types de relations peuvent alors être rencontrés, ces relations pouvant potentiellement s'apparenter à autant de fonctions mathématiques que l'on connaît. Parmi les plus connues, on a par exemple les relations linéaires, les relations logarithmiques, ou encore les relations quadratiques, qui sont illustrées sur la Figure \ref{fig:relationshipsIllustrations}.
 
@@ -3292,8 +3249,7 @@ Avec R, pour obtenir un nuage de points à partir d'un jeu de données, il est p
 \caption{Nuage de points montrant les variables hp et mpg du jeu de données mtcars}\label{fig:scatterplot}
 \end{figure}
 
-\hypertarget{uxe9tudier-numuxe9riquement-la-relation}{%
-\subsection{Étudier numériquement la relation}\label{uxe9tudier-numuxe9riquement-la-relation}}
+\subsection{Étudier numériquement la relation}\label{uxe9tudier-numuxe9riquement-la-relation}
 
 \emph{Le coefficient de corrélation de Pearson}
 
@@ -3330,7 +3286,7 @@ Le Tableau \ref{tab:tablecov} montre les premières étapes du calcul de la cova
 
 \global\setlength{\Oldtabcolsep}{\tabcolsep}
 
-\setlength{\tabcolsep}{0pt}
+\setlength{\tabcolsep}{2pt}
 
 \renewcommand*{\arraystretch}{1.5}
 
@@ -3479,7 +3435,7 @@ Sur la base de travaux antérieurs, Hopkins et al. \autocite*{hopkinsProgressive
 
 \global\setlength{\Oldtabcolsep}{\tabcolsep}
 
-\setlength{\tabcolsep}{0pt}
+\setlength{\tabcolsep}{2pt}
 
 \renewcommand*{\arraystretch}{1.5}
 
@@ -3574,7 +3530,7 @@ Lorsque le coefficient de corrélation de Pearson ne permet pas de caractériser
 
 \global\setlength{\Oldtabcolsep}{\tabcolsep}
 
-\setlength{\tabcolsep}{0pt}
+\setlength{\tabcolsep}{2pt}
 
 \renewcommand*{\arraystretch}{1.5}
 
@@ -3948,11 +3904,9 @@ En matière d'interprétation, des valeurs de \emph{rho} positives indiqueront q
 \caption{Distinction entre la relation observée entre les valeurs (graphique de gauche) et les rangs (graphique de droite) de deux variables}\label{fig:ranksvvaluesspearman}
 \end{figure}
 
-\hypertarget{relation-entre-deux-variables-qualitatives}{%
-\section{Relation entre deux variables qualitatives}\label{relation-entre-deux-variables-qualitatives}}
+\section{Relation entre deux variables qualitatives}\label{relation-entre-deux-variables-qualitatives}
 
-\hypertarget{uxe9tudier-graphiquement-la-relation-1}{%
-\subsection{Étudier graphiquement la relation}\label{uxe9tudier-graphiquement-la-relation-1}}
+\subsection{Étudier graphiquement la relation}\label{uxe9tudier-graphiquement-la-relation-1}
 
 Plusieurs types de graphiques peuvent être envisagés lorsqu'il s'agit de visualiser des données relatives au croisement de deux variables qualitatives. Une première approche consiste à utiliser des graphiques avec barres mises côte-à-côte, comme illustré sur la Figure \ref{fig:groupedBarsFigure}, qui a été réalisée à partir du jeu de données \texttt{JointSports}, lequel est utilisable après installation et chargement du package \texttt{vcd}. \texttt{JointSports} contient des données résumées d'effectifs mis en lien avec les modalités de différentes variables qualitatives, comme on aurait pu l'obtenir avec la fonction \texttt{count()} dans les derniers exemples du chapitre précédent. (La différence qu'il y a avec ces précédents exemples est qu'ici, l'effectif est désigné par la variable \texttt{Freq}, alors qu'il s'agissait de la variable \texttt{n} auparavant.) Pour information, \texttt{JointSports} contient les données d'une enquête s'étant intéressée, en 1983 et 1985, aux opinions d'étudiants danois de 16 à 19 ans sur la pratique sportive mixte.
 
@@ -4043,8 +3997,7 @@ Dans certains cas, on peut vouloir comparer les effectifs relatifs aux modalité
 
 Les graphiques présentés dans cette sous-partie montrent des valeurs d'effectifs, mais selon l'objectif, il pourrait être aussi envisagé d'utiliser ces graphiques pour montrer des proportions. Cela dit, il existe d'autres visualisations possibles des proportions pour visualiser le lien entre deux variables qualitatives. Ces visualisations peuvent être consultées dans l'ouvrage en ligne de Wilke \autocite*{wilkeFundamentalsDataVisualization2018}.
 
-\hypertarget{uxe9tudier-numuxe9riquement-la-relation-1}{%
-\subsection{Étudier numériquement la relation}\label{uxe9tudier-numuxe9riquement-la-relation-1}}
+\subsection{Étudier numériquement la relation}\label{uxe9tudier-numuxe9riquement-la-relation-1}
 
 \emph{Effectifs et proportions}
 
@@ -4468,18 +4421,15 @@ Le rapport des cotes est toujours ≥0. Une valeur en-dessous de 1 signifie « m
 ## [1] 1.75281
 \end{verbatim}
 
-\hypertarget{relation-entre-une-variable-quantitative-et-une-variable-qualitative}{%
-\section{Relation entre une variable quantitative et une variable qualitative}\label{relation-entre-une-variable-quantitative-et-une-variable-qualitative}}
+\section{Relation entre une variable quantitative et une variable qualitative}\label{relation-entre-une-variable-quantitative-et-une-variable-qualitative}
 
 Lorsqu'on analyse une variable quantitative en fonction d'une variable qualitative, on peut avoir des données quantitatives qui sont non appariées (étude de type \emph{between-subject design} en anglais) ou appariées (étude de type \emph{within-subject design} en anglais). Avoir des données non appariées signifie que les données quantitatives correspondant aux différentes modalités de la variable qualitative étudiée ne sont pas liées. Un exemple simple, pour ce premier cas, peut être l'analyse de la taille des individus en fonction du sexe. Dans ce cas, les données quantitatives de taille pour les personnes de sexe masculin, de sexe féminin, et de sexe indéterminé, proviendront forcément d'individus différents et ne formeront donc pas des paires. S'agissant des cas de données appariées, ils se retrouvent dans les études où plusieurs individus sont évalués plusieurs fois dans des conditions similaires ou différentes et que l'on cherche à comparer. En sciences du sport, un exemple relativement classique est de tester la performance d'endurance (variable quantitative) en ayant pris (condition de test) ou non (condition contrôle) une substance potentiellement ergonénique, la prise de substance ou non étant les modalités d'une même variable qualitative de type condition. Dans ce cas là, tous les individus auront des données dans les deux conditions et ces données seront donc appariées (dépendantes).
 
 Étant donné que les contraintes graphiques et les statistiques à calculer diffèrent selon que l'on est en présence de (i) deux groupes (1 variable quantitative x 1 variable qualitative avec 2 modalités) ou (ii) trois groupes et plus (1 variable quantitative x 1 variable qualitative avec 3 modalités ou plus), les procédures graphiques et calculatoires présentées ci-après sont distinguées selon ces deux grands cas de figure.
 
-\hypertarget{comparaison-de-deux-groupes-de-donnuxe9es}{%
-\subsection{Comparaison de deux groupes de données}\label{comparaison-de-deux-groupes-de-donnuxe9es}}
+\subsection{Comparaison de deux groupes de données}\label{comparaison-de-deux-groupes-de-donnuxe9es}
 
-\hypertarget{uxe9tudier-graphiquement-la-relation-2}{%
-\subsubsection{Étudier graphiquement la relation}\label{uxe9tudier-graphiquement-la-relation-2}}
+\subsubsection{Étudier graphiquement la relation}\label{uxe9tudier-graphiquement-la-relation-2}
 
 Lorsque l'on cherche à explorer la relation qu'il peut y avoir entre une variable quantitative et une variable qualitative, il peut être intéressant de visualiser la distribution de la variable quantitative en fonction de chaque modalité de la variable qualitative. Pour faire cela, il a été proposé dans la littérature d'user de graphiques appelés \emph{raincloud plots} qui combinent les avantages de plusieurs techniques graphiques et statistiques et par là même pallient les manques ou défauts inhérents à chacune de ces techniques \autocite{allenRaincloudPlotsMultiplatform2019}. Les blocs de code ci-dessous, et les Figures \ref{fig:raindcloudplotsBivUnpaired1} et \ref{fig:raindcloudplotsBivPaired1}, proposent plusieurs options de mise en oeuvre de ce type de graphiques selon la situation d'étude (avec données non appariées et appariées).
 
@@ -4591,15 +4541,13 @@ Le graphiques montré ci-dessus pour données appariées contient des éléments
 
 Pour obtenir ces éléments supplémentaires, il a fallu configurer l'argument \texttt{id.long.var} de la fonction \texttt{geom\_rain()} pour indiquer le nom de la variable sur laquelle se baser pour garder l'appariement des données individuelles entre les deux conditions et ainsi permettre un bon tracé des lignes individuelles. La ligne reliant les moyennes a été ajoutée grâce à la fonction\texttt{stat\_summary()} avec la particularité d'indiquer \texttt{1} pour l'argument \texttt{group} de la fonction \texttt{aes()} associée à la fonction \texttt{stat\_summary()}. Enfin, l'argument \texttt{rain.side} de la fonction \texttt{geom\_rain()} a été configuré de telle sorte à avoir les données des deux groupes en vis-à-vis, mais un autre choix aurait pu être fait.
 
-\hypertarget{uxe9tudier-numuxe9riquement-la-relation-2}{%
-\subsubsection{Étudier numériquement la relation}\label{uxe9tudier-numuxe9riquement-la-relation-2}}
+\subsubsection{Étudier numériquement la relation}\label{uxe9tudier-numuxe9riquement-la-relation-2}
 
 De manière générale, étudier la relation entre une variable quantitative et une variable qualitative revient souvent à comparer les valeurs que prend la variable quantitative en fonction des modalités de la variable qualitative. L'observation de différences de scores entre les modalités pourrait alors indiquer qu'il y a un lien entre la variable qualitative (qu'on pourrait appeler \textbf{variable facteur}) et la variable quantitative (qu'on pourrait appeler \textbf{variable réponse}). À noter que la démonstration d'un lien de cause à effet entre la variable quantitative et la variable qualitative ne pourra être effective que si l'on a sciemment fait varier les modalités de la variable qualitative pour en observer la conséquence sur les valeurs de la variable quantitative.
 
 De prime abord, l'analyse qui pourrait être envisagée pour comparer deux groupes serait d'utiliser simplement la différence entre les moyennes des deux groupes. Toutefois, en se restreignant à cela, il pourrait être difficile de porter un jugement sur la grandeur relative de la différence entre les groupes comparés, qu'on pourrait appeler \textbf{taille d'effet}. Il serait également difficile de comparer cette taille d'effet avec celles observées dans d'autres études, en particulier celles traitant de thématiques différentes, car en étant calculée de la sorte, la taille d'effet serait inhérente à la nature des variables investiguées et à la grandeur des valeurs mesurées dans l'étude. Il est donc intéressant, dans ce genre de situations, de standardiser la différence de scores obtenue entre les deux groupes. Dans la littérature, la procédure de standardisation a été très développée pour la comparaison de moyennes. Pour cette raison, les sous-parties suivantes qui traitent de la comparaison de deux groupes présentent essentiellement les calculs pour obtenir une taille d'effet en vue de comparer des moyennes. Ces calculs sont repris de l'article de Lakens \autocite*{lakensCalculatingReportingEffect2013}. Quelques mots seront toutefois donnés pour les situations pour lesquelles ces calculs risqueraient de ne pas être appropriés.
 
-\hypertarget{cas-de-deux-groupes-de-donnuxe9es-induxe9pendants-donnuxe9es-non-appariuxe9es}{%
-\paragraph{Cas de deux groupes de données indépendants (données non appariées)}\label{cas-de-deux-groupes-de-donnuxe9es-induxe9pendants-donnuxe9es-non-appariuxe9es}}
+\paragraph{Cas de deux groupes de données indépendants (données non appariées)}\label{cas-de-deux-groupes-de-donnuxe9es-induxe9pendants-donnuxe9es-non-appariuxe9es}
 
 \emph{\(d_{s}\) et \(d_{av}\) de Cohen}
 
@@ -4774,7 +4722,7 @@ Une fois que l'on a calculé une taille d'effet, il est toujours intéressant d'
 
 \global\setlength{\Oldtabcolsep}{\tabcolsep}
 
-\setlength{\tabcolsep}{0pt}
+\setlength{\tabcolsep}{2pt}
 
 \renewcommand*{\arraystretch}{1.5}
 
@@ -4857,8 +4805,7 @@ Notons quand même que l'utilisation du \(\Delta\) de Glass semble peu courante 
 
 Certaines situations peuvent rendre la comparaison de moyennes non pertinente. C'est par exemple le cas lorsque l'un des deux groupes (voire les deux) présentent des données aberrantes ou très extrêmes, en particulier en présence de petits échantillons. L'utilisation des moyennes dans ce cas pourrait ne pas être pertinente car ces moyennes ne refléteraient alors pas correctement les tendances centrales (et donc les groupes associés). Dans ces cas là, mieux vaut observer les médianes de chaque groupe et chercher à voir si les distributions sont en décalage ou non.
 
-\hypertarget{cas-de-deux-groupes-de-donnuxe9es-duxe9pendants-donnuxe9es-appariuxe9es}{%
-\paragraph{Cas de deux groupes de données dépendants (données appariées)}\label{cas-de-deux-groupes-de-donnuxe9es-duxe9pendants-donnuxe9es-appariuxe9es}}
+\paragraph{Cas de deux groupes de données dépendants (données appariées)}\label{cas-de-deux-groupes-de-donnuxe9es-duxe9pendants-donnuxe9es-appariuxe9es}
 
 \emph{\(d_{z}\) et \(d_{av}\) de Cohen}
 
@@ -5011,21 +4958,17 @@ Lorsque la présence de valeurs aberrantes peut fausser le calcul de la taille d
 ## 1           7
 \end{verbatim}
 
-\hypertarget{comparaison-de-trois-groupes-de-donnuxe9es-et-plus}{%
-\subsection{Comparaison de trois groupes de données et plus}\label{comparaison-de-trois-groupes-de-donnuxe9es-et-plus}}
+\subsection{Comparaison de trois groupes de données et plus}\label{comparaison-de-trois-groupes-de-donnuxe9es-et-plus}
 
 \ldots{}
 
-\hypertarget{ruxe9gressions}{%
-\chapter{Régressions}\label{ruxe9gressions}}
+\chapter{Régressions}\label{ruxe9gressions}
 
-\hypertarget{ruxe9gression-linuxe9aire-simple}{%
-\section{Régression linéaire simple}\label{ruxe9gression-linuxe9aire-simple}}
+\section{Régression linéaire simple}\label{ruxe9gression-linuxe9aire-simple}
 
 Il est possible d'investiguer l'existence d'une relation linéaire entre deux variables en modélisant cette relation à l'aide d'une équation de type \(Y = aX + b\), et en calculant certaines statistiques qui rendent compte du niveau de correspondance entre le modèle linéaire et les données étudiées. Ces statistiques sont le coefficient de détermination, noté \(R^2\), et l'erreur typique d'estimation, dont on gardera l'acronyme anglais \(SEE\) (pour \emph{Standard Error of Estimate}).
 
-\hypertarget{le-coefficient-de-duxe9termination}{%
-\subsection{Le coefficient de détermination}\label{le-coefficient-de-duxe9termination}}
+\subsection{Le coefficient de détermination}\label{le-coefficient-de-duxe9termination}
 
 Le coefficient de détermination, noté \(R^2\), représente la part de variance de la variable \(Y\) expliquée par le modèle linéaire. La formule de ce coefficient peut être présentée comme ceci :
 
@@ -5093,8 +5036,7 @@ Pour plus de confort dans l'écriture de la suite du code, il peut être intére
 
 Dans la liste d'informations données suite à l'activation du code, on retrouve notamment l'ordonnée à l'origine (\emph{Intercept}) et le coefficient directeur (\emph{hp}), et on peut trouver le coefficient \(R^2\) en face de l'écriture \emph{Multiple R-squared}. On peut aussi y voir l'erreur typique d'estimation en face de l'écriture \emph{Residual standard error}.
 
-\hypertarget{lerreur-typique-destimation}{%
-\subsection{L'erreur typique d'estimation}\label{lerreur-typique-destimation}}
+\subsection{L'erreur typique d'estimation}\label{lerreur-typique-destimation}
 
 L'erreur typique d'estimation, ou \(SEE\), représente l'écart-type des erreurs d'estimation associées à l'utilisation d'un modèle. Son unité est donc celle de la variable \(Y\) que l'on a cherché à prédire avec le modèle. La formule suivante permet d'expliquer son calcul à partir de données prélevées sur un échantillon :
 
@@ -5102,8 +5044,7 @@ L'erreur typique d'estimation, ou \(SEE\), représente l'écart-type des erreurs
 
 où \(RES{i}\) désigne le résidu pour une observation donnée, \(\overline{RES}\) la moyenne des résidus, et \(N\) le nombre d'observations.
 
-\hypertarget{graphique-ruxe9capitulatif}{%
-\subsection{Graphique récapitulatif}\label{graphique-ruxe9capitulatif}}
+\subsection{Graphique récapitulatif}\label{graphique-ruxe9capitulatif}
 
 Il est possible d'extraire l'ordonnée à l'origine et la pente (i.e., le coefficient directeur) du modèle de régression, le coefficient \(R^2\), et la statistique \(SEE\), à partir de la liste d'informations obtenue avec la fonction \texttt{summary()}. Le code ci-dessous montre comment faire cela avec l'exemple concernant le jeu de données \texttt{mtcars} :
 
@@ -5195,29 +5136,23 @@ Encore une fois, lorsqu'on étudie un phénomène, ici l'existence d'une relatio
 
 Bien que d'aspects très différents, ces jeux de données montrent pourtant des variables en abscisses qui ont toutes la même moyenne (\(\overline{X} = 9\)) et le même écart-type (\(\hat{\sigma}_{X} = 3.32\)), des variables en ordonnées qui ont elles aussi la même moyenne (\(\overline{Y} = 7.5\)) et le même écart-type = (\(\hat{\sigma}_{Y} = 2.03\)), et des modèles de régression linéaire qui présentent tous la même équation (\(Y = 0.5X + 3\)), le même coefficient de détermination (\(R^2 = 0.67\)) et la même erreur typique d'estimation (\(SEE = 1.24\)). Pour autant, on observe que seul le premier jeu de données (cf.~graphique A de la Figure \ref{fig:anscombeQuartetGraph}) est associé à un modèle linéaire vraiment pertinent. En effet, le graphique B montre bien que la relation n'est pas linéaire mais plutôt quadratique, le graphique C montre que la régression est anormalement influencée par une valeur extrême, et le graphique D montre qu'il n'y a en réalité pas de relation linéaire entre les deux variables et que celle-ci ne semble exister numériquement que grâce à une seule valeur très extrême. Autant le graphique C invite à conserver une analyse de régression linéaire avec éventuellement certains ajustements à réaliser, autant les graphiques B et D indiquent qu'un modèle linéaire n'est pas pertinent en l'état pour caractériser la relation entre les deux variables étudiées.
 
-\hypertarget{part-analyses-infuxe9rentielles}{%
-\part{Analyses inférentielles}\label{part-analyses-infuxe9rentielles}}
+\part{Analyses inférentielles}\label{part-analyses-infuxe9rentielles}
 
-\hypertarget{pruxe9requis-1}{%
-\chapter{Prérequis}\label{pruxe9requis-1}}
+\chapter{Prérequis}\label{pruxe9requis-1}
 
-\hypertarget{pruxe9ambule}{%
-\section{Préambule}\label{pruxe9ambule}}
+\section{Préambule}\label{pruxe9ambule}
 
 Réaliser une inférence statistique consiste à conclure à propos de quelque chose dans une population d'intérêt (cette chose pouvant se traduire par n'importe quel paramètre statistique : une moyenne, une médiane, une proportion, un coefficient de corrélation, une différence de moyennes, un rapport de cotes, etc.), cela à partir de données prélevées dans un échantillon de cette population. Pour comprendre la mécanique des calculs à mettre en oeuvre pour réaliser une inférence statistique, il est nécessaire d'avoir quelques notions en matière de probabilité. Ce chapitre, qui s'inspire largement du chapitre ``Introduction to probability'' de l'ouvrage de Danielle Navarro \autocite*{navarroLearningStatistics2018}, vise à présenter brièvement ces notions.
 
-\hypertarget{lois-de-probabilituxe9}{%
-\section{Lois de probabilité}\label{lois-de-probabilituxe9}}
+\section{Lois de probabilité}\label{lois-de-probabilituxe9}
 
-\hypertarget{notion-de-loi-de-probabilituxe9}{%
-\subsection{Notion de loi de probabilité}\label{notion-de-loi-de-probabilituxe9}}
+\subsection{Notion de loi de probabilité}\label{notion-de-loi-de-probabilituxe9}
 
 Les procédures de calcul pour réaliser une inférence statistique requièrent d'utiliser des lois mathématiques que l'on doit configurer pour déterminer théoriquement les probabilités de rencontrer telle ou telle valeur d'un paramètre statistique donné lorsqu'on étudie un échantillon provenant de la population d'intérêt. Cette démarche implique de comprendre que si un phénomène existe (ou pas) à l'échelle d'une population (chose quantifiable à l'aide de la valeur d'un paramètre statistique donné), l'étude d'un échantillon provenant de cette population ne donnera pas forcément la même valeur pour le paramètre statistique considéré. L'enjeu est alors de pouvoir déterminer la probabilité qui était celle d'obtenir telle ou telle valeur du paramètre statistique considéré avec son échantillon dans le cas où le phénomène étudié existerait (ou pas), cela pour envisager une conclusion quant à la réelle existence ou non du phénomène étudié dans la population d'intérêt.
 
 Ces lois mathématiques utilisées pour faire des inférences statistiques, qu'on appelle aussi des lois de probabilité, donnent directement les valeurs de probabilité d'obtenir telle ou telle valeur du paramètre statistique considéré dans les cas de variables qualitatives. Dans les cas de variables quantitatives, les lois de probabilité ne donnent pas directement les probabilités. En effet, dans ces situations, les lois donnent les \textbf{densités de probabilité}. Ceci est lié au fait que dans ce type de situations, les probabilités concernent le fait d'avoir des valeurs appartenant à des intervalles donnés, et non pas d'avoir une valeur précise. Cela implique que pour obtenir la probabilité de rencontrer une valeur appartenant à un intervalle donné, il ne faut pas prendre la valeur directement donnée par la loi de probabilité, mais l'intégrale (i.e., l'aire sous la courbe de densité de probabilité) correspondant à l'intervalle de valeurs considéré. Ce qui suit vise à décrire et illustrer des lois de probabilité typiquement utilisées dans les procédures de calcul servant à réaliser des inférences statistiques.
 
-\hypertarget{la-loi-binomiale}{%
-\subsection{La loi binomiale}\label{la-loi-binomiale}}
+\subsection{La loi binomiale}\label{la-loi-binomiale}
 
 La loi binomiale est une loi mathématique qui concerne les situations où seulement deux résultats sont possibles, comme par exemple ``succès'' et ``échec'', ``pile'' et ``face'', ``0'' et ``1'', etc. Un exemple classique où l'on est en présence d'une variable binomiale est celui où l'on demande à \(N\) personnes de lancer une fois une pièce non truquée, avec par conséquent ``pile'' et ``face'' comme seuls résultats possibles et autant de chances de tomber sur ``pile'' que sur ``face'' à chaque lancer (\(\theta\) = 0.5, soit une chance sur deux). Une fois les essais de toutes les personnes terminés, la distribution qui en résulte contient alors la proportion de personnes qui ont obtenu ``pile'' et la proportion de personnes qui n'ont pas obtenu ``pile'' (donc ``face''). Lorsque le nombre \(N\) d'essais ou de participants et la probabilité d'avoir tel ou tel résultat (\(\theta\)) sont connus, la loi binomiale, qu'on note \(X \sim B(\theta, N)\), permet de connaître la probabilité \(P(X)\) d'avoir \(X\) succès (e.g., \(X\) fois ``pile'') sur les \(N\) essais ou participants. La formule de cette loi est montrée ci-dessous :
 
@@ -5275,8 +5210,7 @@ Plusieurs fonctions R peuvent être utilisées pour obtenir des informations li�
 ## [1] 51
 \end{verbatim}
 
-\hypertarget{la-loi-normale-et-lois-apparentuxe9es}{%
-\subsection{La loi normale et lois apparentées}\label{la-loi-normale-et-lois-apparentuxe9es}}
+\subsection{La loi normale et lois apparentées}\label{la-loi-normale-et-lois-apparentuxe9es}
 
 La \textbf{loi normale}, ou encore \textbf{loi gaussienne}, qu'on note \(X \sim N(\mu, \sigma)\), avec \(\mu\) la moyenne de la variable, et \(\sigma\) l'écart-type de la variable, est une loi qui permet de déterminer la probabilité de rencontrer une valeur dans un intervalle donné en lien avec la formule montrée ci-dessous :
 
@@ -5349,8 +5283,7 @@ La loi normale peut être mise en lien avec d'autres grandes lois, telles que :
 \caption{Densité de probabilité de lois chi-carré, t, et F}\label{fig:VariousQuantLaws}
 \end{figure}
 
-\hypertarget{loi-des-grands-nombres-distribution-duxe9chantillonnage-de-la-moyenne-et-thuxe9oruxe8me-de-la-limite-centrale}{%
-\section{Loi des grands nombres, distribution d'échantillonnage de la moyenne, et théorème de la limite centrale}\label{loi-des-grands-nombres-distribution-duxe9chantillonnage-de-la-moyenne-et-thuxe9oruxe8me-de-la-limite-centrale}}
+\section{Loi des grands nombres, distribution d'échantillonnage de la moyenne, et théorème de la limite centrale}\label{loi-des-grands-nombres-distribution-duxe9chantillonnage-de-la-moyenne-et-thuxe9oruxe8me-de-la-limite-centrale}
 
 La loi des grands nombres décrit un principe de probabilité permettant de comprendre bon nombre de phénomènes statistiques, notamment lorsque l'on s'intéresse à la moyenne d'un échantillon. Cette loi implique par exemple le fait que la moyenne d'un échantillon pris au hasard dans une population tend à être plus proche de la moyenne de la population à mesure que la taille de l'échantillon étudié est grande. Cette loi est illustrée sur la Figure \ref{fig:GreatNumLaw}. Sur cette figure, les distributions représentent des échantillons crées de manière aléatoire à partir d'une population ayant pour moyenne 0 et pour écart-type 400. Le trait vertical rouge représente la moyenne de la population d'origine alors que le trait en pointillés noirs montre la moyenne de l'échantillon qui a été obtenue. Lorsqu'on regarde chaque colonne de la figure du haut vers le bas et qu'on compare les colonnes entre elles, on se rend compte effectivement que plus la taille \(N\) de l'échantillon tiré de la population est grande, plus le trait noir se retrouve en général proche du trait rouge, cela traduisant le fait qu'on a de meilleures chances que la moyenne de l'échantillon étudié soit plus proche de la moyenne de la population lorsque l'échantillon est de grande taille. Une question qui pourrait alors se poser est le nombre de personnes ou d'individus que doit contenir l'échantillon pour obtenir un résultat avec une marge d'erreur jugée acceptable.
 
@@ -5387,12 +5320,11 @@ La Figure \ref{fig:CentralLimTheo} illustre plusieurs principes qui relèvent du
 
 Si l'on formalise les choses d'un point de vue plus mathématique, le théorème de la limite centrale nous dit que si une population a une moyenne \(\mu\) et un écart-type \(\sigma\), alors la moyenne de la distribution d'échantillonnage a aussi \(\mu\) comme moyenne, et l'écart-type de la distribution d'échantillonnage de la moyenne (i.e., l'erreur standard, \emph{SEM}) vaut :
 
-\[SEM = \frac{\sigma}{\sqrt{N}}.\]
+\[SEM = \frac{\sigma}{\sqrt{N}}\].
 
 La formule montre bien que pour une population présentant un écart-type donné, plus les échantillons étudiés seront de petite taille (\(N\)), plus grande sera la variabilité des moyennes provenant des différents échantillons. D'un point de vue plus pratique, cela veut dire notamment que dans une méta-analyse où l'on chercherait à estimer par exemple la moyenne de l'effet d'une intervention dans une population donnée, on aura beau avoir plusieurs d'études conduites sur le sujet, si elles sont de trop petites tailles, il y a de bonnes chances pour que les valeurs des effets trouvés divergent substantiellement et ne permettent donc pas d'avoir une vue précise, fiable, de la valeur de l'effet concernant la population globale.
 
-\hypertarget{ruxe9sumuxe9-3}{%
-\section{Résumé}\label{ruxe9sumuxe9-3}}
+\section{Résumé}\label{ruxe9sumuxe9-3}
 
 \begin{itemize}
 \tightlist
@@ -5405,17 +5337,14 @@ La formule montre bien que pour une population présentant un écart-type donné
 \item
   Selon la loi des grands nombres, plus la taille d'un échantillon est grande, plus il y a de chances que la moyenne de cet échantillon soit relativement proche de la moyenne de la population d'origine.
 \item
-  Selon le théorème de la limite centrale, la moyenne de la distribution d'échantillonnage de la moyenne est la même valeur que la moyenne de la population d'origine, et l'écart-type de cette distribution (\(SEM\)) est tel que : \(SEM = \frac{\sigma}{N}.\) Par conséquent, plus \(N\) est grand, plus \(SEM\) est petite.
+  Selon le théorème de la limite centrale, la moyenne de la distribution d'échantillonnage de la moyenne est la même valeur que la moyenne de la population d'origine, et l'écart-type de cette distribution (\(SEM\)) est tel que : \(SEM = \frac{\sigma}{\sqrt{N}}\). Par conséquent, plus \(N\) est grand, plus \(SEM\) est petite.
 \end{itemize}
 
-\hypertarget{tests-statistiques-pour-des-variables-qualitatives}{%
-\chapter{Tests statistiques pour des variables qualitatives}\label{tests-statistiques-pour-des-variables-qualitatives}}
+\chapter{Tests statistiques pour des variables qualitatives}\label{tests-statistiques-pour-des-variables-qualitatives}
 
-\hypertarget{test-du-chi2-daduxe9quation-ou-encore-dit-de-conformituxe9-ou-dajustement}{%
-\section{\texorpdfstring{Test du \(\chi^2\) d'adéquation (ou encore dit de conformité ou d'ajustement)}{Test du \textbackslash chi\^{}2 d'adéquation (ou encore dit de conformité ou d'ajustement)}}\label{test-du-chi2-daduxe9quation-ou-encore-dit-de-conformituxe9-ou-dajustement}}
+\section{\texorpdfstring{Test du \(\chi^2\) d'adéquation (ou encore dit de conformité ou d'ajustement)}{Test du \textbackslash chi\^{}2 d'adéquation (ou encore dit de conformité ou d'ajustement)}}\label{test-du-chi2-daduxe9quation-ou-encore-dit-de-conformituxe9-ou-dajustement}
 
-\hypertarget{calculs-sous-jacents}{%
-\subsection{Calculs sous-jacents}\label{calculs-sous-jacents}}
+\subsection{Calculs sous-jacents}\label{calculs-sous-jacents}
 
 Le test du \(\chi^2\) d'adéquation consiste à comparer la distribution d'une variable qualitative observée avec une distribution théorique. Pour mieux voir en quoi cela consiste, prenons un exemple repris de Danielle Navarro \autocite*{navarroLearningStatistics2018} où l'on chercherait à savoir si, lorsqu'on demande à des personnes de choisir ``au hasard'' mentalement une carte parmi un ensemble de cartes étalées devant soi, le choix se fait vraiment de manière entièrement aléatoire. Pour étudier cela, on demande à 200 personnes de réaliser l'expérimentation et on note le type de carte qui a été retenu : coeur, trèfle, carreau, ou pique. Le jeu de données est crée avec le code ci-dessous :
 
@@ -5511,7 +5440,7 @@ La distribution \(O\) des fréquences observées pourrait s'écrire comme suit :
 ## [1] 8.44
 \end{verbatim}
 
-Nous avons à présent le score qui résume l'écart obtenu entre la distribution observée et la distribution théorique de notre variable qualitative. Il nous reste alors à connaître la distribution d'échantillonnage de la statistique \(X^2\) dans le cas où \(H_{0}\) serait vraie. Cela nous permettra de connaître la probabilité de rencontrer une valeur de \(X^2\) au moins aussi grande que 8.44 dans le cas où \(H_{0}\) serait vraie, et de juger ainsi si cette probabilité supporte ou non \(H_{0}\)\ldots{} Trêve de suspens, la distribution d'échantillonnage de \(X^2\) suit une loi \(\chi^2\) à \(k-1\) degrés de liberté (\(k\) étant le nombre de types d'évènement possibles, ici les types de cartes tirées). Comment peut-on expliquer cela? Tout d'abord, reprenons le calcul de \(X^2\), et plus précisément le terme \(O_{i}\). Admettons qu'il ne concerne qu'un seul type de cartes (e.g., les cœurs). Ce terme a sa propre distribution de probabilité en posant que \(H_{0}\) soit vraie, et cette distribution est celle d'une loi binomiale (avec \(\theta\) = 0.25 et \(N\) = 200 dans notre exemple), puisque pour chaque sujet interrogé, il était possible que ce type de carte soit choisi, ou non. Or, il s'avère que lorsque \(N\) est relativement grand et que \(\theta\) n'est ni trop proche de 0, ni trop proche de 1, la distribution se rapproche d'une loi normale \autocite{navarroLearningStatistics2018}. En allant vite, pour un type de cartes donné, on peut alors considérer que l'expression \(\frac{(O_{i} - E_{i})}{E_{i}}\) a une distribution d'échantillonnage qui s'apparente à une loi normale standard, et c'est le cas à chaque fois que cette expression doit être reprise pour chaque type de carte. Si on met au carré chacune de ces variables, puis qu'on les additionne (comme décrit plus haut pour le calcul de \(X^2\)), on se retrouve dans la situation dans laquelle nous obtenons une loi \(\chi^2\) (cf.~chapitre \protect\hyperlink{pruxe9requis-1}{Prérequis}). La subtilité ici, par rapport au chapitre \protect\hyperlink{pruxe9requis-1}{Prérequis}, est que le nombre de degrés de liberté n'est pas \(k\) mais \(k-1\). Le nombre de degrés de liberté désigne le nombre de quantités distinctes à décrire (ici 4 quantités car les données sont regroupées en 4 modalités) moins le nombre de contraintes (ici 1 contrainte liée au groupe de sujets qui a un nombre fini). On a donc bien 3 degrés de liberté ici car il nous suffit de connaître le score de fréquence de 3 modalités pour connaître le score de fréquence de la 4ème modalité qu'il nous manquerait pour une taille d'échantillon donnée.
+Nous avons à présent le score qui résume l'écart obtenu entre la distribution observée et la distribution théorique de notre variable qualitative. Il nous reste alors à connaître la distribution d'échantillonnage de la statistique \(X^2\) dans le cas où \(H_{0}\) serait vraie. Cela nous permettra de connaître la probabilité de rencontrer une valeur de \(X^2\) au moins aussi grande que 8.44 dans le cas où \(H_{0}\) serait vraie, et de juger ainsi si cette probabilité supporte ou non \(H_{0}\)\ldots{} Trêve de suspens, la distribution d'échantillonnage de \(X^2\) suit une loi \(\chi^2\) à \(k-1\) degrés de liberté (\(k\) étant le nombre de types d'évènement possibles, ici les types de cartes tirées). Comment peut-on expliquer cela? Tout d'abord, reprenons le calcul de \(X^2\), et plus précisément le terme \(O_{i}\). Admettons qu'il ne concerne qu'un seul type de cartes (e.g., les cœurs). Ce terme a sa propre distribution de probabilité en posant que \(H_{0}\) soit vraie, et cette distribution est celle d'une loi binomiale (avec \(\theta\) = 0.25 et \(N\) = 200 dans notre exemple), puisque pour chaque sujet interrogé, il était possible que ce type de carte soit choisi, ou non. Or, il s'avère que lorsque \(N\) est relativement grand et que \(\theta\) n'est ni trop proche de 0, ni trop proche de 1, la distribution se rapproche d'une loi normale \autocite{navarroLearningStatistics2018}. En allant vite, pour un type de cartes donné, on peut alors considérer que l'expression \(\frac{(O_{i} - E_{i})}{E_{i}}\) a une distribution d'échantillonnage qui s'apparente à une loi normale standard, et c'est le cas à chaque fois que cette expression doit être reprise pour chaque type de carte. Si on met au carré chacune de ces variables, puis qu'on les additionne (comme décrit plus haut pour le calcul de \(X^2\)), on se retrouve dans la situation dans laquelle nous obtenons une loi \(\chi^2\) (cf.~chapitre \hyperref[pruxe9requis]{Prérequis}). La subtilité ici, par rapport au chapitre \hyperref[pruxe9requis]{Prérequis}, est que le nombre de degrés de liberté n'est pas \(k\) mais \(k-1\). Le nombre de degrés de liberté désigne le nombre de quantités distinctes à décrire (ici 4 quantités car les données sont regroupées en 4 modalités) moins le nombre de contraintes (ici 1 contrainte liée au groupe de sujets qui a un nombre fini). On a donc bien 3 degrés de liberté ici car il nous suffit de connaître le score de fréquence de 3 modalités pour connaître le score de fréquence de la 4ème modalité qu'il nous manquerait pour une taille d'échantillon donnée.
 
 La Figure \ref{fig:GOFDistri} montre la loi \(\chi^2\) relative à 3 degrés de liberté et donc les probabilités de rencontrer tel ou tel intervalle de valeurs de \(X^2\) dans le cas où notre \(H_{0}\) serait vraie. La zone hachurée représente la probabilité qui était d'obtenir une valeur de \(X^2\) au moins aussi grande que 8.44 dans l'hypothèse où \(H_{0}\) serait vraie. Cette probabilité \(P\) est de 3.8 \%. En principe, lors d'un test statistique, il y a aussi ce qu'on appelle une ``région critique'', c'est-à-dire l'intervalle dans lequel la valeur de la statistique de test, ici \(X^2\), devrait se trouver pour qu'on considère que nos résultats ne supportent pas \(H_{0}\) et donc qu'on ne retienne pas cette hypothèse. Classiquement (voire par défaut, à tort), cette région critique est définie à l'aide du seuil \(P <= 0.05\). Dans le cas présent, cela se traduirait par le fait que notre statistique \(X^2\) tomberait dans l'intervalle pour lequel il y avait une probabilité inférieure ou égale à 5 \% de tomber dans le cas où \(H_{0}\) serait vraie. Dans notre exemple, cela se traduirait par le fait d'obtenir une valeur de \(X^2\) supérieure ou égale à environ 7.81. La région critique correspondant à cette zone est montrée en rouge sur la Figure \ref{fig:GOFDistri}. En suivant cette démarche, dans le cas présent \(H_{0}\) serait donc bien rejetée puisque notre valeur \(X^2\) de 8.44 tomberait dans la région critique. Le test serait alors dit ``significatif''.
 
@@ -5524,8 +5453,7 @@ La Figure \ref{fig:GOFDistri} montre la loi \(\chi^2\) relative à 3 degrés de 
 \caption{Distribution d'échantillonnage de la statistique $X^2$ sous $H{0}$}\label{fig:GOFDistri}
 \end{figure}
 
-\hypertarget{application-avec-r}{%
-\subsection{Application avec R}\label{application-avec-r}}
+\subsection{Application avec R}\label{application-avec-r}
 
 Nous venons de voir la mécanique des calculs qu'il y a derrière le test \(\chi^2\) d'adéquation. Heureusement, il existe des fonctions dans R pour faire cela automatiquement, comme la fonction \texttt{chisq.test()} :
 
@@ -5609,8 +5537,7 @@ Il convient de noter que les probabilités espérées (théoriques) peuvent êtr
 ##    p-value:  <.001
 \end{verbatim}
 
-\hypertarget{test-du-chi2-dinduxe9pendance-ou-dassociation}{%
-\section{\texorpdfstring{Test du \(\chi^2\) d'indépendance (ou d'association)}{Test du \textbackslash chi\^{}2 d'indépendance (ou d'association)}}\label{test-du-chi2-dinduxe9pendance-ou-dassociation}}
+\section{\texorpdfstring{Test du \(\chi^2\) d'indépendance (ou d'association)}{Test du \textbackslash chi\^{}2 d'indépendance (ou d'association)}}\label{test-du-chi2-dinduxe9pendance-ou-dassociation}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5652,8 +5579,7 @@ Il convient de noter que les probabilités espérées (théoriques) peuvent êtr
 
 (en cours\ldots)
 
-\hypertarget{ruxe9sumuxe9-4}{%
-\section{Résumé}\label{ruxe9sumuxe9-4}}
+\section{Résumé}\label{ruxe9sumuxe9-4}
 
 \begin{itemize}
 \tightlist
