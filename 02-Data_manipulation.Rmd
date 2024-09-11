@@ -29,7 +29,7 @@ flextable(
 ```
 </div>
 
-La base de données prend donc la forme d’un tableau. Plusieurs principes sont à respecter en général lors de la création d’une base de données. Tout d’abord, les lignes de la base de données (qu'on appelle des **observations**) doivent correspondre le cas échéant à des individus bien identifiés. Ensuite, chaque colonne doit correspondre à une variable. L’ensemble des données contenues dans une même ligne correspond donc aux données relatives aux différentes variables (e.g., la taille, le poids, le sexe, etc.) qui auraient été obtenues chez un même individu. Dans le cas d’études où l'on évaluerait une ou plusieurs variables plusieurs fois  chez un même individu (i.e., à différentes moments, dans différentes conditions), il peut convenir de créer autant de lignes que de fois où les variables auraient été évaluées. Par exemple, le Tableau \@ref(tab:databasePlusObs) représente une base de données, certes très sommaire, qui contient des données d'individus dont on aurait évalué le poids deux fois, avant et après un programme de prise en charge. On remarque alors qu'il y a deux lignes par individu qui correspondent aux deux temps d'évaluation. La taille, elle, n'a été évaluée qu'une seule fois, en début de programme, mais pour éviter de laisser des cellules vides, la valeur initiale de la taille a été reproduite dans la seconde ligne.
+La base de données prend donc la forme d’un tableau. Plusieurs principes sont à respecter en général lors de la création d’une base de données. Tout d’abord, les lignes de la base de données (qu'on appelle des **observations**) doivent correspondre le cas échéant à des individus bien identifiés. Ensuite, chaque colonne doit correspondre à une variable. L’ensemble des données contenues dans une même ligne correspond donc aux données relatives aux différentes variables qui auraient été obtenues chez un même individu (e.g., la taille, le poids, le sexe, etc.). Dans le cas d’études où l'on évaluerait une ou plusieurs variables plusieurs fois  chez un même individu (i.e., à différentes moments, dans différentes conditions), il peut convenir de créer autant de lignes que de fois où les variables auraient été évaluées. Par exemple, le Tableau \@ref(tab:databasePlusObs) représente une base de données, certes très sommaire, qui contient des données d'individus dont on aurait évalué le poids deux fois, avant et après un programme de prise en charge. On remarque alors qu'il y a deux lignes par individu qui correspondent aux deux temps d'évaluation. La taille, elle, n'a été évaluée qu'une seule fois, en début de programme, mais pour éviter de laisser des cellules vides, la valeur initiale de la taille a été reproduite dans la seconde ligne.
 
 <div class = "custom-table"> 
 ```{r databasePlusObs, echo = FALSE}
@@ -79,7 +79,7 @@ flextable(
 ```
 </div>
 
-Les **variables quantitatives** (aussi dites numériques) comportent des nombres dont les différences entre eux ont un sens. Parmi les variables quantitatives, il est possible de plus précisément distinguer celles qui peuvent être associées seulement à une **échelle d'intervalles**, et celles qui peuvent être aussi associées à une **échelle de ratios**. Les variables étant associables seulement à une  **échelle d'intervalles** ont la particularité de ne pas avoir de zéro naturel, de sorte que multiplier ou diviser les valeurs de cette variable n'aurait pas de sens. Un exemple de ce type de variables pourrait être la température exprimée en degrés Celsius. Avec cette variable, il est seulement possible de décrire le fait qu'il fait x degrés plus chaud ou plus froid à un endroit par rapport à un autre, mais cela n'aurait pas de sens de dire qu'il ferait deux fois plus chaud à un endroit où il y aurait 20°C par rapport à un endroit où il y aurait seulement 10°C. Il serait possible de le dire si 0°C correspondrait à "pas de température du tout", mais cela n'est évidemment pas le cas (cet exemple est repris de Danielle Navarro [-@navarroLearningStatistics2018]). En revanche, les variables pouvant être associées à une échelle de ratios présentent des valeurs qui, en plus de permettre de calculer des différences numériques qui ont un sens, peuvent être multipliées ou divisées, comme par exemple le temps de réaction à un stimulus donné.
+Les **variables quantitatives** (aussi dites numériques) comportent des nombres dont les différences entre eux ont un sens physique. Parmi les variables quantitatives, il est possible de plus précisément distinguer celles qui peuvent être associées seulement à une **échelle d'intervalles**, et celles qui peuvent être aussi associées à une **échelle de ratios**. Les variables étant associables seulement à une  **échelle d'intervalles** ont la particularité de ne pas avoir de zéro naturel, de sorte que multiplier ou diviser les valeurs de cette variable n'aurait pas de sens. Un exemple de ce type de variables pourrait être la température exprimée en degrés Celsius. Avec cette variable, il est seulement possible de décrire le fait qu'il fait x degrés plus chaud ou plus froid à un endroit par rapport à un autre, mais cela n'aurait pas de sens de dire qu'il ferait deux fois plus chaud à un endroit où il y aurait 20°C par rapport à un endroit où il y aurait seulement 10°C. Il serait possible de le dire si 0°C correspondrait à "pas de température du tout", mais cela n'est évidemment pas le cas (cet exemple est repris de Danielle Navarro [-@navarroLearningStatistics2018]). En revanche, les variables pouvant être associées à une échelle de ratios présentent des valeurs qui, en plus de permettre de calculer des différences numériques qui ont un sens, peuvent être multipliées ou divisées, comme par exemple le temps de réaction à un stimulus donné.
 
 En plus de la distinction échelle d'intervalles / échelle de ratios, les variables quantitatives peuvent être considérées comme étant soit **continues**, soit **discrètes**. Les variables quantitatives continues contiennent des nombres pouvant comporter théoriquement un nombre infini de décimales (e.g., la taille, le poids, etc.). Au contraire, les variables quantitatives discrètes ne peuvent contenir théoriquement que des nombres finis (e.g., le nombre de victoires sportives au cours d’une année). Certaines variables en théorie discrètes sont cependant souvent considérées comme continues tant le nombre de valeurs théoriquement possibles pour la variable est grand, tel que pour le nombre de globules blancs mesurés dans le sang [@labreucheDifferentsTypesVariables2010]. 
 
@@ -309,26 +309,29 @@ iris2
 ```
 
 ### Passer d'une disposition en lignes à une disposition en colonnes et inversement avec `pivot_wider()` et `pivot_longer()`
-Il convient de respecter certaines règles de base lors de la conception d'une base de données (e.g., mettre les observations en lignes et les variables en colonnes). Toutefois, dans certains cas, même après avoir bien respecté les règles, la manière selon laquelle la base de données a été organisée peut ne pas être encore adéquate pour pouvoir utiliser certaines fonctions. Prenons par exemple le cas où toutes les valeurs numériques d'une variable quantitative auraient été mises dans une même colonne en regard d'une variable qualitative pour que chaque valeur numérique corresponde à une modalité de cette variable qualitative (c'est le cas, par exemple, avec le jeu de données `iris`), et que la fonction à utiliser nécessiterait que l'on ait une colonne pour chacune des modalités de la variable qualitative, avec des colonnes mises côte à côte. Une fonction qui permet alors de passer d'un format "long" (i.e., toutes les valeurs numériques sont dans la même colonne) à un format "large" (i.e., les valeurs numériques sont réparties dans différentes colonnes selon la modalité à laquelle elles sont associées), est la fonction `pivot_wider()` du package `tidyr`. Pour pouvoir utiliser cette fonction, il faut qu'il y ait une variable permettant d'identifier à quels individus ou groupes appartiennent les données dont on va changer l'organisation. Dans une base de données classique, il y a toujours une variable présente pour cela. Toutefois, dans le jeu de données `iris`, il n'y a pas une telle variable. Pour pouvoir illustrer l'utilisation de la fonction `pivot_wider()`, nous avons donc ajouté arbitrairement une variable `id` grâce à la fonction `mutate()` pour simuler le fait que les données de `iris` auraient été acquises en référence à des individus bien identifiés, avec à chaque fois une valeur pour les trois modalités de la variable `Species` :
+Il convient de respecter certaines règles de base lors de la conception d'une base de données (e.g., mettre les observations en lignes et les variables en colonnes). Toutefois, dans certains cas, même après avoir bien respecté les règles, la manière selon laquelle la base de données a été organisée peut finalement ne pas être adéquate pour pouvoir utiliser certaines fonctions. Prenons par exemple le cas où toutes les valeurs numériques d'une variable quantitative auraient été mises dans une même colonne en regard d'une variable qualitative pour que chaque valeur numérique corresponde à une modalité de cette variable qualitative (c'est le cas, par exemple, avec le jeu de données `iris`), et que la fonction à utiliser nécessiterait que l'on ait une colonne pour chacune des modalités de la variable qualitative, avec des colonnes mises côte à côte. Une fonction qui permet alors de passer d'un format "long" (i.e., toutes les valeurs numériques sont dans la même colonne) à un format "large" (i.e., les valeurs numériques sont réparties dans différentes colonnes selon la modalité à laquelle elles sont associées), est la fonction `pivot_wider()` du package `tidyr`. Pour pouvoir utiliser cette fonction, il faut qu'il y ait une variable permettant d'identifier à quels individus ou groupes appartiennent les données dont on va changer l'organisation. Dans une base de données classique, il y a généralement une variable présente pour cela. Toutefois, dans le jeu de données `iris`, il n'y a pas une telle variable. Pour pouvoir illustrer l'utilisation de la fonction `pivot_wider()`, nous avons donc, dans un jeu de données s'appelant à présent `iris2`, ajouté arbitrairement une variable `id` grâce à la fonction `mutate()` pour simuler le fait que les données de `iris` auraient été acquises en référence à des individus bien identifiés. Nous avons aussi ajouté une variable `date` pour pouvoir réaliser l'exemple :
 
 ```{r add id iris}
 iris2 <-
   iris |>
-  mutate(id = rep(1:50, times = 3)) |>
-  dplyr::select(id, Species,  everything()) |>
-  arrange(id, Species) |>
+  mutate(
+    id = rep(1:50, each = 3),
+    date = rep(c(2001:2003), times = 50)
+    ) |>
+  dplyr::select(id, date, Species,  everything()) |>
+  arrange(id, date) |>
   as_tibble()
 iris2
 ```
 
-La fonction `pivot_wider()` permet alors de mettre en colonnes les valeurs des variables sélectionnées pour chacune des trois modalités de la variable `Species`.
+La fonction `pivot_wider()` permet alors de mettre en colonnes les valeurs des variables sélectionnées pour chacune des trois modalités de la variable visée, ici la variable `date` dans l'exemple ci-dessous.
 
 ```{r pivot_wider}
 library(tidyr)
 iris3 <- 
   iris2 |> 
   pivot_wider(
-    names_from = Species,
+    names_from = date,
     values_from = Sepal.Length : Petal.Width
     )
 iris3
@@ -336,17 +339,19 @@ iris3
 
 L'argument `names_from` a permis d'indiquer la variable à partir de laquelle on a dispatché les valeurs en colonnes, et l'argument `values_from` a permis de préciser les variables pour lesquelles on voulait que les valeurs numériques soient dispatchées. L'utilisation des deux-points (`:`) nous a permis de sélectionner toutes les variables allant de `Sepal.Length` à `Petal.Width` dans le jeu de données.
 
-Dans une situation inverse à celle que nous venons de voir, nous pourrions avoir les données représentées en colonnes (comme c'est le cas avec le jeu de données `iris3` crée ci-dessus), alors que nous les voudrions en lignes (comme c'était le cas avec le jeu de données `iris` à l'origine). La fonction `pivot_longer()` permet de faire ce genre de conversion. Pour observer ce que cette fonction réalise, sélectionnons seulement les colonnes avec les valeurs de sépales en plus de la colonne `id`, tel que montré ci-dessous :
+Dans une situation inverse à celle que nous venons de voir, nous pourrions vouloir une disposition des données davantage en lignes. Par exemple, s'agissant du jeu de données `iris`, nous pourrions vouloir une seule colonne comprenant tous les paramètres mesurés pour chaque fleur, et une seule colonne contenant les valeurs associées. La fonction `pivot_longer()` permet de faire ce genre de conversion, tel que montré ci-dessous :
 
 ```{r pivot_longer}
-iris3 |> 
-  dplyr::select(id,
-                Sepal.Length_setosa,
-                Sepal.Length_versicolor,
-                Sepal.Length_virginica) %>%
-  pivot_longer(cols = c(-id),
-               names_to = "Species",
-               values_to = "Sepal_len")
+# Avant
+head(iris, 5)
+
+# Après
+iris |> 
+  pivot_longer(
+    cols = c(-Species),
+    names_to = "Parameter",
+    values_to = "Value"
+    )
 ```
 
 Dans la fonction `pivot_longer()` ci-dessus, nous avons indiqué à l'aide de l'argument `cols` et de la fonction `c()` avec le signe `-` la colonne que nous ne voulions pas utiliser avec la fonction (c'était plus rapide que d'indiquer dans la fonction `c()` les trois colonnes à utiliser). L'argument `names_to` nous a permis de donner un nom à la variable qualitative qui comporte à présent les modalités associées aux valeurs numériques, et l'argument `values_to` nous a permis de donner un nom à la colonne où se trouvent maintenant les valeurs numériques.
@@ -354,15 +359,19 @@ Dans la fonction `pivot_longer()` ci-dessus, nous avons indiqué à l'aide de l'
 Lorsque l'on veut utiliser la fonction `pivot_longer()` sur plusieurs colonnes qui sont écrites avec la même logique (par exemple, avec un nom composé de deux morceaux séparés par un `_`, avec un morceau pour indiquer la chose mesurée, et un autre morceau pour indiquer la modalité), il convient de procéder comme ci-dessous :
 
 ```{r pivot_longer 2}
+# Avant
+head(iris3, 5)
+
+# Après
 iris3 |> 
   pivot_longer(
-    cols = c(Sepal.Length_setosa:Petal.Width_virginica),
-    names_to = c(".value", "Species"),
-    names_sep = "_"
+    cols = c(Sepal.Length_2001:Petal.Width_2003),
+    names_to = c(".value", "date"),
+    names_pattern = '(.*)_(.*)'
   )
 ```
 
-Dans le code montré ci-dessus, l'argument `cols` a permis de sélectionner toutes les colonnes situées à droite de la colonne `id`, l'argument `names_to` a permis d'indiquer qu'il faut garder des colonnes spécifiques  nommées avec le premier morceau du nom des variables antérieures (le mot `".value"` permet cela), et le mot `"Species"` a permis de nommer la colonne avec les espèces d'iris qui étaient les seconds morceaux des noms des variables antérieures.
+Dans le code montré ci-dessus, l'argument `cols` a permis de sélectionner toutes les colonnes dont on voulait faire pivoter les données, l'argument `names_to` a permis d'indiquer qu'il faut garder des colonnes spécifiques  nommées avec le premier morceau du nom des variables antérieures (le mot `".value"` permet cela), et le mot `"date"` a permis de nommer la colonne avec les dates qui étaient les seconds morceaux des noms des variables antérieures.
 
 Nous venons de voir plusieurs fonctions qui peuvent être très utiles pour pouvoir facilement préparer sa base de données en vue des futures analyses. Il ne s'agit que d'une vue très superficielle de tout le potentiel de manipulation des données qu'ont ces fonctions. Pour une vue plus approndie des possibilités qu'offrent ces fonctions, la lecture de l'ouvrage *R for Data Science* d'Hadley Wickham et de Garrett Grolemund [-@wickhamDataScience2017] sera particulièrement enrichissante. Cet ouvrage est en libre accès ici : https://r4ds.had.co.nz.
 
