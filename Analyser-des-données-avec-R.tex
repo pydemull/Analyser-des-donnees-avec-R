@@ -146,7 +146,7 @@
 
 \title{Analyser des données avec R}
 \author{Pierre-Yves de Müllenheim}
-\date{2024-03-28}
+\date{2024-09-11}
 
 \begin{document}
 \maketitle
@@ -574,7 +574,7 @@ Une fois que le \emph{package} a été installé (ou l'ensemble de \emph{package
 \end{Highlighting}
 \end{Shaded}
 
-Lorsque l'on charge la collection de \emph{packages} \texttt{tidyverse}, on peut observer dans la Console que plusieurs \emph{packages} sont chargés en même temps : \texttt{ggplot2}, pour la visualisation de données ; \texttt{dplyr}, pour la manipulation de données ; \texttt{tidyr}, pour l'organiation des tableaux de données ; \texttt{readr}, pour l'importation de jeux de données ; \texttt{purrr}, pour la programmation ; \texttt{tibble}, pour le formatage de tableaux de données ; \texttt{stringr}, pour la gestion des chaînes de caractères ; \texttt{forcats}, pour la gestion de variables qualitatives. Si nous avons téléchargé et chargé l'ensemble des \emph{packages} du \texttt{tidyverse}, nous aurions pu aussi installé et chargé un seul de ces \emph{packages} à la fois, comme pour la plupart des \emph{packages} qui existent.
+Lorsque l'on charge la collection de \emph{packages} \texttt{tidyverse}, on peut observer dans la Console que plusieurs \emph{packages} sont chargés en même temps : \texttt{ggplot2}, pour la visualisation de données ; \texttt{dplyr}, pour la manipulation de données ; \texttt{tidyr}, pour l'organiation des tableaux de données ; \texttt{readr}, pour l'importation de jeux de données ; \texttt{purrr}, pour l'automatisation ; \texttt{tibble}, pour le formatage de tableaux de données ; \texttt{stringr}, pour la gestion des chaînes de caractères ; \texttt{forcats}, pour la gestion de variables qualitatives. Si nous avons téléchargé et chargé l'ensemble des \emph{packages} du \texttt{tidyverse}, nous aurions pu aussi installé et chargé un seul de ces \emph{packages} à la fois, comme pour la plupart des \emph{packages} qui existent.
 
 \subsection{Divers}\label{divers}
 
@@ -733,7 +733,7 @@ Très souvent, pour répondre à une question, il est nécessaire d'acquérir pl
 
 \renewcommand*{\arraystretch}{1}
 
-La base de données prend donc la forme d'un tableau. Plusieurs principes sont à respecter en général lors de la création d'une base de données. Tout d'abord, les lignes de la base de données (qu'on appelle des \textbf{observations}) doivent correspondre le cas échéant à des individus bien identifiés. Ensuite, chaque colonne doit correspondre à une variable. L'ensemble des données contenues dans une même ligne correspond donc aux données relatives aux différentes variables (e.g., la taille, le poids, le sexe, etc.) qui auraient été obtenues chez un même individu. Dans le cas d'études où l'on évaluerait une ou plusieurs variables plusieurs fois chez un même individu (i.e., à différentes moments, dans différentes conditions), il peut convenir de créer autant de lignes que de fois où les variables auraient été évaluées. Par exemple, le Tableau \ref{tab:databasePlusObs} représente une base de données, certes très sommaire, qui contient des données d'individus dont on aurait évalué le poids deux fois, avant et après un programme de prise en charge. On remarque alors qu'il y a deux lignes par individu qui correspondent aux deux temps d'évaluation. La taille, elle, n'a été évaluée qu'une seule fois, en début de programme, mais pour éviter de laisser des cellules vides, la valeur initiale de la taille a été reproduite dans la seconde ligne.
+La base de données prend donc la forme d'un tableau. Plusieurs principes sont à respecter en général lors de la création d'une base de données. Tout d'abord, les lignes de la base de données (qu'on appelle des \textbf{observations}) doivent correspondre le cas échéant à des individus bien identifiés. Ensuite, chaque colonne doit correspondre à une variable. L'ensemble des données contenues dans une même ligne correspond donc aux données relatives aux différentes variables qui auraient été obtenues chez un même individu (e.g., la taille, le poids, le sexe, etc.). Dans le cas d'études où l'on évaluerait une ou plusieurs variables plusieurs fois chez un même individu (i.e., à différentes moments, dans différentes conditions), il peut convenir de créer autant de lignes que de fois où les variables auraient été évaluées. Par exemple, le Tableau \ref{tab:databasePlusObs} représente une base de données, certes très sommaire, qui contient des données d'individus dont on aurait évalué le poids deux fois, avant et après un programme de prise en charge. On remarque alors qu'il y a deux lignes par individu qui correspondent aux deux temps d'évaluation. La taille, elle, n'a été évaluée qu'une seule fois, en début de programme, mais pour éviter de laisser des cellules vides, la valeur initiale de la taille a été reproduite dans la seconde ligne.
 
 \global\setlength{\Oldarrayrulewidth}{\arrayrulewidth}
 
@@ -909,7 +909,7 @@ En principe, les données de la base qui ont été obtenues selon la même proc�
 
 \renewcommand*{\arraystretch}{1}
 
-Les \textbf{variables quantitatives} (aussi dites numériques) comportent des nombres dont les différences entre eux ont un sens. Parmi les variables quantitatives, il est possible de plus précisément distinguer celles qui peuvent être associées seulement à une \textbf{échelle d'intervalles}, et celles qui peuvent être aussi associées à une \textbf{échelle de ratios}. Les variables étant associables seulement à une \textbf{échelle d'intervalles} ont la particularité de ne pas avoir de zéro naturel, de sorte que multiplier ou diviser les valeurs de cette variable n'aurait pas de sens. Un exemple de ce type de variables pourrait être la température exprimée en degrés Celsius. Avec cette variable, il est seulement possible de décrire le fait qu'il fait x degrés plus chaud ou plus froid à un endroit par rapport à un autre, mais cela n'aurait pas de sens de dire qu'il ferait deux fois plus chaud à un endroit où il y aurait 20°C par rapport à un endroit où il y aurait seulement 10°C. Il serait possible de le dire si 0°C correspondrait à ``pas de température du tout'', mais cela n'est évidemment pas le cas (cet exemple est repris de Danielle Navarro \autocite*{navarroLearningStatistics2018}). En revanche, les variables pouvant être associées à une échelle de ratios présentent des valeurs qui, en plus de permettre de calculer des différences numériques qui ont un sens, peuvent être multipliées ou divisées, comme par exemple le temps de réaction à un stimulus donné.
+Les \textbf{variables quantitatives} (aussi dites numériques) comportent des nombres dont les différences entre eux ont un sens physique. Parmi les variables quantitatives, il est possible de plus précisément distinguer celles qui peuvent être associées seulement à une \textbf{échelle d'intervalles}, et celles qui peuvent être aussi associées à une \textbf{échelle de ratios}. Les variables étant associables seulement à une \textbf{échelle d'intervalles} ont la particularité de ne pas avoir de zéro naturel, de sorte que multiplier ou diviser les valeurs de cette variable n'aurait pas de sens. Un exemple de ce type de variables pourrait être la température exprimée en degrés Celsius. Avec cette variable, il est seulement possible de décrire le fait qu'il fait x degrés plus chaud ou plus froid à un endroit par rapport à un autre, mais cela n'aurait pas de sens de dire qu'il ferait deux fois plus chaud à un endroit où il y aurait 20°C par rapport à un endroit où il y aurait seulement 10°C. Il serait possible de le dire si 0°C correspondrait à ``pas de température du tout'', mais cela n'est évidemment pas le cas (cet exemple est repris de Danielle Navarro \autocite*{navarroLearningStatistics2018}). En revanche, les variables pouvant être associées à une échelle de ratios présentent des valeurs qui, en plus de permettre de calculer des différences numériques qui ont un sens, peuvent être multipliées ou divisées, comme par exemple le temps de réaction à un stimulus donné.
 
 En plus de la distinction échelle d'intervalles / échelle de ratios, les variables quantitatives peuvent être considérées comme étant soit \textbf{continues}, soit \textbf{discrètes}. Les variables quantitatives continues contiennent des nombres pouvant comporter théoriquement un nombre infini de décimales (e.g., la taille, le poids, etc.). Au contraire, les variables quantitatives discrètes ne peuvent contenir théoriquement que des nombres finis (e.g., le nombre de victoires sportives au cours d'une année). Certaines variables en théorie discrètes sont cependant souvent considérées comme continues tant le nombre de valeurs théoriquement possibles pour la variable est grand, tel que pour le nombre de globules blancs mesurés dans le sang \autocite{labreucheDifferentsTypesVariables2010}.
 
@@ -1642,38 +1642,42 @@ Au cours des illustrations montrant l'usage des fonctions \texttt{select()} jusq
 
 \subsection{\texorpdfstring{Passer d'une disposition en lignes à une disposition en colonnes et inversement avec \texttt{pivot\_wider()} et \texttt{pivot\_longer()}}{Passer d'une disposition en lignes à une disposition en colonnes et inversement avec pivot\_wider() et pivot\_longer()}}\label{passer-dune-disposition-en-lignes-uxe0-une-disposition-en-colonnes-et-inversement-avec-pivot_wider-et-pivot_longer}
 
-Il convient de respecter certaines règles de base lors de la conception d'une base de données (e.g., mettre les observations en lignes et les variables en colonnes). Toutefois, dans certains cas, même après avoir bien respecté les règles, la manière selon laquelle la base de données a été organisée peut ne pas être encore adéquate pour pouvoir utiliser certaines fonctions. Prenons par exemple le cas où toutes les valeurs numériques d'une variable quantitative auraient été mises dans une même colonne en regard d'une variable qualitative pour que chaque valeur numérique corresponde à une modalité de cette variable qualitative (c'est le cas, par exemple, avec le jeu de données \texttt{iris}), et que la fonction à utiliser nécessiterait que l'on ait une colonne pour chacune des modalités de la variable qualitative, avec des colonnes mises côte à côte. Une fonction qui permet alors de passer d'un format ``long'' (i.e., toutes les valeurs numériques sont dans la même colonne) à un format ``large'' (i.e., les valeurs numériques sont réparties dans différentes colonnes selon la modalité à laquelle elles sont associées), est la fonction \texttt{pivot\_wider()} du package \texttt{tidyr}. Pour pouvoir utiliser cette fonction, il faut qu'il y ait une variable permettant d'identifier à quels individus ou groupes appartiennent les données dont on va changer l'organisation. Dans une base de données classique, il y a toujours une variable présente pour cela. Toutefois, dans le jeu de données \texttt{iris}, il n'y a pas une telle variable. Pour pouvoir illustrer l'utilisation de la fonction \texttt{pivot\_wider()}, nous avons donc ajouté arbitrairement une variable \texttt{id} grâce à la fonction \texttt{mutate()} pour simuler le fait que les données de \texttt{iris} auraient été acquises en référence à des individus bien identifiés, avec à chaque fois une valeur pour les trois modalités de la variable \texttt{Species} :
+Il convient de respecter certaines règles de base lors de la conception d'une base de données (e.g., mettre les observations en lignes et les variables en colonnes). Toutefois, dans certains cas, même après avoir bien respecté les règles, la manière selon laquelle la base de données a été organisée peut finalement ne pas être adéquate pour pouvoir utiliser certaines fonctions. Prenons par exemple le cas où toutes les valeurs numériques d'une variable quantitative auraient été mises dans une même colonne en regard d'une variable qualitative pour que chaque valeur numérique corresponde à une modalité de cette variable qualitative (c'est le cas, par exemple, avec le jeu de données \texttt{iris}), et que la fonction à utiliser nécessiterait que l'on ait une colonne pour chacune des modalités de la variable qualitative, avec des colonnes mises côte à côte. Une fonction qui permet alors de passer d'un format ``long'' (i.e., toutes les valeurs numériques sont dans la même colonne) à un format ``large'' (i.e., les valeurs numériques sont réparties dans différentes colonnes selon la modalité à laquelle elles sont associées), est la fonction \texttt{pivot\_wider()} du package \texttt{tidyr}. Pour pouvoir utiliser cette fonction, il faut qu'il y ait une variable permettant d'identifier à quels individus ou groupes appartiennent les données dont on va changer l'organisation. Dans une base de données classique, il y a généralement une variable présente pour cela. Toutefois, dans le jeu de données \texttt{iris}, il n'y a pas une telle variable. Pour pouvoir illustrer l'utilisation de la fonction \texttt{pivot\_wider()}, nous avons donc, dans un jeu de données s'appelant à présent \texttt{iris2}, ajouté arbitrairement une variable \texttt{id} grâce à la fonction \texttt{mutate()} pour simuler le fait que les données de \texttt{iris} auraient été acquises en référence à des individus bien identifiés. Nous avons aussi ajouté une variable \texttt{date} pour pouvoir réaliser l'exemple :
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{iris2 }\OtherTok{\textless{}{-}}
 \NormalTok{  iris }\SpecialCharTok{|\textgreater{}}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{id =} \FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{50}\NormalTok{, }\AttributeTok{times =} \DecValTok{3}\NormalTok{)) }\SpecialCharTok{|\textgreater{}}
-\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(id, Species,  }\FunctionTok{everything}\NormalTok{()) }\SpecialCharTok{|\textgreater{}}
-  \FunctionTok{arrange}\NormalTok{(id, Species) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{id =} \FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{50}\NormalTok{, }\AttributeTok{each =} \DecValTok{3}\NormalTok{),}
+    \AttributeTok{date =} \FunctionTok{rep}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{2001}\SpecialCharTok{:}\DecValTok{2003}\NormalTok{), }\AttributeTok{times =} \DecValTok{50}\NormalTok{)}
+\NormalTok{    ) }\SpecialCharTok{|\textgreater{}}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(id, date, Species,  }\FunctionTok{everything}\NormalTok{()) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{arrange}\NormalTok{(id, date) }\SpecialCharTok{|\textgreater{}}
   \FunctionTok{as\_tibble}\NormalTok{()}
 \NormalTok{iris2}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## # A tibble: 150 x 6
-##       id Species    Sepal.Length Sepal.Width Petal.Length Petal.Width
-##    <int> <fct>             <dbl>       <dbl>        <dbl>       <dbl>
-##  1     1 setosa              5.1         3.5          1.4         0.2
-##  2     1 versicolor          7           3.2          4.7         1.4
-##  3     1 virginica           6.3         3.3          6           2.5
-##  4     2 setosa              4.9         3            1.4         0.2
-##  5     2 versicolor          6.4         3.2          4.5         1.5
-##  6     2 virginica           5.8         2.7          5.1         1.9
-##  7     3 setosa              4.7         3.2          1.3         0.2
-##  8     3 versicolor          6.9         3.1          4.9         1.5
-##  9     3 virginica           7.1         3            5.9         2.1
-## 10     4 setosa              4.6         3.1          1.5         0.2
+## # A tibble: 150 x 7
+##       id  date Species Sepal.Length Sepal.Width Petal.Length
+##    <int> <int> <fct>          <dbl>       <dbl>        <dbl>
+##  1     1  2001 setosa           5.1         3.5          1.4
+##  2     1  2002 setosa           4.9         3            1.4
+##  3     1  2003 setosa           4.7         3.2          1.3
+##  4     2  2001 setosa           4.6         3.1          1.5
+##  5     2  2002 setosa           5           3.6          1.4
+##  6     2  2003 setosa           5.4         3.9          1.7
+##  7     3  2001 setosa           4.6         3.4          1.4
+##  8     3  2002 setosa           5           3.4          1.5
+##  9     3  2003 setosa           4.4         2.9          1.4
+## 10     4  2001 setosa           4.9         3.1          1.5
 ## # i 140 more rows
+## # i 1 more variable: Petal.Width <dbl>
 \end{verbatim}
 
-La fonction \texttt{pivot\_wider()} permet alors de mettre en colonnes les valeurs des variables sélectionnées pour chacune des trois modalités de la variable \texttt{Species}.
+La fonction \texttt{pivot\_wider()} permet alors de mettre en colonnes les valeurs des variables sélectionnées pour chacune des trois modalités de la variable visée, ici la variable \texttt{date} dans l'exemple ci-dessous.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1681,7 +1685,7 @@ La fonction \texttt{pivot\_wider()} permet alors de mettre en colonnes les valeu
 \NormalTok{iris3 }\OtherTok{\textless{}{-}} 
 \NormalTok{  iris2 }\SpecialCharTok{|\textgreater{}} 
   \FunctionTok{pivot\_wider}\NormalTok{(}
-    \AttributeTok{names\_from =}\NormalTok{ Species,}
+    \AttributeTok{names\_from =}\NormalTok{ date,}
     \AttributeTok{values\_from =}\NormalTok{ Sepal.Length }\SpecialCharTok{:}\NormalTok{ Petal.Width}
 \NormalTok{    )}
 \NormalTok{iris3}
@@ -1689,60 +1693,76 @@ La fonction \texttt{pivot\_wider()} permet alors de mettre en colonnes les valeu
 \end{Shaded}
 
 \begin{verbatim}
-## # A tibble: 50 x 13
-##       id Sepal.Length_setosa Sepal.Length_versicolor
-##    <int>               <dbl>                   <dbl>
-##  1     1                 5.1                     7  
-##  2     2                 4.9                     6.4
-##  3     3                 4.7                     6.9
-##  4     4                 4.6                     5.5
-##  5     5                 5                       6.5
-##  6     6                 5.4                     5.7
-##  7     7                 4.6                     6.3
-##  8     8                 5                       4.9
-##  9     9                 4.4                     6.6
-## 10    10                 4.9                     5.2
-## # i 40 more rows
-## # i 10 more variables: Sepal.Length_virginica <dbl>,
-## #   Sepal.Width_setosa <dbl>, Sepal.Width_versicolor <dbl>,
-## #   Sepal.Width_virginica <dbl>, Petal.Length_setosa <dbl>,
-## #   Petal.Length_versicolor <dbl>, Petal.Length_virginica <dbl>,
-## #   Petal.Width_setosa <dbl>, Petal.Width_versicolor <dbl>,
-## #   Petal.Width_virginica <dbl>
+## # A tibble: 52 x 14
+##       id Species Sepal.Length_2001 Sepal.Length_2002 Sepal.Length_2003
+##    <int> <fct>               <dbl>             <dbl>             <dbl>
+##  1     1 setosa                5.1               4.9               4.7
+##  2     2 setosa                4.6               5                 5.4
+##  3     3 setosa                4.6               5                 4.4
+##  4     4 setosa                4.9               5.4               4.8
+##  5     5 setosa                4.8               4.3               5.8
+##  6     6 setosa                5.7               5.4               5.1
+##  7     7 setosa                5.7               5.1               5.4
+##  8     8 setosa                5.1               4.6               5.1
+##  9     9 setosa                4.8               5                 5  
+## 10    10 setosa                5.2               5.2               4.7
+## # i 42 more rows
+## # i 9 more variables: Sepal.Width_2001 <dbl>, Sepal.Width_2002 <dbl>,
+## #   Sepal.Width_2003 <dbl>, Petal.Length_2001 <dbl>,
+## #   Petal.Length_2002 <dbl>, Petal.Length_2003 <dbl>,
+## #   Petal.Width_2001 <dbl>, Petal.Width_2002 <dbl>,
+## #   Petal.Width_2003 <dbl>
 \end{verbatim}
 
 L'argument \texttt{names\_from} a permis d'indiquer la variable à partir de laquelle on a dispatché les valeurs en colonnes, et l'argument \texttt{values\_from} a permis de préciser les variables pour lesquelles on voulait que les valeurs numériques soient dispatchées. L'utilisation des deux-points (\texttt{:}) nous a permis de sélectionner toutes les variables allant de \texttt{Sepal.Length} à \texttt{Petal.Width} dans le jeu de données.
 
-Dans une situation inverse à celle que nous venons de voir, nous pourrions avoir les données représentées en colonnes (comme c'est le cas avec le jeu de données \texttt{iris3} crée ci-dessus), alors que nous les voudrions en lignes (comme c'était le cas avec le jeu de données \texttt{iris} à l'origine). La fonction \texttt{pivot\_longer()} permet de faire ce genre de conversion. Pour observer ce que cette fonction réalise, sélectionnons seulement les colonnes avec les valeurs de sépales en plus de la colonne \texttt{id}, tel que montré ci-dessous :
+Dans une situation inverse à celle que nous venons de voir, nous pourrions vouloir une disposition des données davantage en lignes. Par exemple, s'agissant du jeu de données \texttt{iris}, nous pourrions vouloir une seule colonne comprenant tous les paramètres mesurés pour chaque fleur, et une seule colonne contenant les valeurs associées. La fonction \texttt{pivot\_longer()} permet de faire ce genre de conversion, tel que montré ci-dessous :
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{iris3 }\SpecialCharTok{|\textgreater{}} 
-\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(id,}
-\NormalTok{                Sepal.Length\_setosa,}
-\NormalTok{                Sepal.Length\_versicolor,}
-\NormalTok{                Sepal.Length\_virginica) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{cols =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{id),}
-               \AttributeTok{names\_to =} \StringTok{"Species"}\NormalTok{,}
-               \AttributeTok{values\_to =} \StringTok{"Sepal\_len"}\NormalTok{)}
+\CommentTok{\# Avant}
+\FunctionTok{head}\NormalTok{(iris, }\DecValTok{5}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## # A tibble: 150 x 3
-##       id Species                 Sepal_len
-##    <int> <chr>                       <dbl>
-##  1     1 Sepal.Length_setosa           5.1
-##  2     1 Sepal.Length_versicolor       7  
-##  3     1 Sepal.Length_virginica        6.3
-##  4     2 Sepal.Length_setosa           4.9
-##  5     2 Sepal.Length_versicolor       6.4
-##  6     2 Sepal.Length_virginica        5.8
-##  7     3 Sepal.Length_setosa           4.7
-##  8     3 Sepal.Length_versicolor       6.9
-##  9     3 Sepal.Length_virginica        7.1
-## 10     4 Sepal.Length_setosa           4.6
-## # i 140 more rows
+## # A tibble: 5 x 5
+##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+##          <dbl>       <dbl>        <dbl>       <dbl> <fct>  
+## 1          5.1         3.5          1.4         0.2 setosa 
+## 2          4.9         3            1.4         0.2 setosa 
+## 3          4.7         3.2          1.3         0.2 setosa 
+## 4          4.6         3.1          1.5         0.2 setosa 
+## 5          5           3.6          1.4         0.2 setosa
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Après}
+\NormalTok{iris }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{pivot\_longer}\NormalTok{(}
+    \AttributeTok{cols =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Species),}
+    \AttributeTok{names\_to =} \StringTok{"Parameter"}\NormalTok{,}
+    \AttributeTok{values\_to =} \StringTok{"Value"}
+\NormalTok{    )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 600 x 3
+##    Species Parameter    Value
+##    <fct>   <chr>        <dbl>
+##  1 setosa  Sepal.Length   5.1
+##  2 setosa  Sepal.Width    3.5
+##  3 setosa  Petal.Length   1.4
+##  4 setosa  Petal.Width    0.2
+##  5 setosa  Sepal.Length   4.9
+##  6 setosa  Sepal.Width    3  
+##  7 setosa  Petal.Length   1.4
+##  8 setosa  Petal.Width    0.2
+##  9 setosa  Sepal.Length   4.7
+## 10 setosa  Sepal.Width    3.2
+## # i 590 more rows
 \end{verbatim}
 
 Dans la fonction \texttt{pivot\_longer()} ci-dessus, nous avons indiqué à l'aide de l'argument \texttt{cols} et de la fonction \texttt{c()} avec le signe \texttt{-} la colonne que nous ne voulions pas utiliser avec la fonction (c'était plus rapide que d'indiquer dans la fonction \texttt{c()} les trois colonnes à utiliser). L'argument \texttt{names\_to} nous a permis de donner un nom à la variable qualitative qui comporte à présent les modalités associées aux valeurs numériques, et l'argument \texttt{values\_to} nous a permis de donner un nom à la colonne où se trouvent maintenant les valeurs numériques.
@@ -1751,33 +1771,58 @@ Lorsque l'on veut utiliser la fonction \texttt{pivot\_longer()} sur plusieurs co
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\CommentTok{\# Avant}
+\FunctionTok{head}\NormalTok{(iris3, }\DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 5 x 14
+##      id Species Sepal.Length_2001 Sepal.Length_2002 Sepal.Length_2003
+##   <int> <fct>               <dbl>             <dbl>             <dbl>
+## 1     1 setosa                5.1               4.9               4.7
+## 2     2 setosa                4.6               5                 5.4
+## 3     3 setosa                4.6               5                 4.4
+## 4     4 setosa                4.9               5.4               4.8
+## 5     5 setosa                4.8               4.3               5.8
+## # i 9 more variables: Sepal.Width_2001 <dbl>, Sepal.Width_2002 <dbl>,
+## #   Sepal.Width_2003 <dbl>, Petal.Length_2001 <dbl>,
+## #   Petal.Length_2002 <dbl>, Petal.Length_2003 <dbl>,
+## #   Petal.Width_2001 <dbl>, Petal.Width_2002 <dbl>,
+## #   Petal.Width_2003 <dbl>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Après}
 \NormalTok{iris3 }\SpecialCharTok{|\textgreater{}} 
   \FunctionTok{pivot\_longer}\NormalTok{(}
-    \AttributeTok{cols =} \FunctionTok{c}\NormalTok{(Sepal.Length\_setosa}\SpecialCharTok{:}\NormalTok{Petal.Width\_virginica),}
-    \AttributeTok{names\_to =} \FunctionTok{c}\NormalTok{(}\StringTok{".value"}\NormalTok{, }\StringTok{"Species"}\NormalTok{),}
-    \AttributeTok{names\_sep =} \StringTok{"\_"}
+    \AttributeTok{cols =} \FunctionTok{c}\NormalTok{(Sepal.Length\_2001}\SpecialCharTok{:}\NormalTok{Petal.Width\_2003),}
+    \AttributeTok{names\_to =} \FunctionTok{c}\NormalTok{(}\StringTok{".value"}\NormalTok{, }\StringTok{"date"}\NormalTok{),}
+    \AttributeTok{names\_pattern =} \StringTok{\textquotesingle{}(.*)\_(.*)\textquotesingle{}}
 \NormalTok{  )}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## # A tibble: 150 x 6
-##       id Species    Sepal.Length Sepal.Width Petal.Length Petal.Width
-##    <int> <chr>             <dbl>       <dbl>        <dbl>       <dbl>
-##  1     1 setosa              5.1         3.5          1.4         0.2
-##  2     1 versicolor          7           3.2          4.7         1.4
-##  3     1 virginica           6.3         3.3          6           2.5
-##  4     2 setosa              4.9         3            1.4         0.2
-##  5     2 versicolor          6.4         3.2          4.5         1.5
-##  6     2 virginica           5.8         2.7          5.1         1.9
-##  7     3 setosa              4.7         3.2          1.3         0.2
-##  8     3 versicolor          6.9         3.1          4.9         1.5
-##  9     3 virginica           7.1         3            5.9         2.1
-## 10     4 setosa              4.6         3.1          1.5         0.2
-## # i 140 more rows
+## # A tibble: 156 x 7
+##       id Species date  Sepal.Length Sepal.Width Petal.Length
+##    <int> <fct>   <chr>        <dbl>       <dbl>        <dbl>
+##  1     1 setosa  2001           5.1         3.5          1.4
+##  2     1 setosa  2002           4.9         3            1.4
+##  3     1 setosa  2003           4.7         3.2          1.3
+##  4     2 setosa  2001           4.6         3.1          1.5
+##  5     2 setosa  2002           5           3.6          1.4
+##  6     2 setosa  2003           5.4         3.9          1.7
+##  7     3 setosa  2001           4.6         3.4          1.4
+##  8     3 setosa  2002           5           3.4          1.5
+##  9     3 setosa  2003           4.4         2.9          1.4
+## 10     4 setosa  2001           4.9         3.1          1.5
+## # i 146 more rows
+## # i 1 more variable: Petal.Width <dbl>
 \end{verbatim}
 
-Dans le code montré ci-dessus, l'argument \texttt{cols} a permis de sélectionner toutes les colonnes situées à droite de la colonne \texttt{id}, l'argument \texttt{names\_to} a permis d'indiquer qu'il faut garder des colonnes spécifiques nommées avec le premier morceau du nom des variables antérieures (le mot \texttt{".value"} permet cela), et le mot \texttt{"Species"} a permis de nommer la colonne avec les espèces d'iris qui étaient les seconds morceaux des noms des variables antérieures.
+Dans le code montré ci-dessus, l'argument \texttt{cols} a permis de sélectionner toutes les colonnes dont on voulait faire pivoter les données, l'argument \texttt{names\_to} a permis d'indiquer qu'il faut garder des colonnes spécifiques nommées avec le premier morceau du nom des variables antérieures (le mot \texttt{".value"} permet cela), et le mot \texttt{"date"} a permis de nommer la colonne avec les dates qui étaient les seconds morceaux des noms des variables antérieures.
 
 Nous venons de voir plusieurs fonctions qui peuvent être très utiles pour pouvoir facilement préparer sa base de données en vue des futures analyses. Il ne s'agit que d'une vue très superficielle de tout le potentiel de manipulation des données qu'ont ces fonctions. Pour une vue plus approndie des possibilités qu'offrent ces fonctions, la lecture de l'ouvrage \emph{R for Data Science} d'Hadley Wickham et de Garrett Grolemund \autocite*{wickhamDataScience2017} sera particulièrement enrichissante. Cet ouvrage est en libre accès ici : \url{https://r4ds.had.co.nz}.
 
@@ -4266,23 +4311,7 @@ Dans le tableau ci-dessus, chaque case contenant un « n » est un effectif. Si 
 La différence de risque d'être malade pour le groupe contrôle par rapport au groupe traité de l'exemple, notée \(DR\), est alors :
 
 \[p_C - p_T \]
-Avec R, la différence de risque peut être obtenue avec le package \texttt{riskCommunicator}. Il s'agit d'un package qui n'existe pas sur CRAN, mais seulement sur Github. Pour pouvoir l'installer à partir de Github, il faut d'abord installer un package qui permet ce type d'installation, tel que le package \texttt{devtools} :
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{install.packages}\NormalTok{(}\StringTok{"devtools"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-Le package \texttt{riskCommunicator} peut alors être installé en suivant la procédure ci-dessous :
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{devtools}\SpecialCharTok{::}\FunctionTok{install\_github}\NormalTok{(}\StringTok{"jgrembi/riskCommunicator"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-Pour utiliser le package \texttt{riskCommunicator}, il faut bien sûr ensuite le charger :
+Avec R, la différence de risque peut être obtenue avec le package \texttt{riskCommunicator}. Pour utiliser le package \texttt{riskCommunicator}, il faut bien sûr ensuite le charger :
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4794,9 +4823,9 @@ Dans R, le \(\Delta\) de Glass lié à un échantillon de population peut être 
 \end{Shaded}
 
 \begin{verbatim}
-## Glass' delta |         95% CI
-## -----------------------------
-## -1.80        | [-2.29, -1.31]
+## Glass' delta (adj.) |         95% CI
+## ------------------------------------
+## -1.77               | [-2.25, -1.29]
 \end{verbatim}
 
 Notons quand même que l'utilisation du \(\Delta\) de Glass semble peu courante dans les études cherchant à tester l'effet d'un programme. L'une des difficultés liées à son utilisation est que cela suggère que les groupes à comparer soient identiques en pré-programme pour la variable étudiée. En général, des procédures un peu plus sophistiquées sont utilisées pour déterminer l'effet d'un programme, en particulier des procédures qui permettent de prendre en compte justement les différences qui peuvent exister entre les groupes en pré-programme.
@@ -5414,11 +5443,11 @@ Maintenant que l'on connaît la distribution théorique correspondant à notre e
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.8\linewidth]{Analyser-des-données-avec-R_files/figure-latex/unnamed-chunk-32-1} 
+{\centering \includegraphics[width=0.8\linewidth]{Analyser-des-données-avec-R_files/figure-latex/unnamed-chunk-30-1} 
 
 }
 
-\caption{Visualisation des fréquences dans le jeu de données `cartes`}\label{fig:unnamed-chunk-32}
+\caption{Visualisation des fréquences dans le jeu de données `cartes`}\label{fig:unnamed-chunk-30}
 \end{figure}
 
 La distribution \(O\) des fréquences observées pourrait s'écrire comme suit :

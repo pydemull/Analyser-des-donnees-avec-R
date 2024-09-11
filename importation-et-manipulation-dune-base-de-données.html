@@ -7,7 +7,7 @@
 <title>Chapitre 2 Importation et manipulation d’une base de données | Analyser des données avec R</title>
 <meta name="author" content="Pierre-Yves de Müllenheim">
 <meta name="description" content="2.1 Comprendre ce qu’est une base de données Lorsqu’on souhaite répondre à une question, la démarche scientifique classique consiste à effectuer une série de mesures ou d’observations selon un...">
-<meta name="generator" content="bookdown 0.38 with bs4_book()">
+<meta name="generator" content="bookdown 0.40 with bs4_book()">
 <meta property="og:title" content="Chapitre 2 Importation et manipulation d’une base de données | Analyser des données avec R">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://github.com/pydemull/Analyser-des-donnees-avec-R/importation-et-manipulation-dune-base-de-données.html">
@@ -17,7 +17,7 @@
 <meta name="twitter:description" content="2.1 Comprendre ce qu’est une base de données Lorsqu’on souhaite répondre à une question, la démarche scientifique classique consiste à effectuer une série de mesures ou d’observations selon un...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.6.2/transition.js"></script><script src="libs/bs3compat-0.6.2/tabs.js"></script><script src="libs/bs3compat-0.6.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.8.0/transition.js"></script><script src="libs/bs3compat-0.8.0/tabs.js"></script><script src="libs/bs3compat-0.8.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><link href="libs/tabwid-1.1.3/tabwid.css" rel="stylesheet">
 <script src="libs/tabwid-1.1.3/tabwid.js"></script><!-- Code fom Dexter to custom bs4_book template: https://stackoverflow.com/questions/66128954/change-right-sidebar-header-in-bs4-book-bookdown --><script>
         $(function() {
@@ -104,170 +104,182 @@
 <span class="header-section-number">2.1</span> Comprendre ce qu’est une base de données<a class="anchor" aria-label="anchor" href="#comprendre-ce-quest-une-base-de-donn%C3%A9es"><i class="fas fa-link"></i></a>
 </h2>
 <p>Lorsqu’on souhaite répondre à une question, la démarche scientifique classique consiste à effectuer une série de mesures ou d’observations selon un protocole qui a été conçu en cohérence avec la question posée. En principe, ces mesures ou observations donnent lieu à l’obtention de valeurs. Ces valeurs peuvent être de forme numérique (e.g., les valeurs de taille de différents individus) ou de forme littérale (e.g., les valeurs de sexe de différents individus). Quelle que soit leur forme, les valeurs que l’on obtient dans un contexte qui est connu, comme dans le cas d’un protocole de mesures, ont un sens bien défini car elles sont associées à des choses que l’on a cherché à caractériser. Lorsqu’une valeur est porteuse d’un sens bien défini, on peut alors considérer qu’il s’agit d’une <strong>donnée</strong>.
-Très souvent, pour répondre à une question, il est nécessaire d’acquérir plusieurs données qui seraient relatives à différentes choses que l’on a cherché à caractériser (e.g., la taille, la couleur, le poids, etc.), et qui seraient relatives également à différents individus chez qui l’on aurait souhaité caractériser ces choses. Afin de conduire les analyses qui permettraient de répondre à la question posée, il convient alors de répertorier toutes les données acquises dans un même document, et plus exactement dans un même fichier, qui serait la base de données, telle que présentée dans le Tableau <a href="importation-et-manipulation-dune-base-de-donn%C3%A9es.html#tab:database">2.1</a>.</p>
+Très souvent, pour répondre à une question, il est nécessaire d’acquérir plusieurs données qui seraient relatives à différentes choses que l’on a cherché à caractériser (e.g., la taille, la couleur, le poids, etc.), et qui seraient relatives également à différents individus chez qui l’on aurait souhaité caractériser ces choses. Afin de conduire les analyses qui permettraient de répondre à la question posée, il convient alors de répertorier toutes les données acquises dans un même document, et plus exactement dans un même fichier, qui serait la base de données, telle que présentée dans le Tableau <a href="#tab:database"><strong>??</strong></a>.</p>
 <div class="custom-table">
 <div class="tabwid">
-<style>.cl-f7e47898{}.cl-f7de8762{font-family:'DejaVu Sans';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-f7de8763{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-f7e0cc66{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-f7e0e0ac{width:0.447in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f7e0e0b6{width:0.786in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f7e0e0c0{width:0.722in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f7e0e0ca{width:1.322in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f7e0e0cb{width:0.861in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f7e0e0cc{width:0.447in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f7e0e0d4{width:0.786in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f7e0e0d5{width:0.722in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f7e0e0de{width:1.322in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f7e0e0df{width:0.861in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f7e0e0e0{width:0.447in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f7e0e0e8{width:0.786in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f7e0e0e9{width:0.722in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f7e0e0ea{width:1.322in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f7e0e0eb{width:0.861in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f7e0e0f2{width:0.447in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f7e0e0f3{width:0.786in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f7e0e0f4{width:0.722in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f7e0e0fc{width:1.322in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f7e0e0fd{width:0.861in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f7dadba8{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}</style>
-<div class="inline-table"><table data-quarto-disable-processing="true" class="cl-f7e47898">
-<caption style="display:table-caption;margin:0pt;text-align:center;border-bottom: 0.00pt solid transparent;border-top: 0.00pt solid transparent;border-left: 0.00pt solid transparent;border-right: 0.00pt solid transparent;padding-top:3pt;padding-bottom:3pt;padding-left:3pt;padding-right:3pt;line-height: 1;background-color:transparent;">
-<span id="tab:database">Tableau 2.1: </span><span class="cl-f7dadba8">Exemple de base de données</span>
+<style>.cl-84278bee{}.cl-84210846{font-family:'DejaVu Sans';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-8421085a{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-8423a196{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-8423bf8c{width:0.447in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8423bf96{width:0.786in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8423bf97{width:0.722in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8423bfa0{width:1.322in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8423bfa1{width:0.861in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8423bfa2{width:0.447in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8423bfaa{width:0.786in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8423bfab{width:0.722in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8423bfb4{width:1.322in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8423bfb5{width:0.861in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8423bfb6{width:0.447in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8423bfbe{width:0.786in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8423bfbf{width:0.722in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8423bfc8{width:1.322in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8423bfc9{width:0.861in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8423bfca{width:0.447in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8423bfcb{width:0.786in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8423bfd2{width:0.722in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8423bfd3{width:1.322in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8423bfd4{width:0.861in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-841d3b8a{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}</style>
+<div class="inline-table"><table data-quarto-disable-processing="true" class="cl-84278bee">
+
+```
+
+<caption style="display:table-caption;margin:0pt;text-align:center;border-bottom: 0.00pt solid transparent;border-top: 0.00pt solid transparent;border-left: 0.00pt solid transparent;border-right: 0.00pt solid transparent;padding-top:3pt;padding-bottom:3pt;padding-left:3pt;padding-right:3pt;line-height: 1;background-color:transparent;">(\#tab:database)<span class="cl-841d3b8a">Exemple de base de données</span>
 </caption>
 
+```{=html}
+
 <thead><tr style="overflow-wrap:break-word;">
-<th class="cl-f7e0e0ac"><p class="cl-f7e0cc66"><span class="cl-f7de8762">id</span></p></th>
-<th class="cl-f7e0e0b6"><p class="cl-f7e0cc66"><span class="cl-f7de8762">genre</span></p></th>
-<th class="cl-f7e0e0c0"><p class="cl-f7e0cc66"><span class="cl-f7de8762">taille</span></p></th>
-<th class="cl-f7e0e0ca"><p class="cl-f7e0cc66"><span class="cl-f7de8762">nb_victoires</span></p></th>
-<th class="cl-f7e0e0cb"><p class="cl-f7e0cc66"><span class="cl-f7de8762">niveau</span></p></th>
+<th class="cl-8423bf8c"><p class="cl-8423a196"><span class="cl-84210846">id</span></p></th>
+<th class="cl-8423bf96"><p class="cl-8423a196"><span class="cl-84210846">genre</span></p></th>
+<th class="cl-8423bf97"><p class="cl-8423a196"><span class="cl-84210846">taille</span></p></th>
+<th class="cl-8423bfa0"><p class="cl-8423a196"><span class="cl-84210846">nb_victoires</span></p></th>
+<th class="cl-8423bfa1"><p class="cl-8423a196"><span class="cl-84210846">niveau</span></p></th>
 </tr></thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-f7e0e0cc"><p class="cl-f7e0cc66"><span class="cl-f7de8763">1</span></p></td>
-<td class="cl-f7e0e0d4"><p class="cl-f7e0cc66"><span class="cl-f7de8763">H</span></p></td>
-<td class="cl-f7e0e0d5"><p class="cl-f7e0cc66"><span class="cl-f7de8763">1.80</span></p></td>
-<td class="cl-f7e0e0de"><p class="cl-f7e0cc66"><span class="cl-f7de8763">45</span></p></td>
-<td class="cl-f7e0e0df"><p class="cl-f7e0cc66"><span class="cl-f7de8763">1</span></p></td>
+<td class="cl-8423bfa2"><p class="cl-8423a196"><span class="cl-8421085a">1</span></p></td>
+<td class="cl-8423bfaa"><p class="cl-8423a196"><span class="cl-8421085a">H</span></p></td>
+<td class="cl-8423bfab"><p class="cl-8423a196"><span class="cl-8421085a">1.80</span></p></td>
+<td class="cl-8423bfb4"><p class="cl-8423a196"><span class="cl-8421085a">45</span></p></td>
+<td class="cl-8423bfb5"><p class="cl-8423a196"><span class="cl-8421085a">1</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-f7e0e0e0"><p class="cl-f7e0cc66"><span class="cl-f7de8763">2</span></p></td>
-<td class="cl-f7e0e0e8"><p class="cl-f7e0cc66"><span class="cl-f7de8763">H</span></p></td>
-<td class="cl-f7e0e0e9"><p class="cl-f7e0cc66"><span class="cl-f7de8763">1.93</span></p></td>
-<td class="cl-f7e0e0ea"><p class="cl-f7e0cc66"><span class="cl-f7de8763">90</span></p></td>
-<td class="cl-f7e0e0eb"><p class="cl-f7e0cc66"><span class="cl-f7de8763">3</span></p></td>
+<td class="cl-8423bfb6"><p class="cl-8423a196"><span class="cl-8421085a">2</span></p></td>
+<td class="cl-8423bfbe"><p class="cl-8423a196"><span class="cl-8421085a">H</span></p></td>
+<td class="cl-8423bfbf"><p class="cl-8423a196"><span class="cl-8421085a">1.93</span></p></td>
+<td class="cl-8423bfc8"><p class="cl-8423a196"><span class="cl-8421085a">90</span></p></td>
+<td class="cl-8423bfc9"><p class="cl-8423a196"><span class="cl-8421085a">3</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-f7e0e0cc"><p class="cl-f7e0cc66"><span class="cl-f7de8763">3</span></p></td>
-<td class="cl-f7e0e0d4"><p class="cl-f7e0cc66"><span class="cl-f7de8763">H</span></p></td>
-<td class="cl-f7e0e0d5"><p class="cl-f7e0cc66"><span class="cl-f7de8763">1.50</span></p></td>
-<td class="cl-f7e0e0de"><p class="cl-f7e0cc66"><span class="cl-f7de8763">100</span></p></td>
-<td class="cl-f7e0e0df"><p class="cl-f7e0cc66"><span class="cl-f7de8763">4</span></p></td>
+<td class="cl-8423bfa2"><p class="cl-8423a196"><span class="cl-8421085a">3</span></p></td>
+<td class="cl-8423bfaa"><p class="cl-8423a196"><span class="cl-8421085a">H</span></p></td>
+<td class="cl-8423bfab"><p class="cl-8423a196"><span class="cl-8421085a">1.50</span></p></td>
+<td class="cl-8423bfb4"><p class="cl-8423a196"><span class="cl-8421085a">100</span></p></td>
+<td class="cl-8423bfb5"><p class="cl-8423a196"><span class="cl-8421085a">4</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-f7e0e0e0"><p class="cl-f7e0cc66"><span class="cl-f7de8763">4</span></p></td>
-<td class="cl-f7e0e0e8"><p class="cl-f7e0cc66"><span class="cl-f7de8763">F</span></p></td>
-<td class="cl-f7e0e0e9"><p class="cl-f7e0cc66"><span class="cl-f7de8763">1.95</span></p></td>
-<td class="cl-f7e0e0ea"><p class="cl-f7e0cc66"><span class="cl-f7de8763">43</span></p></td>
-<td class="cl-f7e0e0eb"><p class="cl-f7e0cc66"><span class="cl-f7de8763">1</span></p></td>
+<td class="cl-8423bfb6"><p class="cl-8423a196"><span class="cl-8421085a">4</span></p></td>
+<td class="cl-8423bfbe"><p class="cl-8423a196"><span class="cl-8421085a">F</span></p></td>
+<td class="cl-8423bfbf"><p class="cl-8423a196"><span class="cl-8421085a">1.95</span></p></td>
+<td class="cl-8423bfc8"><p class="cl-8423a196"><span class="cl-8421085a">43</span></p></td>
+<td class="cl-8423bfc9"><p class="cl-8423a196"><span class="cl-8421085a">1</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-f7e0e0cc"><p class="cl-f7e0cc66"><span class="cl-f7de8763">5</span></p></td>
-<td class="cl-f7e0e0d4"><p class="cl-f7e0cc66"><span class="cl-f7de8763">F</span></p></td>
-<td class="cl-f7e0e0d5"><p class="cl-f7e0cc66"><span class="cl-f7de8763">1.52</span></p></td>
-<td class="cl-f7e0e0de"><p class="cl-f7e0cc66"><span class="cl-f7de8763">34</span></p></td>
-<td class="cl-f7e0e0df"><p class="cl-f7e0cc66"><span class="cl-f7de8763">2</span></p></td>
+<td class="cl-8423bfa2"><p class="cl-8423a196"><span class="cl-8421085a">5</span></p></td>
+<td class="cl-8423bfaa"><p class="cl-8423a196"><span class="cl-8421085a">F</span></p></td>
+<td class="cl-8423bfab"><p class="cl-8423a196"><span class="cl-8421085a">1.52</span></p></td>
+<td class="cl-8423bfb4"><p class="cl-8423a196"><span class="cl-8421085a">34</span></p></td>
+<td class="cl-8423bfb5"><p class="cl-8423a196"><span class="cl-8421085a">2</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-f7e0e0e0"><p class="cl-f7e0cc66"><span class="cl-f7de8763">6</span></p></td>
-<td class="cl-f7e0e0e8"><p class="cl-f7e0cc66"><span class="cl-f7de8763">H</span></p></td>
-<td class="cl-f7e0e0e9"><p class="cl-f7e0cc66"><span class="cl-f7de8763">1.87</span></p></td>
-<td class="cl-f7e0e0ea"><p class="cl-f7e0cc66"><span class="cl-f7de8763">67</span></p></td>
-<td class="cl-f7e0e0eb"><p class="cl-f7e0cc66"><span class="cl-f7de8763">2</span></p></td>
+<td class="cl-8423bfb6"><p class="cl-8423a196"><span class="cl-8421085a">6</span></p></td>
+<td class="cl-8423bfbe"><p class="cl-8423a196"><span class="cl-8421085a">H</span></p></td>
+<td class="cl-8423bfbf"><p class="cl-8423a196"><span class="cl-8421085a">1.87</span></p></td>
+<td class="cl-8423bfc8"><p class="cl-8423a196"><span class="cl-8421085a">67</span></p></td>
+<td class="cl-8423bfc9"><p class="cl-8423a196"><span class="cl-8421085a">2</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-f7e0e0f2"><p class="cl-f7e0cc66"><span class="cl-f7de8763">7</span></p></td>
-<td class="cl-f7e0e0f3"><p class="cl-f7e0cc66"><span class="cl-f7de8763">H</span></p></td>
-<td class="cl-f7e0e0f4"><p class="cl-f7e0cc66"><span class="cl-f7de8763">1.83</span></p></td>
-<td class="cl-f7e0e0fc"><p class="cl-f7e0cc66"><span class="cl-f7de8763">79</span></p></td>
-<td class="cl-f7e0e0fd"><p class="cl-f7e0cc66"><span class="cl-f7de8763">3</span></p></td>
+<td class="cl-8423bfca"><p class="cl-8423a196"><span class="cl-8421085a">7</span></p></td>
+<td class="cl-8423bfcb"><p class="cl-8423a196"><span class="cl-8421085a">H</span></p></td>
+<td class="cl-8423bfd2"><p class="cl-8423a196"><span class="cl-8421085a">1.83</span></p></td>
+<td class="cl-8423bfd3"><p class="cl-8423a196"><span class="cl-8421085a">79</span></p></td>
+<td class="cl-8423bfd4"><p class="cl-8423a196"><span class="cl-8421085a">3</span></p></td>
 </tr>
 </tbody>
 </table></div>
 </div>
 </div>
-<p>La base de données prend donc la forme d’un tableau. Plusieurs principes sont à respecter en général lors de la création d’une base de données. Tout d’abord, les lignes de la base de données (qu’on appelle des <strong>observations</strong>) doivent correspondre le cas échéant à des individus bien identifiés. Ensuite, chaque colonne doit correspondre à une variable. L’ensemble des données contenues dans une même ligne correspond donc aux données relatives aux différentes variables (e.g., la taille, le poids, le sexe, etc.) qui auraient été obtenues chez un même individu. Dans le cas d’études où l’on évaluerait une ou plusieurs variables plusieurs fois chez un même individu (i.e., à différentes moments, dans différentes conditions), il peut convenir de créer autant de lignes que de fois où les variables auraient été évaluées. Par exemple, le Tableau <a href="importation-et-manipulation-dune-base-de-donn%C3%A9es.html#tab:databasePlusObs">2.2</a> représente une base de données, certes très sommaire, qui contient des données d’individus dont on aurait évalué le poids deux fois, avant et après un programme de prise en charge. On remarque alors qu’il y a deux lignes par individu qui correspondent aux deux temps d’évaluation. La taille, elle, n’a été évaluée qu’une seule fois, en début de programme, mais pour éviter de laisser des cellules vides, la valeur initiale de la taille a été reproduite dans la seconde ligne.</p>
+<p>La base de données prend donc la forme d’un tableau. Plusieurs principes sont à respecter en général lors de la création d’une base de données. Tout d’abord, les lignes de la base de données (qu’on appelle des <strong>observations</strong>) doivent correspondre le cas échéant à des individus bien identifiés. Ensuite, chaque colonne doit correspondre à une variable. L’ensemble des données contenues dans une même ligne correspond donc aux données relatives aux différentes variables qui auraient été obtenues chez un même individu (e.g., la taille, le poids, le sexe, etc.). Dans le cas d’études où l’on évaluerait une ou plusieurs variables plusieurs fois chez un même individu (i.e., à différentes moments, dans différentes conditions), il peut convenir de créer autant de lignes que de fois où les variables auraient été évaluées. Par exemple, le Tableau <a href="#tab:databasePlusObs"><strong>??</strong></a> représente une base de données, certes très sommaire, qui contient des données d’individus dont on aurait évalué le poids deux fois, avant et après un programme de prise en charge. On remarque alors qu’il y a deux lignes par individu qui correspondent aux deux temps d’évaluation. La taille, elle, n’a été évaluée qu’une seule fois, en début de programme, mais pour éviter de laisser des cellules vides, la valeur initiale de la taille a été reproduite dans la seconde ligne.</p>
 <div class="custom-table">
 <div class="tabwid">
-<style>.cl-f7fbe85c{}.cl-f7f6affe{font-family:'DejaVu Sans';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-f7f6b012{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-f7f8d9b4{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-f7f8e9f4{width:0.447in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f7f8e9f5{width:0.722in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f7f8e9fe{width:1.256in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f7f8e9ff{width:0.752in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f7f8ea00{width:0.447in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f7f8ea08{width:0.722in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f7f8ea09{width:1.256in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f7f8ea12{width:0.752in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f7f8ea13{width:0.447in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f7f8ea14{width:0.722in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f7f8ea1c{width:1.256in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f7f8ea1d{width:0.752in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f7f8ea1e{width:0.447in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f7f8ea26{width:0.722in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f7f8ea30{width:1.256in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f7f8ea31{width:0.752in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<div class="inline-table"><table data-quarto-disable-processing="true" class="cl-f7fbe85c">
-<caption style="display:table-caption;margin:0pt;text-align:center;border-bottom: 0.00pt solid transparent;border-top: 0.00pt solid transparent;border-left: 0.00pt solid transparent;border-right: 0.00pt solid transparent;padding-top:3pt;padding-bottom:3pt;padding-left:3pt;padding-right:3pt;line-height: 1;background-color:transparent;">
-<span id="tab:databasePlusObs">Tableau 2.2: </span><span>Organisation d’une base de données avec des mesures répétées</span>
+<style>.cl-843f2db2{}.cl-8439136e{font-family:'DejaVu Sans';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-84391382{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-843b4fbc{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-843b688a{width:0.447in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-843b688b{width:0.722in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-843b6894{width:1.256in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-843b6895{width:0.752in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-843b6896{width:0.447in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-843b689e{width:0.722in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-843b689f{width:1.256in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-843b68a8{width:0.752in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-843b68a9{width:0.447in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-843b68aa{width:0.722in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-843b68b2{width:1.256in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-843b68b3{width:0.752in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-843b68bc{width:0.447in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-843b68bd{width:0.722in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-843b68be{width:1.256in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-843b68c6{width:0.752in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<div class="inline-table"><table data-quarto-disable-processing="true" class="cl-843f2db2">
+
+```
+
+<caption style="display:table-caption;margin:0pt;text-align:center;border-bottom: 0.00pt solid transparent;border-top: 0.00pt solid transparent;border-left: 0.00pt solid transparent;border-right: 0.00pt solid transparent;padding-top:3pt;padding-bottom:3pt;padding-left:3pt;padding-right:3pt;line-height: 1;background-color:transparent;">(\#tab:databasePlusObs)<span>Organisation d'une base de données avec des mesures répétées</span>
 </caption>
 
+```{=html}
+
 <thead><tr style="overflow-wrap:break-word;">
-<th class="cl-f7f8e9f4"><p class="cl-f7f8d9b4"><span class="cl-f7f6affe">id</span></p></th>
-<th class="cl-f7f8e9f5"><p class="cl-f7f8d9b4"><span class="cl-f7f6affe">taille</span></p></th>
-<th class="cl-f7f8e9fe"><p class="cl-f7f8d9b4"><span class="cl-f7f6affe">temps_eval</span></p></th>
-<th class="cl-f7f8e9ff"><p class="cl-f7f8d9b4"><span class="cl-f7f6affe">poids</span></p></th>
+<th class="cl-843b688a"><p class="cl-843b4fbc"><span class="cl-8439136e">id</span></p></th>
+<th class="cl-843b688b"><p class="cl-843b4fbc"><span class="cl-8439136e">taille</span></p></th>
+<th class="cl-843b6894"><p class="cl-843b4fbc"><span class="cl-8439136e">temps_eval</span></p></th>
+<th class="cl-843b6895"><p class="cl-843b4fbc"><span class="cl-8439136e">poids</span></p></th>
 </tr></thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-f7f8ea00"><p class="cl-f7f8d9b4"><span class="cl-f7f6b012">1</span></p></td>
-<td class="cl-f7f8ea08"><p class="cl-f7f8d9b4"><span class="cl-f7f6b012">1.75</span></p></td>
-<td class="cl-f7f8ea09"><p class="cl-f7f8d9b4"><span class="cl-f7f6b012">pre</span></p></td>
-<td class="cl-f7f8ea12"><p class="cl-f7f8d9b4"><span class="cl-f7f6b012">75</span></p></td>
+<td class="cl-843b6896"><p class="cl-843b4fbc"><span class="cl-84391382">1</span></p></td>
+<td class="cl-843b689e"><p class="cl-843b4fbc"><span class="cl-84391382">1.75</span></p></td>
+<td class="cl-843b689f"><p class="cl-843b4fbc"><span class="cl-84391382">pre</span></p></td>
+<td class="cl-843b68a8"><p class="cl-843b4fbc"><span class="cl-84391382">75</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-f7f8ea13"><p class="cl-f7f8d9b4"><span class="cl-f7f6b012">1</span></p></td>
-<td class="cl-f7f8ea14"><p class="cl-f7f8d9b4"><span class="cl-f7f6b012">1.75</span></p></td>
-<td class="cl-f7f8ea1c"><p class="cl-f7f8d9b4"><span class="cl-f7f6b012">post</span></p></td>
-<td class="cl-f7f8ea1d"><p class="cl-f7f8d9b4"><span class="cl-f7f6b012">73</span></p></td>
+<td class="cl-843b68a9"><p class="cl-843b4fbc"><span class="cl-84391382">1</span></p></td>
+<td class="cl-843b68aa"><p class="cl-843b4fbc"><span class="cl-84391382">1.75</span></p></td>
+<td class="cl-843b68b2"><p class="cl-843b4fbc"><span class="cl-84391382">post</span></p></td>
+<td class="cl-843b68b3"><p class="cl-843b4fbc"><span class="cl-84391382">73</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-f7f8ea00"><p class="cl-f7f8d9b4"><span class="cl-f7f6b012">2</span></p></td>
-<td class="cl-f7f8ea08"><p class="cl-f7f8d9b4"><span class="cl-f7f6b012">1.89</span></p></td>
-<td class="cl-f7f8ea09"><p class="cl-f7f8d9b4"><span class="cl-f7f6b012">pre</span></p></td>
-<td class="cl-f7f8ea12"><p class="cl-f7f8d9b4"><span class="cl-f7f6b012">90</span></p></td>
+<td class="cl-843b6896"><p class="cl-843b4fbc"><span class="cl-84391382">2</span></p></td>
+<td class="cl-843b689e"><p class="cl-843b4fbc"><span class="cl-84391382">1.89</span></p></td>
+<td class="cl-843b689f"><p class="cl-843b4fbc"><span class="cl-84391382">pre</span></p></td>
+<td class="cl-843b68a8"><p class="cl-843b4fbc"><span class="cl-84391382">90</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-f7f8ea1e"><p class="cl-f7f8d9b4"><span class="cl-f7f6b012">2</span></p></td>
-<td class="cl-f7f8ea26"><p class="cl-f7f8d9b4"><span class="cl-f7f6b012">1.89</span></p></td>
-<td class="cl-f7f8ea30"><p class="cl-f7f8d9b4"><span class="cl-f7f6b012">post</span></p></td>
-<td class="cl-f7f8ea31"><p class="cl-f7f8d9b4"><span class="cl-f7f6b012">88</span></p></td>
+<td class="cl-843b68bc"><p class="cl-843b4fbc"><span class="cl-84391382">2</span></p></td>
+<td class="cl-843b68bd"><p class="cl-843b4fbc"><span class="cl-84391382">1.89</span></p></td>
+<td class="cl-843b68be"><p class="cl-843b4fbc"><span class="cl-84391382">post</span></p></td>
+<td class="cl-843b68c6"><p class="cl-843b4fbc"><span class="cl-84391382">88</span></p></td>
 </tr>
 </tbody>
 </table></div>
 </div>
 </div>
-<p>En principe, les données de la base qui ont été obtenues selon la même procédure d’acquisition représentent le même type de choses. Ces choses sont appelées des <strong>variables</strong> car elles varient selon les individus qui ont été étudiés et les conditions de mesure qui ont été mises en oeuvre (dans le cas où il y en aurait plusieurs). Lorsque ces choses ne sont pas censées varier, on parle de <strong>constantes</strong>. Une base de données peut comporter des variables de types différents (Tableau <a href="importation-et-manipulation-dune-base-de-donn%C3%A9es.html#tab:typesVariables">2.3</a>).</p>
+<p>En principe, les données de la base qui ont été obtenues selon la même procédure d’acquisition représentent le même type de choses. Ces choses sont appelées des <strong>variables</strong> car elles varient selon les individus qui ont été étudiés et les conditions de mesure qui ont été mises en oeuvre (dans le cas où il y en aurait plusieurs). Lorsque ces choses ne sont pas censées varier, on parle de <strong>constantes</strong>. Une base de données peut comporter des variables de types différents (Tableau <a href="#tab:typesVariables"><strong>??</strong></a>).</p>
 <div class="custom-table">
 <div class="tabwid">
-<style>.cl-f810aa76{}.cl-f80aabd0{font-family:'DejaVu Sans';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-f80aabe4{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-f80d84ea{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-f80d84f4{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-f80d958e{width:1.366in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f80d9598{width:1.058in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f80d9599{width:1.001in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f80d95a2{width:1.366in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f80d95a3{width:1.058in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f80d95ac{width:1.001in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f80d95ad{width:1.366in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f80d95ae{width:1.058in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f80d95b6{width:1.001in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f80d95b7{width:1.366in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f80d95b8{width:1.058in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f80d95c0{width:1.001in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f80d95c1{width:1.366in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f80d95c2{width:1.058in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f80d95ca{width:1.001in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f80d95cb{width:1.366in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f80d95d4{width:1.058in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f80d95d5{width:1.001in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<div class="inline-table"><table data-quarto-disable-processing="true" class="cl-f810aa76">
-<caption style="display:table-caption;margin:0pt;text-align:center;border-bottom: 0.00pt solid transparent;border-top: 0.00pt solid transparent;border-left: 0.00pt solid transparent;border-right: 0.00pt solid transparent;padding-top:3pt;padding-bottom:3pt;padding-left:3pt;padding-right:3pt;line-height: 1;background-color:transparent;">
-<span id="tab:typesVariables">Tableau 2.3: </span><span>Les différents types de variables</span>
+<style>.cl-84534676{}.cl-844d3c0e{font-family:'DejaVu Sans';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-844d3c22{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-844f6dee{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-844f6def{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-844f8a4a{width:1.366in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-844f8a54{width:1.058in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-844f8a55{width:1.001in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-844f8a5e{width:1.366in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-844f8a68{width:1.058in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-844f8a69{width:1.001in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-844f8a6a{width:1.366in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-844f8a72{width:1.058in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-844f8a73{width:1.001in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-844f8a7c{width:1.366in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-844f8a7d{width:1.058in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-844f8a7e{width:1.001in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-844f8a86{width:1.366in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-844f8a87{width:1.058in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-844f8a88{width:1.001in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-844f8a90{width:1.366in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-844f8a91{width:1.058in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-844f8a9a{width:1.001in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<div class="inline-table"><table data-quarto-disable-processing="true" class="cl-84534676">
+
+```
+
+<caption style="display:table-caption;margin:0pt;text-align:center;border-bottom: 0.00pt solid transparent;border-top: 0.00pt solid transparent;border-left: 0.00pt solid transparent;border-right: 0.00pt solid transparent;padding-top:3pt;padding-bottom:3pt;padding-left:3pt;padding-right:3pt;line-height: 1;background-color:transparent;">(\#tab:typesVariables)<span>Les différents types de variables</span>
 </caption>
 
+```{=html}
+
 <thead><tr style="overflow-wrap:break-word;">
-<th class="cl-f80d958e"><p class="cl-f80d84ea"><span class="cl-f80aabd0">Type</span></p></th>
-<th class="cl-f80d9598"><p class="cl-f80d84f4"><span class="cl-f80aabd0">Continue</span></p></th>
-<th class="cl-f80d9599"><p class="cl-f80d84f4"><span class="cl-f80aabd0">Discrète</span></p></th>
+<th class="cl-844f8a4a"><p class="cl-844f6dee"><span class="cl-844d3c0e">Type</span></p></th>
+<th class="cl-844f8a54"><p class="cl-844f6def"><span class="cl-844d3c0e">Continue</span></p></th>
+<th class="cl-844f8a55"><p class="cl-844f6def"><span class="cl-844d3c0e">Discrète</span></p></th>
 </tr></thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-f80d95a2"><p class="cl-f80d84ea"><span class="cl-f80aabd0">Quantitative</span></p></td>
-<td class="cl-f80d95a3"><p class="cl-f80d84f4"><span class="cl-f80aabe4"></span></p></td>
-<td class="cl-f80d95ac"><p class="cl-f80d84f4"><span class="cl-f80aabe4"></span></p></td>
+<td class="cl-844f8a5e"><p class="cl-844f6dee"><span class="cl-844d3c0e">Quantitative</span></p></td>
+<td class="cl-844f8a68"><p class="cl-844f6def"><span class="cl-844d3c22"></span></p></td>
+<td class="cl-844f8a69"><p class="cl-844f6def"><span class="cl-844d3c22"></span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-f80d95ad"><p class="cl-f80d84ea"><span class="cl-f80aabe4">Intervalle</span></p></td>
-<td class="cl-f80d95ae"><p class="cl-f80d84f4"><span class="cl-f80aabe4">X</span></p></td>
-<td class="cl-f80d95b6"><p class="cl-f80d84f4"><span class="cl-f80aabe4">X</span></p></td>
+<td class="cl-844f8a6a"><p class="cl-844f6dee"><span class="cl-844d3c22">Intervalle</span></p></td>
+<td class="cl-844f8a72"><p class="cl-844f6def"><span class="cl-844d3c22">X</span></p></td>
+<td class="cl-844f8a73"><p class="cl-844f6def"><span class="cl-844d3c22">X</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-f80d95b7"><p class="cl-f80d84ea"><span class="cl-f80aabe4">Ratio</span></p></td>
-<td class="cl-f80d95b8"><p class="cl-f80d84f4"><span class="cl-f80aabe4">X</span></p></td>
-<td class="cl-f80d95c0"><p class="cl-f80d84f4"><span class="cl-f80aabe4">X</span></p></td>
+<td class="cl-844f8a7c"><p class="cl-844f6dee"><span class="cl-844d3c22">Ratio</span></p></td>
+<td class="cl-844f8a7d"><p class="cl-844f6def"><span class="cl-844d3c22">X</span></p></td>
+<td class="cl-844f8a7e"><p class="cl-844f6def"><span class="cl-844d3c22">X</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-f80d95c1"><p class="cl-f80d84ea"><span class="cl-f80aabd0">Qualitative</span></p></td>
-<td class="cl-f80d95c2"><p class="cl-f80d84f4"><span class="cl-f80aabe4"></span></p></td>
-<td class="cl-f80d95ca"><p class="cl-f80d84f4"><span class="cl-f80aabe4"></span></p></td>
+<td class="cl-844f8a86"><p class="cl-844f6dee"><span class="cl-844d3c0e">Qualitative</span></p></td>
+<td class="cl-844f8a87"><p class="cl-844f6def"><span class="cl-844d3c22"></span></p></td>
+<td class="cl-844f8a88"><p class="cl-844f6def"><span class="cl-844d3c22"></span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-f80d95b7"><p class="cl-f80d84ea"><span class="cl-f80aabe4">Nominale</span></p></td>
-<td class="cl-f80d95b8"><p class="cl-f80d84f4"><span class="cl-f80aabe4"></span></p></td>
-<td class="cl-f80d95c0"><p class="cl-f80d84f4"><span class="cl-f80aabe4">X</span></p></td>
+<td class="cl-844f8a7c"><p class="cl-844f6dee"><span class="cl-844d3c22">Nominale</span></p></td>
+<td class="cl-844f8a7d"><p class="cl-844f6def"><span class="cl-844d3c22"></span></p></td>
+<td class="cl-844f8a7e"><p class="cl-844f6def"><span class="cl-844d3c22">X</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-f80d95cb"><p class="cl-f80d84ea"><span class="cl-f80aabe4">Ordinale</span></p></td>
-<td class="cl-f80d95d4"><p class="cl-f80d84f4"><span class="cl-f80aabe4"></span></p></td>
-<td class="cl-f80d95d5"><p class="cl-f80d84f4"><span class="cl-f80aabe4">X</span></p></td>
+<td class="cl-844f8a90"><p class="cl-844f6dee"><span class="cl-844d3c22">Ordinale</span></p></td>
+<td class="cl-844f8a91"><p class="cl-844f6def"><span class="cl-844d3c22"></span></p></td>
+<td class="cl-844f8a9a"><p class="cl-844f6def"><span class="cl-844d3c22">X</span></p></td>
 </tr>
 </tbody>
 </table></div>
 </div>
 </div>
-<p>Les <strong>variables quantitatives</strong> (aussi dites numériques) comportent des nombres dont les différences entre eux ont un sens. Parmi les variables quantitatives, il est possible de plus précisément distinguer celles qui peuvent être associées seulement à une <strong>échelle d’intervalles</strong>, et celles qui peuvent être aussi associées à une <strong>échelle de ratios</strong>. Les variables étant associables seulement à une <strong>échelle d’intervalles</strong> ont la particularité de ne pas avoir de zéro naturel, de sorte que multiplier ou diviser les valeurs de cette variable n’aurait pas de sens. Un exemple de ce type de variables pourrait être la température exprimée en degrés Celsius. Avec cette variable, il est seulement possible de décrire le fait qu’il fait x degrés plus chaud ou plus froid à un endroit par rapport à un autre, mais cela n’aurait pas de sens de dire qu’il ferait deux fois plus chaud à un endroit où il y aurait 20°C par rapport à un endroit où il y aurait seulement 10°C. Il serait possible de le dire si 0°C correspondrait à “pas de température du tout”, mais cela n’est évidemment pas le cas (cet exemple est repris de Danielle Navarro <span class="citation">(<a href="r%C3%A9f%C3%A9rences.html#ref-navarroLearningStatistics2018">2018</a>)</span>). En revanche, les variables pouvant être associées à une échelle de ratios présentent des valeurs qui, en plus de permettre de calculer des différences numériques qui ont un sens, peuvent être multipliées ou divisées, comme par exemple le temps de réaction à un stimulus donné.</p>
+<p>Les <strong>variables quantitatives</strong> (aussi dites numériques) comportent des nombres dont les différences entre eux ont un sens physique. Parmi les variables quantitatives, il est possible de plus précisément distinguer celles qui peuvent être associées seulement à une <strong>échelle d’intervalles</strong>, et celles qui peuvent être aussi associées à une <strong>échelle de ratios</strong>. Les variables étant associables seulement à une <strong>échelle d’intervalles</strong> ont la particularité de ne pas avoir de zéro naturel, de sorte que multiplier ou diviser les valeurs de cette variable n’aurait pas de sens. Un exemple de ce type de variables pourrait être la température exprimée en degrés Celsius. Avec cette variable, il est seulement possible de décrire le fait qu’il fait x degrés plus chaud ou plus froid à un endroit par rapport à un autre, mais cela n’aurait pas de sens de dire qu’il ferait deux fois plus chaud à un endroit où il y aurait 20°C par rapport à un endroit où il y aurait seulement 10°C. Il serait possible de le dire si 0°C correspondrait à “pas de température du tout”, mais cela n’est évidemment pas le cas (cet exemple est repris de Danielle Navarro <span class="citation">(<a href="r%C3%A9f%C3%A9rences.html#ref-navarroLearningStatistics2018">2018</a>)</span>). En revanche, les variables pouvant être associées à une échelle de ratios présentent des valeurs qui, en plus de permettre de calculer des différences numériques qui ont un sens, peuvent être multipliées ou divisées, comme par exemple le temps de réaction à un stimulus donné.</p>
 <p>En plus de la distinction échelle d’intervalles / échelle de ratios, les variables quantitatives peuvent être considérées comme étant soit <strong>continues</strong>, soit <strong>discrètes</strong>. Les variables quantitatives continues contiennent des nombres pouvant comporter théoriquement un nombre infini de décimales (e.g., la taille, le poids, etc.). Au contraire, les variables quantitatives discrètes ne peuvent contenir théoriquement que des nombres finis (e.g., le nombre de victoires sportives au cours d’une année). Certaines variables en théorie discrètes sont cependant souvent considérées comme continues tant le nombre de valeurs théoriquement possibles pour la variable est grand, tel que pour le nombre de globules blancs mesurés dans le sang <span class="citation">(<a href="r%C3%A9f%C3%A9rences.html#ref-labreucheDifferentsTypesVariables2010">Labreuche, 2010</a>)</span>.</p>
 <p>Les <strong>variables qualitatives</strong> (aussi dites catégorielles), elles, contiennent des valeurs désignant non pas des quantités mais des modalités. Ces variables sont donc forcément discrètes. Les modalités peuvent être exprimées sous forme littérale ou numérique. Parmi les variables qualitatives, on distingue celles qui sont <strong>nominales</strong> et celles qui sont <strong>ordinales</strong>. Les variables qualitatives nominales contiennent des modalités qui ne peuvent pas être ordonnées (e.g., les couleurs, les genres, etc.). Au contraire, les variables qualitatives ordinales contiennent des modalités qui peuvent être ordonnées (e.g., les niveaux de compétition sportive : départemental ; régional ; interrégional ; national ; international). Les variables qualitatives ordinales qui prendraient des valeurs numériques pour indiquer par exemple un niveau d’expertise (e.g., 1, 2, 3, et 4) se différencient des variables quantitatives discrètes par l’absence d’information sur la distance qui sépare les nombres de cette variable <span class="citation">(<a href="r%C3%A9f%C3%A9rences.html#ref-labreucheDifferentsTypesVariables2010">Labreuche, 2010</a>)</span>.</p>
 </div>
@@ -552,7 +564,7 @@ Très souvent, pour répondre à une question, il est nécessaire d’acquérir 
 <span><span class="fu"><a href="https://docs.ropensci.org/skimr/reference/skim.html">skim</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-table"><table class="table table-sm">
 <caption>
-<span id="tab:unnamed-chunk-3">Tableau 2.4: </span>Data summary</caption>
+<span id="tab:unnamed-chunk-3">Tableau 2.1: </span>Data summary</caption>
 <tbody>
 <tr class="odd">
 <td align="left">Name</td>
@@ -801,35 +813,39 @@ Très souvent, pour répondre à une question, il est nécessaire d’acquérir 
 <h3>
 <span class="header-section-number">2.4.6</span> Sélectionner des lignes avec <code>filter()</code><a class="anchor" aria-label="anchor" href="#s%C3%A9lectionner-des-lignes-avec-filter"><i class="fas fa-link"></i></a>
 </h3>
-<p>En fonction des besoins de l’analyse, on peut vouloir ne retenir que certaines lignes du fichier de données. La fonction <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> du package <code>dplyr</code> est faite pour réaliser ce filtrage. Plusieurs opérateurs sont disponibles pour ne retenir que les lignes que l’on veut (cf. Tableau <a href="importation-et-manipulation-dune-base-de-donn%C3%A9es.html#tab:SymbolsFilter">2.5</a>).</p>
+<p>En fonction des besoins de l’analyse, on peut vouloir ne retenir que certaines lignes du fichier de données. La fonction <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> du package <code>dplyr</code> est faite pour réaliser ce filtrage. Plusieurs opérateurs sont disponibles pour ne retenir que les lignes que l’on veut (cf. Tableau <a href="#tab:SymbolsFilter"><strong>??</strong></a>).</p>
 <div class="custom-table">
 <div class="tabwid">
-<style>.cl-f888ce8e{}.cl-f882c0a2{font-family:'DejaVu Sans';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-f882c0ac{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-f8859e08{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-f8859e12{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-f885aff6{width:1.643in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f885b000{width:1.167in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f885b001{width:1.643in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f885b00a{width:1.167in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f885b00b{width:1.643in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f885b00c{width:1.167in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f885b014{width:1.643in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f885b015{width:1.167in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f885b016{width:1.643in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f885b01e{width:1.167in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<div class="inline-table"><table data-quarto-disable-processing="true" class="cl-f888ce8e">
-<caption style="display:table-caption;margin:0pt;text-align:center;border-bottom: 0.00pt solid transparent;border-top: 0.00pt solid transparent;border-left: 0.00pt solid transparent;border-right: 0.00pt solid transparent;padding-top:3pt;padding-bottom:3pt;padding-left:3pt;padding-right:3pt;line-height: 1;background-color:transparent;">
-<span id="tab:SymbolsFilter">Tableau 2.5: </span><span>Les opérateurs utilisables avec la fonction filter()</span>
+<style>.cl-84b380f4{}.cl-84ae1646{font-family:'DejaVu Sans';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-84ae1650{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-84b05384{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-84b0538e{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-84b06e14{width:1.643in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-84b06e15{width:1.167in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-84b06e16{width:1.643in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-84b06e1e{width:1.167in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-84b06e1f{width:1.643in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-84b06e20{width:1.167in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-84b06e28{width:1.643in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-84b06e32{width:1.167in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-84b06e33{width:1.643in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-84b06e3c{width:1.167in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<div class="inline-table"><table data-quarto-disable-processing="true" class="cl-84b380f4">
+
+```
+
+<caption style="display:table-caption;margin:0pt;text-align:center;border-bottom: 0.00pt solid transparent;border-top: 0.00pt solid transparent;border-left: 0.00pt solid transparent;border-right: 0.00pt solid transparent;padding-top:3pt;padding-bottom:3pt;padding-left:3pt;padding-right:3pt;line-height: 1;background-color:transparent;">(\#tab:SymbolsFilter)<span>Les opérateurs utilisables avec la fonction filter()</span>
 </caption>
 
+```{=html}
+
 <thead><tr style="overflow-wrap:break-word;">
-<th class="cl-f885aff6"><p class="cl-f8859e08"><span class="cl-f882c0a2">Opération</span></p></th>
-<th class="cl-f885b000"><p class="cl-f8859e12"><span class="cl-f882c0a2">Opérateur</span></p></th>
+<th class="cl-84b06e14"><p class="cl-84b05384"><span class="cl-84ae1646">Opération</span></p></th>
+<th class="cl-84b06e15"><p class="cl-84b0538e"><span class="cl-84ae1646">Opérateur</span></p></th>
 </tr></thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-f885b001"><p class="cl-f8859e08"><span class="cl-f882c0ac">Égal</span></p></td>
-<td class="cl-f885b00a"><p class="cl-f8859e12"><span class="cl-f882c0ac">==</span></p></td>
+<td class="cl-84b06e16"><p class="cl-84b05384"><span class="cl-84ae1650">Égal</span></p></td>
+<td class="cl-84b06e1e"><p class="cl-84b0538e"><span class="cl-84ae1650">==</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-f885b00b"><p class="cl-f8859e08"><span class="cl-f882c0ac">Inférieur ou égal</span></p></td>
-<td class="cl-f885b00c"><p class="cl-f8859e12"><span class="cl-f882c0ac">&lt;=</span></p></td>
+<td class="cl-84b06e1f"><p class="cl-84b05384"><span class="cl-84ae1650">Inférieur ou égal</span></p></td>
+<td class="cl-84b06e20"><p class="cl-84b0538e"><span class="cl-84ae1650">&lt;=</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-f885b014"><p class="cl-f8859e08"><span class="cl-f882c0ac">Supérieur ou égal</span></p></td>
-<td class="cl-f885b015"><p class="cl-f8859e12"><span class="cl-f882c0ac">&gt;=</span></p></td>
+<td class="cl-84b06e28"><p class="cl-84b05384"><span class="cl-84ae1650">Supérieur ou égal</span></p></td>
+<td class="cl-84b06e32"><p class="cl-84b0538e"><span class="cl-84ae1650">&gt;=</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-f885b016"><p class="cl-f8859e08"><span class="cl-f882c0ac">Différent de</span></p></td>
-<td class="cl-f885b01e"><p class="cl-f8859e12"><span class="cl-f882c0ac">!=</span></p></td>
+<td class="cl-84b06e33"><p class="cl-84b05384"><span class="cl-84ae1650">Différent de</span></p></td>
+<td class="cl-84b06e3c"><p class="cl-84b0538e"><span class="cl-84ae1650">!=</span></p></td>
 </tr>
 </tbody>
 </table></div>
@@ -924,108 +940,139 @@ Très souvent, pour répondre à une question, il est nécessaire d’acquérir 
 <h3>
 <span class="header-section-number">2.4.9</span> Passer d’une disposition en lignes à une disposition en colonnes et inversement avec <code>pivot_wider()</code> et <code>pivot_longer()</code><a class="anchor" aria-label="anchor" href="#passer-dune-disposition-en-lignes-%C3%A0-une-disposition-en-colonnes-et-inversement-avec-pivot_wider-et-pivot_longer"><i class="fas fa-link"></i></a>
 </h3>
-<p>Il convient de respecter certaines règles de base lors de la conception d’une base de données (e.g., mettre les observations en lignes et les variables en colonnes). Toutefois, dans certains cas, même après avoir bien respecté les règles, la manière selon laquelle la base de données a été organisée peut ne pas être encore adéquate pour pouvoir utiliser certaines fonctions. Prenons par exemple le cas où toutes les valeurs numériques d’une variable quantitative auraient été mises dans une même colonne en regard d’une variable qualitative pour que chaque valeur numérique corresponde à une modalité de cette variable qualitative (c’est le cas, par exemple, avec le jeu de données <code>iris</code>), et que la fonction à utiliser nécessiterait que l’on ait une colonne pour chacune des modalités de la variable qualitative, avec des colonnes mises côte à côte. Une fonction qui permet alors de passer d’un format “long” (i.e., toutes les valeurs numériques sont dans la même colonne) à un format “large” (i.e., les valeurs numériques sont réparties dans différentes colonnes selon la modalité à laquelle elles sont associées), est la fonction <code><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider()</a></code> du package <code>tidyr</code>. Pour pouvoir utiliser cette fonction, il faut qu’il y ait une variable permettant d’identifier à quels individus ou groupes appartiennent les données dont on va changer l’organisation. Dans une base de données classique, il y a toujours une variable présente pour cela. Toutefois, dans le jeu de données <code>iris</code>, il n’y a pas une telle variable. Pour pouvoir illustrer l’utilisation de la fonction <code><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider()</a></code>, nous avons donc ajouté arbitrairement une variable <code>id</code> grâce à la fonction <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> pour simuler le fait que les données de <code>iris</code> auraient été acquises en référence à des individus bien identifiés, avec à chaque fois une valeur pour les trois modalités de la variable <code>Species</code> :</p>
+<p>Il convient de respecter certaines règles de base lors de la conception d’une base de données (e.g., mettre les observations en lignes et les variables en colonnes). Toutefois, dans certains cas, même après avoir bien respecté les règles, la manière selon laquelle la base de données a été organisée peut finalement ne pas être adéquate pour pouvoir utiliser certaines fonctions. Prenons par exemple le cas où toutes les valeurs numériques d’une variable quantitative auraient été mises dans une même colonne en regard d’une variable qualitative pour que chaque valeur numérique corresponde à une modalité de cette variable qualitative (c’est le cas, par exemple, avec le jeu de données <code>iris</code>), et que la fonction à utiliser nécessiterait que l’on ait une colonne pour chacune des modalités de la variable qualitative, avec des colonnes mises côte à côte. Une fonction qui permet alors de passer d’un format “long” (i.e., toutes les valeurs numériques sont dans la même colonne) à un format “large” (i.e., les valeurs numériques sont réparties dans différentes colonnes selon la modalité à laquelle elles sont associées), est la fonction <code><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider()</a></code> du package <code>tidyr</code>. Pour pouvoir utiliser cette fonction, il faut qu’il y ait une variable permettant d’identifier à quels individus ou groupes appartiennent les données dont on va changer l’organisation. Dans une base de données classique, il y a généralement une variable présente pour cela. Toutefois, dans le jeu de données <code>iris</code>, il n’y a pas une telle variable. Pour pouvoir illustrer l’utilisation de la fonction <code><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider()</a></code>, nous avons donc, dans un jeu de données s’appelant à présent <code>iris2</code>, ajouté arbitrairement une variable <code>id</code> grâce à la fonction <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> pour simuler le fait que les données de <code>iris</code> auraient été acquises en référence à des individus bien identifiés. Nous avons aussi ajouté une variable <code>date</code> pour pouvoir réaliser l’exemple :</p>
 <div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">iris2</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">iris</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">50</span>, times <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">Species</span>,  <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">Species</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>    id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">50</span>, each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
+<span>    date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2001</span><span class="op">:</span><span class="fl">2003</span><span class="op">)</span>, times <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span>
+<span>    <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">date</span>, <span class="va">Species</span>,  <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">date</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">iris2</span></span></code></pre></div>
-<pre><code>## # A tibble: 150 × 6
-##       id Species    Sepal.Length Sepal.Width Petal.Length Petal.Width
-##    &lt;int&gt; &lt;fct&gt;             &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;
-##  1     1 setosa              5.1         3.5          1.4         0.2
-##  2     1 versicolor          7           3.2          4.7         1.4
-##  3     1 virginica           6.3         3.3          6           2.5
-##  4     2 setosa              4.9         3            1.4         0.2
-##  5     2 versicolor          6.4         3.2          4.5         1.5
-##  6     2 virginica           5.8         2.7          5.1         1.9
-##  7     3 setosa              4.7         3.2          1.3         0.2
-##  8     3 versicolor          6.9         3.1          4.9         1.5
-##  9     3 virginica           7.1         3            5.9         2.1
-## 10     4 setosa              4.6         3.1          1.5         0.2
-## # ℹ 140 more rows</code></pre>
-<p>La fonction <code><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider()</a></code> permet alors de mettre en colonnes les valeurs des variables sélectionnées pour chacune des trois modalités de la variable <code>Species</code>.</p>
+<pre><code>## # A tibble: 150 × 7
+##       id  date Species Sepal.Length Sepal.Width Petal.Length
+##    &lt;int&gt; &lt;int&gt; &lt;fct&gt;          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;
+##  1     1  2001 setosa           5.1         3.5          1.4
+##  2     1  2002 setosa           4.9         3            1.4
+##  3     1  2003 setosa           4.7         3.2          1.3
+##  4     2  2001 setosa           4.6         3.1          1.5
+##  5     2  2002 setosa           5           3.6          1.4
+##  6     2  2003 setosa           5.4         3.9          1.7
+##  7     3  2001 setosa           4.6         3.4          1.4
+##  8     3  2002 setosa           5           3.4          1.5
+##  9     3  2003 setosa           4.4         2.9          1.4
+## 10     4  2001 setosa           4.9         3.1          1.5
+## # ℹ 140 more rows
+## # ℹ 1 more variable: Petal.Width &lt;dbl&gt;</code></pre>
+<p>La fonction <code><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider()</a></code> permet alors de mettre en colonnes les valeurs des variables sélectionnées pour chacune des trois modalités de la variable visée, ici la variable <code>date</code> dans l’exemple ci-dessous.</p>
 <div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org">tidyr</a></span><span class="op">)</span></span>
 <span><span class="va">iris3</span> <span class="op">&lt;-</span> </span>
 <span>  <span class="va">iris2</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span><span class="op">(</span></span>
-<span>    names_from <span class="op">=</span> <span class="va">Species</span>,</span>
+<span>    names_from <span class="op">=</span> <span class="va">date</span>,</span>
 <span>    values_from <span class="op">=</span> <span class="va">Sepal.Length</span> <span class="op">:</span> <span class="va">Petal.Width</span></span>
 <span>    <span class="op">)</span></span>
 <span><span class="va">iris3</span></span></code></pre></div>
-<pre><code>## # A tibble: 50 × 13
-##       id Sepal.Length_setosa Sepal.Length_versicolor
-##    &lt;int&gt;               &lt;dbl&gt;                   &lt;dbl&gt;
-##  1     1                 5.1                     7  
-##  2     2                 4.9                     6.4
-##  3     3                 4.7                     6.9
-##  4     4                 4.6                     5.5
-##  5     5                 5                       6.5
-##  6     6                 5.4                     5.7
-##  7     7                 4.6                     6.3
-##  8     8                 5                       4.9
-##  9     9                 4.4                     6.6
-## 10    10                 4.9                     5.2
-## # ℹ 40 more rows
-## # ℹ 10 more variables: Sepal.Length_virginica &lt;dbl&gt;,
-## #   Sepal.Width_setosa &lt;dbl&gt;, Sepal.Width_versicolor &lt;dbl&gt;,
-## #   Sepal.Width_virginica &lt;dbl&gt;, Petal.Length_setosa &lt;dbl&gt;,
-## #   Petal.Length_versicolor &lt;dbl&gt;, Petal.Length_virginica &lt;dbl&gt;,
-## #   Petal.Width_setosa &lt;dbl&gt;, Petal.Width_versicolor &lt;dbl&gt;,
-## #   Petal.Width_virginica &lt;dbl&gt;</code></pre>
+<pre><code>## # A tibble: 52 × 14
+##       id Species Sepal.Length_2001 Sepal.Length_2002 Sepal.Length_2003
+##    &lt;int&gt; &lt;fct&gt;               &lt;dbl&gt;             &lt;dbl&gt;             &lt;dbl&gt;
+##  1     1 setosa                5.1               4.9               4.7
+##  2     2 setosa                4.6               5                 5.4
+##  3     3 setosa                4.6               5                 4.4
+##  4     4 setosa                4.9               5.4               4.8
+##  5     5 setosa                4.8               4.3               5.8
+##  6     6 setosa                5.7               5.4               5.1
+##  7     7 setosa                5.7               5.1               5.4
+##  8     8 setosa                5.1               4.6               5.1
+##  9     9 setosa                4.8               5                 5  
+## 10    10 setosa                5.2               5.2               4.7
+## # ℹ 42 more rows
+## # ℹ 9 more variables: Sepal.Width_2001 &lt;dbl&gt;, Sepal.Width_2002 &lt;dbl&gt;,
+## #   Sepal.Width_2003 &lt;dbl&gt;, Petal.Length_2001 &lt;dbl&gt;,
+## #   Petal.Length_2002 &lt;dbl&gt;, Petal.Length_2003 &lt;dbl&gt;,
+## #   Petal.Width_2001 &lt;dbl&gt;, Petal.Width_2002 &lt;dbl&gt;,
+## #   Petal.Width_2003 &lt;dbl&gt;</code></pre>
 <p>L’argument <code>names_from</code> a permis d’indiquer la variable à partir de laquelle on a dispatché les valeurs en colonnes, et l’argument <code>values_from</code> a permis de préciser les variables pour lesquelles on voulait que les valeurs numériques soient dispatchées. L’utilisation des deux-points (<code>:</code>) nous a permis de sélectionner toutes les variables allant de <code>Sepal.Length</code> à <code>Petal.Width</code> dans le jeu de données.</p>
-<p>Dans une situation inverse à celle que nous venons de voir, nous pourrions avoir les données représentées en colonnes (comme c’est le cas avec le jeu de données <code>iris3</code> crée ci-dessus), alors que nous les voudrions en lignes (comme c’était le cas avec le jeu de données <code>iris</code> à l’origine). La fonction <code><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer()</a></code> permet de faire ce genre de conversion. Pour observer ce que cette fonction réalise, sélectionnons seulement les colonnes avec les valeurs de sépales en plus de la colonne <code>id</code>, tel que montré ci-dessous :</p>
+<p>Dans une situation inverse à celle que nous venons de voir, nous pourrions vouloir une disposition des données davantage en lignes. Par exemple, s’agissant du jeu de données <code>iris</code>, nous pourrions vouloir une seule colonne comprenant tous les paramètres mesurés pour chaque fleur, et une seule colonne contenant les valeurs associées. La fonction <code><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer()</a></code> permet de faire ce genre de conversion, tel que montré ci-dessous :</p>
 <div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">iris3</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">id</span>,</span>
-<span>                <span class="va">Sepal.Length_setosa</span>,</span>
-<span>                <span class="va">Sepal.Length_versicolor</span>,</span>
-<span>                <span class="va">Sepal.Length_virginica</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="va">id</span><span class="op">)</span>,</span>
-<span>               names_to <span class="op">=</span> <span class="st">"Species"</span>,</span>
-<span>               values_to <span class="op">=</span> <span class="st">"Sepal_len"</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## # A tibble: 150 × 3
-##       id Species                 Sepal_len
-##    &lt;int&gt; &lt;chr&gt;                       &lt;dbl&gt;
-##  1     1 Sepal.Length_setosa           5.1
-##  2     1 Sepal.Length_versicolor       7  
-##  3     1 Sepal.Length_virginica        6.3
-##  4     2 Sepal.Length_setosa           4.9
-##  5     2 Sepal.Length_versicolor       6.4
-##  6     2 Sepal.Length_virginica        5.8
-##  7     3 Sepal.Length_setosa           4.7
-##  8     3 Sepal.Length_versicolor       6.9
-##  9     3 Sepal.Length_virginica        7.1
-## 10     4 Sepal.Length_setosa           4.6
-## # ℹ 140 more rows</code></pre>
+<code class="sourceCode R"><span><span class="co"># Avant</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">iris</span>, <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 5 × 5
+##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+##          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  
+## 1          5.1         3.5          1.4         0.2 setosa 
+## 2          4.9         3            1.4         0.2 setosa 
+## 3          4.7         3.2          1.3         0.2 setosa 
+## 4          4.6         3.1          1.5         0.2 setosa 
+## 5          5           3.6          1.4         0.2 setosa</code></pre>
+<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Après</span></span>
+<span><span class="va">iris</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span></span>
+<span>    cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="va">Species</span><span class="op">)</span>,</span>
+<span>    names_to <span class="op">=</span> <span class="st">"Parameter"</span>,</span>
+<span>    values_to <span class="op">=</span> <span class="st">"Value"</span></span>
+<span>    <span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 600 × 3
+##    Species Parameter    Value
+##    &lt;fct&gt;   &lt;chr&gt;        &lt;dbl&gt;
+##  1 setosa  Sepal.Length   5.1
+##  2 setosa  Sepal.Width    3.5
+##  3 setosa  Petal.Length   1.4
+##  4 setosa  Petal.Width    0.2
+##  5 setosa  Sepal.Length   4.9
+##  6 setosa  Sepal.Width    3  
+##  7 setosa  Petal.Length   1.4
+##  8 setosa  Petal.Width    0.2
+##  9 setosa  Sepal.Length   4.7
+## 10 setosa  Sepal.Width    3.2
+## # ℹ 590 more rows</code></pre>
 <p>Dans la fonction <code><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer()</a></code> ci-dessus, nous avons indiqué à l’aide de l’argument <code>cols</code> et de la fonction <code><a href="https://rdrr.io/r/base/c.html">c()</a></code> avec le signe <code>-</code> la colonne que nous ne voulions pas utiliser avec la fonction (c’était plus rapide que d’indiquer dans la fonction <code><a href="https://rdrr.io/r/base/c.html">c()</a></code> les trois colonnes à utiliser). L’argument <code>names_to</code> nous a permis de donner un nom à la variable qualitative qui comporte à présent les modalités associées aux valeurs numériques, et l’argument <code>values_to</code> nous a permis de donner un nom à la colonne où se trouvent maintenant les valeurs numériques.</p>
 <p>Lorsque l’on veut utiliser la fonction <code><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer()</a></code> sur plusieurs colonnes qui sont écrites avec la même logique (par exemple, avec un nom composé de deux morceaux séparés par un <code>_</code>, avec un morceau pour indiquer la chose mesurée, et un autre morceau pour indiquer la modalité), il convient de procéder comme ci-dessous :</p>
-<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">iris3</span> <span class="op">|&gt;</span> </span>
+<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Avant</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">iris3</span>, <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 5 × 14
+##      id Species Sepal.Length_2001 Sepal.Length_2002 Sepal.Length_2003
+##   &lt;int&gt; &lt;fct&gt;               &lt;dbl&gt;             &lt;dbl&gt;             &lt;dbl&gt;
+## 1     1 setosa                5.1               4.9               4.7
+## 2     2 setosa                4.6               5                 5.4
+## 3     3 setosa                4.6               5                 4.4
+## 4     4 setosa                4.9               5.4               4.8
+## 5     5 setosa                4.8               4.3               5.8
+## # ℹ 9 more variables: Sepal.Width_2001 &lt;dbl&gt;, Sepal.Width_2002 &lt;dbl&gt;,
+## #   Sepal.Width_2003 &lt;dbl&gt;, Petal.Length_2001 &lt;dbl&gt;,
+## #   Petal.Length_2002 &lt;dbl&gt;, Petal.Length_2003 &lt;dbl&gt;,
+## #   Petal.Width_2001 &lt;dbl&gt;, Petal.Width_2002 &lt;dbl&gt;,
+## #   Petal.Width_2003 &lt;dbl&gt;</code></pre>
+<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Après</span></span>
+<span><span class="va">iris3</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span></span>
-<span>    cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">Sepal.Length_setosa</span><span class="op">:</span><span class="va">Petal.Width_virginica</span><span class="op">)</span>,</span>
-<span>    names_to <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">".value"</span>, <span class="st">"Species"</span><span class="op">)</span>,</span>
-<span>    names_sep <span class="op">=</span> <span class="st">"_"</span></span>
+<span>    cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">Sepal.Length_2001</span><span class="op">:</span><span class="va">Petal.Width_2003</span><span class="op">)</span>,</span>
+<span>    names_to <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">".value"</span>, <span class="st">"date"</span><span class="op">)</span>,</span>
+<span>    names_pattern <span class="op">=</span> <span class="st">'(.*)_(.*)'</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
-<pre><code>## # A tibble: 150 × 6
-##       id Species    Sepal.Length Sepal.Width Petal.Length Petal.Width
-##    &lt;int&gt; &lt;chr&gt;             &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;
-##  1     1 setosa              5.1         3.5          1.4         0.2
-##  2     1 versicolor          7           3.2          4.7         1.4
-##  3     1 virginica           6.3         3.3          6           2.5
-##  4     2 setosa              4.9         3            1.4         0.2
-##  5     2 versicolor          6.4         3.2          4.5         1.5
-##  6     2 virginica           5.8         2.7          5.1         1.9
-##  7     3 setosa              4.7         3.2          1.3         0.2
-##  8     3 versicolor          6.9         3.1          4.9         1.5
-##  9     3 virginica           7.1         3            5.9         2.1
-## 10     4 setosa              4.6         3.1          1.5         0.2
-## # ℹ 140 more rows</code></pre>
-<p>Dans le code montré ci-dessus, l’argument <code>cols</code> a permis de sélectionner toutes les colonnes situées à droite de la colonne <code>id</code>, l’argument <code>names_to</code> a permis d’indiquer qu’il faut garder des colonnes spécifiques nommées avec le premier morceau du nom des variables antérieures (le mot <code>".value"</code> permet cela), et le mot <code>"Species"</code> a permis de nommer la colonne avec les espèces d’iris qui étaient les seconds morceaux des noms des variables antérieures.</p>
+<pre><code>## # A tibble: 156 × 7
+##       id Species date  Sepal.Length Sepal.Width Petal.Length
+##    &lt;int&gt; &lt;fct&gt;   &lt;chr&gt;        &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;
+##  1     1 setosa  2001           5.1         3.5          1.4
+##  2     1 setosa  2002           4.9         3            1.4
+##  3     1 setosa  2003           4.7         3.2          1.3
+##  4     2 setosa  2001           4.6         3.1          1.5
+##  5     2 setosa  2002           5           3.6          1.4
+##  6     2 setosa  2003           5.4         3.9          1.7
+##  7     3 setosa  2001           4.6         3.4          1.4
+##  8     3 setosa  2002           5           3.4          1.5
+##  9     3 setosa  2003           4.4         2.9          1.4
+## 10     4 setosa  2001           4.9         3.1          1.5
+## # ℹ 146 more rows
+## # ℹ 1 more variable: Petal.Width &lt;dbl&gt;</code></pre>
+<p>Dans le code montré ci-dessus, l’argument <code>cols</code> a permis de sélectionner toutes les colonnes dont on voulait faire pivoter les données, l’argument <code>names_to</code> a permis d’indiquer qu’il faut garder des colonnes spécifiques nommées avec le premier morceau du nom des variables antérieures (le mot <code>".value"</code> permet cela), et le mot <code>"date"</code> a permis de nommer la colonne avec les dates qui étaient les seconds morceaux des noms des variables antérieures.</p>
 <p>Nous venons de voir plusieurs fonctions qui peuvent être très utiles pour pouvoir facilement préparer sa base de données en vue des futures analyses. Il ne s’agit que d’une vue très superficielle de tout le potentiel de manipulation des données qu’ont ces fonctions. Pour une vue plus approndie des possibilités qu’offrent ces fonctions, la lecture de l’ouvrage <em>R for Data Science</em> d’Hadley Wickham et de Garrett Grolemund <span class="citation">(<a href="r%C3%A9f%C3%A9rences.html#ref-wickhamDataScience2017">2017</a>)</span> sera particulièrement enrichissante. Cet ouvrage est en libre accès ici : <a href="https://r4ds.had.co.nz" class="uri">https://r4ds.had.co.nz</a>.</p>
 </div>
 </div>
@@ -1099,7 +1146,7 @@ Très souvent, pour répondre à une question, il est nécessaire d’acquérir 
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Analyser des données avec R</strong>" was written by Pierre-Yves de Müllenheim. It was last built on 2024-03-28.</p>
+    <p>"<strong>Analyser des données avec R</strong>" was written by Pierre-Yves de Müllenheim. It was last built on 2024-09-11.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
