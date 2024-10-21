@@ -282,14 +282,14 @@ window.Quarto = {
    
   <ul>
 <li>
-<a href="#test-du-chi2-dad%C3%A9quation-ou-encore-dit-de-conformit%C3%A9-ou-dajustement" id="toc-test-du-chi2-dadéquation-ou-encore-dit-de-conformité-ou-dajustement" class="nav-link active" data-scroll-target="#test-du-chi2-dad%C3%A9quation-ou-encore-dit-de-conformit%C3%A9-ou-dajustement"><span class="header-section-number">1</span> Test du <span class="math inline">\(\chi^2\)</span> d’adéquation (ou encore dit de conformité ou d’ajustement)</a>
+<a href="#test-du-chi2-dad%C3%A9quation-ou-encore-dit-de-conformit%C3%A9-ou-dajustement" id="toc-test-du-chi2-dadéquation-ou-encore-dit-de-conformité-ou-dajustement" class="nav-link active" data-scroll-target="#test-du-chi2-dad%C3%A9quation-ou-encore-dit-de-conformit%C3%A9-ou-dajustement"><span class="header-section-number">8.1</span> Test du <span class="math inline">\(\chi^2\)</span> d’adéquation (ou encore dit de conformité ou d’ajustement)</a>
   <ul class="collapse">
-<li><a href="#calculs-sous-jacents" id="toc-calculs-sous-jacents" class="nav-link" data-scroll-target="#calculs-sous-jacents"><span class="header-section-number">1.1</span> Calculs sous-jacents</a></li>
-  <li><a href="#application-avec-r" id="toc-application-avec-r" class="nav-link" data-scroll-target="#application-avec-r"><span class="header-section-number">1.2</span> Application avec R</a></li>
+<li><a href="#calculs-sous-jacents" id="toc-calculs-sous-jacents" class="nav-link" data-scroll-target="#calculs-sous-jacents"><span class="header-section-number">8.1.1</span> Calculs sous-jacents</a></li>
+  <li><a href="#application-avec-r" id="toc-application-avec-r" class="nav-link" data-scroll-target="#application-avec-r"><span class="header-section-number">8.1.2</span> Application avec R</a></li>
   </ul>
 </li>
-  <li><a href="#test-du-chi2-dind%C3%A9pendance-ou-dassociation" id="toc-test-du-chi2-dindépendance-ou-dassociation" class="nav-link" data-scroll-target="#test-du-chi2-dind%C3%A9pendance-ou-dassociation"><span class="header-section-number">2</span> Test du <span class="math inline">\(\chi^2\)</span> d’indépendance (ou d’association)</a></li>
-  <li><a href="#r%C3%A9sum%C3%A9" id="toc-résumé" class="nav-link" data-scroll-target="#r%C3%A9sum%C3%A9"><span class="header-section-number">3</span> Résumé</a></li>
+  <li><a href="#test-du-chi2-dind%C3%A9pendance-ou-dassociation" id="toc-test-du-chi2-dindépendance-ou-dassociation" class="nav-link" data-scroll-target="#test-du-chi2-dind%C3%A9pendance-ou-dassociation"><span class="header-section-number">8.2</span> Test du <span class="math inline">\(\chi^2\)</span> d’indépendance (ou d’association)</a></li>
+  <li><a href="#r%C3%A9sum%C3%A9" id="toc-résumé" class="nav-link" data-scroll-target="#r%C3%A9sum%C3%A9"><span class="header-section-number">8.3</span> Résumé</a></li>
   </ul><div class="toc-actions"><ul><li><a href="https://github.com/pydemull/Analyser-des-donnees-avec-R/edit/master/categorical_var_tests.qmd" class="toc-action"><i class="bi bi-github"></i>Modifier cette page</a></li><li><a href="https://github.com/pydemull/Analyser-des-donnees-avec-R/issues/new" class="toc-action"><i class="bi empty"></i>Faire part d'un problème</a></li></ul></div></nav>
     </div>
 <!-- main -->
@@ -310,10 +310,10 @@ window.Quarto = {
   
 
 
-</header><section id="test-du-chi2-dadéquation-ou-encore-dit-de-conformité-ou-dajustement" class="level2" data-number="1"><h2 data-number="1" class="anchored" data-anchor-id="test-du-chi2-dadéquation-ou-encore-dit-de-conformité-ou-dajustement">
-<span class="header-section-number">1</span> Test du <span class="math inline">\(\chi^2\)</span> d’adéquation (ou encore dit de conformité ou d’ajustement)</h2>
-<section id="calculs-sous-jacents" class="level3" data-number="1.1"><h3 data-number="1.1" class="anchored" data-anchor-id="calculs-sous-jacents">
-<span class="header-section-number">1.1</span> Calculs sous-jacents</h3>
+</header><section id="test-du-chi2-dadéquation-ou-encore-dit-de-conformité-ou-dajustement" class="level2" data-number="8.1"><h2 data-number="8.1" class="anchored" data-anchor-id="test-du-chi2-dadéquation-ou-encore-dit-de-conformité-ou-dajustement">
+<span class="header-section-number">8.1</span> Test du <span class="math inline">\(\chi^2\)</span> d’adéquation (ou encore dit de conformité ou d’ajustement)</h2>
+<section id="calculs-sous-jacents" class="level3" data-number="8.1.1"><h3 data-number="8.1.1" class="anchored" data-anchor-id="calculs-sous-jacents">
+<span class="header-section-number">8.1.1</span> Calculs sous-jacents</h3>
 <p>Le test du <span class="math inline">\(\chi^2\)</span> d’adéquation consiste à comparer la distribution d’une variable qualitative observée avec une distribution théorique. Pour mieux voir en quoi cela consiste, prenons un exemple repris de Danielle Navarro <span class="citation" data-cites="navarroLearningStatistics2018">(<a href="references.html#ref-navarroLearningStatistics2018" role="doc-biblioref">2018</a>)</span> où l’on chercherait à savoir si, lorsqu’on demande à des personnes de choisir “au hasard” mentalement une carte parmi un ensemble de cartes étalées devant soi, le choix se fait vraiment de manière entièrement aléatoire. Pour étudier cela, on demande à 200 personnes de réaliser l’expérimentation et on note le type de carte qui a été retenu : coeur, trèfle, carreau, ou pique. Le jeu de données est crée avec le code ci-dessous :</p>
 <div class="cell">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Creation du jeu de données</span></span>
@@ -362,7 +362,7 @@ carreau   coeur   pique trèfles
 <img src="categorical_var_tests_files/figure-html/fig-FreqCards-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-FreqCards-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Visualisation des fréquences dans le jeu de données <code>cartes</code>
+Figure&nbsp;8.1: Visualisation des fréquences dans le jeu de données <code>cartes</code>
 </figcaption></figure>
 </div>
 </div>
@@ -386,13 +386,13 @@ Figure&nbsp;1: Visualisation des fréquences dans le jeu de données <code>carte
 <img src="categorical_var_tests_files/figure-html/fig-GOFDistri-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-GOFDistri-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Distribution d’échantillonnage de la statistique <span class="math inline">\(X^2\)</span> sous <span class="math inline">\(H{0}\)</span>
+Figure&nbsp;8.2: Distribution d’échantillonnage de la statistique <span class="math inline">\(X^2\)</span> sous <span class="math inline">\(H{0}\)</span>
 </figcaption></figure>
 </div>
 </div>
 </div>
-</section><section id="application-avec-r" class="level3" data-number="1.2"><h3 data-number="1.2" class="anchored" data-anchor-id="application-avec-r">
-<span class="header-section-number">1.2</span> Application avec R</h3>
+</section><section id="application-avec-r" class="level3" data-number="8.1.2"><h3 data-number="8.1.2" class="anchored" data-anchor-id="application-avec-r">
+<span class="header-section-number">8.1.2</span> Application avec R</h3>
 <p>Nous venons de voir la mécanique des calculs qu’il y a derrière le test <span class="math inline">\(\chi^2\)</span> d’adéquation. Heureusement, il existe des fonctions dans R pour faire cela automatiquement, comme la fonction <code><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test()</a></code> :</p>
 <div class="cell">
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">observed</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">cartes</span><span class="op">$</span><span class="va">choix</span><span class="op">)</span></span>
@@ -459,8 +459,8 @@ Test results:
    p-value:  &lt;.001 </code></pre>
 </div>
 </div>
-</section></section><section id="test-du-chi2-dindépendance-ou-dassociation" class="level2" data-number="2"><h2 data-number="2" class="anchored" data-anchor-id="test-du-chi2-dindépendance-ou-dassociation">
-<span class="header-section-number">2</span> Test du <span class="math inline">\(\chi^2\)</span> d’indépendance (ou d’association)</h2>
+</section></section><section id="test-du-chi2-dindépendance-ou-dassociation" class="level2" data-number="8.2"><h2 data-number="8.2" class="anchored" data-anchor-id="test-du-chi2-dindépendance-ou-dassociation">
+<span class="header-section-number">8.2</span> Test du <span class="math inline">\(\chi^2\)</span> d’indépendance (ou d’association)</h2>
 <div class="cell">
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">catdata</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -508,8 +508,8 @@ Attachement du package : 'MASS'</code></pre>
 </div>
 </div>
 <p>(en cours…)</p>
-</section><section id="résumé" class="level2" data-number="3"><h2 data-number="3" class="anchored" data-anchor-id="résumé">
-<span class="header-section-number">3</span> Résumé</h2>
+</section><section id="résumé" class="level2" data-number="8.3"><h2 data-number="8.3" class="anchored" data-anchor-id="résumé">
+<span class="header-section-number">8.3</span> Résumé</h2>
 <ul>
 <li>Le test du <span class="math inline">\(\chi^2\)</span> d’adéquation consiste à comparer une distribution observée à une distribution théorique qui représenterait l’hypothèse à tester.</li>
 <li>La statistique de test du <span class="math inline">\(\chi^2\)</span> d’adéquation est <span class="math inline">\(X^2\)</span> et suit une distribution <span class="math inline">\(\chi^2\)</span>.</li>
