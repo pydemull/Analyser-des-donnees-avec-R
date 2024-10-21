@@ -1,0 +1,54 @@
+project:
+  type: book
+  output-dir: _book
+  
+book:
+  title: "Analyser des données avec R"
+  author: "Pierre-Yves de Müllenheim"
+  date: today
+  date-format: "long"
+  chapters:
+    - index.qmd
+    - part: "Appropriation de R et RStudio"
+      chapters:
+        - prerequisite.qmd
+        - data_manipulation.qmd
+    - part: "Analyses descriptives"
+      chapters:
+        - univariate_analyses.qmd
+        - bivariate_analyses.qmd
+        - standardized_differences.qmd
+        - regressions.qmd
+    - part: "Analyses inférentielles"
+      chapters: 
+        - statistical_theory.qmd
+        - categorical_var_tests.qmd
+    - references.qmd
+  downloads: pdf
+  page-navigation: true
+  reader-mode: true
+  page-footer:
+    left: |
+     Analyser des données avec R a été écrit par Pierre-Yves de Müllenheim.
+    right: |
+      Ce livre a été généré avec <a href="https://quarto.org/">Quarto</a>.
+  site-url: https://pydemull.github.io/Analyser-des-donnees-avec-R/
+  repo-url: https://github.com/pydemull/Analyser-des-donnees-avec-R
+  repo-branch: master
+  repo-actions: [edit, issue]
+  
+bibliography: references.bib
+csl: apa.csl
+
+format:
+  html:
+    lang: fr
+    toc-title: Sommaire
+    theme: cosmo
+    code-link: true
+  pdf:
+    documentclass: book
+    
+execute:
+  freeze: auto
+
