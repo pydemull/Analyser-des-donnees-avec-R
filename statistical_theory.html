@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.549">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Analyser des données avec R - 7&nbsp; Prérequis</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./categorical_var_tests.html" rel="next">
+<link href="./regressions.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Pas de résultats",
+    "search-matching-documents-text": "documents trouvés",
+    "search-copy-link-title": "Copier le lien vers la recherche",
+    "search-hide-matches-text": "Cacher les correspondances additionnelles",
+    "search-more-match-text": "correspondance de plus dans ce document",
+    "search-more-matches-text": "correspondances de plus dans ce document",
+    "search-clear-button-title": "Effacer",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Annuler",
+    "search-submit-button-title": "Envoyer",
+    "search-label": "Recherche"
+  }
+}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+</head>
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./statistical_theory.html">Partie III : Analyses inférentielles</a></li><li class="breadcrumb-item"><a href="./statistical_theory.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Prérequis</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Analyser des données avec R</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/pydemull/Analyser-des-donnees-avec-R" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Basculer en mode lecteur">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Recherche"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Partie I : Appropriation de R et RStudio</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./prerequisite.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Prérequis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data_manipulation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Importation et manipulation d’une base de données</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Partie II : Analyses descriptives</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./univariate_analyses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Analyses univariées</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bivariate_analyses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Analyses bivariées</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./standardized_differences.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Différence de moyennes standardisée</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./regressions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Régressions</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">Partie III : Analyses inférentielles</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./statistical_theory.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Prérequis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./categorical_var_tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Tests statistiques pour des variables qualitatives</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Sommaire</h2>
+   
+  <ul>
+<li><a href="#pr%C3%A9ambule" id="toc-préambule" class="nav-link active" data-scroll-target="#pr%C3%A9ambule"><span class="header-section-number">1</span> Préambule</a></li>
+  <li>
+<a href="#lois-de-probabilit%C3%A9" id="toc-lois-de-probabilité" class="nav-link" data-scroll-target="#lois-de-probabilit%C3%A9"><span class="header-section-number">2</span> Lois de probabilité</a>
+  <ul class="collapse">
+<li><a href="#notion-de-loi-de-probabilit%C3%A9" id="toc-notion-de-loi-de-probabilité" class="nav-link" data-scroll-target="#notion-de-loi-de-probabilit%C3%A9"><span class="header-section-number">2.1</span> Notion de loi de probabilité</a></li>
+  <li><a href="#la-loi-binomiale" id="toc-la-loi-binomiale" class="nav-link" data-scroll-target="#la-loi-binomiale"><span class="header-section-number">2.2</span> La loi binomiale</a></li>
+  <li><a href="#la-loi-normale-et-lois-apparent%C3%A9es" id="toc-la-loi-normale-et-lois-apparentées" class="nav-link" data-scroll-target="#la-loi-normale-et-lois-apparent%C3%A9es"><span class="header-section-number">2.3</span> La loi normale et lois apparentées</a></li>
+  </ul>
+</li>
+  <li><a href="#loi-des-grands-nombres-distribution-d%C3%A9chantillonnage-de-la-moyenne-et-th%C3%A9or%C3%A8me-de-la-limite-centrale" id="toc-loi-des-grands-nombres-distribution-déchantillonnage-de-la-moyenne-et-théorème-de-la-limite-centrale" class="nav-link" data-scroll-target="#loi-des-grands-nombres-distribution-d%C3%A9chantillonnage-de-la-moyenne-et-th%C3%A9or%C3%A8me-de-la-limite-centrale"><span class="header-section-number">3</span> Loi des grands nombres, distribution d’échantillonnage de la moyenne, et théorème de la limite centrale</a></li>
+  <li><a href="#r%C3%A9sum%C3%A9" id="toc-résumé" class="nav-link" data-scroll-target="#r%C3%A9sum%C3%A9"><span class="header-section-number">4</span> Résumé</a></li>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/pydemull/Analyser-des-donnees-avec-R/edit/master/statistical_theory.qmd" class="toc-action"><i class="bi bi-github"></i>Modifier cette page</a></li><li><a href="https://github.com/pydemull/Analyser-des-donnees-avec-R/issues/new" class="toc-action"><i class="bi empty"></i>Faire part d'un problème</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./statistical_theory.html">Partie III : Analyses inférentielles</a></li><li class="breadcrumb-item"><a href="./statistical_theory.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Prérequis</span></a></li></ol></nav><div class="quarto-title">
+<h1 class="title">
+<span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Prérequis</span>
+</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><section id="préambule" class="level2" data-number="1"><h2 data-number="1" class="anchored" data-anchor-id="préambule">
+<span class="header-section-number">1</span> Préambule</h2>
+<p>Réaliser une inférence statistique consiste à conclure à propos de quelque chose dans une population d’intérêt (cette chose pouvant se traduire par n’importe quel paramètre statistique : une moyenne, une médiane, une proportion, un coefficient de corrélation, une différence de moyennes, un rapport de cotes, etc.), cela à partir de données prélevées dans un échantillon de cette population. Pour comprendre la mécanique des calculs à mettre en oeuvre pour réaliser une inférence statistique, il est nécessaire d’avoir quelques notions en matière de probabilité. Ce chapitre, qui s’inspire largement du chapitre “Introduction to probability” de l’ouvrage de Danielle Navarro <span class="citation" data-cites="navarroLearningStatistics2018">(<a href="references.html#ref-navarroLearningStatistics2018" role="doc-biblioref">2018</a>)</span>, vise à présenter brièvement ces notions.</p>
+</section><section id="lois-de-probabilité" class="level2" data-number="2"><h2 data-number="2" class="anchored" data-anchor-id="lois-de-probabilité">
+<span class="header-section-number">2</span> Lois de probabilité</h2>
+<section id="notion-de-loi-de-probabilité" class="level3" data-number="2.1"><h3 data-number="2.1" class="anchored" data-anchor-id="notion-de-loi-de-probabilité">
+<span class="header-section-number">2.1</span> Notion de loi de probabilité</h3>
+<p>Les procédures de calcul pour réaliser une inférence statistique requièrent d’utiliser des lois mathématiques que l’on doit configurer pour déterminer théoriquement les probabilités de rencontrer telle ou telle valeur d’un paramètre statistique donné lorsqu’on étudie un échantillon provenant de la population d’intérêt. Cette démarche implique de comprendre que si un phénomène existe (ou pas) à l’échelle d’une population (chose quantifiable à l’aide de la valeur d’un paramètre statistique donné), l’étude d’un échantillon provenant de cette population ne donnera pas forcément la même valeur pour le paramètre statistique considéré. L’enjeu est alors de pouvoir déterminer la probabilité qui était celle d’obtenir telle ou telle valeur du paramètre statistique considéré avec son échantillon dans le cas où le phénomène étudié existerait (ou pas), cela pour envisager une conclusion quant à la réelle existence ou non du phénomène étudié dans la population d’intérêt.</p>
+<p>Ces lois mathématiques utilisées pour faire des inférences statistiques, qu’on appelle aussi des lois de probabilité, donnent directement les valeurs de probabilité d’obtenir telle ou telle valeur du paramètre statistique considéré dans les cas de variables qualitatives. Dans les cas de variables quantitatives, les lois de probabilité ne donnent pas directement les probabilités. En effet, dans ces situations, les lois donnent les <strong>densités de probabilité</strong>. Ceci est lié au fait que dans ce type de situations, les probabilités concernent le fait d’avoir des valeurs appartenant à des intervalles donnés, et non pas d’avoir une valeur précise. Cela implique que pour obtenir la probabilité de rencontrer une valeur appartenant à un intervalle donné, il ne faut pas prendre la valeur directement donnée par la loi de probabilité, mais l’intégrale (i.e., l’aire sous la courbe de densité de probabilité) correspondant à l’intervalle de valeurs considéré. Ce qui suit vise à décrire et illustrer des lois de probabilité typiquement utilisées dans les procédures de calcul servant à réaliser des inférences statistiques.</p>
+</section><section id="la-loi-binomiale" class="level3" data-number="2.2"><h3 data-number="2.2" class="anchored" data-anchor-id="la-loi-binomiale">
+<span class="header-section-number">2.2</span> La loi binomiale</h3>
+<p>La loi binomiale est une loi mathématique qui concerne les situations où seulement deux résultats sont possibles, comme par exemple “succès” et “échec”, “pile” et “face”, “0” et “1”, etc. Un exemple classique où l’on est en présence d’une variable binomiale est celui où l’on demande à <span class="math inline">\(N\)</span> personnes de lancer une fois une pièce non truquée, avec par conséquent “pile” et “face” comme seuls résultats possibles et autant de chances de tomber sur “pile” que sur “face” à chaque lancer (<span class="math inline">\(\theta\)</span> = 0.5, soit une chance sur deux). Une fois les essais de toutes les personnes terminés, la distribution qui en résulte contient alors la proportion de personnes qui ont obtenu “pile” et la proportion de personnes qui n’ont pas obtenu “pile” (donc “face”). Lorsque le nombre <span class="math inline">\(N\)</span> d’essais ou de participants et la probabilité d’avoir tel ou tel résultat (<span class="math inline">\(\theta\)</span>) sont connus, la loi binomiale, qu’on note <span class="math inline">\(X \sim B(\theta, N)\)</span>, permet de connaître la probabilité <span class="math inline">\(P(X)\)</span> d’avoir <span class="math inline">\(X\)</span> succès (e.g., <span class="math inline">\(X\)</span> fois “pile”) sur les <span class="math inline">\(N\)</span> essais ou participants. La formule de cette loi est montrée ci-dessous :</p>
+<p><span class="math display">\[P(X | \theta, N) = \frac{N!}{X!(N-X)!}\theta^X(1-\theta)^{N-X}\]</span></p>
+<p>La <a href="#fig-distriBinom" class="quarto-xref">Figure&nbsp;<span>7.1</span></a> illustre une loi binomiale (avec <span class="math inline">\(N\)</span> = 100 et <span class="math inline">\(\theta\)</span> = 0.5) qui pourrait s’appliquer au cas d’un lancer de pièce non truquée. Cette figure montre que même si une pièce est non truquée (<span class="math inline">\(\theta\)</span> = 0.5), il est tout à fait possible qu’il y ait plus de personnes à obtenir “pile” plutôt que “face” et inversement sur un échantillon de 100 personnes. Cependant, ce que montre aussi la figure, c’est que si la pièce est non truquée, les chances restent les plus fortes pour l’obtention de 50 % de personnes avec “pile” et avec “face” pour un lancer de pièce.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-distriBinom" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-distriBinom-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="statistical_theory_files/figure-html/fig-distriBinom-1.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-distriBinom-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Illustration d’une loi binomiale avec la situation de 100 personnes lançant une pièce non truquée
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>Plusieurs fonctions R peuvent être utilisées pour obtenir des informations liées aux probabilités données par une loi binomiale. Ces fonctions sont montrées ci-dessous.</p>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Fonction pour déterminer la probabilité d'obtenir précisément x succès </span></span>
+<span><span class="co"># (ici 50) à partir de N essais/personnes (ici 100) et d'une probabilité </span></span>
+<span><span class="co"># de succès donnée (ici 0.5)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">dbinom</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">50</span>, size <span class="op">=</span> <span class="fl">100</span>, prob <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.07958924</code></pre>
+</div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Fonction pour déterminer la probabilité d'obtenir un nombre de succès</span></span>
+<span><span class="co"># inférieur ou égal à q (ici 50) à partir de N essais/personnes (ici 100) </span></span>
+<span><span class="co"># et d'une probabilité de succès donnée (ici 0.5)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">pbinom</a></span><span class="op">(</span>q <span class="op">=</span> <span class="fl">50</span>, size <span class="op">=</span> <span class="fl">100</span>, prob <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.5397946</code></pre>
+</div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Fonction pour déterminer la valeur pour laquelle il y a une probabilité p </span></span>
+<span><span class="co"># d'obtenir une valeur inférieure ou égale à la valeur définie à partir de N </span></span>
+<span><span class="co"># essais/personnes (ici 100) et d'une probabilité de succès donnée (ici 0.5)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">qbinom</a></span><span class="op">(</span>p <span class="op">=</span> <span class="fl">0.6</span>, size <span class="op">=</span> <span class="fl">100</span>, prob <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 51</code></pre>
+</div>
+</div>
+</section><section id="la-loi-normale-et-lois-apparentées" class="level3" data-number="2.3"><h3 data-number="2.3" class="anchored" data-anchor-id="la-loi-normale-et-lois-apparentées">
+<span class="header-section-number">2.3</span> La loi normale et lois apparentées</h3>
+<p>La <strong>loi normale</strong>, ou encore <strong>loi gaussienne</strong>, qu’on note <span class="math inline">\(X \sim N(\mu, \sigma)\)</span>, avec <span class="math inline">\(\mu\)</span> la moyenne de la variable, et <span class="math inline">\(\sigma\)</span> l’écart-type de la variable, est une loi qui permet de déterminer la probabilité de rencontrer une valeur dans un intervalle donné en lien avec la formule montrée ci-dessous :</p>
+<p><span class="math display">\[p(X | \mu, \sigma) = \frac{1}{\sqrt{2\pi}\sigma} exp(-\frac{(X-\mu)^2}{2\sigma^2}),\]</span> <span class="math inline">\(p(X | \mu, \sigma)\)</span> étant la densité de probabilité correspondant à la valeur <span class="math inline">\(X\)</span>. Il s’agit bien ici de la densité de probabilité, et non pas de la valeur de la probabilité d’obtenir une valeur précise. Pour mieux comprendre les valeurs que donne cette loi mathématique, regardons la <a href="#fig-distiNorm" class="quarto-xref">Figure&nbsp;<span>7.2</span></a> (graphique de gauche). Sur cette figure, la courbe noire représente les valeurs données par la fonction définissant la loi normale avec <span class="math inline">\(\mu\)</span> = 1, et <span class="math inline">\(\sigma\)</span> = 1. Ces valeurs en réalité n’ont pas vraiment d’intérêt en soi. Par contre, elle permettent de délimiter une aire (en rouge) entre elles et l’axe horizontal, la valeur de cette aire étant pour le coup la probabilité d’obtenir une valeur incluse dans l’intervalle de valeurs relatif à l’aire sous la courbe considérée. Ainsi, l’aire sous l’ensemble de la courbe représentant la densité de probabilité est associée à une probabilité de 1 (il y a par définition, lors d’un tirage au sort, 100 % de chances de rencontrer une valeur située entre le minimum et le maximum de la variable modélisée à l’aide de cette loi). Dans la même veine, le graphique de droite de la <a href="#fig-distiNorm" class="quarto-xref">Figure&nbsp;<span>7.2</span></a> montre une aire sous la courbe (en rouge) dont la valeur est la probabilité d’obtenir une valeur comprise en 2 et 3 lorsqu’on tire au sort une observation en provenance de la population représentée par une loi normale de moyenne 1 et d’écart-type 1, la probabilité étant ici de 14 %.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-distiNorm" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-distiNorm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="statistical_theory_files/figure-html/fig-distiNorm-1.png" class="img-fluid figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-distiNorm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Densité de probabilité d’une loi normale
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>Plusieurs fonctions R peuvent être utilisées pour obtenir des informations liées à la distribution d’une loi normale donnée. Ces fonctions sont montrées ci-dessous.</p>
+<div class="cell">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Fonction pour déterminer la densité de probabilité correspondant à la valeur x</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, mean <span class="op">=</span> <span class="fl">1</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.3989423</code></pre>
+</div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Fonction pour déterminer la probabilité d'obtenir une valeur inférieure ou </span></span>
+<span><span class="co"># égale à q</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span>q <span class="op">=</span> <span class="fl">2</span>, mean <span class="op">=</span> <span class="fl">1</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8413447</code></pre>
+</div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Fonction pour déterminer la valeur pour laquelle il y a une probabilité p </span></span>
+<span><span class="co"># d'obtenir une valeur inférieure ou égale à la valeur définie</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">qnorm</a></span><span class="op">(</span>p <span class="op">=</span> <span class="fl">0.7</span>, mean <span class="op">=</span> <span class="fl">1</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.524401</code></pre>
+</div>
+</div>
+<p>La loi normale peut être mise en lien avec d’autres grandes lois, telles que :</p>
+<ul>
+<li><p>La loi Chi-carré (<span class="math inline">\(\chi^2\)</span>) : lorsque l’on prend les valeurs de plusieurs distributions normales standards (avec des moyennes de 0 et des écarts-types de 1), qu’on les met au carré, puis qu’on les additionne, on obtient une variable suivant une loi <span class="math inline">\(\chi^2\)</span> à <span class="math inline">\(k\)</span> degrés de liberté (cf. <a href="#fig-VariousQuantLaws" class="quarto-xref">Figure&nbsp;<span>7.3</span></a>, graphique A), <span class="math inline">\(k\)</span> étant le nombre de variables que l’on a mises au carré. Comme on peut le voir sur la <a href="#fig-VariousQuantLaws" class="quarto-xref">Figure&nbsp;<span>7.3</span></a>, la distribution <span class="math inline">\(\chi^2\)</span> est plutôt asymétrique, avec des valeurs toujours supérieures à 0.</p></li>
+<li><p>La loi <span class="math inline">\(t\)</span> : les distributions relatives à des lois <span class="math inline">\(t\)</span> ressemblent aux distributions relatives à des lois normales mais avec des queues de distribution plus épaisses (cf. <a href="#fig-VariousQuantLaws" class="quarto-xref">Figure&nbsp;<span>7.3</span></a>, graphique B). Une distribution <span class="math inline">\(t\)</span> peut être obtenue en divisant les valeurs d’une distribution <span class="math inline">\(\chi^2\)</span> par le nombre de degrés de liberté <span class="math inline">\(k\)</span>, puis en prenant leurs racines carrées, et enfin en divisant les valeurs d’une loi normale par la variable obtenue. On obtient alors une distribution <span class="math inline">\(t\)</span> à <span class="math inline">\(k\)</span> degrés de liberté (cf. <a href="#fig-VariousQuantLaws" class="quarto-xref">Figure&nbsp;<span>7.3</span></a>, graphique C).</p></li>
+<li><p>La loi <span class="math inline">\(F\)</span> : la distribution d’une loi <span class="math inline">\(F\)</span> ressemble à celle d’une loi <span class="math inline">\(\chi^2\)</span>. Une distribution <span class="math inline">\(F\)</span> sert à comparer deux distributions <span class="math inline">\(\chi^2\)</span>.</p></li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-VariousQuantLaws" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-VariousQuantLaws-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="statistical_theory_files/figure-html/fig-VariousQuantLaws-1.png" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-VariousQuantLaws-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Densité de probabilité de lois chi-carré, t, et F
+</figcaption></figure>
+</div>
+</div>
+</div>
+</section></section><section id="loi-des-grands-nombres-distribution-déchantillonnage-de-la-moyenne-et-théorème-de-la-limite-centrale" class="level2" data-number="3"><h2 data-number="3" class="anchored" data-anchor-id="loi-des-grands-nombres-distribution-déchantillonnage-de-la-moyenne-et-théorème-de-la-limite-centrale">
+<span class="header-section-number">3</span> Loi des grands nombres, distribution d’échantillonnage de la moyenne, et théorème de la limite centrale</h2>
+<p>La loi des grands nombres décrit un principe de probabilité permettant de comprendre bon nombre de phénomènes statistiques, notamment lorsque l’on s’intéresse à la moyenne d’un échantillon. Cette loi implique par exemple le fait que la moyenne d’un échantillon pris au hasard dans une population tend à être plus proche de la moyenne de la population à mesure que la taille de l’échantillon étudié est grande. Cette loi est illustrée sur la <a href="#fig-GreatNumLaw" class="quarto-xref">Figure&nbsp;<span>7.4</span></a>. Sur cette figure, les distributions représentent des échantillons crées de manière aléatoire à partir d’une population ayant pour moyenne 0 et pour écart-type 400. Le trait vertical rouge représente la moyenne de la population d’origine alors que le trait en pointillés noirs montre la moyenne de l’échantillon qui a été obtenue. Lorsqu’on regarde chaque colonne de la figure du haut vers le bas et qu’on compare les colonnes entre elles, on se rend compte effectivement que plus la taille <span class="math inline">\(N\)</span> de l’échantillon tiré de la population est grande, plus le trait noir se retrouve en général proche du trait rouge, cela traduisant le fait qu’on a de meilleures chances que la moyenne de l’échantillon étudié soit plus proche de la moyenne de la population lorsque l’échantillon est de grande taille. Une question qui pourrait alors se poser est le nombre de personnes ou d’individus que doit contenir l’échantillon pour obtenir un résultat avec une marge d’erreur jugée acceptable.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-GreatNumLaw" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-GreatNumLaw-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="statistical_theory_files/figure-html/fig-GreatNumLaw-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-GreatNumLaw-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Illustration de la loi des grands nombres avec la moyenne d’un échantillon. Les distributions ont été obtenues à partir de <span class="math inline">\(N\)</span> valeurs obtenues aléatoirement à partir d’une population de moyenne 0 et d’écart-type 400. Trait rouge = moyenne de la population d’origine ; trait noir = moyenne de l’échantillon
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>La Figure <a href="#fig-GreatNumLaw" class="quarto-xref">Figure&nbsp;<span>7.4</span></a> montre certes qu’on a plus de chances d’avoir une moyenne d’échantillon proche de la moyenne de la population avec un grand <span class="math inline">\(N\)</span>, mais elle esquisse aussi, avec les traits en pointillés noirs, le fait qu’avec un grand <span class="math inline">\(N\)</span>, la variabilité des valeurs que peuvent prendre les moyennes de plusieurs échantillons diminue. Pour s’en assurer, on peut chercher à voir les valeurs de moyennes que l’on obtiendrait si l’on étudiait un grand nombre d’échantillons (e.g., 10 000) de même taille, autrement dit la distribution d’échantillonnage de la moyenne pour une valeur de <span class="math inline">\(N\)</span> donnée. La <a href="#fig-CentralLimTheo" class="quarto-xref">Figure&nbsp;<span>7.5</span></a> donne une vision de ce que serait une telle distribution pour différentes valeurs de <span class="math inline">\(N\)</span> dans ce cas là.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-CentralLimTheo" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-CentralLimTheo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="statistical_theory_files/figure-html/fig-CentralLimTheo-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-CentralLimTheo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Illustration du théorème de la limite centrale appliqué à une moyenne d’échantillon. Les distributions des moyennes montrées ici ont été obtenues avec 10 000 échantillons de N observations obtenues aléatoirement à partir d’une population ayant pour moyenne 0 et écart-type 400. Trait rouge = moyenne de la population d’origine
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>La <a href="#fig-CentralLimTheo" class="quarto-xref">Figure&nbsp;<span>7.5</span></a> illustre plusieurs principes qui relèvent du <strong>théorème de la limite centrale</strong>, à savoir : la moyenne d’une distribution d’échantillonnage de la moyenne tend à être la même moyenne que celle de la population d’origine ; et l’écart-type de la distribution d’échantillonnage de la moyenne (<em>SEM</em>, pour <em>Standard Error of the Mean</em> en anglais), devient plus faible à mesure que <span class="math inline">\(N\)</span> grandit. Un troisième principe est illustré sur la <a href="#fig-CentralLimTheo2" class="quarto-xref">Figure&nbsp;<span>7.6</span></a>. Pour réaliser cette figure, la même démarche que pour la <a href="#fig-CentralLimTheo" class="quarto-xref">Figure&nbsp;<span>7.5</span></a> a été suivie, si ce n’est qu’auparavant, la population d’origine suivait systématiquement une loi normale. Dans le cas de la <a href="#fig-CentralLimTheo2" class="quarto-xref">Figure&nbsp;<span>7.6</span></a>, la population suit à l’origine une loi chi-carré, elle est donc asymétrique. Malgré tout, on voit que dès que <span class="math inline">\(N\)</span> est suffisamment grand, la distribution d’échantillonnage de la moyenne suit une loi normale.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-CentralLimTheo2" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-CentralLimTheo2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="statistical_theory_files/figure-html/fig-CentralLimTheo2-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-CentralLimTheo2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Illustration du théorème de la limite centrale appliqué à une moyenne d’échantillon. Les distributions des moyennes montrées ici ont été obtenues avec 10 000 échantillons de N observations obtenues aléatoirement à partir d’une population suivant une loi chi-carré avec 3 degrés de liberté. Trait rouge = moyenne de la population d’origine
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>Si l’on formalise les choses d’un point de vue plus mathématique, le théorème de la limite centrale nous dit que si une population a une moyenne <span class="math inline">\(\mu\)</span> et un écart-type <span class="math inline">\(\sigma\)</span>, alors la moyenne de la distribution d’échantillonnage a aussi <span class="math inline">\(\mu\)</span> comme moyenne, et l’écart-type de la distribution d’échantillonnage de la moyenne (i.e., l’erreur standard, <em>SEM</em>) vaut :</p>
+<p><span class="math display">\[SEM = \frac{\sigma}{\sqrt{N}}\]</span>.</p>
+<p>La formule montre bien que pour une population présentant un écart-type donné, plus les échantillons étudiés seront de petite taille (<span class="math inline">\(N\)</span>), plus grande sera la variabilité des moyennes provenant des différents échantillons. D’un point de vue plus pratique, cela veut dire notamment que dans une méta-analyse où l’on chercherait à estimer par exemple la moyenne de l’effet d’une intervention dans une population donnée, on aura beau avoir plusieurs d’études conduites sur le sujet, si elles sont de trop petites tailles, il y a de bonnes chances pour que les valeurs des effets trouvés divergent substantiellement et ne permettent donc pas d’avoir une vue précise, fiable, de la valeur de l’effet concernant la population globale.</p>
+</section><section id="résumé" class="level2" data-number="4"><h2 data-number="4" class="anchored" data-anchor-id="résumé">
+<span class="header-section-number">4</span> Résumé</h2>
+<ul>
+<li>Les lois de probabilité, la loi des grands nombres, la distribution d’échantillonnage d’une statistique, ou encore le théorème de la limite centrale, sont des outils mathématiques qui permettent de réaliser et de mieux comprendre les inférences statistiques.</li>
+<li>Une loi de probabilité renseigne sur les chances, pour une statistique donnée, d’obtenir une valeur précise (e.g., un nombre de succès dans le cas d’une binomiale) ou d’obtenir une valeur tombant dans un rang de valeurs donné (e.g., s’agissant d’une moyenne dans le cas d’une loi normale).</li>
+<li>Des exemples de lois de probabilité couramment utilisées sont la loi binomiale, la loi normale, la loi <span class="math inline">\(\chi^2\)</span>, la loi <span class="math inline">\(t\)</span>, et la loi <span class="math inline">\(F\)</span>.</li>
+<li>Selon la loi des grands nombres, plus la taille d’un échantillon est grande, plus il y a de chances que la moyenne de cet échantillon soit relativement proche de la moyenne de la population d’origine.</li>
+<li>Selon le théorème de la limite centrale, la moyenne de la distribution d’échantillonnage de la moyenne est la même valeur que la moyenne de la population d’origine, et l’écart-type de cette distribution (<span class="math inline">\(SEM\)</span>) est tel que : <span class="math inline">\(SEM = \frac{\sigma}{\sqrt{N}}\)</span>. Par conséquent, plus <span class="math inline">\(N\)</span> est grand, plus <span class="math inline">\(SEM\)</span> est petite.</li>
+</ul>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
+<div id="ref-navarroLearningStatistics2018" class="csl-entry" role="listitem">
+Navarro, D. (2018). <em>Learning Statistics with <span>R</span></em>. <span>UNSW Computational Cognitive Science</span>.
+</div>
+</div>
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copié");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copié");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./regressions.html" class="pagination-link  aria-label=">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Régressions</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./categorical_var_tests.html" class="pagination-link" aria-label="<span class='chapter-number'>8</span>&nbsp; <span class='chapter-title'>Tests statistiques pour des variables qualitatives</span>">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Tests statistiques pour des variables qualitatives</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Analyser des données avec R a été écrit par Pierre-Yves de Müllenheim.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/pydemull/Analyser-des-donnees-avec-R/edit/master/statistical_theory.qmd" class="toc-action"><i class="bi bi-github"></i>Modifier cette page</a></li><li><a href="https://github.com/pydemull/Analyser-des-donnees-avec-R/issues/new" class="toc-action"><i class="bi empty"></i>Faire part d'un problème</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>Ce livre a été généré avec <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+
+
+</body></html>

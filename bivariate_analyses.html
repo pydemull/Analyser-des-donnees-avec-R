@@ -1,0 +1,1617 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.549">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Analyser des données avec R - 4&nbsp; Analyses bivariées</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./standardized_differences.html" rel="next">
+<link href="./univariate_analyses.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Pas de résultats",
+    "search-matching-documents-text": "documents trouvés",
+    "search-copy-link-title": "Copier le lien vers la recherche",
+    "search-hide-matches-text": "Cacher les correspondances additionnelles",
+    "search-more-match-text": "correspondance de plus dans ce document",
+    "search-more-matches-text": "correspondances de plus dans ce document",
+    "search-clear-button-title": "Effacer",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Annuler",
+    "search-submit-button-title": "Envoyer",
+    "search-label": "Recherche"
+  }
+}</script><link href="site_libs/tabwid-1.1.3/tabwid.css" rel="stylesheet">
+<script src="site_libs/tabwid-1.1.3/tabwid.js"></script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+</head>
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./univariate_analyses.html">Partie II : Analyses descriptives</a></li><li class="breadcrumb-item"><a href="./bivariate_analyses.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Analyses bivariées</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Analyser des données avec R</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/pydemull/Analyser-des-donnees-avec-R" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Basculer en mode lecteur">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Recherche"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Partie I : Appropriation de R et RStudio</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./prerequisite.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Prérequis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data_manipulation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Importation et manipulation d’une base de données</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Partie II : Analyses descriptives</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./univariate_analyses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Analyses univariées</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bivariate_analyses.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Analyses bivariées</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./standardized_differences.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Différence de moyennes standardisée</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./regressions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Régressions</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">Partie III : Analyses inférentielles</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./statistical_theory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Prérequis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./categorical_var_tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Tests statistiques pour des variables qualitatives</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Sommaire</h2>
+   
+  <ul>
+<li>
+<a href="#relation-entre-deux-variables-quantitatives" id="toc-relation-entre-deux-variables-quantitatives" class="nav-link active" data-scroll-target="#relation-entre-deux-variables-quantitatives"><span class="header-section-number">1</span> Relation entre deux variables quantitatives</a>
+  <ul class="collapse">
+<li><a href="#%C3%A9tudier-graphiquement-la-relation" id="toc-étudier-graphiquement-la-relation" class="nav-link" data-scroll-target="#%C3%A9tudier-graphiquement-la-relation"><span class="header-section-number">1.1</span> Étudier graphiquement la relation</a></li>
+  <li><a href="#%C3%A9tudier-num%C3%A9riquement-la-relation" id="toc-étudier-numériquement-la-relation" class="nav-link" data-scroll-target="#%C3%A9tudier-num%C3%A9riquement-la-relation"><span class="header-section-number">1.2</span> Étudier numériquement la relation</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#relation-entre-deux-variables-qualitatives" id="toc-relation-entre-deux-variables-qualitatives" class="nav-link" data-scroll-target="#relation-entre-deux-variables-qualitatives"><span class="header-section-number">2</span> Relation entre deux variables qualitatives</a>
+  <ul class="collapse">
+<li><a href="#%C3%A9tudier-graphiquement-la-relation-1" id="toc-étudier-graphiquement-la-relation-1" class="nav-link" data-scroll-target="#%C3%A9tudier-graphiquement-la-relation-1"><span class="header-section-number">2.1</span> Étudier graphiquement la relation</a></li>
+  <li><a href="#%C3%A9tudier-num%C3%A9riquement-la-relation-1" id="toc-étudier-numériquement-la-relation-1" class="nav-link" data-scroll-target="#%C3%A9tudier-num%C3%A9riquement-la-relation-1"><span class="header-section-number">2.2</span> Étudier numériquement la relation</a></li>
+  </ul>
+</li>
+  <li><a href="#r%C3%A9sum%C3%A9" id="toc-résumé" class="nav-link" data-scroll-target="#r%C3%A9sum%C3%A9"><span class="header-section-number">3</span> Résumé</a></li>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/pydemull/Analyser-des-donnees-avec-R/edit/master/bivariate_analyses.qmd" class="toc-action"><i class="bi bi-github"></i>Modifier cette page</a></li><li><a href="https://github.com/pydemull/Analyser-des-donnees-avec-R/issues/new" class="toc-action"><i class="bi empty"></i>Faire part d'un problème</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./univariate_analyses.html">Partie II : Analyses descriptives</a></li><li class="breadcrumb-item"><a href="./bivariate_analyses.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Analyses bivariées</span></a></li></ol></nav><div class="quarto-title">
+<h1 class="title">
+<span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Analyses bivariées</span>
+</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><p>Réaliser une analyse bivariée désigne le fait d’étudier la relation qui peut exister entre deux variables. Dans ce chapitre, nous allons voir les procédures graphiques et calculatoires qui permettent d’étudier et de quantifier le degré de relation pouvant exister entre deux variables dans les cas suivants : entre deux variables quantitatives, et entre deux variables qualitatives. Comme dans le chapitre précédent, l’objectif est ici d’explorer et de décrire les données et leurs relations à l’échelle d’un échantillon, sans pour autant chercher à déterminer l’incertitude qu’il peut exister dans les statistiques calculées en vue de les utiliser pour réaliser une inférence dans la population représentée.</p>
+<section id="relation-entre-deux-variables-quantitatives" class="level2" data-number="1"><h2 data-number="1" class="anchored" data-anchor-id="relation-entre-deux-variables-quantitatives">
+<span class="header-section-number">1</span> Relation entre deux variables quantitatives</h2>
+<section id="étudier-graphiquement-la-relation" class="level3" data-number="1.1"><h3 data-number="1.1" class="anchored" data-anchor-id="étudier-graphiquement-la-relation">
+<span class="header-section-number">1.1</span> Étudier graphiquement la relation</h3>
+<p>Comme dans le cadre d’analyses univariées, une bonne pratique, lorsqu’on étudie une relation bivariée, est de faire un graphique. Avec des variables quantitatives, il s’agit de montrer les valeurs d’une variable en fonction des valeurs de l’autre variable, chose que permet un simple nuage de points. Plusieurs types de relations peuvent alors être rencontrés, ces relations pouvant potentiellement s’apparenter à autant de fonctions mathématiques que l’on connaît. Parmi les plus connues, on a par exemple les relations linéaires, les relations logarithmiques, ou encore les relations quadratiques, qui sont illustrées sur la <a href="#fig-relationshipsIllustrations" class="quarto-xref">Figure&nbsp;<span>4.1</span></a>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-relationshipsIllustrations" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-relationshipsIllustrations-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="bivariate_analyses_files/figure-html/fig-relationshipsIllustrations-1.png" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-relationshipsIllustrations-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Différentes formes de relation entre deux variables quantitatives
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>Avec R, pour obtenir un nuage de points à partir d’un jeu de données, il est possible d’utiliser la fonction <code>ggplot()</code> en l’associant à la fonction <code>geom_point()</code> du package <code>ggplot2</code>, comme dans l’exemple ci-dessous qui utilise le jeu de données <code>mtcars</code> (qui est intégré à R de base) et les variables <code>hp</code> (<em>gross horsepower</em>) et <code>mpg</code> (<em>miles/US gallon</em>). Dans cet exemple dont le résultat est montré sur la <a href="#fig-scatterplot" class="quarto-xref">Figure&nbsp;<span>4.2</span></a>, on peut voir que la relation semble globalement linéaire négative (voire curvilinéaire négative si l’on donne de l’importance au point isolé à droite du graphique).</p>
+<div class="cell" data-out-.width="90%">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">mtcars</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">hp</span>, y <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-scatterplot" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-scatterplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="bivariate_analyses_files/figure-html/fig-scatterplot-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-scatterplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Nuage de points montrant les variables hp et mpg du jeu de données mtcars
+</figcaption></figure>
+</div>
+</div>
+</div>
+</section><section id="étudier-numériquement-la-relation" class="level3" data-number="1.2"><h3 data-number="1.2" class="anchored" data-anchor-id="étudier-numériquement-la-relation">
+<span class="header-section-number">1.2</span> Étudier numériquement la relation</h3>
+<section id="le-coefficient-de-corrélation-de-pearson" class="level4" data-number="1.2.1"><h4 data-number="1.2.1" class="anchored" data-anchor-id="le-coefficient-de-corrélation-de-pearson">
+<span class="header-section-number">1.2.1</span> Le coefficient de corrélation de Pearson</h4>
+<p>Lorsque la relation étudiée semble linéaire, l’étude numérique classique consiste à calculer le coefficient de corrélation de Pearson, noté <span class="math inline">\(r\)</span>, dont la valeur vise à renseigner dans quelle mesure le nuage de points représentant le lien entre les deux variables étudiées suit une droite. Avant de se lancer dans le calcul du coefficient de corrélation de Pearson pour étudier la relation entre une variable <span class="math inline">\(X\)</span> et une variable <span class="math inline">\(Y\)</span>, il peut donc être utile de compléter le nuage de points montré sur la <a href="#fig-scatterplot" class="quarto-xref">Figure&nbsp;<span>4.2</span></a> avec une droite d’équation de type <span class="math inline">\(Y = aX + b\)</span> (<a href="#fig-scatterplotLine" class="quarto-xref">Figure&nbsp;<span>4.3</span></a>). Cette équation serait la meilleure modélisation possible de la relation linéaire entre <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span>, de telle sorte que parmi l’infinité d’équations qui pourraient lier <span class="math inline">\(X\)</span> à <span class="math inline">\(Y\)</span>, c’est cette équation qui au total donnerait la plus petite erreur lorsque l’on voudrait prédire <span class="math inline">\(Y\)</span> à partir de <span class="math inline">\(X\)</span>. Si <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span> sont liées de manière linéaire, alors le nuage des points relatifs aux deux variables devrait s’étaler le long de cette droite. Pour obtenir cette droite en plus du nuage de points, il est possible d’utiliser la fonction <code>geom_smooth()</code> du package <code>ggplot2</code>.</p>
+<div class="cell">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">mtcars</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">hp</span>, y <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_smooth</span><span class="op">(</span>formula <span class="op">=</span> <span class="va">y</span> <span class="op">~</span> <span class="va">x</span>, method <span class="op">=</span> <span class="st">"lm"</span>, se <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-scatterplotLine" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-scatterplotLine-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="bivariate_analyses_files/figure-html/fig-scatterplotLine-1.png" class="img-fluid figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-scatterplotLine-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Nuage de points avec droite de régression pour les variables hp et mpg du jeu de données mtcars
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>Dans la fonction <code>geom_smooth()</code> qui a été utilisée dans l’exemple ci-dessus, on note que l’argument <code>formula</code> pourrait être considéré comme facultatif car il s’agit ici de la configuration par défaut de la fonction. En revanche, l’argument <code>method</code> doit être ici configuré avec <code>"lm"</code> (pour <em>linear model</em>) car ce n’est pas la méthode graphique configurée par défaut dans la fonction. Enfin, l’argument <code>se</code> permet de montrer ou non un intervalle de confiance autour de la droite de régression, ce qui n’a pas été activé ici (par défaut, l’argument <code>se</code> est configuré pour montrer cet intervalle de confiance). Dans l’exemple montré ci-dessus, la représentation graphique encourage fortement à penser que l’un des types de relations à envisager prioritairement dans l’étude des deux variables est la relation linéaire. Cette information rend pertinente l’utilisation du coefficient de corrélation de Pearson pour une étude numérique de la relation en question.</p>
+<p>La valeur du coefficient de corrélation de Pearson peut aller de 1 (suggérant une relation linéaire positive parfaite) à -1 (suggérant une relation linéaire négative parfaite). Des valeurs proches de 0 suggèreraient une abscence de relation linéaire. La formule du coefficient de corrélation de Pearson (<span class="math inline">\(r\)</span>) pour un échantillon est la suivante :</p>
+<p><span class="math display">\[r_{X,Y} =  {\frac{COV_{X,Y}}{\hat{\sigma}_{X} \hat{\sigma}_{Y}}} =  {\frac{\sum_{i=1}^{N} (X{i} - \overline{X}) (Y{i} - \overline{Y})}{N-1}} {\frac{1}{\hat{\sigma}_{X} \hat{\sigma}_{Y}}},\]</span></p>
+<p><span class="math inline">\(COV\)</span> désignant la covariance entre les variables <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span>, <span class="math inline">\(X{i}\)</span> et <span class="math inline">\(Y{i}\)</span> les valeurs de <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span> pour une observation <span class="math inline">\(i\)</span>, <span class="math inline">\(\overline{X}\)</span> et <span class="math inline">\(\overline{Y}\)</span> les moyennes respectives des variables <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span>, <span class="math inline">\(N\)</span> le nombre d’observations, et <span class="math inline">\(\hat{\sigma}_{X}\)</span> et <span class="math inline">\(\hat{\sigma}_{Y}\)</span> les écarts-types respectifs des variables <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span>. Cette formule indique que le coefficient de corrélation de Pearson s’obtient en divisant la covariance des deux variables étudiées par le produit de leurs écarts-types respectifs.</p>
+<p>Le <a href="#tbl-tablecov" class="quarto-xref">Tableau&nbsp;<span>4.1</span></a> montre les premières étapes du calcul de la covariance pour des couples de variables fictifs <span class="math inline">\((X1,Y1)\)</span>, <span class="math inline">\((X1,Y2)\)</span>, et <span class="math inline">\((X1,Y3)\)</span>. En particulier, la partie droite du tableau (de X1Y1 à X1Y3) montre le calcul du produit <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span> pour les différents couples de variables et cela pour chaque ligne du jeu de données.</p>
+<div class="cell">
+<div id="tbl-tablecov" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-tablecov-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tableau&nbsp;1: Illustration de calculs de covariance
+</figcaption><div aria-describedby="tbl-tablecov-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div class="tabwid">
+<style>.cl-7c717cfe{}.cl-7c674cc0{font-family:'Arial';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-7c674cde{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-7c6ad610{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-7c6afa32{width:0.472in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7c6afa3c{width:0.506in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7c6afa3d{width:0.659in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7c6afa3e{width:1.058in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7c6afa46{width:0.472in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7c6afa47{width:0.506in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7c6afa50{width:0.659in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7c6afa51{width:1.058in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7c6afa5a{width:0.472in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7c6afa5b{width:0.506in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7c6afa5c{width:0.659in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7c6afa64{width:1.058in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7c6afa65{width:0.472in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7c6afa66{width:0.506in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7c6afa6e{width:0.659in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7c6afa6f{width:1.058in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7c6afa78{width:0.472in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7c6afa79{width:0.506in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7c6afa7a{width:0.659in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7c6afa82{width:1.058in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7c6afa83{width:0.472in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7c6afa84{width:0.506in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7c6afa8c{width:0.659in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7c6afa8d{width:1.058in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table data-quarto-disable-processing="true" class="cl-7c717cfe">
+<thead><tr style="overflow-wrap:break-word;">
+<th class="cl-7c6afa32"><p class="cl-7c6ad610"><span class="cl-7c674cc0">X1</span></p></th>
+<th class="cl-7c6afa32"><p class="cl-7c6ad610"><span class="cl-7c674cc0">Y1</span></p></th>
+<th class="cl-7c6afa32"><p class="cl-7c6ad610"><span class="cl-7c674cc0">Y2</span></p></th>
+<th class="cl-7c6afa3c"><p class="cl-7c6ad610"><span class="cl-7c674cc0">Y3</span></p></th>
+<th class="cl-7c6afa3d"><p class="cl-7c6ad610"><span class="cl-7c674cc0">X1Y1</span></p></th>
+<th class="cl-7c6afa3e"><p class="cl-7c6ad610"><span class="cl-7c674cc0">X1Y2</span></p></th>
+<th class="cl-7c6afa3d"><p class="cl-7c6ad610"><span class="cl-7c674cc0">X1Y3</span></p></th>
+</tr></thead>
+<tbody>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-7c6afa46"><p class="cl-7c6ad610"><span class="cl-7c674cde">0</span></p></td>
+<td class="cl-7c6afa46"><p class="cl-7c6ad610"><span class="cl-7c674cde">0</span></p></td>
+<td class="cl-7c6afa46"><p class="cl-7c6ad610"><span class="cl-7c674cde">0</span></p></td>
+<td class="cl-7c6afa47"><p class="cl-7c6ad610"><span class="cl-7c674cde">0</span></p></td>
+<td class="cl-7c6afa50"><p class="cl-7c6ad610"><span class="cl-7c674cde">36</span></p></td>
+<td class="cl-7c6afa51"><p class="cl-7c6ad610"><span class="cl-7c674cde">40.285714</span></p></td>
+<td class="cl-7c6afa50"><p class="cl-7c6ad610"><span class="cl-7c674cde">-36</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-7c6afa5a"><p class="cl-7c6ad610"><span class="cl-7c674cde">2</span></p></td>
+<td class="cl-7c6afa5a"><p class="cl-7c6ad610"><span class="cl-7c674cde">2</span></p></td>
+<td class="cl-7c6afa5a"><p class="cl-7c6ad610"><span class="cl-7c674cde">1</span></p></td>
+<td class="cl-7c6afa5b"><p class="cl-7c6ad610"><span class="cl-7c674cde">-2</span></p></td>
+<td class="cl-7c6afa5c"><p class="cl-7c6ad610"><span class="cl-7c674cde">16</span></p></td>
+<td class="cl-7c6afa64"><p class="cl-7c6ad610"><span class="cl-7c674cde">22.857143</span></p></td>
+<td class="cl-7c6afa5c"><p class="cl-7c6ad610"><span class="cl-7c674cde">-16</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-7c6afa65"><p class="cl-7c6ad610"><span class="cl-7c674cde">4</span></p></td>
+<td class="cl-7c6afa65"><p class="cl-7c6ad610"><span class="cl-7c674cde">4</span></p></td>
+<td class="cl-7c6afa65"><p class="cl-7c6ad610"><span class="cl-7c674cde">15</span></p></td>
+<td class="cl-7c6afa66"><p class="cl-7c6ad610"><span class="cl-7c674cde">-4</span></p></td>
+<td class="cl-7c6afa6e"><p class="cl-7c6ad610"><span class="cl-7c674cde">4</span></p></td>
+<td class="cl-7c6afa6f"><p class="cl-7c6ad610"><span class="cl-7c674cde">-16.571429</span></p></td>
+<td class="cl-7c6afa6e"><p class="cl-7c6ad610"><span class="cl-7c674cde">-4</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-7c6afa78"><p class="cl-7c6ad610"><span class="cl-7c674cde">6</span></p></td>
+<td class="cl-7c6afa78"><p class="cl-7c6ad610"><span class="cl-7c674cde">6</span></p></td>
+<td class="cl-7c6afa78"><p class="cl-7c6ad610"><span class="cl-7c674cde">5</span></p></td>
+<td class="cl-7c6afa79"><p class="cl-7c6ad610"><span class="cl-7c674cde">-6</span></p></td>
+<td class="cl-7c6afa7a"><p class="cl-7c6ad610"><span class="cl-7c674cde">0</span></p></td>
+<td class="cl-7c6afa82"><p class="cl-7c6ad610"><span class="cl-7c674cde">0.000000</span></p></td>
+<td class="cl-7c6afa7a"><p class="cl-7c6ad610"><span class="cl-7c674cde">0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-7c6afa65"><p class="cl-7c6ad610"><span class="cl-7c674cde">8</span></p></td>
+<td class="cl-7c6afa65"><p class="cl-7c6ad610"><span class="cl-7c674cde">8</span></p></td>
+<td class="cl-7c6afa65"><p class="cl-7c6ad610"><span class="cl-7c674cde">11</span></p></td>
+<td class="cl-7c6afa66"><p class="cl-7c6ad610"><span class="cl-7c674cde">-8</span></p></td>
+<td class="cl-7c6afa6e"><p class="cl-7c6ad610"><span class="cl-7c674cde">4</span></p></td>
+<td class="cl-7c6afa6f"><p class="cl-7c6ad610"><span class="cl-7c674cde">8.571429</span></p></td>
+<td class="cl-7c6afa6e"><p class="cl-7c6ad610"><span class="cl-7c674cde">-4</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-7c6afa5a"><p class="cl-7c6ad610"><span class="cl-7c674cde">10</span></p></td>
+<td class="cl-7c6afa5a"><p class="cl-7c6ad610"><span class="cl-7c674cde">10</span></p></td>
+<td class="cl-7c6afa5a"><p class="cl-7c6ad610"><span class="cl-7c674cde">3</span></p></td>
+<td class="cl-7c6afa5b"><p class="cl-7c6ad610"><span class="cl-7c674cde">-10</span></p></td>
+<td class="cl-7c6afa5c"><p class="cl-7c6ad610"><span class="cl-7c674cde">16</span></p></td>
+<td class="cl-7c6afa64"><p class="cl-7c6ad610"><span class="cl-7c674cde">-14.857143</span></p></td>
+<td class="cl-7c6afa5c"><p class="cl-7c6ad610"><span class="cl-7c674cde">-16</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-7c6afa83"><p class="cl-7c6ad610"><span class="cl-7c674cde">12</span></p></td>
+<td class="cl-7c6afa83"><p class="cl-7c6ad610"><span class="cl-7c674cde">12</span></p></td>
+<td class="cl-7c6afa83"><p class="cl-7c6ad610"><span class="cl-7c674cde">12</span></p></td>
+<td class="cl-7c6afa84"><p class="cl-7c6ad610"><span class="cl-7c674cde">-12</span></p></td>
+<td class="cl-7c6afa8c"><p class="cl-7c6ad610"><span class="cl-7c674cde">36</span></p></td>
+<td class="cl-7c6afa8d"><p class="cl-7c6ad610"><span class="cl-7c674cde">31.714286</span></p></td>
+<td class="cl-7c6afa8c"><p class="cl-7c6ad610"><span class="cl-7c674cde">-36</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>Ce que ce tableau montre, c’est que plus les deux variables étudiées évolueront de manière consistante dans des sens identiques comme avec <span class="math inline">\(X1\)</span> et <span class="math inline">\(Y1\)</span>, ou de manière consistante dans des sens opposés comme avec <span class="math inline">\(X1\)</span> et <span class="math inline">\(Y3\)</span>, plus les produits <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span> donneront respectivement des grands scores positifs ou des grands scores négatifs, et moins les scores <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span> à additionner pour le calcul de la covariance s’annuleront. En effet, avec une relation relativement linéaire et positive les scores seront plus systématiquement positifs, et avec une relation relativement linéaire et négative les scores seront plus systématiquement négatifs. Toutefois, lorsqu’on aura des variables qui n’évolueront pas de manière consistante dans le même sens ou dans un sens opposé comme avec <span class="math inline">\(X1\)</span> et <span class="math inline">\(Y2\)</span>, les scores positifs et négatifs liés aux calculs <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span> auront tendance à s’annuler et donneront lieu à une somme des scores <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span> diminuée, et donc à une covariance et à un coefficient de corrélation de Pearson tirés vers 0. Ces différents cas de figure et les calculs <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span> correspondants sont illustrés sur la <a href="#fig-graphCov" class="quarto-xref">Figure&nbsp;<span>4.4</span></a>. Sur cette figure, chaque carré correspond au calcul <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span>, le carré étant bleu lorsque le résultat du calcul est positif, et rouge lorsque le résultat est négatif. L’aire d’un carré illustre la grandeur du score issu du calcul. Sur les graphiques de gauche et de droite de la figure, on distingue une relation linéaire parfaite, ce qui maximise les scores à additionner pour le calcul de la covariance, dans le positif pour le graphique de gauche et dans le négatif pour le graphique de droite. Sur le graphique du milieu, on remarque que le manque de relation linéaire donne lieu à des carrés à la fois bleus et rouges, indiquant que les scores associés aux calculs <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span> de la covariance s’annulent et diminuent ainsi la valeur finale de la covariance.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-graphCov" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-graphCov-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="bivariate_analyses_files/figure-html/fig-graphCov-1.png" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-graphCov-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Illustration du calcul de la covariance
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>Dans R, le coefficient de corrélation de Pearson peut être obtenu avec la fonction <code><a href="https://rdrr.io/r/stats/cor.html">cor()</a></code>. Dans l’exemple ci-dessous qui reprend les variables du jeu de données <code>mtcars</code> utilisées plus haut, on observe un coefficient négatif, relativement proche de -1, suggérant une relation relativement linéaire et négative entre les variables étudiées.</p>
+<div class="cell">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">mtcars</span><span class="op">$</span><span class="va">hp</span>, y <span class="op">=</span> <span class="va">mtcars</span><span class="op">$</span><span class="va">mpg</span>, method <span class="op">=</span> <span class="st">"pearson"</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -0.7761684</code></pre>
+</div>
+</div>
+<p>Toutefois, la fonction <code><a href="https://rdrr.io/r/stats/cor.test.html">cor.test()</a></code> sera plus intéressante pour la suite car elle permet de calculer des indices statistiques de probabilité qui seront nécessaires dès lors qu’il s’agira de chercher à inférer la valeur d’une corrélation dans une population d’où l’échantillon étudié provient. La valeur de la corrélation est donnée à la fin de la liste des informations qui apparaissent suite à l’activation de la fonction.</p>
+<div class="cell">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.test.html">cor.test</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">mtcars</span><span class="op">$</span><span class="va">hp</span>, y <span class="op">=</span> <span class="va">mtcars</span><span class="op">$</span><span class="va">mpg</span>, method <span class="op">=</span> <span class="st">"pearson"</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's product-moment correlation
+
+data:  mtcars$hp and mtcars$mpg
+t = -6.7424, df = 30, p-value = 1.788e-07
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.8852686 -0.5860994
+sample estimates:
+       cor 
+-0.7761684 </code></pre>
+</div>
+</div>
+<p>Sur la base de travaux antérieurs, Hopkins et al. <span class="citation" data-cites="hopkinsProgressiveStatisticsStudies2009">(<a href="references.html#ref-hopkinsProgressiveStatisticsStudies2009" role="doc-biblioref">2009</a>)</span> ont fait une proposition de classification pour qualifier la valeur du coefficient de corrélation qui serait obtenue dans le cadre d’une relation linéaire. Cette proposition est montrée dans le <a href="#tbl-correlationtable" class="quarto-xref">Tableau&nbsp;<span>4.2</span></a> :</p>
+<div class="cell">
+<div id="tbl-correlationtable" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-correlationtable-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tableau&nbsp;2: Proposition de termes qualifiant l’importance d’une corrélation
+</figcaption><div aria-describedby="tbl-correlationtable-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div class="tabwid">
+<style>.cl-7d5f8c6e{}.cl-7d5627b4{font-family:'Arial';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-7d5627c8{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-7d596cda{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-7d599318{width:0.701in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7d599319{width:0.947in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7d599322{width:0.82in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7d599323{width:1.16in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7d59932c{width:1.805in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7d59932d{width:0.701in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7d599336{width:0.947in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7d599337{width:0.82in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7d599338{width:1.16in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7d599340{width:1.805in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table data-quarto-disable-processing="true" class="cl-7d5f8c6e">
+<thead><tr style="overflow-wrap:break-word;">
+<th class="cl-7d599318"><p class="cl-7d596cda"><span class="cl-7d5627b4">Petite</span></p></th>
+<th class="cl-7d599319"><p class="cl-7d596cda"><span class="cl-7d5627b4">Moyenne</span></p></th>
+<th class="cl-7d599322"><p class="cl-7d596cda"><span class="cl-7d5627b4">Grande</span></p></th>
+<th class="cl-7d599323"><p class="cl-7d596cda"><span class="cl-7d5627b4">Très grande</span></p></th>
+<th class="cl-7d59932c"><p class="cl-7d596cda"><span class="cl-7d5627b4">Extrêmement grande</span></p></th>
+</tr></thead>
+<tbody><tr style="overflow-wrap:break-word;">
+<td class="cl-7d59932d"><p class="cl-7d596cda"><span class="cl-7d5627c8">0.1</span></p></td>
+<td class="cl-7d599336"><p class="cl-7d596cda"><span class="cl-7d5627c8">0.3</span></p></td>
+<td class="cl-7d599337"><p class="cl-7d596cda"><span class="cl-7d5627c8">0.5</span></p></td>
+<td class="cl-7d599338"><p class="cl-7d596cda"><span class="cl-7d5627c8">0.7</span></p></td>
+<td class="cl-7d599340"><p class="cl-7d596cda"><span class="cl-7d5627c8">0.9</span></p></td>
+</tr></tbody>
+</table>
+</div>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>Pour visualiser le lien que l’on peut faire entre la forme du nuage de points et la valeur du coefficient de corrélation de Pearson que l’on peut obtenir, la page web proposée par Kristoffer Magnusson (https://rpsychologist.com/correlation) peut être particulièrement intéressante. Cette page web donne la possibilité de faire varier manuellement la valeur du coefficient de corrélation de Pearson pour ensuite voir un nuage de points type correspondant à cette valeur. Faites un essai !</p>
+<p>À noter que la valeur du coefficient de corrélation de Pearson est dépendante du degré de variabilité des valeurs autour des tendances centrales des variables concernées. <span class="citation" data-cites="halperinSpuriousCorrelationsCauses1986">(<a href="references.html#ref-halperinSpuriousCorrelationsCauses1986" role="doc-biblioref">Halperin, 1986</a>)</span>. En ce sens, si dans deux études différentes les variables étudiées n’ont pas les mêmes niveaux de variabilité, les valeurs des coefficients de corrélation de Pearson ne seront pas vraiment comparables, en sachant que c’est l’étude qui présentera l’échantillon avec la plus grande variabilité qui aura plus de chances de présenter une valeur de coefficient de corrélation de Pearson plus élevée.</p>
+<p>Un cas particulier illustrant l’influence du degré de dispersion sur la relation étudiée est montré sur la <a href="#fig-simpsonquant" class="quarto-xref">Figure&nbsp;<span>4.5</span></a>. Cet exemple a pour but de montrer que l’étude d’une relation entre deux variables quantitatives peut aboutir à des conclusions radicalement différentes selon que l’on conduit les analyses à l’échelle d’un groupe entier ou que l’on sépare les analyses par groupe de caractéristiques, en particulier lorsque la distribution des données par groupe est radicalement différente de celle obtenue à l’échelle du groupe entier. Sur la gauche de la <a href="#fig-simpsonquant" class="quarto-xref">Figure&nbsp;<span>4.5</span></a>, le nuage de points représente la relation entre deux variables à l’échelle de l’ensemble du groupe étudié. La variabilité possible pour les deux variables étudiées (V1 et V2 dans l’exemple) est alors maximale. Toutefois, ces données appartiennent en réalité à des sous-groupes distincts (cf.&nbsp;couleurs sur le graphique de droite de la <a href="#fig-simpsonquant" class="quarto-xref">Figure&nbsp;<span>4.5</span></a>). L’analyse par sous-groupe diminue la variabilité à la fois pour V1 et V2, donnant même lieu ici à des relations de sens opposé à celui observé à l’échelle de l’ensemble du groupe ! Cette situation correspond à ce qu’on appelle un paradoxe de Simpson, lequel se présente lorsque le phénomène que l’on peut observer avec une vue globale est annulé voire inversé lors d’une analyse par sous-groupe. Ici, la grande variabilité associée aux données du graphique de gauche de la <a href="#fig-simpsonquant" class="quarto-xref">Figure&nbsp;<span>4.5</span></a> crée une relation artificiellement et donc faussement positive entre V1 et V2. C’est l’analyse par sous-groupe qui permet de révéler la vraie nature de la relation étudiée.</p>
+<div class="cell">
+<div id="fig-simpsonquant" class="cell quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-simpsonquant-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div id="fig-simpsonquant" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-simpsonquant-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="bivariate_analyses_files/figure-html/fig-simpsonquant-1.png" class="img-fluid figure-img" style="width:90.0%" data-ref-parent="fig-simpsonquant">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-simpsonquant-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Données obtenues grâce à la fonction simulate_simpson() du package bayestestR
+</figcaption></figure>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-simpsonquant-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Influence du niveau d’analyse (groupe entier vs.&nbsp;sous-groupes) sur la corrélation observée entre deux variables quantitatives
+</figcaption></figure>
+</div>
+</div>
+<p>En outre, la valeur du coefficient de corrélation de Pearson peut être influencée par des valeurs extrêmes, comme montré sur la <a href="#fig-spuriousCorrelationBis" class="quarto-xref">Figure&nbsp;<span>4.6</span></a>. Les deux graphiques de cette figure montrent exactement les mêmes données, à ceci près que sur le graphique de droite, on a remplacé en ordonnées une valeur du graphique de gauche pour lui donner la valeur de 10. L’influence de cette simple action sur la valeur du coefficient de corrélation de Pearson est nette. Ceci montre qu’il faut faire attention aux valeurs extrêmes qui pourraient grandement influencer la variabilité des données d’une variable et au final la valeur de corrélation obtenue, notamment en présence d’échantillons de taille relativement faible. Dans le cas où la valeur du coefficient de corrélation de Pearson serait très influencée par une valeur, il pourrait être une bonne pratique de calculer la valeur du coefficient de corrélation de Pearson avec et sans cette valeur afin de pouvoir quantifier son influence sur la relation étudiée <span class="citation" data-cites="halperinSpuriousCorrelationsCauses1986">(<a href="references.html#ref-halperinSpuriousCorrelationsCauses1986" role="doc-biblioref">Halperin, 1986</a>)</span>. Une alternative pourrait être aussi d’étudier la relation à l’aide d’autres types de coefficients que celui de Pearson, tels que celui de Spearman, présenté plus bas. Cet exemple doit faire prendre conscience qu’il n’est pas toujours pertinent de calculer le coefficient de corrélation de Pearson. En ce sens, lorsqu’on cherche à inférer la valeur du coefficient de corrélation de Pearson dans la population étudiée, il convient de vérifier certains prérequis, lesquels sont abordés plus loin dans ce livre.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-spuriousCorrelationBis" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-spuriousCorrelationBis-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="bivariate_analyses_files/figure-html/fig-spuriousCorrelationBis-1.png" class="img-fluid figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-spuriousCorrelationBis-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Influence d’une valeur extrême sur la valeur du coefficient de corrélation de Pearson en présence d’un petit échantillon
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>Lorsque la relation étudiée ne semble pas linéaire mais s’apparente assez clairement à d’autres fonctions mathématiques, telles que des relations logarithmiques ou polynomiales, il est possible de transformer une des variables, voire les deux, pour rendre la relation linéaire et à nouveau étudiable à l’aide du coefficient de corrélation de Pearson <span class="citation" data-cites="halperinSpuriousCorrelationsCauses1986">(<a href="references.html#ref-halperinSpuriousCorrelationsCauses1986" role="doc-biblioref">Halperin, 1986</a>)</span>. Toutefois, il est aussi possible de créer des modèles de régression non linéaires afin de regarder si ces modèles correspondent bien aux données. La détermination et la validation d’un modèle non linéaire qui correspondrait bien aux données confirmerait alors que la relation étudiée a une forme particulière et potentiellement prédictible. Les procédures pour explorer différents modèles de régression (linéaires et non linéaires) sont abordées au chapitre suivant. Enfin, une dernière alternative possible, pour étudier la relation entre deux variables quantitatives dont les distributions ne permettraient pas d’utiliser correctement le coefficient de corrélation de Pearson, serait l’utilisation de coefficients de corrélation basés sur les rangs, tels que le coefficient de corrélation de Spearman.</p>
+</section><section id="le-coefficient-de-corrélation-de-spearman" class="level4" data-number="1.2.2"><h4 data-number="1.2.2" class="anchored" data-anchor-id="le-coefficient-de-corrélation-de-spearman">
+<span class="header-section-number">1.2.2</span> Le coefficient de corrélation de Spearman</h4>
+<p>Lorsque le coefficient de corrélation de Pearson ne permet pas de caractériser fiablement le degré de relation linéaire <strong>entre les valeurs</strong> de deux variables (e.g., en présence de valeurs aberrantes au sein d’un échantillon de petite taille), une alternative peut être d’étudier le degré de relation linéaire <strong>entre les rangs</strong> de ces deux variables. Le rang, c’est le classement (ou la position) d’une observation donnée au sein d’une variable en fonction de sa valeur. Dans une variable, les observations avec les valeurs les plus faibles seront associées aux rangs les plus bas alors que les observations avec les valeurs les plus élevées seront associées aux rangs les plus élevés. Une illustration de la notion de rang est proposée dans le <a href="#tbl-tableranks" class="quarto-xref">Tableau&nbsp;<span>4.3</span></a> pour la variable <code>hp</code> du jeu de données <code>mtcars</code>. Dans ce tableau, les lignes ont été ordonnées sur la base des rangs de la variable <code>hp</code>. On pourra remarquer que dans le tableau, nous avons ce qu’on appelle des ex-aequos, c’est-à-dire que plusieurs observations peuvent présenter les mêmes valeurs, et donc avoir le même rang.</p>
+<div class="cell">
+<div id="tbl-tableranks" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-tableranks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tableau&nbsp;3: Illustration de la notion de rang pour une variable quantitative
+</figcaption><div aria-describedby="tbl-tableranks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div class="tabwid">
+<style>.cl-7e65acf6{}.cl-7e582298{font-family:'Arial';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-7e5822ac{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-7e5def5c{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-7e5e1694{width:1.066in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7e5e169e{width:0.947in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7e5e16a8{width:1.066in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7e5e16b2{width:0.947in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7e5e16b3{width:1.066in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7e5e16bc{width:0.947in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7e5e16bd{width:1.066in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7e5e16be{width:0.947in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7e5e16c6{width:1.066in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7e5e16c7{width:0.947in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7e5e16d0{width:1.066in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-7e5e16d1{width:0.947in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table data-quarto-disable-processing="true" class="cl-7e65acf6">
+<thead><tr style="overflow-wrap:break-word;">
+<th class="cl-7e5e1694"><p class="cl-7e5def5c"><span class="cl-7e582298">hp (valeur)</span></p></th>
+<th class="cl-7e5e169e"><p class="cl-7e5def5c"><span class="cl-7e582298">hp (rang)</span></p></th>
+</tr></thead>
+<tbody>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-7e5e16a8"><p class="cl-7e5def5c"><span class="cl-7e5822ac">52</span></p></td>
+<td class="cl-7e5e16b2"><p class="cl-7e5def5c"><span class="cl-7e5822ac">1.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-7e5e16b3"><p class="cl-7e5def5c"><span class="cl-7e5822ac">62</span></p></td>
+<td class="cl-7e5e16bc"><p class="cl-7e5def5c"><span class="cl-7e5822ac">2.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-7e5e16bd"><p class="cl-7e5def5c"><span class="cl-7e5822ac">65</span></p></td>
+<td class="cl-7e5e16be"><p class="cl-7e5def5c"><span class="cl-7e5822ac">3.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-7e5e16b3"><p class="cl-7e5def5c"><span class="cl-7e5822ac">66</span></p></td>
+<td class="cl-7e5e16bc"><p class="cl-7e5def5c"><span class="cl-7e5822ac">4.5</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-7e5e16a8"><p class="cl-7e5def5c"><span class="cl-7e5822ac">66</span></p></td>
+<td class="cl-7e5e16b2"><p class="cl-7e5def5c"><span class="cl-7e5822ac">4.5</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-7e5e16b3"><p class="cl-7e5def5c"><span class="cl-7e5822ac">91</span></p></td>
+<td class="cl-7e5e16bc"><p class="cl-7e5def5c"><span class="cl-7e5822ac">6.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-7e5e16bd"><p class="cl-7e5def5c"><span class="cl-7e5822ac">93</span></p></td>
+<td class="cl-7e5e16be"><p class="cl-7e5def5c"><span class="cl-7e5822ac">7.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-7e5e16b3"><p class="cl-7e5def5c"><span class="cl-7e5822ac">95</span></p></td>
+<td class="cl-7e5e16bc"><p class="cl-7e5def5c"><span class="cl-7e5822ac">8.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-7e5e16a8"><p class="cl-7e5def5c"><span class="cl-7e5822ac">97</span></p></td>
+<td class="cl-7e5e16b2"><p class="cl-7e5def5c"><span class="cl-7e5822ac">9.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-7e5e16b3"><p class="cl-7e5def5c"><span class="cl-7e5822ac">105</span></p></td>
+<td class="cl-7e5e16bc"><p class="cl-7e5def5c"><span class="cl-7e5822ac">10.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-7e5e16a8"><p class="cl-7e5def5c"><span class="cl-7e5822ac">109</span></p></td>
+<td class="cl-7e5e16b2"><p class="cl-7e5def5c"><span class="cl-7e5822ac">11.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-7e5e16c6"><p class="cl-7e5def5c"><span class="cl-7e5822ac">110</span></p></td>
+<td class="cl-7e5e16c7"><p class="cl-7e5def5c"><span class="cl-7e5822ac">13.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-7e5e16bd"><p class="cl-7e5def5c"><span class="cl-7e5822ac">110</span></p></td>
+<td class="cl-7e5e16be"><p class="cl-7e5def5c"><span class="cl-7e5822ac">13.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-7e5e16c6"><p class="cl-7e5def5c"><span class="cl-7e5822ac">110</span></p></td>
+<td class="cl-7e5e16c7"><p class="cl-7e5def5c"><span class="cl-7e5822ac">13.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-7e5e16bd"><p class="cl-7e5def5c"><span class="cl-7e5822ac">113</span></p></td>
+<td class="cl-7e5e16be"><p class="cl-7e5def5c"><span class="cl-7e5822ac">15.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-7e5e16c6"><p class="cl-7e5def5c"><span class="cl-7e5822ac">123</span></p></td>
+<td class="cl-7e5e16c7"><p class="cl-7e5def5c"><span class="cl-7e5822ac">16.5</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-7e5e16bd"><p class="cl-7e5def5c"><span class="cl-7e5822ac">123</span></p></td>
+<td class="cl-7e5e16be"><p class="cl-7e5def5c"><span class="cl-7e5822ac">16.5</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-7e5e16b3"><p class="cl-7e5def5c"><span class="cl-7e5822ac">150</span></p></td>
+<td class="cl-7e5e16bc"><p class="cl-7e5def5c"><span class="cl-7e5822ac">18.5</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-7e5e16a8"><p class="cl-7e5def5c"><span class="cl-7e5822ac">150</span></p></td>
+<td class="cl-7e5e16b2"><p class="cl-7e5def5c"><span class="cl-7e5822ac">18.5</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-7e5e16b3"><p class="cl-7e5def5c"><span class="cl-7e5822ac">175</span></p></td>
+<td class="cl-7e5e16bc"><p class="cl-7e5def5c"><span class="cl-7e5822ac">21.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-7e5e16a8"><p class="cl-7e5def5c"><span class="cl-7e5822ac">175</span></p></td>
+<td class="cl-7e5e16b2"><p class="cl-7e5def5c"><span class="cl-7e5822ac">21.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-7e5e16b3"><p class="cl-7e5def5c"><span class="cl-7e5822ac">175</span></p></td>
+<td class="cl-7e5e16bc"><p class="cl-7e5def5c"><span class="cl-7e5822ac">21.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-7e5e16a8"><p class="cl-7e5def5c"><span class="cl-7e5822ac">180</span></p></td>
+<td class="cl-7e5e16b2"><p class="cl-7e5def5c"><span class="cl-7e5822ac">24.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-7e5e16b3"><p class="cl-7e5def5c"><span class="cl-7e5822ac">180</span></p></td>
+<td class="cl-7e5e16bc"><p class="cl-7e5def5c"><span class="cl-7e5822ac">24.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-7e5e16a8"><p class="cl-7e5def5c"><span class="cl-7e5822ac">180</span></p></td>
+<td class="cl-7e5e16b2"><p class="cl-7e5def5c"><span class="cl-7e5822ac">24.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-7e5e16b3"><p class="cl-7e5def5c"><span class="cl-7e5822ac">205</span></p></td>
+<td class="cl-7e5e16bc"><p class="cl-7e5def5c"><span class="cl-7e5822ac">26.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-7e5e16a8"><p class="cl-7e5def5c"><span class="cl-7e5822ac">215</span></p></td>
+<td class="cl-7e5e16b2"><p class="cl-7e5def5c"><span class="cl-7e5822ac">27.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-7e5e16c6"><p class="cl-7e5def5c"><span class="cl-7e5822ac">230</span></p></td>
+<td class="cl-7e5e16c7"><p class="cl-7e5def5c"><span class="cl-7e5822ac">28.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-7e5e16a8"><p class="cl-7e5def5c"><span class="cl-7e5822ac">245</span></p></td>
+<td class="cl-7e5e16b2"><p class="cl-7e5def5c"><span class="cl-7e5822ac">29.5</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-7e5e16b3"><p class="cl-7e5def5c"><span class="cl-7e5822ac">245</span></p></td>
+<td class="cl-7e5e16bc"><p class="cl-7e5def5c"><span class="cl-7e5822ac">29.5</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-7e5e16bd"><p class="cl-7e5def5c"><span class="cl-7e5822ac">264</span></p></td>
+<td class="cl-7e5e16be"><p class="cl-7e5def5c"><span class="cl-7e5822ac">31.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-7e5e16d0"><p class="cl-7e5def5c"><span class="cl-7e5822ac">335</span></p></td>
+<td class="cl-7e5e16d1"><p class="cl-7e5def5c"><span class="cl-7e5822ac">32.0</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>Le fait d’étudier l’existence d’une relation linéaire entre les rangs et non plus entre les valeurs de deux variables permet de s’affranchir de l’influence possible de valeurs très extrêmes, dans l’une et/ou l’autre variable, sur le calcul final de la corrélation. Pour déterminer alors la valeur de la corrélation, une manière de procéder est d’appliquer la méthode de calcul du coefficient de corrélation de Pearson en utilisant non plus les valeurs des variables, mais les rangs correspondants. Cette methode, c’est celle du calcul du coefficient de corrélation de Spearman (<em>rho</em>). Si l’on suit <em>stricto sensu</em> cette définition, nous pourrions alors utiliser le code suivant pour avoir le coefficient de corrélation de Spearman :</p>
+<div class="cell">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rank.html">rank</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">hp</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rank.html">rank</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">mpg</span><span class="op">)</span>, method <span class="op">=</span> <span class="st">"pearson"</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -0.8946646</code></pre>
+</div>
+</div>
+<p>Toutefois, il existe une manière plus directe d’écrire les choses avec la fonction <code>cor</code>, qui contient un argument spécifiquement dédié au calcul du coefficient <em>rho</em> de Spearman :</p>
+<div class="cell">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">mtcars</span><span class="op">$</span><span class="va">hp</span>, y <span class="op">=</span> <span class="va">mtcars</span><span class="op">$</span><span class="va">mpg</span>, method <span class="op">=</span> <span class="st">"spearman"</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -0.8946646</code></pre>
+</div>
+</div>
+<p>La fonction <code>cor.test</code> permet aussi de calculer le coefficient de corrélation de Spearman en fournissant aussi des informations potentiellement intéressantes pour donner une idée de la significativité statistique de l’estimation de <em>rho</em> dans la population étudiée.</p>
+<div class="cell">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.test.html">cor.test</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">mtcars</span><span class="op">$</span><span class="va">hp</span>, y <span class="op">=</span> <span class="va">mtcars</span><span class="op">$</span><span class="va">mpg</span>, method <span class="op">=</span> <span class="st">"spearman"</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Spearman's rank correlation rho
+
+data:  mtcars$hp and mtcars$mpg
+S = 10337, p-value = 5.086e-12
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+       rho 
+-0.8946646 </code></pre>
+</div>
+</div>
+<p>Si l’on veut produire une représentation graphique qui illustre la valeur de <em>rho</em>, il pourrait être davantage pertinent de non plus montrer un nuage de points à partir des valeurs des variables mises en lien, mais un nuage de points à partir de leurs rangs respectifs (cf.&nbsp;code ci-dessous et <a href="#fig-graphSpearman" class="quarto-xref">Figure&nbsp;<span>4.7</span></a>).</p>
+<div class="cell">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mtcars</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span>hp_rank <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rank.html">rank</a></span><span class="op">(</span><span class="va">hp</span><span class="op">)</span>, mpg_rank <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rank.html">rank</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">hp_rank</span>, y <span class="op">=</span> <span class="va">mpg_rank</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_smooth</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span>, se <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-graphSpearman" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-graphSpearman-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="bivariate_analyses_files/figure-html/fig-graphSpearman-1.png" class="img-fluid figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-graphSpearman-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7: Graphique pour le coefficient de corrélation de Spearman
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>En matière d’interprétation, des valeurs de <em>rho</em> positives indiqueront que les deux variables mises en lien tendent à augmenter simultanément, on parlera alors de <strong>relation monotone positive</strong>. Dans le cas inverse, des valeurs négatives indiqueront que les deux variables mises en lien tendent à diminuer simultanément, on parlera alors de relation <strong>monotone négative</strong>. À noter cependant que de par son calcul, la valeur de <em>rho</em> ne permet pas de renseigner sur la forme de relation qu’il pourrait y avoir entre les valeurs des deux variables (e.g., linéaire ou curvilinéaire par exemple). Ceci est illustré sur la <a href="#fig-ranksvvaluesspearman" class="quarto-xref">Figure&nbsp;<span>4.8</span></a>. Sur cette figure, le graphique de gauche montre la relation entre les valeurs des variables <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span>, qui est caractérisée par un coefficient de corrélation de Spearman (<em>rho</em>) de 1, indiquant donc que la relation est parfaitement monotone positive, sans préjuger de la forme particulière que pourrait présenter la relation. Pour mieux comprendre pourquoi cette valeur de <em>rho</em> est de 1, le graphique de droite de la figure montre la relation entre les rangs de ces deux variables <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span>. On voit que la relation entre les rangs est effectivement parfaitement linéaire.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-ranksvvaluesspearman" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-ranksvvaluesspearman-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="bivariate_analyses_files/figure-html/fig-ranksvvaluesspearman-1.png" class="img-fluid figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ranksvvaluesspearman-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8: Distinction entre la relation observée entre les valeurs (graphique de gauche) et les rangs (graphique de droite) de deux variables
+</figcaption></figure>
+</div>
+</div>
+</div>
+</section></section></section><section id="relation-entre-deux-variables-qualitatives" class="level2" data-number="2"><h2 data-number="2" class="anchored" data-anchor-id="relation-entre-deux-variables-qualitatives">
+<span class="header-section-number">2</span> Relation entre deux variables qualitatives</h2>
+<section id="étudier-graphiquement-la-relation-1" class="level3" data-number="2.1"><h3 data-number="2.1" class="anchored" data-anchor-id="étudier-graphiquement-la-relation-1">
+<span class="header-section-number">2.1</span> Étudier graphiquement la relation</h3>
+<p>Plusieurs types de graphiques peuvent être envisagés lorsqu’il s’agit de visualiser des données relatives au croisement de deux variables qualitatives. Une première approche consiste à utiliser des graphiques avec barres mises côte-à-côte, comme illustré sur la <a href="#fig-groupedBarsFigure" class="quarto-xref">Figure&nbsp;<span>4.9</span></a>, qui a été réalisée à partir du jeu de données <code>JointSports</code>, lequel est utilisable après installation et chargement du package <code>vcd</code>. <code>JointSports</code> contient des données résumées d’effectifs mis en lien avec les modalités de différentes variables qualitatives, comme on aurait pu l’obtenir avec la fonction <code>count()</code> dans les derniers exemples du chapitre précédent. La différence qu’il y a avec ces précédents exemples est qu’ici, l’effectif est désigné par la variable <code>Freq</code>, alors qu’il s’agissait de la variable <code>n</code> auparavant. Pour information, <code>JointSports</code> contient les données d’une enquête s’étant intéressée, en 1983 et 1985, aux opinions d’étudiants danois de 16 à 19 ans sur la pratique sportive mixte.</p>
+<div class="cell">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">vcd</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Reconfiguration de l'ordre des modalités de la variable opinion, et calcul </span></span>
+<span><span class="co"># des effectifs totaux pour les catégories étudiées</span></span>
+<span></span>
+<span><span class="va">JointSports_new</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="va">JointSports</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span>opinion <span class="op">=</span> <span class="fu">fct_relevel</span><span class="op">(</span><span class="va">opinion</span>, </span>
+<span>                               <span class="st">"very bad"</span>, </span>
+<span>                               <span class="st">"bad"</span>, </span>
+<span>                               <span class="st">"indifferent"</span>, </span>
+<span>                               <span class="st">"good"</span>, </span>
+<span>                               <span class="st">"very good"</span><span class="op">)</span>,</span>
+<span>         gender <span class="op">=</span> <span class="fu">fct_relevel</span><span class="op">(</span><span class="va">gender</span>, <span class="st">"Girl"</span>, <span class="st">"Boy"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">gender</span>, <span class="va">opinion</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">summarise</span><span class="op">(</span>Freq <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">Freq</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Création des graphiques</span></span>
+<span><span class="va">A</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">JointSports_new</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">gender</span>, y <span class="op">=</span> <span class="va">Freq</span>, fill <span class="op">=</span> <span class="va">opinion</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_bar</span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span>,  position <span class="op">=</span> <span class="st">"dodge"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_fill_brewer</span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Greens"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"right"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ggtitle</span><span class="op">(</span><span class="st">"A : Mise en avant de la comparaison des opinions"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">B</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">JointSports_new</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">opinion</span>, y <span class="op">=</span> <span class="va">Freq</span>, fill <span class="op">=</span> <span class="va">gender</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_bar</span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span>,  position <span class="op">=</span> <span class="st">"dodge"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"right"</span><span class="op">)</span> <span class="op">+</span>  </span>
+<span>  <span class="fu">ggtitle</span><span class="op">(</span><span class="st">"B : Mise en avant de la comparaison des genres"</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-groupedBarsFigure" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-groupedBarsFigure-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="bivariate_analyses_files/figure-html/fig-groupedBarsFigure-1.png" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-groupedBarsFigure-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9: Exemples de diagramme en barres mises côte-à-côte
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>Pour pouvoir réaliser le graphique <code>A</code> de la <a href="#fig-groupedBarsFigure" class="quarto-xref">Figure&nbsp;<span>4.9</span></a>, il a fallu indiquer dans la fonction <code>ggplot()</code>, grâce à l’argument <code>x =</code>, la variable dont on voulait voir les modalités en abscisses, et il a fallu renseigner pour les ordonnées, à l’aide de l’argument <code>y =</code>, la variable contenant les effectifs correspondants, le tout toujours à l’intérieur de la fonction <code>aes()</code>. Étant donné que les données à montrer le long de l’axe des ordonnées sont explicitement indiquées avec <code>Freq</code>, il convient d’indiquer à l’intérieur de la fonction <code>geom_bar()</code> l’argument <code>stat = "identity"</code>, ce qui contraint à déterminer la hauteur des barres en fonction des valeurs de la variable <code>Freq</code>. À l’intérieur de la fonction <code>ggplot()</code>, plus exactement au niveau de la fonction <code>aes()</code>, c’est l’argument <code>fill = opinion</code> qui a permis d’indiquer qu’on voulait des couleurs de remplissage différentes selon les modalités de la variable <code>opinion</code>. Enfin, c’est grâce à l’argument <code>position = "dodge"</code>, à l’intérieur de la fonction <code>geom_bar()</code>, que l’on a pu obtenir des barres mises côte-à-côte, et non pas de manière empilée. Une logique similaire a été utilisée pour le graphique <code>B</code> en modifiant le code de telle sorte à ce que la distinction de l’information avec des couleurs différentes se fasse avec la variable <code>gender</code>, et non plus <code>opinion</code>.</p>
+<p>Les graphiques <code>A</code> et <code>B</code> de la <a href="#fig-groupedBarsFigure" class="quarto-xref">Figure&nbsp;<span>4.9</span></a> montrent l’importance de la configuration du graphique en fonction des comparaisons que l’on veut principalement faire, et donc du message que l’on veut prioritairement délivrer. Un principe qui peut guider la conception du graphique est le fait qu’il est plus facile de comparer des barres qui sont mises juste côte-à-côte. Sur la base de ce principe, le graphique <code>A</code> de la <a href="#fig-groupedBarsFigure" class="quarto-xref">Figure&nbsp;<span>4.9</span></a> permet de comparer plus facilement les diverses opinions relevées pour les garçons d’un côté et pour les filles de l’autre, alors que le graphique <code>B</code> permet de comparer plus facilement les réponses provenant des deux genres et cela pour chaque type d’opinion. Comme indiqué par Wilke <span class="citation" data-cites="wilkeFundamentalsDataVisualization2018">(<a href="references.html#ref-wilkeFundamentalsDataVisualization2018" role="doc-biblioref">2018</a>)</span>, les types de graphiques illustrés avec les graphiques <code>A</code> et <code>B</code> de la <a href="#fig-groupedBarsFigure" class="quarto-xref">Figure&nbsp;<span>4.9</span></a> peuvent parfois se voir attribuer le reproche que s’il est relativement facile de lire les informations encodées par des positions (cf.&nbsp;ligne de base sur les graphiques), il peut être être difficile de lire les informations encodées par une couleur dont la signification est indiquée en légende, car cela demande un effort mental supplémentaire de garder en tête la signification de la légende lorsqu’on lit le graphique. Pour palier ce problème, qui, selon Wilke <span class="citation" data-cites="wilkeFundamentalsDataVisualization2018">(<a href="references.html#ref-wilkeFundamentalsDataVisualization2018" role="doc-biblioref">2018</a>)</span>, est au final une affaire de goût, on pourrait utiliser la fonction <code>facet_wrap()</code> pour créer une figure telle que la <a href="#fig-groupedBarsUpgraded" class="quarto-xref">Figure&nbsp;<span>4.10</span></a>. Cette figure reprend la logique du graphique <code>A</code> de la <a href="#fig-groupedBarsFigure" class="quarto-xref">Figure&nbsp;<span>4.9</span></a>, avec un besoin de légende pour la variable <code>opinion</code> qui n’existe plus car la fonction <code>facet_wrap()</code> a permis de montrer les diagrammes en barres pour les deux genres de manière séparée, dans des encarts différents, et avec chacun leur propre axe des abscisses relatif aux modalités de la variable <code>opinion</code>.</p>
+<div class="cell">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">JointSports_new</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">opinion</span>, y <span class="op">=</span> <span class="va">Freq</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_bar</span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="va">.</span> <span class="op">~</span> <span class="va">gender</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-groupedBarsUpgraded" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-groupedBarsUpgraded-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="bivariate_analyses_files/figure-html/fig-groupedBarsUpgraded-1.png" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-groupedBarsUpgraded-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10: Diagrammes en barres côte-à-côte séparés selon une variable qualitative
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>Dans certains cas, on peut vouloir comparer les effectifs relatifs aux modalités d’une première variable qualitative avec des barres mises côte-à-côte, et n’utiliser la seconde variable qualitative que pour avoir un peu d’éléments de contexte “à l’intérieur” des effectifs affichés pour la première variable qualitative. La <a href="#fig-stackedBarsBiv" class="quarto-xref">Figure&nbsp;<span>4.11</span></a> illustre ce cas de figure où la hauteur des barres sert prioritairement à comparer les effectifs relatifs à diverses opinions, et la coloration des barres sert à fournir une idée de la répartition (hommes / femmes dans l’exemple) dans les réponses, sans pourtant avoir l’ambition de comparer cette répartition facilement d’un type d’opinion à un autre.</p>
+<div class="cell">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">JointSports_new</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">opinion</span>, y <span class="op">=</span> <span class="va">Freq</span>, fill <span class="op">=</span> <span class="va">gender</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_bar</span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_text</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="va">Freq</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">3</span>, position <span class="op">=</span> <span class="fu">position_stack</span><span class="op">(</span>vjust <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-stackedBarsBiv" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-stackedBarsBiv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="bivariate_analyses_files/figure-html/fig-stackedBarsBiv-1.png" class="img-fluid figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-stackedBarsBiv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11: Exemple de diagramme en barres empilées
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>Les graphiques présentés dans cette sous-partie montrent des valeurs d’effectifs, mais selon l’objectif, il pourrait être aussi envisagé d’utiliser ces graphiques pour montrer des proportions. Cela dit, il existe d’autres visualisations possibles des proportions pour visualiser le lien entre deux variables qualitatives. Ces visualisations peuvent être consultées dans l’ouvrage en ligne de Wilke <span class="citation" data-cites="wilkeFundamentalsDataVisualization2018">(<a href="references.html#ref-wilkeFundamentalsDataVisualization2018" role="doc-biblioref">2018</a>)</span>.</p>
+</section><section id="étudier-numériquement-la-relation-1" class="level3" data-number="2.2"><h3 data-number="2.2" class="anchored" data-anchor-id="étudier-numériquement-la-relation-1">
+<span class="header-section-number">2.2</span> Étudier numériquement la relation</h3>
+<section id="tableau-de-contingence" class="level4" data-number="2.2.1"><h4 data-number="2.2.1" class="anchored" data-anchor-id="tableau-de-contingence">
+<span class="header-section-number">2.2.1</span> Tableau de contingence</h4>
+<p>Lorsqu’il s’agit de mener une étude numérique de la relation entre deux variables qualitatives, une première démarche à mettre en oeuvre est de récapituler numériquement les effectifs qui correspondent au croisement des deux variables. Pour cela, la fonction <code><a href="https://rdrr.io/r/base/table.html">table()</a></code> intégrée à R de base s’avère très pratique. Cependant, cette fonction requiert d’utiliser le jeu de données initial complet (i.e., avec toutes les observations), ce qui n’est pas le cas du jeu de données <code>JointSports</code> que nous avons utilisé précédemment, car ce dernier contient des effectifs déjà récapitulés par modalité de variable. Pour pouvoir illustrer le fonctionnement de la fonction <code><a href="https://rdrr.io/r/base/table.html">table()</a></code> avec les informations du jeu de données <code>JointSports</code>, j’ai donc crée un jeu de données complet qui, une fois résumé comme c’est le cas plus haut avec <code>JointSports</code>, donnerait les mêmes résultats. Ce nouveau jeu de données se nomme <code>JointSports_full</code>.</p>
+<div class="cell">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Création du jeu de données JointSports_full</span></span>
+<span></span>
+<span><span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">:</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">JointSports</span><span class="op">$</span><span class="va">Freq</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">year</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"1983"</span>, <span class="fl">656</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"1985"</span>, <span class="fl">615</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">grade</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"1st"</span>, <span class="fl">350</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"3rd"</span>, <span class="fl">306</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"1st"</span>, <span class="fl">354</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"3rd"</span>, <span class="fl">261</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">gender</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Boy"</span>, <span class="fl">134</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Girl"</span>, <span class="fl">216</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Boy"</span>, <span class="fl">115</span><span class="op">)</span>, </span>
+<span>            <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Girl"</span>, <span class="fl">191</span><span class="op">)</span>,  <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Boy"</span>, <span class="fl">157</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Girl"</span>, <span class="fl">197</span><span class="op">)</span>, </span>
+<span>            <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Boy"</span>, <span class="fl">104</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Girl"</span>, <span class="fl">157</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">opinion</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"very good"</span>, <span class="fl">31</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"good"</span>, <span class="fl">51</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"indifferent"</span>, <span class="fl">38</span><span class="op">)</span>, </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"bad"</span>, <span class="fl">10</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"very bad"</span>, <span class="fl">4</span><span class="op">)</span>, </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"very good"</span>, <span class="fl">103</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"good"</span>, <span class="fl">67</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"indifferent"</span>, <span class="fl">29</span><span class="op">)</span>, </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"bad"</span>, <span class="fl">15</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"very bad"</span>, <span class="fl">2</span><span class="op">)</span>, </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"very good"</span>, <span class="fl">23</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"good"</span>, <span class="fl">39</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"indifferent"</span>, <span class="fl">36</span><span class="op">)</span>, </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"bad"</span>, <span class="fl">15</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"very bad"</span>, <span class="fl">2</span><span class="op">)</span>, </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"very good"</span>, <span class="fl">61</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"good"</span>, <span class="fl">72</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"indifferent"</span>, <span class="fl">39</span><span class="op">)</span>, </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"bad"</span>, <span class="fl">16</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"very bad"</span>, <span class="fl">3</span><span class="op">)</span>, </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"very good"</span>, <span class="fl">41</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"good"</span>, <span class="fl">67</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"indifferent"</span>, <span class="fl">35</span><span class="op">)</span>, </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"bad"</span>, <span class="fl">12</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"very bad"</span>, <span class="fl">2</span><span class="op">)</span>, </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"very good"</span>, <span class="fl">77</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"good"</span>, <span class="fl">80</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"indifferent"</span>, <span class="fl">27</span><span class="op">)</span>, </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"bad"</span>, <span class="fl">10</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"very bad"</span>, <span class="fl">3</span><span class="op">)</span>, </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"very good"</span>, <span class="fl">31</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"good"</span>, <span class="fl">31</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"indifferent"</span>, <span class="fl">31</span><span class="op">)</span>, </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"bad"</span>, <span class="fl">4</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"very bad"</span>, <span class="fl">7</span><span class="op">)</span>, </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"very good"</span>, <span class="fl">52</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"good"</span>, <span class="fl">70</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"indifferent"</span>, <span class="fl">28</span><span class="op">)</span>, </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"bad"</span>, <span class="fl">4</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"very bad"</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">JointSports_full</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>id <span class="op">=</span> <span class="va">id</span>, </span>
+<span>             year <span class="op">=</span> <span class="va">year</span>, </span>
+<span>             grade <span class="op">=</span> <span class="va">grade</span>, </span>
+<span>             gender <span class="op">=</span> <span class="va">gender</span>, </span>
+<span>             opinion <span class="op">=</span> <span class="va">opinion</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span>opinion <span class="op">=</span> <span class="fu">fct_relevel</span><span class="op">(</span><span class="va">opinion</span>, </span>
+<span>                               <span class="st">"very bad"</span>, </span>
+<span>                               <span class="st">"bad"</span>, </span>
+<span>                               <span class="st">"indifferent"</span>, </span>
+<span>                               <span class="st">"good"</span>, </span>
+<span>                               <span class="st">"very good"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Une fois que l’on a un jeu de données complet sous la main, il est possible de créer ce qu’on appelle un <strong>tableau de contingence</strong>, c’est-à-dire ici un tableau qui récapitule numériquement les effectifs à la croisée des deux variables qui nous intéressent. Pour faire cela, on peut utiliser la fonction <code><a href="https://rdrr.io/r/base/table.html">table()</a></code> en suivant différentes méthodes montrées ci-dessous. (Le code montré ci-dessous aboutit aux mêmes informations que celles montrées sur la <a href="#fig-stackedBarsBiv" class="quarto-xref">Figure&nbsp;<span>4.11</span></a> ci-avant.)</p>
+<div class="cell">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># 1ère méthode</span></span>
+<span><span class="va">tab</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">JointSports_full</span>,</span>
+<span>       <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">opinion</span>, <span class="va">gender</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># 2ème méthode</span></span>
+<span><span class="va">tab</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">JointSports_full</span><span class="op">$</span><span class="va">opinion</span>, <span class="va">JointSports_full</span><span class="op">$</span><span class="va">gender</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Visualisation du tableau de contingence</span></span>
+<span><span class="va">tab</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             
+              Boy Girl
+  very bad     15   11
+  bad          41   45
+  indifferent 140  123
+  good        188  289
+  very good   126  293</code></pre>
+</div>
+</div>
+<p>Un tableau de contingence permet donc de comparer des effectifs en fonction de plusieurs modalités et variables à la fois. Le problème, lorsqu’on utilise des effectifs, est que certaines comparaisons peuvent être difficiles à faire lorsque les effectifs totaux liés aux différentes modalités ne sont pas comparables. Par exemple, dans le résultat montré ci-dessus, l’effectif total des filles est de 761 alors que celui des garçons est de 510, ce qui rend difficile la comparaison des garçons et des filles pour les différents types d’opinion recensés dans l’enquête danoise présentée plus haut. C’est pour cela qu’il convient, dans certains cas, de calculer les proportions correspondant à ces différents effectifs. Pour ce faire, on peut :</p>
+<ul>
+<li>Utiliser la fonction <code><a href="https://rdrr.io/r/base/proportions.html">prop.table()</a></code>, qui va convertir en proportions les effectifs montrés plus haut en considérant l’effectif total de tout le tableau :</li>
+</ul>
+<div class="cell">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/proportions.html">prop.table</a></span><span class="op">(</span><span class="va">tab</span><span class="op">)</span> <span class="op">*</span> <span class="fl">100</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             
+                Boy  Girl
+  very bad     1.18  0.87
+  bad          3.23  3.54
+  indifferent 11.01  9.68
+  good        14.79 22.74
+  very good    9.91 23.05</code></pre>
+</div>
+</div>
+<ul>
+<li>Utiliser la fonction <code><a href="https://juba.github.io/questionr/reference/rprop.html">lprop()</a></code> du package <code>questionr</code>, qui va convertir en proportions les effectifs montrés plus haut en considérant l’effectif total de chaque ligne du tableau :</li>
+</ul>
+<div class="cell">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://juba.github.io/questionr/">questionr</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://juba.github.io/questionr/reference/rprop.html">lprop</a></span><span class="op">(</span><span class="va">tab</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             
+              Boy   Girl  Total
+  very bad     57.7  42.3 100.0
+  bad          47.7  52.3 100.0
+  indifferent  53.2  46.8 100.0
+  good         39.4  60.6 100.0
+  very good    30.1  69.9 100.0
+  Ensemble     40.1  59.9 100.0</code></pre>
+</div>
+</div>
+<ul>
+<li>Utiliser la fonction <code><a href="https://juba.github.io/questionr/reference/cprop.html">cprop()</a></code> du package <code>questionr</code>, qui va convertir en proportions les effectifs montrés plus haut en considérant l’effectif total de chaque colonne du tableau :</li>
+</ul>
+<div class="cell">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://juba.github.io/questionr/">questionr</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://juba.github.io/questionr/reference/cprop.html">cprop</a></span><span class="op">(</span><span class="va">tab</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             
+              Boy   Girl  Ensemble
+  very bad      2.9   1.4   2.0   
+  bad           8.0   5.9   6.8   
+  indifferent  27.5  16.2  20.7   
+  good         36.9  38.0  37.5   
+  very good    24.7  38.5  33.0   
+  Total       100.0 100.0 100.0   </code></pre>
+</div>
+</div>
+<p>Il convient de noter que les proportions données par ces différentes fonctions doivent être utilisées selon les comparaisons que l’on veut faire. L’analyse descriptive consiste alors à voir si, tant d’un point de vue graphique que numérique, on observe des différences de scores particulières entre les modalités d’une variable qualitative en fonction des modalités de l’autre variable qualitative. Si l’on considère le dernier tableau de résultats ci-dessus, on peut par exemple observer une très légère tendance à ce que les garçons soient davantage polarisés, par rapport aux filles, sur des opinions négatives vis-à-vis des pratiques sportives mixtes, alors que les filles seraient légèrement plus polarisées que les garçons sur des opinions positives, ce qui n’empêche pas que, pour les deux genres, il y a une polarisation principale sur des opinions neutres à positives.</p>
+<p>Si les proportions permettent en principe de mieux comparer les effectifs de sous-groupes (e.g., les opinions par groupe de genre dans l’exemple ci-dessus) lorsque les effectifs des groupes parents sont de tailles différentes (comme c’est le cas pour les groupes de genre dans l’exemple ci-dessus), il convient tout de même de faire attention aux conclusions que l’on tire lorsqu’on s’en tient à une analyse globale, car ces conclusions dépendent de la manière dont les individus des groupes parents sont répartis dans chacun des sous-groupes. Un exemple connu qui permet d’illustrer cette vigilance à avoir lorsqu’on étudie le croisement de variables qualitatives est le cas du taux de réussite des femmes à l’université de Berkeley en 1973, qui apparaissait bien inférieur à celui des hommes lorsqu’on considérait les taux de réussite par genre à l’échelle de l’ensemble de l’université <span class="citation" data-cites="bickelSexBiasGraduate1975">(<a href="references.html#ref-bickelSexBiasGraduate1975" role="doc-biblioref">Bickel et al., 1975</a>)</span>, avec 30.3 % de réussite chez les femmes contre 44.5 % de réussite chez les hommes (cf. <a href="#fig-taballUCBA" class="quarto-xref">Figure&nbsp;<span>4.12</span></a>).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-taballUCBA" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-taballUCBA-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="bivariate_analyses_files/figure-html/fig-taballUCBA-1.png" class="img-fluid figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-taballUCBA-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12: Taux de réussite des étudiants femmes et hommes à l’Université de Berkeley en 1973, approche globale (Bickel et al., 1975)
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>Toutefois, une analyse par département permettait de voir que les taux de réussite des femmes étaient en réalité supérieurs voire nettement supérieurs à ceux des hommes dans la plupart des départements (cf. <a href="#fig-tabdepUCBA" class="quarto-xref">Figure&nbsp;<span>4.13</span></a>).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-tabdepUCBA" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-tabdepUCBA-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="bivariate_analyses_files/figure-html/fig-tabdepUCBA-1.png" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tabdepUCBA-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13: Taux de réussite des étudiants femmes et hommes à l’Université de Berkeley en 1973, approche par département (Bickel et al., 1975)
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>Cette situation, qui peut paraître étonnante, illustre à nouveau ce qu’on appelle un paradoxe de Simpson. Dans le cas présent, l’apparent paradoxe s’explique par le fait que les femmes avaient en proportion davantage candidaté que les hommes dans des départements où le taux de réussite global était moins bon. Ceci est illustré sur la <a href="#fig-distriUCBA" class="quarto-xref">Figure&nbsp;<span>4.14</span></a>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-distriUCBA" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-distriUCBA-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="bivariate_analyses_files/figure-html/fig-distriUCBA-1.png" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-distriUCBA-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;14: Mise en avant du département d’inscription comme facteur confondant dans l’étude du lien entre le genre et le taux de réussite à l’Université de Berkeley en 1973 (Bickel et al., 1975)
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>Autrement dit, les hommes se retrouvaient avec un pourcentage de réussite global bien meilleur que celui des femmes seulement parce que, comparativement aux femmes, les hommes s’étaient en proportion davantage engagés dans les départements où les taux de réussite étaient bien meilleurs.</p>
+<p>Au-delà du tableau de contingence, plusieurs outils statistiques sont disponibles pour quantifier le lien entre les modalités de deux variables qualitatives <span class="citation" data-cites="janeEffectSizesConfidence2023">(<a href="references.html#ref-janeEffectSizesConfidence2023" role="doc-biblioref">Jané et al., 2023</a>)</span>. On s’intéresse ici plus spécifiquement au coefficient Phi (<span class="math inline">\(\Phi\)</span>), au <span class="math inline">\(V\)</span> de Cramer, à la différence de risque, au risque relatif, et au rapport des cotes. À noter que tous ces indices statistiques, excepté le <span class="math inline">\(V\)</span> de Cramer, sont essentiellement faits pour analyser le lien entre deux variables qualitatives dont l’une ne présenterait que deux modalités (on parle alors de variable binaire).</p>
+</section><section id="coefficient-phi" class="level4" data-number="2.2.2"><h4 data-number="2.2.2" class="anchored" data-anchor-id="coefficient-phi">
+<span class="header-section-number">2.2.2</span> Coefficient Phi</h4>
+<p>Le coefficient <span class="math inline">\(\Phi\)</span> est une valeur qui peut être comprise entre -1 et 1 (ou entre 0 et 1 selon les manières de l’obtenir) et indique la force de la relation entre deux variables qualitatives binaires. Toutefois, seule la valeur absolue (entre 0 et 1 donc) est à interpréter. Le signe (si jamais différents signes peuvent apparaître selon le calcul utilisé) ne fait que renseigner sur la diagonale du tableau de contingence où les individus sont davantage polarisés. Pour comprendre comment <span class="math inline">\(\Phi\)</span> peut être calculé, prenons les tableaux de contingence montrés ci-dessous (<a href="#fig-PhiContTables" class="quarto-xref">Figure&nbsp;<span>4.15</span></a>) :</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-PhiContTables" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-PhiContTables-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="bivariate_analyses_files/figure-html/fig-PhiContTables-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-PhiContTables-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15: Tableaux de contingence schématiques pour comprendre le calcul de Phi
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>On note sur ces tableaux qu’une valeur absolue de <span class="math inline">\(\Phi\)</span> élevée sera attendue dans le cas où il y aura relativement beaucoup d’individus dans une diagonale et relativement peu d’individus dans l’autre diagonale (cf.&nbsp;tableaux du milieu et de droite ci-dessus). Si l’on prend comme base l’un des tableaux de contingence montrés ci-dessus, la formule du coefficient <span class="math inline">\(\Phi\)</span> est la suivante <span class="citation" data-cites="janeEffectSizesConfidence2023">(<a href="references.html#ref-janeEffectSizesConfidence2023" role="doc-biblioref">Jané et al., 2023</a>)</span> :</p>
+<p><span class="math display">\[\Phi = \frac{(n_{11} \cdot n_{22}) - (n_{21} \cdot n_{12})}{\sqrt{(n_{11} + n_{21}) \cdot (n_{12} + n_{22}) \cdot (n_{11} + n_{12}) \cdot (n_{21} + n_{22})}}\]</span> Une autre formule pour calculer <span class="math inline">\(\Phi\)</span> (donnant systématiquement la valeur absolue du coefficient) pourrait être aussi la suivante <span class="citation" data-cites="janeEffectSizesConfidence2023">(<a href="references.html#ref-janeEffectSizesConfidence2023" role="doc-biblioref">Jané et al., 2023</a>)</span> :</p>
+<p><span class="math display">\[\Phi = \sqrt{\frac{\chi^2}{n}},\]</span></p>
+<p>avec <span class="math inline">\(\chi^2\)</span> la statistique “chi-carré” et <span class="math inline">\(n\)</span> le nombre total d’individus. Pour calculer <span class="math inline">\(\Phi\)</span> dans R, on peut utiliser la fonction <code>phi()</code> du package <code>effectsize</code> :</p>
+<div class="cell">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tab</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">am</span>, <span class="va">mtcars</span><span class="op">$</span><span class="va">vs</span><span class="op">)</span></span>
+<span><span class="fu">effectsize</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/effectsize/reference/phi.html">phi</a></span><span class="op">(</span><span class="va">tab</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Phi (adj.) |       95% CI
+-------------------------
+0.00       | [0.00, 1.00]
+
+- One-sided CIs: upper bound fixed at [1.00].</code></pre>
+</div>
+</div>
+</section><section id="v-de-cramer" class="level4" data-number="2.2.3"><h4 data-number="2.2.3" class="anchored" data-anchor-id="v-de-cramer">
+<span class="header-section-number">2.2.3</span> <span class="math inline">\(V\)</span> de Cramer</h4>
+<p>Le <span class="math inline">\(V\)</span> de Cramer est la forme généralisée de la force d’association entre deux variables qualitatives. Il peut donc être calculé à partir d’un tableau de contingence de n’importe quelle taille, prendre des valeurs absolues entre 0 et 1, et est ainsi l’équivalent du coefficient <span class="math inline">\(\Phi\)</span> dans le cas d’un tableau de contingence 2 x 2 (2 variables qualitatives x 2 modalités chacune). La formule du <span class="math inline">\(V\)</span> de Cramer est la suivante <span class="citation" data-cites="janeEffectSizesConfidence2023">(<a href="references.html#ref-janeEffectSizesConfidence2023" role="doc-biblioref">Jané et al., 2023</a>)</span> :</p>
+<p><span class="math display">\[V = \sqrt{\frac{\chi^2}{n \cdot (k-1)}},\]</span> avec <span class="math inline">\(\chi^2\)</span> la statistique « chi-carré », <span class="math inline">\(n\)</span> le nombre total d’individus, et <span class="math inline">\(k\)</span> le nombre de modalités de la variable qui a le moins de modalités. Pour calculer le <span class="math inline">\(V\)</span> de Cramer dans R, on peut utiliser la fonction <code>cramers_v()</code> du package <code>effectsize</code> :</p>
+<div class="cell">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tab</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">JointSports_full</span><span class="op">$</span><span class="va">gender</span>, <span class="va">JointSports_full</span><span class="op">$</span><span class="va">opinion</span><span class="op">)</span></span>
+<span><span class="fu">effectsize</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/effectsize/reference/phi.html">cramers_v</a></span><span class="op">(</span><span class="va">tab</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Cramer's V (adj.) |       95% CI
+--------------------------------
+0.17              | [0.11, 1.00]
+
+- One-sided CIs: upper bound fixed at [1.00].</code></pre>
+</div>
+</div>
+</section><section id="différence-de-risque" class="level4" data-number="2.2.4"><h4 data-number="2.2.4" class="anchored" data-anchor-id="différence-de-risque">
+<span class="header-section-number">2.2.4</span> Différence de risque</h4>
+<p>La différence de risque est une différence de proportions. La notion de risque peut ne pas être très pertinente pour certains contextes, mais elle l’est particulièrement dans un contexte de santé. Pour comprendre le calcul du risque puis de la différence de risque, regardons le tableau ci-dessous (<a href="#fig-RiskContTables" class="quarto-xref">Figure&nbsp;<span>4.16</span></a>).</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-RiskContTables" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-RiskContTables-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="bivariate_analyses_files/figure-html/fig-RiskContTables-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-RiskContTables-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;16: Tableau de contingence schématique pour comprendre le calcul des risques et des cotes
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>Dans le tableau ci-dessus, chaque case contenant un « n » est un effectif. Si l’on désire connaître le risque d’être malade dans le groupe contrôle (<span class="math inline">\(p_C\)</span>) et dans le groupe traité (<span class="math inline">\(p_T\)</span>), on fait les calculs suivants :</p>
+<p><span class="math display">\[p_C = \frac{n_{C1}}{n_{C0} + n_{C1}}\]</span></p>
+<p><span class="math display">\[p_T = \frac{n_{T1}}{n_{T0} + n_{T1}}\]</span></p>
+<p>La différence de risque d’être malade pour le groupe contrôle par rapport au groupe traité de l’exemple, notée <span class="math inline">\(DR\)</span>, est alors :</p>
+<p><span class="math display">\[p_C - p_T \]</span> Avec R, la différence de risque peut être obtenue avec le package <code>riskCommunicator</code>. Pour utiliser le package <code>riskCommunicator</code>, il faut bien sûr l’installer et ensuite le charger :</p>
+<div class="cell">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">riskCommunicator</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Pour l’exemple, chargeons le jeu de données <code>cvdd</code> associé au package <code>riskCommunicator</code>:</p>
+<div class="cell">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">cvdd</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Il s’agit d’un jeu de données avec plusieurs variables qualitatives, dont plusieurs sont plus précisément binaires (i.e., qui ne contiennent que deux modalités). Admettons que l’on souhaiterait connaître la différence de risque de mortalité cardiovasculaire (<code>cvd_dh</code>) sur une période de suivi donnée, cela en fonction de si l’on a développé une hypertension ou non (<code>HYPERTEN</code>). Pour cela, on peut utiliser la fonction <code><a href="https://rdrr.io/pkg/riskCommunicator/man/gComp.html">gComp()</a></code> du package <code>riskCommunicator</code> comme suit :</p>
+<div class="cell">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/riskCommunicator/man/gComp.html">gComp</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">cvdd</span>, X <span class="op">=</span> <span class="st">"HYPERTEN"</span>, Y <span class="op">=</span> <span class="st">"cvd_dth"</span>, outcome.type <span class="op">=</span> <span class="st">"binary"</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Formula: 
+cvd_dth ~ HYPERTEN 
+
+Parameter estimates: 
+                            HYPERTEN1_v._HYPERTEN0 Estimate (95% CI)
+Risk Difference                                 0.132 (0.098, 0.159)
+Risk Ratio                                      1.411 (1.275, 1.527)
+Odds Ratio                                      1.753 (1.505, 1.977)
+Number needed to treat/harm                                    7.559</code></pre>
+</div>
+</div>
+<p>Dans le résultat obtenu, la différence de risque est de 0.132, soit 13.2 %. À ce stade, il est fondamental de comprendre que le résultat obtenu dépend de la manière dont les modalités sont ordonnées dans les variables de type facteur utilisées pour faire les calculs. Regardons comment les modalités sont organisées pour les variables qui nous concernent :</p>
+<div class="cell">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">cvdd</span><span class="op">$</span><span class="va">HYPERTEN</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "0" "1"</code></pre>
+</div>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">cvdd</span><span class="op">$</span><span class="va">cvd_dth</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "0" "1"</code></pre>
+</div>
+</div>
+<p>On remarque qu’à chaque fois, “0” est la première modalité, et “1” est la seconde modalité. C’est important de le savoir pour interpréter le résultat ensuite car la fonction <code><a href="https://rdrr.io/pkg/riskCommunicator/man/gComp.html">gComp()</a></code> calcule par défaut la différence de risque en faisant le risque de présenter la modalité 2 de la variable Y quand on a la modalité 2 de la variable X (ici le risque de mourir quand on est hypertendu) moins le risque de présenter la modalité 2 de la variable Y quand on a la modalité 1 de la variable X (ici le risque de mourir quand on n’est pas hypertendu). On peut d’ailleurs vérifier le calcul manuellement :</p>
+<div class="cell">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Obtention d'un tableau de contingence avec proportions</span></span>
+<span><span class="va">tab</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">cvdd</span><span class="op">$</span><span class="va">HYPERTEN</span>, <span class="va">cvdd</span><span class="op">$</span><span class="va">cvd_dth</span><span class="op">)</span></span>
+<span><span class="va">risks</span> <span class="op">&lt;-</span> <span class="fu">questionr</span><span class="fu">::</span><span class="fu"><a href="https://juba.github.io/questionr/reference/rprop.html">lprop</a></span><span class="op">(</span><span class="va">tab</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">risks</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"vivant"</span>, <span class="st">"mort"</span>, <span class="st">"total"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">risks</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"non-hypertendu"</span>, <span class="st">"hypertendu"</span>, <span class="st">"total"</span><span class="op">)</span></span>
+<span><span class="va">risks</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                
+                 vivant mort  total
+  non-hypertendu  67.8   32.2 100.0
+  hypertendu      54.6   45.4 100.0
+  total           58.2   41.8 100.0</code></pre>
+</div>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Calcul de la différence de risque de mortalité </span></span>
+<span><span class="co"># chez les hypertendus vs non-hypertendus (en %)</span></span>
+<span><span class="fl">45.4</span><span class="op">-</span><span class="fl">32.2</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 13.2</code></pre>
+</div>
+</div>
+</section><section id="risque-relatif" class="level4" data-number="2.2.5"><h4 data-number="2.2.5" class="anchored" data-anchor-id="risque-relatif">
+<span class="header-section-number">2.2.5</span> Risque relatif</h4>
+<p>Le risque relatif, noté <span class="math inline">\(RR\)</span>, reprend les mêmes informations que celles utilisées pour la différence de risque (<span class="math inline">\({p_T}\)</span> et <span class="math inline">\({p_C}\)</span>). La différence est qu’il ne s’agit plus d’une différence, mais d’un rapport entre les risques présentés par les groupes comparés. Sa formule pour comparer le groupe contrôle au groupe traité dans notre exemple débuté plus haut est la suivante :</p>
+<p><span class="math display">\[RR = \frac{{p_C}}{{p_T}}\]</span> Avec R, le risque relatif peut être obtenu avec le package <code>riskCommunicator</code> tel que montré pour le calcul de la différence de risque, en faisant toujours bien attention à quel risque est divisé par quel risque selon l’analyse qui est réellement souhaitée. Dans notre exemple débuté plus haut, il s’agit du même calcul que pour la différence de risque sauf qu’il ne s’agit plus d’un signe moins mais d’une division. Les résultats obtenus plus haut avec l’exemple de la différence de risque montrent aussi le risque relatif, qui est tel que le risque de mourir chez les hypertendus est 1.41 fois plus élevé que chez les non-hypertendus.</p>
+</section><section id="rapports-des-cotes" class="level4" data-number="2.2.6"><h4 data-number="2.2.6" class="anchored" data-anchor-id="rapports-des-cotes">
+<span class="header-section-number">2.2.6</span> Rapports des cotes</h4>
+<p>Le rapport des cotes, noté <span class="math inline">\(OR\)</span> pour <em>Odds ratio</em> en anglais, est une statistique dont le calcul peut à nouveau se comprendre à l’aide d’un tableau de contingence. Si l’on reprend le tableau de la Figure <a href="#fig-RiskContTables" class="quarto-xref">Figure&nbsp;<span>4.16</span></a>, on peut dire que la cote pour le fait d’être en bonne santé versus être malade dans le groupe contrôle est <span class="math inline">\(n_{C0}\)</span>/<span class="math inline">\(n_{C1}\)</span> et la cote pour le fait d’être en bonne santé versus malade dans le groupe traité est <span class="math inline">\(n_{T0}\)</span>/<span class="math inline">\(n_{T1}\)</span>. Le rapport des cotes pour le groupe contrôle versus le groupe traité dans ce cas-là peut se calculer comme ceci :</p>
+<p><span class="math display">\[ OR=  \frac{n_{C0} / n{_{C1}}}{n_{T0} / n{_{T1}}}\]</span></p>
+<p>Le rapport des cotes est toujours ≥0. Une valeur en-dessous de 1 signifie « moins de chances/risques », une valeur de 1 signifie « chances/risques équivalent(e)s », et une valeur au-dessus de 1 signifie « plus de chances ou de risques ». Le chiffre obtenu renseigne toujours sur un niveau de chances pour le groupe au numérateur par rapport au niveau de chances concernant le groupe au dénominateur (cf.&nbsp;formule ci-dessus). Avec R, le rapport des cotes peut être obtenu avec le package <code>riskCommunicator</code> tel que montré pour le calcul de la différence de risque, en faisant cette fois attention à quelle cote est divisée par quelle cote selon l’analyse qui est réellement souhaitée. Dans notre exemple débuté plus haut, le rapport des cotes est de 1.75. Cela signifie ici que la cote pour le fait de mourir (versus le fait de vivre) est 1.75 fois plus élevée quand on est hypertendu que lorsqu’on ne l’est pas. Pour comprendre le calcul, on peut le refaire manuellement :</p>
+<div class="cell">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Obtention d'un tableau de contingence avec effectifs</span></span>
+<span><span class="va">tab</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">cvdd</span><span class="op">$</span><span class="va">HYPERTEN</span>, <span class="va">cvdd</span><span class="op">$</span><span class="va">cvd_dth</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">tab</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"vivant"</span>, <span class="st">"mort"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">tab</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"non-hypertendu"</span>, <span class="st">"hypertendu"</span><span class="op">)</span></span>
+<span><span class="va">tab</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                
+                 vivant mort
+  non-hypertendu    781  371
+  hypertendu       1685 1403</code></pre>
+</div>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Calcul des cotes pour les "chances" de mourir selon le groupe d'appartenance</span></span>
+<span><span class="va">cote_hypertendus</span> <span class="op">&lt;-</span> <span class="fl">1403</span><span class="op">/</span><span class="fl">1685</span></span>
+<span><span class="va">cote_non_hypertendus</span> <span class="op">&lt;-</span> <span class="fl">371</span><span class="op">/</span><span class="fl">781</span></span>
+<span></span>
+<span><span class="co"># Calcul du rapport des cotes</span></span>
+<span><span class="va">OR</span> <span class="op">&lt;-</span> <span class="va">cote_hypertendus</span> <span class="op">/</span> <span class="va">cote_non_hypertendus</span></span>
+<span><span class="va">OR</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.75281</code></pre>
+</div>
+</div>
+</section></section></section><section id="résumé" class="level2" data-number="3"><h2 data-number="3" class="anchored" data-anchor-id="résumé">
+<span class="header-section-number">3</span> Résumé</h2>
+<ul>
+<li>La relation entre deux variables quantitatives peut être étudiée graphiquement à l’aide d’un nuage de points et numériquement à l’aide, notamment, du coefficient de corrélation de Pearson (<em>r</em>) ou du coefficient de corrélation de Spearman (<em>rho</em>). Le premier caractérise le degré de lien linéaire entre les valeurs des deux variables, alors que le second caractérise le lien linéaire entre les rangs des deux variables.</li>
+<li>La relation entre deux variables qualitatives peut être étudiée graphiquement à l’aide de diagrammes en barres mises côte-à-côte ou empilées, et numériquement à l’aide du croisement d’effectifs ou de proportions, du coefficient Phi, du V de Cramer, de la différence de risque, du risque relatif, ou encore du rapport des cotes selon le contexte.</li>
+</ul>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
+<div id="ref-bickelSexBiasGraduate1975" class="csl-entry" role="listitem">
+Bickel, P. J., Hammel, E. A., &amp; O’Connell J, W. (1975). Sex Bias in Graduate Admissions: Data from Berkeley. <em>Science</em>, <em>187</em>(4175), 398‑404. <a href="https://doi.org/10.1126/science.187.4175.398">https://doi.org/10.1126/science.187.4175.398</a>
+</div>
+<div id="ref-halperinSpuriousCorrelationsCauses1986" class="csl-entry" role="listitem">
+Halperin, S. (1986). Spurious Correlations–Causes and Cures. <em>Psychoneuroendocrinology</em>, <em>11</em>(1), 3‑13. <a href="https://doi.org/10.1016/0306-4530(86)90028-4">https://doi.org/10.1016/0306-4530(86)90028-4</a>
+</div>
+<div id="ref-hopkinsProgressiveStatisticsStudies2009" class="csl-entry" role="listitem">
+Hopkins, W. G., Marshall, S. W., Batterham, A. M., &amp; Hanin, J. (2009). Progressive Statistics for Studies in Sports Medicine and Exercise Science. <em>Med Sci Sports Exerc</em>, <em>41</em>(1), 3‑13. <a href="https://doi.org/10.1249/MSS.0b013e31818cb278">https://doi.org/10.1249/MSS.0b013e31818cb278</a>
+</div>
+<div id="ref-janeEffectSizesConfidence2023" class="csl-entry" role="listitem">
+Jané, M. B., Xiao, Q., Yeung, S. K., Dunleavy, D. J., Röseler, L., Elsherif, M., Cousineau, D., Caldwell, A. R., Johnson, B. T., &amp; Feldman, G. (2023). <em>Effect Sizes and Confidence Intervals Guide</em>. <a href="https://matthewbjane.com/effect-sizes-and-confidence-intervals-guide/">https://matthewbjane.com/effect-sizes-and-confidence-intervals-guide/</a>
+</div>
+<div id="ref-wilkeFundamentalsDataVisualization2018" class="csl-entry" role="listitem">
+Wilke, C. O. (2018). <em>Fundamentals of Data Visualization</em>. <span>O’Reilly Media, Inc. Retrieved from https://clauswilke.com/dataviz</span>.
+</div>
+</div>
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copié");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copié");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./univariate_analyses.html" class="pagination-link  aria-label=" univari="">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Analyses univariées</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./standardized_differences.html" class="pagination-link" aria-label="<span class='chapter-number'>5</span>&nbsp; <span class='chapter-title'>Différence de moyennes standardisée</span>">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Différence de moyennes standardisée</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Analyser des données avec R a été écrit par Pierre-Yves de Müllenheim.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/pydemull/Analyser-des-donnees-avec-R/edit/master/bivariate_analyses.qmd" class="toc-action"><i class="bi bi-github"></i>Modifier cette page</a></li><li><a href="https://github.com/pydemull/Analyser-des-donnees-avec-R/issues/new" class="toc-action"><i class="bi empty"></i>Faire part d'un problème</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>Ce livre a été généré avec <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+
+
+</body></html>

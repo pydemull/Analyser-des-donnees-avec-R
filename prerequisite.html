@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.549">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Analyser des données avec R - 1&nbsp; Prérequis</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./data_manipulation.html" rel="next">
+<link href="./index.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Pas de résultats",
+    "search-matching-documents-text": "documents trouvés",
+    "search-copy-link-title": "Copier le lien vers la recherche",
+    "search-hide-matches-text": "Cacher les correspondances additionnelles",
+    "search-more-match-text": "correspondance de plus dans ce document",
+    "search-more-matches-text": "correspondances de plus dans ce document",
+    "search-clear-button-title": "Effacer",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Annuler",
+    "search-submit-button-title": "Envoyer",
+    "search-label": "Recherche"
+  }
+}</script>
+</head>
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./prerequisite.html">Partie I : Appropriation de R et RStudio</a></li><li class="breadcrumb-item"><a href="./prerequisite.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Prérequis</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Analyser des données avec R</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/pydemull/Analyser-des-donnees-avec-R" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Basculer en mode lecteur">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Recherche"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Partie I : Appropriation de R et RStudio</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./prerequisite.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Prérequis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data_manipulation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Importation et manipulation d’une base de données</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Partie II : Analyses descriptives</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./univariate_analyses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Analyses univariées</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bivariate_analyses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Analyses bivariées</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./standardized_differences.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Différence de moyennes standardisée</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./regressions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Régressions</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">Partie III : Analyses inférentielles</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Basculer la section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./statistical_theory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Prérequis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./categorical_var_tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Tests statistiques pour des variables qualitatives</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Sommaire</h2>
+   
+  <ul>
+<li>
+<a href="#installation-de-r-et-rstudio" id="toc-installation-de-r-et-rstudio" class="nav-link active" data-scroll-target="#installation-de-r-et-rstudio"><span class="header-section-number">1.1</span> Installation de R et RStudio</a>
+  <ul class="collapse">
+<li><a href="#installer-r-sur-windows" id="toc-installer-r-sur-windows" class="nav-link" data-scroll-target="#installer-r-sur-windows"><span class="header-section-number">1.1.1</span> Installer R sur WINDOWS</a></li>
+  <li><a href="#installer-r-sur-mac" id="toc-installer-r-sur-mac" class="nav-link" data-scroll-target="#installer-r-sur-mac"><span class="header-section-number">1.1.2</span> Installer R sur MAC</a></li>
+  <li><a href="#installer-rstudio-sur-windows-ou-mac" id="toc-installer-rstudio-sur-windows-ou-mac" class="nav-link" data-scroll-target="#installer-rstudio-sur-windows-ou-mac"><span class="header-section-number">1.1.3</span> Installer RStudio sur WINDOWS ou MAC</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#prise-en-main-de-rstudio" id="toc-prise-en-main-de-rstudio" class="nav-link" data-scroll-target="#prise-en-main-de-rstudio"><span class="header-section-number">1.2</span> Prise en main de RStudio</a>
+  <ul class="collapse">
+<li><a href="#fonctionnement-g%C3%A9n%C3%A9ral" id="toc-fonctionnement-général" class="nav-link" data-scroll-target="#fonctionnement-g%C3%A9n%C3%A9ral"><span class="header-section-number">1.2.1</span> Fonctionnement général</a></li>
+  <li><a href="#manipuler-des-objets-valeurs-vecteurs-et-tableaux-de-donn%C3%A9es" id="toc-manipuler-des-objets-valeurs-vecteurs-et-tableaux-de-données" class="nav-link" data-scroll-target="#manipuler-des-objets-valeurs-vecteurs-et-tableaux-de-donn%C3%A9es"><span class="header-section-number">1.2.2</span> Manipuler des objets (valeurs, vecteurs, et tableaux de données)</a></li>
+  <li><a href="#manipuler-des-objets-via-des-noms" id="toc-manipuler-des-objets-via-des-noms" class="nav-link" data-scroll-target="#manipuler-des-objets-via-des-noms"><span class="header-section-number">1.2.3</span> Manipuler des objets via des noms</a></li>
+  <li><a href="#utiliser-des-fonctions" id="toc-utiliser-des-fonctions" class="nav-link" data-scroll-target="#utiliser-des-fonctions"><span class="header-section-number">1.2.4</span> Utiliser des fonctions</a></li>
+  <li><a href="#installer-et-charger-des-packages" id="toc-installer-et-charger-des-packages" class="nav-link" data-scroll-target="#installer-et-charger-des-packages"><span class="header-section-number">1.2.5</span> Installer et charger des <em>packages</em></a></li>
+  <li><a href="#divers" id="toc-divers" class="nav-link" data-scroll-target="#divers"><span class="header-section-number">1.2.6</span> Divers</a></li>
+  </ul>
+</li>
+  <li><a href="#r%C3%A9sum%C3%A9" id="toc-résumé" class="nav-link" data-scroll-target="#r%C3%A9sum%C3%A9"><span class="header-section-number">1.3</span> Résumé</a></li>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/pydemull/Analyser-des-donnees-avec-R/edit/master/prerequisite.qmd" class="toc-action"><i class="bi bi-github"></i>Modifier cette page</a></li><li><a href="https://github.com/pydemull/Analyser-des-donnees-avec-R/issues/new" class="toc-action"><i class="bi empty"></i>Faire part d'un problème</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./prerequisite.html">Partie I : Appropriation de R et RStudio</a></li><li class="breadcrumb-item"><a href="./prerequisite.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Prérequis</span></a></li></ol></nav><div class="quarto-title">
+<h1 class="title">
+<span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Prérequis</span>
+</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><section id="installation-de-r-et-rstudio" class="level2" data-number="1.1"><h2 data-number="1.1" class="anchored" data-anchor-id="installation-de-r-et-rstudio">
+<span class="header-section-number">1.1</span> Installation de R et RStudio</h2>
+<p>R et RStudio sont deux logiciels en libre accès sur internet. Le logiciel R peut être utilisé indépendamment du logiciel RStudio. En revanche, l’utilisation du logiciel RStudio requiert au préalable l’installation du logiciel R. En effet, RStudio est un logiciel qui permet d’utiliser les fonctionnalités de R tout en proposant une interface d’utilisation plus agréable et fonctionnelle que l’interface à l’origine proposée pour le logiciel R, qui est très basique. Les explications présentées au cours de ce document considèrent que l’utilisateur fonctionne avec RStudio.</p>
+<section id="installer-r-sur-windows" class="level3" data-number="1.1.1"><h3 data-number="1.1.1" class="anchored" data-anchor-id="installer-r-sur-windows">
+<span class="header-section-number">1.1.1</span> Installer R sur WINDOWS</h3>
+<ul>
+<li>Aller sur le site https://cran.rstudio.com.</li>
+<li>Sur la page web qui s’affiche, l’encart du haut <strong>Download and Install R</strong> montre les différents liens de téléchargement possibles selon le système d’exploitation utilisé. Cliquer sur le lien <strong>Download R for Windows</strong>.</li>
+<li>Dans la nouvelle fenêtre qui vient de s’ouvrir, cliquer sur <strong>install R for the first time</strong>.</li>
+<li>Dans la nouvelle fenêtre qui vient de s’ouvrir, cliquer sur le premier lien en haut de la page : <strong>Download R-X.X.X. for Windows</strong>. Exécuter le fichier s’il est proposé de le faire. Si ce n’est pas le cas, il est probable que le téléchargement du fichier ait été lancé automatiquement. Retrouver le fichier ainsi téléchargé sur le PC (une fois son enregistrement terminé), puis exécuter le fichier.</li>
+<li>Suivre la procédure d’installation par défaut en cliquant à chaque fois sur <strong>Suivant</strong>.</li>
+<li>Une fois l’installation terminée, double-cliquer sur l’icône du bureau (<strong>R x64 X.X.X</strong>) pour vérifier que l’ouverture du logiciel R s’effectue correctement.</li>
+</ul></section><section id="installer-r-sur-mac" class="level3" data-number="1.1.2"><h3 data-number="1.1.2" class="anchored" data-anchor-id="installer-r-sur-mac">
+<span class="header-section-number">1.1.2</span> Installer R sur MAC</h3>
+<ul>
+<li>Aller sur le site https://cran.rstudio.com.</li>
+<li>Sur la page web qui s’affiche, l’encart du haut <strong>Download and Install R</strong> montre les différents liens de téléchargement possibles selon le système d’exploitation utilisé. Cliquer sur le lien <strong>Download R for macOS</strong>.</li>
+<li>Dans la nouvelle fenêtre qui s’ouvre, cliquer sur le lien qui correspond à votre version OS (le clic entraînera le début du téléchargement du fichier).</li>
+<li>Sur le Mac, chercher dans le dossier <strong>Téléchargements</strong> le fichier téléchargé.</li>
+<li>Double-cliquer sur le fichier téléchargé pour lancer l’installation du logiciel R.</li>
+<li>Suivre la procédure par défaut et terminer l’installation.</li>
+<li>Lorsque l’installation est terminée, aller dans le dossier <strong>Applications</strong> du Mac pour rechercher le logiciel R. Double-cliquer sur l’icône pour ouvrir le logiciel et vérifier que l’ouverture se déroule correctement.</li>
+</ul></section><section id="installer-rstudio-sur-windows-ou-mac" class="level3" data-number="1.1.3"><h3 data-number="1.1.3" class="anchored" data-anchor-id="installer-rstudio-sur-windows-ou-mac">
+<span class="header-section-number">1.1.3</span> Installer RStudio sur WINDOWS ou MAC</h3>
+<ul>
+<li>Aller sur le site https://posit.co/.</li>
+<li>En haut à droite de la page d’accueil, cliquer sur le bouton <strong>DOWNLOAD RSTUDIO</strong>.</li>
+<li>Dans la nouvelle fenêtre qui vient de s’ouvrir, faire défiler la page vers le bas jusqu’à aller dans la section RStudio Desktop puis cliquer sur le bouton <strong>DOWNLOAD RSTUDIO</strong>.</li>
+<li>Dans la nouvelle fenêtre qui vient de s’ouvrir, cliquer sur le bouton <strong>DOWNLOAD RSTUDIO DESKTOP FOR WINDOWS</strong> si vous avez une machine Windows. Si vous avez un MAC et que le bouton n’est pas mis à jour automatiquement pour votre MAC, alors il faut faire défiler un peu la page vers le bas pour ensuite cliquer sur le lien de téléchargement de RStudio adapté à votre version de système d’exploitation.</li>
+<li>
+<strong>Sur WINDOWS :</strong> Exécuter le fichier s’il est proposé de le faire. Si le clic entraîne automatiquement le téléchargement du fichier, retrouver alors ce fichier sur le PC (une fois son enregistrement terminé), puis exécuter le fichier et suivre la procédure d’installation par défaut. Une fois le logiciel installé, retrouver le fichier d’exécution du logiciel sur le PC (chemin d’accès possible : <strong>Ordinateur &gt; Windows (C:) &gt; Programmes &gt; RStudio &gt; bin &gt; rstudio.exe</strong>). Créer un raccourci pour le fichier <strong>rstudio.exe</strong> (clic droit sur le fichier &gt; Créer un raccourci) et mettre le raccourci sur le bureau du PC. Double-cliquer sur l’icône RStudio afin de vérifier si l’ouverture s’effectue correctement.</li>
+<li>
+<strong>Sur MAC :</strong> Le téléchargement débute lorsque vous cliquez sur le lien. Une fois le téléchargement terminé, sur votre MAC, réaliser l’installation en double-cliquant sur le fichier téléchargé et en suivant la procédure indiquée. Une fois l’installation terminée, aller dans le dossier <strong>Applications</strong> du MAC et double-cliquer sur l’icône de RStudio pour vérifier si le logiciel s’ouvre correctement.</li>
+</ul></section></section><section id="prise-en-main-de-rstudio" class="level2" data-number="1.2"><h2 data-number="1.2" class="anchored" data-anchor-id="prise-en-main-de-rstudio">
+<span class="header-section-number">1.2</span> Prise en main de RStudio</h2>
+<section id="fonctionnement-général" class="level3" data-number="1.2.1"><h3 data-number="1.2.1" class="anchored" data-anchor-id="fonctionnement-général">
+<span class="header-section-number">1.2.1</span> Fonctionnement général</h3>
+<p>Basiquement, RStudio s’utilise de la manière suivante : on écrit une instruction (i.e., une ligne de code) dans une fenêtre, on lance cette instruction, et le logiciel nous donne le résultat, qu’il s’agisse d’un calcul, d’un graphique, d’une modification d’un jeu de données, etc. Quand on ouvre RStudio pour la première fois, la fenêtre principale qui se présente est la <strong>Console</strong>. Cette fenêtre permet d’y écrire des lignes de code et de les lancer en appuyant sur la touche <strong>Entrée</strong>. Lorsque l’on souhaite conserver les lignes de code que l’on a écrites, ou que l’on souhaite écrire des lignes de code sans forcément les lancer, il est possible d’utiliser une fenêtre <strong>Script</strong> (chemin d’accès : <strong>File &gt; New File &gt; R Script</strong>). Pour lancer les lignes de code qui sont écrites dans une fenêtre de script, il suffit de se placer n’importe où sur la ligne de code et de cliquer sur l’icône <strong>Run</strong> du logiciel (raccourci : <strong>Ctrl + Entrée</strong>). Une fois le code activé, celui-ci est montré dans la Console, et selon la nature de la commande, le résultat peut apparaître lui aussi dans la Console ou dans l’un des encarts disposés par défaut à droite de l’écran, selon qu’il s’agisse notamment d’un nouvel objet (e.g., une variable), d’une demande d’aide, ou de la création d’un graphique.</p>
+</section><section id="manipuler-des-objets-valeurs-vecteurs-et-tableaux-de-données" class="level3" data-number="1.2.2"><h3 data-number="1.2.2" class="anchored" data-anchor-id="manipuler-des-objets-valeurs-vecteurs-et-tableaux-de-données">
+<span class="header-section-number">1.2.2</span> Manipuler des objets (valeurs, vecteurs, et tableaux de données)</h3>
+<p>R permet tout d’abord d’effectuer des opérations simples avec des nombres, telles que des additions avec le symbole <code>+</code>, des soustractions avec le symbole <code>-</code>, des multiplications avec le symbole <code>*</code>, des divisions avec le symbole <code>/</code>, des racines carrées avec la fonction <code><a href="https://rdrr.io/r/base/MathFun.html">sqrt()</a></code>, ou encore des élévations à la puissance avec le symbole <code>^</code>.</p>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="op">(</span><span class="fl">9</span> <span class="op">+</span> <span class="fl">3</span> <span class="op">-</span> <span class="fl">5</span><span class="op">)</span> <span class="op">*</span> <span class="fl">5</span> <span class="op">/</span> <span class="fl">2</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fl">9</span><span class="op">)</span> <span class="op">^</span> <span class="fl">2</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 26.5</code></pre>
+</div>
+</div>
+<p>De manière plus élaborée, R permet aussi de créer des vecteurs (i.e., des suites de valeurs), notamment grâce à la fonction <code><a href="https://rdrr.io/r/base/c.html">c()</a></code>, et de les manipuler avec différentes sortes d’opérations. Lorsqu’une opération ou une série d’opérations est appliquée à un vecteur, chaque valeur du vecteur subit les opérations spécifiées. Dans l’exemple ci-dessous, on voit par exemple que chaque valeur du vecteur a été multipliée par 2 et s’est vue ajouter la valeur 3.</p>
+<div class="cell">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">5</span><span class="op">)</span> <span class="op">*</span> <span class="fl">2</span> <span class="op">+</span> <span class="fl">3</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  3  5  7  9 11 13</code></pre>
+</div>
+</div>
+<p>Si des vecteurs peuvent contenir des nombres, ils peuvent également contenir des caractères, tels que de simples lettres ou des mots, ces vecteurs ne pouvant cependant pas, par nature, subir des opérations mathématiques. Pour pouvoir être crées, les caractères doivent être écrits à l’intérieur du vecteur avec des guillemets (<code>" "</code>).</p>
+<div class="cell">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "a" "b" "c"</code></pre>
+</div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Pierre"</span>, <span class="st">"Marie"</span>, <span class="st">"Jean"</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Pierre" "Marie"  "Jean"  </code></pre>
+</div>
+</div>
+<p>De manière encore plus élaborée, R permet de créer des tableaux de données à partir de vecteurs à l’aide de la fonction <code><a href="https://rdrr.io/r/base/data.frame.html">data.frame()</a></code>. Dans l’exemple ci-dessous, les noms x, y, et z, marqués à gauche du signe <code>=</code>, sont les noms des vecteurs que contiendra le tableau de données. À droite du signe <code>=</code>, on retrouve la fonction <code><a href="https://rdrr.io/r/base/c.html">c()</a></code> qui permet de créer un vecteur avec des valeurs à l’intérieur.</p>
+<div class="cell">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
+<span>  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span>,</span>
+<span>  y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">5</span>, <span class="fl">7</span>, <span class="fl">9</span><span class="op">)</span>,</span>
+<span>  z <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>, <span class="st">"d"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  x y z
+1 0 3 a
+2 1 5 b
+3 2 7 c
+4 3 9 d</code></pre>
+</div>
+</div>
+</section><section id="manipuler-des-objets-via-des-noms" class="level3" data-number="1.2.3"><h3 data-number="1.2.3" class="anchored" data-anchor-id="manipuler-des-objets-via-des-noms">
+<span class="header-section-number">1.2.3</span> Manipuler des objets via des noms</h3>
+<p>L’une des particularités de R, c’est de permettre d’associer des objets (e.g., des valeurs, des vecteurs, ou encore des tableaux de données) à des noms. Pour ce faire, R utilise la fonction d’assignation <code>&lt;-</code>. Cette fonction s’utilise en écrivant à droite de la flèche l’objet à créer (ou qui est déjà crée), et en écrivant à gauche de la flèche le nom auquel on veut que l’objet soit associé (Attention : Toujours utiliser seulement des caractères alphanumériques et des points <code>.</code> ou des tirets du bas <code>_</code> pour écrire un nom ; ne pas commencer par un chiffre ; avoir à l’esprit que R est sensible à la casse, ce qui veut dire qu’un nom commençant par une majuscule sera un nom différent de celui qui a les mêmes lettres mais qui commence par une minuscule.) L’utilisation de noms associés à des objets permet de grandement faciliter les analyses par la suite. Lorsqu’on réalise une assignation, il est possible de voir le nouveau nom et l’objet associé dans la fenêtre <strong>Environnement</strong> de RStudio. Lorsqu’on lance le code permettant d’assigner un objet à un nom, R ne montre pas le contenu de l’objet. Pour le voir, il faut écrire le nom associé à l’objet dans une ligne de code et lancer la commande.</p>
+<p>Il est donc possible d’associer à un nom un objet qui serait une valeur numérique…</p>
+<div class="cell">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fl">9</span></span>
+<span><span class="va">a</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 9</code></pre>
+</div>
+</div>
+<p>… ou encore une succession de caractères …</p>
+<div class="cell">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Prenom</span> <span class="op">&lt;-</span> <span class="st">"Pierre"</span></span>
+<span><span class="va">Prenom</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Pierre"</code></pre>
+</div>
+</div>
+<p>… ou encore un vecteur …</p>
+<div class="cell">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Taille</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">178</span>, <span class="fl">191</span>, <span class="fl">178</span>, <span class="fl">182</span>, <span class="fl">167</span>, <span class="fl">151</span><span class="op">)</span></span>
+<span><span class="va">Taille</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 178 191 178 182 167 151</code></pre>
+</div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Poids</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">60</span>, <span class="fl">89</span>, <span class="fl">92</span>, <span class="fl">67</span>, <span class="fl">80</span>, <span class="fl">70</span><span class="op">)</span></span>
+<span><span class="va">Poids</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 60 89 92 67 80 70</code></pre>
+</div>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Sexe</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"M"</span>, <span class="st">"M"</span>, <span class="st">"F"</span>, <span class="st">"F"</span>, <span class="st">"M"</span>, <span class="st">"F"</span><span class="op">)</span></span>
+<span><span class="va">Sexe</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "M" "M" "F" "F" "M" "F"</code></pre>
+</div>
+</div>
+<p>… et même un tableau de données, qui aurait été soit conçu à la main, soit conçu à partir d’objets de type vecteurs qui auraient été crées auparavant, comme ci-dessous. À noter que les vecteurs doivent contenir le même nombre de valeurs pour pouvoir être combinés dans un tableau de données avec la fonction <code><a href="https://rdrr.io/r/base/data.frame.html">data.frame()</a></code>.</p>
+<div class="cell">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">Taille</span>, <span class="va">Poids</span>, <span class="va">Sexe</span><span class="op">)</span></span>
+<span><span class="va">df</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Taille Poids Sexe
+1    178    60    M
+2    191    89    M
+3    178    92    F
+4    182    67    F
+5    167    80    M
+6    151    70    F</code></pre>
+</div>
+</div>
+<p>Lorsqu’un objet de type tableau de données est assigné à un nom, il est possible d’afficher le contenu d’une seule colonne de ce tableau à partir du nom associé au tableau, du symbole <code>$</code>, et du titre de la colonne désirée.</p>
+<div class="cell">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span><span class="op">$</span><span class="va">Taille</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 178 191 178 182 167 151</code></pre>
+</div>
+</div>
+<p>Une fois que des objets sont liés à des noms, il est possible, comme montré initialement avec des valeurs, d’utiliser ces noms pour réaliser des opérations. Par exemple, via des noms, on peut manipuler des objets contenant simplement une valeur numérique…</p>
+<div class="cell">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fl">7</span></span>
+<span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fl">3</span></span>
+<span><span class="va">c</span> <span class="op">&lt;-</span> <span class="fl">2</span></span>
+<span><span class="op">(</span><span class="va">a</span> <span class="op">+</span> <span class="va">b</span><span class="op">)</span> <span class="op">/</span> <span class="va">c</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5</code></pre>
+</div>
+</div>
+<p>ou alors des objets contenant un vecteur …</p>
+<div class="cell">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">vec1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">6</span>, <span class="fl">8</span><span class="op">)</span></span>
+<span><span class="va">vec2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">9</span>, <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="va">vec1</span> <span class="op">*</span> <span class="fl">10</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  0 20 40 60 80</code></pre>
+</div>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">vec1</span> <span class="op">*</span> <span class="va">vec2</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  0  8 20 54  0</code></pre>
+</div>
+</div>
+<p>ou encore des objets contenant un tableau de données, en créant par exemple une variable à partir d’autres variables du tableau.</p>
+<div class="cell">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span><span class="op">$</span><span class="va">IMC</span> <span class="op">&lt;-</span> <span class="va">df</span><span class="op">$</span><span class="va">Poids</span> <span class="op">/</span> <span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Taille</span> <span class="op">/</span> <span class="fl">100</span><span class="op">)</span> <span class="op">^</span> <span class="fl">2</span></span>
+<span><span class="va">df</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Taille Poids Sexe      IMC
+1    178    60    M 18.93700
+2    191    89    M 24.39626
+3    178    92    F 29.03674
+4    182    67    F 20.22703
+5    167    80    M 28.68514
+6    151    70    F 30.70041</code></pre>
+</div>
+</div>
+<p>Lorsque plusieurs objets ont été assignés à des noms, il est possible de vouloir supprimer certaines assignations, par exemple en raison du fait qu’un objet aurait été assigné par erreur. Pour supprimer une assignation, il est possible d’utiliser la fonction <code><a href="https://rdrr.io/r/base/rm.html">rm()</a></code>.</p>
+<div class="cell">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/rm.html">rm</a></span><span class="op">(</span><span class="va">vec1</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>L’instruction <code>rm(list = ls())</code> supprime toutes les assignations qui ont été réalisées auparavant.</p>
+</section><section id="utiliser-des-fonctions" class="level3" data-number="1.2.4"><h3 data-number="1.2.4" class="anchored" data-anchor-id="utiliser-des-fonctions">
+<span class="header-section-number">1.2.4</span> Utiliser des fonctions</h3>
+<p>Dans les exemples de code précédents, nous avons utilisé plusieurs fonctions : la fonction <code><a href="https://rdrr.io/r/base/MathFun.html">sqrt()</a></code>, la fonction <code><a href="https://rdrr.io/r/base/c.html">c()</a></code>, la fonction <code><a href="https://rdrr.io/r/base/data.frame.html">data.frame()</a></code>, et la fonction <code><a href="https://rdrr.io/r/base/rm.html">rm()</a></code>. Par la suite, nous serons amenés à voir comment l’on crée une fonction et comment l’on arrive finalement à n’avoir qu’une expression suivie de parenthèses à utiliser pour faire un ensemble d’actions automatiquement. Mais avant cela, il est important de savoir globalement comment une fonction s’utilise. Cela est important car il est rapidement possible de se rendre compte qu’utiliser R, c’est utiliser des fonctions. De plus, lorsque l’on souhaite réaliser une nouvelle analyse avec une fonction que l’on n’a jamais utilisée auparavant, il est nécessaire de pouvoir en comprendre la structure et d’être en mesure d’en comprendre le fonctionnement pour pouvoir l’utiliser.</p>
+<p>Pour expliquer comment s’utilise une fonction, commençons directement par un exemple, cette fois avec la fonction <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> :</p>
+<div class="cell">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Length</span>, y <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">Petal.Length</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Comme nous pouvons l’observer ci-dessus, pour utiliser une fonction, il faut d’abord écrire son nom, puis mettre des parenthèses pour qu’on puisse écrire des informations à l’intérieur. Ces informations, elles sont de deux natures. D’un côté il y a les <strong>arguments</strong> (qui sont <code>x</code> et <code>y</code> dans l’exemple ci-dessus), et d’un autre côté il y a les <strong>valeurs</strong> (qui sont les variables <code>Sepal.Length</code> et <code>Petal.Length</code> du jeu de données <code>iris</code> dans l’exemple ci-dessus). Notons ici que le concept de valeur est à prendre au sens général du terme. Dans ce cadre là, une valeur pourrait tout aussi bien désigner des nombres ou des lettres, des vecteurs, des jeux de données, etc. Avec certaines fonctions, nous aurions pu mettre le nom de la variable seul et mettre le nom du jeu de données en face d’un autre argument, mais cela n’était pas possible ici. Comme nous pouvons le voir également, l’argument et la valeur sont toujours mis en lien par le biais du signe <code>=</code>. (Attention : Nous verrons plus tard qu’avec certaines fonctions, l’écriture qui est à gauche du signe <code>=</code> est en fait le nom d’une nouvelle variable à créer, mais laissons cela de côté pour le moment.) Le nombre d’arguments dépend des fonctions. Certaines n’en n’ont qu’un, d’autres peuvent en avoir un très grand nombre. Dans une fonction, certains arguments doivent obligatoirement recevoir une valeur indiquée par nos soins, alors que d’autres arguments ne seront tout simplement pas utilisés si on ne leur associe pas une valeur particulière. Enfin, certains arguments prendront une valeur par défaut associée à la fonction si l’on écrit rien les concernant dans la fonction. Dans la fonction <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code>, seul l’argument <code>x</code> doit obligatoirement recevoir une valeur pour que la fonction puisse être utilisée. Dans notre exemple, le fait d’avoir en plus associé une valeur à l’argument <code>y</code> permet à la fonction de non pas montrer uniquement les données de la variable <code>x</code>, mais de réaliser un graphique en montrant les données de <code>y</code> en fonction de <code>x</code>, comme illustré sur la <a href="#fig-plot_function2" class="quarto-xref">Figure&nbsp;<span>1.1</span></a> :</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Length</span>, y <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">Petal.Length</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-plot_function2" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-plot_function2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="prerequisite_files/figure-html/fig-plot_function2-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-plot_function2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.1: Graphique obtenu avec un paramétrage explicite de la fonction plot()
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>Lorsque les arguments sont explicitement précisés comme pour <code>x</code> et <code>y</code> de l’exemple ci-dessus, il est en réalité possible de les écrire dans l’ordre que l’on veut. Nous aurions par exemple très bien pu écrire les choses de la manière suivante sans que cela ne change rien au résultat de la commande :</p>
+<div class="cell">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">Petal.Length</span>, x <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Length</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Ce changement d’ordre n’est possible que lorsque les arguments sont explicitement précisés dans la fonction. Il est aussi possible de configurer une fonction en mettant des valeurs sans avoir à écrire les noms des arguments. Cependant, lorsque les noms des arguments ne sont pas précisés, R associe les valeurs (celles que l’on a mises) aux arguments de la fonction en suivant l’ordre par défaut des arguments avec lequel la fonction a été configurée. Ainsi, si nous voulons avoir, pour le graphique associé à notre exemple, la variable <code>Sepal.Length</code> en <code>x</code>, et la variable <code>Petal.Length</code> en <code>y</code>, on peut très bien écrire la fonction comme ceci :</p>
+<div class="cell">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Length</span>, <span class="va">iris</span><span class="op">$</span><span class="va">Petal.Length</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>En revanche, si nous avions inversé l’ordre d’écriture des variables dans la fonction sans préciser les noms des arguments (cf.&nbsp;code ci-dessous), nous aurions eu un résultat différent du graphique précédent (cf. <a href="#fig-plot_function5" class="quarto-xref">Figure&nbsp;<span>1.2</span></a>), où les variables en x et en y ont été inversées par rapport au graphique précédent).</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">iris</span><span class="op">$</span><span class="va">Petal.Length</span>, <span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Length</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-plot_function5" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-plot_function5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="prerequisite_files/figure-html/fig-plot_function5-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-plot_function5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.2: Graphique obtenu avec un paramétrage implicite de la fonction plot()
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>Dans la suite de ce livre, les arguments configurés par nos soins seront en général précisés lorsque nous leur donnerons une valeur. Cela étant dit, beaucoup d’arguments seront aussi régulièrement laissés de côté lorsque cela ne sera pas nécessaire de les préciser pour l’exemple.</p>
+<p>Au regard de ce qu’il vient d’être expliqué, il est donc une bonne pratique, avant d’utiliser une fonction, de connaître les arguments qu’elle contient, non seulement pour savoir comment configurer ses arguments, mais aussi pour savoir ce que font les arguments de la fonction lorsque l’on ne touche pas à leur configuration par défaut. En général, toute fonction utilisable et opérationnelle avec R dispose d’une aide directement accessible via RStudio. Pour consulter l’aide associée à une fonction, il suffit d’écrire dans la Console le signe <code>?</code> suivi du nom de la fonction qui pose question, comme ci-dessous :</p>
+<div class="cell">
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="op">?</span><span class="va">plot</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Toutefois, paradoxalement, l’aide n’est pas toujours facile à comprendre pour ceux qui n’ont pas un niveau d’expertise avancé avec R. Pour bien comprendre comment on peut utiliser une fonction, internet peut être une excellente ressource car il regorge de sites et d’exemples crées par la communauté R. L’un des sites sur lesquels on tombe souvent lors d’une recherche internet est le site https://stackoverflow.com. Une bonne partie des problèmes de compréhension et d’utilisation des fonctions de R que l’on rencontre peuvent être résolus en consultant des exemples venant de ce site.</p>
+</section><section id="installer-et-charger-des-packages" class="level3" data-number="1.2.5"><h3 data-number="1.2.5" class="anchored" data-anchor-id="installer-et-charger-des-packages">
+<span class="header-section-number">1.2.5</span> Installer et charger des <em>packages</em>
+</h3>
+<p>R fonctionne en bonne partie sur la base de fonctions qui permettent de réaliser automatiquement différents types de calculs. Ces fonctions sont regroupées dans des ensembles qu’on appelle des <em>packages</em>. La version d’installation initialle du logiciel R dispose d’un ensemble de <em>packages</em> de base qui permettent de réaliser un très grand nombre d’analyses. Toutefois, la version de base de R impose parfois des manières d’écrire certaines instructions qui sont peu intuitives ou qui parfois ne permettent tout simplement pas de faire les analyses souhaitées. Pour palier ces problèmes, des <em>packages</em> sont régulièrement crées et actualisés par la communauté R. Pour pouvoir les utiliser, il est nécessaire de d’abord installer le <em>package</em> additionnel grâce à la fonction <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages()</a></code>. L’une des collections de <em>packages</em> les plus utiles pour manipuler des tableaux de données et effectuer des analyses statistiques et graphiques est celle du <code>tidyverse</code>, qui a été pensée notamment pour faciliter l’écriture des lignes de code.</p>
+<div class="cell">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"tidyverse"</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Une fois que le <em>package</em> a été installé (ou l’ensemble de <em>packages</em> s’il s’agit d’une collection comme dans le cas du <code>tidyverse</code>), une étape supplémentaire est nécessaire pour pouvoir utiliser les fonctions qu’il contient : il faut le charger dans l’environnement R. Pour cela, il est possible d’utiliser la fonction <code><a href="https://rdrr.io/r/base/library.html">library()</a></code>.</p>
+<div class="cell">
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Lorsque l’on charge la collection de <em>packages</em> <code>tidyverse</code>, on peut observer dans la Console que plusieurs <em>packages</em> sont chargés en même temps : <code>ggplot2</code>, pour la visualisation de données ; <code>dplyr</code>, pour la manipulation de données ; <code>tidyr</code>, pour l’organiation des tableaux de données ; <code>readr</code>, pour l’importation de jeux de données ; <code>purrr</code>, pour l’automatisation ; <code>tibble</code>, pour le formatage de tableaux de données ; <code>stringr</code>, pour la gestion des chaînes de caractères ; <code>forcats</code>, pour la gestion de variables qualitatives. Si nous avons téléchargé et chargé l’ensemble des <em>packages</em> du <code>tidyverse</code>, nous aurions pu aussi installé et chargé un seul de ces <em>packages</em> à la fois, comme pour la plupart des <em>packages</em> qui existent.</p>
+</section><section id="divers" class="level3" data-number="1.2.6"><h3 data-number="1.2.6" class="anchored" data-anchor-id="divers">
+<span class="header-section-number">1.2.6</span> Divers</h3>
+<p>Au fur et à mesure que l’on écrit un script, une bonne pratique consiste à régulièrement créer des sections avec des titres et d’ajouter des commentaires pour certaines analyses. Afin de ne pas rendre activable les lignes de code qui ne serviraient qu’à écrire des titres ou des commentaires, il convient d’utiliser le symbole <code>#</code> devant l’écriture du code.</p>
+<div class="cell">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Titre de section 1 -------------------------------------------</span></span>
+<span><span class="co">## Sous-titre 1</span></span>
+<span><span class="co">## Sous-titre 2</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Étant donné que l’erreur est difficile à éviter à un moment donné ou à un autre lorsqu’on commence à écrire son propre code ou à utiliser un code qui vient de quelqu’un d’autre, il est utile de reconnaître les situations dans lesquelles une erreur est survenue. La situation la plus évidente est l’apparition d’un texte en rouge dans la Console. Lorsqu’il s’agit bel et bien d’une erreur (car il peut ne s’agir parfois que d’un message d’alerte ou d’information), le texte en rouge décrit l’erreur qui a été détectée et qui empêche le code d’être entièrement activé. De manière moins visible, il est possible parfois d’observer un <code>+</code> tout en bas de la Console. Cela survient lorsque le code lancé à l’instant est incomplet (e.g., une parenthèse a été oubliée). Si cela arrive, il vaut mieux appuyer sur <strong>Echap</strong>, trouver l’erreur dans le code, et relancer la commande. Avant de relancer la commande, il faut s’assurer que R donne effectivement la main pour lancer une nouvelle instruction. C’est le cas lorsque le symbole <code>&gt;</code> est observé dans la Console. Enfin, RStudio permet d’utiliser un certain nombre de raccourcis clavier. Pour en avoir une vue d’ensemble, appuyez sur <strong>Alt+Shift+K</strong>.</p>
+</section></section><section id="résumé" class="level2" data-number="1.3"><h2 data-number="1.3" class="anchored" data-anchor-id="résumé">
+<span class="header-section-number">1.3</span> Résumé</h2>
+<ul>
+<li>R permet de faire des opérations sur des valeurs : additions, soustractions, multiplications, divisions, etc.</li>
+<li>R permet de faire des opérations sur des objets : valeurs uniques, vecteurs, tableaux de données, etc.</li>
+<li>Pour créer un vecteur, qu’il contienne des nombres, du texte, ou les deux, il est possible d’utiliser la fonction <code><a href="https://rdrr.io/r/base/c.html">c()</a></code>.</li>
+<li>Pour créer un tableau de données, il est possible d’utiliser la fonction <code><a href="https://rdrr.io/r/base/data.frame.html">data.frame()</a></code>.</li>
+<li>Pour afficher une colonne particulière d’un tableau de données, utiliser le symbole <code>$</code>.</li>
+<li>Pour associer un objet à un nom, utiliser la fonction d’assignation <code>&lt;-</code>.</li>
+<li>Pour supprimer une assignation, utiliser la fonction <code><a href="https://rdrr.io/r/base/rm.html">rm()</a></code>.</li>
+<li>L’utilisation de R repose sur l’utilisation de fonctions. Une fonction s’utilise en écrivant son nom, suivi de parenthèses à l’intérieur desquelles on peut préciser les arguments qui nous intéressent et indiquer les valeurs nécessaires selon les besoins des analyses.</li>
+<li>Pour demander l’aide de R à propos d’une fonction, écrire <code>?</code> suivi du nom de la fonction.</li>
+<li>Pour installer un <em>package</em>, utiliser la fonction <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages()</a></code>.</li>
+<li>Un code peut être écrit directement dans la <strong>Console</strong>, ou dans une fenêtre <strong>Script</strong>. Pour activer le code à partir d’un script, utiliser le bouton <strong>Run</strong> ou <strong>Ctrl + Entrée</strong>.</li>
+<li>Les noms et les objets associés apparaissent dans la fenêtre <strong>Environnement</strong>.</li>
+<li>Pour écrire des titres et des commentaires dans un script, utiliser un ou plusieurs <code>#</code> avant l’écriture du code.</li>
+<li>Dans la Console, le symbole <code>&gt;</code> signifie que le logiciel est prêt à lancer une nouvelle instruction. Le symbole <code>+</code> indique que l’instruction initialement lancée est incomplète. Mieux vaut alors faire <strong>Echap</strong>, modifier le code, et recommencer.</li>
+</ul>
+
+
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copié");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copié");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link  aria-label=" introduction="">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Introduction</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./data_manipulation.html" class="pagination-link" aria-label="<span class='chapter-number'>2</span>&nbsp; <span class='chapter-title'>Importation et manipulation d'une base de données</span>">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Importation et manipulation d’une base de données</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Analyser des données avec R a été écrit par Pierre-Yves de Müllenheim.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/pydemull/Analyser-des-donnees-avec-R/edit/master/prerequisite.qmd" class="toc-action"><i class="bi bi-github"></i>Modifier cette page</a></li><li><a href="https://github.com/pydemull/Analyser-des-donnees-avec-R/issues/new" class="toc-action"><i class="bi empty"></i>Faire part d'un problème</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>Ce livre a été généré avec <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+
+
+</body></html>

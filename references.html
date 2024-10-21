@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Pierre-Yves de Müllenheim">
 
-<title>Analyser des données avec R</title>
+<title>Analyser des données avec R - References</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,7 +20,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -31,7 +49,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./prerequisite.html" rel="next">
+<link href="./categorical_var_tests.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -81,7 +99,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Introduction</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./references.html">References</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -116,7 +134,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Introduction</span></a>
   </div>
 </li>
@@ -203,7 +221,7 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">
+  <a href="./references.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">References</span></a>
   </div>
 </li>
@@ -213,39 +231,21 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Sommaire</h2>
-   
-  <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
-  </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/pydemull/Analyser-des-donnees-avec-R/edit/master/index.qmd" class="toc-action"><i class="bi bi-github"></i>Modifier cette page</a></li><li><a href="https://github.com/pydemull/Analyser-des-donnees-avec-R/issues/new" class="toc-action"><i class="bi empty"></i>Faire part d'un problème</a></li></ul></div></nav>
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Analyser des données avec R</h1>
+<h1 class="title">References</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Auteur·rice</div>
-    <div class="quarto-title-meta-contents">
-             <p>Pierre-Yves de Müllenheim </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Date de publication</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">21 octobre 2024</p>
-    </div>
-  </div>
   
     
   </div>
@@ -255,16 +255,103 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="introduction" class="level1 unnumbered">
-<h1 class="unnumbered">Introduction</h1>
-<p>Ce livre vise à servir de support à des enseignements auprès d’étudiants qui découvrent les analyses statistiques en même temps que le langage de programmation R. Ce livre n’est donc pas dédié exclusivement aux statistiques, ni exclusivement dédié à R. D’autres ouvrages proposent des contenus plus spécialisés, et donc plus poussés, et c’est vers ces ouvrages qu’il convient d’aller pour davantage maîtriser les fondamentaux des statistiques ou toutes les subtilités du langage R.</p>
-<p>Bien que le langage R puisse être utilisé via le logiciel R en tant que tel, les procédures décrites dans ce livre supposent que l’utilisation du logiciel R s’effectue en réalité à l’aide de l’environnement proposé par le logiciel RStudio, qui est plus confortable en matière d’utilisation que l’interface initialement associée au logiciel R. Que cela soit via l’interface de base associée au logiciel R ou via l’environnement proposé par RStudio, l’utilisation du langage R pour obtenir le résultat d’une analyse nécessite d’écrire des lignes de code. Si cela peut s’avérer plus complexe et/ou fastidieux à utiliser au départ qu’un logiciel classique où il suffit de cliquer sur des boutons pour obtenir le résultat de l’analyse, cela vaut la peine de prendre le temps d’apprendre à programmer avec R (et préférentiellement via RStudio), au moins pour les raisons suivantes : les logiciels R et RStudio sont en accès libre sur internet ; il existe de nombreuses aides documentaires, notamment sur internet, qui permettent de programmer n’importe quelle analyse ou manipulation de données, aussi sophistiquée soit elle ; il est possible de conserver les lignes de code pour pouvoir refaire plus tard les analyses, ou pour pouvoir appliquer ces lignes de code à d’autres données, ou encore pour partager ces lignes de code avec d’autres personnes. De par sa gratuité et sa capacité à permettre le partage des analyses réalisées, R et RStudio sont ainsi une très bonne option pour embrasser la tendance actuelle, encore timide, de l’<em>open science</em>, consistant à permettre à tout un chacun de savoir ce qui a été fait en matière d’analyses et à pouvoir reproduire ces analyses. Enfin, le langage R, notamment via l’utilisation de RStudio, permet de faire bien plus que des analyses de données (e.g., automatisation d’analyses, développement d’applications web, construction de sites internet et de curriculum vitae, etc.), ce qui en fait un outil de travail polyvalent et donc particulièrement intéressant.</p>
-<p>L’appropriation du contenu de ce livre suppose une lecture relativement linéaire des chapitres, du moins en vue de comprendre comment utiliser le langage R. Plusieurs exemples de code, en particulier pour la conception de graphiques, utilisent ce qu’on appelle des <em>packages</em> qui sont à télécharger et à installer sur l’ordinateur, puis à charger lorsque le logiciel est ouvert. Une fois que les consignes d’installation et de chargement de ces packages ont été explicitement données au cours d’un chapitre, leur utilisation dans le chapitre en cours suppose implicitement que ces packages ont été chargés et sont donc prêts à être utilisés.</p>
-<p>Dans ce livre, les exemples de code apparaissent dans des zones grisées, et les résultats qui pourraient apparaître à l’écran dans RStudio une fois le code activé sont précédés d’un double dièse (##). Par moment, les noms des fonctions sont écrits à la suite des noms des packages dont elles dépendent, comme ceci : <code>package::fonction()</code>.</p>
-<p><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Licence Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png"></a><br>Ce livre, qui est en cours d’élaboration, est mis à disposition selon les termes de la <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Licence Creative Commons Attribution - Pas d’Utilisation Commerciale - Partage dans les Mêmes Conditions 4.0 International</a>.</p>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-allenRaincloudPlotsMultiplatform2019" class="csl-entry" role="listitem">
+Allen, M., Poggiali, D., Whitaker, K., Marshall, T. R., &amp; Kievit, R.
+A. (2019). Raincloud plots: A multi-platform tool for robust data
+visualization. <em>Wellcome Open Res</em>, <em>4</em>, 63. <a href="https://doi.org/10.12688/wellcomeopenres.15191.1">https://doi.org/10.12688/wellcomeopenres.15191.1</a>
+</div>
+<div id="ref-anscombeGraphsStatisticalAnalysis1973" class="csl-entry" role="listitem">
+Anscombe, F. J. (1973). Graphs in statistical analysis. <em>Am
+Stat</em>, <em>27</em>(1), 17–21.
+</div>
+<div id="ref-bickelSexBiasGraduate1975" class="csl-entry" role="listitem">
+Bickel, P. J., Hammel, E. A., &amp; O’Connell J, W. (1975). Sex bias in
+graduate admissions: Data from berkeley. <em>Science</em>,
+<em>187</em>(4175), 398–404. <a href="https://doi.org/10.1126/science.187.4175.398">https://doi.org/10.1126/science.187.4175.398</a>
+</div>
+<div id="ref-chatellierMoyenneMedianeLeurs2003" class="csl-entry" role="listitem">
+Chatellier, G., &amp; Durieux, P. (2003). Moyenne, médiane, et leurs
+indices de dispersion : Quand les utiliser et comment les présenter dans
+un article scientifique ? <em>Rev Mal Respir</em>, <em>20</em>(3),
+421–424. <a href="https://doi.org/RMR-06-2003-20-3-0761-8425-101019-ART17">https://doi.org/RMR-06-2003-20-3-0761-8425-101019-ART17</a>
+</div>
+<div id="ref-dartCommentDecrireDistribution2003" class="csl-entry" role="listitem">
+Dart, T., &amp; Chatellier, G. (2003). Comment décrire la distribution
+d’une variable ? <em>Rev Mal Respir</em>, <em>20</em>(6), 946–951. <a href="https://doi.org/RMR-12-2003-20-6-0761-8425-101019-ART19">https://doi.org/RMR-12-2003-20-6-0761-8425-101019-ART19</a>
+</div>
+<div id="ref-gonzalesMeasuresCentralTendency2001" class="csl-entry" role="listitem">
+Gonzales, V. A., &amp; Ottenbacher, K. J. (2001). Measures of central
+tendency in rehabilitation research: What do they mean? <em>Am J Phys
+Med Rehabil</em>, <em>80</em>(2), 141–146. <a href="https://doi.org/10.1097/00002060-200102000-00014">https://doi.org/10.1097/00002060-200102000-00014</a>
+</div>
+<div id="ref-grenierQuelleEstBonne2007" class="csl-entry" role="listitem">
+Grenier, E. (2007). Quelle est la « bonne » formule de l’écart-type ?
+<em>Revue MODULAD</em>, <em>37</em>, 102–105.
+</div>
+<div id="ref-halperinSpuriousCorrelationsCauses1986" class="csl-entry" role="listitem">
+Halperin, S. (1986). Spurious correlations–causes and cures.
+<em>Psychoneuroendocrinology</em>, <em>11</em>(1), 3–13. <a href="https://doi.org/10.1016/0306-4530(86)90028-4">https://doi.org/10.1016/0306-4530(86)90028-4</a>
+</div>
+<div id="ref-hopkinsProgressiveStatisticsStudies2009" class="csl-entry" role="listitem">
+Hopkins, W. G., Marshall, S. W., Batterham, A. M., &amp; Hanin, J.
+(2009). Progressive statistics for studies in sports medicine and
+exercise science. <em>Med Sci Sports Exerc</em>, <em>41</em>(1), 3–13.
+<a href="https://doi.org/10.1249/MSS.0b013e31818cb278">https://doi.org/10.1249/MSS.0b013e31818cb278</a>
+</div>
+<div id="ref-janeEffectSizesConfidence2023" class="csl-entry" role="listitem">
+Jané, M. B., Xiao, Q., Yeung, S. K., Dunleavy, D. J., Röseler, L.,
+Elsherif, M., Cousineau, D., Caldwell, A. R., Johnson, B. T., &amp;
+Feldman, G. (2023). <em>Effect sizes and confidence intervals
+guide</em>. <a href="https://matthewbjane.com/effect-sizes-and-confidence-intervals-guide/">https://matthewbjane.com/effect-sizes-and-confidence-intervals-guide/</a>
+</div>
+<div id="ref-joanesComparingMeasuresSample1998" class="csl-entry" role="listitem">
+Joanes, D. N., &amp; Gill, C. A. (1998). Comparing measures of sample
+skewness and kurtosis. <em>The Statistician</em>, <em>47</em>, 183–189.
+<a href="https://doi.org/10.1111/1467-9884.00122">https://doi.org/10.1111/1467-9884.00122</a>
+</div>
+<div id="ref-kelleyEffectsNonnormalDistributions2005" class="csl-entry" role="listitem">
+Kelley, K. (2005). The <span>Effects</span> of nonnormal distributions
+on confidence <span>Intervals</span> around the standardized mean
+difference: Bootstrap and parametric confidence intervals. <em>Educ
+Psychol Meas</em>, <em>65</em>(1), 51–69. <a href="https://doi.org/10.1177/0013164404264850">https://doi.org/10.1177/0013164404264850</a>
+</div>
+<div id="ref-labreucheDifferentsTypesVariables2010" class="csl-entry" role="listitem">
+Labreuche, J. (2010). Les différents types de variables, leurs
+représentations graphiques et paramètres descriptifs. <em>Sang Thrombose
+Vaisseaux</em>, <em>22</em>(10), 536–543. <a href="https://doi.org/10.1684/stv.2010.0541">https://doi.org/10.1684/stv.2010.0541</a>
+</div>
+<div id="ref-lakensCalculatingReportingEffect2013" class="csl-entry" role="listitem">
+Lakens, D. (2013). Calculating and reporting effect sizes to facilitate
+cumulative science: A practical primer for t-tests and
+<span>ANOVAs</span>. <em>Front. Psychol.</em>, <em>4</em>. <a href="https://doi.org/10.3389/fpsyg.2013.00863">https://doi.org/10.3389/fpsyg.2013.00863</a>
+</div>
+<div id="ref-navarroLearningStatistics2018" class="csl-entry" role="listitem">
+Navarro, D. (2018). <em>Learning statistics with <span>R</span></em>.
+<span>UNSW Computational Cognitive Science</span>.
+</div>
+<div id="ref-rousseletReactionTimesOther2020" class="csl-entry" role="listitem">
+Rousselet, G. A., &amp; Wilcox, R. R. (2020). Reaction times and other
+skewed distributions: Problems with the mean and the median.
+<em>Meta-Psychology</em>, <em>4</em>, 1–39. <a href="https://doi.org/10.15626/MP.2019.1630">https://doi.org/10.15626/MP.2019.1630</a>
+</div>
+<div id="ref-weissgerberBarLineGraphs2015" class="csl-entry" role="listitem">
+Weissgerber, T. L., Milic, N. M., Winham, S. J., &amp; Garovic, V. D.
+(2015). Beyond bar and line graphs: Time for a new data presentation
+paradigm. <em>PLoS Biol</em>, <em>13</em>(4), e1002128. <a href="https://doi.org/10.1371/journal.pbio.1002128">https://doi.org/10.1371/journal.pbio.1002128</a>
+</div>
+<div id="ref-wickhamDataScience2017" class="csl-entry" role="listitem">
+Wickham, H., &amp; Grolemund, G. (2017). <em>R for <span>Data
+Science</span></em>. <span>O’Reilly</span>.
+</div>
+<div id="ref-wilkeFundamentalsDataVisualization2018" class="csl-entry" role="listitem">
+Wilke, C. O. (2018). <em>Fundamentals of data visualization</em>.
+<span>O’Reilly Media, Inc. Retrieved from
+https://clauswilke.com/dataviz</span>.
+</div>
+</div>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -656,11 +743,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./categorical_var_tests.html" class="pagination-link  aria-label=" &lt;span="" statistiques="" pour="" des="" variables="" qualitatives&lt;="" span&gt;"="">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Tests statistiques pour des variables qualitatives</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./prerequisite.html" class="pagination-link" aria-label="<span class='chapter-number'>1</span>&nbsp; <span class='chapter-title'>Prérequis</span>">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Prérequis</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->
@@ -671,7 +758,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/pydemull/Analyser-des-donnees-avec-R/edit/master/index.qmd" class="toc-action"><i class="bi bi-github"></i>Modifier cette page</a></li><li><a href="https://github.com/pydemull/Analyser-des-donnees-avec-R/issues/new" class="toc-action"><i class="bi empty"></i>Faire part d'un problème</a></li></ul></div></div>
+    <div class="toc-actions"><ul><li><a href="https://github.com/pydemull/Analyser-des-donnees-avec-R/edit/master/references.qmd" class="toc-action"><i class="bi bi-github"></i>Modifier cette page</a></li><li><a href="https://github.com/pydemull/Analyser-des-donnees-avec-R/issues/new" class="toc-action"><i class="bi empty"></i>Faire part d'un problème</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Ce livre a été généré avec <a href="https://quarto.org/">Quarto</a>.</p>
 </div>
