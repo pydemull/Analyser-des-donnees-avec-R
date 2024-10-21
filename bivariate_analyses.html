@@ -2,9 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.549">
+<meta name="generator" content="quarto-1.5.57">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>Analyser des données avec R - 4&nbsp; Analyses bivariées</title>
+<title>4&nbsp; Analyses bivariées – Analyser des données avec R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,7 +30,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -117,7 +117,7 @@ div.csl-indent {
     "search-label": "Recherche"
   }
 }</script><link href="site_libs/tabwid-1.1.3/tabwid.css" rel="stylesheet">
-<script src="site_libs/tabwid-1.1.3/tabwid.js"></script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+<script src="site_libs/tabwid-1.1.3/tabwid.js"></script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
 const typesetMath = (el) => {
   if (window.MathJax) {
     // MathJax Typeset
@@ -148,13 +148,13 @@ window.Quarto = {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./univariate_analyses.html">Partie II : Analyses descriptives</a></li><li class="breadcrumb-item"><a href="./bivariate_analyses.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Analyses bivariées</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./univariate_analyses.html">Analyses descriptives</a></li><li class="breadcrumb-item"><a href="./bivariate_analyses.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Analyses bivariées</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Basculer la barre latérale" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="Recherche" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -163,8 +163,9 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Analyser des données avec R</a> 
-        <div class="sidebar-tools-main">
+        <div class="sidebar-tools-main tools-wide">
     <a href="https://github.com/pydemull/Analyser-des-donnees-avec-R" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="./Analyser-des-données-avec-R.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Basculer en mode lecteur">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
@@ -188,9 +189,9 @@ window.Quarto = {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
- <span class="menu-text">Partie I : Appropriation de R et RStudio</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Basculer la section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appropriation de R et RStudio</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Basculer la section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -211,9 +212,9 @@ window.Quarto = {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
- <span class="menu-text">Partie II : Analyses descriptives</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Basculer la section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Analyses descriptives</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Basculer la section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -246,9 +247,9 @@ window.Quarto = {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
- <span class="menu-text">Partie III : Analyses inférentielles</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Basculer la section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Analyses inférentielles</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Basculer la section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -299,7 +300,7 @@ window.Quarto = {
   </ul><div class="toc-actions"><ul><li><a href="https://github.com/pydemull/Analyser-des-donnees-avec-R/edit/master/bivariate_analyses.qmd" class="toc-action"><i class="bi bi-github"></i>Modifier cette page</a></li><li><a href="https://github.com/pydemull/Analyser-des-donnees-avec-R/issues/new" class="toc-action"><i class="bi empty"></i>Faire part d'un problème</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./univariate_analyses.html">Partie II : Analyses descriptives</a></li><li class="breadcrumb-item"><a href="./bivariate_analyses.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Analyses bivariées</span></a></li></ol></nav><div class="quarto-title">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./univariate_analyses.html">Analyses descriptives</a></li><li class="breadcrumb-item"><a href="./bivariate_analyses.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Analyses bivariées</span></a></li></ol></nav><div class="quarto-title">
 <h1 class="title">
 <span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Analyses bivariées</span>
 </h1>
@@ -324,7 +325,7 @@ window.Quarto = {
 <p>Comme dans le cadre d’analyses univariées, une bonne pratique, lorsqu’on étudie une relation bivariée, est de faire un graphique. Avec des variables quantitatives, il s’agit de montrer les valeurs d’une variable en fonction des valeurs de l’autre variable, chose que permet un simple nuage de points. Plusieurs types de relations peuvent alors être rencontrés, ces relations pouvant potentiellement s’apparenter à autant de fonctions mathématiques que l’on connaît. Parmi les plus connues, on a par exemple les relations linéaires, les relations logarithmiques, ou encore les relations quadratiques, qui sont illustrées sur la <a href="#fig-relationshipsIllustrations" class="quarto-xref">Figure&nbsp;<span>4.1</span></a>.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-relationshipsIllustrations" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-relationshipsIllustrations" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-relationshipsIllustrations-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="bivariate_analyses_files/figure-html/fig-relationshipsIllustrations-1.png" class="img-fluid figure-img" style="width:100.0%">
 </div>
@@ -339,7 +340,7 @@ Figure&nbsp;1: Différentes formes de relation entre deux variables quantitative
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">mtcars</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">hp</span>, y <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-scatterplot" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-scatterplot" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-scatterplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="bivariate_analyses_files/figure-html/fig-scatterplot-1.png" class="img-fluid figure-img" width="672">
 </div>
@@ -359,7 +360,7 @@ Figure&nbsp;2: Nuage de points montrant les variables hp et mpg du jeu de donné
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_smooth</span><span class="op">(</span>formula <span class="op">=</span> <span class="va">y</span> <span class="op">~</span> <span class="va">x</span>, method <span class="op">=</span> <span class="st">"lm"</span>, se <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-scatterplotLine" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-scatterplotLine" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-scatterplotLine-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="bivariate_analyses_files/figure-html/fig-scatterplotLine-1.png" class="img-fluid figure-img" style="width:90.0%">
 </div>
@@ -375,7 +376,7 @@ Figure&nbsp;3: Nuage de points avec droite de régression pour les variables hp 
 <p><span class="math inline">\(COV\)</span> désignant la covariance entre les variables <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span>, <span class="math inline">\(X{i}\)</span> et <span class="math inline">\(Y{i}\)</span> les valeurs de <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span> pour une observation <span class="math inline">\(i\)</span>, <span class="math inline">\(\overline{X}\)</span> et <span class="math inline">\(\overline{Y}\)</span> les moyennes respectives des variables <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span>, <span class="math inline">\(N\)</span> le nombre d’observations, et <span class="math inline">\(\hat{\sigma}_{X}\)</span> et <span class="math inline">\(\hat{\sigma}_{Y}\)</span> les écarts-types respectifs des variables <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span>. Cette formule indique que le coefficient de corrélation de Pearson s’obtient en divisant la covariance des deux variables étudiées par le produit de leurs écarts-types respectifs.</p>
 <p>Le <a href="#tbl-tablecov" class="quarto-xref">Tableau&nbsp;<span>4.1</span></a> montre les premières étapes du calcul de la covariance pour des couples de variables fictifs <span class="math inline">\((X1,Y1)\)</span>, <span class="math inline">\((X1,Y2)\)</span>, et <span class="math inline">\((X1,Y3)\)</span>. En particulier, la partie droite du tableau (de X1Y1 à X1Y3) montre le calcul du produit <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span> pour les différents couples de variables et cela pour chaque ligne du jeu de données.</p>
 <div class="cell">
-<div id="tbl-tablecov" class="cell quarto-float anchored">
+<div id="tbl-tablecov" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-tablecov-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Tableau&nbsp;1: Illustration de calculs de covariance
 </figcaption><div aria-describedby="tbl-tablecov-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -467,7 +468,7 @@ Tableau&nbsp;1: Illustration de calculs de covariance
 <p>Ce que ce tableau montre, c’est que plus les deux variables étudiées évolueront de manière consistante dans des sens identiques comme avec <span class="math inline">\(X1\)</span> et <span class="math inline">\(Y1\)</span>, ou de manière consistante dans des sens opposés comme avec <span class="math inline">\(X1\)</span> et <span class="math inline">\(Y3\)</span>, plus les produits <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span> donneront respectivement des grands scores positifs ou des grands scores négatifs, et moins les scores <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span> à additionner pour le calcul de la covariance s’annuleront. En effet, avec une relation relativement linéaire et positive les scores seront plus systématiquement positifs, et avec une relation relativement linéaire et négative les scores seront plus systématiquement négatifs. Toutefois, lorsqu’on aura des variables qui n’évolueront pas de manière consistante dans le même sens ou dans un sens opposé comme avec <span class="math inline">\(X1\)</span> et <span class="math inline">\(Y2\)</span>, les scores positifs et négatifs liés aux calculs <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span> auront tendance à s’annuler et donneront lieu à une somme des scores <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span> diminuée, et donc à une covariance et à un coefficient de corrélation de Pearson tirés vers 0. Ces différents cas de figure et les calculs <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span> correspondants sont illustrés sur la <a href="#fig-graphCov" class="quarto-xref">Figure&nbsp;<span>4.4</span></a>. Sur cette figure, chaque carré correspond au calcul <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span>, le carré étant bleu lorsque le résultat du calcul est positif, et rouge lorsque le résultat est négatif. L’aire d’un carré illustre la grandeur du score issu du calcul. Sur les graphiques de gauche et de droite de la figure, on distingue une relation linéaire parfaite, ce qui maximise les scores à additionner pour le calcul de la covariance, dans le positif pour le graphique de gauche et dans le négatif pour le graphique de droite. Sur le graphique du milieu, on remarque que le manque de relation linéaire donne lieu à des carrés à la fois bleus et rouges, indiquant que les scores associés aux calculs <span class="math inline">\((X{i} - \overline{X}) (Y{i} - \overline{Y})\)</span> de la covariance s’annulent et diminuent ainsi la valeur finale de la covariance.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-graphCov" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-graphCov" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-graphCov-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="bivariate_analyses_files/figure-html/fig-graphCov-1.png" class="img-fluid figure-img" style="width:100.0%">
 </div>
@@ -503,7 +504,7 @@ sample estimates:
 </div>
 <p>Sur la base de travaux antérieurs, Hopkins et al. <span class="citation" data-cites="hopkinsProgressiveStatisticsStudies2009">(<a href="references.html#ref-hopkinsProgressiveStatisticsStudies2009" role="doc-biblioref">2009</a>)</span> ont fait une proposition de classification pour qualifier la valeur du coefficient de corrélation qui serait obtenue dans le cadre d’une relation linéaire. Cette proposition est montrée dans le <a href="#tbl-correlationtable" class="quarto-xref">Tableau&nbsp;<span>4.2</span></a> :</p>
 <div class="cell">
-<div id="tbl-correlationtable" class="cell quarto-float anchored">
+<div id="tbl-correlationtable" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-correlationtable-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Tableau&nbsp;2: Proposition de termes qualifiant l’importance d’une corrélation
 </figcaption><div aria-describedby="tbl-correlationtable-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -536,10 +537,10 @@ Tableau&nbsp;2: Proposition de termes qualifiant l’importance d’une corréla
 <p>À noter que la valeur du coefficient de corrélation de Pearson est dépendante du degré de variabilité des valeurs autour des tendances centrales des variables concernées. <span class="citation" data-cites="halperinSpuriousCorrelationsCauses1986">(<a href="references.html#ref-halperinSpuriousCorrelationsCauses1986" role="doc-biblioref">Halperin, 1986</a>)</span>. En ce sens, si dans deux études différentes les variables étudiées n’ont pas les mêmes niveaux de variabilité, les valeurs des coefficients de corrélation de Pearson ne seront pas vraiment comparables, en sachant que c’est l’étude qui présentera l’échantillon avec la plus grande variabilité qui aura plus de chances de présenter une valeur de coefficient de corrélation de Pearson plus élevée.</p>
 <p>Un cas particulier illustrant l’influence du degré de dispersion sur la relation étudiée est montré sur la <a href="#fig-simpsonquant" class="quarto-xref">Figure&nbsp;<span>4.5</span></a>. Cet exemple a pour but de montrer que l’étude d’une relation entre deux variables quantitatives peut aboutir à des conclusions radicalement différentes selon que l’on conduit les analyses à l’échelle d’un groupe entier ou que l’on sépare les analyses par groupe de caractéristiques, en particulier lorsque la distribution des données par groupe est radicalement différente de celle obtenue à l’échelle du groupe entier. Sur la gauche de la <a href="#fig-simpsonquant" class="quarto-xref">Figure&nbsp;<span>4.5</span></a>, le nuage de points représente la relation entre deux variables à l’échelle de l’ensemble du groupe étudié. La variabilité possible pour les deux variables étudiées (V1 et V2 dans l’exemple) est alors maximale. Toutefois, ces données appartiennent en réalité à des sous-groupes distincts (cf.&nbsp;couleurs sur le graphique de droite de la <a href="#fig-simpsonquant" class="quarto-xref">Figure&nbsp;<span>4.5</span></a>). L’analyse par sous-groupe diminue la variabilité à la fois pour V1 et V2, donnant même lieu ici à des relations de sens opposé à celui observé à l’échelle de l’ensemble du groupe ! Cette situation correspond à ce qu’on appelle un paradoxe de Simpson, lequel se présente lorsque le phénomène que l’on peut observer avec une vue globale est annulé voire inversé lors d’une analyse par sous-groupe. Ici, la grande variabilité associée aux données du graphique de gauche de la <a href="#fig-simpsonquant" class="quarto-xref">Figure&nbsp;<span>4.5</span></a> crée une relation artificiellement et donc faussement positive entre V1 et V2. C’est l’analyse par sous-groupe qui permet de révéler la vraie nature de la relation étudiée.</p>
 <div class="cell">
-<div id="fig-simpsonquant" class="cell quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-simpsonquant" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-simpsonquant-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="fig-simpsonquant" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-simpsonquant" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-simpsonquant-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="bivariate_analyses_files/figure-html/fig-simpsonquant-1.png" class="img-fluid figure-img" style="width:90.0%" data-ref-parent="fig-simpsonquant">
 </div>
@@ -557,7 +558,7 @@ Figure&nbsp;5: Influence du niveau d’analyse (groupe entier vs.&nbsp;sous-grou
 <p>En outre, la valeur du coefficient de corrélation de Pearson peut être influencée par des valeurs extrêmes, comme montré sur la <a href="#fig-spuriousCorrelationBis" class="quarto-xref">Figure&nbsp;<span>4.6</span></a>. Les deux graphiques de cette figure montrent exactement les mêmes données, à ceci près que sur le graphique de droite, on a remplacé en ordonnées une valeur du graphique de gauche pour lui donner la valeur de 10. L’influence de cette simple action sur la valeur du coefficient de corrélation de Pearson est nette. Ceci montre qu’il faut faire attention aux valeurs extrêmes qui pourraient grandement influencer la variabilité des données d’une variable et au final la valeur de corrélation obtenue, notamment en présence d’échantillons de taille relativement faible. Dans le cas où la valeur du coefficient de corrélation de Pearson serait très influencée par une valeur, il pourrait être une bonne pratique de calculer la valeur du coefficient de corrélation de Pearson avec et sans cette valeur afin de pouvoir quantifier son influence sur la relation étudiée <span class="citation" data-cites="halperinSpuriousCorrelationsCauses1986">(<a href="references.html#ref-halperinSpuriousCorrelationsCauses1986" role="doc-biblioref">Halperin, 1986</a>)</span>. Une alternative pourrait être aussi d’étudier la relation à l’aide d’autres types de coefficients que celui de Pearson, tels que celui de Spearman, présenté plus bas. Cet exemple doit faire prendre conscience qu’il n’est pas toujours pertinent de calculer le coefficient de corrélation de Pearson. En ce sens, lorsqu’on cherche à inférer la valeur du coefficient de corrélation de Pearson dans la population étudiée, il convient de vérifier certains prérequis, lesquels sont abordés plus loin dans ce livre.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-spuriousCorrelationBis" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-spuriousCorrelationBis" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-spuriousCorrelationBis-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="bivariate_analyses_files/figure-html/fig-spuriousCorrelationBis-1.png" class="img-fluid figure-img" style="width:90.0%">
 </div>
@@ -572,7 +573,7 @@ Figure&nbsp;6: Influence d’une valeur extrême sur la valeur du coefficient de
 <span class="header-section-number">1.2.2</span> Le coefficient de corrélation de Spearman</h4>
 <p>Lorsque le coefficient de corrélation de Pearson ne permet pas de caractériser fiablement le degré de relation linéaire <strong>entre les valeurs</strong> de deux variables (e.g., en présence de valeurs aberrantes au sein d’un échantillon de petite taille), une alternative peut être d’étudier le degré de relation linéaire <strong>entre les rangs</strong> de ces deux variables. Le rang, c’est le classement (ou la position) d’une observation donnée au sein d’une variable en fonction de sa valeur. Dans une variable, les observations avec les valeurs les plus faibles seront associées aux rangs les plus bas alors que les observations avec les valeurs les plus élevées seront associées aux rangs les plus élevés. Une illustration de la notion de rang est proposée dans le <a href="#tbl-tableranks" class="quarto-xref">Tableau&nbsp;<span>4.3</span></a> pour la variable <code>hp</code> du jeu de données <code>mtcars</code>. Dans ce tableau, les lignes ont été ordonnées sur la base des rangs de la variable <code>hp</code>. On pourra remarquer que dans le tableau, nous avons ce qu’on appelle des ex-aequos, c’est-à-dire que plusieurs observations peuvent présenter les mêmes valeurs, et donc avoir le même rang.</p>
 <div class="cell">
-<div id="tbl-tableranks" class="cell quarto-float anchored">
+<div id="tbl-tableranks" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-tableranks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Tableau&nbsp;3: Illustration de la notion de rang pour une variable quantitative
 </figcaption><div aria-describedby="tbl-tableranks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -758,7 +759,7 @@ sample estimates:
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_smooth</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span>, se <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-graphSpearman" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-graphSpearman" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-graphSpearman-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="bivariate_analyses_files/figure-html/fig-graphSpearman-1.png" class="img-fluid figure-img" style="width:90.0%">
 </div>
@@ -771,7 +772,7 @@ Figure&nbsp;7: Graphique pour le coefficient de corrélation de Spearman
 <p>En matière d’interprétation, des valeurs de <em>rho</em> positives indiqueront que les deux variables mises en lien tendent à augmenter simultanément, on parlera alors de <strong>relation monotone positive</strong>. Dans le cas inverse, des valeurs négatives indiqueront que les deux variables mises en lien tendent à diminuer simultanément, on parlera alors de relation <strong>monotone négative</strong>. À noter cependant que de par son calcul, la valeur de <em>rho</em> ne permet pas de renseigner sur la forme de relation qu’il pourrait y avoir entre les valeurs des deux variables (e.g., linéaire ou curvilinéaire par exemple). Ceci est illustré sur la <a href="#fig-ranksvvaluesspearman" class="quarto-xref">Figure&nbsp;<span>4.8</span></a>. Sur cette figure, le graphique de gauche montre la relation entre les valeurs des variables <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span>, qui est caractérisée par un coefficient de corrélation de Spearman (<em>rho</em>) de 1, indiquant donc que la relation est parfaitement monotone positive, sans préjuger de la forme particulière que pourrait présenter la relation. Pour mieux comprendre pourquoi cette valeur de <em>rho</em> est de 1, le graphique de droite de la figure montre la relation entre les rangs de ces deux variables <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span>. On voit que la relation entre les rangs est effectivement parfaitement linéaire.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-ranksvvaluesspearman" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-ranksvvaluesspearman" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-ranksvvaluesspearman-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="bivariate_analyses_files/figure-html/fig-ranksvvaluesspearman-1.png" class="img-fluid figure-img" style="width:90.0%">
 </div>
@@ -820,7 +821,7 @@ Figure&nbsp;8: Distinction entre la relation observée entre les valeurs (graphi
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-groupedBarsFigure" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-groupedBarsFigure" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-groupedBarsFigure-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="bivariate_analyses_files/figure-html/fig-groupedBarsFigure-1.png" class="img-fluid figure-img" style="width:100.0%">
 </div>
@@ -837,7 +838,7 @@ Figure&nbsp;9: Exemples de diagramme en barres mises côte-à-côte
 <span>  <span class="fu">geom_bar</span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="va">.</span> <span class="op">~</span> <span class="va">gender</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-groupedBarsUpgraded" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-groupedBarsUpgraded" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-groupedBarsUpgraded-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="bivariate_analyses_files/figure-html/fig-groupedBarsUpgraded-1.png" class="img-fluid figure-img" style="width:100.0%">
 </div>
@@ -854,7 +855,7 @@ Figure&nbsp;10: Diagrammes en barres côte-à-côte séparés selon une variable
 <span>  <span class="fu">geom_bar</span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_text</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="va">Freq</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">3</span>, position <span class="op">=</span> <span class="fu">position_stack</span><span class="op">(</span>vjust <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-stackedBarsBiv" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-stackedBarsBiv" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-stackedBarsBiv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="bivariate_analyses_files/figure-html/fig-stackedBarsBiv-1.png" class="img-fluid figure-img" style="width:90.0%">
 </div>
@@ -987,7 +988,7 @@ Figure&nbsp;11: Exemple de diagramme en barres empilées
 <p>Si les proportions permettent en principe de mieux comparer les effectifs de sous-groupes (e.g., les opinions par groupe de genre dans l’exemple ci-dessus) lorsque les effectifs des groupes parents sont de tailles différentes (comme c’est le cas pour les groupes de genre dans l’exemple ci-dessus), il convient tout de même de faire attention aux conclusions que l’on tire lorsqu’on s’en tient à une analyse globale, car ces conclusions dépendent de la manière dont les individus des groupes parents sont répartis dans chacun des sous-groupes. Un exemple connu qui permet d’illustrer cette vigilance à avoir lorsqu’on étudie le croisement de variables qualitatives est le cas du taux de réussite des femmes à l’université de Berkeley en 1973, qui apparaissait bien inférieur à celui des hommes lorsqu’on considérait les taux de réussite par genre à l’échelle de l’ensemble de l’université <span class="citation" data-cites="bickelSexBiasGraduate1975">(<a href="references.html#ref-bickelSexBiasGraduate1975" role="doc-biblioref">Bickel et al., 1975</a>)</span>, avec 30.3 % de réussite chez les femmes contre 44.5 % de réussite chez les hommes (cf. <a href="#fig-taballUCBA" class="quarto-xref">Figure&nbsp;<span>4.12</span></a>).</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-taballUCBA" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-taballUCBA" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-taballUCBA-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="bivariate_analyses_files/figure-html/fig-taballUCBA-1.png" class="img-fluid figure-img" style="width:90.0%">
 </div>
@@ -1000,7 +1001,7 @@ Figure&nbsp;12: Taux de réussite des étudiants femmes et hommes à l’Univers
 <p>Toutefois, une analyse par département permettait de voir que les taux de réussite des femmes étaient en réalité supérieurs voire nettement supérieurs à ceux des hommes dans la plupart des départements (cf. <a href="#fig-tabdepUCBA" class="quarto-xref">Figure&nbsp;<span>4.13</span></a>).</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-tabdepUCBA" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-tabdepUCBA" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-tabdepUCBA-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="bivariate_analyses_files/figure-html/fig-tabdepUCBA-1.png" class="img-fluid figure-img" style="width:100.0%">
 </div>
@@ -1013,7 +1014,7 @@ Figure&nbsp;13: Taux de réussite des étudiants femmes et hommes à l’Univers
 <p>Cette situation, qui peut paraître étonnante, illustre à nouveau ce qu’on appelle un paradoxe de Simpson. Dans le cas présent, l’apparent paradoxe s’explique par le fait que les femmes avaient en proportion davantage candidaté que les hommes dans des départements où le taux de réussite global était moins bon. Ceci est illustré sur la <a href="#fig-distriUCBA" class="quarto-xref">Figure&nbsp;<span>4.14</span></a>.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-distriUCBA" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-distriUCBA" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-distriUCBA-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="bivariate_analyses_files/figure-html/fig-distriUCBA-1.png" class="img-fluid figure-img" style="width:100.0%">
 </div>
@@ -1030,7 +1031,7 @@ Figure&nbsp;14: Mise en avant du département d’inscription comme facteur conf
 <p>Le coefficient <span class="math inline">\(\Phi\)</span> est une valeur qui peut être comprise entre -1 et 1 (ou entre 0 et 1 selon les manières de l’obtenir) et indique la force de la relation entre deux variables qualitatives binaires. Toutefois, seule la valeur absolue (entre 0 et 1 donc) est à interpréter. Le signe (si jamais différents signes peuvent apparaître selon le calcul utilisé) ne fait que renseigner sur la diagonale du tableau de contingence où les individus sont davantage polarisés. Pour comprendre comment <span class="math inline">\(\Phi\)</span> peut être calculé, prenons les tableaux de contingence montrés ci-dessous (<a href="#fig-PhiContTables" class="quarto-xref">Figure&nbsp;<span>4.15</span></a>) :</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-PhiContTables" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<div id="fig-PhiContTables" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-PhiContTables-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="bivariate_analyses_files/figure-html/fig-PhiContTables-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%">
 </div>
@@ -1075,7 +1076,7 @@ Figure&nbsp;15: Tableaux de contingence schématiques pour comprendre le calcul 
 <p>La différence de risque est une différence de proportions. La notion de risque peut ne pas être très pertinente pour certains contextes, mais elle l’est particulièrement dans un contexte de santé. Pour comprendre le calcul du risque puis de la différence de risque, regardons le tableau ci-dessous (<a href="#fig-RiskContTables" class="quarto-xref">Figure&nbsp;<span>4.16</span></a>).</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-RiskContTables" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<div id="fig-RiskContTables" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-RiskContTables-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="bivariate_analyses_files/figure-html/fig-RiskContTables-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%">
 </div>
@@ -1237,18 +1238,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1280,7 +1270,47 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/pydemull\.github\.io\/Analyser-des-donnees-avec-R\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -1315,7 +1345,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
@@ -1589,12 +1623,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
-      <a href="./univariate_analyses.html" class="pagination-link  aria-label=" univari="">
+      <a href="./univariate_analyses.html" class="pagination-link" aria-label="Analyses univariées">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Analyses univariées</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./standardized_differences.html" class="pagination-link" aria-label="<span class='chapter-number'>5</span>&nbsp; <span class='chapter-title'>Différence de moyennes standardisée</span>">
+      <a href="./standardized_differences.html" class="pagination-link" aria-label="Différence de moyennes standardisée">
         <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Différence de moyennes standardisée</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
