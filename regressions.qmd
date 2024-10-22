@@ -1,8 +1,4 @@
----
-crossref:
-  tbl-title: Tableau
-  tbl-prefix: Tableau
----
+
 ```{r}
 #| echo: false
 #| warning: false
@@ -45,7 +41,7 @@ dfR2 <-
          res = pred - mpg)
 
 ggplot(data = dfR2) +
-  geom_segment(aes(x = hp, xend = hp, y = pred, yend = mpg), color = "red", size = 1) +
+  geom_segment(aes(x = hp, xend = hp, y = pred, yend = mpg), color = "red", linewidth = 1) +
   geom_point(aes(x = hp,y =  mpg), size = 3) +
   geom_smooth(aes(x = hp, y = mpg), method = "lm", se = FALSE) +
   xlab("X") +
