@@ -135,7 +135,7 @@ expected <- c(0.25, 0.25, 0.25, 0.25)
 chisq.test(x = observed, p = expected)
 ```
 
-Une seconde fonction possible est la fonction `goodnessOfFitTest()` du package `lsr`. Elle est intéressante en raison du fait qu'elle propose un récapitulatif plus détaillé de la configuration du test qui a été faite. De plus, pas besoin de passer par la fonction `table()`, mais il faut que la variable étudiée soit en format `factor` :
+Une seconde fonction possible est la fonction `goodnessOfFitTest()` du package `{lsr}`. Elle est intéressante en raison du fait qu'elle propose un récapitulatif plus détaillé de la configuration du test qui a été faite. De plus, pas besoin de passer par la fonction `table()`, mais il faut que la variable étudiée soit en format `factor` :
 
 ```{r}
 lsr::goodnessOfFitTest(as.factor(cartes$choix), p = c(0.25, 0.25, 0.25, 0.25))

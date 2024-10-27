@@ -79,7 +79,7 @@ g_quad <-
 (g_lin | g_log | g_quad)
 ```
 
-Avec R, pour obtenir un nuage de points à partir d'un jeu de données, il est possible d'utiliser la fonction `ggplot()` en l'associant à la fonction `geom_point()` du package `ggplot2`, comme dans l'exemple ci-dessous qui utilise le jeu de données `mtcars` (qui est intégré à R de base) et les variables `hp` (*gross horsepower*) et `mpg` (*miles/US gallon*). Dans cet exemple dont le résultat est montré sur la @fig-scatterplot, on peut voir que la relation semble globalement linéaire négative (voire curvilinéaire négative si l'on donne de l'importance au point isolé à droite du graphique).
+Avec R, pour obtenir un nuage de points à partir d'un jeu de données, il est possible d'utiliser la fonction `ggplot()` en l'associant à la fonction `geom_point()` du package `{ggplot2}`, comme dans l'exemple ci-dessous qui utilise le jeu de données `mtcars` (qui est intégré à R de base) et les variables `hp` (*gross horsepower*) et `mpg` (*miles/US gallon*). Dans cet exemple dont le résultat est montré sur la @fig-scatterplot, on peut voir que la relation semble globalement linéaire négative (voire curvilinéaire négative si l'on donne de l'importance au point isolé à droite du graphique).
 
 ```{r scatterplot}
 #| out-.width: '90%'
@@ -94,7 +94,7 @@ ggplot(data = mtcars, aes(x = hp, y = mpg)) +
 
 #### Le coefficient de corrélation de Pearson
 
-Lorsque la relation étudiée semble linéaire, l'étude numérique classique consiste à calculer le coefficient de corrélation de Pearson, noté $r$, dont la valeur vise à renseigner dans quelle mesure le nuage de points représentant le lien entre les deux variables étudiées suit une droite. Avant de se lancer dans le calcul du coefficient de corrélation de Pearson pour étudier la relation entre une variable $X$ et une variable $Y$, il peut donc être utile de compléter le nuage de points montré sur la @fig-scatterplot avec une droite d'équation de type $Y = aX + b$ (@fig-scatterplotLine). Cette équation serait la meilleure modélisation possible de la relation linéaire entre $X$ et $Y$, de telle sorte que parmi l'infinité d'équations qui pourraient lier $X$ à $Y$, c'est cette équation qui au total donnerait la plus petite erreur lorsque l'on voudrait prédire $Y$ à partir de $X$. Si $X$ et $Y$ sont liées de manière linéaire, alors le nuage des points relatifs aux deux variables devrait s'étaler le long de cette droite. Pour obtenir cette droite en plus du nuage de points, il est possible d'utiliser la fonction `geom_smooth()` du package `ggplot2`.
+Lorsque la relation étudiée semble linéaire, l'étude numérique classique consiste à calculer le coefficient de corrélation de Pearson, noté $r$, dont la valeur vise à renseigner dans quelle mesure le nuage de points représentant le lien entre les deux variables étudiées suit une droite. Avant de se lancer dans le calcul du coefficient de corrélation de Pearson pour étudier la relation entre une variable $X$ et une variable $Y$, il peut donc être utile de compléter le nuage de points montré sur la @fig-scatterplot avec une droite d'équation de type $Y = aX + b$ (@fig-scatterplotLine). Cette équation serait la meilleure modélisation possible de la relation linéaire entre $X$ et $Y$, de telle sorte que parmi l'infinité d'équations qui pourraient lier $X$ à $Y$, c'est cette équation qui au total donnerait la plus petite erreur lorsque l'on voudrait prédire $Y$ à partir de $X$. Si $X$ et $Y$ sont liées de manière linéaire, alors le nuage des points relatifs aux deux variables devrait s'étaler le long de cette droite. Pour obtenir cette droite en plus du nuage de points, il est possible d'utiliser la fonction `geom_smooth()` du package `{ggplot2}`.
 
 ```{r scatterplotLine}
 #| out-width: '90%'
@@ -267,7 +267,7 @@ Un cas particulier illustrant l'influence du degré de dispersion sur la relatio
 #| echo: false
 #| message: false
 #| fig-cap: "Influence du niveau d'analyse (groupe entier vs. sous-groupes) sur la corrélation observée entre deux variables quantitatives"
-#| fig-subcap: "Données obtenues grâce à la fonction simulate_simpson() du package bayestestR"
+#| fig-subcap: "Données obtenues grâce à la fonction simulate_simpson() du package {bayestestR}"
 #| label: fig-simpsonquant
 
 library(correlation)
@@ -327,7 +327,6 @@ g2 <-
   ggtitle(bquote(paste("r = ", .(round(cor(x = data2$x, y = data2$y), 2)))))
 
 g1 | g2
-  
 ```
 
 Lorsque la relation étudiée ne semble pas linéaire mais s'apparente assez clairement à d'autres fonctions mathématiques, telles que des relations logarithmiques ou polynomiales, il est possible de transformer une des variables, voire les deux, pour rendre la relation linéaire et à nouveau étudiable à l'aide du coefficient de corrélation de Pearson [@halperinSpuriousCorrelationsCauses1986]. Toutefois, il est aussi possible de créer des modèles de régression non linéaires afin de regarder si ces modèles correspondent bien aux données. La détermination et la validation d'un modèle non linéaire qui correspondrait bien aux données confirmerait alors que la relation étudiée a une forme particulière et potentiellement prédictible. Les procédures pour explorer différents modèles de régression (linéaires et non linéaires) sont abordées au chapitre suivant. Enfin, une dernière alternative possible, pour étudier la relation entre deux variables quantitatives dont les distributions ne permettraient pas d'utiliser correctement le coefficient de corrélation de Pearson, serait l'utilisation de coefficients de corrélation basés sur les rangs, tels que le coefficient de corrélation de Spearman.
@@ -423,7 +422,7 @@ a | b
 
 ### Étudier graphiquement la relation
 
-Plusieurs types de graphiques peuvent être envisagés lorsqu'il s'agit de visualiser des données relatives au croisement de deux variables qualitatives. Une première approche consiste à utiliser des graphiques avec barres mises côte-à-côte, comme illustré sur la @fig-groupedBarsFigure, qui a été réalisée à partir du jeu de données `JointSports`, lequel est utilisable après installation et chargement du package `vcd`. `JointSports` contient des données résumées d'effectifs mis en lien avec les modalités de différentes variables qualitatives, comme on aurait pu l'obtenir avec la fonction `count()` dans les derniers exemples du chapitre précédent. La différence qu'il y a avec ces précédents exemples est qu'ici, l'effectif est désigné par la variable `Freq`, alors qu'il s'agissait de la variable `n` auparavant. Pour information, `JointSports` contient les données d'une enquête s'étant intéressée, en 1983 et 1985, aux opinions d'étudiants danois de 16 à 19 ans sur la pratique sportive mixte.
+Plusieurs types de graphiques peuvent être envisagés lorsqu'il s'agit de visualiser des données relatives au croisement de deux variables qualitatives. Une première approche consiste à utiliser des graphiques avec barres mises côte-à-côte, comme illustré sur la @fig-groupedBarsFigure, qui a été réalisée à partir du jeu de données `JointSports`, lequel est utilisable après installation et chargement du package `{vcd}`. `JointSports` contient des données résumées d'effectifs mis en lien avec les modalités de différentes variables qualitatives, comme on aurait pu l'obtenir avec la fonction `count()` dans les derniers exemples du chapitre précédent. La différence qu'il y a avec ces précédents exemples est qu'ici, l'effectif est désigné par la variable `Freq`, alors qu'il s'agissait de la variable `n` auparavant. Pour information, `JointSports` contient les données d'une enquête s'étant intéressée, en 1983 et 1985, aux opinions d'étudiants danois de 16 à 19 ans sur la pratique sportive mixte.
 
 
 ```{r grouped_bars_code}
@@ -575,7 +574,7 @@ Un tableau de contingence permet donc de comparer des effectifs en fonction de p
 round(prop.table(tab) * 100, digits = 2)
 ```
 
-- Utiliser la fonction `lprop()` du package `questionr`, qui va convertir en proportions les effectifs montrés plus haut en considérant l'effectif total de chaque ligne du tableau :
+- Utiliser la fonction `lprop()` du package `{questionr}`, qui va convertir en proportions les effectifs montrés plus haut en considérant l'effectif total de chaque ligne du tableau :
 
 ```{r lprop_tab}
 #| message: false
@@ -585,7 +584,7 @@ library(questionr)
 lprop(tab)
 ```
 
-- Utiliser la fonction `cprop()` du package `questionr`, qui va convertir en proportions les effectifs montrés plus haut en considérant l'effectif total de chaque colonne du tableau :
+- Utiliser la fonction `cprop()` du package `{questionr}`, qui va convertir en proportions les effectifs montrés plus haut en considérant l'effectif total de chaque colonne du tableau :
 
 ```{r cprop_tab}
 library(questionr)
@@ -790,7 +789,7 @@ Une autre formule pour calculer $\Phi$ (donnant systématiquement la valeur abso
 
 $$\Phi = \sqrt{\frac{\chi^2}{n}},$$ 
 
-avec $\chi^2$ la statistique "chi-carré" et $n$ le nombre total d'individus. Pour calculer $\Phi$ dans R, on peut utiliser la fonction `phi()` du package `effectsize` :
+avec $\chi^2$ la statistique "chi-carré" et $n$ le nombre total d'individus. Pour calculer $\Phi$ dans R, on peut utiliser la fonction `phi()` du package `{effectsize}` :
 ```{r}
 tab <- table(mtcars$am, mtcars$vs)
 effectsize::phi(tab)
@@ -801,7 +800,7 @@ effectsize::phi(tab)
 Le $V$ de Cramer est la forme généralisée de la force d’association entre deux variables qualitatives. Il peut donc être calculé à partir d’un tableau de contingence de n’importe quelle taille, prendre des valeurs absolues entre 0 et 1, et est ainsi l’équivalent du coefficient $\Phi$ dans le cas d’un tableau de contingence 2 x 2 (2 variables qualitatives x 2 modalités chacune). La formule du $V$ de Cramer est la suivante [@janeEffectSizesConfidence2023] : 
 
 $$V = \sqrt{\frac{\chi^2}{n \cdot (k-1)}},$$ 
-avec $\chi^2$ la statistique « chi-carré », $n$ le nombre total d’individus, et $k$ le nombre de modalités de la variable qui a le moins de modalités. Pour calculer le $V$ de Cramer dans R, on peut utiliser la fonction `cramers_v()` du package `effectsize` :
+avec $\chi^2$ la statistique "chi-carré", $n$ le nombre total d’individus, et $k$ le nombre de modalités de la variable qui a le moins de modalités. Pour calculer le $V$ de Cramer dans R, on peut utiliser la fonction `cramers_v()` du package `{effectsize}` :
 
 ```{r}
 tab <- table(JointSports_full$gender, JointSports_full$opinion)
@@ -848,17 +847,19 @@ $$p_T = \frac{n_{T1}}{n_{T0} + n_{T1}}$$
 La différence de risque d'être malade pour le groupe contrôle par rapport au groupe traité de l'exemple, notée $DR$, est alors :
 
 $$p_C - p_T $$
-Avec R, la différence de risque peut être obtenue avec le package `riskCommunicator`. Pour utiliser le package `riskCommunicator`, il faut bien sûr l'installer et ensuite le charger :
+Avec R, la différence de risque peut être obtenue avec le package `{riskCommunicator}`. Pour utiliser le package `{riskCommunicator}`, il faut bien sûr l'installer et ensuite le charger :
+
 ```{r}
 library(riskCommunicator)
 ```
 
-Pour l'exemple, chargeons le jeu de données `cvdd` associé au package `riskCommunicator`:
+Pour l'exemple, chargeons le jeu de données `cvdd` associé au package `{riskCommunicator}`:
+
 ```{r}
 data(cvdd)
 ```
 
-Il s'agit d'un jeu de données avec plusieurs variables qualitatives, dont plusieurs sont plus précisément binaires (i.e., qui ne contiennent que deux modalités). Admettons que l'on souhaiterait connaître la différence de risque de mortalité cardiovasculaire (`cvd_dh`) sur une période de suivi donnée, cela en fonction de si l'on a développé une hypertension ou non (`HYPERTEN`). Pour cela, on peut utiliser la fonction `gComp()` du package `riskCommunicator` comme suit :
+Il s'agit d'un jeu de données avec plusieurs variables qualitatives, dont plusieurs sont plus précisément binaires (i.e., qui ne contiennent que deux modalités). Admettons que l'on souhaiterait connaître la différence de risque de mortalité cardiovasculaire (`cvd_dh`) sur une période de suivi donnée, cela en fonction de si l'on a développé une hypertension ou non (`HYPERTEN`). Pour cela, on peut utiliser la fonction `gComp()` du package `{riskCommunicator}` comme suit :
 
 ```{r}
 gComp(data = cvdd, X = "HYPERTEN", Y = "cvd_dth", outcome.type = "binary")
@@ -890,7 +891,7 @@ risks
 Le risque relatif, noté $RR$, reprend les mêmes informations que celles utilisées pour la différence de risque (${p_T}$ et ${p_C}$). La différence est qu’il ne s’agit plus d’une différence, mais d’un rapport entre les risques présentés par les groupes comparés. Sa formule pour comparer le groupe contrôle au groupe traité dans notre exemple débuté plus haut est la suivante :
 
 $$RR = \frac{{p_C}}{{p_T}}$$
-Avec R, le risque relatif peut  être obtenu avec le package `riskCommunicator` tel que montré pour le calcul de la différence de risque, en faisant toujours bien attention à quel risque est divisé par quel risque selon l'analyse qui est réellement souhaitée. Dans notre exemple débuté plus haut, il s'agit du même calcul que pour la différence de risque sauf qu'il ne s'agit plus d'un signe moins mais d'une division. Les résultats obtenus plus haut avec l'exemple de la différence de risque montrent aussi le risque relatif, qui est tel que le risque de mourir chez les hypertendus est 1.41 fois plus élevé que chez les non-hypertendus.
+Avec R, le risque relatif peut  être obtenu avec le package `{riskCommunicator}` tel que montré pour le calcul de la différence de risque, en faisant toujours bien attention à quel risque est divisé par quel risque selon l'analyse qui est réellement souhaitée. Dans notre exemple débuté plus haut, il s'agit du même calcul que pour la différence de risque sauf qu'il ne s'agit plus d'un signe moins mais d'une division. Les résultats obtenus plus haut avec l'exemple de la différence de risque montrent aussi le risque relatif, qui est tel que le risque de mourir chez les hypertendus est 1.41 fois plus élevé que chez les non-hypertendus.
 
 #### Rapports des cotes
 
@@ -898,7 +899,7 @@ Le rapport des cotes, noté $OR$ pour *Odds ratio* en anglais, est une statistiq
 
 $$ OR=  \frac{n_{C0} / n{_{C1}}}{n_{T0} / n{_{T1}}}$$
 
-Le rapport des cotes est toujours ≥0. Une valeur en-dessous de 1 signifie « moins de chances/risques », une valeur de 1 signifie « chances/risques équivalent(e)s », et une valeur au-dessus de 1 signifie « plus de chances ou de risques ». Le chiffre obtenu renseigne toujours sur un niveau de chances pour le groupe au numérateur par rapport au niveau de chances concernant le groupe au dénominateur (cf. formule ci-dessus). Avec R, le rapport des cotes peut  être obtenu avec le package `riskCommunicator` tel que montré pour le calcul de la différence de risque, en faisant cette fois attention à quelle cote est divisée par quelle cote selon l'analyse qui est réellement souhaitée. Dans notre exemple débuté plus haut, le rapport des cotes est de 1.75. Cela signifie ici que la cote pour le fait de mourir (versus le fait de vivre) est 1.75 fois plus élevée quand on est hypertendu que lorsqu'on ne l'est pas. Pour comprendre le calcul, on peut le refaire manuellement : 
+Le rapport des cotes est toujours ≥0. Une valeur en-dessous de 1 signifie « moins de chances/risques », une valeur de 1 signifie « chances/risques équivalent(e)s », et une valeur au-dessus de 1 signifie « plus de chances ou de risques ». Le chiffre obtenu renseigne toujours sur un niveau de chances pour le groupe au numérateur par rapport au niveau de chances concernant le groupe au dénominateur (cf. formule ci-dessus). Avec R, le rapport des cotes peut  être obtenu avec le package `{riskCommunicator}` tel que montré pour le calcul de la différence de risque, en faisant cette fois attention à quelle cote est divisée par quelle cote selon l'analyse qui est réellement souhaitée. Dans notre exemple débuté plus haut, le rapport des cotes est de 1.75. Cela signifie ici que la cote pour le fait de mourir (versus le fait de vivre) est 1.75 fois plus élevée quand on est hypertendu que lorsqu'on ne l'est pas. Pour comprendre le calcul, on peut le refaire manuellement : 
 
 ```{r}
 # Obtention d'un tableau de contingence avec effectifs
