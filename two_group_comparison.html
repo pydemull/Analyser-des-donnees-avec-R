@@ -335,7 +335,7 @@ window.Quarto = {
 </section><section id="différences-de-moyennes-standardisées" class="level3" data-number="5.1.2"><h3 data-number="5.1.2" class="anchored" data-anchor-id="différences-de-moyennes-standardisées">
 <span class="header-section-number">5.1.2</span> Différences de moyennes standardisées</h3>
 <p>Les statistiques qui sont classiquement envisagées pour chiffrer les comparaisons entre deux groupes de valeurs sont les différences de moyennes (associées respectivement aux deux groupes étudiés) standardisées, c’est-à-dire normalisées (ou, plus concrètement, divisées) par le degré d’hétérogénéité interindividuelle (une sorte d’écart-type) pour la variable étudiée <span class="citation" data-cites="lakensCalculatingReportingEffect2013">(<a href="references.html#ref-lakensCalculatingReportingEffect2013" role="doc-biblioref">Lakens, 2013</a>)</span>. Ces statistiques sont inhérentes aux tests <span class="math inline">\(t\)</span> de Student et de Welch. Les différences de moyennes standardisées, qui de par leurs calculs sont sans unité, favorisent la possibilité de porter un jugement sur la grandeur relative de la différence de moyennes entre les groupes comparés et la possibilité de comparer cette différence avec celles observées dans d’autres études, en particulier celles traitant de thématiques différentes avec des variables et unités correspondantes différentes. Cela étant dit, il est important d’avoir en tête que la grandeur d’une différence de moyennes standardisée ne renseigne pas forcément directement sur l’importance pratique que la différence inter-groupe observée dans une étude pourrait avoir sur le terrain. Par exemple, une grande ou une petite différence standardisée pourraient correspondre à une même différence absolue entre deux moyennes (par exemple une distance en mètres) selon que le degré d’hétérogénéité interindividuelle dans l’étude est faible ou élevé, respectivement.</p>
-<p>En principe, les différences de moyennes standardisées sont valides pour pouvoir faire des inférences dans une population seulement lorsque la variable étudiée suit une loi normale (soit pour les deux groupes non appariés comparés, soit pour les différences intra-individu en cas de groupes appariés) et que les variances des deux groupes comparés (en cas de groupes non appariés) sont relativement identiques. Lorsqu’une de ces conditions n’est pas respectée, il est possible que l’estimation faite à partir de l’échantillon pour caractériser la population soit en général très imprécise. Aussi, dans ces cas là, mieux vaut utiliser une version dite “robuste” des différences de moyennes standardisées, tel qu’en procédant à une winsorisation des données avant de procéder aux calculs classiques (i.e., on remplace, dans les variables d’origine, les valeurs correspondant aux 20 % les plus faibles et celles correspondant aux 20 % les plus élevés par respectivement la valeur la plus basse avant les 20 % les plus faibles et la valeur la plus haute avant les 20 % les plus élevés) <span class="citation" data-cites="liEffectSizeMeasures2016">(<a href="references.html#ref-liEffectSizeMeasures2016" role="doc-biblioref">Li, 2016</a>)</span>. Une autre approche consiste à utiliser des statistiques qui ne font pas d’hypothèse sur la manière dont sont distribuées les données dans la population d’origine pour les groupes à comparer, telles que la corrélation bisériale des rangs ou encore la probabilité de supériorité. Ces deux dernières approches sont à associer aux tests statistiques de somme des rangs et des rangs signés de Wilcoxon et sont présentées plus en détails ci-après.</p>
+<p>En principe, les différences de moyennes standardisées sont valides pour pouvoir faire des inférences dans une population seulement lorsque la variable étudiée suit une loi normale (soit pour chacun des deux groupes non appariés comparés, soit pour les différences intra-individu en cas de groupes appariés) et que les variances des deux groupes comparés (en cas de groupes non appariés) sont relativement identiques. Lorsqu’une de ces conditions n’est pas respectée, il est possible que l’estimation faite à partir de l’échantillon pour caractériser la population soit en général très imprécise. Aussi, dans ces cas là, mieux vaut utiliser une version dite “robuste” des différences de moyennes standardisées, tel qu’en procédant à une winsorisation des données avant de procéder aux calculs classiques (i.e., on remplace, dans les variables d’origine, les valeurs correspondant aux 20 % les plus faibles et celles correspondant aux 20 % les plus élevés par respectivement la valeur la plus basse avant les 20 % les plus faibles et la valeur la plus haute avant les 20 % les plus élevés) <span class="citation" data-cites="liEffectSizeMeasures2016">(<a href="references.html#ref-liEffectSizeMeasures2016" role="doc-biblioref">Li, 2016</a>)</span>. Une autre approche consiste à utiliser des statistiques qui ne font pas d’hypothèse sur la manière dont sont distribuées les données dans la population d’origine pour les groupes à comparer, telles que la corrélation bisériale des rangs ou encore la probabilité de supériorité. Ces deux dernières approches sont à associer aux tests statistiques de somme des rangs et des rangs signés de Wilcoxon et sont présentées plus en détails ci-après.</p>
 </section><section id="dominance" class="level3" data-number="5.1.3"><h3 data-number="5.1.3" class="anchored" data-anchor-id="dominance">
 <span class="header-section-number">5.1.3</span> Dominance</h3>
 <p>La notion de dominance d’un groupe par rapport à un autre est à privilégier à la classique différence de moyennes standardisée lorsque les conditions d’analyse rendent cette statistique imprécise (i.e., absence de normalité en cas de groupes non appariés ou appariés, hétérogénéité des variances en cas de groupes non appariés). La corrélation bisériale des rangs (<span class="math inline">\(r_{rb}\)</span>) est un moyen de caractériser la dominance d’un groupe par rapport à un autre. Cette statistique, située entre -1 et 1, est telle que des valeurs plus élevées indiquent que davantage de valeurs d’un groupe sont supérieures à celles de l’autre groupe. Une valeur de −1 signifie que toutes les observations dans le second groupe sont supérieures à celles du premier, tandis qu’une valeur de +1 signifie que toutes les observations dans le premier groupe sont supérieures à celles du second (source: <a href="https://easystats.github.io/effectsize/articles/standardized_differences.html#dominance-effect-sizes">site du package {effectsize}</a>).</p>
@@ -354,10 +354,20 @@ window.Quarto = {
 <span><span class="va">iris_two_species</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">iris</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">!=</span> <span class="st">"virginica"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">mutate</span><span class="op">(</span>Species <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">Species</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"setosa"</span>, <span class="st">"versicolor"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">mutate</span><span class="op">(</span>Species <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">Species</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"setosa"</span>, <span class="st">"versicolor"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">iris_two_species</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+1          5.1         3.5          1.4         0.2  setosa
+2          4.9         3.0          1.4         0.2  setosa
+3          4.7         3.2          1.3         0.2  setosa
+4          4.6         3.1          1.5         0.2  setosa
+5          5.0         3.6          1.4         0.2  setosa
+6          5.4         3.9          1.7         0.4  setosa</code></pre>
 </div>
-<div class="cell">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">iris_two_species</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">Species</span>, y <span class="op">=</span> <span class="va">Sepal.Length</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Création du graphique</span></span>
+<span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">iris_two_species</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">Species</span>, y <span class="op">=</span> <span class="va">Sepal.Length</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_rain</span><span class="op">(</span>point.args <span class="op">=</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/list2.html">list2</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">stat_summary</span><span class="op">(</span></span>
 <span>    geom <span class="op">=</span> <span class="st">"errorbar"</span>,</span>
@@ -391,9 +401,9 @@ Figure&nbsp;5.1: Exemple de graphique pour une comparaison de deux groupes de va
 <span class="header-section-number">5.2.2.1.1</span> <span class="math inline">\(d_{s}\)</span> et <span class="math inline">\(d_{av}\)</span> de Cohen</h5>
 <p>Classiquement, l’indice statistique utilisé pour calculer une différence de moyennes de manière standardisée entre deux groupes indépendants, à partir d’échantillons de population, est le <span class="math inline">\(d_{s}\)</span> de Cohen. Cette statistique se calcule en faisant la différence entre les moyennes des deux groupes à comparer, et en divisant cette différence par l’écart-type combiné (ou commun) des deux groupes. Ce calcul est montré ci-dessous :</p>
 <p><span class="math display">\[d_{s} = \frac{\overline{X}_{1} - \overline{X}_{2}} {\sqrt{\frac{(N_{1} - 1) \hat{\sigma}_{1}^2 + (N_{2} - 1) \hat{\sigma}_{2}^2} {N_{1} + N_{2} - 2}}},\]</span></p>
-<p>avec <span class="math inline">\(\overline{X}_{1}\)</span> et <span class="math inline">\(\overline{X}_{2}\)</span> les moyennes des deux groupes comparés, <span class="math inline">\(N_{1}\)</span> et <span class="math inline">\(N_{2 }\)</span> les effectifs respectifs des deux groupes comparés, et <span class="math inline">\(\hat{\sigma}_{1}^2\)</span> et <span class="math inline">\(\hat{\sigma}_{2}^2\)</span> les variances respectives des deux groupes comparés. On peut remarquer qu’au dénominateur, la variance d’un groupe donné est multipliée par un coefficient calculé à partir de l’effectif du groupe, cela pour que le poids de la variance d’un groupe dans le calcul final soit ajusté par rapport à la taille du groupe représenté. Dans R, si l’on voulait calculer <span class="math inline">\(d_s\)</span> manuellement, cela donnerait ceci (à partir du jeu de données <code>iris_two_species</code>) :</p>
+<p>avec <span class="math inline">\(\overline{X}_{1}\)</span> et <span class="math inline">\(\overline{X}_{2}\)</span> les moyennes des deux groupes comparés, <span class="math inline">\(N_{1}\)</span> et <span class="math inline">\(N_{2 }\)</span> les effectifs respectifs des deux groupes comparés, et <span class="math inline">\(\hat{\sigma}_{1}^2\)</span> et <span class="math inline">\(\hat{\sigma}_{2}^2\)</span> les variances respectives des deux groupes comparés. On peut remarquer qu’au dénominateur, la variance d’un groupe donné est multipliée par un coefficient calculé à partir de l’effectif du groupe, cela pour que le poids de la variance d’un groupe dans le calcul final soit ajusté par rapport à la taille du groupe. Dans R, si l’on voulait calculer <span class="math inline">\(d_s\)</span> manuellement, cela donnerait ceci (à partir du jeu de données <code>iris_two_species</code>) :</p>
 <div class="cell">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Calcul des paramètres</span></span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Calcul des paramètres</span></span>
 <span><span class="va">X1</span> <span class="op">&lt;-</span> <span class="va">iris_two_species</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">==</span> <span class="st">"setosa"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">pull</span><span class="op">(</span><span class="va">Sepal.Length</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">X2</span> <span class="op">&lt;-</span> <span class="va">iris_two_species</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">==</span> <span class="st">"versicolor"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">pull</span><span class="op">(</span><span class="va">Sepal.Length</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">SD1</span> <span class="op">&lt;-</span> <span class="va">iris_two_species</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">==</span> <span class="st">"setosa"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">pull</span><span class="op">(</span><span class="va">Sepal.Length</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -410,13 +420,13 @@ Figure&nbsp;5.1: Exemple de graphique pour une comparaison de deux groupes de va
 </div>
 <p>Heureusement, le <span class="math inline">\(d_{s}\)</span> de Cohen peut être facilement calculé à l’aide de la fonction <code><a href="https://easystats.github.io/effectsize/reference/cohens_d.html">cohens_d()</a></code> du package <a href="https://easystats.github.io/effectsize/">effectsize</a>, qui nécessite d’être installé puis chargé avant d’être utilisé :</p>
 <div class="cell">
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/effectsize/">effectsize</a></span><span class="op">)</span></span>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/effectsize/">effectsize</a></span><span class="op">)</span></span>
 <span><span class="va">ds</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://easystats.github.io/effectsize/reference/cohens_d.html">cohens_d</a></span><span class="op">(</span></span>
-<span>  <span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>, </span>
-<span>  data <span class="op">=</span> <span class="va">iris_two_species</span>, </span>
-<span>  paired <span class="op">=</span> <span class="cn">FALSE</span>, </span>
-<span>  pooled_sd <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>    <span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>,</span>
+<span>    data <span class="op">=</span> <span class="va">iris_two_species</span>,</span>
+<span>    paired <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    pooled_sd <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="va">ds</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -429,7 +439,7 @@ Figure&nbsp;5.1: Exemple de graphique pour une comparaison de deux groupes de va
 </div>
 <p>Dans cet exemple, on remarque qu’on a bien cherché à savoir comment les données de la variable <code>Sepal.Length</code> pouvaient différer en fonction (<code>~</code>) des modalités de la variable <code>Species</code>. Si la fonction nous donne un résultat, il faut toutefois bien faire attention au sens du calcul qui a été réalisé. Configurée de la sorte, la fonction <code><a href="https://easystats.github.io/effectsize/reference/cohens_d.html">cohens_d()</a></code> réalise la différence <strong>modalité 1 - modalité 2</strong>. Il faut donc savoir quelle est la modalité 1 et quelle est la modalité 2 dans la variable <code>Species</code> pour ensuite pouvoir interpréter le signe du résultat, qui est négatif ici avec la valeur de -2.10. Pour ce faire, on peut utiliser la fonction <code><a href="https://rdrr.io/r/base/levels.html">levels()</a></code> :</p>
 <div class="cell">
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">iris_two_species</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">iris_two_species</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "setosa"     "versicolor"</code></pre>
 </div>
@@ -439,21 +449,21 @@ Figure&nbsp;5.1: Exemple de graphique pour une comparaison de deux groupes de va
 <p><span class="math display">\[d_{av} = \frac{\overline{X}_{1} - \overline{X}_{2}} {\sqrt{\frac{\hat{\sigma}_{1}^2 + \hat{\sigma}_{2}^2} {2}}}\]</span></p>
 <p>En repartant des paramètres calculés précédemment, on peut manuellement obtenir cet indice comme ceci :</p>
 <div class="cell">
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Calcul de dav</span></span>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Calcul de dav</span></span>
 <span><span class="va">dav</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">X1</span> <span class="op">-</span> <span class="va">X2</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="op">(</span><span class="va">SD1</span><span class="op">^</span><span class="fl">2</span> <span class="op">+</span> <span class="va">SD2</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="va">dav</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -2.104197</code></pre>
 </div>
 </div>
-<p>On peut obtenir le <span class="math inline">\(d_{av}\)</span> avec le package <a href="https://easystats.github.io/effectsize/">effectsize</a> comme ceci (avec <code>pooled = FALSE</code>) :</p>
+<p>On peut obtenir le <span class="math inline">\(d_{av}\)</span> avec le package <a href="https://easystats.github.io/effectsize/">effectsize</a> comme ceci (avec <code>pooled_sd = FALSE</code>) :</p>
 <div class="cell">
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dav</span> <span class="op">&lt;-</span></span>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dav</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://easystats.github.io/effectsize/reference/cohens_d.html">cohens_d</a></span><span class="op">(</span></span>
-<span>  <span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>, </span>
-<span>  data <span class="op">=</span> <span class="va">iris_two_species</span>, </span>
-<span>  paired <span class="op">=</span> <span class="cn">FALSE</span>, </span>
-<span>  pooled_sd <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>    <span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>,</span>
+<span>    data <span class="op">=</span> <span class="va">iris_two_species</span>,</span>
+<span>    paired <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    pooled_sd <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="va">dav</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -475,12 +485,12 @@ Figure&nbsp;5.1: Exemple de graphique pour une comparaison de deux groupes de va
 <p>avec <span class="math inline">\(\Gamma\)</span> la loi Gamma, et <span class="math inline">\(df\)</span> ce qu’on appelle le nombre de degrés de liberté (qui est ici égal au nombre total d’individus moins 2). Dans les faits, les différences entre <span class="math inline">\(d\)</span> et <span class="math inline">\(g\)</span> sont minimes, surtout avec <span class="math inline">\(N\)</span> &gt; 20 dans les groupes.</p>
 <p>Dans R, le <span class="math inline">\(g_{s}\)</span> de Hedges lié à un échantillon de population peut être calculé à l’aide de la fonction <code><a href="https://easystats.github.io/effectsize/reference/cohens_d.html">hedges_g()</a></code> du package <a href="https://easystats.github.io/effectsize/">effectsize</a> :</p>
 <div class="cell">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gs</span> <span class="op">&lt;-</span></span>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gs</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://easystats.github.io/effectsize/reference/cohens_d.html">hedges_g</a></span><span class="op">(</span></span>
-<span>  <span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>,</span>
-<span>  data <span class="op">=</span> <span class="va">iris_two_species</span>, </span>
-<span>  paired <span class="op">=</span> <span class="cn">FALSE</span>, </span>
-<span>  pooled_sd <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>    <span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>,</span>
+<span>    data <span class="op">=</span> <span class="va">iris_two_species</span>,</span>
+<span>    paired <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    pooled_sd <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="va">gs</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -494,12 +504,12 @@ Figure&nbsp;5.1: Exemple de graphique pour une comparaison de deux groupes de va
 <p>Ici, la valeur ne change pas beaucoup par rapport à <span class="math inline">\(d_s\)</span> car l’effectif n’est pas si petit que cela (<span class="math inline">\(N_{1}\)</span> + <span class="math inline">\(N_{2}\)</span> = 100 ici, ce qui fait que la correction appliquée au <span class="math inline">\(d_{s}\)</span> de Cohen est minime).</p>
 <p>Le <span class="math inline">\(g_{av}\)</span> de Hedges lié à un échantillon de population peut aussi être calculé à l’aide de la fonction <code><a href="https://easystats.github.io/effectsize/reference/cohens_d.html">hedges_g()</a></code> du package <a href="https://easystats.github.io/effectsize/">effectsize</a> (avec <code>pooled_sd = FALSE</code>) :</p>
 <div class="cell">
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gav</span> <span class="op">&lt;-</span></span>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gav</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://easystats.github.io/effectsize/reference/cohens_d.html">hedges_g</a></span><span class="op">(</span></span>
-<span>  <span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>,</span>
-<span>  data <span class="op">=</span> <span class="va">iris_two_species</span>, </span>
-<span>  paired <span class="op">=</span> <span class="cn">FALSE</span>, </span>
-<span>  pooled_sd <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>    <span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>,</span>
+<span>    data <span class="op">=</span> <span class="va">iris_two_species</span>,</span>
+<span>    paired <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    pooled_sd <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="va">gav</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -518,11 +528,11 @@ Figure&nbsp;5.1: Exemple de graphique pour une comparaison de deux groupes de va
 <p>Le calcul du <span class="math inline">\(\Delta\)</span> de Glass est dans l’idée le même que celui du <span class="math inline">\(d\)</span> de Cohen, sauf que la différence entre les moyennes des deux groupes n’est pas divisée par un écart-type lié aux deux groupes, mais par l’écart-type d’un seul des deux groupes, qui serait en principe celui qui représenterait la condition contrôle ou la condition de référence. Une pratique souvent recommandée pour comparer dans ce genre de situation les scores post-programme de deux groupes (un groupe entraîné/traité et un groupe contrôle) serait d’utiliser l’écart-type des scores du groupe contrôle obtenu en pré-programme <span class="citation" data-cites="lakensCalculatingReportingEffect2013">(<a href="references.html#ref-lakensCalculatingReportingEffect2013" role="doc-biblioref">Lakens, 2013</a>)</span>.</p>
 <p>Dans R, le <span class="math inline">\(\Delta\)</span> de Glass lié à un échantillon de population peut être calculé à l’aide de la fonction <code><a href="https://easystats.github.io/effectsize/reference/cohens_d.html">glass_delta()</a></code> du package <a href="https://easystats.github.io/effectsize/">effectsize</a>. Attention, l’écart-type utilisé dans le code suivant est celui de la variable quantitative associée à la modalité 2 de la variable qualitative, qui est toujours <code>versicolor</code> dans cet exemple (exemple dont le contexte n’est certes pas celui d’un programme dont on cherche l’effet, mais le principe d’utilisation du code reste le même).</p>
 <div class="cell">
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gd</span> <span class="op">&lt;-</span></span>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gd</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://easystats.github.io/effectsize/reference/cohens_d.html">glass_delta</a></span><span class="op">(</span></span>
-<span>  <span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>, </span>
-<span>  data <span class="op">=</span> <span class="va">iris_two_species</span></span>
-<span>  <span class="op">)</span></span>
+<span>    <span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>, </span>
+<span>    data <span class="op">=</span> <span class="va">iris_two_species</span></span>
+<span>    <span class="op">)</span></span>
 <span><span class="va">gd</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Glass' delta (adj.) |         95% CI
@@ -541,17 +551,17 @@ Tableau&nbsp;5.1: Proposition de termes pour qualifier l’importance d’une di
 </figcaption><div aria-describedby="tbl-effectsizedtable-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
 <div class="tabwid">
-<style>.cl-adce4a46{}.cl-adbd7f18{font-family:'Arial';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-adbd7f86{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-adc3edf8{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-adc43056{width:0.676in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-adc4306a{width:0.769in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-adc43074{width:0.735in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-adc43075{width:0.676in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-adc4307e{width:0.769in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-adc43088{width:0.735in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table data-quarto-disable-processing="true" class="cl-adce4a46">
+<style>.cl-1aa31e86{}.cl-1a9556a2{font-family:'Arial';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-1a9556ca{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-1a9cb82a{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-1a9cd90e{width:0.676in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1a9cd918{width:0.769in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1a9cd919{width:0.735in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1a9cd91a{width:0.676in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1a9cd922{width:0.769in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1a9cd923{width:0.735in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table data-quarto-disable-processing="true" class="cl-1aa31e86">
 <thead><tr style="overflow-wrap:break-word;">
-<th class="cl-adc43056"><p class="cl-adc3edf8"><span class="cl-adbd7f18">Petit</span></p></th>
-<th class="cl-adc4306a"><p class="cl-adc3edf8"><span class="cl-adbd7f18">Moyen</span></p></th>
-<th class="cl-adc43074"><p class="cl-adc3edf8"><span class="cl-adbd7f18">Grand</span></p></th>
+<th class="cl-1a9cd90e"><p class="cl-1a9cb82a"><span class="cl-1a9556a2">Petit</span></p></th>
+<th class="cl-1a9cd918"><p class="cl-1a9cb82a"><span class="cl-1a9556a2">Moyen</span></p></th>
+<th class="cl-1a9cd919"><p class="cl-1a9cb82a"><span class="cl-1a9556a2">Grand</span></p></th>
 </tr></thead>
 <tbody><tr style="overflow-wrap:break-word;">
-<td class="cl-adc43075"><p class="cl-adc3edf8"><span class="cl-adbd7f86">&gt;=0.2</span></p></td>
-<td class="cl-adc4307e"><p class="cl-adc3edf8"><span class="cl-adbd7f86">&gt;=0.5</span></p></td>
-<td class="cl-adc43088"><p class="cl-adc3edf8"><span class="cl-adbd7f86">&gt;=0.8</span></p></td>
+<td class="cl-1a9cd91a"><p class="cl-1a9cb82a"><span class="cl-1a9556ca">&gt;=0.2</span></p></td>
+<td class="cl-1a9cd922"><p class="cl-1a9cb82a"><span class="cl-1a9556ca">&gt;=0.5</span></p></td>
+<td class="cl-1a9cd923"><p class="cl-1a9cb82a"><span class="cl-1a9556ca">&gt;=0.8</span></p></td>
 </tr></tbody>
 </table>
 </div>
@@ -562,7 +572,7 @@ Tableau&nbsp;5.1: Proposition de termes pour qualifier l’importance d’une di
 </div>
 <p>Pour obtenir une interprétation automatique en même temps que la valeur de différence de moyennes standardisée, on peut utiliser les fonctions <code><a href="https://easystats.github.io/effectsize/reference/interpret_cohens_d.html">interpret_cohens_d()</a></code>, <code><a href="https://easystats.github.io/effectsize/reference/interpret_cohens_d.html">interpret_hedges_g()</a></code> et <code><a href="https://easystats.github.io/effectsize/reference/interpret_cohens_d.html">interpret_glass_delta()</a></code> du package {effectsize} :</p>
 <div class="cell">
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://easystats.github.io/effectsize/reference/interpret_cohens_d.html">interpret_cohens_d</a></span><span class="op">(</span><span class="va">ds</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://easystats.github.io/effectsize/reference/interpret_cohens_d.html">interpret_cohens_d</a></span><span class="op">(</span><span class="va">ds</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Cohen's d |         95% CI | Interpretation
 -------------------------------------------
@@ -571,7 +581,7 @@ Tableau&nbsp;5.1: Proposition de termes pour qualifier l’importance d’une di
 - Estimated using pooled SD.
 - Interpretation rule: cohen1988</code></pre>
 </div>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://easystats.github.io/effectsize/reference/interpret_cohens_d.html">interpret_hedges_g</a></span><span class="op">(</span><span class="va">gs</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://easystats.github.io/effectsize/reference/interpret_cohens_d.html">interpret_hedges_g</a></span><span class="op">(</span><span class="va">gs</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Hedges' g |         95% CI | Interpretation
 -------------------------------------------
@@ -580,7 +590,7 @@ Tableau&nbsp;5.1: Proposition de termes pour qualifier l’importance d’une di
 - Estimated using pooled SD.
 - Interpretation rule: cohen1988</code></pre>
 </div>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://easystats.github.io/effectsize/reference/interpret_cohens_d.html">interpret_glass_delta</a></span><span class="op">(</span><span class="va">gd</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://easystats.github.io/effectsize/reference/interpret_cohens_d.html">interpret_glass_delta</a></span><span class="op">(</span><span class="va">gd</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "large"
 (Rules: cohen1988)</code></pre>
@@ -592,22 +602,9 @@ Tableau&nbsp;5.1: Proposition de termes pour qualifier l’importance d’une di
 <p><span class="math display">\[
 \frac{\sum_{i=1}^{N} rank(X_{i}) - N_{X} (N_{X} + 1) / 2}{N_{X}  N_{Y}} - \frac{\sum_{i=1}^{N} rank(Y_{i}) - N_{Y} (N_{Y} + 1) / 2}{N_{X}  N_{Y}},
 \]</span></p>
-<p>avec <span class="math inline">\(rank(X_{i})\)</span> et <span class="math inline">\(rank(Y_{i})\)</span> les rangs des observations des variables <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span> toutes observations confondues, et <span class="math inline">\(N_{X}\)</span> et <span class="math inline">\(N_{Y}\)</span> les nombres d’observations pour les variables <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span>. Cette corrélation peut être obtenue manuellement dans R de la manière suivante :</p>
+<p>avec <span class="math inline">\(rank(X_{i})\)</span> et <span class="math inline">\(rank(Y_{i})\)</span> les rangs des observations des variables <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span> toutes observations confondues, et <span class="math inline">\(N_{X}\)</span> et <span class="math inline">\(N_{Y}\)</span> les nombres d’observations pour les variables <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span> respectivement. Cette corrélation peut être obtenue manuellement dans R de la manière suivante :</p>
 <div class="cell">
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Exemple avec le jeu de données `iris_two_species` crée plus haut</span></span>
-<span><span class="co"># On cherche à comparer les espèces `setosa`et `versicolor` pour la </span></span>
-<span><span class="co"># variable `Sepal.Length` </span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">iris_two_species</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
-1          5.1         3.5          1.4         0.2  setosa
-2          4.9         3.0          1.4         0.2  setosa
-3          4.7         3.2          1.3         0.2  setosa
-4          4.6         3.1          1.5         0.2  setosa
-5          5.0         3.6          1.4         0.2  setosa
-6          5.4         3.9          1.7         0.4  setosa</code></pre>
-</div>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Calcul des rangs relatifs aux observations des deux modalités confondues</span></span>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Calcul des rangs relatifs aux observations des deux modalités confondues</span></span>
 <span><span class="va">ranks</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rank.html">rank</a></span><span class="op">(</span><span class="va">iris_two_species</span><span class="op">$</span><span class="va">Sepal.Length</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Obtention du nombre d'observations pour setosa et versicolor</span></span>
@@ -632,12 +629,12 @@ Tableau&nbsp;5.1: Proposition de termes pour qualifier l’importance d’une di
 </div>
 <p>La corrélation bisériale des rangs peut s’obtenir facilement avec la fonction <code><a href="https://easystats.github.io/effectsize/reference/rank_biserial.html">rank_biserial()</a></code> du package <a href="https://easystats.github.io/effectsize/">effectsize</a> comme ceci :</p>
 <div class="cell">
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">rb</span> <span class="op">&lt;-</span></span>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">rb</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://easystats.github.io/effectsize/reference/rank_biserial.html">rank_biserial</a></span><span class="op">(</span></span>
-<span>  <span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>, </span>
-<span>  data <span class="op">=</span> <span class="va">iris_two_species</span>, </span>
-<span>  paired <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span></span>
+<span>    <span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>, </span>
+<span>    data <span class="op">=</span> <span class="va">iris_two_species</span>, </span>
+<span>    paired <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>    <span class="op">)</span></span>
 <span><span class="va">rb</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>r (rank biserial) |         95% CI
@@ -654,21 +651,21 @@ Tableau&nbsp;5.2: Proposition de termes pour qualifier l’importance d’une co
 </figcaption><div aria-describedby="tbl-effectsizecorrb-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
 <div class="tabwid">
-<style>.cl-ae600bb6{}.cl-ae513bd6{font-family:'Arial';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-ae513be0{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-ae574f62{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-ae5789c8{width:1.058in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ae5789dc{width:0.701in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ae5789e6{width:0.947in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ae5789f0{width:0.82in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ae5789fa{width:1.16in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ae578a04{width:1.058in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ae578a05{width:0.701in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ae578a0e{width:0.947in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ae578a0f{width:0.82in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ae578a18{width:1.16in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table data-quarto-disable-processing="true" class="cl-ae600bb6">
+<style>.cl-1afd7598{}.cl-1af28dcc{font-family:'Arial';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-1af28dd6{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-1af6e296{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-1af70370{width:1.058in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1af7037a{width:0.701in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1af70384{width:0.947in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1af70385{width:0.82in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1af70386{width:1.16in;background-color:rgba(207, 207, 207, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1af70387{width:1.058in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1af7038e{width:0.701in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1af7038f{width:0.947in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1af70398{width:0.82in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-1af703a2{width:1.16in;background-color:rgba(239, 239, 239, 1.00);vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table data-quarto-disable-processing="true" class="cl-1afd7598">
 <thead><tr style="overflow-wrap:break-word;">
-<th class="cl-ae5789c8"><p class="cl-ae574f62"><span class="cl-ae513bd6">Très petite</span></p></th>
-<th class="cl-ae5789dc"><p class="cl-ae574f62"><span class="cl-ae513bd6">Petite</span></p></th>
-<th class="cl-ae5789e6"><p class="cl-ae574f62"><span class="cl-ae513bd6">Moyenne</span></p></th>
-<th class="cl-ae5789f0"><p class="cl-ae574f62"><span class="cl-ae513bd6">Grande</span></p></th>
-<th class="cl-ae5789fa"><p class="cl-ae574f62"><span class="cl-ae513bd6">Très grande</span></p></th>
+<th class="cl-1af70370"><p class="cl-1af6e296"><span class="cl-1af28dcc">Très petite</span></p></th>
+<th class="cl-1af7037a"><p class="cl-1af6e296"><span class="cl-1af28dcc">Petite</span></p></th>
+<th class="cl-1af70384"><p class="cl-1af6e296"><span class="cl-1af28dcc">Moyenne</span></p></th>
+<th class="cl-1af70385"><p class="cl-1af6e296"><span class="cl-1af28dcc">Grande</span></p></th>
+<th class="cl-1af70386"><p class="cl-1af6e296"><span class="cl-1af28dcc">Très grande</span></p></th>
 </tr></thead>
 <tbody><tr style="overflow-wrap:break-word;">
-<td class="cl-ae578a04"><p class="cl-ae574f62"><span class="cl-ae513be0">&gt;=0.05</span></p></td>
-<td class="cl-ae578a05"><p class="cl-ae574f62"><span class="cl-ae513be0">&gt;=0.1</span></p></td>
-<td class="cl-ae578a0e"><p class="cl-ae574f62"><span class="cl-ae513be0">&gt;=0.2</span></p></td>
-<td class="cl-ae578a0f"><p class="cl-ae574f62"><span class="cl-ae513be0">&gt;=0.3</span></p></td>
-<td class="cl-ae578a18"><p class="cl-ae574f62"><span class="cl-ae513be0">&gt;=0.4</span></p></td>
+<td class="cl-1af70387"><p class="cl-1af6e296"><span class="cl-1af28dd6">&gt;=0.05</span></p></td>
+<td class="cl-1af7038e"><p class="cl-1af6e296"><span class="cl-1af28dd6">&gt;=0.1</span></p></td>
+<td class="cl-1af7038f"><p class="cl-1af6e296"><span class="cl-1af28dd6">&gt;=0.2</span></p></td>
+<td class="cl-1af70398"><p class="cl-1af6e296"><span class="cl-1af28dd6">&gt;=0.3</span></p></td>
+<td class="cl-1af703a2"><p class="cl-1af6e296"><span class="cl-1af28dd6">&gt;=0.4</span></p></td>
 </tr></tbody>
 </table>
 </div>
@@ -679,7 +676,7 @@ Tableau&nbsp;5.2: Proposition de termes pour qualifier l’importance d’une co
 </div>
 <p>Pour obtenir une interprétation automatique en même temps que la valeur de corrélation, on peut utiliser la fonction <code>interpret_rb()</code> du package {effectsize} :</p>
 <div class="cell">
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://easystats.github.io/effectsize/reference/interpret_r.html">interpret_rank_biserial</a></span><span class="op">(</span><span class="va">rb</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://easystats.github.io/effectsize/reference/interpret_r.html">interpret_rank_biserial</a></span><span class="op">(</span><span class="va">rb</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>r (rank biserial) |         95% CI | Interpretation
 ---------------------------------------------------
@@ -692,12 +689,12 @@ Tableau&nbsp;5.2: Proposition de termes pour qualifier l’importance d’une co
 <span class="header-section-number">5.2.2.3</span> Langage commun</h4>
 <p>Pour comparer les groupes en utilisant la probabilité de supériorité, on peut utiliser la fonction <code><a href="https://easystats.github.io/effectsize/reference/p_superiority.html">p_superiority()</a></code> du package <a href="https://easystats.github.io/effectsize/">effectsize</a> comme ceci :</p>
 <div class="cell">
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://easystats.github.io/effectsize/reference/p_superiority.html">p_superiority</a></span><span class="op">(</span></span>
-<span>  <span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>, </span>
-<span>  data <span class="op">=</span> <span class="va">iris_two_species</span>, </span>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://easystats.github.io/effectsize/reference/p_superiority.html">p_superiority</a></span><span class="op">(</span></span>
+<span>  <span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">iris_two_species</span>,</span>
 <span>  paired <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  parametric <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span>  <span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Pr(superiority) |       95% CI
 ------------------------------
@@ -706,14 +703,14 @@ Tableau&nbsp;5.2: Proposition de termes pour qualifier l’importance d’une co
 - Non-parametric CLES</code></pre>
 </div>
 </div>
-<p>Le résultat indique que la probabilité d’avoir une valeur de <code>Sepal.Length</code> supérieure pour l’espèce <code>setosa</code> par rapport à l’espèce <code>versicolor</code> est de 7 % (réciproquement, la probabilité de supériorité pour l’espèce <code>setosa</code> est de 93 %). On note, dans le code ci-dessus, que l’argument <code>parametric</code> est configuré avec la valeur <code>FALSE</code>. De cette manière, la probabilité de supériorité reste calculée à partir des rangs à partir de la corrélation bisériale des rangs tel que : <span class="math inline">\(Pr(Superiority) = (r_{rb} + 1)/2\)</span>. Ce calcul serait le plus précis (le moins biaisé) sur un ensemble de scenarii de violation des conditions de normalité et d’hétérogénéité de variance <span class="citation" data-cites="liEffectSizeMeasures2016">(<a href="references.html#ref-liEffectSizeMeasures2016" role="doc-biblioref">Li, 2016</a>)</span>.</p>
+<p>Le résultat indique que la probabilité d’avoir une valeur de <code>Sepal.Length</code> supérieure pour l’espèce <code>setosa</code> par rapport à l’espèce <code>versicolor</code> est de 7 % (réciproquement, la probabilité de supériorité pour l’espèce <code>setosa</code> est de 93 %). On note, dans le code ci-dessus, que l’argument <code>parametric</code> est configuré avec la valeur <code>FALSE</code>. De cette manière, la probabilité de supériorité est calculée à partir de la corrélation bisériale des rangs tel que : <span class="math inline">\(Pr(Superiority) = (r_{rb} + 1)/2\)</span>. Ce calcul serait le plus précis (le moins biaisé), notamment par rapport aux différences de moyennes standardisées classiques, sur un ensemble de scenarii de violation des conditions de normalité et d’hétérogénéité de variance <span class="citation" data-cites="liEffectSizeMeasures2016">(<a href="references.html#ref-liEffectSizeMeasures2016" role="doc-biblioref">Li, 2016</a>)</span>.</p>
 </section></section></section><section id="comparer-deux-groupes-appariés" class="level2" data-number="5.3"><h2 data-number="5.3" class="anchored" data-anchor-id="comparer-deux-groupes-appariés">
 <span class="header-section-number">5.3</span> Comparer deux groupes appariés</h2>
 <section id="étudier-graphiquement-la-comparaison-1" class="level3" data-number="5.3.1"><h3 data-number="5.3.1" class="anchored" data-anchor-id="étudier-graphiquement-la-comparaison-1">
 <span class="header-section-number">5.3.1</span> Étudier graphiquement la comparaison</h3>
 <p>La <a href="#fig-raindcloudplotsBivPaired1" class="quarto-xref">Figure&nbsp;<span>5.2</span></a> montre une proposition de graphique dans le cas de l’étude d’une comparaison de deux groupes de données appariés. Pour cela, nous avons installé le package <code>{PairedData}</code> et chargé le jeu de données associé, appelé <code>Blink</code>. Pour information, <code>Blink</code> contient des données de taux de clignotement des yeux obtenues chez 12 sujets et dans deux conditions différentes : une tâche où il fallait diriger un stylo selon une trajectoire rectiligne (modalité <code>Straight</code>), et une tâche où il fallait diriger un stylo selon une trajectoire présentant des oscillations (<code>Oscillating</code>). Ce jeu de données a été un peu transformé pour pouvoir passer à l’étape de la conception graphique, comme montré ci-dessous.</p>
 <div class="cell">
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Charger le package</span></span>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Charger le package</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">PairedData</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Charger le jeu de données</span></span>
@@ -731,10 +728,23 @@ Tableau&nbsp;5.2: Proposition de termes pour qualifier l’importance d’une co
 <span>    Condition <span class="op">=</span> <span class="fu">fct_relevel</span><span class="op">(</span></span>
 <span>      <span class="va">Condition</span>, <span class="st">"Straight"</span>, <span class="st">"Oscillating"</span></span>
 <span>      <span class="op">)</span></span>
-<span>    <span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>    <span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Visualisation du jeu de données</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">Blink2</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  Subject Condition   Blink_rate
+  &lt;fct&gt;   &lt;fct&gt;            &lt;dbl&gt;
+1 S01     Straight          24  
+2 S01     Oscillating       15  
+3 S02     Straight          19.5
+4 S02     Oscillating        6.6
+5 S03     Straight           8.2
+6 S03     Oscillating        1.9</code></pre>
 </div>
-<div class="cell">
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">Blink2</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Condition</span>, y <span class="op">=</span> <span class="va">Blink_rate</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Création du graphique</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">Blink2</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Condition</span>, y <span class="op">=</span> <span class="va">Blink_rate</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_rain</span><span class="op">(</span></span>
 <span>    rain.side <span class="op">=</span> <span class="st">"f1x1"</span>,</span>
 <span>    id.long.var <span class="op">=</span> <span class="st">"Subject"</span>,</span>
@@ -769,12 +779,12 @@ Figure&nbsp;5.2: Exemple de graphique pour une comparaison de deux groupes de va
 </div>
 </div>
 </div>
-<p>Le graphique montré ci-dessus pour données appariées contient des éléments graphiques supplémentaires par rapport à celui proposé pour les données non appariées : des lignes reliant les données individuelles, et une ligne reliant les statistiques qui représentent les tendances centrales (ici les moyennes). Ces deux types d’éléments graphiques sont importants pour explicitement montrer qu’il y a un lien entre les deux conditions de mesure (il s’agit des mêmes individus et donc du même groupe), et cela permet de mettre en évidence à la fois les trajectoires individuelles et celle du groupe entre les deux conditions de mesure.</p>
+<p>Le graphique montré ci-dessus pour des données appariées contient des éléments graphiques supplémentaires par rapport à celui proposé pour les données non appariées : des lignes reliant les données individuelles, et une ligne reliant les statistiques qui représentent les tendances centrales (ici les moyennes). Ces deux types d’éléments graphiques sont importants pour explicitement montrer qu’il y a un lien entre les deux conditions de mesure (il s’agit des mêmes individus et donc du même groupe), et cela permet de mettre en évidence à la fois les trajectoires individuelles et celle du groupe entre les deux conditions de mesure.</p>
 <p>Pour obtenir ces éléments supplémentaires, il a fallu configurer l’argument <code>id.long.var</code> de la fonction <code>geom_rain()</code> pour indiquer le nom de la variable sur laquelle se baser pour garder l’appariement des données individuelles entre les deux conditions et ainsi permettre un bon tracé des lignes individuelles. La ligne reliant les moyennes a été ajoutée grâce à la fonction<code><a href="https://ggplot2.tidyverse.org/reference/stat_summary.html">stat_summary()</a></code> avec la particularité d’indiquer <code>1</code> pour l’argument <code>group</code> de la fonction <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code> associée à la fonction <code><a href="https://ggplot2.tidyverse.org/reference/stat_summary.html">stat_summary()</a></code>. Enfin, l’argument <code>rain.side</code> de la fonction <code>geom_rain()</code> a été configuré de telle sorte à avoir les données des deux groupes en vis-à-vis, mais un autre choix aurait pu être fait.</p>
 </section><section id="étudier-numériquement-la-comparaison-1" class="level3" data-number="5.3.2"><h3 data-number="5.3.2" class="anchored" data-anchor-id="étudier-numériquement-la-comparaison-1">
 <span class="header-section-number">5.3.2</span> Étudier numériquement la comparaison</h3>
-<section id="différences-standardisées" class="level4" data-number="5.3.2.1"><h4 data-number="5.3.2.1" class="anchored" data-anchor-id="différences-standardisées">
-<span class="header-section-number">5.3.2.1</span> Différences standardisées</h4>
+<section id="différences-de-moyennes-standardisées-2" class="level4" data-number="5.3.2.1"><h4 data-number="5.3.2.1" class="anchored" data-anchor-id="différences-de-moyennes-standardisées-2">
+<span class="header-section-number">5.3.2.1</span> Différences de moyennes standardisées</h4>
 <section id="d_z-et-d_av-de-cohen" class="level5" data-number="5.3.2.1.1"><h5 data-number="5.3.2.1.1" class="anchored" data-anchor-id="d_z-et-d_av-de-cohen">
 <span class="header-section-number">5.3.2.1.1</span> <span class="math inline">\(d_{z}\)</span> et <span class="math inline">\(d_{av}\)</span> de Cohen</h5>
 <p>Le calcul classique pour obtenir la taille d’effet désignant l’écart de moyennes entre deux groupes de données dépendants est celui du <span class="math inline">\(d_{z}\)</span> <span class="citation" data-cites="lakensCalculatingReportingEffect2013">(<a href="references.html#ref-lakensCalculatingReportingEffect2013" role="doc-biblioref">Lakens, 2013</a>)</span>, qui est montré ci-dessous :</p>
@@ -794,15 +804,14 @@ Figure&nbsp;5.2: Exemple de graphique pour une comparaison de deux groupes de va
 <pre><code>[1] 2.811462</code></pre>
 </div>
 </div>
-<p>Le <span class="math inline">\(d_{z}\)</span> peut heureusement être obtenu à nouveau avec la fonction <code><a href="https://easystats.github.io/effectsize/reference/repeated_measures_d.html">rm_d()</a></code> du package <a href="https://easystats.github.io/effectsize/">effectsize</a>. Pour illustrer cela, nous allons utiliser le jeu de données <code>Blink2</code> crée plus haut pour l’exemple de graphique :</p>
+<p>Le <span class="math inline">\(d_{z}\)</span> peut être obtenu automatiquement avec la fonction <code><a href="https://easystats.github.io/effectsize/reference/repeated_measures_d.html">rm_d()</a></code> du package <a href="https://easystats.github.io/effectsize/">effectsize</a>. Pour illustrer cela, nous allons utiliser le jeu de données <code>Blink2</code> crée plus haut pour l’exemple de graphique :</p>
 <div class="cell">
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#</span></span>
-<span><span class="va">dz</span> <span class="op">&lt;-</span></span>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dz</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://easystats.github.io/effectsize/reference/repeated_measures_d.html">rm_d</a></span><span class="op">(</span></span>
-<span>  <span class="va">Blink_rate</span> <span class="op">~</span> <span class="va">Condition</span> <span class="op">|</span> <span class="va">Subject</span>, </span>
-<span>  data <span class="op">=</span> <span class="va">Blink2</span>,</span>
-<span>  method <span class="op">=</span> <span class="st">"z"</span>,</span>
-<span>  adjust <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>    <span class="va">Blink_rate</span> <span class="op">~</span> <span class="va">Condition</span> <span class="op">|</span> <span class="va">Subject</span>,</span>
+<span>    data <span class="op">=</span> <span class="va">Blink2</span>,</span>
+<span>    method <span class="op">=</span> <span class="st">"z"</span>,</span>
+<span>    adjust <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="va">dz</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -830,14 +839,14 @@ Figure&nbsp;5.2: Exemple de graphique pour une comparaison de deux groupes de va
 <pre><code>[1] 1.525146</code></pre>
 </div>
 </div>
-<p>Pour obtenir <span class="math inline">\(d_{av}\)</span> avec des données appariées et la fonction <code><a href="https://easystats.github.io/effectsize/reference/cohens_d.html">cohens_d()</a></code>, il faut procéder comme s’il s’agissait de données non appariées :</p>
+<p>Le <span class="math inline">\(d_{av}\)</span> pour données appariées peut être obtenu automatiquement avec la fonction <code><a href="https://easystats.github.io/effectsize/reference/repeated_measures_d.html">rm_d()</a></code> du package <a href="https://easystats.github.io/effectsize/">effectsize</a>.</p>
 <div class="cell">
 <div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dav</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://easystats.github.io/effectsize/reference/repeated_measures_d.html">rm_d</a></span><span class="op">(</span></span>
-<span>  <span class="va">Blink_rate</span> <span class="op">~</span> <span class="va">Condition</span> <span class="op">|</span> <span class="va">Subject</span>, </span>
-<span>  data <span class="op">=</span> <span class="va">Blink2</span>,</span>
-<span>  method <span class="op">=</span> <span class="st">"av"</span>,</span>
-<span>  adjust <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>    <span class="va">Blink_rate</span> <span class="op">~</span> <span class="va">Condition</span> <span class="op">|</span> <span class="va">Subject</span>,</span>
+<span>    data <span class="op">=</span> <span class="va">Blink2</span>,</span>
+<span>    method <span class="op">=</span> <span class="st">"av"</span>,</span>
+<span>    adjust <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="va">dav</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -848,15 +857,15 @@ Figure&nbsp;5.2: Exemple de graphique pour une comparaison de deux groupes de va
 </div>
 </section><section id="g_z-et-g_av-de-hedges" class="level5" data-number="5.3.2.1.2"><h5 data-number="5.3.2.1.2" class="anchored" data-anchor-id="g_z-et-g_av-de-hedges">
 <span class="header-section-number">5.3.2.1.2</span> <span class="math inline">\(g_{z}\)</span> et <span class="math inline">\(g_{av}\)</span> de Hedges</h5>
-<p>Comme pour les <span class="math inline">\(d\)</span> de Cohen calculés dans le cadre de groupes indépendants, les <span class="math inline">\(d\)</span> de Cohen obtenus avec groupes dépendants sont positivement biaisés. À nouveau, ces indices statistiques peuvent être corrigés avec le même facteur de correction montré pour le <span class="math inline">\(g\)</span> de Hedges dans la partie sur les groupes dépendants. Toutefois, <span class="math inline">\(g_{av}\)</span> ne serait malgré tout pas complètement non biaisé <span class="citation" data-cites="lakensCalculatingReportingEffect2013">(<a href="references.html#ref-lakensCalculatingReportingEffect2013" role="doc-biblioref">Lakens, 2013</a>)</span>.</p>
+<p>Comme pour les <span class="math inline">\(d\)</span> de Cohen calculés dans le cadre de groupes non appariés, les <span class="math inline">\(d\)</span> de Cohen obtenus avec groupes appariés sont positivement biaisés. À nouveau, ces indices statistiques peuvent être corrigés avec le même facteur de correction montré pour le <span class="math inline">\(g\)</span> de Hedges dans la partie sur les groupes non appariés Toutefois, <span class="math inline">\(g_{av}\)</span> ne serait malgré tout pas complètement non biaisé <span class="citation" data-cites="lakensCalculatingReportingEffect2013">(<a href="references.html#ref-lakensCalculatingReportingEffect2013" role="doc-biblioref">Lakens, 2013</a>)</span>.</p>
 <p>Pour obtenir <span class="math inline">\(g_z\)</span> :</p>
 <div class="cell">
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gz</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://easystats.github.io/effectsize/reference/repeated_measures_d.html">rm_d</a></span><span class="op">(</span></span>
-<span>  <span class="va">Blink_rate</span> <span class="op">~</span> <span class="va">Condition</span> <span class="op">|</span> <span class="va">Subject</span>, </span>
-<span>  data <span class="op">=</span> <span class="va">Blink2</span>,</span>
-<span>  method <span class="op">=</span> <span class="st">"z"</span>,</span>
-<span>  adjust <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>    <span class="va">Blink_rate</span> <span class="op">~</span> <span class="va">Condition</span> <span class="op">|</span> <span class="va">Subject</span>,</span>
+<span>    data <span class="op">=</span> <span class="va">Blink2</span>,</span>
+<span>    method <span class="op">=</span> <span class="st">"z"</span>,</span>
+<span>    adjust <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="va">gz</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -871,10 +880,10 @@ Figure&nbsp;5.2: Exemple de graphique pour une comparaison de deux groupes de va
 <div class="cell">
 <div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gav</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://easystats.github.io/effectsize/reference/repeated_measures_d.html">rm_d</a></span><span class="op">(</span></span>
-<span>  <span class="va">Blink_rate</span> <span class="op">~</span> <span class="va">Condition</span> <span class="op">|</span> <span class="va">Subject</span>, </span>
-<span>  data <span class="op">=</span> <span class="va">Blink2</span>,</span>
-<span>  method <span class="op">=</span> <span class="st">"av"</span>,</span>
-<span>  adjust <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>    <span class="va">Blink_rate</span> <span class="op">~</span> <span class="va">Condition</span> <span class="op">|</span> <span class="va">Subject</span>,</span>
+<span>    data <span class="op">=</span> <span class="va">Blink2</span>,</span>
+<span>    method <span class="op">=</span> <span class="st">"av"</span>,</span>
+<span>    adjust <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="va">gav</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -892,7 +901,7 @@ Figure&nbsp;5.2: Exemple de graphique pour une comparaison de deux groupes de va
 <p><span class="math display">\[
 \frac{\sum_{i=1}^{N} (SignedRank(X_{i} - Y_{i}) &gt; 0)}{N (N+1) / 2} - \frac{\sum_{i=1}^{N} (SignedRank(X_{i} - Y_{i}) &lt; 0)}{N (N+1) / 2}(-1),
 \]</span></p>
-<p>avec <span class="math inline">\(SignedRank(X_{i} - Y_{i}))\)</span> les rangs signés associés aux observations des modalités <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span> toutes observations confondues, et <span class="math inline">\(N\)</span> les nombres d’individus étudiés. Cette corrélation peut être obtenue manuellement dans R de la manière suivante :</p>
+<p>avec <span class="math inline">\(SignedRank(X_{i} - Y_{i}))\)</span> les rangs signés associés aux observations des modalités <span class="math inline">\(X\)</span> et <span class="math inline">\(Y\)</span> toutes observations confondues, et <span class="math inline">\(N\)</span> le nombre d’individus étudiés. Cette corrélation peut être obtenue manuellement dans R de la manière suivante :</p>
 <div class="cell">
 <div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Exemple avec le jeu de données `Blink2` crée plus haut</span></span>
 <span><span class="co"># On cherche à comparer les condition `Straight`et `Oscillating` pour la variable `Condition` </span></span>
@@ -945,7 +954,7 @@ Figure&nbsp;5.2: Exemple de graphique pour une comparaison de deux groupes de va
 1.00              | [1.00, 1.00]</code></pre>
 </div>
 </div>
-<p>Le résultat indique que les observations liée à la deuxième modalité de la variable <code>Condition</code>, qui est <code>Oscillating</code>, ont systématiquement des valeurs inférieures à celles relatives à la modalité <code>Straight</code>.</p>
+<p>Le résultat indique que les observations liées à la deuxième modalité de la variable <code>Condition</code>, qui est <code>Oscillating</code>, ont systématiquement des valeurs inférieures à celles relatives à la modalité <code>Straight</code> (pour un même individu).</p>
 <p>Pour obtenir une interprétation des valeurs, on peut reprendre les procédures décrites pour les cas de groupes non appariés.</p>
 </section><section id="langage-commun-2" class="level4" data-number="5.3.2.3"><h4 data-number="5.3.2.3" class="anchored" data-anchor-id="langage-commun-2">
 <span class="header-section-number">5.3.2.3</span> Langage commun</h4>
@@ -965,14 +974,13 @@ Figure&nbsp;5.2: Exemple de graphique pour une comparaison de deux groupes de va
 - Non-parametric CLES</code></pre>
 </div>
 </div>
-<p>Le résultat indique que la probabilité d’avoir une valeur de <code>Sepal.Length</code> supérieure pour l’espèce <code>setosa</code> par rapport à l’espèce <code>versicolor</code> est de 7 % (réciproquement, la probabilité de supériorité pour l’espèce <code>setosa</code> est de 93 %). On note, dans le code ci-dessus, que l’argument <code>parametric</code> est configuré avec la valeur <code>FALSE</code>. De cette manière, la probabilité de supériorité reste calculée à partir des rangs à partir de la corrélation bisériale des rangs tel que : <span class="math inline">\(Pr(Superiority) = (r_{rb} + 1)/2\)</span>. Ce calcul serait le plus précis (le moins biaisé) sur un ensemble de scenarii de violation des conditions de normalité et d’hétérogénéité de variance <span class="citation" data-cites="liEffectSizeMeasures2016">(<a href="references.html#ref-liEffectSizeMeasures2016" role="doc-biblioref">Li, 2016</a>)</span>.</p>
+<p>Le résultat indique que la probabilité d’avoir une valeur de <code>Blink_rate</code> supérieure pour la condition <code>Oscillating</code> par rapport à la condition <code>Straight</code> est de 100 % (réciproquement, la probabilité de supériorité pour la condition <code>Straight</code> est de 0 %).</p>
 </section></section></section><section id="résumé" class="level2" data-number="5.4"><h2 data-number="5.4" class="anchored" data-anchor-id="résumé">
 <span class="header-section-number">5.4</span> Résumé</h2>
 <ul>
 <li>L’analyse graphique de la comparaison de deux groupes de valeurs peut se faire à l’aide de <em>raincloud plots</em>.</li>
-<li>L’analyse numérique consistant à comparer deux groupes de valeurs peut consister à calculer une différence de moyennes standardisée.</li>
-<li>Les indices de différence de moyennes standardisée non biaisés sont les <span class="math inline">\(g_{s}\)</span> et <span class="math inline">\(g_{av}\)</span> de Hedges en cas de groupes indépendants et les <span class="math inline">\(g_{z}\)</span> et <span class="math inline">\(g_{av}\)</span> de Hedges en cas de groupes dépendants et peuvent être calculés avec la fonction <code><a href="https://easystats.github.io/effectsize/reference/cohens_d.html">effectsize::hedges_g()</a></code>.</li>
-<li>Afin d’éviter la supposition que les variances des groupes comparés sont égales (avec des groupes indépendants) ou pour rendre les résultats d’études avec groupes dépendants plus comparables avec les études ayant utilisé des groupes indépendants, le <span class="math inline">\(g_{av}\)</span> de Hedges pourrait être privilégié.</li>
+<li>L’analyse numérique consistant à comparer deux groupes de valeurs peut consister à calculer une différence de moyennes standardisée. Les indices de différence de moyennes standardisée non biaisés sont les <span class="math inline">\(g_{s}\)</span> et <span class="math inline">\(g_{av}\)</span> de Hedges en cas de groupes non appariés et les <span class="math inline">\(g_{z}\)</span> et <span class="math inline">\(g_{av}\)</span> de Hedges en cas de groupes appariés et peuvent être calculés respectivement avec les fonctions <code><a href="https://easystats.github.io/effectsize/reference/cohens_d.html">effectsize::hedges_g()</a></code> et <code><a href="https://easystats.github.io/effectsize/reference/repeated_measures_d.html">effectsize::rm_d()</a></code>.</li>
+<li>Afin d’éviter la supposition que les variances des groupes comparés sont égales (avec des groupes non appariés) ou pour rendre les résultats d’études avec groupes appariés plus comparables avec les études ayant utilisé des groupes non appariés, le <span class="math inline">\(g_{av}\)</span> de Hedges pourrait être privilégié.</li>
 <li>Lorsque les conditions de normalité et/ou d’homogénéité des variances ne son pas présentes, mieux vaut utiliser des indicateurs statistiques plus robustes, tels que la corrélation bisériale des rangs qui traduit la notion de dominance, ou encore la probabilité de supériorité qui s’inscrit dans l’utilisation d’un langage commun. Ces statistiques peuvent être obtenues respectivement avec les fonctions <code><a href="https://easystats.github.io/effectsize/reference/rank_biserial.html">effectsize::rank_biserial()</a></code> et <code><a href="https://easystats.github.io/effectsize/reference/p_superiority.html">effectsize::p_superiority()</a></code>.</li>
 </ul>
 
