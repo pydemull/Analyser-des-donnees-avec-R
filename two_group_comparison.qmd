@@ -29,7 +29,7 @@ La notion d’appariement ou non peut bien sûr s'étendre aux cas de figure où
 
 Les statistiques qui sont classiquement envisagées pour chiffrer les comparaisons entre deux groupes de valeurs sont les différences de moyennes (associées respectivement aux deux groupes étudiés) standardisées, c'est-à-dire normalisées (ou, plus concrètement, divisées) par le degré d'hétérogénéité interindividuelle (une sorte d'écart-type) pour la variable étudiée [@lakensCalculatingReportingEffect2013]. Ces statistiques sont inhérentes aux tests $t$ de Student et de Welch. Les différences de moyennes standardisées, qui de par leurs calculs sont sans unité, favorisent la possibilité de porter un jugement sur la grandeur relative de la différence de moyennes entre les groupes comparés et la possibilité de comparer cette différence avec celles observées dans d'autres études, en particulier celles traitant de thématiques différentes avec des variables et unités correspondantes différentes. Cela étant dit, il est important d'avoir en tête que la grandeur d'une différence de moyennes standardisée ne renseigne pas forcément directement sur l'importance pratique que la différence inter-groupe observée dans une étude pourrait avoir sur le terrain. Par exemple, une grande ou une petite différence standardisée pourraient correspondre à une même différence absolue entre deux moyennes (par exemple une distance en mètres) selon que le degré d'hétérogénéité interindividuelle dans l'étude est faible ou élevé, respectivement.
 
-En principe, les différences de moyennes standardisées sont valides pour pouvoir faire des inférences dans une population seulement lorsque la variable étudiée suit une loi normale (soit pour les deux groupes non appariés comparés, soit pour les différences intra-individu en cas de groupes appariés) et que les variances des deux groupes comparés (en cas de groupes non appariés) sont relativement identiques. Lorsqu'une de ces conditions n'est pas respectée, il est possible que l'estimation faite à partir de l'échantillon pour caractériser la population soit en général très imprécise. Aussi, dans ces cas là, mieux vaut utiliser une version dite "robuste" des différences de moyennes standardisées, tel qu'en procédant à une winsorisation des données avant de procéder aux calculs classiques (i.e., on remplace, dans les variables d'origine, les valeurs correspondant aux 20 % les plus faibles et celles correspondant aux 20 % les plus élevés par respectivement la valeur la plus basse avant les 20 % les plus faibles et la valeur la plus haute avant les 20 % les plus élevés) [@liEffectSizeMeasures2016]. Une autre approche consiste à utiliser des statistiques qui ne font pas d'hypothèse sur la manière dont sont distribuées les données dans la population d'origine pour les groupes à comparer, telles que la corrélation bisériale des rangs ou encore la probabilité de supériorité. Ces deux dernières approches sont à associer aux tests statistiques de somme des rangs et des rangs signés de Wilcoxon et sont présentées plus en détails ci-après.
+En principe, les différences de moyennes standardisées sont valides pour pouvoir faire des inférences dans une population seulement lorsque la variable étudiée suit une loi normale (soit pour chacun des deux groupes non appariés comparés, soit pour les différences intra-individu en cas de groupes appariés) et que les variances des deux groupes comparés (en cas de groupes non appariés) sont relativement identiques. Lorsqu'une de ces conditions n'est pas respectée, il est possible que l'estimation faite à partir de l'échantillon pour caractériser la population soit en général très imprécise. Aussi, dans ces cas là, mieux vaut utiliser une version dite "robuste" des différences de moyennes standardisées, tel qu'en procédant à une winsorisation des données avant de procéder aux calculs classiques (i.e., on remplace, dans les variables d'origine, les valeurs correspondant aux 20 % les plus faibles et celles correspondant aux 20 % les plus élevés par respectivement la valeur la plus basse avant les 20 % les plus faibles et la valeur la plus haute avant les 20 % les plus élevés) [@liEffectSizeMeasures2016]. Une autre approche consiste à utiliser des statistiques qui ne font pas d'hypothèse sur la manière dont sont distribuées les données dans la population d'origine pour les groupes à comparer, telles que la corrélation bisériale des rangs ou encore la probabilité de supériorité. Ces deux dernières approches sont à associer aux tests statistiques de somme des rangs et des rangs signés de Wilcoxon et sont présentées plus en détails ci-après.
 
 ### Dominance
 
@@ -45,7 +45,12 @@ L'approche du langage commun consiste à caractériser une différence entre deu
 
 La @fig-raindcloudplotsBivUnpaired1, qui est associée au bloc de code ci-dessous, montre un graphique approprié pour des données non appariées. 
 
-```{r}
+```{r raindcloudplotsBivUnpaired1}
+#| out-width: '90%'
+#| fig-cap: "Exemple de graphique pour une comparaison de deux groupes de valeurs non appariés (indépendants)"
+#| label: fig-raindcloudplotsBivUnpaired1
+#| warning: false
+
 # Configuration du jeu de données pour l'exemple avec données non appariées.
 # Il s'agit ici d'obtenir le jeu de données `iris` avec seulement deux modalités  
 # de la variable `Species`, cela en enlevant la modalité `virginica`.
@@ -53,15 +58,10 @@ iris_two_species <-
   iris |> 
   filter(Species != "virginica") |> 
   mutate(Species = factor(Species, levels = c("setosa", "versicolor")))
-```
 
-```{r raindcloudplotsBivUnpaired1}
-#| out-width: '90%'
-#| fig-cap: "Exemple de graphique pour une comparaison de deux groupes de valeurs non appariés (indépendants)"
-#| label: fig-raindcloudplotsBivUnpaired1
-#| warning: false
+head(iris_two_species)
 
-
+# Création du graphique
 ggplot(data = iris_two_species, aes(x = Species, y = Sepal.Length)) +
   geom_rain(point.args = rlang::list2(alpha = 0.3)) +
   stat_summary(
@@ -90,7 +90,7 @@ Classiquement, l'indice statistique utilisé pour calculer une différence de mo
 
 $$d_{s} = \frac{\overline{X}_{1} - \overline{X}_{2}} {\sqrt{\frac{(N_{1} - 1) \hat{\sigma}_{1}^2 + (N_{2} - 1) \hat{\sigma}_{2}^2} {N_{1} + N_{2} - 2}}},$$
 
-avec $\overline{X}_{1}$ et $\overline{X}_{2}$ les moyennes des deux groupes comparés, $N_{1}$ et $N_{2 }$ les effectifs respectifs des deux groupes comparés, et $\hat{\sigma}_{1}^2$ et $\hat{\sigma}_{2}^2$ les variances respectives des deux groupes comparés. On peut remarquer qu’au dénominateur, la variance d’un groupe donné est multipliée par un coefficient calculé à partir de l’effectif du groupe, cela pour que le poids de la variance d’un groupe dans le calcul final soit ajusté par rapport à la taille du groupe représenté. Dans R, si l'on voulait calculer $d_s$ manuellement, cela donnerait ceci (à partir du jeu de données `iris_two_species`) :
+avec $\overline{X}_{1}$ et $\overline{X}_{2}$ les moyennes des deux groupes comparés, $N_{1}$ et $N_{2 }$ les effectifs respectifs des deux groupes comparés, et $\hat{\sigma}_{1}^2$ et $\hat{\sigma}_{2}^2$ les variances respectives des deux groupes comparés. On peut remarquer qu’au dénominateur, la variance d’un groupe donné est multipliée par un coefficient calculé à partir de l’effectif du groupe, cela pour que le poids de la variance d’un groupe dans le calcul final soit ajusté par rapport à la taille du groupe. Dans R, si l'on voulait calculer $d_s$ manuellement, cela donnerait ceci (à partir du jeu de données `iris_two_species`) :
 
 ```{r}
 # Calcul des paramètres
@@ -115,10 +115,10 @@ Heureusement, le $d_{s}$ de Cohen peut être facilement calculé à l'aide de la
 library(effectsize)
 ds <-
   cohens_d(
-  Sepal.Length ~ Species, 
-  data = iris_two_species, 
-  paired = FALSE, 
-  pooled_sd = TRUE
+    Sepal.Length ~ Species,
+    data = iris_two_species,
+    paired = FALSE,
+    pooled_sd = TRUE
   )
 ds
 ```
@@ -143,15 +143,15 @@ dav <- (X1 - X2) / sqrt((SD1^2 + SD2^2) / 2)
 dav
 ```
 
-On peut obtenir le $d_{av}$ avec le package `{effectsize}` comme ceci (avec `pooled = FALSE`) : 
+On peut obtenir le $d_{av}$ avec le package `{effectsize}` comme ceci (avec `pooled_sd = FALSE`) : 
 
 ```{r}
 dav <-
   cohens_d(
-  Sepal.Length ~ Species, 
-  data = iris_two_species, 
-  paired = FALSE, 
-  pooled_sd = FALSE
+    Sepal.Length ~ Species,
+    data = iris_two_species,
+    paired = FALSE,
+    pooled_sd = FALSE
   )
 dav
 ```
@@ -178,10 +178,10 @@ Dans R, le $g_{s}$ de Hedges lié à un échantillon de population peut être ca
 ```{r hedges_g_between}
 gs <-
   hedges_g(
-  Sepal.Length ~ Species,
-  data = iris_two_species, 
-  paired = FALSE, 
-  pooled_sd = TRUE
+    Sepal.Length ~ Species,
+    data = iris_two_species,
+    paired = FALSE,
+    pooled_sd = TRUE
   )
 gs
 ```
@@ -192,10 +192,10 @@ Le $g_{av}$ de Hedges lié à un échantillon de population peut aussi être cal
 ```{r}
 gav <-
   hedges_g(
-  Sepal.Length ~ Species,
-  data = iris_two_species, 
-  paired = FALSE, 
-  pooled_sd = FALSE
+    Sepal.Length ~ Species,
+    data = iris_two_species,
+    paired = FALSE,
+    pooled_sd = FALSE
   )
 gav
 ```
@@ -215,9 +215,9 @@ Dans R, le $\Delta$ de Glass lié à un échantillon de population peut être ca
 ```{r glass delta between}
 gd <-
   glass_delta(
-  Sepal.Length ~ Species, 
-  data = iris_two_species
-  )
+    Sepal.Length ~ Species, 
+    data = iris_two_species
+    )
 gd
 ```
 
@@ -260,14 +260,9 @@ $$
 \frac{\sum_{i=1}^{N} rank(X_{i}) - N_{X} (N_{X} + 1) / 2}{N_{X}  N_{Y}} - \frac{\sum_{i=1}^{N} rank(Y_{i}) - N_{Y} (N_{Y} + 1) / 2}{N_{X}  N_{Y}},
 $$
 
-avec $rank(X_{i})$ et $rank(Y_{i})$ les rangs des observations des variables $X$ et $Y$ toutes observations confondues, et $N_{X}$ et $N_{Y}$ les nombres d'observations pour les variables $X$ et $Y$. Cette corrélation peut être obtenue manuellement dans R de la manière suivante : 
+avec $rank(X_{i})$ et $rank(Y_{i})$ les rangs des observations des variables $X$ et $Y$ toutes observations confondues, et $N_{X}$ et $N_{Y}$ les nombres d'observations pour les variables $X$ et $Y$ respectivement. Cette corrélation peut être obtenue manuellement dans R de la manière suivante : 
 
 ```{r}
-# Exemple avec le jeu de données `iris_two_species` crée plus haut
-# On cherche à comparer les espèces `setosa`et `versicolor` pour la 
-# variable `Sepal.Length` 
-head(iris_two_species)
-
 # Calcul des rangs relatifs aux observations des deux modalités confondues
 ranks <- rank(iris_two_species$Sepal.Length)
 
@@ -294,10 +289,10 @@ La corrélation bisériale des rangs peut s'obtenir facilement avec la fonction 
 ```{r}
 rb <-
   rank_biserial(
-  Sepal.Length ~ Species, 
-  data = iris_two_species, 
-  paired = FALSE
-)
+    Sepal.Length ~ Species, 
+    data = iris_two_species, 
+    paired = FALSE
+    )
 rb
 ```
 
@@ -334,15 +329,15 @@ Pour comparer les groupes en utilisant la probabilité de supériorité, on peut
 
 ```{r}
 p_superiority(
-  Sepal.Length ~ Species, 
-  data = iris_two_species, 
+  Sepal.Length ~ Species,
+  data = iris_two_species,
   paired = FALSE,
   parametric = FALSE
-  )
+)
 ```
 
 Le résultat indique que la probabilité d'avoir une valeur de `Sepal.Length` supérieure pour l'espèce `setosa` par rapport à l'espèce `versicolor` est de 7 % (réciproquement, la probabilité de supériorité pour l'espèce `setosa` est de 93 %).
-On note, dans le code ci-dessus, que l'argument `parametric` est configuré avec la valeur `FALSE`. De cette manière, la probabilité de supériorité reste calculée à partir des rangs à partir de la corrélation bisériale des rangs tel que : $Pr(Superiority) = (r_{rb} + 1)/2$. Ce calcul serait le plus précis (le moins biaisé) sur un ensemble de scenarii de violation des conditions de normalité et d'hétérogénéité de variance [@liEffectSizeMeasures2016].
+On note, dans le code ci-dessus, que l'argument `parametric` est configuré avec la valeur `FALSE`. De cette manière, la probabilité de supériorité est calculée à partir de la corrélation bisériale des rangs tel que : $Pr(Superiority) = (r_{rb} + 1)/2$. Ce calcul serait le plus précis (le moins biaisé), notamment par rapport aux différences de moyennes standardisées classiques, sur un ensemble de scenarii de violation des conditions de normalité et d'hétérogénéité de variance [@liEffectSizeMeasures2016].
 
 ## Comparer deux groupes appariés
 
@@ -353,6 +348,16 @@ La @fig-raindcloudplotsBivPaired1 montre une proposition de graphique dans le ca
 ```{r}
 #| message: false
 #| warning: false
+
+
+```
+
+```{r raindcloudplotsBivPaired1}
+#| warning: false
+#| message: false
+#| out-width: '90%'
+#| fig-cap: "Exemple de graphique pour une comparaison de deux groupes de valeurs appariés (dépendants)"
+#| label: fig-raindcloudplotsBivPaired1
 
 # Charger le package
 library(PairedData)
@@ -373,14 +378,11 @@ Blink2 <-
       Condition, "Straight", "Oscillating"
       )
     )
-```
 
-```{r raindcloudplotsBivPaired1}
-#| warning: false
-#| out-width: '90%'
-#| fig-cap: "Exemple de graphique pour une comparaison de deux groupes de valeurs appariés (dépendants)"
-#| label: fig-raindcloudplotsBivPaired1
+# Visualisation du jeu de données
+head(Blink2)
 
+# Création du graphique
 ggplot(data = Blink2, aes(x = Condition, y = Blink_rate)) +
   geom_rain(
     rain.side = "f1x1",
@@ -407,14 +409,14 @@ ggplot(data = Blink2, aes(x = Condition, y = Blink_rate)) +
     )
 ```
 
-Le graphique montré ci-dessus pour données appariées contient des éléments graphiques supplémentaires par rapport à celui proposé pour les données non appariées : des lignes reliant les données individuelles, et une ligne reliant les statistiques qui représentent les tendances centrales (ici les moyennes). Ces deux types d'éléments graphiques sont importants pour explicitement montrer qu'il y a un lien entre les deux conditions de mesure (il s'agit des mêmes individus et donc du même groupe), et cela permet de mettre en évidence à la fois les trajectoires individuelles et celle du groupe entre les deux conditions de mesure.
+Le graphique montré ci-dessus pour des données appariées contient des éléments graphiques supplémentaires par rapport à celui proposé pour les données non appariées : des lignes reliant les données individuelles, et une ligne reliant les statistiques qui représentent les tendances centrales (ici les moyennes). Ces deux types d'éléments graphiques sont importants pour explicitement montrer qu'il y a un lien entre les deux conditions de mesure (il s'agit des mêmes individus et donc du même groupe), et cela permet de mettre en évidence à la fois les trajectoires individuelles et celle du groupe entre les deux conditions de mesure.
 
 Pour obtenir ces éléments supplémentaires, il a fallu configurer l'argument `id.long.var` de la fonction `geom_rain()` pour indiquer le nom de la variable sur laquelle se baser pour garder l'appariement des données individuelles entre les deux conditions et ainsi permettre un bon tracé des lignes individuelles. La ligne reliant les moyennes a été ajoutée grâce à la fonction`stat_summary()` avec la particularité d'indiquer `1` pour l'argument `group` de la fonction `aes()` associée à la fonction `stat_summary()`. Enfin, l'argument `rain.side` de la fonction `geom_rain()` a été configuré de telle sorte à avoir les données des deux groupes en vis-à-vis, mais un autre choix aurait pu être fait.
 
 
 ### Étudier numériquement la comparaison
 
-#### Différences standardisées
+#### Différences de moyennes standardisées
 
 ##### $d_{z}$ et $d_{av}$ de Cohen
 
@@ -437,18 +439,18 @@ dz <- mean_diff / sd_diff
 dz
 ```
 
-Le $d_{z}$ peut heureusement être obtenu à nouveau avec la fonction `rm_d()` du package `{effectsize}`. Pour illustrer cela, nous allons utiliser le jeu de données `Blink2` crée plus haut pour l'exemple de graphique :
+Le $d_{z}$ peut être obtenu automatiquement avec la fonction `rm_d()` du package `{effectsize}`. Pour illustrer cela, nous allons utiliser le jeu de données `Blink2` crée plus haut pour l'exemple de graphique :
 
 ```{r cohens_dz_within}
 #| warning: false
 #| message: false
-#
+
 dz <-
   rm_d(
-  Blink_rate ~ Condition | Subject, 
-  data = Blink2,
-  method = "z",
-  adjust = FALSE
+    Blink_rate ~ Condition | Subject,
+    data = Blink2,
+    method = "z",
+    adjust = FALSE
   )
 dz
 ```
@@ -473,7 +475,7 @@ dav <- (X1 - X2) / sqrt((SD1^2 + SD2^2) / 2)
 dav
 ```
 
-Pour obtenir $d_{av}$ avec des données appariées et la fonction `cohens_d()`, il faut procéder comme s'il s'agissait de données non appariées : 
+Le $d_{av}$ pour données appariées peut être obtenu automatiquement avec la fonction `rm_d()` du package `{effectsize}`.
 
 ```{r cohens_dav_within}
 #| warning: false
@@ -481,27 +483,27 @@ Pour obtenir $d_{av}$ avec des données appariées et la fonction `cohens_d()`, 
 
 dav <-
   rm_d(
-  Blink_rate ~ Condition | Subject, 
-  data = Blink2,
-  method = "av",
-  adjust = FALSE
+    Blink_rate ~ Condition | Subject,
+    data = Blink2,
+    method = "av",
+    adjust = FALSE
   )
 dav
 ```
 
 ##### $g_{z}$ et $g_{av}$ de Hedges
 
-Comme pour les $d$ de Cohen calculés dans le cadre de groupes indépendants, les $d$ de Cohen obtenus avec groupes dépendants sont positivement biaisés. À nouveau, ces indices statistiques peuvent être corrigés avec le même facteur de correction montré pour le $g$ de Hedges dans la partie sur les groupes dépendants. Toutefois, $g_{av}$ ne serait malgré tout pas complètement non biaisé [@lakensCalculatingReportingEffect2013].
+Comme pour les $d$ de Cohen calculés dans le cadre de groupes non appariés, les $d$ de Cohen obtenus avec groupes appariés sont positivement biaisés. À nouveau, ces indices statistiques peuvent être corrigés avec le même facteur de correction montré pour le $g$ de Hedges dans la partie sur les groupes non appariés Toutefois, $g_{av}$ ne serait malgré tout pas complètement non biaisé [@lakensCalculatingReportingEffect2013].
 
 Pour obtenir $g_z$ :
 
 ```{r}
 gz <-
   rm_d(
-  Blink_rate ~ Condition | Subject, 
-  data = Blink2,
-  method = "z",
-  adjust = TRUE
+    Blink_rate ~ Condition | Subject,
+    data = Blink2,
+    method = "z",
+    adjust = TRUE
   )
 gz
 ```
@@ -514,10 +516,10 @@ Pour obtenir $g_{av}$ :
 
 gav <-
   rm_d(
-  Blink_rate ~ Condition | Subject, 
-  data = Blink2,
-  method = "av",
-  adjust = TRUE
+    Blink_rate ~ Condition | Subject,
+    data = Blink2,
+    method = "av",
+    adjust = TRUE
   )
 gav
 ```
@@ -537,7 +539,7 @@ $$
 \frac{\sum_{i=1}^{N} (SignedRank(X_{i} - Y_{i}) > 0)}{N (N+1) / 2} - \frac{\sum_{i=1}^{N} (SignedRank(X_{i} - Y_{i}) < 0)}{N (N+1) / 2}(-1),
 $$
 
-avec $SignedRank(X_{i} - Y_{i}))$ les rangs signés associés aux observations des modalités $X$ et $Y$ toutes observations confondues, et $N$ les nombres d'individus étudiés. Cette corrélation peut être obtenue manuellement dans R de la manière suivante : 
+avec $SignedRank(X_{i} - Y_{i}))$ les rangs signés associés aux observations des modalités $X$ et $Y$ toutes observations confondues, et $N$ le nombre d'individus étudiés. Cette corrélation peut être obtenue manuellement dans R de la manière suivante : 
 
 ```{r}
 # Exemple avec le jeu de données `Blink2` crée plus haut
@@ -576,7 +578,7 @@ rb <-
 rb
 ```
 
-Le résultat indique que les observations liée à la deuxième modalité de la variable `Condition`, qui est `Oscillating`, ont systématiquement des valeurs inférieures à celles relatives à la modalité `Straight`.
+Le résultat indique que les observations liées à la deuxième modalité de la variable `Condition`, qui est `Oscillating`, ont systématiquement des valeurs inférieures à celles relatives à la modalité `Straight` (pour un même individu).
 
 Pour obtenir une interprétation des valeurs, on peut reprendre les procédures décrites pour les cas de groupes non appariés.
 
@@ -593,15 +595,13 @@ p_superiority(
 )
 ```
 
-Le résultat indique que la probabilité d'avoir une valeur de `Sepal.Length` supérieure pour l'espèce `setosa` par rapport à l'espèce `versicolor` est de 7 % (réciproquement, la probabilité de supériorité pour l'espèce `setosa` est de 93 %).
-On note, dans le code ci-dessus, que l'argument `parametric` est configuré avec la valeur `FALSE`. De cette manière, la probabilité de supériorité reste calculée à partir des rangs à partir de la corrélation bisériale des rangs tel que : $Pr(Superiority) = (r_{rb} + 1)/2$. Ce calcul serait le plus précis (le moins biaisé) sur un ensemble de scenarii de violation des conditions de normalité et d'hétérogénéité de variance [@liEffectSizeMeasures2016].
+Le résultat indique que la probabilité d'avoir une valeur de `Blink_rate` supérieure pour la condition `Oscillating` par rapport à la condition `Straight` est de 100 % (réciproquement, la probabilité de supériorité pour la condition `Straight` est de 0 %).
 
 ## Résumé
 
 * L'analyse graphique de la comparaison de deux groupes de valeurs peut se faire à l'aide de *raincloud plots*.
-* L'analyse numérique consistant à comparer deux groupes de valeurs peut consister à calculer une différence de moyennes standardisée. 
-* Les indices de différence de moyennes standardisée non biaisés sont les $g_{s}$ et $g_{av}$ de Hedges en cas de groupes indépendants et les $g_{z}$ et $g_{av}$ de Hedges en cas de groupes dépendants et peuvent être calculés avec la fonction `effectsize::hedges_g()`.
-* Afin d'éviter la supposition que les variances des groupes comparés sont égales (avec des groupes indépendants) ou pour rendre les résultats d'études avec groupes dépendants plus comparables avec les études ayant utilisé des groupes indépendants, le $g_{av}$ de Hedges pourrait être privilégié.
+* L'analyse numérique consistant à comparer deux groupes de valeurs peut consister à calculer une différence de moyennes standardisée. Les indices de différence de moyennes standardisée non biaisés sont les $g_{s}$ et $g_{av}$ de Hedges en cas de groupes non appariés et les $g_{z}$ et $g_{av}$ de Hedges en cas de groupes appariés et peuvent être calculés respectivement avec les fonctions `effectsize::hedges_g()` et `effectsize::rm_d()`.
+* Afin d'éviter la supposition que les variances des groupes comparés sont égales (avec des groupes non appariés) ou pour rendre les résultats d'études avec groupes appariés plus comparables avec les études ayant utilisé des groupes non appariés, le $g_{av}$ de Hedges pourrait être privilégié.
 * Lorsque les conditions de normalité et/ou d'homogénéité des variances ne son pas présentes, mieux vaut utiliser des indicateurs statistiques plus robustes, tels que la corrélation bisériale des rangs qui traduit la notion de dominance, ou encore la probabilité de supériorité qui s'inscrit dans l'utilisation d'un langage commun. Ces statistiques peuvent être obtenues respectivement avec les fonctions `effectsize::rank_biserial()` et `effectsize::p_superiority()`.
 
 
