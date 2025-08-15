@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.42">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>1&nbsp; Prérequis – Analyser des données avec R</title>
 <style>
@@ -67,10 +67,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-8da5b4427184b79ecddefad3d342027e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -304,7 +304,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Aller sur la page web <a href="https://posit.co/download/rstudio-desktop/">https://posit.co/download/rstudio-desktop/</a>.</li>
 <li>Scroller vers le bas et cliquer sur le bouton <strong>DOWNLOAD RSTUDIO DESKTOP FOR WINDOWS</strong> si vous avez une machine Windows. Si vous avez un MAC et que le bouton n’est pas mis à jour automatiquement pour votre MAC, alors il faut faire défiler un peu la page vers le bas pour ensuite cliquer sur le lien de téléchargement de RStudio adapté à votre version de système d’exploitation.</li>
 <li>
-<strong>Sur WINDOWS :</strong> Exécuter le fichier s’il est proposé de le faire. Si le clic entraîne automatiquement le téléchargement du fichier, retrouver alors ce fichier sur le PC (une fois son enregistrement terminé), puis exécuter le fichier et suivre la procédure d’installation par défaut. Une fois le logiciel installé, retrouver le fichier d’exécution du logiciel sur le PC (chemin d’accès possible : <strong>Ordinateur &gt; Windows (C:) &gt; Programmes &gt; RStudio &gt; bin &gt; rstudio.exe</strong>). Créer un raccourci pour le fichier <strong>rstudio.exe</strong> (clic droit sur le fichier &gt; Créer un raccourci) et mettre le raccourci sur le bureau du PC. Double-cliquer sur l’icône RStudio afin de vérifier si l’ouverture s’effectue correctement.</li>
+<strong>Sur WINDOWS :</strong> Exécuter le fichier s’il est proposé de le faire. Si le clic entraîne automatiquement le téléchargement du fichier, retrouver alors ce fichier sur le PC (une fois son enregistrement terminé), puis exécuter le fichier et suivre la procédure d’installation par défaut. Une fois le logiciel installé, retrouver le fichier d’exécution du logiciel sur le PC (chemin d’accès possible : <strong>Ordinateur &gt; Windows (C:) &gt; Programmes &gt; RStudio &gt; rstudio.exe</strong>). Créer un raccourci pour le fichier <strong>rstudio.exe</strong> et le mettre sur le bureau du PC ou l’épingler dans la barre de tâches. Double-cliquer sur l’icône RStudio afin de vérifier si l’ouverture s’effectue correctement.</li>
 <li>
 <strong>Sur MAC :</strong> Le téléchargement débute lorsque vous cliquez sur le lien. Une fois le téléchargement terminé, sur votre MAC, réaliser l’installation en double-cliquant sur le fichier téléchargé et en suivant la procédure indiquée. Une fois l’installation terminée, aller dans le dossier <strong>Applications</strong> du MAC et double-cliquer sur l’icône de RStudio pour vérifier si le logiciel s’ouvre correctement.</li>
 </ul></section></section><section id="prise-en-main-de-rstudio" class="level2" data-number="1.2"><h2 data-number="1.2" class="anchored" data-anchor-id="prise-en-main-de-rstudio">
@@ -461,7 +461,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Length</span>, y <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">Petal.Length</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Comme nous pouvons l’observer ci-dessus, pour utiliser une fonction, il faut d’abord écrire son nom, puis mettre des parenthèses pour qu’on puisse écrire des informations à l’intérieur. Ces informations, elles sont de deux natures. D’un côté il y a les <strong>arguments</strong> (qui sont <code>x</code> et <code>y</code> dans l’exemple ci-dessus), et d’un autre côté il y a les <strong>valeurs</strong> (qui sont les variables <code>Sepal.Length</code> et <code>Petal.Length</code> du jeu de données <code>iris</code> dans l’exemple ci-dessus). Notons ici que le concept de valeur est à prendre au sens général du terme. Dans ce cadre là, une valeur pourrait tout aussi bien désigner des nombres ou des lettres, des vecteurs, des jeux de données, etc. Avec certaines fonctions, nous aurions pu mettre le nom de la variable seul et mettre le nom du jeu de données en face d’un autre argument, mais cela n’était pas possible ici. Comme nous pouvons le voir également, l’argument et la valeur sont toujours mis en lien par le biais du signe <code>=</code>. (Attention : Nous verrons plus tard qu’avec certaines fonctions, l’écriture qui est à gauche du signe <code>=</code> est en fait le nom d’une nouvelle variable à créer, mais laissons cela de côté pour le moment.) Le nombre d’arguments dépend des fonctions. Certaines n’en n’ont qu’un, d’autres peuvent en avoir un très grand nombre. Dans une fonction, certains arguments doivent obligatoirement recevoir une valeur indiquée par nos soins, alors que d’autres arguments ne seront tout simplement pas utilisés si on ne leur associe pas une valeur particulière. Enfin, certains arguments prendront une valeur par défaut associée à la fonction si l’on écrit rien les concernant dans la fonction. Dans la fonction <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code>, seul l’argument <code>x</code> doit obligatoirement recevoir une valeur pour que la fonction puisse être utilisée. Dans notre exemple, le fait d’avoir en plus associé une valeur à l’argument <code>y</code> permet à la fonction de non pas montrer uniquement les données de la variable <code>x</code>, mais de réaliser un graphique en montrant les données de <code>y</code> en fonction de <code>x</code>, comme illustré sur la <a href="#fig-plot_function2" class="quarto-xref">Figure&nbsp;<span>1.1</span></a> :</p>
+<p>Comme nous pouvons l’observer ci-dessus, pour utiliser une fonction, il faut d’abord écrire son nom, puis mettre des parenthèses pour qu’on puisse écrire des informations à l’intérieur. Ces informations, elles sont de deux natures. D’un côté il y a les <strong>arguments</strong> (qui sont <code>x</code> et <code>y</code> dans l’exemple ci-dessus), et d’un autre côté il y a les <strong>valeurs</strong> (qui sont les variables <code>Sepal.Length</code> et <code>Petal.Length</code> du jeu de données <code>iris</code> dans l’exemple ci-dessus). Notons ici que le concept de valeur est à prendre au sens général du terme. Dans ce cadre là, une valeur pourrait tout aussi bien désigner des nombres ou des lettres, des vecteurs, des jeux de données, etc. Avec certaines fonctions, nous aurions pu mettre le nom de la variable seul et mettre le nom du jeu de données en face d’un autre argument, mais cela n’était pas possible ici. Comme nous pouvons le voir également, l’argument et la valeur sont toujours mis en lien par le biais du signe <code>=</code>. (Attention : Nous verrons plus tard qu’avec certaines fonctions, l’écriture qui est à gauche du signe <code>=</code> est en fait le nom d’une nouvelle variable à créer, mais laissons cela de côté pour le moment.) Le nombre d’arguments dépend des fonctions. Certaines n’en n’ont qu’un, d’autres peuvent en avoir un très grand nombre. Dans une fonction, certains arguments doivent obligatoirement recevoir une valeur indiquée par nos soins, alors que d’autres arguments ne seront tout simplement pas utilisés si on ne leur associe pas une valeur particulière. Enfin, certains arguments prendront une valeur par défaut associée à la fonction si l’on n’écrit rien les concernant dans la fonction. Dans la fonction <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code>, seul l’argument <code>x</code> doit obligatoirement recevoir une valeur pour que la fonction puisse être utilisée. Dans notre exemple, le fait d’avoir en plus associé une valeur à l’argument <code>y</code> permet à la fonction de non pas montrer uniquement les données de la variable <code>x</code>, mais de réaliser un graphique en montrant les données de <code>y</code> en fonction de <code>x</code>, comme illustré sur la <a href="#fig-plot_function2" class="quarto-xref">Figure&nbsp;<span>1.1</span></a> :</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Length</span>, y <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">Petal.Length</span><span class="op">)</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -502,7 +502,7 @@ Figure&nbsp;1.2: Graphique obtenu avec un paramétrage implicite de la fonction 
 <div class="cell">
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="op">?</span><span class="va">plot</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Toutefois, paradoxalement, l’aide n’est pas toujours facile à comprendre pour ceux qui n’ont pas un niveau d’expertise avancé avec R. Pour bien comprendre comment on peut utiliser une fonction, internet peut être une excellente ressource car il regorge de sites et d’exemples crées par la communauté R. L’un des sites sur lesquels on tombe souvent lors d’une recherche internet est le site https://stackoverflow.com. Une bonne partie des problèmes de compréhension et d’utilisation des fonctions de R que l’on rencontre peuvent être résolus en consultant des exemples venant de ce site.</p>
+<p>Toutefois, paradoxalement, l’aide n’est pas toujours facile à comprendre pour celles et ceux qui n’ont pas un niveau d’expertise avancé avec R. Pour bien comprendre comment on peut utiliser une fonction, internet peut être une excellente ressource car il regorge de sites et d’exemples crées par la communauté R. L’un des sites sur lesquels on tombe souvent lors d’une recherche internet est le site https://stackoverflow.com. Une bonne partie des problèmes de compréhension et d’utilisation des fonctions de R que l’on rencontre peuvent être résolus en consultant des exemples venant de ce site.</p>
 </section><section id="installer-et-charger-des-packages" class="level3" data-number="1.2.5"><h3 data-number="1.2.5" class="anchored" data-anchor-id="installer-et-charger-des-packages">
 <span class="header-section-number">1.2.5</span> Installer et charger des <em>packages</em>
 </h3>
@@ -519,7 +519,7 @@ Figure&nbsp;1.2: Graphique obtenu avec un paramétrage implicite de la fonction 
 <span class="header-section-number">1.2.6</span> Divers</h3>
 <p>Au fur et à mesure que l’on écrit un script, une bonne pratique consiste à régulièrement créer des sections avec des titres et d’ajouter des commentaires pour certaines analyses. Afin de ne pas rendre activable les lignes de code qui ne serviraient qu’à écrire des titres ou des commentaires, il convient d’utiliser le symbole <code>#</code> devant l’écriture du code.</p>
 <div class="cell">
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Titre de section 1 -------------------------------------------</span></span>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Titre de section 1 ----</span></span>
 <span><span class="co">## Sous-titre 1</span></span>
 <span><span class="co">## Sous-titre 2</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -626,8 +626,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -738,7 +736,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
