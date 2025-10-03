@@ -20,7 +20,7 @@ library(tidyr)
 
 Lorsqu'on compare des données quantitatives ou qualitatives en fonction des modalités d'une variable qualitative, on peut avoir des données qui sont non appariées (étude de type *between-subject design* en anglais) ou appariées (étude de type *within-subject design* en anglais). Avoir des données non appariées signifie que les données n'appartiennent pas aux mêmes individus. Un exemple simple, pour ce premier cas, peut être la comparaison de la taille entre les hommes et les femmes. Dans ce cas, les données quantitatives de taille selon les modalités de sexe proviendront forcément d'individus différents et ne formeront donc pas des paires. S'agissant des cas de données appariées, ils se retrouvent dans les études où plusieurs individus sont évalués plusieurs fois dans des conditions similaires ou différentes et que l'on cherche à comparer. En sciences du sport, un exemple relativement classique est de tester la performance d'endurance (variable quantitative) en ayant pris (condition de test) ou non (condition contrôle) une substance potentiellement ergogénique, la prise de substance ou non étant les modalités d'une même variable qualitative de type condition. Dans ce cas là, tous les individus auront des données dans les deux conditions et ces données seront donc appariées (dépendantes).
 
-La notion d’appariement ou non peut bien sûr s'étendre aux cas de figure où il y aurait plus que 2 groupes de valeurs à comparer. Toutefois, les procédures graphiques et calculatoires sont différentes selon que l'on a 2 groupes ou plus. Ce chapitre s'intéresse seulement à la comparaison de 2 groupes.
+La notion d’appariement ou non peut bien sûr s'étendre aux cas de figure où il y aurait plus que deux groupes de valeurs à comparer. Toutefois, les procédures graphiques et calculatoires sont différentes selon que l'on a deux groupes ou plus. Ce chapitre s'intéresse seulement à la comparaison de deux groupes.
 
 ## Comparaison sur une variable quantitative
 
@@ -30,7 +30,7 @@ La notion d’appariement ou non peut bien sûr s'étendre aux cas de figure où
 
 Les statistiques qui sont classiquement envisagées pour chiffrer les comparaisons entre deux groupes de valeurs numériques sont les différences de moyennes (associées respectivement aux deux groupes étudiés) standardisées, c'est-à-dire normalisées (ou, plus concrètement, divisées) par le degré d'hétérogénéité interindividuelle (une sorte d'écart-type) pour la variable étudiée [@lakensCalculatingReportingEffect2013]. Ces statistiques sont inhérentes aux tests $t$ de Student et de Welch. Les différences de moyennes standardisées, qui de par leurs calculs sont sans unité, favorisent la possibilité de porter un jugement sur la grandeur relative de la différence de moyennes entre les groupes comparés et la possibilité de comparer cette différence avec celles observées dans d'autres études, en particulier celles traitant de thématiques différentes avec des variables et unités correspondantes différentes. Cela étant dit, il est important d'avoir en tête que la grandeur d'une différence de moyennes standardisée ne renseigne pas forcément directement sur l'importance pratique que la différence inter-groupe observée dans une étude pourrait avoir sur le terrain. Par exemple, une grande ou une petite différence standardisée pourraient correspondre à une même différence absolue entre deux moyennes (par exemple une distance en mètres) selon que le degré d'hétérogénéité interindividuelle dans l'étude est faible ou élevé, respectivement.
 
-En principe, les différences de moyennes standardisées sont valides pour pouvoir faire des inférences dans une population seulement lorsque la variable étudiée suit une loi normale (soit pour chacun des deux groupes non appariés comparés, soit pour les différences intra-individu en cas de groupes appariés) et que les variances des deux groupes comparés (en cas de groupes non appariés) sont relativement identiques. Lorsqu'une de ces conditions n'est pas respectée, il est possible que l'estimation faite à partir de l'échantillon pour caractériser la population soit en général très imprécise. Aussi, dans ces cas là, mieux vaut utiliser une version dite "robuste" des différences de moyennes standardisées, tel qu'en procédant à une winsorisation des données avant de procéder aux calculs classiques (i.e., on remplace, dans les variables d'origine, les valeurs correspondant aux 20 % les plus faibles et celles correspondant aux 20 % les plus élevés par respectivement la valeur la plus basse avant les 20 % les plus faibles et la valeur la plus haute avant les 20 % les plus élevés) [@liEffectSizeMeasures2016]. Une autre approche consiste à utiliser des statistiques qui ne font pas d'hypothèse sur la manière dont sont distribuées les données dans la population d'origine pour les groupes à comparer, telles que la corrélation bisériale des rangs qui est à associer aux tests statistiques de somme des rangs et des rangs signés de Wilcoxon. Enfin, une autre approche robuste qui peut être associée à divers tests de comparaison de 2 groupes est la probabilité de supériorité. Ces deux dernières approches sont présentées plus en détails ci-après.
+En principe, les différences de moyennes standardisées sont valides pour pouvoir faire des inférences dans une population seulement lorsque la variable étudiée suit une loi normale (soit pour chacun des deux groupes non appariés comparés, soit pour les différences intra-individu en cas de groupes appariés) et que les variances des deux groupes comparés (en cas de groupes non appariés) sont relativement identiques. Lorsqu'une de ces conditions n'est pas respectée, il est possible que l'estimation faite à partir de l'échantillon pour caractériser la population soit en général très imprécise. Aussi, dans ces cas là, mieux vaut utiliser une version dite "robuste" des différences de moyennes standardisées, tel qu'en procédant à une winsorisation des données avant de procéder aux calculs classiques (i.e., on remplace, dans les variables d'origine, les valeurs correspondant aux 20 % les plus faibles et celles correspondant aux 20 % les plus élevés par respectivement la valeur la plus basse avant les 20 % les plus faibles et la valeur la plus haute avant les 20 % les plus élevés) [@liEffectSizeMeasures2016]. Une autre approche consiste à utiliser des statistiques qui ne font pas d'hypothèse sur la manière dont sont distribuées les données dans la population d'origine pour les groupes à comparer, telles que la corrélation bisériale des rangs qui est à associer aux tests statistiques de somme des rangs et des rangs signés de Wilcoxon. Enfin, une autre approche robuste qui peut être associée à divers tests de comparaison de deux groupes est la probabilité de supériorité. Ces deux dernières approches sont présentées plus en détails ci-après.
 
 #### Dominance
 
@@ -172,7 +172,7 @@ avec $d$ le $d_s$ ou le $d_{av}$ de Cohen, et $N_{1}$ et $N_{2}$ les effectifs r
 
 $$g =  d \frac{\Gamma(\frac{df}{2})}{\sqrt{\frac{df}{2}\Gamma(\frac{df-1}{2})}} $$
 
-avec $\Gamma$ la loi Gamma, et $df$ ce qu’on appelle le nombre de degrés de liberté (qui est ici égal au nombre total d’individus moins 2). Dans les faits, les différences entre $d$ et $g$ sont minimes, surtout avec $N$ > 20 dans les groupes.
+avec $\Gamma$ la loi Gamma, et $df$ ce qu’on appelle le nombre de degrés de liberté (qui est ici égal au nombre total d’individus moins 2). Dans les faits, les différences entre $d$ et $g$ sont relativement modestes, surtout avec $N$ > 20 dans les groupes.
 
 Dans R, le $g_{s}$ de Hedges lié à un échantillon de population peut être calculé à l'aide de la fonction `hedges_g()` du package `{effectsize}` :
 
@@ -245,7 +245,7 @@ flextable(
   autofit()
 ```
 
-Pour obtenir une interprétation automatique en même temps que la valeur de différence de moyennes standardisée, on peut utiliser les fonctions `interpret_cohens_d()`, `interpret_hedges_g()` et `interpret_glass_delta()` du package {effectsize} : 
+Pour obtenir une interprétation automatique en même temps que la valeur de différence de moyennes standardisée, on peut utiliser les fonctions `interpret_cohens_d()`, `interpret_hedges_g()` et `interpret_glass_delta()` du package `{effectsize}` : 
 
 ```{r}
 interpret_cohens_d(ds)
@@ -273,12 +273,12 @@ n_versicolor <- nrow(iris_two_species |> filter(Species == "versicolor"))
 
 # Calcul de la somme des rangs normalisée pour l'espèce `setosa`
 sum_rks_setosa <-
-  (sum(ranks[seq_along(iris_two_species[iris_two_species$Species == "setosa", "Sepal.Length"])]) - n_setosa * (n_setosa + 1) /
+  (sum(ranks[which(iris_two_species$Species == "setosa")]) - n_setosa * (n_setosa + 1) /
      2) / (n_setosa * n_versicolor)
 
 # Calcul de la somme des rangs normalisée pour l'espèce `versicolor`
 sum_rks_versicolor <-
-  (sum(ranks[-seq_along(iris_two_species[iris_two_species$Species == "versicolor", "Sepal.Length"])]) - n_setosa * (n_setosa + 1) /
+  (sum(ranks[which(iris_two_species$Species == "versicolor")]) - n_versicolor * (n_versicolor + 1) /
      2) / (n_setosa * n_versicolor)
 
 # Obtention de la corrélation bisériale
@@ -299,7 +299,7 @@ rb
 
 Le résultat indique que les observations liées à la seconde modalité de la variable `Species`, qui est `versicolor`, ont en général des valeurs supérieures à celles relatives à la modalité `setosa`.
 
-La grandeur de la corrélation bisériale des rangs peut être caractérisée à l'aide de la classification de Funder & Ozer (2019) proposée par défaut dans le package {effectsize} (@tbl-effectsizecorrb)  : 
+La grandeur de la corrélation bisériale des rangs peut être caractérisée à l'aide de la classification de Funder & Ozer (2019) proposée par défaut dans le package `{effectsize}` (@tbl-effectsizecorrb)  : 
 
 ```{r effectsizecorrb}
 #| echo: false
@@ -338,20 +338,13 @@ p_superiority(
 ```
 
 Le résultat indique que la probabilité d'avoir une valeur de `Sepal.Length` supérieure pour l'espèce `setosa` par rapport à l'espèce `versicolor` est de 7 % (réciproquement, la probabilité de supériorité pour l'espèce `setosa` est de 93 %).
-On note, dans le code ci-dessus, que l'argument `parametric` est configuré avec la valeur `FALSE`. De cette manière, la probabilité de supériorité est calculée à partir de la corrélation bisériale des rangs tel que : $Pr(Superiority) = (r_{rb} + 1)/2$. Ce calcul serait le plus précis (le moins biaisé), notamment par rapport aux différences de moyennes standardisées classiques, sur un ensemble de scenarii de violation des conditions de normalité et d'hétérogénéité de variance [@liEffectSizeMeasures2016].
+On note, dans le code ci-dessus, que l'argument `parametric` est configuré avec la valeur `FALSE`. Cela implique que l'estimation fournie est non paramétrique. De cette manière, la probabilité de supériorité est calculée à partir de la corrélation bisériale des rangs tel que : $Pr(Superiority) = (r_{rb} + 1)/2$. Ce calcul serait le plus précis (le moins biaisé), notamment par rapport aux différences de moyennes standardisées classiques, sur un ensemble de scenarii de violation des conditions de normalité et d'hétérogénéité de variance [@liEffectSizeMeasures2016]. Dans le cas où on utiliserait `parametric` = `TRUE`, alors la probabilité de supériorité serait calculée comme suit : $Pr(superiority) = \phi(d/ \sqrt{2})$, avec $d$ pour le $d_{s}$ de Cohen.
 
 ### Comparer deux groupes appariés
 
 #### Étudier graphiquement la comparaison
 
 La @fig-raindcloudplotsBivPaired1 montre une proposition de graphique dans le cas de l'étude d'une comparaison de deux groupes de données appariés. Pour cela, nous avons installé le package `{PairedData}` et chargé le jeu de données associé, appelé `Blink`. Pour information, `Blink` contient des données de taux de clignotement des yeux obtenues chez 12 sujets et dans deux conditions différentes : une tâche où il fallait diriger un stylo selon une trajectoire rectiligne (modalité `Straight`), et une tâche où il fallait diriger un stylo selon une trajectoire présentant des oscillations (`Oscillating`). Ce jeu de données a été un peu transformé pour pouvoir passer à l'étape de la conception graphique, comme montré ci-dessous.
-
-```{r}
-#| message: false
-#| warning: false
-
-
-```
 
 ```{r raindcloudplotsBivPaired1}
 #| warning: false
@@ -901,7 +894,7 @@ Le résultat indique que le taux de réussite des hommes était 1.47 fois plus �
 
 #### Rapports des cotes
 
-Le rapport des cotes, noté $OR$ pour *Odds ratio* en anglais, est une statistique dont le calcul peut à nouveau se comprendre à l’aide d’un tableau de contingence. Si l’on reprend le tableau de la @fig-RiskContTables, on peut dire que la cote pour le fait d’être admis versus le fait d'être refusé dans le groupe des hommes est $n_{1}$/$n_{3}$ et la cote pour le fait d’être admis versus le fait d'être refusé dans le groupe des femmes est $n_{2}$/$n_{4}$. Le rapport des cotes pour les hommes versus les femmes dans ce cas-là peut se calculer comme ceci : 
+Le rapport des cotes, noté $OR$ pour *Odds ratio* en anglais, est une statistique dont le calcul peut à nouveau se comprendre à l’aide d’un tableau de contingence. Si l’on reprend le tableau de la @fig-RiskContTables, on peut dire que la cote pour le fait d’être admis versus le fait d'être refusé dans le groupe des hommes est $n_{1}$/$n_{3}$ et la cote pour le fait d’être admis versus le fait d'être refusée dans le groupe des femmes est $n_{2}$/$n_{4}$. Le rapport des cotes pour les hommes versus celui pour les femmes dans ce cas-là peut se calculer comme ceci : 
 
 $$ OR =  \frac{n_{1} / n{_{3}}}{n_{2} / n{_{4}}}$$
 

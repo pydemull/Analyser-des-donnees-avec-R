@@ -88,7 +88,7 @@ g2 <- ggplot(data = iris, aes(x = Sepal.Length)) +
 g1 | g2
 ```
 
-En plus de l'histogramme, une autre manière de prendre connaissance graphiquement de la distribution des données d'une variable quantitative est d'utiliser une **boîte à moustaches**. Pour ce faire, il convient d'utiliser la fonction `geom_boxplot()`, comme montré dans le code ci-dessous. Le résultat de ce code est montré sur la @fig-geomboxplot. On pourra noter ci-dessous l'ajout d'une ligne de code avec une fonction `theme()` dont on ne présentera pas les détails ici ; cette fonction nous sert juste ici à ne pas montrer des chiffres qui auraient été ajoutés par défaut sur l'axe Y de gauche du graphique et qui n'auraient eu aucun intérêt.
+En plus de l'histogramme, une autre manière de prendre connaissance graphiquement de la distribution des données d'une variable quantitative est d'utiliser une **boîte à moustaches**. Pour ce faire, il convient d'utiliser la fonction `geom_boxplot()`, comme montré dans le code ci-dessous. Le résultat de ce code est montré sur la @fig-geomboxplot. On pourra noter ci-dessous l'ajout d'une ligne de code avec une fonction `theme()` dont on ne présentera pas les détails ici ; cette fonction nous sert juste à ne pas montrer des chiffres qui auraient été ajoutés par défaut sur l'axe Y de gauche du graphique et qui n'auraient eu aucun intérêt.
 
 ```{r geomboxplot}
 #| fig.cap: "Exemple de boîte à moustaches"
@@ -179,7 +179,7 @@ On remarque ainsi qu'au-delà de prendre connaissance de la forme de la distribu
 À noter que si l'histogramme et la boîte à moustaches sont des graphiques classiques pour étudier la distribution d'une variable quantitative, il est aussi possible avec R de créer ce qu'on appelle un *raincloud plot*, tel qu'illustré sur la @fig-raincloudUnivar. Un [post du blog de Cédric Scherer](https://www.cedricscherer.com/2021/06/06/visualizing-distributions-with-raincloud-plots-and-how-to-create-them-with-ggplot2/) fournit une description très intéressante et riche de l'intérêt de ce type de graphique. Le *raincloud plot* se compose de trois éléments : 
 
 * Une aire sous la courbe représentative de la densité de probabilité (*the cloud*), qui représente une estimation de la fréquence d'apparition d'une valeur donnée dans l'échantillon étudié. Cet élément est intéressant pour prendre pleinement conscience de la forme de la distribution. Attention cependant, car les formes des aires et les idées qu’elles donnent des distributions dans la population d’intérêt dépendent beaucoup du nombre d’observations disponibles, et leur utilisation pourrait donc se discuter en présence de peu d’observations.
-* Une boîte à moustaches, qui permet de se faire une idée résumée relativement robuste des distributions dans la population d'intérêt (i.e., insensible aux *outliers* et davantage comparable avec d'autres études) ; selon les cas, d'autres statistiques, comme les moyennes et les écarts-types, peuvent être utilisées à la place ou en plus des boîtes à moustaches [@allenRaincloudPlotsMultiplatform2019].
+* Une boîte à moustaches, qui permet de se faire une idée résumée relativement robuste de la distribution dans la population d'intérêt (i.e., insensible aux *outliers* et davantage comparable avec d'autres études) ; selon les cas, d'autres statistiques, comme les moyennes et les écarts-types, peuvent être utilisées à la place ou en plus des boîtes à moustaches [@allenRaincloudPlotsMultiplatform2019].
 * Un nuage de points des données individuelles (*the rain*), qui est très intéressant pour avoir une vue précise des valeurs obtenues par les individus, de leurs différences éventuelles, des *outliers* éventuels, voire  des *patterns* de distribution éventuellement inattendus ; les données individuelles permettent aussi d'avoir une idée plus claire de la grandeur du nombre d'observations présentes dans le jeu de données (chose non renseignée par les deux éléments précédents).
 
 Parce qu'ils montrent les données individuelles, les *raincloud plots* vont dans le sens du propos de Weissgerber et al. [-@weissgerberBarLineGraphs2015] qui militent pour la disparition des graphiques en forme de simples bâtons de dynamite, lesquels ayant été souvent utilisés par le passé pour montrer des moyennes et écart-types dans les études. Le problème de ces graphiques en forme de bâtons de dynamite est qu'ils peuvent induire en erreur quant à la réelle forme de la distribution et ils limitent les possibilités du lecteur de juger de la pertinence des choix d'analyses inférentielles qui seraient faits par la suite. Les *raincloud plots* peuvent être réalisés relativement facilement à l'aide de la fonction `geom_rain()` du package `{ggrain}`.
@@ -215,15 +215,7 @@ rain_cloud <- function(data, x, y) {
   require(ggdist)
   require(gghalves)
   
-  ggplot(data = data, aes(x = {
-    {
-      x
-    }
-  }, y = {
-    {
-      y
-    }
-  })) +
+  ggplot(data = data, aes(x = x, y = .data[[y]])) +
     ggdist::stat_halfeye(
       ## Ajuste le lissage de la courbe représentative de la densité de probabilité
       adjust = .5,
@@ -234,12 +226,7 @@ rain_cloud <- function(data, x, y) {
     ) +
     geom_boxplot(width = .1,
                  outlier.shape = NA) +
-    gghalves::geom_half_point(
-      side = "l",
-      range_scale = .4,
-      alpha = .2,
-      transformation = position_jitter(seed = 123)
-    ) +
+    geom_point(aes(x = stage(x, after_scale = x - 0.2)), position = position_jitter(0.05), alpha = 0.2) +
     coord_flip(xlim = c(1.2, NA)) +
     theme(
       axis.text = element_blank(),
@@ -249,7 +236,7 @@ rain_cloud <- function(data, x, y) {
 }
 ```
 
-Lors de l'analyse de données, différentes formes typiques de distribution peuvent être rencontrées, notamment des formes **gaussiennes**, **asymétriques**, **leptocurtiques**, et **platycurtiques** [@dartCommentDecrireDistribution2003]. Ces formes sont illustrées sur la @fig-variousDistributions. Les formes gaussiennes sont observées en présence de variables suivant ce qu'on appelle une **loi normale**. Très souvent, on associe une distribution gaussienne, et donc une loi normale, à une distribution en forme de cloche, bien que  l'analogie à la cloche pourrait se discuter. Les formes asymétriques traduisent le fait que la majorité des observations sont concentrées sur une extrémité de l'intervalle des valeurs possibles, et qu'il existe des observations, non majoritaires, avec des valeurs pouvant être très éloignées de la majorité des données, mais seulement d'un seul côté de la distribution. Enfin, les formes leptocurtiques et platycurtiques sont appelées ainsi par comparaison à la forme gaussienne. En présence d'une forme leptocurtique, la distribution s'avère plus pointue, avec des queues (qui sont les extrémités de la distribution) plus longues qu'avec une forme gaussienne. Dans le cadre d'une distribution platycurtique, la distribution est plus aplatie, avec des queues plus courtes qu'avec une forme gaussienne [@dartCommentDecrireDistribution2003]. La distribution uniforme est un cas particulier de distribution platycurtique, et c'est cette distribution qui est en réalité montrée sur la @fig-variousDistributions.
+Lors de l'analyse de données, différentes formes typiques de distribution peuvent être rencontrées, notamment des formes **gaussiennes**, **asymétriques**, **leptocurtiques**, et **platycurtiques** [@dartCommentDecrireDistribution2003]. Ces formes sont illustrées sur la @fig-variousDistributions. Les formes gaussiennes sont observées en présence de variables suivant ce qu'on appelle une **loi normale**. Très souvent, on associe une distribution gaussienne, et donc une loi normale, à une distribution en forme de cloche, bien que  l'analogie à la cloche pourrait se discuter. Les formes asymétriques traduisent le fait que la majorité des observations sont concentrées sur une extrémité de l'intervalle des valeurs possibles, et qu'il existe des observations, non majoritaires, avec des valeurs pouvant être très éloignées de la majorité des données, de l'autre côté de la distribution. Enfin, les formes leptocurtiques et platycurtiques sont appelées ainsi par comparaison à la forme gaussienne. En présence d'une forme leptocurtique, la distribution s'avère plus pointue, avec des queues (qui sont les extrémités de la distribution) plus longues qu'avec une forme gaussienne. Dans le cadre d'une distribution platycurtique, la distribution est plus aplatie, avec des queues plus courtes qu'avec une forme gaussienne [@dartCommentDecrireDistribution2003]. La distribution uniforme est un cas particulier de distribution platycurtique, et c'est cette distribution qui est en réalité montrée sur la @fig-variousDistributions.
 
 ```{r variousDistributions}
 #| echo: false
@@ -272,19 +259,19 @@ lepto <-
 plati <- tibble(values = runif(n = 1000, min = -5, max = 5))
 
 gauss_g <-
-  rain_cloud(data = gauss, x = "", y = values) + labs(title = "Gaussienne")
+  rain_cloud(data = gauss, x = "", y = "values") + labs(title = "Gaussienne")
 skew_right_g <-
-  rain_cloud(data = skew_right, x = "", y = values)  + labs(title = "Asymétrique")
+  rain_cloud(data = skew_right, x = "", y = "values")  + labs(title = "Asymétrique")
 lepto_g <-
-  rain_cloud(data = lepto, x = "", y = values) + labs(title = "Leptocurtique")
+  rain_cloud(data = lepto, x = "", y = "values") + labs(title = "Leptocurtique")
 plati_g <-
-  rain_cloud(data = plati, x = "", y = values) + labs(title = "Platycurtique")
+  rain_cloud(data = plati, x = "", y = "values") + labs(title = "Platycurtique")
 
 (gauss_g | skew_right_g) /
   (lepto_g | plati_g) 
 ```
 
-La confiance que l'on peut avoir dans des résultats issus d'analyses inférentielles dépend de l'adéquation entre, d'une part, la forme de la distribution de la population d'où vient l'échantillon, et d'autre part, l'indice statistique choisi pour résumer la distribution de l'échantillon, en particulier sa position, pour conduire les analyses inférentielles. Il est donc important de chercher à savoir, graphiquement dans un premier temps, si la distribution de la variable est effectivement gaussienne ou non dans la population d'intérêt, cela à partir de l'échantillon que l'on a sous les yeux. Le fait d'être capable d'identifier les autres formes de distribution peut être aussi important afin de mener des analyses appropriées. Dans les exemples montrés ci-dessus, les distributions ont été créées à partir de 1000 valeurs générées de manière aléatoire de telle sorte à suivre des lois prédéfinies et ainsi illustrer différentes distributions possibles. C'est pour cette raison que les formes de distribution montrées sur la figure ci-dessus sont si nettes. Lorsque l'on travaille dans certains domaines ou contextes, tel qu'avec l'être humain, il peut être compliqué d'obtenir autant de données, et les formes de distribution seront alors plus dures à identifier.
+La confiance que l'on peut avoir dans des résultats issus d'analyses inférentielles dépend de l'adéquation entre, d'une part, la forme de la distribution de la population d'où vient l'échantillon, et d'autre part, l'indice statistique choisi pour résumer la distribution de l'échantillon, en particulier sa position, pour conduire les analyses inférentielles. Il est donc important de chercher à savoir, graphiquement dans un premier temps, si la distribution de la variable est effectivement gaussienne ou non dans la population d'intérêt, cela à partir de l'échantillon que l'on a sous les yeux. Le fait d'être capable d'identifier les autres formes de distribution peut être aussi important afin de mener des analyses appropriées. Dans les exemples montrés ci-dessus, les distributions ont été créées à partir de 1000 valeurs générées de manière aléatoire de telle sorte à suivre des lois de probabilité prédéfinies et ainsi illustrer différentes distributions possibles. C'est pour cette raison que les formes de distribution montrées sur la figure ci-dessus sont si nettes. Lorsque l'on travaille dans certains domaines ou contextes, tel qu'avec l'être humain, il peut être compliqué d'obtenir autant de données, et les formes de distribution seront alors plus dures à identifier.
 
 Une fois qu'une première analyse graphique des données a été réalisée, il peut être utile de chercher à résumer de manière numérique la variable. Plusieurs types de statistiques peuvent être utilisés à cet effet : les **indices de position**, les **indices de dispersion**, les **indices d'asymétrie**, et les **indices d'aplatissement**.
 
@@ -335,7 +322,7 @@ La gestion des valeurs manquantes telle que nous venons de la voir s’effectue 
 mean(x = iris$Sepal.Length)
 ```
 
-La moyenne, c'est en quelque sorte le "centre de gravité" de la variable [@navarroLearningStatistics2018]. L'un de ses intérêts est que son calcul prend en compte toutes les informations contenues dans la variable, ce qui est utile quand on a relativement peu de données [@navarroLearningStatistics2018]. En revanche, un inconvénient est qu'elle est très sensible aux valeurs extrêmes, et en particulier aux valeurs qui seraient particulièrement basses ou particulièrement élevées par rapport à la majorité des valeurs de la variable (il s'agirait ici d'*outliers*), et cela est d'autant plus vrai lorsque la taille de l'échantillon étudié est faible. Dans ce dernier cas, il y a donc un risque assez important que la moyenne ne représente pas bien la tendance centrale, c'est-à-dire la valeur ou la zone de valeurs où sont situées la majorité des observations. Ce risque existe aussi même avec des tailles d'échantillon relativement importantes lorsque la distribution est asymétrique, comme illustré sur la @fig-meansSkewedVariables. Sur cette figure, on peut voir qu'avec une distribution gaussienne, la moyenne correspond parfaitement à la tendance centrale. En revanche, avec une distribution asymétrique à droite, on voit que la moyenne est "tirée vers la droite" par rapport à la tendance centrale sous l'effet des valeurs, certes moins nombreuses, mais d'une grandeur plus importante.
+La moyenne, c'est en quelque sorte le "centre de gravité" de la variable [@navarroLearningStatistics2018]. L'un de ses intérêts est que son calcul prend en compte toutes les informations contenues dans la variable, ce qui est utile quand on a relativement peu de données [@navarroLearningStatistics2018]. En revanche, un inconvénient est qu'elle est très sensible aux valeurs extrêmes, c'est-à-dire aux valeurs qui seraient particulièrement basses ou particulièrement élevées par rapport à la majorité des valeurs de la variable (il s'agirait ici d'*outliers*), et cela est d'autant plus vrai lorsque la taille de l'échantillon étudié est faible. Dans ce dernier cas, il y a donc un risque assez important que la moyenne ne représente pas bien la tendance centrale, c'est-à-dire la valeur ou la zone de valeurs où sont situées la majorité des observations. Ce risque existe aussi même avec des tailles d'échantillon relativement importantes lorsque la distribution est asymétrique, comme illustré sur la @fig-meansSkewedVariables. Sur cette figure, on peut voir qu'avec une distribution gaussienne, la moyenne correspond parfaitement à la tendance centrale. En revanche, avec une distribution asymétrique à droite, on voit que la moyenne est "tirée vers la droite" par rapport à la tendance centrale sous l'effet des valeurs, certes moins nombreuses, mais d'une grandeur plus importante.
 
 ```{r meansSkewedVariables}
 #| out-width: '100%'
@@ -412,6 +399,8 @@ iris_sort2
 Dans R, la médiane d'une variable s'obtient facilement à l'aide de la fonction `median()`.
 
 ```{r median_function}
+#| echo: false
+
 vec <- c(4.6, 4.7, 4.9, 5.0, 5.1, 5.4)
 median(x = vec)
 ```
@@ -531,7 +520,7 @@ sd(x = vec)
 L’intervalle interquartile désigne l’étendue entre le premier quartile (Q1) et le troisième quartile (Q3) d’une variable. Comme expliqué auparavant dans le cadre de la boîte à moustaches, Q1 et Q3 désignent respectivement les valeurs en-dessous desquelles 25 % et 75 % des observations de la variable se trouvent [@chatellierMoyenneMedianeLeurs2003]. Pour un échantillon de taille $N$, la procédure classique pour calculer les quartiles est différente selon que le rapport $N$ / 4 est un nombre entier ou non. Lorsque ce rapport n’est pas un nombre entier, Q1 est la valeur correspondant au rang immédiatement supérieur à $N$ / 4. Par exemple, pour la variable ci-dessous, qui a une taille $N$ de 5 valeurs, le rapport $N$ / 4 est égal à 1.25. Q1 est donc la valeur correspondant au rang directement supérieur, c'est-à-dire au rang 2, qui est ici la valeur 7.8.
 
 ```{r quartile_1_N_non_entier}
-#| eval: false
+#| echo: false
 
 names(vec) <- c(1, 2, 3, 4, 5)
 vec
@@ -698,7 +687,8 @@ gauss <- tibble(x = rnorm(n = 1000, mean = 0, sd = 1))
 
 TextPlot_chisq1 <- 
             ggplot() + 
-            annotate(geom = "text", x = 4, y = 1, size = 4, label = bquote(paste(gamma[1], " = ", .(round(skewness(chis_1$x), 2))))) +
+            annotate(geom = "text", x = 4, y = 1, size = 4,   label = sprintf("gamma[1] == %s", format(round(e1071::skewness(chis_1$x), 2), nsmall = 2)),
+    parse = TRUE) +
             theme(
               plot.background = element_blank(), 
               panel.grid.major = element_blank(),
@@ -715,7 +705,8 @@ TextPlot_chisq1 <-
 
 TextPlot_chisq4 <- 
             ggplot() + 
-            annotate(geom = "text", x = 4, y = 1, size = 4, label = bquote(paste(gamma[1], " = ", .(round(skewness(chis_4$x), 2))))) +
+            annotate(geom = "text", x = 4, y = 1, size = 4,   label = sprintf("gamma[1] == %s", format(round(e1071::skewness(chis_4$x), 2), nsmall = 2)),
+    parse = TRUE) +
             theme(
               plot.background = element_blank(), 
               panel.grid.major = element_blank(),
@@ -732,7 +723,8 @@ TextPlot_chisq4 <-
 
 TextPlot_gauss <- 
             ggplot() + 
-            annotate(geom = "text", x = 4, y = 1, size = 4, label = bquote(paste(gamma[1], " = ", .(round(skewness(gauss$x), 2))))) +
+            annotate(geom = "text", x = 4, y = 1, size = 4,   label = sprintf("gamma[1] == %s", format(round(e1071::skewness(gauss$x), 2), nsmall = 2)),
+    parse = TRUE) +
             theme(
               plot.background = element_blank(), 
               panel.grid.major = element_blank(),
@@ -749,7 +741,8 @@ TextPlot_gauss <-
 
 TextPlot_chisq4_neg <- 
             ggplot() + 
-            annotate(geom = "text", x = 4, y = 1, size = 4, label = bquote(paste(gamma[1], " = ", .(round(skewness(chis_4_neg$x), 2))))) +
+            annotate(geom = "text", x = 4, y = 1, size = 4,   label = sprintf("gamma[1] == %s", format(round(e1071::skewness(chis_4_neg$x), 2), nsmall = 2)),
+    parse = TRUE) +
             theme(
               plot.background = element_blank(), 
               panel.grid.major = element_blank(),
@@ -766,7 +759,8 @@ TextPlot_chisq4_neg <-
 
 TextPlot_chisq1_neg <- 
             ggplot() + 
-            annotate(geom = "text", x = 4, y = 1, size = 4, label = bquote(paste(gamma[1], " = ", .(round(skewness(chis_1_neg$x), 2))))) +
+            annotate(geom = "text", x = 4, y = 1, size = 4,   label = sprintf("gamma[1] == %s", format(round(e1071::skewness(chis_1_neg$x), 2), nsmall = 2)),
+    parse = TRUE) +
             theme(
               plot.background = element_blank(), 
               panel.grid.major = element_blank(),
@@ -879,8 +873,9 @@ set.seed(123)
 gauss <- tibble(x = rnorm(n = 1000, mean = 0, sd = 1))
 
 TextPlot_unif <- 
-            ggplot() + 
-            annotate(geom = "text", x = 4, y = 1, size = 4, label = bquote(paste(gamma[2], " = ", .(round(kurtosis(unif$x), 2))))) +
+ggplot() + 
+annotate(geom = "text", x = 4, y = 1, size = 4,   label = sprintf("gamma[2] == %s", format(round(e1071::kurtosis(unif$x), 2), nsmall = 2)),
+    parse = TRUE) +
             theme(
               plot.background = element_blank(), 
               panel.grid.major = element_blank(),
@@ -896,8 +891,9 @@ TextPlot_unif <-
             )
 
 TextPlot_gauss <- 
-            ggplot() + 
-            annotate(geom = "text", x = 4, y = 1, size = 4, label = bquote(paste(gamma[2], " = ", .(round(kurtosis(gauss$x), 2))))) +
+ggplot() + 
+annotate(geom = "text", x = 4, y = 1, size = 4,   label = sprintf("gamma[2] == %s", format(round(e1071::kurtosis(gauss$x), 2), nsmall = 2)),
+    parse = TRUE) +
             theme(
               plot.background = element_blank(), 
               panel.grid.major = element_blank(),
@@ -914,8 +910,9 @@ TextPlot_gauss <-
 
 
 TextPlot_laplace <- 
-            ggplot() + 
-            annotate(geom = "text", x = 4, y = 1, size = 4, label = bquote(paste(gamma[2], " = ", .(round(kurtosis(laplace$x), 2))))) +
+ggplot() + 
+annotate(geom = "text", x = 4, y = 1, size = 4,   label = sprintf("gamma[2] == %s", format(round(e1071::kurtosis(laplace$x), 2), nsmall = 2)),
+    parse = TRUE) +
             theme(
               plot.background = element_blank(), 
               panel.grid.major = element_blank(),
@@ -1059,7 +1056,10 @@ g1 <-
   geom_hline(aes(yintercept = 0), size = 1) +
   theme_classic() +
   labs(fill = "") +
-  annotate(geom = "text", label =  bquote(paste(bar(italic(X)), " ± 1 ", hat(sigma))), x = 15, y = 0.06, size = 5) +
+  annotate(geom = "text", label =  "bar(italic(X)) %+-% 1*hat(sigma)", 
+           x = 15, y = 0.06, size = 5,
+           parse = TRUE
+           ) +
   theme(axis.text = element_blank(),
         axis.ticks = element_blank(),
         legend.position = "none")
@@ -1071,7 +1071,10 @@ g2 <-
   geom_hline(aes(yintercept = 0), size = 1) +
   theme_classic() +
   labs(fill = "") +
-  annotate(geom = "text", label =  bquote(paste(bar(italic(X)), " ± 2 ", hat(sigma))), x = 15, y = 0.06, size = 5) +
+  annotate(geom = "text", label =  "bar(italic(X)) %+-% 2*hat(sigma)", 
+           x = 15, y = 0.06, size = 5,
+           parse = TRUE
+           ) +
   theme(axis.text = element_blank(),
         axis.ticks = element_blank(),
         legend.position = "none")
@@ -1083,7 +1086,10 @@ g3 <-
   geom_hline(aes(yintercept = 0), size = 1) +
   theme_classic() +
   labs(fill = "") +
-  annotate(geom = "text", label =  bquote(paste(bar(italic(X)), " ± 3 ", hat(sigma))), x = 15, y = 0.06, size = 5) +
+  annotate(geom = "text", label =  "bar(italic(X)) %+-% 3*hat(sigma)", 
+           x = 15, y = 0.06, size = 5,
+           parse = TRUE
+           ) +
   theme(axis.text = element_blank(),
         axis.ticks = element_blank(),
         legend.position = "none")
@@ -1224,7 +1230,7 @@ F <-
 (A | B | C) / (D | E | F)
 ```
 
-Dans le code montré ci-dessus, on remarque que le réagencement manuel des barres (cf. graphique B) a pu être réalisé grâce à la fonction `fct_relevel()` du package `{forcats}`. Pour les autres diagrammes, la réorganisation des barres en ordre croissant ou décroissant sur la base de la valeur de l'effectif (`n`) a pu se faire grâce à la fonction `fct_reorder()` du package `{forcats}`. Les noms des arguments de ces fonctions n'ont pas été indiqués pour alléger le code. Le plus important, c'est d'indiquer en premier dans la fonction la variable dont l'ordre d'apparition des modalités doit être réorganisé (il s'agissait de la variable `color` dans cet exemple). En second, il convient d'indiquer la logique de réorganisation de l'apparition des modalités (ce qui a été fait sur la base des valeurs de la variable `n` dans les exemples ci-dessus utilisant la fonction `fct_reorder()`).
+Dans le code montré ci-dessus, on remarque que le réagencement manuel des barres (cf. graphique B) a pu être réalisé grâce à la fonction `fct_relevel()` du package `{forcats}`. Pour les autres diagrammes, la réorganisation des barres en ordre croissant ou décroissant sur la base de la valeur de l'effectif (`n`) a pu se faire grâce à la fonction `fct_reorder()` du package `{forcats}`. Les noms des arguments de ces fonctions n'ont pas été indiqués pour alléger le code. Le plus important, c'est d'indiquer en premier dans la fonction la variable dont l'ordre d'apparition des modalités doit être réorganisé (il s'agissait de la variable `color` dans cet exemple). En second lieu, il convient d'indiquer la logique de réorganisation de l'apparition des modalités (ce qui a été fait sur la base des valeurs de la variable `n` dans les exemples ci-dessus utilisant la fonction `fct_reorder()`).
 
 Toujours dans le code montré ci-dessus, on peut voir aussi, dans la fonction `geom_text()` du graphique A, la présence de l'argument `nudge_y`. Cet argument permet de régler le décalage entre le haut de la barre et le texte. L'unité du chiffre indiqué est celle de la variable montrée en ordonnées.
 
@@ -1314,7 +1320,7 @@ freq(diamonds$color, valid = TRUE, total = TRUE, sort = "dec")
 
 ## Résumé
 
-* En statistiques, la notion de population désigne l'ensemble des individus existant qui présentent un ou plusieurs critères d'intérêt. Un échantillon est alors une fraction de la population étudiée, composée d'individus qui en principe sont représentatifs de la population étudiée.
+* En statistiques, la notion de population désigne l'ensemble des individus existants qui présentent un ou plusieurs critères d'intérêt. Un échantillon est alors une fraction de la population étudiée, composée d'individus qui en principe sont représentatifs de la population étudiée.
 * Avec R, les graphiques peuvent être réalisés, entre autres, à l'aide du package `{ggplot2}` et des fonctions associées.
 * Lors de l'analyse d'une variable quantitative, une première étape doit être de visualiser graphiquement la distribution des observations. Cela peut se faire à l'aide :
   +  d'un histogramme avec la fonction `ggplot2::geom_histogram()` ;
